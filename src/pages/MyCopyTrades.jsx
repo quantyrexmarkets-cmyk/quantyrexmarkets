@@ -52,7 +52,7 @@ export default function MyCopyTrades() {
         method: 'PUT',
         headers: { Authorization: `Bearer ${token || localStorage.getItem('token')}` }
       });
-      setCopyTrades(prev => prev.map(t => t._id === selectedTrade._id ? { ...t, status: 'stopped' } : t));
+      setCopyTrades(prev => prev.filter(t => t._id !== selectedTrade._id));
     } catch {}
     setShowStopModal(false);
     setSelectedTrade(null);
