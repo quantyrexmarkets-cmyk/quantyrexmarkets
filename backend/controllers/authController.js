@@ -17,7 +17,7 @@ exports.register = async (req, res) => {
 
     const userData = {
       firstName, lastName, email, phone, country, password,
-      emailVerified: true,  // Temporarily skip email verification
+      emailVerified: false,
     };
 
     if (referralCode) {
@@ -38,13 +38,12 @@ exports.register = async (req, res) => {
       user.emailVerifyToken = verifyToken;
       user.emailVerifyExpire = Date.now() + 24 * 60 * 60 * 1000;
       await user.save();
-      // Email verification temporarily disabled
-      // await sendEmail({
-      //   to: user.email,
-      //   type: 'verifyEmail',
-      //   name: user.firstName,
-      //   verifyUrl: process.env.FRONTEND_URL + '/verify-email/' + verifyToken
-      // });
+      await sendEmail({
+        to: user.email,
+        type: 'verifyEmail',
+        name: user.firstName,
+        verifyUrl: process.env.FRONTEND_URL + '/verify-email/' + verifyToken
+      });
     } catch(emailErr) { console.log('Verification email error:', emailErr.message); }
 
     res.status(201).json({
