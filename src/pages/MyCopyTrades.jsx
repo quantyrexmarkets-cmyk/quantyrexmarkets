@@ -113,7 +113,7 @@ export default function MyCopyTrades() {
                 <div key={trade._id} style={{ background: 'linear-gradient(135deg, rgba(15,23,42,0.9), rgba(30,41,59,0.8))', border: '1px solid rgba(99,102,241,0.3)', borderRadius: '12px', padding: '14px', marginBottom: '10px' }}>
                   <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '12px' }}>
                     <div style={{ position: 'relative', flexShrink: 0 }}>
-                      <img src={trade.traderImg || `https://ui-avatars.com/api/?name=${trade.traderName}&background=6366f1&color=fff&size=96`} style={{ width: '46px', height: '46px', borderRadius: '50%', objectFit: 'cover', border: '2px solid rgba(99,102,241,0.5)' }} onError={e => e.target.src = `https://ui-avatars.com/api/?name=${trade.traderName}&background=6366f1&color=fff`} />
+                      <img src={trade.traderImg && `https://ui-avatars.com/api/?name=${trade.traderName}&background=6366f1&color=fff&size=96`} style={{ width: '46px', height: '46px', borderRadius: '50%', objectFit: 'cover', border: '2px solid rgba(99,102,241,0.5)' }} onError={e => e.target.src = `https://ui-avatars.com/api/?name=${trade.traderName}&background=6366f1&color=fff`} />
                       <div style={{ position: 'absolute', bottom: 0, right: 0, width: '10px', height: '10px', borderRadius: '50%', background: '#22c55e', border: '2px solid #1a2e4a' }} />
                     </div>
                     <div style={{ flex: 1 }}>
@@ -176,7 +176,7 @@ export default function MyCopyTrades() {
             return (
               <div key={trade._id} style={{ display: 'grid', gridTemplateColumns: '1.5fr 1fr 1fr 1fr 1fr 1fr', padding: '8px 10px', borderBottom: '1px solid rgba(255,255,255,0.04)', background: i % 2 === 0 ? 'transparent' : 'rgba(255,255,255,0.02)', alignItems: 'center' }}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-                  <img src={trade.traderImg || `https://ui-avatars.com/api/?name=${trade.traderName}&background=6366f1&color=fff&size=64`}
+                  <img src={trade.traderImg && `https://ui-avatars.com/api/?name=${trade.traderName}&background=6366f1&color=fff&size=64`}
                     style={{ width: '22px', height: '22px', borderRadius: '50%', flexShrink: 0 }}
                     onError={e => e.target.src = `https://ui-avatars.com/api/?name=${trade.traderName}&background=6366f1&color=fff`} />
                   <span style={{ color: '#6366f1', fontSize: '8px', fontWeight: '700' }}>{trade.traderName}</span>
