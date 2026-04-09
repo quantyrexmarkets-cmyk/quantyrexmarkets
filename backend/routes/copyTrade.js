@@ -31,7 +31,7 @@ router.post('/', auth, async (req, res) => {
 // Get user's active copy trades
 router.get('/', auth, async (req, res) => {
   try {
-    const trades = await CopyTrade.find({ user: req.user._id }).sort({ createdAt: -1 });
+    const trades = await CopyTrade.find({ user: req.user._id, status: 'active' }).sort({ createdAt: -1 });
     res.json(trades);
   } catch (err) {
     res.status(500).json({ message: err.message });
