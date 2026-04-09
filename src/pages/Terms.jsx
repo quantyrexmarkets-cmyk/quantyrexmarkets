@@ -21,7 +21,7 @@ export default function Terms() {
     <div style={{ minHeight: '100vh', background: '#0e1628', color: 'white', fontFamily: "'Segoe UI', sans-serif" }}>
       {/* Header */}
       <div style={{ background: '#132035', padding: '14px 20px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', borderBottom: '1px solid rgba(255,255,255,0.08)', position: 'sticky', top: 0, zIndex: 100 }}>
-        <span style={{ fontWeight: '800', fontSize: '13px', cursor: 'pointer' }} onClick={() => navigate('/')}>VERTEXTRADE <span style={{ color: '#6366f1' }}>PRO</span></span>
+        <span style={{ fontWeight: '800', fontSize: '13px', cursor: 'pointer' }} onClick={() => navigate('/')}>QUANTYREX <span style={{ color: '#6366f1' }}>MARKETS</span></span>
         <div style={{ display: 'flex', gap: '12px' }}>
           <button onClick={() => navigate('/')} style={{ background: 'none', border: 'none', color: 'rgba(255,255,255,0.6)', fontSize: '10px', cursor: 'pointer' }}>Home</button>
           <button onClick={() => navigate('/signup')} style={{ background: '#6366f1', border: 'none', color: 'white', fontSize: '10px', padding: '6px 14px', cursor: 'pointer', fontWeight: '700' }}>Get Started</button>

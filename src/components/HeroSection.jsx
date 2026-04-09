@@ -91,7 +91,7 @@ function Navbar({ onGetStarted }) {
             </svg>
           </div>
           <span style={{ fontSize: "clamp(7px, 1.8vw, 10px)" }} className="text-white font-bold tracking-wider whitespace-nowrap">
-            VERTEXTRADE <span className="bg-gradient-to-r from-[#6366F1] to-[#6366F1] bg-clip-text text-transparent">PRO</span>
+            QUANTYREX <span className="bg-gradient-to-r from-[#6366F1] to-[#6366F1] bg-clip-text text-transparent">MARKETS</span>
           </span>
         </div>
 

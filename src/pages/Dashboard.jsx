@@ -280,7 +280,7 @@ export default function Dashboard() {
                 <path d='M20 8L8 14V22L20 34L32 22V14L20 8Z' fill='#0F172A' stroke='#6366F1' strokeWidth='1.2'/>
                 <path d='M20 14L12 18V23L20 30L28 23V18L20 14Z' fill='#6366F1' stroke='#6366F1' strokeWidth='1'/>
               </svg>
-              <span style={{ color: '#6366f1', fontSize: '9px', fontWeight: '800' }}>VERTEXTRADE PRO</span>
+              <span style={{ color: '#6366f1', fontSize: '9px', fontWeight: '800' }}>QUANTYREX MARKETS</span>
               <span style={{ color: 'rgba(255,255,255,0.4)', fontSize: '8px' }}>| {u.firstName || ''} {u.lastName || ''}</span>
             </div>
 

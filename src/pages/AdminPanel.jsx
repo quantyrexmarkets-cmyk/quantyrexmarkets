@@ -459,7 +459,7 @@ export default function AdminPanel() {
 
       {/* Header */}
       <div style={{ background: '#132035', padding: '10px 16px', display: 'flex', alignItems: 'center', gap: '10px', borderBottom: '1px solid rgba(255,255,255,0.1)' }}>
-        <span style={{ color: 'white', fontSize: '8px', fontWeight: '800' }}>VERTEXTRADE <span style={{ color: '#6366f1' }}>PRO</span></span>
+        <span style={{ color: 'white', fontSize: '8px', fontWeight: '800' }}>QUANTYREX <span style={{ color: '#6366f1' }}>MARKETS</span></span>
         <span style={{ color: 'rgba(255,255,255,0.3)', fontSize: '8px' }}>/ Admin Panel</span>
         <div style={{ marginLeft: 'auto', display: 'flex', gap: '8px' }}>
           <button onClick={() => navigate('/dashboard')} style={{ background: 'none', border: '1px solid rgba(255,255,255,0.2)', color: 'white', fontSize: '9px', padding: '4px 10px', cursor: 'pointer' }}>Dashboard</button>

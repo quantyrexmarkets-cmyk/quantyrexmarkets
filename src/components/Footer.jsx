@@ -101,7 +101,7 @@ const Footer = () => {
             <path d="M20 8L8 14V22L20 34L32 22V14L20 8Z" fill="#0d1117" stroke="#6366F1" strokeWidth="1.2"/>
             <path d="M20 14L12 18V23L20 30L28 23V18L20 14Z" fill="#6366F1" stroke="#6366F1" strokeWidth="1"/>
           </svg>
-          <span style={{ color: 'white', fontSize: 'clamp(7px, 1.8vw, 15px)', fontWeight: '700', letterSpacing: '2px' }}>VERTEXTRADE <span style={{ color: '#6366f1' }}>PRO</span></span>
+          <span style={{ color: 'white', fontSize: 'clamp(7px, 1.8vw, 15px)', fontWeight: '700', letterSpacing: '2px' }}>QUANTYREX <span style={{ color: '#6366f1' }}>MARKETS</span></span>
           <span style={{ color: 'white', fontSize: 'clamp(7px, 1.8vw, 15px)' }}>© 2025 Quantyrex Markets All rights reserved</span>
         </div>
       </div>

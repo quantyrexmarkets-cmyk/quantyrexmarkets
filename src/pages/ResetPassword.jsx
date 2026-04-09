@@ -39,7 +39,7 @@ export default function ResetPassword() {
               <path d="M20 14L12 18V23L20 30L28 23V18L20 14Z" fill="#6366F1" stroke="#6366F1" strokeWidth="1"/>
             </svg>
           </div>
-          <div style={{ color: 'white', fontSize: '14px', fontWeight: '800' }}>VERTEXTRADE <span style={{ color: '#6366f1' }}>PRO</span></div>
+          <div style={{ color: 'white', fontSize: '14px', fontWeight: '800' }}>QUANTYREX <span style={{ color: '#6366f1' }}>MARKETS</span></div>
           <div style={{ color: 'rgba(255,255,255,0.5)', fontSize: '9px', marginTop: '4px' }}>Reset Your Password</div>
         </div>
 

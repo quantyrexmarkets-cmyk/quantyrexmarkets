@@ -32,7 +32,7 @@ export default function LoadingScreen() {
 
       {/* Brand name */}
       <div style={{ color: 'white', fontSize: '11px', fontWeight: '800', letterSpacing: '2px', marginBottom: '6px' }}>
-        VERTEXTRADE <span style={{ color: '#6366f1' }}>PRO</span>
+        QUANTYREX <span style={{ color: '#6366f1' }}>MARKETS</span>
       </div>
 
       {/* Animated dots */}
