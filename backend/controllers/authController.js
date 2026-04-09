@@ -7,6 +7,7 @@ const generateToken = (id) => jwt.sign({ id }, process.env.JWT_SECRET, { expires
 
 exports.register = async (req, res) => {
   try {
+    console.log('Register request received:', req.body);
     const { firstName, lastName, email, phone, country, password, referralCode } = req.body;
 
     if (!firstName || !lastName || !email || !password)
@@ -28,7 +29,9 @@ exports.register = async (req, res) => {
       }
     }
 
+    console.log('Creating user with data:', userData);
     const user = await User.create(userData);
+    console.log('User created successfully:', user._id);
     const token = generateToken(user._id);
 
     // Send verification email
