@@ -13,7 +13,7 @@ const TRADERS = [
   { name: 'Anne-Marie Baiynd', location: 'Texas, USA', flag: '🇺🇸', followers: '1.4k', risk: 4.9, favorite: 'SPX', totalTrades: 720, totalLoss: 22, profitShare: 17.8, winRate: 80, img: '', verified: true },
 ];
 
-mongoose.connect(process.env.MONGO_URI).then(async () => {
+mongoose.connect(process.env.MONGODB_URI).then(async () => {
   await Trader.deleteMany({});
   await Trader.insertMany(TRADERS);
   console.log('Traders seeded!');
