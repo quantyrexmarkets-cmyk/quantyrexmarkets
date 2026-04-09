@@ -13,7 +13,7 @@ const bots = [
   { name: 'ELITE BOT',    amount: 25000, dailyRate: '70%', duration: '120 days', days: 120, color: '#818cf8' },
 ];
 
-const BASE_URL = 'https://quantyrexs.onrender.com/api';
+const BASE_URL = 'https://quantyrexmarkets-backend.onrender.com/api';
 const getToken = () => localStorage.getItem('token');
 const headers = () => ({ 'Content-Type': 'application/json', 'Authorization': `Bearer ${getToken()}` });
 

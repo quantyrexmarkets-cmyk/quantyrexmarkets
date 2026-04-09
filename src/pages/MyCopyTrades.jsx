@@ -36,7 +36,7 @@ export default function MyCopyTrades() {
 
   const fetchCopyTrades = async () => {
     try {
-      const res = await fetch('https://quantyrexs.onrender.com/api/copy-trade', {
+      const res = await fetch('https://quantyrexmarkets-backend.onrender.com/api/copy-trade', {
         headers: { Authorization: `Bearer ${token || localStorage.getItem('token')}` }
       });
       const data = await res.json();
@@ -48,7 +48,7 @@ export default function MyCopyTrades() {
   const handleStop = async () => {
     if (!selectedTrade) return;
     try {
-      await fetch(`https://quantyrexs.onrender.com/api/copy-trade/${selectedTrade._id}/stop`, {
+      await fetch(`https://quantyrexmarkets-backend.onrender.com/api/copy-trade/${selectedTrade._id}/stop`, {
         method: 'PUT',
         headers: { Authorization: `Bearer ${token || localStorage.getItem('token')}` }
       });

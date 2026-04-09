@@ -37,7 +37,7 @@ export default function Stake() {
   const [balance, setBalance] = useState(0);
 
   useEffect(() => {
-    fetch('https://quantyrexs.onrender.com/api/user/dashboard', {
+    fetch('https://quantyrexmarkets-backend.onrender.com/api/user/dashboard', {
       headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
     }).then(r => r.json()).then(d => setBalance(d.balance || 0)).catch(() => {});
     getStakes().then(data => {
@@ -58,7 +58,7 @@ export default function Stake() {
     setError(''); setSubmitting(true);
     try {
       const token = localStorage.getItem('token');
-      const res = await fetch('https://quantyrexs.onrender.com/api/stake', {
+      const res = await fetch('https://quantyrexmarkets-backend.onrender.com/api/stake', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
         body: JSON.stringify({ plan: selectedPlan.name, amount: Number(amount), apy: selectedPlan.apy, duration: selectedPlan.duration })

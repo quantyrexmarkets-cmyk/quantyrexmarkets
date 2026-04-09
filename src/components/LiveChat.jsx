@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { useAuth } from '../context/AuthContext';
 
-const API = 'https://quantyrexs.onrender.com/api/chat';
+const API = 'https://quantyrexmarkets-backend.onrender.com/api/chat';
 
 export default function LiveChat() {
   if (window.location.pathname.startsWith('/admin')) return null;

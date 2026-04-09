@@ -71,7 +71,7 @@ export default function Profile() {
   const handleRemoveAvatar = async () => {
     try {
       const token = localStorage.getItem('token');
-      const res = await fetch('https://quantyrexs.onrender.com/api/user/avatar', {
+      const res = await fetch('https://quantyrexmarkets-backend.onrender.com/api/user/avatar', {
         method: 'DELETE',
         headers: { 'Authorization': `Bearer ${token}` }
       });
