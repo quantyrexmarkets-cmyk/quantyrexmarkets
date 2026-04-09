@@ -48,12 +48,18 @@ export default function MyCopyTrades() {
   const handleStop = async () => {
     if (!selectedTrade) return;
     try {
-      await fetch(`https://quantyrexmarkets-backend.onrender.com/api/copy-trade/${selectedTrade._id}/stop`, {
+      const res = await fetch(`https://quantyrexmarkets-backend.onrender.com/api/copy-trade/${selectedTrade._id}/stop`, {
         method: 'PUT',
         headers: { Authorization: `Bearer ${token || localStorage.getItem('token')}` }
       });
-      setCopyTrades(prev => prev.filter(t => t._id !== selectedTrade._id));
-    } catch {}
+      const data = await res.json();
+      console.log('Stop response:', data);
+      if (data.success) {
+        setCopyTrades(prev => prev.filter(t => t._id !== selectedTrade._id));
+      }
+    } catch (err) {
+      console.error('Stop error:', err);
+    }
     setShowStopModal(false);
     setSelectedTrade(null);
   };
