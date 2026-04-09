@@ -40,15 +40,18 @@ const sendEmail = async ({ to, type, name, resetUrl, verifyUrl, amount, currency
   }
 
   try {
-    await transporter.sendMail({
+    console.log('📧 Attempting to send email to:', to);
+    console.log('Email config:', { user: process.env.EMAIL_USER, hasPassword: !!process.env.EMAIL_PASSWORD });
+    const result = await transporter.sendMail({
       from: process.env.EMAIL_USER,
       to,
       subject,
       html
     });
+    console.log('✅ Email sent successfully:', result);
     return { success: true };
   } catch (error) {
-    console.error('Email error:', error);
+    console.error('❌ Email error:', error.message);
     throw error;
   }
 };
