@@ -5,7 +5,7 @@ const PushSubscription = require('../models/PushSubscription');
 const adminAuth = require('../middleware/adminAuth');
 
 webpush.setVapidDetails(
-  process.env.VAPID_EMAIL,
+  process.env.VAPID_SUBJECT,
   process.env.VAPID_PUBLIC_KEY,
   process.env.VAPID_PRIVATE_KEY
 );
