@@ -3,11 +3,10 @@ import { getMe } from '../services/api';
 
 const AuthContext = createContext();
 
-// Decode JWT to get expiry
 const getTokenExpiry = (token) => {
   try {
     const payload = JSON.parse(atob(token.split('.')[1]));
-    return payload.exp * 1000; // convert to ms
+    return payload.exp * 1000;
   } catch (e) {
     return null;
   }
@@ -24,49 +23,56 @@ export const AuthProvider = ({ children }) => {
 
   useEffect(() => {
     const token = localStorage.getItem('token');
+    console.log('AuthContext: checking token...', token ? 'found' : 'not found');
+    
     if (token) {
-      // Check if token is already expired
       const expiry = getTokenExpiry(token);
       if (expiry && Date.now() >= expiry) {
+        console.log('AuthContext: token expired');
         logout();
         setLoading(false);
         return;
       }
 
-      getMe().then(data => {
-        if (data && data._id) {
-          setUser(data);
-          if (expiry) {
-            const timeout = expiry - Date.now();
-            setTimeout(() => {
-              logout();
-              window.location.href = '/signin';
-            }, timeout);
+      console.log('AuthContext: calling getMe()...');
+      getMe()
+        .then(data => {
+          console.log('AuthContext: getMe response:', data);
+          if (data && data._id) {
+            console.log('AuthContext: user loaded successfully');
+            setUser(data);
+            if (expiry) {
+              const timeout = expiry - Date.now();
+              setTimeout(() => {
+                logout();
+                window.location.href = '/signin';
+              }, timeout);
+            }
+          } else {
+            console.log('AuthContext: getMe returned invalid data, clearing token');
+            localStorage.removeItem('token');
+            setUser(null);
           }
-        } else {
-          console.log('getMe failed:', data);
-        }
-      }).catch(err => {
-        console.log('getMe error:', err);
-      }).finally(() => setLoading(false));
+        })
+        .catch(err => {
+          console.log('AuthContext: getMe error:', err);
+          localStorage.removeItem('token');
+          setUser(null);
+        })
+        .finally(() => {
+          console.log('AuthContext: loading complete');
+          setLoading(false);
+        });
     } else {
+      console.log('AuthContext: no token found');
       setLoading(false);
     }
   }, [logout]);
 
   const login = (token, userData) => {
+    console.log('AuthContext: login called with user:', userData);
     localStorage.setItem('token', token);
     setUser(userData);
-
-    // Set auto-logout timer on login
-    const expiry = getTokenExpiry(token);
-    if (expiry) {
-      const timeout = expiry - Date.now();
-      setTimeout(() => {
-        logout();
-        window.location.href = '/signin';
-      }, timeout);
-    }
   };
 
   const updateUser = (userData) => setUser(prev => ({ ...prev, ...userData }));
