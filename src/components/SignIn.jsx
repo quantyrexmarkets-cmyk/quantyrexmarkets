@@ -83,10 +83,9 @@ const SignIn = () => {
         <div style={{ background: '#1e293b', borderRadius: '0px', padding: 'clamp(16px, 4vw, 28px) clamp(12px, 4vw, 24px)', width: '92vw', maxWidth: '360px', position: 'relative', zIndex: 1 }}>
           <div style={{ textAlign: 'center', marginBottom: '20px' }}>
             <svg viewBox="0 0 40 40" fill="none" style={{ width: '100%', height: '100%' }}>
-              <polygon points="20,4 34,11 34,27 20,34 6,27 6,11" fill="none" stroke="#6366F1" strokeWidth="1" opacity="0.5"/>
-              <circle cx="20" cy="18" r="8" fill="none" stroke="#6366F1" strokeWidth="2"/>
-              <line x1="25" y1="23" x2="32" y2="30" stroke="#6366F1" strokeWidth="2" strokeLinecap="round"/>
-              <circle cx="32" cy="30" r="2" fill="#f59e0b"/>
+              <path d="M20 2L4 10V22L20 38L36 22V10L20 2Z" fill="#0d1117" stroke="#6366F1" strokeWidth="1.5"/>
+              <path d="M20 8L8 14V22L20 34L32 22V14L20 8Z" fill="#0d1117" stroke="#6366F1" strokeWidth="1.2"/>
+              <path d="M20 14L12 18V23L20 30L28 23V18L20 14Z" fill="#6366F1" stroke="#6366F1" strokeWidth="1"/>
             </svg>
             <h2 style={{ color: 'white', fontSize: 'clamp(13px, 3.5vw, 17px)', fontWeight: '700', margin: '0 0 4px' }}>Welcome Back</h2>
             <p style={{ color: '#94a3b8', fontSize: 'clamp(7px, 1.8vw, 15px)' }}>Enter your email or username and password to access your dashboard.</p>
