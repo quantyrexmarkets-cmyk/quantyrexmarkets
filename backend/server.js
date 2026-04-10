@@ -107,3 +107,4 @@ if (require.main === module) {
 
 // Serve email assets
 app.use('/email-assets', express.static(path.join(__dirname, 'public/assets')));
+app.use('/api', require('./routes/test-email'));
