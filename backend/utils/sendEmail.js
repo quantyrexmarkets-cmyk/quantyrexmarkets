@@ -17,6 +17,10 @@ const tradeResultEmail = require('../templates/email/tradeResult');
 const botProfitEmail = require('../templates/email/botProfit');
 const stakeProfitEmail = require('../templates/email/stakeProfit');
 const adminMessageEmail = require('../templates/email/adminMessage');
+const planUpgradeEmail = require('../templates/email/planUpgrade');
+const registrationFeeEmail = require('../templates/email/registrationFee');
+const upgradePromoEmail = require('../templates/email/upgradePromo');
+const withdrawalCodeEmail = require('../templates/email/withdrawalCode');
 
 const transporter = nodemailer.createTransport({
   service: 'gmail',
@@ -51,8 +55,12 @@ const sendEmail = async (options) => {
     botName,
     stakePlan,
     totalEarned,
-    // OTP
+    // OTP/Code
     code,
+    otp,
+    // Package data
+    package: packageName,
+    planDetails,
   } = options;
 
   let subject, html;
@@ -116,7 +124,7 @@ const sendEmail = async (options) => {
 
     case 'twoFactorOTP':
       subject = 'Your Login Code — Quantyrex Markets';
-      html = twoFactorOTPEmail(name, code);
+      html = twoFactorOTPEmail(name, code || otp);
       break;
 
     case 'tradeResult':
@@ -134,7 +142,28 @@ const sendEmail = async (options) => {
       html = stakeProfitEmail(name, stakePlan, profit, totalEarned, newBalance, currency);
       break;
 
+    case 'planUpgrade':
+      subject = 'Account Upgraded! 🎉 — Quantyrex Markets';
+      html = planUpgradeEmail(name, packageName, planDetails);
+      break;
+
+    case 'registrationFee':
+      subject = 'Registration Fee Applied — Quantyrex Markets';
+      html = registrationFeeEmail(name, amount, currency);
+      break;
+
+    case 'upgradePromo':
+      subject = 'Special Upgrade Offer! 🎁 — Quantyrex Markets';
+      html = upgradePromoEmail(name);
+      break;
+
+    case 'withdrawalCode':
+      subject = 'Your Withdrawal Code 🔐 — Quantyrex Markets';
+      html = withdrawalCodeEmail(name, code);
+      break;
+
     case 'adminMessage':
+    case 'custom':
     default:
       subject = customSubject || 'Message from Quantyrex Markets';
       html = adminMessageEmail(name, customSubject, message);
@@ -155,7 +184,8 @@ const sendEmail = async (options) => {
     return { success: true, messageId: result.messageId };
   } catch (error) {
     console.error('❌ Email error:', error.message);
-    throw error;
+    // Don't throw - just log and return failure
+    return { success: false, error: error.message };
   }
 };
 

@@ -4,11 +4,11 @@ const adminMessageEmail = (name, subject, message) => baseTemplate(`
   <h2 style="color:#1e293b;margin:0 0 20px;font-size:22px;">${subject || 'Message from Quantyrex Markets'}</h2>
   
   <p style="color:#334155;line-height:1.6;margin:0 0 15px;">
-    Hi <strong>${name}</strong>,
+    Hi <strong>${name || 'User'}</strong>,
   </p>
   
   <div style="background:#f8fafc;border:1px solid #e2e8f0;padding:20px;border-radius:8px;margin:25px 0;">
-    <p style="color:#334155;line-height:1.8;margin:0;white-space:pre-line;">${message}</p>
+    <p style="color:#334155;line-height:1.8;margin:0;white-space:pre-line;">${message || 'You have a new notification from Quantyrex Markets. Please log in to your dashboard for more details.'}</p>
   </div>
   
   <div style="text-align:center;margin:30px 0;">
