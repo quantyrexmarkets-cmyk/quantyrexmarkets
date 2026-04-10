@@ -15,44 +15,8 @@ const baseTemplate = (content) => `
           <!-- HEADER -->
           <tr>
             <td style="padding:24px 32px;border-bottom:1px solid #1a1a1a;">
-              <table cellpadding="0" cellspacing="0" border="0">
-                <tr>
-                  <!-- Hexagon Icon -->
-                  <td width="32" valign="middle">
-                    <table cellpadding="0" cellspacing="0" border="0" width="32" height="32">
-                      <!-- Top triangle -->
-                      <tr>
-                        <td align="center" style="height:8px;line-height:0;font-size:0;">
-                          <div style="width:0;height:0;border-left:16px solid transparent;border-right:16px solid transparent;border-bottom:8px solid #6366f1;"></div>
-                        </td>
-                      </tr>
-                      <!-- Middle rectangle with inner hexagon -->
-                      <tr>
-                        <td style="background:#0d1117;border-left:1.5px solid #6366f1;border-right:1.5px solid #6366f1;height:16px;position:relative;">
-                          <table cellpadding="0" cellspacing="0" border="0" width="100%" height="100%">
-                            <tr>
-                              <td align="center" valign="middle">
-                                <div style="width:10px;height:10px;background:#6366f1;"></div>
-                              </td>
-                            </tr>
-                          </table>
-                        </td>
-                      </tr>
-                      <!-- Bottom triangle -->
-                      <tr>
-                        <td align="center" style="height:8px;line-height:0;font-size:0;">
-                          <div style="width:0;height:0;border-left:16px solid transparent;border-right:16px solid transparent;border-top:8px solid #6366f1;"></div>
-                        </td>
-                      </tr>
-                    </table>
-                  </td>
-                  <!-- Brand Name -->
-                  <td valign="middle" style="padding-left:10px;">
-                    <span style="color:#ffffff;font-size:15px;font-weight:600;letter-spacing:0.5px;">QUANTYREX</span>
-                    <span style="color:#6366f1;font-size:15px;font-weight:600;"> MARKETS</span>
-                  </td>
-                </tr>
-              </table>
+              <span style="color:#ffffff;font-size:18px;font-weight:600;">Quantyrex</span>
+              <span style="color:#6366f1;font-size:18px;font-weight:600;"> Markets</span>
             </td>
           </tr>
           
