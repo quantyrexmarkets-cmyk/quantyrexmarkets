@@ -11,7 +11,7 @@ const baseTemplate = (content) => `
     <tr>
       <td align="center">
         
-        <table width="100%" cellpadding="0" cellspacing="0" border="0" style="max-width:520px;background:#0a0a0a;">
+        <table width="100%" cellpadding="0" cellspacing="0" border="0" style="max-width:520px;background:#0a0a0a;border:1px solid #1a1a1a;">
           
           <!-- HEADER -->
           <tr>
@@ -21,16 +21,30 @@ const baseTemplate = (content) => `
             </td>
           </tr>
           
+          <!-- SEPARATOR -->
+          <tr>
+            <td style="padding:0 40px;">
+              <div style="height:1px;background:#1a1a1a;"></div>
+            </td>
+          </tr>
+          
           <!-- CONTENT -->
           <tr>
-            <td style="padding:20px 24px 32px 24px;">
+            <td style="padding:24px 24px 32px 24px;">
               ${content}
+            </td>
+          </tr>
+          
+          <!-- FOOTER SEPARATOR -->
+          <tr>
+            <td style="padding:0 40px;">
+              <div style="height:1px;background:#1a1a1a;"></div>
             </td>
           </tr>
           
           <!-- FOOTER -->
           <tr>
-            <td style="padding:24px;border-top:1px solid #1a1a1a;">
+            <td style="padding:20px 24px;">
               <p style="margin:0 0 5px 0;color:#505050;font-size:10px;line-height:1.5;">
                 Questions? Contact support@quantyrexmarkets.com
               </p>
