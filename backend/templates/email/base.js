@@ -17,18 +17,23 @@ const baseTemplate = (content) => `
             <td style="padding:28px 35px;border-bottom:1px solid #1f1f1f;">
               <table cellpadding="0" cellspacing="0" border="0">
                 <tr>
-                  <!-- Logo Image -->
-                  <td width="40" valign="middle">
-                    <img src="https://quantyrexmarkets-backend.onrender.com/email-assets/logo-email.png" 
-                         alt="Q" 
-                         width="40" 
-                         height="40" 
-                         style="display:block;border:0;border-radius:8px;"/>
+                  <!-- Q Logo Icon (Table-based for email compatibility) -->
+                  <td width="44" valign="middle">
+                    <table cellpadding="0" cellspacing="0" border="0" width="44" height="44">
+                      <tr>
+                        <td style="background:#0a0a0a;border:2px solid #6366f1;border-radius:10px;text-align:center;vertical-align:middle;">
+                          <span style="color:#6366f1;font-size:24px;font-weight:bold;font-family:Georgia,serif;">Q</span>
+                        </td>
+                      </tr>
+                    </table>
                   </td>
                   <!-- Brand Name -->
                   <td valign="middle" style="padding-left:14px;">
-                    <p style="margin:0;padding:0;color:#ffffff;font-size:17px;font-weight:bold;letter-spacing:0.5px;line-height:1.2;">
-                      QUANTYREX<span style="color:#6366f1;"> MARKETS</span>
+                    <p style="margin:0;padding:0;color:#ffffff;font-size:18px;font-weight:700;letter-spacing:1px;line-height:1.2;">
+                      QUANTYREX
+                    </p>
+                    <p style="margin:2px 0 0 0;padding:0;color:#6366f1;font-size:10px;font-weight:400;letter-spacing:3px;line-height:1;">
+                      MARKETS
                     </p>
                   </td>
                 </tr>
@@ -50,7 +55,7 @@ const baseTemplate = (content) => `
                 Questions? Contact support@quantyrexmarkets.com
               </p>
               <p style="margin:0;color:#353535;font-size:9px;">
-                © 2026 Quantyrex Markets
+                © 2026 Quantyrex Markets. All rights reserved.
               </p>
             </td>
           </tr>
