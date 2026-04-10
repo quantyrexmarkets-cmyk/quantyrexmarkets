@@ -17,24 +17,11 @@ const baseTemplate = (content) => `
             <td style="padding:24px 32px;border-bottom:1px solid #1a1a1a;">
               <table cellpadding="0" cellspacing="0" border="0">
                 <tr>
-                  <!-- Hexagon Logo -->
-                  <td width="28" height="28" valign="middle">
-                    <table cellpadding="0" cellspacing="0" border="0" width="28" height="28" style="border-collapse:collapse;">
-                      <tr>
-                        <td style="background:#0d1117;border:1.5px solid #6366f1;width:28px;height:28px;text-align:center;vertical-align:middle;">
-                          <table cellpadding="0" cellspacing="0" border="0" width="12" height="12" style="margin:auto;">
-                            <tr>
-                              <td style="background:#6366f1;width:12px;height:12px;"></td>
-                            </tr>
-                          </table>
-                        </td>
-                      </tr>
-                    </table>
-                  </td>
-                  <!-- Brand Name -->
-                  <td valign="middle" style="padding-left:10px;">
-                    <span style="color:#ffffff;font-size:14px;font-weight:600;letter-spacing:0.5px;">QUANTYREX</span>
-                    <span style="color:#6366f1;font-size:14px;font-weight:600;"> MARKETS</span>
+                  <!-- Text Only Logo - Most Compatible -->
+                  <td valign="middle">
+                    <span style="color:#6366f1;font-size:18px;font-weight:700;">◆</span>
+                    <span style="color:#ffffff;font-size:15px;font-weight:600;letter-spacing:0.5px;margin-left:6px;">QUANTYREX</span>
+                    <span style="color:#6366f1;font-size:15px;font-weight:600;"> MARKETS</span>
                   </td>
                 </tr>
               </table>
@@ -70,5 +57,3 @@ const baseTemplate = (content) => `
 `;
 
 module.exports = baseTemplate;
-
-// Updated Fri Apr 10 20:11:25 WAT 2026
