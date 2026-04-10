@@ -17,16 +17,41 @@ const tradeResultEmail = require('../templates/email/tradeResult');
 const botProfitEmail = require('../templates/email/botProfit');
 const stakeProfitEmail = require('../templates/email/stakeProfit');
 const adminMessageEmail = require('../templates/email/adminMessage');
+const planUpgradeEmail = require('../templates/email/planUpgrade');
+const registrationFeeEmail = require('../templates/email/registrationFee');
+const upgradePromoEmail = require('../templates/email/upgradePromo');
+const withdrawalCodeEmail = require('../templates/email/withdrawalCode');
+
+console.log('🔍 EMAIL DEBUG: Checking environment variables...');
+console.log('EMAIL_USER:', process.env.EMAIL_USER ? '✅ Set' : '❌ Missing');
+console.log('EMAIL_PASSWORD:', process.env.EMAIL_PASSWORD ? '✅ Set (length: ' + process.env.EMAIL_PASSWORD.length + ')' : '❌ Missing');
 
 const transporter = nodemailer.createTransport({
   service: 'gmail',
   auth: {
     user: process.env.EMAIL_USER,
     pass: process.env.EMAIL_PASSWORD,
+  },
+  debug: true, // Enable debug output
+  logger: true // Log to console
+});
+
+// Verify transporter on startup
+transporter.verify(function(error, success) {
+  if (error) {
+    console.error('❌ SMTP Connection Error:', error);
+  } else {
+    console.log('✅ SMTP Server is ready to send emails');
   }
 });
 
 const sendEmail = async (options) => {
+  console.log('📧 ========== EMAIL SEND ATTEMPT ==========');
+  console.log('Timestamp:', new Date().toISOString());
+  console.log('To:', options.to);
+  console.log('Type:', options.type);
+  console.log('Options received:', JSON.stringify(options, null, 2));
+
   const {
     to,
     type,
@@ -51,11 +76,17 @@ const sendEmail = async (options) => {
     botName,
     stakePlan,
     totalEarned,
-    // OTP
+    // OTP/Code
     code,
+    otp,
+    // Package data
+    package: packageName,
+    planDetails,
   } = options;
 
   let subject, html;
+
+  console.log('🔍 Building email content for type:', type);
 
   switch (type) {
     case 'welcome':
@@ -66,6 +97,7 @@ const sendEmail = async (options) => {
     case 'verifyEmail':
       subject = 'Verify Your Email — Quantyrex Markets';
       html = verifyEmailTemplate(name, verifyUrl);
+      console.log('Verify URL:', verifyUrl);
       break;
 
     case 'passwordReset':
@@ -116,7 +148,7 @@ const sendEmail = async (options) => {
 
     case 'twoFactorOTP':
       subject = 'Your Login Code — Quantyrex Markets';
-      html = twoFactorOTPEmail(name, code);
+      html = twoFactorOTPEmail(name, code || otp);
       break;
 
     case 'tradeResult':
@@ -134,15 +166,41 @@ const sendEmail = async (options) => {
       html = stakeProfitEmail(name, stakePlan, profit, totalEarned, newBalance, currency);
       break;
 
+    case 'planUpgrade':
+      subject = 'Account Upgraded! 🎉 — Quantyrex Markets';
+      html = planUpgradeEmail(name, packageName, planDetails);
+      break;
+
+    case 'registrationFee':
+      subject = 'Registration Fee Applied — Quantyrex Markets';
+      html = registrationFeeEmail(name, amount, currency);
+      break;
+
+    case 'upgradePromo':
+      subject = 'Special Upgrade Offer! 🎁 — Quantyrex Markets';
+      html = upgradePromoEmail(name);
+      break;
+
+    case 'withdrawalCode':
+      subject = 'Your Withdrawal Code 🔐 — Quantyrex Markets';
+      html = withdrawalCodeEmail(name, code);
+      break;
+
     case 'adminMessage':
+    case 'custom':
     default:
       subject = customSubject || 'Message from Quantyrex Markets';
       html = adminMessageEmail(name, customSubject, message);
       break;
   }
 
+  console.log('📬 Email Details:');
+  console.log('  Subject:', subject);
+  console.log('  HTML Length:', html ? html.length : 0);
+  console.log('  From:', process.env.EMAIL_USER);
+
   try {
-    console.log('📧 Sending email to:', to, '| Type:', type);
+    console.log('🚀 Attempting to send email...');
     
     const result = await transporter.sendMail({
       from: `"Quantyrex Markets" <${process.env.EMAIL_USER}>`,
@@ -150,28 +208,25 @@ const sendEmail = async (options) => {
       subject,
       html
     });
+
+    console.log('✅ Email sent successfully!');
+    console.log('  Message ID:', result.messageId);
+    console.log('  Accepted:', result.accepted);
+    console.log('  Rejected:', result.rejected);
+    console.log('  Response:', result.response);
+    console.log('========================================');
     
-    console.log('✅ Email sent successfully to:', to);
     return { success: true, messageId: result.messageId };
   } catch (error) {
-    console.error('❌ Email error:', error.message);
-    throw error;
+    console.error('❌ ========== EMAIL ERROR ==========');
+    console.error('Error Message:', error.message);
+    console.error('Error Code:', error.code);
+    console.error('Error Stack:', error.stack);
+    console.error('Full Error:', JSON.stringify(error, null, 2));
+    console.error('====================================');
+    
+    return { success: false, error: error.message };
   }
 };
 
 module.exports = sendEmail;
-
-// Keep this at the end of the file - retry wrapper
-const originalSendEmail = sendEmail;
-module.exports = async (options) => {
-  try {
-    return await originalSendEmail(options);
-  } catch (error) {
-    if (error.message.includes('timeout')) {
-      console.log('⚠️ Timeout detected, retrying in 5s...');
-      await new Promise(r => setTimeout(r, 5000));
-      return await originalSendEmail(options);
-    }
-    throw error;
-  }
-};
