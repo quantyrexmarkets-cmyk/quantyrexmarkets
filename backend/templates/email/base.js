@@ -10,21 +10,31 @@ const baseTemplate = (content) => `
     <tr>
       <td align="center" style="padding:30px 15px;">
         
-        <table width="100%" cellpadding="0" cellspacing="0" border="0" style="max-width:480px;background:#0a0a0a;border:1px solid #1f1f1f;">
+        <table width="100%" cellpadding="0" cellspacing="0" border="0" style="max-width:480px;background:#0a0a0a;border:1px solid #1a1a1a;">
           
           <!-- HEADER -->
           <tr>
-            <td style="padding:25px 35px;border-bottom:1px solid #1f1f1f;">
+            <td style="padding:24px 32px;border-bottom:1px solid #1a1a1a;">
               <table cellpadding="0" cellspacing="0" border="0">
                 <tr>
-                  <!-- Simple Hexagon Icon -->
-                  <td width="32" height="32" valign="middle" style="background:#0d1117;border:1.5px solid #6366f1;text-align:center;">
-                    <div style="width:12px;height:12px;background:#6366f1;margin:auto;"></div>
+                  <!-- Hexagon Logo -->
+                  <td width="28" height="28" valign="middle">
+                    <table cellpadding="0" cellspacing="0" border="0" width="28" height="28" style="border-collapse:collapse;">
+                      <tr>
+                        <td style="background:#0d1117;border:1.5px solid #6366f1;width:28px;height:28px;text-align:center;vertical-align:middle;">
+                          <table cellpadding="0" cellspacing="0" border="0" width="12" height="12" style="margin:auto;">
+                            <tr>
+                              <td style="background:#6366f1;width:12px;height:12px;"></td>
+                            </tr>
+                          </table>
+                        </td>
+                      </tr>
+                    </table>
                   </td>
                   <!-- Brand Name -->
-                  <td valign="middle" style="padding-left:12px;">
-                    <span style="color:#ffffff;font-size:16px;font-weight:600;letter-spacing:0.5px;">QUANTYREX</span>
-                    <span style="color:#6366f1;font-size:16px;font-weight:600;"> MARKETS</span>
+                  <td valign="middle" style="padding-left:10px;">
+                    <span style="color:#ffffff;font-size:14px;font-weight:600;letter-spacing:0.5px;">QUANTYREX</span>
+                    <span style="color:#6366f1;font-size:14px;font-weight:600;"> MARKETS</span>
                   </td>
                 </tr>
               </table>
@@ -33,19 +43,19 @@ const baseTemplate = (content) => `
           
           <!-- CONTENT -->
           <tr>
-            <td style="padding:35px;">
+            <td style="padding:32px;">
               ${content}
             </td>
           </tr>
           
           <!-- FOOTER -->
           <tr>
-            <td style="padding:20px 35px;border-top:1px solid #1f1f1f;">
+            <td style="padding:20px 32px;border-top:1px solid #1a1a1a;">
               <p style="margin:0 0 5px 0;color:#505050;font-size:10px;line-height:1.5;">
                 Questions? Contact support@quantyrexmarkets.com
               </p>
               <p style="margin:0;color:#353535;font-size:9px;">
-                © 2026 Quantyrex Markets
+                © 2026 Quantyrex Markets. All rights reserved.
               </p>
             </td>
           </tr>
