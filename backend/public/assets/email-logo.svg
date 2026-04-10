@@ -1,0 +1,56 @@
+<svg width="600" height="120" viewBox="0 0 600 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background -->
+  <rect width="600" height="120" fill="#0a0a0a"/>
+  
+  <!-- Logo Icon -->
+  <g transform="translate(30, 30)">
+    <!-- Outer hexagon -->
+    <path d="M30 3L6 15V39L30 57L54 39V15L30 3Z" 
+          fill="#0a0a0a" 
+          stroke="#6366F1" 
+          stroke-width="2"/>
+    
+    <!-- Middle hexagon -->
+    <path d="M30 12L12 21V39L30 51L48 39V21L30 12Z" 
+          fill="#0a0a0a" 
+          stroke="#6366F1" 
+          stroke-width="1.8" 
+          opacity="0.8"/>
+    
+    <!-- Inner fill -->
+    <path d="M30 21L18 27V33L30 42L42 33V27L30 21Z" 
+          fill="#6366F1"/>
+  </g>
+  
+  <!-- Brand Text -->
+  <text x="110" y="50" 
+        font-family="'Helvetica Neue', Arial, sans-serif" 
+        font-size="24" 
+        font-weight="600" 
+        letter-spacing="1" 
+        fill="#ffffff">
+    QUANTYREX
+  </text>
+  
+  <text x="110" y="75" 
+        font-family="'Helvetica Neue', Arial, sans-serif" 
+        font-size="16" 
+        font-weight="400" 
+        letter-spacing="3" 
+        fill="#6366F1">
+    MARKETS
+  </text>
+  
+  <!-- Tagline -->
+  <text x="110" y="95" 
+        font-family="'Helvetica Neue', Arial, sans-serif" 
+        font-size="11" 
+        font-weight="400" 
+        letter-spacing="0.5" 
+        fill="#666666">
+    Your Gateway to Financial Freedom
+  </text>
+  
+  <!-- Decorative line -->
+  <line x1="30" y1="110" x2="570" y2="110" stroke="#1a1a1a" stroke-width="1"/>
+</svg>
