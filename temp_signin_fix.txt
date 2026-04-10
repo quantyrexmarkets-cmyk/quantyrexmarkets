@@ -1,0 +1,37 @@
+  const handleSubmit = async () => {
+    const newErrors = validate();
+    if (Object.keys(newErrors).length > 0) { setErrors(newErrors); return; }
+    setLoading(true);
+    try {
+      const res = await loginUser({ email: form.username, password: form.password });
+      console.log('Login response:', res);
+      
+      if (res.token) {
+        localStorage.setItem('token', res.token);
+        login(res.token, res.user);
+        console.log('Token saved, redirecting...');
+        window.location.replace('/dashboard');
+        return;
+      }
+      
+      if (res.twoFactorRequired) {
+        setOtpEmail(res.email);
+        setShowOTP(true);
+        setLoading(false);
+        return;
+      }
+      
+      if (res.emailNotVerified) {
+        navigate('/check-email', { state: { email: form.username, name: '' } });
+        setLoading(false);
+        return;
+      }
+      
+      setErrors({ username: res.message || 'Invalid credentials' });
+      setLoading(false);
+    } catch (err) {
+      console.error('Login error:', err);
+      setErrors({ username: 'Server error. Please try again.' });
+      setLoading(false);
+    }
+  };
