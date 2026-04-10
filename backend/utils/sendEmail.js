@@ -1,4 +1,4 @@
-const SibApiV3Sdk = require('@getbrevo/brevo');
+const SibApiV3Sdk = require('sib-api-v3-sdk');
 
 // Import all templates
 const welcomeEmail = require('../templates/email/welcome');
@@ -25,10 +25,12 @@ const withdrawalCodeEmail = require('../templates/email/withdrawalCode');
 console.log('🔍 EMAIL DEBUG: Checking Brevo configuration...');
 console.log('BREVO_API_KEY:', process.env.BREVO_API_KEY ? '✅ Set' : '❌ Missing');
 
-// Configure Brevo API
-const apiInstance = new SibApiV3Sdk.TransactionalEmailsApi();
-const apiKey = apiInstance.authentications['apiKey'];
+// Configure Brevo
+const defaultClient = SibApiV3Sdk.ApiClient.instance;
+const apiKey = defaultClient.authentications['api-key'];
 apiKey.apiKey = process.env.BREVO_API_KEY;
+
+const apiInstance = new SibApiV3Sdk.TransactionalEmailsApi();
 
 const sendEmail = async (options) => {
   console.log('📧 ========== EMAIL SEND ATTEMPT (BREVO) ==========');
@@ -160,10 +162,7 @@ const sendEmail = async (options) => {
     const sendSmtpEmail = new SibApiV3Sdk.SendSmtpEmail();
     sendSmtpEmail.subject = subject;
     sendSmtpEmail.htmlContent = html;
-    sendSmtpEmail.sender = {
-      name: 'Quantyrex Markets',
-      email: 'noreply@quantyrexmarkets.com'
-    };
+    sendSmtpEmail.sender = { name: 'Quantyrex Markets', email: 'noreply@quantyrexmarkets.com' };
     sendSmtpEmail.to = [{ email: to, name: name }];
 
     const data = await apiInstance.sendTransacEmail(sendSmtpEmail);
