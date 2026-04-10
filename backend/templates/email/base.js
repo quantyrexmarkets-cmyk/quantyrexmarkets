@@ -4,6 +4,7 @@ const baseTemplate = (content) => `
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500&display=swap" rel="stylesheet">
 </head>
 <body style="margin:0;padding:0;background:#000000;font-family:'Helvetica Neue',Arial,sans-serif;">
   <table width="100%" cellpadding="0" cellspacing="0" border="0" style="background:#000000;">
@@ -14,9 +15,9 @@ const baseTemplate = (content) => `
           
           <!-- HEADER -->
           <tr>
-            <td style="padding:24px 32px;border-bottom:1px solid #1a1a1a;">
-              <span style="color:#ffffff;font-size:18px;font-weight:600;">Quantyrex</span>
-              <span style="color:#6366f1;font-size:18px;font-weight:600;"> Markets</span>
+            <td style="padding:28px 32px;border-bottom:1px solid #1a1a1a;">
+              <span style="font-family:'Montserrat',Arial,sans-serif;color:#ffffff;font-size:22px;font-weight:500;">Quantyrex</span>
+              <span style="font-family:'Montserrat',Arial,sans-serif;color:#6366f1;font-size:22px;font-weight:500;"> Markets</span>
             </td>
           </tr>
           
