@@ -162,7 +162,10 @@ const sendEmail = async (options) => {
     const sendSmtpEmail = new SibApiV3Sdk.SendSmtpEmail();
     sendSmtpEmail.subject = subject;
     sendSmtpEmail.htmlContent = html;
-    sendSmtpEmail.sender = { name: 'Quantyrex Markets', email: 'quantyrexmarkets@gmail.com' };
+    sendSmtpEmail.sender = { 
+      name: 'Quantyrex Markets', 
+      email: process.env.EMAIL_USER || 'quantyrexmarkets@gmail.com'
+    };
     sendSmtpEmail.to = [{ email: to, name: name }];
 
     const data = await apiInstance.sendTransacEmail(sendSmtpEmail);
