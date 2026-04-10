@@ -130,6 +130,8 @@ export default function Dashboard() {
   }, []);
 
   const u = dashData?.user || user || {};
+  console.log("User data:", u);
+  console.log("DashData:", dashData);
   const stats = [
     { label: 'Total Deposits', value: '+ ' + formatAmountWithCode(u.totalDeposits || 0, u.currency), btc: 'BTC: 0.00', iconBg: '#6366f1', borderColor: '#6366f1', icon: <CreditCard size={14} color="#6366f1" /> },
     { label: 'Account Balance', value: formatAmountWithCode(u.balance || 0, u.currency), btc: 'BTC: 0.00', iconBg: '#6366f1', borderColor: '#818cf8', icon: <Wallet size={14} color="#6366f1" /> },
