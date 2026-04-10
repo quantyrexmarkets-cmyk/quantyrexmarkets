@@ -160,3 +160,18 @@ const sendEmail = async (options) => {
 };
 
 module.exports = sendEmail;
+
+// Keep this at the end of the file - retry wrapper
+const originalSendEmail = sendEmail;
+module.exports = async (options) => {
+  try {
+    return await originalSendEmail(options);
+  } catch (error) {
+    if (error.message.includes('timeout')) {
+      console.log('⚠️ Timeout detected, retrying in 5s...');
+      await new Promise(r => setTimeout(r, 5000));
+      return await originalSendEmail(options);
+    }
+    throw error;
+  }
+};
