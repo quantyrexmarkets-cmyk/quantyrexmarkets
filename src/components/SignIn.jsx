@@ -82,7 +82,7 @@ const SignIn = () => {
 
         <div style={{ background: '#1e293b', borderRadius: '0px', padding: 'clamp(16px, 4vw, 28px) clamp(12px, 4vw, 24px)', width: '92vw', maxWidth: '360px', position: 'relative', zIndex: 1 }}>
           <div style={{ textAlign: 'center', marginBottom: '20px' }}>
-            <svg viewBox="0 0 40 40" fill="none" style={width: '100%', height: '100%'}>
+            <svg viewBox="0 0 40 40" fill="none" style={{ width: '100%', height: '100%' }}>
               <polygon points="20,4 34,11 34,27 20,34 6,27 6,11" fill="none" stroke="#6366F1" strokeWidth="1" opacity="0.5"/>
               <circle cx="20" cy="18" r="8" fill="none" stroke="#6366F1" strokeWidth="2"/>
               <line x1="25" y1="23" x2="32" y2="30" stroke="#6366F1" strokeWidth="2" strokeLinecap="round"/>

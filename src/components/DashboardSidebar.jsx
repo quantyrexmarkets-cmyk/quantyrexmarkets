@@ -101,7 +101,7 @@ export default function DashboardSidebar({ open, onClose }) {
         <div style={{ padding: '14px 16px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', borderBottom: '1px solid rgba(255,255,255,0.06)' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '6px', cursor: 'pointer' }} onClick={() => { navigate('/dashboard'); onClose(); }}>
             <div style={{ width: '18px', height: '18px' }}>
-              <svg viewBox="0 0 40 40" fill="none" style={width: '100%', height: '100%'}>
+              <svg viewBox="0 0 40 40" fill="none" style={{ width: '100%', height: '100%' }}>
               <polygon points="20,4 34,11 34,27 20,34 6,27 6,11" fill="none" stroke="#6366F1" strokeWidth="1" opacity="0.5"/>
               <circle cx="20" cy="18" r="8" fill="none" stroke="#6366F1" strokeWidth="2"/>
               <line x1="25" y1="23" x2="32" y2="30" stroke="#6366F1" strokeWidth="2" strokeLinecap="round"/>

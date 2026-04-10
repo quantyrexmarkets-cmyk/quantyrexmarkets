@@ -166,7 +166,7 @@ export default function Dashboard() {
       {/* Icon Sidebar */}
       <div style={{ width: 'clamp(36px, 8vw, 48px)', background: '#0F172A', borderRight: '1px solid rgba(255,255,255,0.1)', flexDirection: 'column', alignItems: 'center', padding: '12px 0', gap: '4px', flexShrink: 0, display: sidebarOpen ? 'none' : 'flex' }}>
         <div style={{ width: '22px', height: '22px', marginBottom: '16px' }}>
-          <svg viewBox="0 0 40 40" fill="none" style={width: '100%', height: '100%'}>
+          <svg viewBox="0 0 40 40" fill="none" style={{ width: '100%', height: '100%' }}>
               <polygon points="20,4 34,11 34,27 20,34 6,27 6,11" fill="none" stroke="#6366F1" strokeWidth="1" opacity="0.5"/>
               <circle cx="20" cy="18" r="8" fill="none" stroke="#6366F1" strokeWidth="2"/>
               <line x1="25" y1="23" x2="32" y2="30" stroke="#6366F1" strokeWidth="2" strokeLinecap="round"/>
@@ -282,7 +282,7 @@ export default function Dashboard() {
           {/* Left Panel */}
           <div style={{ flex: 1, overflowY: 'auto', padding: '12px', minWidth: 0 }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: '6px', marginBottom: '10px' }}>
-              <svg viewBox="0 0 40 40" fill="none" style={width: '100%', height: '100%'}>
+              <svg viewBox="0 0 40 40" fill="none" style={{ width: '100%', height: '100%' }}>
               <polygon points="20,4 34,11 34,27 20,34 6,27 6,11" fill="none" stroke="#6366F1" strokeWidth="1" opacity="0.5"/>
               <circle cx="20" cy="18" r="8" fill="none" stroke="#6366F1" strokeWidth="2"/>
               <line x1="25" y1="23" x2="32" y2="30" stroke="#6366F1" strokeWidth="2" strokeLinecap="round"/>
