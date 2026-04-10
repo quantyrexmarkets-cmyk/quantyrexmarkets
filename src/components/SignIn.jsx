@@ -46,10 +46,10 @@ const SignIn = () => {
         localStorage.setItem('token', res.token);
         login(res.token, res.user);
         setSuccess(true);
-        // Single redirect after 1 second
+        // Force immediate redirect
         setTimeout(() => {
-          navigate('/dashboard', { replace: true });
-        }, 1000);
+          window.location.href = '/dashboard';
+        }, 1500);
       } else if (res.twoFactorRequired) {
         setOtpEmail(res.email);
         setShowOTP(true);
