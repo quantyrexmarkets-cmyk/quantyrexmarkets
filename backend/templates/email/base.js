@@ -6,68 +6,57 @@ const baseTemplate = (content) => `
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 <body style="margin:0;padding:0;background:#000000;font-family:'Helvetica Neue',Arial,sans-serif;">
-  <table width="100%" cellpadding="0" cellspacing="0" style="background:#000000;padding:40px 20px;">
+  <table width="100%" cellpadding="0" cellspacing="0" border="0" style="background:#000000;">
     <tr>
-      <td align="center">
-        <table width="500" cellpadding="0" cellspacing="0" style="background:#0a0a0a;border:1px solid #1a1a1a;">
+      <td align="center" style="padding:30px 15px;">
+        
+        <table width="100%" cellpadding="0" cellspacing="0" border="0" style="max-width:480px;background:#0a0a0a;border:1px solid #1f1f1f;">
           
-          <!-- Header with Text Logo (Most Compatible) -->
+          <!-- HEADER -->
           <tr>
-            <td style="padding:30px 40px;border-bottom:1px solid #1a1a1a;">
-              <table width="100%">
+            <td style="padding:28px 35px;border-bottom:1px solid #1f1f1f;">
+              <table cellpadding="0" cellspacing="0" border="0">
                 <tr>
-                  <td width="45" valign="middle">
-                    <!-- Simple geometric logo using table cells -->
-                    <table cellpadding="0" cellspacing="0" style="border:2px solid #6366f1;width:40px;height:40px;">
-                      <tr>
-                        <td style="background:#6366f1;width:20px;height:20px;"></td>
-                        <td style="background:#0a0a0a;width:20px;height:20px;border-left:1px solid #6366f1;"></td>
-                      </tr>
-                      <tr>
-                        <td style="background:#0a0a0a;width:20px;height:20px;border-top:1px solid #6366f1;"></td>
-                        <td style="background:#6366f1;width:20px;height:20px;opacity:0.6;"></td>
-                      </tr>
-                    </table>
+                  <!-- Logo Image -->
+                  <td width="40" valign="middle">
+                    <img src="https://quantyrexmarkets-backend.onrender.com/email-assets/logo-email.png" 
+                         alt="Q" 
+                         width="40" 
+                         height="40" 
+                         style="display:block;border:0;border-radius:8px;"/>
                   </td>
-                  <td valign="middle" style="padding-left:12px;">
-                    <div style="line-height:1;">
-                      <span style="color:#ffffff;font-size:18px;font-weight:700;letter-spacing:1px;font-family:'Helvetica Neue',Arial,sans-serif;">QUANTYREX</span>
-                    </div>
-                    <div style="line-height:1;margin-top:2px;">
-                      <span style="color:#6366f1;font-size:12px;font-weight:500;letter-spacing:2px;font-family:'Helvetica Neue',Arial,sans-serif;">MARKETS</span>
-                    </div>
+                  <!-- Brand Name -->
+                  <td valign="middle" style="padding-left:14px;">
+                    <p style="margin:0;padding:0;color:#ffffff;font-size:17px;font-weight:bold;letter-spacing:0.5px;line-height:1.2;">
+                      QUANTYREX<span style="color:#6366f1;"> MARKETS</span>
+                    </p>
                   </td>
                 </tr>
               </table>
             </td>
           </tr>
           
-          <!-- Content -->
+          <!-- CONTENT -->
           <tr>
-            <td style="padding:40px;">
+            <td style="padding:35px;">
               ${content}
             </td>
           </tr>
           
-          <!-- Footer -->
+          <!-- FOOTER -->
           <tr>
-            <td style="padding:25px 40px;border-top:1px solid #1a1a1a;">
-              <table width="100%">
-                <tr>
-                  <td>
-                    <p style="color:#555555;font-size:10px;margin:0 0 8px;line-height:1.5;">
-                      Questions? Contact support@quantyrexmarkets.com
-                    </p>
-                    <p style="color:#333333;font-size:9px;margin:0;">
-                      © 2026 Quantyrex Markets. All rights reserved.
-                    </p>
-                  </td>
-                </tr>
-              </table>
+            <td style="padding:22px 35px;border-top:1px solid #1f1f1f;">
+              <p style="margin:0 0 6px 0;color:#505050;font-size:10px;line-height:1.5;">
+                Questions? Contact support@quantyrexmarkets.com
+              </p>
+              <p style="margin:0;color:#353535;font-size:9px;">
+                © 2026 Quantyrex Markets
+              </p>
             </td>
           </tr>
           
         </table>
+        
       </td>
     </tr>
   </table>
