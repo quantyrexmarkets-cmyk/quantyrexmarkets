@@ -13,69 +13,67 @@ const getTokenExpiry = (token) => {
 };
 
 export const AuthProvider = ({ children }) => {
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState(() => {
+    // Try to get user from sessionStorage on initial load
+    const savedUser = sessionStorage.getItem('user');
+    return savedUser ? JSON.parse(savedUser) : null;
+  });
   const [loading, setLoading] = useState(true);
 
   const logout = useCallback(() => {
     localStorage.removeItem('token');
+    sessionStorage.removeItem('user');
     setUser(null);
   }, []);
 
   useEffect(() => {
     const token = localStorage.getItem('token');
-    console.log('AuthContext: checking token...', token ? 'found' : 'not found');
+    const savedUser = sessionStorage.getItem('user');
+    
+    // If we have saved user from login, use it
+    if (savedUser) {
+      setUser(JSON.parse(savedUser));
+      setLoading(false);
+      return;
+    }
     
     if (token) {
       const expiry = getTokenExpiry(token);
       if (expiry && Date.now() >= expiry) {
-        console.log('AuthContext: token expired');
         logout();
         setLoading(false);
         return;
       }
 
-      console.log('AuthContext: calling getMe()...');
       getMe()
         .then(data => {
-          console.log('AuthContext: getMe response:', data);
           if (data && data._id) {
-            console.log('AuthContext: user loaded successfully');
             setUser(data);
-            if (expiry) {
-              const timeout = expiry - Date.now();
-              setTimeout(() => {
-                logout();
-                window.location.href = '/signin';
-              }, timeout);
-            }
+            sessionStorage.setItem('user', JSON.stringify(data));
           } else {
-            console.log('AuthContext: getMe returned invalid data, clearing token');
-            localStorage.removeItem('token');
-            setUser(null);
+            logout();
           }
         })
         .catch(err => {
-          console.log('AuthContext: getMe error:', err);
-          localStorage.removeItem('token');
-          setUser(null);
+          console.error('getMe failed:', err);
+          logout();
         })
-        .finally(() => {
-          console.log('AuthContext: loading complete');
-          setLoading(false);
-        });
+        .finally(() => setLoading(false));
     } else {
-      console.log('AuthContext: no token found');
       setLoading(false);
     }
   }, [logout]);
 
   const login = (token, userData) => {
-    console.log('AuthContext: login called with user:', userData);
     localStorage.setItem('token', token);
+    sessionStorage.setItem('user', JSON.stringify(userData));
     setUser(userData);
   };
 
-  const updateUser = (userData) => setUser(prev => ({ ...prev, ...userData }));
+  const updateUser = (userData) => {
+    setUser(prev => ({ ...prev, ...userData }));
+    sessionStorage.setItem('user', JSON.stringify({ ...user, ...userData }));
+  };
 
   return (
     <AuthContext.Provider value={{ user, loading, login, logout, updateUser }}>
