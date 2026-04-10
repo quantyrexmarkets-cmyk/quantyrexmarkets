@@ -33,7 +33,7 @@ export default function ResetPassword() {
       <div style={{ background: '#1a2e4a', border: '1px solid rgba(99,102,241,0.3)', padding: '30px', width: '100%', maxWidth: '360px' }}>
         <div style={{ textAlign: 'center', marginBottom: '24px' }}>
           <div style={{ width: '40px', height: '40px', margin: '0 auto 12px' }}>
-            <svg viewBox="0 0 40 40" fill="none" style={{ width: '100%', height: '100%' }}>
+            <svg viewBox="0 0 40 40" fill="none" width="40" height="40" style={{ margin: "0 auto 10px" }}>
                 <path d="M20 2L4 10V22L20 38L36 22V10L20 2Z" fill="#0d1117" stroke="#6366F1" strokeWidth="1.5"/>
                 <path d="M20 8L8 14V22L20 34L32 22V14L20 8Z" fill="#0d1117" stroke="#6366F1" strokeWidth="1.2"/>
                 <path d="M20 14L12 18V23L20 30L28 23V18L20 14Z" fill="#6366F1" stroke="#6366F1" strokeWidth="1"/>
