@@ -1,67 +1,53 @@
 const baseTemplate = require('./base');
 
 const botProfitEmail = (name, botName, profit, totalEarned, newBalance, currency) => baseTemplate(`
-  <h2 style="color:#1e293b;margin:0 0 20px;font-size:22px;">Bot Profit Earned 🤖💰</h2>
-  
-  <p style="color:#334155;line-height:1.6;margin:0 0 15px;">
-    Hi <strong>${name}</strong>,
+  <p style="color:#ffffff;font-size:13px;margin:0 0 25px;line-height:1.7;">
+    Hi ${name},
   </p>
   
-  <p style="color:#334155;line-height:1.6;margin:0 0 25px;">
-    Great news! Your trading bot has generated profit.
+  <p style="color:#888888;font-size:12px;margin:0 0 25px;line-height:1.7;">
+    Your trading bot generated profit.
   </p>
   
-  <div style="background:linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);padding:25px;border-radius:12px;text-align:center;margin:30px 0;">
-    <p style="color:rgba(255,255,255,0.9);margin:0 0 8px;font-size:14px;">Profit Earned</p>
-    <h1 style="color:white;margin:0;font-size:36px;font-weight:700;">
-      +${currency} ${parseFloat(profit).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
-    </h1>
-  </div>
-  
-  <table width="100%" cellpadding="0" cellspacing="0" style="margin:25px 0;">
+  <table width="100%" style="margin:0 0 30px;">
     <tr>
-      <td style="padding:12px;border-bottom:1px solid #e2e8f0;">
-        <span style="color:#64748b;font-size:13px;">Bot Name</span>
+      <td style="padding:12px 0;border-bottom:1px solid #1a1a1a;">
+        <span style="color:#666666;font-size:11px;">Bot</span>
       </td>
-      <td align="right" style="padding:12px;border-bottom:1px solid #e2e8f0;">
-        <strong style="color:#1e293b;font-size:15px;">🤖 ${botName}</strong>
+      <td align="right" style="padding:12px 0;border-bottom:1px solid #1a1a1a;">
+        <span style="color:#ffffff;font-size:12px;">${botName}</span>
       </td>
     </tr>
     <tr>
-      <td style="padding:12px;border-bottom:1px solid #e2e8f0;">
-        <span style="color:#64748b;font-size:13px;">Total Earned</span>
+      <td style="padding:12px 0;border-bottom:1px solid #1a1a1a;">
+        <span style="color:#666666;font-size:11px;">Profit</span>
       </td>
-      <td align="right" style="padding:12px;border-bottom:1px solid #e2e8f0;">
-        <strong style="color:#22c55e;font-size:15px;">+${currency} ${parseFloat(totalEarned).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</strong>
+      <td align="right" style="padding:12px 0;border-bottom:1px solid #1a1a1a;">
+        <span style="color:#22c55e;font-size:12px;font-weight:500;">+${currency} ${parseFloat(profit || 0).toFixed(2)}</span>
       </td>
     </tr>
     <tr>
-      <td style="padding:12px;border-bottom:1px solid #e2e8f0;">
-        <span style="color:#64748b;font-size:13px;">New Balance</span>
+      <td style="padding:12px 0;border-bottom:1px solid #1a1a1a;">
+        <span style="color:#666666;font-size:11px;">Total Earned</span>
       </td>
-      <td align="right" style="padding:12px;border-bottom:1px solid #e2e8f0;">
-        <strong style="color:#1e293b;font-size:15px;">${currency} ${parseFloat(newBalance).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</strong>
+      <td align="right" style="padding:12px 0;border-bottom:1px solid #1a1a1a;">
+        <span style="color:#22c55e;font-size:12px;">+${currency} ${parseFloat(totalEarned || 0).toFixed(2)}</span>
+      </td>
+    </tr>
+    <tr>
+      <td style="padding:12px 0;">
+        <span style="color:#666666;font-size:11px;">Balance</span>
+      </td>
+      <td align="right" style="padding:12px 0;">
+        <span style="color:#ffffff;font-size:12px;font-weight:500;">${currency} ${parseFloat(newBalance || 0).toFixed(2)}</span>
       </td>
     </tr>
   </table>
   
-  <div style="background:#f0fdf4;border-left:4px solid #22c55e;padding:15px 20px;margin:25px 0;border-radius:6px;">
-    <p style="color:#166534;margin:0;font-size:13px;">
-      🚀 <strong>Your bot is working!</strong> Keep your bot active to continue earning passive income.
-    </p>
-  </div>
-  
-  <div style="text-align:center;margin:30px 0;">
-    <a href="https://quantyrexmarkets.vercel.app/dashboard/manage-bots" 
-       style="background:#6366f1;color:white;padding:14px 35px;border-radius:8px;text-decoration:none;font-weight:600;display:inline-block;">
-      View Bot Performance →
-    </a>
-  </div>
-  
-  <p style="color:#334155;margin:20px 0 0;">
-    Best regards,<br/>
-    <strong>Quantyrex Markets Team</strong>
-  </p>
+  <a href="https://quantyrexmarkets.vercel.app/dashboard/manage-bots" 
+     style="display:inline-block;background:#6366f1;color:#ffffff;font-size:11px;font-weight:500;padding:12px 28px;text-decoration:none;letter-spacing:0.5px;">
+    VIEW BOTS
+  </a>
 `);
 
 module.exports = botProfitEmail;
