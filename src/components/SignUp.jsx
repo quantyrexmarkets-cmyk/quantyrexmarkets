@@ -196,10 +196,9 @@ const SignUp = () => {
       <div style={{ background: '#2d3748', width: '92vw', maxWidth: '360px', position: 'relative', zIndex: 1 }}>
         <div style={{ background: '#374151', padding: '16px', textAlign: 'center' }}>
           <svg viewBox="0 0 40 40" fill="none" width="32" height="32" style={{ margin: '0 auto 8px' }}>
-                <polygon points="20,4 34,11 34,27 20,34 6,27 6,11" fill="none" stroke="#6366F1" strokeWidth="1" opacity="0.5"/>
-                <circle cx="20" cy="18" r="8" fill="none" stroke="#6366F1" strokeWidth="2"/>
-                <line x1="25" y1="23" x2="32" y2="30" stroke="#6366F1" strokeWidth="2" strokeLinecap="round"/>
-                <circle cx="32" cy="30" r="2" fill="#f59e0b"/>
+                <path d="M20 2L4 10V22L20 38L36 22V10L20 2Z" fill="#0d1117" stroke="#6366F1" strokeWidth="1.5"/>
+                <path d="M20 8L8 14V22L20 34L32 22V14L20 8Z" fill="#0d1117" stroke="#6366F1" strokeWidth="1.2"/>
+                <path d="M20 14L12 18V23L20 30L28 23V18L20 14Z" fill="#6366F1" stroke="#6366F1" strokeWidth="1"/>
           </svg>
           <div style={{ width: '100%', height: '1px', background: 'rgba(99,102,241,0.4)', marginBottom: '12px' }} />
           <h2 style={{ color: 'white', fontWeight: '600', fontSize: 'clamp(12px, 3.5vw, 16px)', marginBottom: '4px' }}>Account Sign Up</h2>
