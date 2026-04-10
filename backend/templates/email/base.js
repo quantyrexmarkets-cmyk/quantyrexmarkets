@@ -14,27 +14,17 @@ const baseTemplate = (content) => `
           
           <!-- HEADER -->
           <tr>
-            <td style="padding:28px 35px;border-bottom:1px solid #1f1f1f;">
+            <td style="padding:25px 35px;border-bottom:1px solid #1f1f1f;">
               <table cellpadding="0" cellspacing="0" border="0">
                 <tr>
-                  <!-- Q Logo Icon (Table-based for email compatibility) -->
-                  <td width="44" valign="middle">
-                    <table cellpadding="0" cellspacing="0" border="0" width="44" height="44">
-                      <tr>
-                        <td style="background:#0a0a0a;border:2px solid #6366f1;border-radius:10px;text-align:center;vertical-align:middle;">
-                          <span style="color:#6366f1;font-size:24px;font-weight:bold;font-family:Georgia,serif;">Q</span>
-                        </td>
-                      </tr>
-                    </table>
+                  <!-- Simple Hexagon Icon -->
+                  <td width="32" height="32" valign="middle" style="background:#0d1117;border:1.5px solid #6366f1;text-align:center;">
+                    <div style="width:12px;height:12px;background:#6366f1;margin:auto;"></div>
                   </td>
                   <!-- Brand Name -->
-                  <td valign="middle" style="padding-left:14px;">
-                    <p style="margin:0;padding:0;color:#ffffff;font-size:18px;font-weight:700;letter-spacing:1px;line-height:1.2;">
-                      QUANTYREX
-                    </p>
-                    <p style="margin:2px 0 0 0;padding:0;color:#6366f1;font-size:10px;font-weight:400;letter-spacing:3px;line-height:1;">
-                      MARKETS
-                    </p>
+                  <td valign="middle" style="padding-left:12px;">
+                    <span style="color:#ffffff;font-size:16px;font-weight:600;letter-spacing:0.5px;">QUANTYREX</span>
+                    <span style="color:#6366f1;font-size:16px;font-weight:600;"> MARKETS</span>
                   </td>
                 </tr>
               </table>
@@ -50,12 +40,12 @@ const baseTemplate = (content) => `
           
           <!-- FOOTER -->
           <tr>
-            <td style="padding:22px 35px;border-top:1px solid #1f1f1f;">
-              <p style="margin:0 0 6px 0;color:#505050;font-size:10px;line-height:1.5;">
+            <td style="padding:20px 35px;border-top:1px solid #1f1f1f;">
+              <p style="margin:0 0 5px 0;color:#505050;font-size:10px;line-height:1.5;">
                 Questions? Contact support@quantyrexmarkets.com
               </p>
               <p style="margin:0;color:#353535;font-size:9px;">
-                © 2026 Quantyrex Markets. All rights reserved.
+                © 2026 Quantyrex Markets
               </p>
             </td>
           </tr>
