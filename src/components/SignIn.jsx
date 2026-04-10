@@ -43,12 +43,13 @@ const SignIn = () => {
     try {
       const res = await loginUser({ email: form.username, password: form.password });
       if (res.token) {
+        localStorage.setItem('token', res.token);
         login(res.token, res.user);
         setSuccess(true);
-        setTimeout(() => { window.location.replace('/dashboard'); }, 1500);
-      } else if (res.twoFactorRequired) {
-        setOtpEmail(res.email);
-        setShowOTP(true);
+        // Single redirect after 1 second
+        setTimeout(() => {
+          navigate('/dashboard', { replace: true });
+        }, 1000);
       } else if (res.twoFactorRequired) {
         setOtpEmail(res.email);
         setShowOTP(true);
@@ -105,39 +106,40 @@ const SignIn = () => {
               </div>
             </>
           )}
-              <div style={{ marginBottom: '12px' }}>
-                <label style={{ color: '#94a3b8', fontSize: 'clamp(7px, 1.8vw, 15px)', display: 'block', marginBottom: '4px' }}>Email or Username</label>
-                <input name='username' value={form.username} onChange={handleChange} placeholder='Enter email or username' style={inputStyle('username')} />
-                {errors.username && <div style={errStyle}>{errors.username}</div>}
-              </div>
 
-              <div style={{ marginBottom: '12px' }}>
-                <label style={{ color: '#94a3b8', fontSize: 'clamp(7px, 1.8vw, 15px)', display: 'block', marginBottom: '4px' }}>Password</label>
-                <div style={{ position: 'relative' }}>
-                  <input name='password' type={showPass ? 'text' : 'password'} value={form.password} onChange={handleChange} placeholder='Enter password'
-                    style={{ ...inputStyle('password'), paddingRight: '28px' }} />
-                  <button onClick={() => setShowPass(!showPass)} style={{ position: 'absolute', right: '8px', top: '50%', transform: 'translateY(-50%)', background: 'none', border: 'none', color: '#94a3b8', cursor: 'pointer', fontSize: '8px' }}>
-                    {showPass ? 'Hide' : 'Show'}
-                  </button>
-                </div>
-                {errors.password && <div style={errStyle}>{errors.password}</div>}
-              </div>
+          <div style={{ marginBottom: '12px' }}>
+            <label style={{ color: '#94a3b8', fontSize: 'clamp(7px, 1.8vw, 15px)', display: 'block', marginBottom: '4px' }}>Email or Username</label>
+            <input name='username' value={form.username} onChange={handleChange} placeholder='Enter email or username' style={inputStyle('username')} />
+            {errors.username && <div style={errStyle}>{errors.username}</div>}
+          </div>
 
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px' }}>
-                <label style={{ display: 'flex', alignItems: 'center', gap: '4px', cursor: 'pointer' }}>
-                  <input type='checkbox' name='remember' checked={form.remember} onChange={handleChange} style={{ accentColor: '#6366f1' }} />
-                  <span style={{ color: '#94a3b8', fontSize: 'clamp(7px, 1.8vw, 15px)' }}>Remember me</span>
-                </label>
-                <span onClick={() => setShowForgot(true)} style={{ color: '#6366f1', fontSize: 'clamp(7px, 1.8vw, 15px)', cursor: 'pointer' }}>Forgot Password?</span>
-              </div>
-
-              <button onClick={handleSubmit} disabled={loading} style={{ width: '100%', padding: '10px', background: loading ? '#4b4f9e' : '#6366f1', border: 'none', borderRadius: '4px', color: 'white', fontSize: 'clamp(8px, 2vw, 15px)', fontWeight: '600', cursor: loading ? 'not-allowed' : 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '6px', marginBottom: '12px' }}>
-                {loading ? 'Logging in...' : 'Log in'}
+          <div style={{ marginBottom: '12px' }}>
+            <label style={{ color: '#94a3b8', fontSize: 'clamp(7px, 1.8vw, 15px)', display: 'block', marginBottom: '4px' }}>Password</label>
+            <div style={{ position: 'relative' }}>
+              <input name='password' type={showPass ? 'text' : 'password'} value={form.password} onChange={handleChange} placeholder='Enter password'
+                style={{ ...inputStyle('password'), paddingRight: '28px' }} />
+              <button onClick={() => setShowPass(!showPass)} style={{ position: 'absolute', right: '8px', top: '50%', transform: 'translateY(-50%)', background: 'none', border: 'none', color: '#94a3b8', cursor: 'pointer', fontSize: '8px' }}>
+                {showPass ? 'Hide' : 'Show'}
               </button>
+            </div>
+            {errors.password && <div style={errStyle}>{errors.password}</div>}
+          </div>
 
-              <p style={{ textAlign: 'center', color: '#94a3b8', fontSize: 'clamp(7px, 1.8vw, 15px)', margin: 0 }}>
-                Don't have an account? <span onClick={() => window.location.href='/signup'} style={{ color: 'white', fontWeight: '600', cursor: 'pointer' }}>Sign Up</span>
-              </p>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px' }}>
+            <label style={{ display: 'flex', alignItems: 'center', gap: '4px', cursor: 'pointer' }}>
+              <input type='checkbox' name='remember' checked={form.remember} onChange={handleChange} style={{ accentColor: '#6366f1' }} />
+              <span style={{ color: '#94a3b8', fontSize: 'clamp(7px, 1.8vw, 15px)' }}>Remember me</span>
+            </label>
+            <span onClick={() => setShowForgot(true)} style={{ color: '#6366f1', fontSize: 'clamp(7px, 1.8vw, 15px)', cursor: 'pointer' }}>Forgot Password?</span>
+          </div>
+
+          <button onClick={handleSubmit} disabled={loading} style={{ width: '100%', padding: '10px', background: loading ? '#4b4f9e' : '#6366f1', border: 'none', borderRadius: '4px', color: 'white', fontSize: 'clamp(8px, 2vw, 15px)', fontWeight: '600', cursor: loading ? 'not-allowed' : 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '6px', marginBottom: '12px' }}>
+            {loading ? 'Logging in...' : 'Log in'}
+          </button>
+
+          <p style={{ textAlign: 'center', color: '#94a3b8', fontSize: 'clamp(7px, 1.8vw, 15px)', margin: 0 }}>
+            Don't have an account? <span onClick={() => window.location.href='/signup'} style={{ color: 'white', fontWeight: '600', cursor: 'pointer' }}>Sign Up</span>
+          </p>
         </div>
       </div>
 
@@ -207,7 +209,7 @@ const SignIn = () => {
                 if (res.token) {
                   login(res.token, res.user);
                   setSuccess(true);
-                  setTimeout(() => window.location.replace('/dashboard'), 1500);
+                  setTimeout(() => navigate('/dashboard', { replace: true }), 1000);
                 } else {
                   setErrors({ otp: res.message || 'Invalid OTP' });
                 }
