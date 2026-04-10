@@ -73,8 +73,18 @@ const AdminRoute = ({ children }) => {
 
 const PrivateRoute = ({ children }) => {
   const { user, loading } = useAuth();
-  if (loading) return <LoadingScreen />;
-  if (!user) return <Navigate to="/signin" replace />;
+  if (loading) return <div style={{color:'white',background:'#0e1628',minHeight:'100vh',display:'flex',alignItems:'center',justifyContent:'center'}}>Loading...</div>;
+  if (!user) {
+    const token = localStorage.getItem('token');
+    if (token) {
+      return <div style={{color:'white',background:'#0e1628',minHeight:'100vh',padding:'20px',fontSize:'12px'}}>
+        <p>Token exists but user is null.</p>
+        <p>getMe() likely failed or returned no _id.</p>
+        <p>Token preview: {token.substring(0,40)}...</p>
+      </div>;
+    }
+    return <Navigate to="/signin" replace />;
+  }
   return children;
 };
 

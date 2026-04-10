@@ -34,20 +34,20 @@ export const AuthProvider = ({ children }) => {
       }
 
       getMe().then(data => {
-        if (data._id) {
+        if (data && data._id) {
           setUser(data);
-          // Set auto-logout timer
           if (expiry) {
             const timeout = expiry - Date.now();
-            const timer = setTimeout(() => {
+            setTimeout(() => {
               logout();
               window.location.href = '/signin';
             }, timeout);
-            return () => clearTimeout(timer);
           }
         } else {
-          logout();
+          console.log('getMe failed:', data);
         }
+      }).catch(err => {
+        console.log('getMe error:', err);
       }).finally(() => setLoading(false));
     } else {
       setLoading(false);
