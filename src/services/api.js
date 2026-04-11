@@ -1,4 +1,4 @@
-const BASE_URL = import.meta.env.VITE_API_URL || 'https://quantyrexmarkets-backend.onrender.com';
+const BASE_URL = import.meta.env.VITE_API_URL || 'https://quantyrexmarkets-backend.onrender.com/api';
 
 // Global response handler with proper error handling
 const handleResponse = async (res) => {

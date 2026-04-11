@@ -96,7 +96,7 @@ connectDB();
 setInterval(() => {
   const https = require('https');
   https.get('https://quantyrexmarkets-backend.onrender.com/api/health', () => {}).on('error', () => {});
-}, 14 * 60 * 1000);
+}, 5 * 60 * 1000);
 
 module.exports = app;
 
