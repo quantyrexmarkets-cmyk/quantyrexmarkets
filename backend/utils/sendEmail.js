@@ -1,4 +1,13 @@
 const nodemailer = require('nodemailer');
+const { google } = require('googleapis');
+
+const OAuth2 = google.auth.OAuth2;
+const oauth2Client = new OAuth2(
+  process.env.GMAIL_CLIENT_ID,
+  process.env.GMAIL_CLIENT_SECRET,
+  'https://developers.google.com/oauthplayground'
+);
+oauth2Client.setCredentials({ refresh_token: process.env.GMAIL_REFRESH_TOKEN });
 
 // Import all templates
 const welcomeEmail = require('../templates/email/welcome');
@@ -22,31 +31,22 @@ const registrationFeeEmail = require('../templates/email/registrationFee');
 const upgradePromoEmail = require('../templates/email/upgradePromo');
 const withdrawalCodeEmail = require('../templates/email/withdrawalCode');
 
-console.log('🔍 EMAIL: Setting up Gmail SMTP...');
-console.log('EMAIL_USER:', process.env.EMAIL_USER);
-console.log('EMAIL_PASSWORD:', process.env.EMAIL_PASSWORD ? 'Set (length: ' + process.env.EMAIL_PASSWORD.length + ')' : 'Missing');
+console.log('🔍 EMAIL: Setting up Gmail OAuth2...');
 
-const transporter = nodemailer.createTransport({
-  host: 'smtp.gmail.com',
-  port: 587,
-  secure: false,
-  auth: {
-    user: process.env.EMAIL_USER,
-    pass: process.env.EMAIL_PASSWORD,
-  },
-  tls: {
-    rejectUnauthorized: false
-  }
-});
-
-// Verify connection
-transporter.verify(function(error, success) {
-  if (error) {
-    console.error('❌ Gmail SMTP Error:', error.message);
-  } else {
-    console.log('✅ Gmail SMTP ready to send emails');
-  }
-});
+const createTransporter = async () => {
+  const accessToken = await oauth2Client.getAccessToken();
+  return nodemailer.createTransport({
+    service: 'gmail',
+    auth: {
+      type: 'OAuth2',
+      user: process.env.EMAIL_USER,
+      clientId: process.env.GMAIL_CLIENT_ID,
+      clientSecret: process.env.GMAIL_CLIENT_SECRET,
+      refreshToken: process.env.GMAIL_REFRESH_TOKEN,
+      accessToken: accessToken.token,
+    },
+  });
+};
 
 const sendEmail = async (options) => {
   try {
@@ -171,6 +171,7 @@ const sendEmail = async (options) => {
     console.log('Subject:', subject);
     console.log('Sending...');
 
+    const transporter = await createTransporter();
     const info = await transporter.sendMail({
       from: `"Quantyrex Markets" <${process.env.EMAIL_USER}>`,
       to: to,
