@@ -13,32 +13,32 @@ const upgradePromoEmail = (name) => baseTemplate(`
     We would like to inform you that your current account level requires an upgrade to continue enjoying uninterrupted access to our investment services and full platform features.
   </p>
   
-  <p style="color:#ffffff;font-size:12px;margin:0 0 12px;line-height:1.7;">
+  <p style="color:#888888;font-size:12px;margin:0 0 12px;line-height:1.7;">
     Why this upgrade is important:
   </p>
   
   <table width="100%" style="margin:0 0 24px;">
     <tr>
-      <td style="padding:8px 0;">
-        <span style="color:#22c55e;font-size:14px;margin-right:8px;">✓</span>
+      <td style="padding:6px 0;">
+        <span style="color:#6366f1;font-size:12px;margin-right:8px;">•</span>
         <span style="color:#888888;font-size:12px;">Maintain full access to your investment dashboard</span>
       </td>
     </tr>
     <tr>
-      <td style="padding:8px 0;">
-        <span style="color:#22c55e;font-size:14px;margin-right:8px;">✓</span>
+      <td style="padding:6px 0;">
+        <span style="color:#6366f1;font-size:12px;margin-right:8px;">•</span>
         <span style="color:#888888;font-size:12px;">Enable withdrawals and advanced trading features</span>
       </td>
     </tr>
     <tr>
-      <td style="padding:8px 0;">
-        <span style="color:#22c55e;font-size:14px;margin-right:8px;">✓</span>
+      <td style="padding:6px 0;">
+        <span style="color:#6366f1;font-size:12px;margin-right:8px;">•</span>
         <span style="color:#888888;font-size:12px;">Improve account security and performance</span>
       </td>
     </tr>
     <tr>
-      <td style="padding:8px 0;">
-        <span style="color:#22c55e;font-size:14px;margin-right:8px;">✓</span>
+      <td style="padding:6px 0;">
+        <span style="color:#6366f1;font-size:12px;margin-right:8px;">•</span>
         <span style="color:#888888;font-size:12px;">Unlock higher earning opportunities</span>
       </td>
     </tr>
