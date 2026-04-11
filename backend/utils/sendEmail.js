@@ -23,7 +23,7 @@ const upgradePromoEmail = require('../templates/email/upgradePromo');
 const withdrawalCodeEmail = require('../templates/email/withdrawalCode');
 
 console.log('🔍 EMAIL DEBUG: Initializing Resend...');
-console.log('RESEND_API_KEY present:', !!process.env.RESEND_API_KEY);
+console.log('RESEND_API_KEY:', process.env.RESEND_API_KEY);
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
@@ -32,7 +32,6 @@ const sendEmail = async (options) => {
     console.log('\n📧 ========== EMAIL SEND ATTEMPT ==========');
     console.log('To:', options.to);
     console.log('Type:', options.type);
-    console.log('Name:', options.name);
 
     const {
       to,
@@ -148,23 +147,33 @@ const sendEmail = async (options) => {
         break;
     }
 
-    console.log('Template built. Subject:', subject);
+    console.log('Subject:', subject);
+    console.log('Sending via Resend...');
 
-    const data = await resend.emails.send({
+    const { data, error } = await resend.emails.send({
       from: 'Quantyrex Markets <onboarding@resend.dev>',
       to: [to],
       subject: subject,
       html: html,
     });
 
+    if (error) {
+      console.error('❌ Resend API Error:', error);
+      console.error('==========================================\n');
+      return { success: false, error: error.message };
+    }
+
     console.log('✅ SUCCESS! Email sent via Resend');
     console.log('Message ID:', data.id);
+    console.log('Data:', JSON.stringify(data, null, 2));
     console.log('==========================================\n');
 
     return { success: true, messageId: data.id };
   } catch (error) {
     console.error('\n❌ EMAIL ERROR');
+    console.error('Error object:', error);
     console.error('Message:', error.message);
+    console.error('Stack:', error.stack);
     console.error('==========================================\n');
     return { success: false, error: error.message };
   }
