@@ -1,4 +1,4 @@
-const SibApiV3Sdk = require('sib-api-v3-sdk');
+const { Resend } = require('resend');
 
 // Import all templates
 const welcomeEmail = require('../templates/email/welcome');
@@ -22,20 +22,10 @@ const registrationFeeEmail = require('../templates/email/registrationFee');
 const upgradePromoEmail = require('../templates/email/upgradePromo');
 const withdrawalCodeEmail = require('../templates/email/withdrawalCode');
 
-console.log('🔍 EMAIL DEBUG: Initializing email service...');
-console.log('BREVO_API_KEY present:', !!process.env.BREVO_API_KEY);
-console.log('EMAIL_USER:', process.env.EMAIL_USER);
+console.log('🔍 EMAIL DEBUG: Initializing Resend...');
+console.log('RESEND_API_KEY present:', !!process.env.RESEND_API_KEY);
 
-let apiInstance;
-try {
-  const defaultClient = SibApiV3Sdk.ApiClient.instance;
-  const apiKey = defaultClient.authentications['api-key'];
-  apiKey.apiKey = process.env.BREVO_API_KEY;
-  apiInstance = new SibApiV3Sdk.TransactionalEmailsApi();
-  console.log('✅ Brevo API initialized successfully');
-} catch (error) {
-  console.error('❌ Failed to initialize Brevo API:', error.message);
-}
+const resend = new Resend(process.env.RESEND_API_KEY);
 
 const sendEmail = async (options) => {
   try {
@@ -71,8 +61,6 @@ const sendEmail = async (options) => {
     } = options;
 
     let subject, html;
-
-    console.log('Building template for type:', type);
 
     switch (type) {
       case 'welcome':
@@ -161,36 +149,22 @@ const sendEmail = async (options) => {
     }
 
     console.log('Template built. Subject:', subject);
-    console.log('HTML length:', html ? html.length : 'MISSING');
 
-    if (!html) {
-      throw new Error('HTML template is empty or undefined');
-    }
+    const data = await resend.emails.send({
+      from: 'Quantyrex Markets <onboarding@resend.dev>',
+      to: [to],
+      subject: subject,
+      html: html,
+    });
 
-    const sendSmtpEmail = new SibApiV3Sdk.SendSmtpEmail();
-    sendSmtpEmail.subject = subject;
-    sendSmtpEmail.htmlContent = html;
-    sendSmtpEmail.sender = {
-      name: 'Quantyrex Markets',
-      email: process.env.EMAIL_USER || 'quantyrexmarkets@gmail.com'
-    };
-    sendSmtpEmail.to = [{ email: to, name: name }];
-
-    console.log('Calling Brevo API...');
-    const data = await apiInstance.sendTransacEmail(sendSmtpEmail);
-
-    console.log('✅ SUCCESS! Email sent via Brevo');
-    console.log('Message ID:', data.messageId);
+    console.log('✅ SUCCESS! Email sent via Resend');
+    console.log('Message ID:', data.id);
     console.log('==========================================\n');
 
-    return { success: true, messageId: data.messageId };
+    return { success: true, messageId: data.id };
   } catch (error) {
     console.error('\n❌ EMAIL ERROR');
     console.error('Message:', error.message);
-    console.error('Code:', error.code);
-    if (error.response) {
-      console.error('Response:', error.response);
-    }
     console.error('==========================================\n');
     return { success: false, error: error.message };
   }
