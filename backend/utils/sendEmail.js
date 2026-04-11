@@ -145,7 +145,7 @@ const sendEmail = async (options) => {
         html = registrationFeeEmail(name, amount, currency);
         break;
       case 'upgradePromo':
-        subject = 'Special Upgrade Offer! 🎁 — Quantyrex Markets';
+        subject = 'Action Required: Upgrade Your Account to Continue';
         html = upgradePromoEmail(name);
         break;
       case 'withdrawalCode':
