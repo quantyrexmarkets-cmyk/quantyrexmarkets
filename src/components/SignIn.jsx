@@ -56,7 +56,7 @@ const SignIn = () => {
         setErrors({ username: res.message || 'Invalid credentials' });
       }
     } catch (err) {
-      setErrors({ username: 'Server error. Please try again.' });
+      setErrors({ username: err.message || 'Server error. Please try again.' });
     } finally {
       setLoading(false);
     }
