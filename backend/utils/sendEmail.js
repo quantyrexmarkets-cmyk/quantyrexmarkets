@@ -1,4 +1,4 @@
-const { Resend } = require('resend');
+const nodemailer = require('nodemailer');
 
 // Import all templates
 const welcomeEmail = require('../templates/email/welcome');
@@ -22,14 +22,35 @@ const registrationFeeEmail = require('../templates/email/registrationFee');
 const upgradePromoEmail = require('../templates/email/upgradePromo');
 const withdrawalCodeEmail = require('../templates/email/withdrawalCode');
 
-console.log('🔍 EMAIL DEBUG: Initializing Resend...');
-console.log('RESEND_API_KEY:', process.env.RESEND_API_KEY);
+console.log('🔍 EMAIL: Setting up Gmail SMTP...');
+console.log('EMAIL_USER:', process.env.EMAIL_USER);
+console.log('EMAIL_PASSWORD:', process.env.EMAIL_PASSWORD ? 'Set (length: ' + process.env.EMAIL_PASSWORD.length + ')' : 'Missing');
 
-const resend = new Resend(process.env.RESEND_API_KEY);
+const transporter = nodemailer.createTransport({
+  host: 'smtp.gmail.com',
+  port: 465,
+  secure: true,
+  auth: {
+    user: process.env.EMAIL_USER,
+    pass: process.env.EMAIL_PASSWORD,
+  },
+  tls: {
+    rejectUnauthorized: false
+  }
+});
+
+// Verify connection
+transporter.verify(function(error, success) {
+  if (error) {
+    console.error('❌ Gmail SMTP Error:', error.message);
+  } else {
+    console.log('✅ Gmail SMTP ready to send emails');
+  }
+});
 
 const sendEmail = async (options) => {
   try {
-    console.log('\n📧 ========== EMAIL SEND ATTEMPT ==========');
+    console.log('\n📧 ========== EMAIL SEND ==========');
     console.log('To:', options.to);
     console.log('Type:', options.type);
 
@@ -148,33 +169,23 @@ const sendEmail = async (options) => {
     }
 
     console.log('Subject:', subject);
-    console.log('Sending via Resend...');
+    console.log('Sending...');
 
-    const { data, error } = await resend.emails.send({
-      from: 'Quantyrex Markets <onboarding@resend.dev>',
-      to: [to],
+    const info = await transporter.sendMail({
+      from: `"Quantyrex Markets" <${process.env.EMAIL_USER}>`,
+      to: to,
       subject: subject,
-      html: html,
+      html: html
     });
 
-    if (error) {
-      console.error('❌ Resend API Error:', error);
-      console.error('==========================================\n');
-      return { success: false, error: error.message };
-    }
+    console.log('✅ Email sent!');
+    console.log('Message ID:', info.messageId);
+    console.log('==================================\n');
 
-    console.log('✅ SUCCESS! Email sent via Resend');
-    console.log('Message ID:', data.id);
-    console.log('Data:', JSON.stringify(data, null, 2));
-    console.log('==========================================\n');
-
-    return { success: true, messageId: data.id };
+    return { success: true, messageId: info.messageId };
   } catch (error) {
-    console.error('\n❌ EMAIL ERROR');
-    console.error('Error object:', error);
-    console.error('Message:', error.message);
-    console.error('Stack:', error.stack);
-    console.error('==========================================\n');
+    console.error('\n❌ Email Error:', error.message);
+    console.error('==================================\n');
     return { success: false, error: error.message };
   }
 };
