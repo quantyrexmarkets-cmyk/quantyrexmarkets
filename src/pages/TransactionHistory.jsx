@@ -1,4 +1,5 @@
 import { useNavigate } from 'react-router-dom';
+import { useTheme } from '../context/ThemeContext';
 import { useState, useEffect } from 'react';
 import { useAuth } from '../context/AuthContext';
 import { formatAmount } from '../utils/currency';
@@ -8,6 +9,7 @@ import { DollarSign, ArrowUpDown, Clock } from 'lucide-react';
 
 export default function TransactionHistory() {
   const { user } = useAuth();
+  const { current: t } = useTheme();
   const navigate = useNavigate();
   const [search, setSearch] = useState('');
   const [show, setShow] = useState(10);
@@ -63,7 +65,7 @@ export default function TransactionHistory() {
   const pendingCount = transactions.filter(t => t.status === 'pending').length;
 
   return (
-    <div style={{ minHeight: '100vh', background: '#0e1628', fontFamily: "'Segoe UI', sans-serif", color: 'white' }}>
+    <div style={{ minHeight: '100vh', background: t.bg, fontFamily: "'Segoe UI', sans-serif", color: 'white' }}>
       <PageHeader title="Transaction History" />
       <div style={{ padding: '14px' }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '6px', marginBottom: '14px' }}>
@@ -92,7 +94,7 @@ export default function TransactionHistory() {
             <button key={f} onClick={() => { setFilter(f); setPage(1); }} style={{ padding: '4px 10px', background: filter === f ? '#6366f1' : 'rgba(255,255,255,0.06)', border: 'none', color: filter === f ? 'white' : 'rgba(255,255,255,0.5)', fontSize: '8px', fontWeight: '600', cursor: 'pointer' }}>{f}</button>
           ))}
         </div>
-        <div style={{ background: '#1a2e4a', border: '1px solid rgba(255,255,255,0.06)' }}>
+        <div style={{ background: t.cardBg, border: '1px solid rgba(255,255,255,0.06)' }}>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '8px 10px', borderBottom: '1px solid rgba(255,255,255,0.06)' }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
               <span style={{ color: 'rgba(255,255,255,0.45)', fontSize: '8px' }}>Show</span>

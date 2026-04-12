@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useTheme } from '../context/ThemeContext';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { formatAmount, getCurrencySymbol } from '../utils/currency';
@@ -26,6 +27,7 @@ const cryptoPlans = [
 export default function NewStake() {
   const navigate = useNavigate();
   const { user } = useAuth();
+  const { current: t } = useTheme();
   const [selected, setSelected] = useState(null);
   const [amount, setAmount] = useState('');
   const [submitting, setSubmitting] = useState(false);
@@ -55,7 +57,7 @@ export default function NewStake() {
   };
 
   return (
-    <div style={{ minHeight: '100vh', background: '#0e1628', fontFamily: "'Segoe UI', sans-serif", color: 'white' }}>
+    <div style={{ minHeight: '100vh', background: t.bg, fontFamily: "'Segoe UI', sans-serif", color: 'white' }}>
 
       {/* Header */}
       <PageHeader title="New Stake" />
@@ -150,7 +152,7 @@ export default function NewStake() {
                 value={amount}
                 onChange={e => setAmount(e.target.value)}
                 placeholder="Min. $100.00"
-                style={{ width: '100%', background: '#0e1628', border: '1px solid rgba(255,255,255,0.1)', color: 'white', fontSize: '11px', padding: '10px 12px', outline: 'none', boxSizing: 'border-box', marginBottom: '6px' }}
+                style={{ width: '100%', background: t.bg, border: '1px solid rgba(255,255,255,0.1)', color: 'white', fontSize: '11px', padding: '10px 12px', outline: 'none', boxSizing: 'border-box', marginBottom: '6px' }}
               />
               {amount && Number(amount) >= 100 && user?.currency && user.currency !== 'USD' && (
                 <div style={{ fontSize: '7px', color: '#f59e0b', marginBottom: '12px' }}>≈ {formatAmount(Number(amount), user.currency)} in your currency</div>

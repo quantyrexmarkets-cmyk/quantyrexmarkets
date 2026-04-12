@@ -1,4 +1,5 @@
 import { useNavigate, useLocation } from 'react-router-dom';
+import { useTheme } from '../context/ThemeContext';
 import { useState, useEffect } from 'react';
 import PageHeader from '../components/PageHeader';
 import { CheckCircle, X, AlertCircle, Zap, TrendingUp, Award, Crown, Rocket, Star } from 'lucide-react';
@@ -20,6 +21,7 @@ export default function Packages() {
   const location = useLocation();
   const urlTab = new URLSearchParams(location.search).get('tab');
   const { user } = useAuth();
+  const { current: t } = useTheme();
   const [activeTab, setActiveTab] = useState(urlTab || 'available');
 
   useEffect(() => {
@@ -93,7 +95,7 @@ export default function Packages() {
   const activeInvestments = investments.filter(i => i.status === 'active');
 
   return (
-    <div style={{ minHeight: '100vh', background: '#0e1628', fontFamily: "'Segoe UI', sans-serif", color: 'white' }}>
+    <div style={{ minHeight: '100vh', background: t.bg, fontFamily: "'Segoe UI', sans-serif", color: 'white' }}>
 
       {/* Low Balance Notice */}
       {lowBalance && (
@@ -117,7 +119,7 @@ export default function Packages() {
       {confirmPlan && (
         <>
           <div onClick={() => setConfirmPlan(null)} style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.6)', zIndex: 150 }}/>
-          <div style={{ position: 'fixed', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', zIndex: 151, background: '#1a2e4a', border: '1px solid rgba(99,102,241,0.4)', padding: '20px', width: '260px' }}>
+          <div style={{ position: 'fixed', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', zIndex: 151, background: t.cardBg, border: '1px solid rgba(99,102,241,0.4)', padding: '20px', width: '260px' }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '14px' }}>
               <span style={{ color: 'white', fontSize: '11px', fontWeight: '700' }}>Confirm Investment</span>
               <button onClick={() => setConfirmPlan(null)} style={{ background: 'none', border: 'none', color: 'rgba(255,255,255,0.4)', cursor: 'pointer' }}><X size={13}/></button>
@@ -195,7 +197,7 @@ export default function Packages() {
 
 
             {/* Records Table */}
-            <div style={{ background: '#1a2e4a', border: '1px solid rgba(255,255,255,0.06)', marginTop: '0' }}>
+            <div style={{ background: t.cardBg, border: '1px solid rgba(255,255,255,0.06)', marginTop: '0' }}>
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '8px 10px', borderBottom: '1px solid rgba(255,255,255,0.06)' }}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
                   <span style={{ color: 'rgba(255,255,255,0.45)', fontSize: '8px' }}>Show</span>
@@ -254,7 +256,7 @@ export default function Packages() {
         {activeTab === 'available' && (
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px' }}>
             {plans.map((plan, i) => (
-              <div key={i} style={{ background: '#1a2e4a', border: '1px solid rgba(99,102,241,0.3)', padding: '12px' }}>
+              <div key={i} style={{ background: t.cardBg, border: '1px solid rgba(99,102,241,0.3)', padding: '12px' }}>
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '6px' }}>
                   <span style={{ color: '#818cf8', fontSize: '7px', fontWeight: '600' }}>{plan.roi}</span>
                   <div style={{ width: '20px', height: '20px', borderRadius: '50%', background: 'rgba(99,102,241,0.2)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
@@ -278,7 +280,7 @@ export default function Packages() {
                 <input
                   value={amounts[i]}
                   onChange={e => { const a = [...amounts]; a[i] = e.target.value; setAmounts(a); }}
-                  style={{ width: '100%', background: '#0e1628', border: '1px solid rgba(255,255,255,0.08)', color: 'white', fontSize: '9px', padding: '6px 8px', outline: 'none', boxSizing: 'border-box', marginBottom: '4px' }}
+                  style={{ width: '100%', background: t.bg, border: '1px solid rgba(255,255,255,0.08)', color: 'white', fontSize: '9px', padding: '6px 8px', outline: 'none', boxSizing: 'border-box', marginBottom: '4px' }}
                 />
                 {amounts[i] && Number(amounts[i]) >= plan.min && user?.currency && user.currency !== 'USD' && (
                   <div style={{ fontSize: '7px', color: '#22c55e', marginBottom: '10px' }}>≈ {formatAmount(Number(amounts[i]), user.currency)}</div>

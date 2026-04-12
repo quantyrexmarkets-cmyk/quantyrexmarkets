@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { useTheme } from '../context/ThemeContext';
 import { useAuth } from '../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
 import { TrendingUp, DollarSign, Clock, CheckCircle } from 'lucide-react';
@@ -8,6 +9,7 @@ import { formatAmountWithCode } from '../utils/currency';
 export default function MyCopyTrades() {
   const { token } = useAuth();
   const navigate = useNavigate();
+  const { current: t } = useTheme();
   const [copyTrades, setCopyTrades] = useState([]);
   const [loading, setLoading] = useState(true);
   const [currency, setCurrency] = useState('USD');
@@ -64,14 +66,14 @@ export default function MyCopyTrades() {
   const totalReturns = copyTrades.reduce((s, t) => s + (t.totalEarned || 0), 0);
 
   return (
-    <div style={{ minHeight: '100vh', background: '#0e1628', fontFamily: "'Segoe UI', sans-serif", color: 'white' }}>
+    <div style={{ minHeight: '100vh', background: t.bg, fontFamily: "'Segoe UI', sans-serif", color: 'white' }}>
       <PageHeader title="My Copy Trades" />
 
       {/* Stop Confirmation Modal */}
       {showStopModal && (
         <>
           <div onClick={() => setShowStopModal(false)} style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.75)', zIndex: 100 }}/>
-          <div style={{ position: 'fixed', top: '50%', left: '50%', transform: 'translate(-50%,-50%)', zIndex: 101, background: '#1a2e4a', border: '1px solid rgba(99,102,241,0.3)', borderRadius: '12px', padding: '20px', width: '320px' }}>
+          <div style={{ position: 'fixed', top: '50%', left: '50%', transform: 'translate(-50%,-50%)', zIndex: 101, background: t.cardBg, border: '1px solid rgba(99,102,241,0.3)', borderRadius: '12px', padding: '20px', width: '320px' }}>
             <div style={{ fontSize: '14px', fontWeight: '700', marginBottom: '10px' }}>Stop Copy Trading?</div>
             <div style={{ fontSize: '10px', color: 'rgba(255,255,255,0.6)', marginBottom: '20px' }}>
               Are you sure you want to stop copying {selectedTrade?.traderName}?
@@ -132,15 +134,15 @@ export default function MyCopyTrades() {
                     <button onClick={() => { setSelectedTrade(trade); setShowStopModal(true); }} style={{ background: 'rgba(239,68,68,0.1)', border: '1px solid rgba(239,68,68,0.25)', padding: '6px 10px', borderRadius: '6px', color: '#ef4444', fontSize: '8px', cursor: 'pointer' }}>✕ Stop</button>
                   </div>
                   <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '6px' }}>
-                    <div style={{ background: '#0e1628', borderRadius: '8px', padding: '8px', textAlign: 'center', border: '1px solid rgba(255,255,255,0.04)' }}>
+                    <div style={{ background: t.bg, borderRadius: '8px', padding: '8px', textAlign: 'center', border: '1px solid rgba(255,255,255,0.04)' }}>
                       <div style={{ fontSize: '7px', color: 'rgba(255,255,255,0.35)', marginBottom: '4px' }}>Invested</div>
                       <div style={{ fontSize: '9px', fontWeight: '700', color: 'white' }}>{formatAmountWithCode(trade.amount, currency)}</div>
                     </div>
-                    <div style={{ background: '#0e1628', borderRadius: '8px', padding: '8px', textAlign: 'center', border: '1px solid rgba(255,255,255,0.04)' }}>
+                    <div style={{ background: t.bg, borderRadius: '8px', padding: '8px', textAlign: 'center', border: '1px solid rgba(255,255,255,0.04)' }}>
                       <div style={{ fontSize: '7px', color: 'rgba(255,255,255,0.35)', marginBottom: '4px' }}>Earned</div>
                       <div style={{ fontSize: '9px', fontWeight: '700', color: isProfit ? '#22c55e' : '#ef4444' }}>{(isProfit ? '+' : '-') + formatAmountWithCode(Math.abs(trade.totalEarned || 0), currency)}</div>
                     </div>
-                    <div style={{ background: '#0e1628', borderRadius: '8px', padding: '8px', textAlign: 'center', border: '1px solid rgba(255,255,255,0.04)' }}>
+                    <div style={{ background: t.bg, borderRadius: '8px', padding: '8px', textAlign: 'center', border: '1px solid rgba(255,255,255,0.04)' }}>
                       <div style={{ fontSize: '7px', color: 'rgba(255,255,255,0.35)', marginBottom: '4px' }}>ROI</div>
                       <div style={{ fontSize: '9px', fontWeight: '700', color: isProfit ? '#22c55e' : '#ef4444' }}>{(isProfit ? '+' : '') + roi.toFixed(2)}%</div>
                     </div>

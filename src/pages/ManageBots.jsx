@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { useTheme } from '../context/ThemeContext';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { formatAmount } from '../utils/currency';
@@ -21,6 +22,7 @@ const headers = () => ({ 'Content-Type': 'application/json', 'Authorization': `B
 export default function ManageBots() {
   const navigate = useNavigate();
   const { user } = useAuth();
+  const { current: t } = useTheme();
   const [activeBots, setActiveBots] = useState([]);
   const [totalEarned, setTotalEarned] = useState(0);
   const [loading, setLoading] = useState(true);
@@ -109,7 +111,7 @@ export default function ManageBots() {
         </div>
 
         {/* Bots Table */}
-        <div style={{ background: '#1a2e4a', border: '1px solid rgba(255,255,255,0.06)' }}>
+        <div style={{ background: t.cardBg, border: '1px solid rgba(255,255,255,0.06)' }}>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '8px 10px', borderBottom: '1px solid rgba(255,255,255,0.06)' }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
               <span style={{ color: 'rgba(255,255,255,0.45)', fontSize: '8px' }}>Show</span>
@@ -171,7 +173,7 @@ export default function ManageBots() {
       {showPlans && (
         <>
           <div onClick={() => setShowPlans(false)} style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.75)', zIndex: 100 }}/>
-          <div style={{ position: 'fixed', top: '50%', left: '50%', transform: 'translate(-50%,-50%)', zIndex: 101, background: '#0e1628', border: '1px solid rgba(99,102,241,0.3)', padding: '16px', width: '340px', maxHeight: '90vh', overflowY: 'auto' }}>
+          <div style={{ position: 'fixed', top: '50%', left: '50%', transform: 'translate(-50%,-50%)', zIndex: 101, background: t.bg, border: '1px solid rgba(99,102,241,0.3)', padding: '16px', width: '340px', maxHeight: '90vh', overflowY: 'auto' }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '14px' }}>
               <span style={{ color: 'white', fontSize: '11px', fontWeight: '700' }}>Subscribe to a Bot</span>
               <button onClick={() => setShowPlans(false)} style={{ background: 'none', border: 'none', color: 'rgba(255,255,255,0.4)', cursor: 'pointer', fontSize: '16px' }}>×</button>

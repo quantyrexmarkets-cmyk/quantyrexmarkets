@@ -8,6 +8,7 @@ import { useTheme, themes } from '../context/ThemeContext';
 export default function SettingsPage() {
   const navigate = useNavigate();
   const { user } = useAuth();
+  const { current: t } = useTheme();
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [twoFAEnabled, setTwoFAEnabled] = useState(user?.twoFactorEnabled || false);
   const [twoFALoading, setTwoFALoading] = useState(false);
@@ -46,7 +47,7 @@ export default function SettingsPage() {
   );
 
   const Section = ({ title, children }) => (
-    <div style={{ background: '#1e293b', border: '1px solid rgba(255,255,255,0.08)', borderRadius: '12px', padding: '16px', marginBottom: '12px' }}>
+    <div style={{ background: t.cardBg, border: '1px solid rgba(255,255,255,0.08)', borderRadius: '12px', padding: '16px', marginBottom: '12px' }}>
       <div style={{ color: 'rgba(255,255,255,0.5)', fontSize: '9px', fontWeight: '700', letterSpacing: '0.1em', marginBottom: '12px', textTransform: 'uppercase' }}>{title}</div>
       {children}
     </div>
@@ -64,11 +65,11 @@ export default function SettingsPage() {
   );
 
   return (
-    <div style={{ minHeight: '100vh', background: '#0f172a', fontFamily: "'Segoe UI', sans-serif" }}>
+    <div style={{ minHeight: '100vh', background: t.bg, fontFamily: "'Segoe UI', sans-serif" }}>
       <DashboardSidebar open={sidebarOpen} onClose={() => setSidebarOpen(false)} />
 
       {/* Header */}
-      <div style={{ background: '#131b2e', padding: '12px 16px', display: 'flex', alignItems: 'center', gap: '12px', borderBottom: '1px solid rgba(255,255,255,0.06)', position: 'sticky', top: 0, zIndex: 100 }}>
+      <div style={{ background: t.bg, padding: '12px 16px', display: 'flex', alignItems: 'center', gap: '12px', borderBottom: '1px solid rgba(255,255,255,0.06)', position: 'sticky', top: 0, zIndex: 100 }}>
         <button onClick={() => navigate('/dashboard')} style={{ background: 'none', border: 'none', color: 'white', cursor: 'pointer', display: 'flex', alignItems: 'center' }}>
           <ArrowLeft size={20} />
         </button>

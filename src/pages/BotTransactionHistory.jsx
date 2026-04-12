@@ -1,4 +1,5 @@
 import { useNavigate } from 'react-router-dom';
+import { useTheme } from '../context/ThemeContext';
 import { useState, useEffect } from 'react';
 import { getBots } from '../services/api';
 import { useAuth } from '../context/AuthContext';
@@ -18,6 +19,7 @@ const statusColor = s => s === 'active' ? '#22c55e' : s === 'completed' ? '#6366
 export default function BotTransactionHistory() {
   const navigate = useNavigate();
   const { user } = useAuth();
+  const { current: t } = useTheme();
   const [search, setSearch] = useState('');
   const [show, setShow] = useState(10);
   const [bots, setBots] = useState([]);
@@ -41,7 +43,7 @@ export default function BotTransactionHistory() {
   );
 
   return (
-    <div style={{ minHeight: '100vh', background: '#0e1628', fontFamily: "'Segoe UI', sans-serif", color: 'white' }}>
+    <div style={{ minHeight: '100vh', background: t.bg, fontFamily: "'Segoe UI', sans-serif", color: 'white' }}>
 
       {/* Header */}
       <PageHeader title="Bot History" />
@@ -62,7 +64,7 @@ export default function BotTransactionHistory() {
             ['Total Earned', formatAmount(totalEarned, user?.currency), '#f59e0b'],
             ['Total Invested', formatAmount(totalInvested, user?.currency), '#ec4899'],
           ].map(([l,v,c]) => (
-            <div key={l} style={{ background: '#1a2e4a', padding: '10px', border: `1px solid ${c}30` }}>
+            <div key={l} style={{ background: t.cardBg, padding: '10px', border: `1px solid ${c}30` }}>
               <div style={{ color: 'rgba(255,255,255,0.5)', fontSize: '7px', marginBottom: '4px' }}>{l}</div>
               <div style={{ color: c, fontSize: '15px', fontWeight: '700' }}>{v}</div>
             </div>
@@ -82,7 +84,7 @@ export default function BotTransactionHistory() {
               const progress = Math.min(100, Math.max(0, ((totalDays - daysLeft) / totalDays) * 100));
               const color = botColors[b.botName] || '#6366f1';
               return (
-                <div key={i} style={{ background: '#1a2e4a', border: `1px solid ${color}40`, padding: '12px', marginBottom: '8px' }}>
+                <div key={i} style={{ background: t.cardBg, border: `1px solid ${color}40`, padding: '12px', marginBottom: '8px' }}>
                   <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '10px' }}>
                     <span style={{ color, fontSize: '10px', fontWeight: '700' }}>{b.botName}</span>
                     <span style={{ color: '#22c55e', fontSize: '8px', background: 'rgba(34,197,94,0.1)', padding: '2px 8px' }}>ACTIVE</span>
@@ -118,7 +120,7 @@ export default function BotTransactionHistory() {
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#6366f1" strokeWidth="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
           Bot History
         </div>
-        <div style={{ background: '#1a2e4a', border: '1px solid rgba(255,255,255,0.06)' }}>
+        <div style={{ background: t.cardBg, border: '1px solid rgba(255,255,255,0.06)' }}>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '8px 10px', borderBottom: '1px solid rgba(255,255,255,0.06)' }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
               <span style={{ color: 'rgba(255,255,255,0.45)', fontSize: '8px' }}>Show</span>

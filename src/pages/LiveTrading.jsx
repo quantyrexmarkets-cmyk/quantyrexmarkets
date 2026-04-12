@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
+import { useTheme } from '../context/ThemeContext';
 import { formatAmount } from '../utils/currency';
 import { useAuth } from '../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
@@ -19,6 +20,7 @@ const DURATIONS = ['30 seconds','1 minute','2 minutes','5 minutes','10 minutes',
 
 export default function LiveTrading() {
   const { user } = useAuth();
+  const { current: t } = useTheme();
   const navigate = useNavigate();
   const [balance, setBalance] = useState(null);
   const [currency, setCurrency] = useState(user?.currency || 'USD');
@@ -107,7 +109,7 @@ export default function LiveTrading() {
       {showForm && (
         <>
           <div onClick={() => setShowForm(false)} style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.75)', zIndex: 100 }}/>
-          <div style={{ position: 'fixed', top: '50%', left: '50%', transform: 'translate(-50%,-50%)', zIndex: 101, background: '#0e1628', border: '1px solid rgba(99,102,241,0.3)', width: '340px', maxHeight: '90vh', overflowY: 'auto' }}>
+          <div style={{ position: 'fixed', top: '50%', left: '50%', transform: 'translate(-50%,-50%)', zIndex: 101, background: t.bg, border: '1px solid rgba(99,102,241,0.3)', width: '340px', maxHeight: '90vh', overflowY: 'auto' }}>
             {/* Chart */}
             <div style={{ height: '200px', position: 'relative' }}>
               <div className='tradingview-widget-container' ref={chartRef} style={{ position: 'absolute', inset: 0 }} />
@@ -189,7 +191,7 @@ export default function LiveTrading() {
         </div>
 
         {/* Trades Table */}
-        <div style={{ background: '#1a2e4a', border: '1px solid rgba(255,255,255,0.06)' }}>
+        <div style={{ background: t.cardBg, border: '1px solid rgba(255,255,255,0.06)' }}>
           {/* Tabs */}
           <div style={{ display: 'flex', borderBottom: '1px solid rgba(255,255,255,0.06)' }}>
             {[['open', `Open (${openTrades.length})`], ['closed', `Closed (${closedTrades.length})`]].map(([key, label]) => (

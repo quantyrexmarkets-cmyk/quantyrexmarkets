@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { useTheme } from '../context/ThemeContext';
 import { useNavigate } from 'react-router-dom';
 import PageHeader from '../components/PageHeader';
 import { createWithdrawal, getWithdrawals } from '../services/api';
@@ -17,6 +18,7 @@ const methods = [
 export default function Withdraw() {
   const navigate = useNavigate();
   const { user } = useAuth();
+  const { current: t } = useTheme();
   const [showMethodSelector, setShowMethodSelector] = useState(false);
   const [selected, setSelected] = useState('');
   const [showForm, setShowForm] = useState(false);
@@ -92,13 +94,13 @@ export default function Withdraw() {
   ).slice(0, show);
 
   return (
-    <div style={{ minHeight: '100vh', background: '#0e1628', fontFamily: "'Segoe UI', sans-serif", color: 'white' }}>
+    <div style={{ minHeight: '100vh', background: t.bg, fontFamily: "'Segoe UI', sans-serif", color: 'white' }}>
 
       {/* Method Selector Modal */}
       {showMethodSelector && !showForm && (
         <>
           <div onClick={() => setShowMethodSelector(false)} style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.6)', zIndex: 100 }} />
-          <div style={{ position: 'fixed', top: '50%', left: '50%', transform: 'translate(-50%,-50%)', zIndex: 151, background: '#0e1628', padding: '20px', width: '340px', borderRadius: '4px', border: '1px solid rgba(255,255,255,0.1)', maxHeight: '90vh', overflowY: 'auto' }}>
+          <div style={{ position: 'fixed', top: '50%', left: '50%', transform: 'translate(-50%,-50%)', zIndex: 151, background: t.bg, padding: '20px', width: '340px', borderRadius: '4px', border: '1px solid rgba(255,255,255,0.1)', maxHeight: '90vh', overflowY: 'auto' }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '14px' }}>
               <div>
                 <span style={{ color: 'white', fontSize: '11px', fontWeight: '700' }}>Transfer Limit: </span>
@@ -108,7 +110,7 @@ export default function Withdraw() {
             </div>
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '8px' }}>
               {methods.map(m => (
-                <div key={m.id} onClick={() => { setSelected(m.id); setShowForm(true); setError(''); }} style={{ background: '#1a2e4a', border: '1px solid rgba(255,255,255,0.08)', padding: '12px', cursor: 'pointer' }}>
+                <div key={m.id} onClick={() => { setSelected(m.id); setShowForm(true); setError(''); }} style={{ background: t.cardBg, border: '1px solid rgba(255,255,255,0.08)', padding: '12px', cursor: 'pointer' }}>
                   <div style={{ display: 'flex', alignItems: 'center', gap: '6px', marginBottom: '5px' }}>
                     <svg width="13" height="13" fill="none" stroke="#818cf8" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d={m.icon} />
@@ -131,7 +133,7 @@ export default function Withdraw() {
       {showForm && (
         <>
           <div onClick={() => { setShowForm(false); setShowMethodSelector(false); }} style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.6)', zIndex: 100 }} />
-          <div style={{ position: 'fixed', top: '50%', left: '50%', transform: 'translate(-50%,-50%)', zIndex: 151, background: '#0e1628', padding: '20px', width: '320px', borderRadius: '4px', border: '1px solid rgba(255,255,255,0.1)', maxHeight: '90vh', overflowY: 'auto' }}>
+          <div style={{ position: 'fixed', top: '50%', left: '50%', transform: 'translate(-50%,-50%)', zIndex: 151, background: t.bg, padding: '20px', width: '320px', borderRadius: '4px', border: '1px solid rgba(255,255,255,0.1)', maxHeight: '90vh', overflowY: 'auto' }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '14px' }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
                 <button onClick={() => { setShowForm(false); }} style={{ background: 'none', border: 'none', color: '#818cf8', fontSize: '9px', cursor: 'pointer' }}>← Back</button>
@@ -206,7 +208,7 @@ export default function Withdraw() {
               )}
             </div>
             <div style={{ color: 'rgba(255,255,255,0.3)', fontSize: '7px', marginBottom: '8px' }}>Available balance: {formatAmount(user?.balance || 0, user?.currency)}</div>
-            <div style={{ background: '#1a2e4a', border: '1px solid rgba(255,255,255,0.08)', padding: '10px', marginBottom: '12px' }}>
+            <div style={{ background: t.cardBg, border: '1px solid rgba(255,255,255,0.08)', padding: '10px', marginBottom: '12px' }}>
               {[['Withdrawal Fee','1%'],['Minimum','$100.00'],['Processing','1-3 Business Days']].map(([k,v]) => (
                 <div key={k} style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '4px' }}>
                   <span style={{ color: 'rgba(255,255,255,0.4)', fontSize: '8px' }}>{k}</span>
@@ -271,7 +273,7 @@ export default function Withdraw() {
         </div>
 
         {/* Table */}
-        <div style={{ background: '#1a2e4a', border: '1px solid rgba(255,255,255,0.06)' }}>
+        <div style={{ background: t.cardBg, border: '1px solid rgba(255,255,255,0.06)' }}>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '8px 10px', borderBottom: '1px solid rgba(255,255,255,0.06)' }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
               <span style={{ color: 'rgba(255,255,255,0.45)', fontSize: '8px' }}>Show</span>

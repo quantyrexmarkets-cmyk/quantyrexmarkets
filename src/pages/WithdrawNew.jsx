@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useTheme } from '../context/ThemeContext';
 import { formatAmountWithCode } from '../utils/currency';
 import { createWithdrawal } from '../services/api';
 import { useAuth } from '../context/AuthContext';
@@ -23,6 +24,7 @@ const methods = [
 export default function WithdrawNew() {
   const navigate = useNavigate();
   const { user } = useAuth();
+  const { current: t } = useTheme();
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [step, setStep] = useState(1); // 1 = select method, 2 = fill form
   const [selectedMethod, setSelectedMethod] = useState(null);
@@ -45,7 +47,7 @@ export default function WithdrawNew() {
   const [showSuccess, setShowSuccess] = useState(false);
   const [submitting, setSubmitting] = useState(false);
 
-  const inputStyle = { width: '100%', background: '#1a2e4a', border: '1px solid rgba(255,255,255,0.08)', color: 'white', fontSize: '9px', padding: '8px 10px', outline: 'none', boxSizing: 'border-box' };
+  const inputStyle = { width: '100%', background: t.cardBg, border: '1px solid rgba(255,255,255,0.08)', color: 'white', fontSize: '9px', padding: '8px 10px', outline: 'none', boxSizing: 'border-box' };
   const labelStyle = { color: 'rgba(255,255,255,0.7)', fontSize: '8px', display: 'block', marginBottom: '6px' };
 
   const handleProceed = () => {
@@ -186,7 +188,7 @@ export default function WithdrawNew() {
   );
 
   return (
-    <div style={{ minHeight: '100vh', background: '#0e1628', fontFamily: "'Segoe UI', sans-serif", color: 'white' }}>
+    <div style={{ minHeight: '100vh', background: t.bg, fontFamily: "'Segoe UI', sans-serif", color: 'white' }}>
       <DashboardSidebar open={sidebarOpen} onClose={() => setSidebarOpen(false)} />
 
       {/* Header */}

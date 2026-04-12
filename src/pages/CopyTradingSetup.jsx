@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { useTheme } from '../context/ThemeContext';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { MapPin, Users, FlaskConical, Heart, CheckCircle2, AlertTriangle, TrendingUp, Shield, Clock } from 'lucide-react';
 import PageHeader from '../components/PageHeader';
@@ -15,6 +16,7 @@ const DURATIONS = [
 export default function CopyTradingSetup() {
   const { state } = useLocation();
   const navigate = useNavigate();
+  const { current: t } = useTheme();
   const trader = state?.trader;
   console.log("Received trader:", trader);
 
@@ -65,7 +67,7 @@ export default function CopyTradingSetup() {
   if (!trader) return null;
 
   if (success) return (
-    <div style={{ minHeight: '100vh', background: '#0e1628', fontFamily: "'Segoe UI', sans-serif", color: 'white', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: '24px' }}>
+    <div style={{ minHeight: '100vh', background: t.bg, fontFamily: "'Segoe UI', sans-serif", color: 'white', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: '24px' }}>
       <div style={{ width: '72px', height: '72px', background: 'rgba(34,197,94,0.15)', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '16px', border: '2px solid rgba(34,197,94,0.3)' }}>
         <CheckCircle2 size={36} color="#22c55e" />
       </div>
@@ -81,12 +83,12 @@ export default function CopyTradingSetup() {
   );
 
   return (
-    <div style={{ minHeight: '100vh', background: '#0e1628', fontFamily: "'Segoe UI', sans-serif", color: 'white' }}>
+    <div style={{ minHeight: '100vh', background: t.bg, fontFamily: "'Segoe UI', sans-serif", color: 'white' }}>
       <PageHeader title="Copy Trading Setup" />
       <div style={{ padding: '14px' }}>
 
         {/* Trader Profile */}
-        <div style={{ background: '#1a2e4a', border: '1px solid rgba(255,255,255,0.06)', borderRadius: '12px', padding: '16px', marginBottom: '14px' }}>
+        <div style={{ background: t.cardBg, border: '1px solid rgba(255,255,255,0.06)', borderRadius: '12px', padding: '16px', marginBottom: '14px' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '14px' }}>
             <div style={{ width: '56px', height: '56px', borderRadius: '50%', overflow: 'hidden', border: '2px solid rgba(99,102,241,0.5)', flexShrink: 0 }}>
               <img src={trader.img} style={{ width: '100%', height: '100%', objectFit: 'cover' }} onError={e => e.target.src = 'https://ui-avatars.com/api/?name=' + trader.name + '&background=6366f1&color=fff'} />
@@ -132,7 +134,7 @@ export default function CopyTradingSetup() {
               { label: 'Risk Score', value: trader.risk + '/10', color: riskColor(trader.risk) },
               { label: 'ROI (Est.)', value: ((trader.winRate / 100) * trader.profitShare).toFixed(1) + '%', color: '#6366f1' },
             ].map((s, i) => (
-              <div key={i} style={{ background: '#0e1628', border: '1px solid rgba(255,255,255,0.06)', borderRadius: '6px', padding: '8px 10px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+              <div key={i} style={{ background: t.bg, border: '1px solid rgba(255,255,255,0.06)', borderRadius: '6px', padding: '8px 10px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                 <span style={{ fontSize: '8px', color: 'rgba(255,255,255,0.45)' }}>{s.label}</span>
                 <span style={{ fontSize: '9px', fontWeight: '700', color: s.color }}>{s.value}</span>
               </div>
@@ -153,7 +155,7 @@ export default function CopyTradingSetup() {
         )}
 
         {/* Duration Selector */}
-        <div style={{ background: '#1a2e4a', border: '1px solid rgba(255,255,255,0.06)', borderRadius: '12px', padding: '14px', marginBottom: '14px' }}>
+        <div style={{ background: t.cardBg, border: '1px solid rgba(255,255,255,0.06)', borderRadius: '12px', padding: '14px', marginBottom: '14px' }}>
           <div style={{ fontSize: '10px', fontWeight: '700', marginBottom: '10px', display: 'flex', alignItems: 'center', gap: '6px' }}>
             <Clock size={12} color="#6366f1" /> Select Duration
           </div>
@@ -168,14 +170,14 @@ export default function CopyTradingSetup() {
         </div>
 
         {/* Investment Amount */}
-        <div style={{ background: '#1a2e4a', border: '1px solid rgba(255,255,255,0.06)', borderRadius: '12px', padding: '14px', marginBottom: '14px' }}>
+        <div style={{ background: t.cardBg, border: '1px solid rgba(255,255,255,0.06)', borderRadius: '12px', padding: '14px', marginBottom: '14px' }}>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '10px' }}>
             <span style={{ fontSize: '10px', fontWeight: '700' }}>Investment Amount</span>
             <span style={{ fontSize: '9px', color: '#22c55e', fontWeight: '600' }}>Balance: {formatAmountWithCode(balance, currency)}</span>
           </div>
           <div style={{ position: 'relative', marginBottom: '4px' }}>
             <span style={{ position: 'absolute', left: '12px', top: '50%', transform: 'translateY(-50%)', color: 'rgba(255,255,255,0.4)', fontSize: '10px' }}>$</span>
-            <input type="number" value={amount} onChange={e => { setAmount(e.target.value); setError(''); }} placeholder="0.00" style={{ width: '100%', background: '#0e1628', border: '1px solid rgba(255,255,255,0.1)', color: 'white', fontSize: '11px', fontWeight: '600', padding: '10px 10px 10px 24px', outline: 'none', borderRadius: '8px', boxSizing: 'border-box' }} />
+            <input type="number" value={amount} onChange={e => { setAmount(e.target.value); setError(''); }} placeholder="0.00" style={{ width: '100%', background: t.bg, border: '1px solid rgba(255,255,255,0.1)', color: 'white', fontSize: '11px', fontWeight: '600', padding: '10px 10px 10px 24px', outline: 'none', borderRadius: '8px', boxSizing: 'border-box' }} />
           </div>
           {amount && Number(amount) > 0 && currency !== 'USD' && (
             <div style={{ fontSize: '9px', color: '#f59e0b', marginBottom: '8px', display: 'flex', alignItems: 'center', gap: '4px' }}>
@@ -193,7 +195,7 @@ export default function CopyTradingSetup() {
 
         {/* Investment Summary */}
         {amount && Number(amount) > 0 && (
-          <div style={{ background: '#1a2e4a', border: '1px solid rgba(99,102,241,0.2)', borderRadius: '12px', padding: '14px', marginBottom: '14px' }}>
+          <div style={{ background: t.cardBg, border: '1px solid rgba(99,102,241,0.2)', borderRadius: '12px', padding: '14px', marginBottom: '14px' }}>
             <div style={{ fontSize: '10px', fontWeight: '700', marginBottom: '10px', display: 'flex', alignItems: 'center', gap: '6px' }}>
               <TrendingUp size={12} color="#6366f1" /> Investment Summary
             </div>

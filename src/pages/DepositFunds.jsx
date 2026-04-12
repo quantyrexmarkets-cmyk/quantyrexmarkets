@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useTheme } from '../context/ThemeContext';
 import { useAuth } from '../context/AuthContext';
 import { formatAmountWithCode } from '../utils/currency';
 import { createDeposit } from '../services/api';
@@ -7,6 +8,7 @@ import PageHeader from '../components/PageHeader';
 
 export default function DepositFunds() {
   const navigate = useNavigate();
+  const { current: t } = useTheme();
   const [amount, setAmount] = useState('100.00');
   const [method, setMethod] = useState('crypto');
   const [copied, setCopied] = useState(false);
@@ -44,7 +46,7 @@ export default function DepositFunds() {
   };
 
   return (
-    <div style={{ minHeight: '100vh', background: '#0e1628', fontFamily: "'Segoe UI', sans-serif", color: 'white' }}>
+    <div style={{ minHeight: '100vh', background: t.bg, fontFamily: "'Segoe UI', sans-serif", color: 'white' }}>
       <PageHeader title="Deposit Funds" />
 
       <div style={{ padding: '16px' }}>
@@ -55,7 +57,7 @@ export default function DepositFunds() {
           {/* Payment Method */}
           <div>
             <div style={{ color: 'rgba(255,255,255,0.6)', fontSize: '9px', marginBottom: '6px' }}>Payment Method</div>
-            <select value={method} onChange={e => setMethod(e.target.value)} style={{ width: '100%', background: '#1a2e4a', border: '1px solid rgba(255,255,255,0.15)', color: 'white', fontSize: '9px', padding: '10px', outline: 'none', boxSizing: 'border-box' }}>
+            <select value={method} onChange={e => setMethod(e.target.value)} style={{ width: '100%', background: t.cardBg, border: '1px solid rgba(255,255,255,0.15)', color: 'white', fontSize: '9px', padding: '10px', outline: 'none', boxSizing: 'border-box' }}>
               <option value='crypto'>Crypto</option>
               <option value='bank'>Bank Transfer</option>
             </select>
@@ -65,13 +67,13 @@ export default function DepositFunds() {
           <div>
             <div style={{ color: 'rgba(255,255,255,0.6)', fontSize: '9px', marginBottom: '6px' }}>Amount to deposit</div>
             <input value={amount} onChange={e => setAmount(e.target.value)}
-              style={{ width: '100%', background: '#1a2e4a', border: '1px solid rgba(255,255,255,0.15)', color: 'white', fontSize: '9px', padding: '10px', outline: 'none', boxSizing: 'border-box' }} />
+              style={{ width: '100%', background: t.cardBg, border: '1px solid rgba(255,255,255,0.15)', color: 'white', fontSize: '9px', padding: '10px', outline: 'none', boxSizing: 'border-box' }} />
           </div>
 
           {/* Payment Proof */}
           <div>
             <div style={{ color: 'rgba(255,255,255,0.6)', fontSize: '9px', marginBottom: '6px' }}>Payment Proof</div>
-            <label style={{ display: 'flex', alignItems: 'center', gap: '10px', background: '#1a2e4a', border: '1px solid rgba(255,255,255,0.15)', padding: '10px', cursor: 'pointer', width: '100%', boxSizing: 'border-box' }}>
+            <label style={{ display: 'flex', alignItems: 'center', gap: '10px', background: t.cardBg, border: '1px solid rgba(255,255,255,0.15)', padding: '10px', cursor: 'pointer', width: '100%', boxSizing: 'border-box' }}>
               <span style={{ background: 'rgba(255,255,255,0.1)', padding: '4px 10px', fontSize: '9px', color: 'white', whiteSpace: 'nowrap' }}>Choose File</span>
               <span style={{ color: fileData ? 'white' : 'rgba(255,255,255,0.3)', fontSize: '9px' }}>{fileName}</span>
               <input type='file' accept='image/*,application/pdf' style={{ display: 'none' }} onChange={e => { if(e.target.files[0]) { setFileName(e.target.files[0].name); setFileData(e.target.files[0]); } }} />
@@ -80,7 +82,7 @@ export default function DepositFunds() {
 
           {/* Bank Transfer Details */}
           {method === 'bank' && (
-            <div style={{ background: '#1a2e4a', border: '1px solid rgba(255,255,255,0.15)', padding: '12px', display: 'flex', flexDirection: 'column', gap: '8px' }}>
+            <div style={{ background: t.cardBg, border: '1px solid rgba(255,255,255,0.15)', padding: '12px', display: 'flex', flexDirection: 'column', gap: '8px' }}>
               <div style={{ color: 'white', fontSize: '10px', fontWeight: '700', marginBottom: '4px' }}>Bank Transfer Details</div>
               {[
                 ['Bank Name', 'VertexTrade Bank'],

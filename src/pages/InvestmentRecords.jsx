@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { useTheme } from '../context/ThemeContext';
 import { useAuth } from '../context/AuthContext';
 import { formatAmount, getCurrencySymbol, formatAmountWithCode } from '../utils/currency';
 import { useNavigate } from 'react-router-dom';
@@ -8,6 +9,7 @@ import { getInvestments } from '../services/api';
 
 export default function InvestmentRecords() {
   const { user } = useAuth();
+  const { current: t } = useTheme();
   const navigate = useNavigate();
   const [show, setShow] = useState(10);
   const perPage = show;
@@ -48,7 +50,7 @@ export default function InvestmentRecords() {
   );
 
   return (
-    <div style={{ minHeight: '100vh', background: '#0e1628', fontFamily: "'Segoe UI', sans-serif", color: 'white' }}>
+    <div style={{ minHeight: '100vh', background: t.bg, fontFamily: "'Segoe UI', sans-serif", color: 'white' }}>
 
       {/* Header */}
       <PageHeader title="Investment Records" />
@@ -70,7 +72,7 @@ export default function InvestmentRecords() {
         </div>
 
         {/* Table */}
-        <div style={{ background: '#1a2e4a', border: '1px solid rgba(255,255,255,0.06)' }}>
+        <div style={{ background: t.cardBg, border: '1px solid rgba(255,255,255,0.06)' }}>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '8px 10px', borderBottom: '1px solid rgba(255,255,255,0.06)' }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
               <span style={{ color: 'rgba(255,255,255,0.45)', fontSize: '8px' }}>Show</span>

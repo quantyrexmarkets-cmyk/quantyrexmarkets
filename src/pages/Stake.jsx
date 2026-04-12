@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { useTheme } from '../context/ThemeContext';
 import { useAuth } from '../context/AuthContext';
 import { formatAmount, getCurrencySymbol } from '../utils/currency';
 import { getStakes } from '../services/api';
@@ -17,6 +18,7 @@ const stakePlans = [
 
 export default function Stake() {
   const { user } = useAuth();
+  const { current: t } = useTheme();
   const navigate = useNavigate();
   const location = useLocation();
   useEffect(() => { if (location.search.includes('new=1')) setShowForm(true); }, [location]);
@@ -80,7 +82,7 @@ export default function Stake() {
   const paginated = filtered.slice((page-1)*perPage, page*perPage);
 
   return (
-    <div style={{ minHeight: '100vh', background: '#0e1628', fontFamily: "'Segoe UI', sans-serif", color: 'white' }}>
+    <div style={{ minHeight: '100vh', background: t.bg, fontFamily: "'Segoe UI', sans-serif", color: 'white' }}>
 
       {/* Header */}
       <PageHeader title="Stake" />
@@ -91,7 +93,7 @@ export default function Stake() {
       {showForm && (
         <>
           <div onClick={() => setShowForm(false)} style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.6)', zIndex: 100 }}/>
-          <div style={{ position: 'fixed', top: '50%', left: '50%', transform: 'translate(-50%,-50%)', zIndex: 101, background: '#0e1628', border: '1px solid rgba(99,102,241,0.3)', padding: '16px', width: '340px', maxHeight: '90vh', overflowY: 'auto' }}>
+          <div style={{ position: 'fixed', top: '50%', left: '50%', transform: 'translate(-50%,-50%)', zIndex: 101, background: t.bg, border: '1px solid rgba(99,102,241,0.3)', padding: '16px', width: '340px', maxHeight: '90vh', overflowY: 'auto' }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '14px' }}>
               <span style={{ color: 'white', fontSize: '11px', fontWeight: '700' }}>New Stake</span>
               <button onClick={() => setShowForm(false)} style={{ background: 'none', border: 'none', color: 'rgba(255,255,255,0.4)', cursor: 'pointer', fontSize: '16px' }}>×</button>
@@ -116,14 +118,14 @@ export default function Stake() {
             {/* Form */}
             <div style={{ marginBottom: '10px' }}>
               <div style={{ color: 'rgba(255,255,255,0.7)', fontSize: '8px', marginBottom: '4px' }}>Selected Plan</div>
-              <div style={{ background: '#1a2e4a', border: '1px solid rgba(255,255,255,0.08)', padding: '8px 10px', fontSize: '9px', color: selectedPlan ? selectedPlan.color : 'rgba(255,255,255,0.3)' }}>
+              <div style={{ background: t.cardBg, border: '1px solid rgba(255,255,255,0.08)', padding: '8px 10px', fontSize: '9px', color: selectedPlan ? selectedPlan.color : 'rgba(255,255,255,0.3)' }}>
                 {selectedPlan ? `${selectedPlan.name} — ${selectedPlan.apy} APY — ${selectedPlan.duration} days` : 'No plan selected'}
               </div>
             </div>
             <div style={{ marginBottom: '10px' }}>
               <div style={{ color: 'rgba(255,255,255,0.7)', fontSize: '8px', marginBottom: '4px' }}>Amount (USD) — Balance: <span style={{ color: '#22c55e' }}>{formatAmount(balance, user?.currency)}</span></div>
               <input value={amount} onChange={e => setAmount(e.target.value)} placeholder="0.00"
-                style={{ width: '100%', background: '#1a2e4a', border: '1px solid rgba(255,255,255,0.08)', color: 'white', fontSize: '9px', padding: '8px 10px', outline: 'none', boxSizing: 'border-box' }} />
+                style={{ width: '100%', background: t.cardBg, border: '1px solid rgba(255,255,255,0.08)', color: 'white', fontSize: '9px', padding: '8px 10px', outline: 'none', boxSizing: 'border-box' }} />
               {amount && Number(amount) > 0 && user?.currency && user.currency !== 'USD' && (
                 <div style={{ fontSize: '7px', color: '#f59e0b', marginTop: '4px' }}>≈ {formatAmount(Number(amount), user.currency)} in your currency</div>
               )}
@@ -184,7 +186,7 @@ export default function Stake() {
         </div>
 
         {/* Table */}
-        <div style={{ background: '#1a2e4a', border: '1px solid rgba(255,255,255,0.06)' }}>
+        <div style={{ background: t.cardBg, border: '1px solid rgba(255,255,255,0.06)' }}>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '8px 10px', borderBottom: '1px solid rgba(255,255,255,0.06)' }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
               <span style={{ color: 'rgba(255,255,255,0.45)', fontSize: '8px' }}>Show</span>

@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { useTheme } from '../context/ThemeContext';
 import { useNavigate } from 'react-router-dom';
 import { Search, MapPin, Users, FlaskConical, Heart, CheckCircle2 } from 'lucide-react';
 import PageHeader from '../components/PageHeader';
@@ -21,6 +22,7 @@ const TRADERS_DEFAULT = [
 
 export default function CopyTrading() {
   const navigate = useNavigate();
+  const { current: t } = useTheme();
   const [traders, setTraders] = useState(TRADERS_DEFAULT);
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState('');
@@ -43,7 +45,7 @@ export default function CopyTrading() {
 
 
   return (
-    <div style={{ minHeight: '100vh', background: '#0e1628', fontFamily: "'Segoe UI', sans-serif", color: 'white' }}>
+    <div style={{ minHeight: '100vh', background: t.bg, fontFamily: "'Segoe UI', sans-serif", color: 'white' }}>
       <PageHeader title="Copy Trading" />
       <div style={{ padding: '14px' }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '6px', marginBottom: '6px' }}>
@@ -53,10 +55,10 @@ export default function CopyTrading() {
         <p style={{ fontSize: '8px', color: 'rgba(255,255,255,0.45)', margin: '0 0 14px' }}>Copy expert traders from all over the world and enhance your investment portfolio.</p>
         <div style={{ position: 'relative', marginBottom: '16px' }}>
           <Search size={12} color="rgba(255,255,255,0.3)" style={{ position: 'absolute', left: '10px', top: '50%', transform: 'translateY(-50%)' }} />
-          <input value={search} onChange={e => setSearch(e.target.value)} placeholder="Search expert traders" style={{ width: '100%', background: '#1a2e4a', border: '1px solid rgba(255,255,255,0.08)', color: 'white', fontSize: '9px', padding: '9px 10px 9px 28px', outline: 'none', boxSizing: 'border-box' }} />
+          <input value={search} onChange={e => setSearch(e.target.value)} placeholder="Search expert traders" style={{ width: '100%', background: t.cardBg, border: '1px solid rgba(255,255,255,0.08)', color: 'white', fontSize: '9px', padding: '9px 10px 9px 28px', outline: 'none', boxSizing: 'border-box' }} />
         </div>
         {filtered.map(t => (
-          <div key={t.id} style={{ background: '#1a2e4a', border: '1px solid rgba(255,255,255,0.06)', borderRadius: '12px', padding: '16px', marginBottom: '12px', position: 'relative' }}>
+          <div key={t.id} style={{ background: t.cardBg, border: '1px solid rgba(255,255,255,0.06)', borderRadius: '12px', padding: '16px', marginBottom: '12px', position: 'relative' }}>
             <div style={{ position: 'absolute', top: '12px', right: '12px', fontSize: '20px' }}>{t.flag}</div>
             <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', marginBottom: '10px' }}>
               <div style={{ width: '64px', height: '64px', borderRadius: '50%', overflow: 'hidden', border: '2px solid rgba(99,102,241,0.5)', marginBottom: '8px' }}>
@@ -92,7 +94,7 @@ export default function CopyTrading() {
             </div>
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '6px', marginBottom: '14px' }}>
               {[{ label: 'Total trades', value: t.totalTrades, color: 'white' }, { label: 'Total loss', value: t.totalLoss, color: '#ef4444' }, { label: 'Profit share', value: t.profitShare + '%', color: '#22c55e' }, { label: 'Win rate', value: t.winRate + '%', color: '#22c55e' }].map((s, i) => (
-                <div key={i} style={{ background: '#0e1628', border: '1px solid rgba(255,255,255,0.06)', borderRadius: '6px', padding: '8px 10px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                <div key={i} style={{ background: t.bg, border: '1px solid rgba(255,255,255,0.06)', borderRadius: '6px', padding: '8px 10px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                   <span style={{ fontSize: '8px', color: 'rgba(255,255,255,0.45)' }}>{s.label}</span>
                   <span style={{ fontSize: '9px', fontWeight: '700', color: s.color }}>{s.value}</span>
                 </div>

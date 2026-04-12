@@ -1,10 +1,12 @@
 import { useState, useEffect } from 'react';
+import { useTheme } from '../context/ThemeContext';
 import { useNavigate } from 'react-router-dom';
 import PageHeader from '../components/PageHeader';
 import { submitKyc, getKycStatus } from '../services/api';
 
 export default function KYC() {
   const navigate = useNavigate();
+  const { current: t } = useTheme();
   const [idType, setIdType] = useState('');
   const [idNumber, setIdNumber] = useState('');
   const [idFront, setIdFront] = useState(null);
@@ -19,7 +21,7 @@ export default function KYC() {
   const [loading, setLoading] = useState(true);
   const [submitting, setSubmitting] = useState(false);
 
-  const inputStyle = { width: '100%', background: '#1a2e4a', border: '1px solid rgba(255,255,255,0.08)', color: 'white', fontSize: '9px', padding: '8px 10px', outline: 'none', boxSizing: 'border-box' };
+  const inputStyle = { width: '100%', background: t.cardBg, border: '1px solid rgba(255,255,255,0.08)', color: 'white', fontSize: '9px', padding: '8px 10px', outline: 'none', boxSizing: 'border-box' };
   const labelStyle = { color: 'rgba(255,255,255,0.7)', fontSize: '8px', display: 'block', marginBottom: '6px' };
 
   useEffect(() => {
@@ -41,7 +43,7 @@ export default function KYC() {
   const FileInput = ({ label, fileName, onChange }) => (
     <div style={{ marginBottom: '12px' }}>
       <label style={labelStyle}>{label} <span style={{ color: '#ef4444' }}>*</span></label>
-      <div style={{ display: 'flex', alignItems: 'center', gap: '8px', background: '#1a2e4a', border: '1px solid rgba(255,255,255,0.08)', padding: '6px 10px' }}>
+      <div style={{ display: 'flex', alignItems: 'center', gap: '8px', background: t.cardBg, border: '1px solid rgba(255,255,255,0.08)', padding: '6px 10px' }}>
         <label style={{ background: 'rgba(255,255,255,0.08)', color: 'white', fontSize: '8px', padding: '4px 10px', cursor: 'pointer', whiteSpace: 'nowrap' }}>
           Choose File<input type='file' accept='image/*,.pdf' style={{ display: 'none' }} onChange={onChange} />
         </label>
@@ -103,7 +105,7 @@ export default function KYC() {
   const isLocked = kycStatus === 'submitted' || kycStatus === 'approved';
 
   return (
-    <div style={{ minHeight: '100vh', background: '#0e1628', fontFamily: "'Segoe UI', sans-serif", color: 'white' }}>
+    <div style={{ minHeight: '100vh', background: t.bg, fontFamily: "'Segoe UI', sans-serif", color: 'white' }}>
 
       {/* Header */}
       <PageHeader title="KYC" />
@@ -117,9 +119,9 @@ export default function KYC() {
 
         {/* Status Banner */}
         {loading ? (
-          <div style={{ background: '#1a2e4a', padding: '12px 16px', marginBottom: '16px', color: 'rgba(255,255,255,0.3)', fontSize: '8px' }}>Loading status...</div>
+          <div style={{ background: t.cardBg, padding: '12px 16px', marginBottom: '16px', color: 'rgba(255,255,255,0.3)', fontSize: '8px' }}>Loading status...</div>
         ) : kycStatus && (
-          <div style={{ background: '#1a2e4a', border: `1px solid ${statusColor[kycStatus]}40`, padding: '12px 16px', marginBottom: '16px', display: 'flex', alignItems: 'center', gap: '10px' }}>
+          <div style={{ background: t.cardBg, border: `1px solid ${statusColor[kycStatus]}40`, padding: '12px 16px', marginBottom: '16px', display: 'flex', alignItems: 'center', gap: '10px' }}>
             <div style={{ width: '36px', height: '36px', borderRadius: '50%', border: `2px solid ${statusColor[kycStatus]}`, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
               {statusIcon[kycStatus]}
             </div>
@@ -156,7 +158,7 @@ export default function KYC() {
             <div style={{ marginBottom: '12px' }}>
               <label style={labelStyle}>ID Type <span style={{ color: '#ef4444' }}>*</span></label>
               <select value={idType} onChange={e => setIdType(e.target.value)}
-                style={{ width: '100%', background: '#1a2e4a', border: '1px solid rgba(255,255,255,0.08)', color: idType ? 'white' : 'rgba(255,255,255,0.4)', fontSize: '9px', padding: '8px 10px', outline: 'none', boxSizing: 'border-box' }}>
+                style={{ width: '100%', background: t.cardBg, border: '1px solid rgba(255,255,255,0.08)', color: idType ? 'white' : 'rgba(255,255,255,0.4)', fontSize: '9px', padding: '8px 10px', outline: 'none', boxSizing: 'border-box' }}>
                 <option value=''>Select ID Type</option>
                 <option value='passport'>International Passport</option>
                 <option value='national_id'>National ID Card</option>

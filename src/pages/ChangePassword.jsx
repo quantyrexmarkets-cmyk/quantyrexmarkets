@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
+import { useTheme } from '../context/ThemeContext';
 import { useNavigate } from 'react-router-dom';
 import { ArrowLeft, Lock, Mail, Shield } from 'lucide-react';
 
 export default function ChangePassword() {
   const navigate = useNavigate();
+  const { current: t } = useTheme();
   const [step, setStep] = useState(1);
   const [email, setEmail] = useState('');
   const [code, setCode] = useState('');
@@ -72,8 +74,8 @@ export default function ChangePassword() {
   ];
 
   return (
-    <div style={{ minHeight: '100vh', background: '#0f172a', fontFamily: "'Segoe UI', sans-serif" }}>
-      <div style={{ background: '#131b2e', padding: '12px 16px', display: 'flex', alignItems: 'center', gap: '12px', borderBottom: '1px solid rgba(255,255,255,0.06)' }}>
+    <div style={{ minHeight: '100vh', background: t.bg, fontFamily: "'Segoe UI', sans-serif" }}>
+      <div style={{ background: t.bg, padding: '12px 16px', display: 'flex', alignItems: 'center', gap: '12px', borderBottom: '1px solid rgba(255,255,255,0.06)' }}>
         <button onClick={() => step > 1 ? setStep(step - 1) : navigate('/dashboard/settings')} style={{ background: 'none', border: 'none', color: 'white', cursor: 'pointer', display: 'flex' }}>
           <ArrowLeft size={20} />
         </button>
@@ -89,7 +91,7 @@ export default function ChangePassword() {
           ))}
         </div>
 
-        <div style={{ background: '#1e293b', border: '1px solid rgba(255,255,255,0.08)', borderRadius: '12px', padding: '24px 20px' }}>
+        <div style={{ background: t.cardBg, border: '1px solid rgba(255,255,255,0.08)', borderRadius: '12px', padding: '24px 20px' }}>
           {success ? (
             <div style={{ textAlign: 'center', padding: '20px' }}>
               <div style={{ fontSize: '40px', marginBottom: '12px' }}>✅</div>
@@ -109,7 +111,7 @@ export default function ChangePassword() {
               {step === 1 && (
                 <>
                   <input type="email" value={email} onChange={e => setEmail(e.target.value)} placeholder="Enter your email address"
-                    style={{ width: '100%', background: '#0f172a', border: '1px solid rgba(255,255,255,0.1)', color: 'white', fontSize: '12px', padding: '12px', outline: 'none', borderRadius: '8px', boxSizing: 'border-box', marginBottom: '12px' }} />
+                    style={{ width: '100%', background: t.bg, border: '1px solid rgba(255,255,255,0.1)', color: 'white', fontSize: '12px', padding: '12px', outline: 'none', borderRadius: '8px', boxSizing: 'border-box', marginBottom: '12px' }} />
                   {error && <div style={{ color: '#ef4444', fontSize: '10px', marginBottom: '12px' }}>{error}</div>}
                   <button onClick={sendCode} disabled={loading} style={{ width: '100%', padding: '12px', background: loading ? '#4b5563' : '#6366f1', border: 'none', color: 'white', fontSize: '12px', fontWeight: '700', cursor: 'pointer', borderRadius: '8px' }}>
                     {loading ? 'Sending...' : 'Send Verification Code'}
@@ -121,7 +123,7 @@ export default function ChangePassword() {
                 <>
                   <div style={{ color: 'rgba(255,255,255,0.5)', fontSize: '10px', textAlign: 'center', marginBottom: '16px' }}>Code sent to <span style={{ color: '#6366f1' }}>{email}</span></div>
                   <input type="text" value={code} onChange={e => setCode(e.target.value)} placeholder="Enter 6-digit code" maxLength={6}
-                    style={{ width: '100%', background: '#0f172a', border: '1px solid rgba(255,255,255,0.1)', color: 'white', fontSize: '18px', padding: '12px', outline: 'none', borderRadius: '8px', boxSizing: 'border-box', marginBottom: '12px', textAlign: 'center', letterSpacing: '6px' }} />
+                    style={{ width: '100%', background: t.bg, border: '1px solid rgba(255,255,255,0.1)', color: 'white', fontSize: '18px', padding: '12px', outline: 'none', borderRadius: '8px', boxSizing: 'border-box', marginBottom: '12px', textAlign: 'center', letterSpacing: '6px' }} />
                   {error && <div style={{ color: '#ef4444', fontSize: '10px', marginBottom: '12px' }}>{error}</div>}
                   <button onClick={verifyCode} disabled={loading} style={{ width: '100%', padding: '12px', background: loading ? '#4b5563' : '#6366f1', border: 'none', color: 'white', fontSize: '12px', fontWeight: '700', cursor: 'pointer', borderRadius: '8px' }}>
                     {loading ? 'Verifying...' : 'Verify Code'}
@@ -139,7 +141,7 @@ export default function ChangePassword() {
                       </label>
                       <input type="password" value={form[field]} onChange={e => setForm(prev => ({ ...prev, [field]: e.target.value }))}
                         placeholder={field === 'newPassword' ? 'Enter new password' : 'Confirm new password'}
-                        style={{ width: '100%', background: '#0f172a', border: '1px solid rgba(255,255,255,0.1)', color: 'white', fontSize: '12px', padding: '12px', outline: 'none', borderRadius: '8px', boxSizing: 'border-box' }} />
+                        style={{ width: '100%', background: t.bg, border: '1px solid rgba(255,255,255,0.1)', color: 'white', fontSize: '12px', padding: '12px', outline: 'none', borderRadius: '8px', boxSizing: 'border-box' }} />
                     </div>
                   ))}
                   {error && <div style={{ color: '#ef4444', fontSize: '10px', marginBottom: '12px' }}>{error}</div>}

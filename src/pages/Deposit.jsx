@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { useTheme } from '../context/ThemeContext';
 import { createDeposit, getDeposits } from '../services/api';
 import { useNavigate } from 'react-router-dom';
 import { Copy } from 'lucide-react';
@@ -9,6 +10,7 @@ import { formatAmountWithCode, formatAmount, getCurrencySymbol } from '../utils/
 export default function Deposit() {
   const navigate = useNavigate();
   const { user } = useAuth();
+  const { current: t } = useTheme();
   const [showForm, setShowForm] = useState(false);
   const [deposits, setDeposits] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -96,11 +98,11 @@ export default function Deposit() {
   const totalPages = Math.ceil(filtered.length / perPage);
   const paginated = filtered.slice((page-1)*perPage, page*perPage);
 
-  const inputStyle = { width: '100%', background: '#1a2e4a', border: '1px solid rgba(255,255,255,0.08)', color: 'white', fontSize: '9px', padding: '8px 10px', outline: 'none', boxSizing: 'border-box' };
+  const inputStyle = { width: '100%', background: t.cardBg, border: '1px solid rgba(255,255,255,0.08)', color: 'white', fontSize: '9px', padding: '8px 10px', outline: 'none', boxSizing: 'border-box' };
   const labelStyle = { color: 'rgba(255,255,255,0.7)', fontSize: '8px', display: 'block', marginBottom: '6px' };
 
   return (
-    <div style={{ minHeight: '100vh', background: '#0e1628', fontFamily: "'Segoe UI', sans-serif", color: 'white' }}>
+    <div style={{ minHeight: '100vh', background: t.bg, fontFamily: "'Segoe UI', sans-serif", color: 'white' }}>
 
       {/* Header */}
       <PageHeader title="Deposit" />
@@ -111,7 +113,7 @@ export default function Deposit() {
       {showForm && (
         <>
           <div onClick={() => setShowForm(false)} style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.6)', zIndex: 100 }}/>
-          <div style={{ position: 'fixed', top: '50%', left: '50%', transform: 'translate(-50%,-50%)', zIndex: 101, background: '#0e1628', border: '1px solid rgba(99,102,241,0.3)', padding: '16px', width: '320px', maxHeight: '90vh', overflowY: 'auto' }}>
+          <div style={{ position: 'fixed', top: '50%', left: '50%', transform: 'translate(-50%,-50%)', zIndex: 101, background: t.bg, border: '1px solid rgba(99,102,241,0.3)', padding: '16px', width: '320px', maxHeight: '90vh', overflowY: 'auto' }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '14px' }}>
               <span style={{ color: 'white', fontSize: '11px', fontWeight: '700' }}>Deposit Funds</span>
               <button onClick={() => setShowForm(false)} style={{ background: 'none', border: 'none', color: 'rgba(255,255,255,0.4)', cursor: 'pointer', fontSize: '16px' }}>×</button>
@@ -123,7 +125,7 @@ export default function Deposit() {
                 <div style={{ marginBottom: '12px' }}>
                   <label style={labelStyle}>Payment Method</label>
                   <select value={depositMethod} onChange={e => setDepositMethod(e.target.value)}
-                    style={{ width: '100%', background: '#1a2e4a', border: '1px solid rgba(255,255,255,0.08)', color: 'white', fontSize: '9px', padding: '8px 10px', outline: 'none', boxSizing: 'border-box' }}>
+                    style={{ width: '100%', background: t.cardBg, border: '1px solid rgba(255,255,255,0.08)', color: 'white', fontSize: '9px', padding: '8px 10px', outline: 'none', boxSizing: 'border-box' }}>
                     <option value='crypto'>Crypto (USDT)</option>
                     <option value='bank'>Bank Transfer</option>
                   </select>
@@ -134,7 +136,7 @@ export default function Deposit() {
                 </div>
                 <div style={{ marginBottom: '16px' }}>
                   <label style={labelStyle}>Payment Proof</label>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '6px', background: '#1a2e4a', border: '1px solid rgba(255,255,255,0.08)', padding: '5px 8px' }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '6px', background: t.cardBg, border: '1px solid rgba(255,255,255,0.08)', padding: '5px 8px' }}>
                     <label style={{ background: 'rgba(255,255,255,0.08)', color: 'white', fontSize: '7px', padding: '3px 8px', cursor: 'pointer', whiteSpace: 'nowrap' }}>
                       Choose File
                       <input type='file' accept='image/*' style={{ display: 'none' }} onChange={e => { if(e.target.files[0]){ setFileData(e.target.files[0]); setFileName(e.target.files[0].name); }}}/>
@@ -187,7 +189,7 @@ export default function Deposit() {
         </div>
 
         {/* Table */}
-        <div style={{ background: '#1a2e4a', border: '1px solid rgba(255,255,255,0.06)' }}>
+        <div style={{ background: t.cardBg, border: '1px solid rgba(255,255,255,0.06)' }}>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '8px 10px', borderBottom: '1px solid rgba(255,255,255,0.06)' }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
               <span style={{ color: 'rgba(255,255,255,0.45)', fontSize: '8px' }}>Show</span>

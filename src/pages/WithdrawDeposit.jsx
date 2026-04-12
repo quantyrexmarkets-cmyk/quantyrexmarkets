@@ -1,4 +1,5 @@
 import { useNavigate, useLocation } from 'react-router-dom';
+import { useTheme } from '../context/ThemeContext';
 import { Upload, Download, Copy } from 'lucide-react';
 import { useState, useEffect } from 'react';
 import DashboardSidebar from '../components/DashboardSidebar';
@@ -10,6 +11,7 @@ export default function WithdrawDeposit() {
   const navigate = useNavigate();
   const location = useLocation();
   const { user } = useAuth();
+  const { current: t } = useTheme();
   const urlTab = new URLSearchParams(location.search).get('tab');
   const [activeTab, setActiveTab] = useState(urlTab || 'deposit');
 
@@ -132,7 +134,7 @@ const handleWithdraw = async () => {
   const statusColor = (s) => s === 'completed' ? '#22c55e' : s === 'pending' ? '#f59e0b' : '#ef4444';
 
   return (
-    <div style={{ minHeight: '100vh', background: '#0e1628', fontFamily: "'Segoe UI', sans-serif", color: 'white' }}>
+    <div style={{ minHeight: '100vh', background: t.bg, fontFamily: "'Segoe UI', sans-serif", color: 'white' }}>
       <DashboardSidebar open={sidebarOpen} onClose={() => setSidebarOpen(false)} />
 
       {/* Header */}
@@ -247,7 +249,7 @@ const handleWithdraw = async () => {
             </div>
 
             {/* Deposits Table */}
-            <div style={{ marginTop: '20px', background: '#1a2e4a', border: '1px solid rgba(255,255,255,0.06)' }}>
+            <div style={{ marginTop: '20px', background: t.cardBg, border: '1px solid rgba(255,255,255,0.06)' }}>
               <div style={{ padding: '8px 10px', borderBottom: '1px solid rgba(255,255,255,0.06)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                 <span style={{ color: 'white', fontSize: '9px', fontWeight: '700' }}>Recent Deposits</span>
               </div>

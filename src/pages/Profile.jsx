@@ -1,4 +1,5 @@
 import { useNavigate, useLocation } from 'react-router-dom';
+import { useTheme } from '../context/ThemeContext';
 import PageHeader from '../components/PageHeader';
 import { User, Edit2, RefreshCw } from 'lucide-react';
 import { useState, useEffect } from 'react';
@@ -61,6 +62,7 @@ const COUNTRIES = [
 
 export default function Profile() {
   const navigate = useNavigate();
+  const { current: t } = useTheme();
   const { user, updateUser, logout } = useAuth();
   const location = useLocation();
   const [activeTab, setActiveTab] = useState(location.state?.tab || 'profile');
@@ -222,7 +224,7 @@ export default function Profile() {
   };
 
   const inputStyle = (field) => ({
-    width: '100%', background: '#0e1628',
+    width: '100%', background: t.bg,
     border: '1px solid ' + (errors[field] ? '#ef4444' : 'rgba(255,255,255,0.08)'),
     color: 'white', fontSize: '9px', padding: '7px 10px', outline: 'none', boxSizing: 'border-box'
   });
@@ -232,7 +234,7 @@ export default function Profile() {
   const selectedCountry = getSelectedCountry();
 
   return (
-    <div style={{ minHeight: '100vh', background: '#0e1628', fontFamily: "'Segoe UI', sans-serif", color: 'white' }}>
+    <div style={{ minHeight: '100vh', background: t.bg, fontFamily: "'Segoe UI', sans-serif", color: 'white' }}>
 
       {/* Top Nav */}
       <PageHeader title="Profile" />
@@ -307,11 +309,11 @@ export default function Profile() {
                 </div>
               )}
               <div style={{ display: 'flex', alignItems: 'center' }}>
-                <label style={{ background: '#1a2e4a', border: '1px solid rgba(255,255,255,0.1)', color: 'rgba(255,255,255,0.7)', fontSize: '8px', padding: '6px 12px', cursor: 'pointer', whiteSpace: 'nowrap' }}>
+                <label style={{ background: t.cardBg, border: '1px solid rgba(255,255,255,0.1)', color: 'rgba(255,255,255,0.7)', fontSize: '8px', padding: '6px 12px', cursor: 'pointer', whiteSpace: 'nowrap' }}>
                   Choose File
                   <input type='file' accept='image/*' style={{ display: 'none' }} onChange={handleFileChange}/>
                 </label>
-                <span style={{ background: '#0e1628', border: '1px solid rgba(255,255,255,0.08)', borderLeft: 'none', color: 'rgba(255,255,255,0.3)', fontSize: '8px', padding: '6px 12px', flex: 1 }}>{fileName}</span>
+                <span style={{ background: t.bg, border: '1px solid rgba(255,255,255,0.08)', borderLeft: 'none', color: 'rgba(255,255,255,0.3)', fontSize: '8px', padding: '6px 12px', flex: 1 }}>{fileName}</span>
               </div>
             </div>
 
@@ -334,7 +336,7 @@ export default function Profile() {
             {/* Currency */}
             <div style={{ marginBottom: '14px' }}>
               <label style={labelStyle}>Country Currency</label>
-              <select name='currency' value={form.currency} onChange={handleChange} style={{ width: '60%', background: '#0e1628', border: '1px solid rgba(255,255,255,0.08)', color: 'white', fontSize: '9px', padding: '7px 10px', outline: 'none' }}>
+              <select name='currency' value={form.currency} onChange={handleChange} style={{ width: '60%', background: t.bg, border: '1px solid rgba(255,255,255,0.08)', color: 'white', fontSize: '9px', padding: '7px 10px', outline: 'none' }}>
                 <option>US Dollar (USD)</option>
                 <option>Euro (EUR)</option>
                 <option>British Pound (GBP)</option>
@@ -374,7 +376,7 @@ export default function Profile() {
                     name='phoneCode'
                     value={form.phoneCode}
                     onChange={handlePhoneCodeChange}
-                    style={{ background: '#0e1628', border: '1px solid rgba(255,255,255,0.08)', borderRight: 'none', color: 'white', fontSize: '8px', padding: '7px 4px', outline: 'none', maxWidth: '70px' }}
+                    style={{ background: t.bg, border: '1px solid rgba(255,255,255,0.08)', borderRight: 'none', color: 'white', fontSize: '8px', padding: '7px 4px', outline: 'none', maxWidth: '70px' }}
                   >
                     {COUNTRIES.map((c, i) => (
                       <option key={i} value={c.code}>{c.flag} {c.code}</option>
@@ -386,7 +388,7 @@ export default function Profile() {
                     onChange={handleChange}
                     placeholder={`${selectedCountry.minLen}-${selectedCountry.maxLen} digits`}
                     maxLength={selectedCountry.maxLen}
-                    style={{ flex: 1, background: '#0e1628', border: '1px solid ' + (errors.phone ? '#ef4444' : 'rgba(255,255,255,0.08)'), color: 'white', fontSize: '9px', padding: '7px 10px', outline: 'none', boxSizing: 'border-box' }}
+                    style={{ flex: 1, background: t.bg, border: '1px solid ' + (errors.phone ? '#ef4444' : 'rgba(255,255,255,0.08)'), color: 'white', fontSize: '9px', padding: '7px 10px', outline: 'none', boxSizing: 'border-box' }}
                   />
                 </div>
                 {errors.phone
@@ -407,7 +409,7 @@ export default function Profile() {
                 name='country'
                 value={form.country}
                 onChange={handleCountryChange}
-                style={{ width: '100%', background: '#0e1628', border: '1px solid ' + (errors.country ? '#ef4444' : 'rgba(255,255,255,0.08)'), color: 'white', fontSize: '9px', padding: '7px 10px', outline: 'none' }}
+                style={{ width: '100%', background: t.bg, border: '1px solid ' + (errors.country ? '#ef4444' : 'rgba(255,255,255,0.08)'), color: 'white', fontSize: '9px', padding: '7px 10px', outline: 'none' }}
               >
                 <option value=''>Select Country</option>
                 {COUNTRIES.map((c, i) => (
@@ -434,7 +436,7 @@ export default function Profile() {
             {/* Address */}
             <div style={{ marginBottom: '16px' }}>
               <label style={labelStyle}>Address *</label>
-              <textarea name='address' value={form.address} onChange={handleChange} placeholder='Enter your address here' rows={3} style={{ width: '100%', background: '#0e1628', border: '1px solid ' + (errors.address ? '#ef4444' : 'rgba(255,255,255,0.08)'), color: 'white', fontSize: '9px', padding: '7px 10px', outline: 'none', boxSizing: 'border-box', resize: 'vertical' }}/>
+              <textarea name='address' value={form.address} onChange={handleChange} placeholder='Enter your address here' rows={3} style={{ width: '100%', background: t.bg, border: '1px solid ' + (errors.address ? '#ef4444' : 'rgba(255,255,255,0.08)'), color: 'white', fontSize: '9px', padding: '7px 10px', outline: 'none', boxSizing: 'border-box', resize: 'vertical' }}/>
               {errors.address && <div style={errStyle}>{errors.address}</div>}
             </div>
 

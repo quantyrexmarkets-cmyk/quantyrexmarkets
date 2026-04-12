@@ -1,4 +1,5 @@
 import { useNavigate, useLocation } from 'react-router-dom';
+import { useTheme } from '../context/ThemeContext';
 import { useAuth } from '../context/AuthContext';
 import { useState, useEffect, useRef } from 'react';
 import { User, BarChart2, Wallet, Bot, TrendingUp, Clock, ArrowDownCircle, Package, Lock, Users, ChevronRight, Globe, X, Download, Bell, Settings, Home } from 'lucide-react';
@@ -77,6 +78,7 @@ const sidebarSections = [
 export default function DashboardSidebar({ open, onClose }) {
   const location = useLocation();
   const { user } = useAuth();
+  const { current: t } = useTheme();
   const navigate = useNavigate();
   const [openSubmenu, setOpenSubmenu] = useState(null);
 
@@ -98,7 +100,7 @@ export default function DashboardSidebar({ open, onClose }) {
       {open && <div onClick={onClose} style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.4)', backdropFilter: 'blur(6px)', WebkitBackdropFilter: 'blur(6px)', zIndex: 1099 }} />}
       <div style={{
         position: 'fixed', top: 0, left: open ? '0' : '-220px', height: '100vh', width: '210px',
-        background: '#131b2e', zIndex: 1100, transition: 'left 0.3s ease',
+        background: t.bg, zIndex: 1100, transition: 'left 0.3s ease',
         display: 'flex', flexDirection: 'column', borderRight: '1px solid rgba(255,255,255,0.12)', overflowY: 'auto'
       }}>
         {/* Logo */}

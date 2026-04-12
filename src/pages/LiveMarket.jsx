@@ -1,4 +1,5 @@
 import { useNavigate } from 'react-router-dom';
+import { useTheme } from '../context/ThemeContext';
 import { useState, useEffect, useRef } from 'react';
 import PageHeader from '../components/PageHeader';
 import { BarChart2, TrendingUp, Bitcoin } from 'lucide-react';
@@ -145,7 +146,7 @@ export default function LiveMarket() {
   }, [activeTab]);
 
   return (
-    <div style={{ minHeight: '100vh', background: '#0e1628', fontFamily: "'Segoe UI', sans-serif", color: 'white' }}>
+    <div style={{ minHeight: '100vh', background: t.bg, fontFamily: "'Segoe UI', sans-serif", color: 'white' }}>
 
       {/* Header */}
       <PageHeader title="Live Market" />
