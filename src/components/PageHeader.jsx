@@ -34,7 +34,7 @@ export default function PageHeader({ title }) {
           <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
         </button>
 
-        {title && <span style={{ color: 'rgba(255,255,255,0.4)', fontSize: '10px' }}>/ {title}</span>}
+        {title && <span style={{ color: 'rgba(255,255,255,0.7)', fontSize: '11px', fontWeight: '500' }}>{title}</span>}
 
         <div style={{ marginLeft: 'auto', display: 'flex', gap: '6px', alignItems: 'stretch' }}>
 
