@@ -1,18 +1,23 @@
 const baseTemplate = require('./base');
 
 const botProfitEmail = (name, botName, profit, totalEarned, newBalance, currency) => baseTemplate(`
-  <p style="color:#ffffff;font-size:13px;margin:0 0 20px;line-height:1.7;">Dear ${name || 'Valued Client'},</p>
-  <p style="color:#22c55e;font-size:14px;margin:0 0 20px;line-height:1.8;font-weight:500;">Great news!</p>
-  <p style="color:#888888;font-size:12px;margin:0 0 20px;line-height:1.8;">Your automated trading bot has generated profit.</p>
+  <p style="color:#ffffff;font-size:13px;margin:0 0 20px;line-height:1.7;font-family:'Montserrat',Arial,sans-serif;font-weight:300;">Dear ${name || 'Valued Client'},</p>
+  <p style="color:#22c55e;font-size:13px;margin:0 0 20px;line-height:1.8;font-family:'Montserrat',Arial,sans-serif;font-weight:400;">Great news!</p>
+  <p style="color:#ffffff;font-size:12px;margin:0 0 20px;line-height:1.8;font-family:'Montserrat',Arial,sans-serif;font-weight:300;">Your automated trading bot has successfully generated profit from the latest trading session.</p>
+  <p style="color:#ffffff;font-size:12px;margin:0 0 12px;line-height:1.7;font-family:'Montserrat',Arial,sans-serif;font-weight:300;">Bot Performance:</p>
   <table width="100%" style="margin:20px 0;background:#0d1117;border:1px solid #1a1a1a;"><tr><td style="padding:16px;"><table width="100%">
-    <tr><td style="padding:8px 0;border-bottom:1px solid #1a1a1a;"><span style="color:#666666;font-size:11px;">Bot</span></td><td align="right" style="padding:8px 0;border-bottom:1px solid #1a1a1a;"><span style="color:#ffffff;font-size:12px;">${botName || 'Trading Bot'}</span></td></tr>
-    <tr><td style="padding:8px 0;border-bottom:1px solid #1a1a1a;"><span style="color:#666666;font-size:11px;">Profit</span></td><td align="right" style="padding:8px 0;border-bottom:1px solid #1a1a1a;"><span style="color:#22c55e;font-size:12px;font-weight:500;">+${currency} ${parseFloat(profit || 0).toFixed(2)}</span></td></tr>
-    <tr><td style="padding:8px 0;border-bottom:1px solid #1a1a1a;"><span style="color:#666666;font-size:11px;">Total Earned</span></td><td align="right" style="padding:8px 0;border-bottom:1px solid #1a1a1a;"><span style="color:#22c55e;font-size:12px;">+${currency} ${parseFloat(totalEarned || 0).toFixed(2)}</span></td></tr>
-    <tr><td style="padding:8px 0;"><span style="color:#666666;font-size:11px;">Balance</span></td><td align="right" style="padding:8px 0;"><span style="color:#ffffff;font-size:12px;font-weight:500;">${currency} ${parseFloat(newBalance || 0).toFixed(2)}</span></td></tr>
+    <tr><td style="padding:8px 0;border-bottom:1px solid #1a1a1a;"><span style="color:#ffffff;font-size:11px;font-family:'Montserrat',Arial,sans-serif;font-weight:300;">Bot Name</span></td><td align="right" style="padding:8px 0;border-bottom:1px solid #1a1a1a;"><span style="color:#ffffff;font-size:12px;font-family:'Montserrat',Arial,sans-serif;font-weight:300;">${botName || 'Automated Trading Bot'}</span></td></tr>
+    <tr><td style="padding:8px 0;border-bottom:1px solid #1a1a1a;"><span style="color:#ffffff;font-size:11px;font-family:'Montserrat',Arial,sans-serif;font-weight:300;">Strategy</span></td><td align="right" style="padding:8px 0;border-bottom:1px solid #1a1a1a;"><span style="color:#ffffff;font-size:12px;font-family:'Montserrat',Arial,sans-serif;font-weight:300;">Automated Trading Bot</span></td></tr>
+    <tr><td style="padding:8px 0;border-bottom:1px solid #1a1a1a;"><span style="color:#ffffff;font-size:11px;font-family:'Montserrat',Arial,sans-serif;font-weight:300;">Profit Generated</span></td><td align="right" style="padding:8px 0;border-bottom:1px solid #1a1a1a;"><span style="color:#22c55e;font-size:12px;font-family:'Montserrat',Arial,sans-serif;font-weight:300;">+${currency} ${parseFloat(profit || 0).toLocaleString('en-US', { minimumFractionDigits: 2 })}</span></td></tr>
+    <tr><td style="padding:8px 0;border-bottom:1px solid #1a1a1a;"><span style="color:#ffffff;font-size:11px;font-family:'Montserrat',Arial,sans-serif;font-weight:300;">Total Earned</span></td><td align="right" style="padding:8px 0;border-bottom:1px solid #1a1a1a;"><span style="color:#22c55e;font-size:12px;font-family:'Montserrat',Arial,sans-serif;font-weight:300;">+${currency} ${parseFloat(totalEarned || 0).toLocaleString('en-US', { minimumFractionDigits: 2 })}</span></td></tr>
+    <tr><td style="padding:8px 0;"><span style="color:#ffffff;font-size:11px;font-family:'Montserrat',Arial,sans-serif;font-weight:300;">Account Balance</span></td><td align="right" style="padding:8px 0;"><span style="color:#ffffff;font-size:12px;font-family:'Montserrat',Arial,sans-serif;font-weight:300;">${currency} ${parseFloat(newBalance || 0).toLocaleString('en-US', { minimumFractionDigits: 2 })}</span></td></tr>
   </table></td></tr></table>
-  <a href="https://quantyrexmarkets.vercel.app/dashboard/manage-bots" style="display:inline-block;background:#6366f1;color:#ffffff;font-size:12px;font-weight:500;padding:14px 32px;text-decoration:none;letter-spacing:0.5px;margin-bottom:24px;">VIEW BOTS</a>
-  <p style="color:#888888;font-size:12px;margin:24px 0 20px;line-height:1.8;">Thank you for trusting Quantyrex Markets.</p>
-  <p style="color:#666666;font-size:11px;margin:30px 0 0;line-height:1.7;">Warm regards,<br/><span style="color:#888888;">The Quantyrex Markets Team</span></p>
+  <p style="color:#ffffff;font-size:12px;margin:0 0 20px;line-height:1.8;font-family:'Montserrat',Arial,sans-serif;font-weight:300;">The profit has been credited to your account balance and is now available.</p>
+  <p style="color:#ffffff;font-size:12px;margin:0 0 24px;line-height:1.8;font-family:'Montserrat',Arial,sans-serif;font-weight:300;">Our system continues to monitor market conditions to optimize future performance.</p>
+  <a href="https://quantyrexmarkets.vercel.app/dashboard/manage-bots" style="display:inline-block;background:#6366f1;color:#ffffff;font-size:11px;font-weight:400;padding:14px 32px;text-decoration:none;letter-spacing:1px;margin-bottom:24px;font-family:'Montserrat',Arial,sans-serif;">VIEW BOT PERFORMANCE</a>
+  <p style="color:#ffffff;font-size:12px;margin:24px 0 20px;line-height:1.8;font-family:'Montserrat',Arial,sans-serif;font-weight:300;">If you need assistance or want to adjust your bot settings, our support team is available to help.</p>
+  <p style="color:#ffffff;font-size:12px;margin:0 0 20px;line-height:1.8;font-family:'Montserrat',Arial,sans-serif;font-weight:300;">Thank you for trusting Quantyrex Markets.</p>
+  <p style="color:#ffffff;font-size:11px;margin:30px 0 0;line-height:1.7;font-family:'Montserrat',Arial,sans-serif;font-weight:300;">Warm regards,<br/><span style="color:#ffffff;">The Quantyrex Markets Team</span></p>
 `);
 
 module.exports = botProfitEmail;

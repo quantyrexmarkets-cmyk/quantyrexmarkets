@@ -55,11 +55,23 @@ const adminLimiter = rateLimit({ windowMs: 15 * 60 * 1000, max: 50, message: { m
 
 let cachedDb = null;
 async function connectDB() {
-  if (cachedDb) return cachedDb;
-  const db = await mongoose.connect(process.env.MONGODB_URI, { serverSelectionTimeoutMS: 5000, socketTimeoutMS: 5000, connectTimeoutMS: 5000, bufferCommands: false });
-  cachedDb = db;
-  console.log('✅ MongoDB connected');
-  return db;
+  if (cachedDb && mongoose.connection.readyState === 1) return cachedDb;
+  if (mongoose.connection.readyState === 2) {
+    await new Promise(resolve => mongoose.connection.once('connected', resolve));
+    return mongoose.connection;
+  }
+  if (mongoose.connection.readyState === 0) {
+    const db = await mongoose.connect(process.env.MONGODB_URI, {
+      serverSelectionTimeoutMS: 30000,
+      socketTimeoutMS: 75000,
+      connectTimeoutMS: 30000,
+      maxPoolSize: 10,
+    });
+    cachedDb = db;
+    console.log('✅ MongoDB connected');
+    return db;
+  }
+  return mongoose.connection;
 }
 
 app.use(async (req, res, next) => {

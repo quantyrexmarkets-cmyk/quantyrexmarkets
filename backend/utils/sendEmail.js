@@ -124,7 +124,7 @@ const sendEmail = async (options) => {
       html = stakeProfitEmail(name, stakePlan, profit, totalEarned, newBalance, currency);
       break;
     case 'planUpgrade':
-      subject = 'Account Upgraded! 🎉 — Quantyrex Markets';
+      subject = 'Your Plan Has Been Upgraded — Quantyrex Markets';
       html = planUpgradeEmail(name, packageName, planDetails);
       break;
     case 'registrationFee':
