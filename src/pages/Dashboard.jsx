@@ -293,6 +293,8 @@ export default function Dashboard() {
                 {/* Inner Glass Balance Card */}
                 <div style={{ background: t.cardBg2, backdropFilter: 'blur(20px)', WebkitBackdropFilter: 'blur(20px)', border: `1px solid ${t.border}`, borderRadius: '12px', padding: '14px', marginBottom: '8px', position: 'relative', overflow: 'hidden', boxShadow: t.bg === '#111111' ? '0 0 20px rgba(99,102,241,0.15), inset 0 1px 0 rgba(99,102,241,0.1)' : 'none' }}>
                   <div style={{ position: 'absolute', inset: 0, background: 'transparent', pointerEvents: 'none' }} />
+                  {t.bg === '#111111' && <div style={{ position: 'absolute', bottom: '-20px', left: '50%', transform: 'translateX(-50%)', width: '80%', height: '60px', borderRadius: '50%', background: 'rgba(99,102,241,0.35)', filter: 'blur(40px)', pointerEvents: 'none' }} />}
+                  {t.bg === '#111111' && <div style={{ position: 'absolute', top: '-20px', right: '-20px', width: '80px', height: '80px', borderRadius: '50%', background: 'rgba(99,102,241,0.2)', filter: 'blur(30px)', pointerEvents: 'none' }} />}
                   <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '6px', marginBottom: '4px' }}>
                     <svg width='16' height='16' fill='none' stroke='rgba(255,255,255,0.6)' viewBox='0 0 24 24' strokeWidth='2'><rect x='2' y='5' width='20' height='14' rx='2'/><line x1='2' y1='10' x2='22' y2='10'/></svg>
                     <span style={{ color: t.subText, fontSize: '12px', fontWeight: '600' }}>Account Balance</span>
