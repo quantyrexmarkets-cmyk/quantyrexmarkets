@@ -273,32 +273,32 @@ export default function Dashboard() {
               <path d="M20 8L8 14V22L20 34L32 22V14L20 8Z" fill="#0d1117" stroke="#6366F1" strokeWidth="1.2"/>
               <path d="M20 14L12 18V23L20 30L28 23V18L20 14Z" fill="#6366F1" stroke="#6366F1" strokeWidth="1"/>
             </svg>
-              <span style={{ color: 'white', fontSize: '13px', fontWeight: '300', letterSpacing: '1px', fontFamily: "'Montserrat', Arial, sans-serif" }}>QUANTYREX</span><span style={{ color: '#6366f1', fontSize: '13px', fontWeight: '300', letterSpacing: '1px', fontFamily: "'Montserrat', Arial, sans-serif" }}>&nbsp;&nbsp;MARKETS</span>
+              <span style={{ color: t.bg === '#f8fafc' ? '#0f172a' : 'white', fontSize: '13px', fontWeight: '300', letterSpacing: '1px', fontFamily: "'Montserrat', Arial, sans-serif" }}>QUANTYREX</span><span style={{ color: '#6366f1', fontSize: '13px', fontWeight: '300', letterSpacing: '1px', fontFamily: "'Montserrat', Arial, sans-serif" }}>&nbsp;&nbsp;MARKETS</span>
               <span style={{ color: 'rgba(255,255,255,0.4)', fontSize: '10px' }}>| {u.firstName || ''} {u.lastName || ''}</span>
             </div>
 
             <DashboardTicker />
             <div style={{ height: '16px' }}></div>
             {/* Welcome Card */}
-            <div style={{ position: 'relative', borderRadius: '16px', overflow: 'hidden', marginBottom: '20px', background: 'linear-gradient(135deg, rgba(99,102,241,0.15) 0%, rgba(15,23,42,0.9) 50%, rgba(99,102,241,0.1) 100%)', backdropFilter: 'blur(20px)', WebkitBackdropFilter: 'blur(20px)', border: '1px solid rgba(99,102,241,0.25)', boxShadow: '0 8px 32px rgba(99,102,241,0.15), inset 0 1px 0 rgba(255,255,255,0.1)', padding: '14px 12px', textAlign: 'center' }}>
+            <div style={{ position: 'relative', borderRadius: '16px', overflow: 'hidden', marginBottom: '20px', background: t.bg === '#f8fafc' ? '#ffffff' : 'linear-gradient(135deg, rgba(99,102,241,0.15) 0%, rgba(15,23,42,0.9) 50%, rgba(99,102,241,0.1) 100%)', backdropFilter: 'blur(20px)', WebkitBackdropFilter: 'blur(20px)', border: t.bg === '#f8fafc' ? '1px solid #e2e8f0' : '1px solid rgba(99,102,241,0.25)', boxShadow: '0 8px 32px rgba(99,102,241,0.15), inset 0 1px 0 rgba(255,255,255,0.1)', padding: '14px 12px', textAlign: 'center' }}>
 
               {/* Glow effects */}
               <div style={{ position: 'absolute', top: '-40px', right: '-40px', width: '150px', height: '150px', borderRadius: '50%', background: 'rgba(99,102,241,0.2)', filter: 'blur(40px)', pointerEvents: 'none', opacity: t.bg === '#f8fafc' ? 0.1 : 1 }} />
               <div style={{ position: 'absolute', bottom: '-40px', left: '-40px', width: '150px', height: '150px', borderRadius: '50%', background: 'rgba(99,102,241,0.15)', filter: 'blur(40px)', pointerEvents: 'none', opacity: t.bg === '#f8fafc' ? 0.1 : 1 }} />
 
               <div style={{ position: 'relative' }}>
-                <div style={{ color: 'white', fontSize: '15px', fontWeight: '300', letterSpacing: '0.3px', marginBottom: '4px' }}>Welcome back, {u.firstName || 'User'} {u.lastName || ''}!</div>
-                <div style={{ color: 'rgba(255,255,255,0.35)', fontSize: '11px', fontWeight: '300', marginBottom: '10px' }}>Your investment dashboard overview</div>
+                <div style={{ color: t.bg === '#f8fafc' ? '#0f172a' : 'white', fontSize: '15px', fontWeight: '300', letterSpacing: '0.3px', marginBottom: '4px' }}>Welcome back, {u.firstName || 'User'} {u.lastName || ''}!</div>
+                <div style={{ color: t.bg === '#f8fafc' ? '#64748b' : 'rgba(255,255,255,0.35)', fontSize: '11px', fontWeight: '300', marginBottom: '10px' }}>Your investment dashboard overview</div>
 
                 {/* Inner Glass Balance Card */}
-                <div style={{ background: 'rgba(0,0,0,0.3)', backdropFilter: 'blur(20px)', WebkitBackdropFilter: 'blur(20px)', border: '1px solid rgba(255,255,255,0.06)', borderRadius: '12px', padding: '14px', marginBottom: '8px', position: 'relative', overflow: 'hidden' }}>
+                <div style={{ background: t.bg === '#f8fafc' ? '#f1f5f9' : 'rgba(0,0,0,0.3)', backdropFilter: 'blur(20px)', WebkitBackdropFilter: 'blur(20px)', border: t.bg === '#f8fafc' ? '1px solid #e2e8f0' : '1px solid rgba(255,255,255,0.06)', borderRadius: '12px', padding: '14px', marginBottom: '8px', position: 'relative', overflow: 'hidden' }}>
                   <div style={{ position: 'absolute', inset: 0, background: 'transparent', pointerEvents: 'none' }} />
                   <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '6px', marginBottom: '4px' }}>
                     <svg width='16' height='16' fill='none' stroke='rgba(255,255,255,0.6)' viewBox='0 0 24 24' strokeWidth='2'><rect x='2' y='5' width='20' height='14' rx='2'/><line x1='2' y1='10' x2='22' y2='10'/></svg>
-                    <span style={{ color: 'rgba(255,255,255,0.6)', fontSize: '12px', fontWeight: '600' }}>Account Balance</span>
+                    <span style={{ color: t.bg === '#f8fafc' ? '#64748b' : 'rgba(255,255,255,0.6)', fontSize: '12px', fontWeight: '600' }}>Account Balance</span>
                   </div>
-                  <div style={{ color: 'rgba(255,255,255,0.4)', fontSize: '11px', marginBottom: '10px' }}>Your available funds</div>
-                  <div style={{ color: 'white', fontSize: '16px', fontWeight: '700', marginBottom: '6px' }}>{formatAmountWithCode(u.balance || 0, u.currency)}</div>
+                  <div style={{ color: t.bg === '#f8fafc' ? '#64748b' : 'rgba(255,255,255,0.4)', fontSize: '11px', marginBottom: '10px' }}>Your available funds</div>
+                  <div style={{ color: t.bg === '#f8fafc' ? '#0f172a' : 'white', fontSize: '16px', fontWeight: '700', marginBottom: '6px' }}>{formatAmountWithCode(u.balance || 0, u.currency)}</div>
                   <div style={{ display: 'inline-flex', alignItems: 'center', gap: '5px', background: 'rgba(255,255,255,0.08)', padding: '4px 12px', borderRadius: '20px', marginBottom: '8px' }}>
                     <svg width='12' height='12' fill='none' stroke='rgba(255,255,255,0.6)' viewBox='0 0 24 24' strokeWidth='2'><polyline points='20 6 9 17 4 12'/></svg>
                     <span style={{ color: 'rgba(255,255,255,0.6)', fontSize: '11px' }}>Available for Withdrawal</span>
@@ -309,7 +309,7 @@ export default function Dashboard() {
                       {u.kycStatus === 'approved' ? '✓ KYC Verified' : '✗ KYC Not Verified'}
                     </span>
                   </div>
-                  <div style={{ color: 'rgba(255,255,255,0.3)', fontSize: '8px' }}>Last updated: {new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })} {new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</div>
+                  <div style={{ color: t.bg === '#f8fafc' ? '#94a3b8' : 'rgba(255,255,255,0.3)', fontSize: '8px' }}>Last updated: {new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })} {new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</div>
                 </div>
 
                 {/* Action Buttons */}
@@ -336,10 +336,10 @@ export default function Dashboard() {
                   <div style={{ position: 'absolute', top: 0, left: 0, right: 0, height: '2px', background: `linear-gradient(90deg, ${s.iconBg}, transparent)`, borderRadius: '14px 14px 0 0' }} />
                   <div style={{ position: 'relative' }}>
                     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '8px' }}>
-                      <span style={{ color: 'rgba(255,255,255,0.55)', fontSize: 'clamp(9px, 2vw, 11px)' }}>{s.label}</span>
+                      <span style={{ color: t.bg === '#f8fafc' ? '#64748b' : 'rgba(255,255,255,0.55)', fontSize: 'clamp(9px, 2vw, 11px)' }}>{s.label}</span>
                       <div style={{ width: '28px', height: '28px', borderRadius: '50%', background: s.iconBg + '20', border: `1px solid ${s.iconBg}40`, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>{s.icon}</div>
                     </div>
-                    <div style={{ color: 'white', fontWeight: '700', fontSize: 'clamp(12px, 2.5vw, 16px)', marginBottom: '8px' }}>{s.value}</div>
+                    <div style={{ color: t.bg === '#f8fafc' ? '#0f172a' : 'white', fontWeight: '700', fontSize: 'clamp(12px, 2.5vw, 16px)', marginBottom: '8px' }}>{s.value}</div>
                     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                       <span style={{ color: 'rgba(255,255,255,0.3)', fontSize: '8px' }}>{s.btc}</span>
                       {s.hasViewTrade && <button onClick={() => navigate('/dashboard/packages')} style={{ background: 'rgba(99,102,241,0.15)', border: '1px solid rgba(99,102,241,0.3)', color: '#818cf8', fontSize: '8px', padding: '2px 6px', cursor: 'pointer', borderRadius: '4px' }}>View</button>}
@@ -355,8 +355,8 @@ export default function Dashboard() {
                 <div style={{ width: '48px', height: '48px', background: 'rgba(99,102,241,0.15)', borderRadius: '12px', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 12px' }}>
                   <svg width='24' height='24' fill='none' stroke='#6366f1' viewBox='0 0 24 24' strokeWidth='2'><path d='M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z'/><polyline points='9 12 11 14 15 10'/></svg>
                 </div>
-                <div style={{ color: 'white', fontSize: '16px', fontWeight: '700', marginBottom: '6px' }}>Identity Verification</div>
-                <div style={{ color: 'rgba(255,255,255,0.45)', fontSize: '12px', marginBottom: '16px' }}>Complete verification to access all features</div>
+                <div style={{ color: t.bg === '#f8fafc' ? '#0f172a' : 'white', fontSize: '16px', fontWeight: '700', marginBottom: '6px' }}>Identity Verification</div>
+                <div style={{ color: t.bg === '#f8fafc' ? '#64748b' : 'rgba(255,255,255,0.45)', fontSize: '12px', marginBottom: '16px' }}>Complete verification to access all features</div>
                 <button onClick={() => navigate('/dashboard/kyc')} style={{ width: '100%', background: 'linear-gradient(90deg, #3b82f6, #6366f1)', border: 'none', color: 'white', fontSize: '13px', fontWeight: '700', padding: '13px', cursor: 'pointer', borderRadius: '10px', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px', boxShadow: '0 4px 15px rgba(99,102,241,0.4)' }}>
                   View Details
                   <svg width='16' height='16' fill='none' stroke='currentColor' viewBox='0 0 24 24' strokeWidth='2'><polyline points='6 9 12 15 18 9'/></svg>
@@ -368,7 +368,7 @@ export default function Dashboard() {
             {/* Transaction List */}
             <div style={{ background: 'rgba(255,255,255,0.04)', backdropFilter: 'blur(16px)', WebkitBackdropFilter: 'blur(16px)', border: '1px solid rgba(255,255,255,0.08)', borderRadius: '12px', padding: '10px', boxShadow: t.bg === '#f8fafc' ? '0 4px 20px rgba(0,0,0,0.05)' : '0 4px 24px rgba(0,0,0,0.2)', marginBottom: '20px' }}>
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '12px' }}>
-                <span style={{ color: 'white', fontSize: '9px', fontWeight: '700', letterSpacing: '0.08em' }}>TRANSACTION LIST</span>
+                <span style={{ color: t.bg === '#f8fafc' ? '#0f172a' : 'white', fontSize: '9px', fontWeight: '700', letterSpacing: '0.08em' }}>TRANSACTION LIST</span>
                 <select style={{ background: 'rgba(255,255,255,0.15)', border: '1px solid rgba(255,255,255,0.08)', color: 'white', fontSize: '8px', padding: '3px 8px', outline: 'none' }}>
                   <option>Today</option><option>This Week</option><option>This Month</option>
                 </select>
