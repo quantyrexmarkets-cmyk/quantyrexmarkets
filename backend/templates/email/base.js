@@ -4,9 +4,9 @@ const baseTemplate = (content) => `
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
 </head>
-<body style="margin:0;padding:0;background:#0a0a0a;font-family:'Helvetica Neue',Arial,sans-serif;">
+<body style="margin:0;padding:0;background:#0a0a0a;font-family:'Montserrat',Arial,sans-serif;">
   <table width="100%" cellpadding="0" cellspacing="0" border="0" style="background:#0a0a0a;">
     <tr>
       <td align="center">
@@ -34,10 +34,10 @@ const baseTemplate = (content) => `
           </tr>
           <tr>
             <td style="padding:20px 24px;">
-              <p style="margin:0 0 5px 0;color:#505050;font-size:10px;line-height:1.5;">
+              <p style="margin:0 0 5px 0;color:#505050;font-size:10px;line-height:1.5;font-family:'Montserrat',Arial,sans-serif;">
                 Questions? Contact support@quantyrexmarkets.com
               </p>
-              <p style="margin:0;color:#353535;font-size:9px;">
+              <p style="margin:0;color:#353535;font-size:9px;font-family:'Montserrat',Arial,sans-serif;">
                 &copy; 2026 Quantyrex Markets. All rights reserved.
               </p>
             </td>
