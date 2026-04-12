@@ -105,6 +105,7 @@ function TrendyStocks() {
 export default function Dashboard() {
   const navigate = useNavigate();
   const { user } = useAuth();
+  const { current: t } = useTheme();
   const [dashData, setDashData] = useState(null);
   const [transactions, setTransactions] = useState([]);
   const [amount, setAmount] = useState('100.00');
