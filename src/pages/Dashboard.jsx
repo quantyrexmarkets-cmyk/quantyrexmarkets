@@ -280,7 +280,7 @@ export default function Dashboard() {
             <DashboardTicker />
             <div style={{ height: '16px' }}></div>
             {/* Welcome Card */}
-            <div style={{ position: 'relative', borderRadius: '16px', overflow: 'hidden', marginBottom: '20px', background: t.bg === '#f8fafc' ? '#ffffff' : 'linear-gradient(135deg, rgba(99,102,241,0.15) 0%, rgba(15,23,42,0.9) 50%, rgba(99,102,241,0.1) 100%)', backdropFilter: 'blur(20px)', WebkitBackdropFilter: 'blur(20px)', border: t.bg === '#f8fafc' ? '1px solid #e2e8f0' : '1px solid rgba(99,102,241,0.25)', boxShadow: '0 8px 32px rgba(99,102,241,0.15), inset 0 1px 0 rgba(255,255,255,0.1)', padding: '14px 12px', textAlign: 'center' }}>
+            <div style={{ position: 'relative', borderRadius: '16px', overflow: 'hidden', marginBottom: '20px', background: t.bg === '#f8fafc' ? '#ffffff' : t.bg === '#111111' ? 'linear-gradient(135deg, rgba(99,102,241,0.15) 0%, rgba(0,0,0,0.9) 50%, rgba(99,102,241,0.1) 100%)' : 'linear-gradient(135deg, rgba(99,102,241,0.15) 0%, rgba(15,23,42,0.9) 50%, rgba(99,102,241,0.1) 100%)', backdropFilter: 'blur(20px)', WebkitBackdropFilter: 'blur(20px)', border: t.bg === '#f8fafc' ? '1px solid #e2e8f0' : '1px solid rgba(99,102,241,0.25)', boxShadow: '0 8px 32px rgba(99,102,241,0.15), inset 0 1px 0 rgba(255,255,255,0.1)', padding: '14px 12px', textAlign: 'center' }}>
 
               {/* Glow effects */}
               <div style={{ position: 'absolute', top: '-40px', right: '-40px', width: '150px', height: '150px', borderRadius: '50%', background: 'rgba(99,102,241,0.2)', filter: 'blur(40px)', pointerEvents: 'none', opacity: t.bg === '#f8fafc' ? 0.1 : 1 }} />
@@ -291,7 +291,7 @@ export default function Dashboard() {
                 <div style={{ color: t.bg === '#f8fafc' ? '#64748b' : 'rgba(255,255,255,0.35)', fontSize: '11px', fontWeight: '300', marginBottom: '10px' }}>Your investment dashboard overview</div>
 
                 {/* Inner Glass Balance Card */}
-                <div style={{ background: t.bg === '#f8fafc' ? '#f1f5f9' : 'rgba(0,0,0,0.3)', backdropFilter: 'blur(20px)', WebkitBackdropFilter: 'blur(20px)', border: t.bg === '#f8fafc' ? '1px solid #e2e8f0' : '1px solid rgba(255,255,255,0.06)', borderRadius: '12px', padding: '14px', marginBottom: '8px', position: 'relative', overflow: 'hidden' }}>
+                <div style={{ background: t.bg === '#f8fafc' ? '#f1f5f9' : t.bg === '#111111' ? 'rgba(0,0,0,0.5)' : 'rgba(0,0,0,0.3)', backdropFilter: 'blur(20px)', WebkitBackdropFilter: 'blur(20px)', border: t.bg === '#f8fafc' ? '1px solid #e2e8f0' : '1px solid rgba(255,255,255,0.06)', borderRadius: '12px', padding: '14px', marginBottom: '8px', position: 'relative', overflow: 'hidden' }}>
                   <div style={{ position: 'absolute', inset: 0, background: 'transparent', pointerEvents: 'none' }} />
                   <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '6px', marginBottom: '4px' }}>
                     <svg width='16' height='16' fill='none' stroke='rgba(255,255,255,0.6)' viewBox='0 0 24 24' strokeWidth='2'><rect x='2' y='5' width='20' height='14' rx='2'/><line x1='2' y1='10' x2='22' y2='10'/></svg>
