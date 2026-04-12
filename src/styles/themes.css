@@ -1,0 +1,23 @@
+[data-theme="dark"] {
+  --bg: #0f172a;
+  --card-bg: #1e293b;
+  --text: #ffffff;
+  --subtext: rgba(255,255,255,0.5);
+  --border: rgba(255,255,255,0.08);
+}
+
+[data-theme="black"] {
+  --bg: #111111;
+  --card-bg: #1a1a1a;
+  --text: #ffffff;
+  --subtext: rgba(255,255,255,0.5);
+  --border: rgba(255,255,255,0.08);
+}
+
+[data-theme="white"] {
+  --bg: #f8fafc;
+  --card-bg: #ffffff;
+  --text: #0f172a;
+  --subtext: #64748b;
+  --border: #e2e8f0;
+}
