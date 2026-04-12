@@ -100,7 +100,7 @@ export default function DashboardSidebar({ open, onClose }) {
         display: 'flex', flexDirection: 'column', borderRight: '1px solid rgba(255,255,255,0.12)', overflowY: 'auto'
       }}>
         {/* Logo */}
-        <div style={{ padding: '12px 16px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', borderBottom: '1px solid rgba(99,102,241,0.3)', background: 'linear-gradient(90deg, rgba(15,23,42,0.95) 0%, rgba(30,41,59,0.9) 100%)', backdropFilter: 'blur(20px)', boxShadow: '0 4px 24px rgba(99,102,241,0.15), 0 1px 0 rgba(255,255,255,0.05) inset' }}>
+        <div style={{ padding: '12px 16px', minHeight: '41px', boxSizing: 'border-box', display: 'flex', alignItems: 'center', justifyContent: 'space-between', borderBottom: '1px solid rgba(99,102,241,0.3)', background: 'linear-gradient(90deg, rgba(15,23,42,0.95) 0%, rgba(30,41,59,0.9) 100%)', backdropFilter: 'blur(20px)', boxShadow: '0 4px 24px rgba(99,102,241,0.15), 0 1px 0 rgba(255,255,255,0.05) inset' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '6px', cursor: 'pointer' }} onClick={() => { navigate('/dashboard'); onClose(); }}>
             <div style={{ width: '18px', height: '18px' }}>
               <svg viewBox="0 0 40 40" fill="none" style={{ width: '100%', height: '100%' }}>
@@ -111,7 +111,7 @@ export default function DashboardSidebar({ open, onClose }) {
             </div>
             <div style={{ display: 'flex', flexDirection: 'column', lineHeight: '1.4' }}>
               <span style={{ color: 'white', fontSize: '12px', fontWeight: '800' }}>QUANTYREX <span style={{ color: '#6366f1' }}>MARKETS</span></span>
-              <span style={{ color: 'rgba(255,255,255,0.4)', fontSize: '8px', fontWeight: '400' }}>{user?.firstName || ''} {user?.lastName || ''}</span>
+              <span style={{ color: 'rgba(255,255,255,0.5)', fontSize: '10px', fontWeight: '400' }}>{user?.firstName || ''} {user?.lastName || ''}</span>
             </div>
           </div>
           <button onClick={onClose} style={{ background: 'none', border: 'none', color: 'rgba(255,255,255,0.4)', cursor: 'pointer' }}>
