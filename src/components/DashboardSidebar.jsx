@@ -95,7 +95,7 @@ export default function DashboardSidebar({ open, onClose }) {
 
   return (
     <>
-      {open && <div onClick={onClose} style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.5)', zIndex: 1099 }} />}
+      {open && <div onClick={onClose} style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.4)', backdropFilter: 'blur(6px)', WebkitBackdropFilter: 'blur(6px)', zIndex: 1099 }} />}
       <div style={{
         position: 'fixed', top: 0, left: open ? '0' : '-220px', height: '100vh', width: '210px',
         background: '#131b2e', zIndex: 1100, transition: 'left 0.3s ease',
