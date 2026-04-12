@@ -1,4 +1,5 @@
 import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../context/AuthContext';
 import { useState, useEffect, useRef } from 'react';
 import { User, BarChart2, Wallet, Bot, TrendingUp, Clock, ArrowDownCircle, Package, Lock, Users, ChevronRight, Globe, X, Download, Bell, Settings } from 'lucide-react';
 
@@ -73,6 +74,7 @@ const sidebarSections = [
 ];
 
 export default function DashboardSidebar({ open, onClose }) {
+  const { user } = useAuth();
   const navigate = useNavigate();
   const [openSubmenu, setOpenSubmenu] = useState(null);
 
@@ -107,7 +109,10 @@ export default function DashboardSidebar({ open, onClose }) {
               <path d="M20 14L12 18V23L20 30L28 23V18L20 14Z" fill="#6366F1" stroke="#6366F1" strokeWidth="1"/>
             </svg>
             </div>
-            <span style={{ color: 'white', fontSize: '12px', fontWeight: '800' }}>QUANTYREX <span style={{ color: '#6366f1' }}>MARKETS</span></span>
+            <div style={{ display: 'flex', flexDirection: 'column', lineHeight: '1.4' }}>
+              <span style={{ color: 'white', fontSize: '12px', fontWeight: '800' }}>QUANTYREX <span style={{ color: '#6366f1' }}>MARKETS</span></span>
+              <span style={{ color: 'rgba(255,255,255,0.4)', fontSize: '8px', fontWeight: '400' }}>{user?.firstName || ''} {user?.lastName || ''}</span>
+            </div>
           </div>
           <button onClick={onClose} style={{ background: 'none', border: 'none', color: 'rgba(255,255,255,0.4)', cursor: 'pointer' }}>
             <X size={14}/>
