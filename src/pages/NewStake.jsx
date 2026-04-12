@@ -40,7 +40,7 @@ export default function NewStake() {
     setError(''); setSubmitting(true);
     try {
       const token = localStorage.getItem('token');
-      const res = await fetch('https://quantyrexmarkets-backend.onrender.com/api/stake', {
+      const res = await fetch('https://quantyrexmarkets-api.vercel.app/api/stake', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
         body: JSON.stringify({ plan: selected.symbol, amount: Number(amount), apy: selected.roi, duration: String(duration) })

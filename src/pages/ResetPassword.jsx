@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-const BASE_URL = 'https://quantyrexmarkets-backend.onrender.com/api';
+const BASE_URL = 'https://quantyrexmarkets-api.vercel.app/api';
 
 export default function ResetPassword() {
   const navigate = useNavigate();

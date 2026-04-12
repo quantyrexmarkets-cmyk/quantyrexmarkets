@@ -11,7 +11,7 @@ const ContactUs = () => {
     if (!form.name || !form.email || !form.message) { setError('All fields are required'); setTimeout(() => setError(''), 3000); return; }
     setSubmitting(true); setError(''); setSuccess('');
     try {
-      const res = await fetch('https://quantyrexmarkets-backend.onrender.com/api/admin/contact', {
+      const res = await fetch('https://quantyrexmarkets-api.vercel.app/api/admin/contact', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(form)

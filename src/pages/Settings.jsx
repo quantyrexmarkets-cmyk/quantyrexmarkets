@@ -19,7 +19,7 @@ export default function SettingsPage() {
     setTwoFALoading(true);
     try {
       const token = localStorage.getItem('token');
-      const res = await fetch('https://quantyrexmarkets-backend.onrender.com/api/auth/2fa/toggle', {
+      const res = await fetch('https://quantyrexmarkets-api.vercel.app/api/auth/2fa/toggle', {
         method: 'PUT',
         headers: { Authorization: `Bearer ${token}`, 'Content-Type': 'application/json' }
       }).then(r => r.json());

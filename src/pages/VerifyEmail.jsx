@@ -10,7 +10,7 @@ export default function VerifyEmail() {
   useEffect(() => {
     const verify = async () => {
       try {
-        const res = await fetch(`https://quantyrexmarkets-backend.onrender.com/api/auth/verify-email/${token}`);
+        const res = await fetch(`https://quantyrexmarkets-api.vercel.app/api/auth/verify-email/${token}`);
         const data = await res.json();
         if (data.success) {
           setStatus('success');

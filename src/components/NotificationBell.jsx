@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { Bell } from 'lucide-react';
 
-const API = 'https://quantyrexmarkets-backend.onrender.com/api';
+const API = 'https://quantyrexmarkets-api.vercel.app/api';
 
 export default function NotificationBell() {
   const [notifications, setNotifications] = useState([]);

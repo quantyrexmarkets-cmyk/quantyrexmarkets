@@ -1,7 +1,7 @@
 {
   "buildCommand": "npm run build",
   "env": {
-    "VITE_API_URL": "https://quantyrexmarkets-backend.onrender.com/api"
+    "VITE_API_URL": "https://quantyrexmarkets-api.vercel.app/api"
   },
   "rewrites": [
     {

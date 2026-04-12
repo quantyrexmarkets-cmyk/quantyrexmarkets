@@ -56,7 +56,7 @@ const adminLimiter = rateLimit({ windowMs: 15 * 60 * 1000, max: 50, message: { m
 let cachedDb = null;
 async function connectDB() {
   if (cachedDb) return cachedDb;
-  const db = await mongoose.connect(process.env.MONGODB_URI, { serverSelectionTimeoutMS: 30000, socketTimeoutMS: 30000, connectTimeoutMS: 30000 });
+  const db = await mongoose.connect(process.env.MONGODB_URI, { serverSelectionTimeoutMS: 5000, socketTimeoutMS: 5000, connectTimeoutMS: 5000, bufferCommands: false });
   cachedDb = db;
   console.log('✅ MongoDB connected');
   return db;

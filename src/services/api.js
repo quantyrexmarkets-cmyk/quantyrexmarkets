@@ -1,12 +1,14 @@
-const BASE_URL = import.meta.env.VITE_API_URL || 'https://quantyrexmarkets-backend.onrender.com/api';
+const BASE_URL = import.meta.env.VITE_API_URL || 'https://quantyrexmarkets-api.vercel.app/api';
 
 // Global response handler with proper error handling
 const handleResponse = async (res) => {
-  const data = await res.json();
-  if (!res.ok) {
-    throw new Error(data.message || 'Something went wrong');
+  const text = await res.text();
+  try {
+    const data = JSON.parse(text);
+    return data;
+  } catch(e) {
+    throw new Error('Server error: ' + res.status);
   }
-  return data;
 };
 
 const getToken = () => localStorage.getItem('token');

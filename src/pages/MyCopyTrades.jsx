@@ -21,7 +21,7 @@ export default function MyCopyTrades() {
 
   const fetchCurrency = async () => {
     try {
-      const res = await fetch('https://quantyrexmarkets-backend.onrender.com/api/user/dashboard', {
+      const res = await fetch('https://quantyrexmarkets-api.vercel.app/api/user/dashboard', {
         headers: { Authorization: `Bearer ${token || localStorage.getItem('token')}` }
       });
       const data = await res.json();
@@ -31,7 +31,7 @@ export default function MyCopyTrades() {
 
   const fetchCopyTrades = async () => {
     try {
-      const res = await fetch('https://quantyrexmarkets-backend.onrender.com/api/copy-trade', {
+      const res = await fetch('https://quantyrexmarkets-api.vercel.app/api/copy-trade', {
         headers: { Authorization: `Bearer ${token || localStorage.getItem('token')}` }
       });
       const data = await res.json();
@@ -45,7 +45,7 @@ export default function MyCopyTrades() {
   const handleStop = async () => {
     if (!selectedTrade) return;
     try {
-      const res = await fetch(`https://quantyrexmarkets-backend.onrender.com/api/copy-trade/${selectedTrade._id}/stop`, {
+      const res = await fetch(`https://quantyrexmarkets-api.vercel.app/api/copy-trade/${selectedTrade._id}/stop`, {
         method: 'PUT',
         headers: { Authorization: `Bearer ${token || localStorage.getItem('token')}` }
       });
