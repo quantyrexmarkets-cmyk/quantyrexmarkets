@@ -46,8 +46,10 @@ const SignIn = () => {
       if (res.token) {
         localStorage.setItem('token', res.token);
         login(res.token, res.user);
-        // Immediate redirect - no popup, no delay
-        window.location.replace('/dashboard');
+        setSuccess(true);
+        setTimeout(() => {
+          window.location.replace('/dashboard');
+        }, 1500);
       } else if (res.twoFactorRequired) {
         setOtpEmail(res.email);
         setShowOTP(true);
