@@ -118,7 +118,7 @@ export default function DashboardSidebar({ open, onClose }) {
         <div style={{ padding: '12px 0', flex: 1 }}>
           {sidebarSections.map((section, si) => (
             <div key={si} style={{ marginBottom: '16px' }}>
-              <div style={{ color: 'rgba(255,255,255,0.5)', fontSize: '9px', fontWeight: '700', letterSpacing: '0.1em', padding: '0 16px', marginBottom: '6px' }}>{section.title}</div>
+              <div style={{ color: 'rgba(255,255,255,0.5)', fontSize: '9px', fontWeight: '700', letterSpacing: '0.1em', padding: '0 16px', marginBottom: '8px', marginTop: '8px' }}>{section.title}</div>
               {section.items.map((item, ii) => (
                 <div key={ii}>
                   <button onClick={() => {
@@ -130,7 +130,7 @@ export default function DashboardSidebar({ open, onClose }) {
                       navigate(item.route); onClose();
                     }
                   }}
-                  style={{ width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '9px 16px', background: 'transparent', border: 'none', cursor: 'pointer', color: 'rgba(255,255,255,0.9)', fontSize: '11px', textAlign: 'left' }}>
+                  style={{ width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '12px 16px', background: 'transparent', border: 'none', cursor: 'pointer', color: 'rgba(255,255,255,0.9)', fontSize: '11px', textAlign: 'left' }}>
                     <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
                       <span style={{ color: '#6366f1' }}>{item.icon}</span>
                       <span>{item.label}</span>
@@ -144,7 +144,7 @@ export default function DashboardSidebar({ open, onClose }) {
                     <div style={{ background: 'rgba(99,102,241,0.08)', paddingLeft: '38px', borderLeft: '2px solid #6366f1', marginLeft: '16px' }}>
                       {item.submenu.map((sub, si2) => (
                         <button key={si2} onClick={() => { navigate(sub.route); onClose(); }}
-                          style={{ width: '100%', padding: '9px 16px 9px 0', background: 'transparent', border: 'none', cursor: 'pointer', color: 'white', fontSize: '11px', textAlign: 'left', display: 'flex', alignItems: 'center', gap: '6px', fontWeight: '500' }}>
+                          style={{ width: '100%', padding: '12px 16px 12px 0', background: 'transparent', border: 'none', cursor: 'pointer', color: 'white', fontSize: '11px', textAlign: 'left', display: 'flex', alignItems: 'center', gap: '6px', fontWeight: '500' }}>
                           <span style={{ color: '#6366f1', fontSize: '12px' }}>›</span> {sub.label}
                         </button>
                       ))}
