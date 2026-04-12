@@ -169,26 +169,22 @@ export default function LiveTrading() {
         </div>
 
         {/* Stats Cards */}
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '14px', marginBottom: '20px' }}>
-            {stats ? [
-              { label: 'Total Trades', value: stats.totalTrades ?? 0, color: 'white' },
-              { label: 'Wins', value: stats.wins ?? 0, color: '#22c55e' },
-              { label: 'Losses', value: stats.losses ?? 0, color: '#ef4444' },
-            ].map(s => (
-              <div key={s.label} style={{ background: 'linear-gradient(135deg, rgba(15,23,42,0.9), rgba(30,41,59,0.8))', border: '1px solid rgba(99,102,241,0.3)', borderRadius: '12px', padding: '12px', textAlign: 'center', boxShadow: '0 4px 24px rgba(99,102,241,0.1)' }}>
-                <div style={{ color: 'rgba(255,255,255,0.5)', fontSize: '9px', marginBottom: '6px', fontWeight: '600' }}>{s.label}</div>
-                <div style={{ color: s.color, fontSize: '14px', fontWeight: '800' }}>{s.value}</div>
-              </div>
-            )) : [
-              { label: 'Total Trades', value: '...', color: 'rgba(255,255,255,0.3)' },
-              { label: 'Wins', value: '...', color: 'rgba(255,255,255,0.3)' },
-              { label: 'Losses', value: '...', color: 'rgba(255,255,255,0.3)' },
-            ].map(s => (
-              <div key={s.label} style={{ background: 'linear-gradient(135deg, rgba(15,23,42,0.9), rgba(30,41,59,0.8))', border: '1px solid rgba(99,102,241,0.3)', borderRadius: '12px', padding: '12px', textAlign: 'center', boxShadow: '0 4px 24px rgba(99,102,241,0.1)' }}>
-                <div style={{ color: 'rgba(255,255,255,0.5)', fontSize: '9px', marginBottom: '6px', fontWeight: '600' }}>{s.label}</div>
-                <div style={{ color: s.color, fontSize: '14px', fontWeight: '800' }}>{s.value}</div>
-              </div>
-            ))}
+        <div style={{ display: 'flex', gap: '8px', marginBottom: '14px' }}>
+          <div style={{ background: 'linear-gradient(135deg, rgba(15,23,42,0.9), rgba(30,41,59,0.8))', border: '1px solid rgba(99,102,241,0.3)', borderRadius: '12px', padding: '6px', flex: 1, textAlign: 'center', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '3px', boxShadow: '0 4px 24px rgba(99,102,241,0.1)' }}>
+            <div style={{ width: '32px', height: '32px', borderRadius: '50%', background: 'rgba(99,102,241,0.15)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}><BarChart2 size={14} color="#6366f1"/></div>
+            <div style={{ color: 'rgba(255,255,255,0.45)', fontSize: '7px' }}>Total Trades</div>
+            <div style={{ color: 'white', fontSize: '10px', fontWeight: '700' }}>{stats ? stats.totalTrades ?? 0 : '...'}</div>
+          </div>
+          <div style={{ background: 'linear-gradient(135deg, rgba(15,23,42,0.9), rgba(30,41,59,0.8))', border: '1px solid rgba(99,102,241,0.3)', borderRadius: '12px', padding: '6px', flex: 1, textAlign: 'center', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '3px', boxShadow: '0 4px 24px rgba(99,102,241,0.1)' }}>
+            <div style={{ width: '32px', height: '32px', borderRadius: '50%', background: 'rgba(34,197,94,0.15)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}><TrendingUp size={14} color="#22c55e"/></div>
+            <div style={{ color: 'rgba(255,255,255,0.45)', fontSize: '7px' }}>Wins</div>
+            <div style={{ color: '#22c55e', fontSize: '10px', fontWeight: '700' }}>{stats ? stats.wins ?? 0 : '...'}</div>
+          </div>
+          <div style={{ background: 'linear-gradient(135deg, rgba(15,23,42,0.9), rgba(30,41,59,0.8))', border: '1px solid rgba(99,102,241,0.3)', borderRadius: '12px', padding: '6px', flex: 1, textAlign: 'center', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '3px', boxShadow: '0 4px 24px rgba(99,102,241,0.1)' }}>
+            <div style={{ width: '32px', height: '32px', borderRadius: '50%', background: 'rgba(239,68,68,0.15)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}><TrendingUp size={14} color="#ef4444" style={{ transform: 'rotate(180deg)' }}/></div>
+            <div style={{ color: 'rgba(255,255,255,0.45)', fontSize: '7px' }}>Losses</div>
+            <div style={{ color: '#ef4444', fontSize: '10px', fontWeight: '700' }}>{stats ? stats.losses ?? 0 : '...'}</div>
+          </div>
         </div>
 
         {/* Trades Table */}
