@@ -24,6 +24,7 @@ const navItems = [
 
 
 function TrendyStocks() {
+  const { current: t } = useTheme();
   const [activeStock, setActiveStock] = useState('AAPL');
   const [period, setPeriod] = useState('1M');
   const chartRef = useRef(null);
