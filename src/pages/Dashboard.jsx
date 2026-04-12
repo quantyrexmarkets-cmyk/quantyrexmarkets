@@ -67,10 +67,10 @@ function TrendyStocks() {
   }, [activeStock, period]);
 
   return (
-    <div style={{ background: '#132035', border: '1px solid rgba(99,102,241,0.2)', borderRadius: '12px', padding: '14px', marginBottom: '16px' }}>
+    <div style={{ background: t.cardBg, border: '1px solid rgba(99,102,241,0.2)', borderRadius: '12px', padding: '14px', marginBottom: '16px' }}>
       {/* Header */}
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px' }}>
-        <div style={{ color: 'white', fontSize: '14px', fontWeight: '700' }}>Trendy Stock Markets</div>
+        <div style={{ color: t.text, fontSize: '14px', fontWeight: '700' }}>Trendy Stock Markets</div>
         <button onClick={() => window.location.href='/dashboard/deposit-funds'} style={{ background: '#6366f1', border: 'none', color: 'white', fontSize: '10px', fontWeight: '700', padding: '8px 16px', borderRadius: '8px', cursor: 'pointer' }}>Deposit</button>
       </div>
 
@@ -144,7 +144,7 @@ export default function Dashboard() {
   ];
 
   if (!user) {
-    return <div style={{ minHeight: '100vh', background: '#0e1628', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'white', fontSize: '14px' }}>Loading...</div>;
+    return <div style={{ minHeight: '100vh', background: t.bg, display: 'flex', alignItems: 'center', justifyContent: 'center', color: t.text, fontSize: '14px' }}>Loading...</div>;
   }
 
   return (
@@ -176,7 +176,7 @@ export default function Dashboard() {
           </button>
 
           <div style={{ marginLeft: 'auto', display: 'flex', gap: '6px', alignItems: 'stretch' }}>
-            <button onClick={() => getDashboard().then(data => setDashData(data))} style={{ padding: '5px 10px', background: 'rgba(255,255,255,0.15)', border: '1px solid rgba(255,255,255,0.1)', color: 'white', fontSize: '11px', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '4px', whiteSpace: 'nowrap' }}><span style={{ color: '#f7931a' }}>₿</span> {u.balance ? formatAmount(u.balance, u.currency) : '0.00'}</button>
+            <button onClick={() => getDashboard().then(data => setDashData(data))} style={{ padding: '5px 10px', background: 'rgba(255,255,255,0.15)', border: `1px solid ${t.border}`, color: t.text, fontSize: '11px', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '4px', whiteSpace: 'nowrap' }}><span style={{ color: '#f7931a' }}>₿</span> {u.balance ? formatAmount(u.balance, u.currency) : '0.00'}</button>
             <button onClick={() => navigate('/dashboard/live-trading')} style={{ padding: '5px 10px', background: 'transparent', border: '1px solid #6366f1', color: 'white', fontSize: '11px', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '4px', whiteSpace: 'nowrap' }}><RefreshCw size={11}/> Trade</button>
             <div style={{ position: 'relative' }}>
                       <button onClick={() => { const readIds = JSON.parse(localStorage.getItem('readNotifications') || '[]'); setNotifications(prev => prev.map(n => ({ ...n, unread: readIds.includes(String(n.id)) ? false : n.unread }))); setShowNotifications(!showNotifications); setShowProfileMenu(false); }} style={{ background: 'none', border: 'none', color: 'rgba(255,255,255,0.7)', cursor: 'pointer', padding: '5px 8px', position: 'relative', display: 'flex', alignItems: 'center' }}>
@@ -186,9 +186,9 @@ export default function Dashboard() {
                       {showNotifications && (
                         <>
                           <div onClick={() => setShowNotifications(false)} style={{ position: 'fixed', inset: 0, zIndex: 998 }} />
-                          <div style={{ position: 'absolute', top: '110%', right: 0, background: '#1e2538', border: '1px solid rgba(255,255,255,0.08)', zIndex: 999, minWidth: '260px', boxShadow: '0 8px 24px rgba(0,0,0,0.4)', borderRadius: '8px', overflow: 'hidden' }}>
-                            <div style={{ padding: '12px 16px', borderBottom: '1px solid rgba(255,255,255,0.06)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                              <span style={{ color: 'white', fontSize: '11px', fontWeight: '700' }}>Notifications</span>
+                          <div style={{ position: 'absolute', top: '110%', right: 0, background: '#1e2538', border: `1px solid ${t.border}`, zIndex: 999, minWidth: '260px', boxShadow: '0 8px 24px rgba(0,0,0,0.4)', borderRadius: '8px', overflow: 'hidden' }}>
+                            <div style={{ padding: '12px 16px', borderBottom: `1px solid ${t.border}`, display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                              <span style={{ color: t.text, fontSize: '11px', fontWeight: '700' }}>Notifications</span>
                               <span onClick={() => {
                                 const ids = notifications.map(n => String(n.id));
                                 const existing = JSON.parse(localStorage.getItem('readNotifications') || '[]');
@@ -202,7 +202,7 @@ export default function Dashboard() {
                               <div key={i} style={{ padding: '10px 16px', borderBottom: '1px solid rgba(255,255,255,0.04)', background: n.unread ? 'rgba(99,102,241,0.08)' : 'transparent', display: 'flex', gap: '10px', alignItems: 'flex-start' }}>
                                 <span style={{ fontSize: '16px' }}>{n.icon}</span>
                                 <div style={{ flex: 1 }}>
-                                  <div style={{ color: 'white', fontSize: '10px', fontWeight: '600', marginBottom: '2px' }}>{n.title}</div>
+                                  <div style={{ color: t.text, fontSize: '10px', fontWeight: '600', marginBottom: '2px' }}>{n.title}</div>
                                   <div style={{ color: 'rgba(255,255,255,0.4)', fontSize: '9px', marginBottom: '2px' }}>{n.desc}</div>
                                   <div style={{ color: 'rgba(255,255,255,0.25)', fontSize: '8px' }}>{typeof n.time === 'string' && n.time.includes('ago') ? n.time : new Date(n.time).toLocaleDateString()}</div>
                                 </div>
@@ -224,7 +224,7 @@ export default function Dashboard() {
               {showProfileMenu && (
                 <>
                   <div onClick={() => setShowProfileMenu(false)} style={{ position: 'fixed', inset: 0, zIndex: 998 }} />
-                  <div style={{ position: 'absolute', top: '110%', right: 0, background: '#1e2538', border: '1px solid rgba(255,255,255,0.08)', zIndex: 999, minWidth: '180px', boxShadow: '0 8px 24px rgba(0,0,0,0.4)' }}>
+                  <div style={{ position: 'absolute', top: '110%', right: 0, background: '#1e2538', border: `1px solid ${t.border}`, zIndex: 999, minWidth: '180px', boxShadow: '0 8px 24px rgba(0,0,0,0.4)' }}>
                     <div onClick={() => { navigate('/dashboard/profile'); setShowProfileMenu(false); }} style={{ display: 'flex', alignItems: 'center', gap: '10px', padding: '12px 16px', cursor: 'pointer', color: 'rgba(255,255,255,0.8)', fontSize: '11px' }}
                       onMouseEnter={e => e.currentTarget.style.background='rgba(255,255,255,0.05)'}
                       onMouseLeave={e => e.currentTarget.style.background='transparent'}>
@@ -272,7 +272,7 @@ export default function Dashboard() {
               <path d="M20 8L8 14V22L20 34L32 22V14L20 8Z" fill="#0d1117" stroke="#6366F1" strokeWidth="1.2"/>
               <path d="M20 14L12 18V23L20 30L28 23V18L20 14Z" fill="#6366F1" stroke="#6366F1" strokeWidth="1"/>
             </svg>
-              <span style={{ color: '#ffffff', fontSize: '13px', fontWeight: '300', letterSpacing: '1px', fontFamily: "'Montserrat', Arial, sans-serif" }}>QUANTYREX</span><span style={{ color: '#6366f1', fontSize: '13px', fontWeight: '300', letterSpacing: '1px', fontFamily: "'Montserrat', Arial, sans-serif" }}>&nbsp;&nbsp;MARKETS</span>
+              <span style={{ color: t.text, fontSize: '13px', fontWeight: '300', letterSpacing: '1px', fontFamily: "'Montserrat', Arial, sans-serif" }}>QUANTYREX</span><span style={{ color: '#6366f1', fontSize: '13px', fontWeight: '300', letterSpacing: '1px', fontFamily: "'Montserrat', Arial, sans-serif" }}>&nbsp;&nbsp;MARKETS</span>
               <span style={{ color: 'rgba(255,255,255,0.4)', fontSize: '10px' }}>| {u.firstName || ''} {u.lastName || ''}</span>
             </div>
 
@@ -286,7 +286,7 @@ export default function Dashboard() {
               <div style={{ position: 'absolute', bottom: '-40px', left: '-40px', width: '150px', height: '150px', borderRadius: '50%', background: 'rgba(99,102,241,0.15)', filter: 'blur(40px)', pointerEvents: 'none' }} />
 
               <div style={{ position: 'relative' }}>
-                <div style={{ color: 'white', fontSize: '15px', fontWeight: '300', letterSpacing: '0.3px', marginBottom: '4px' }}>Welcome back, {u.firstName || 'User'} {u.lastName || ''}!</div>
+                <div style={{ color: t.text, fontSize: '15px', fontWeight: '300', letterSpacing: '0.3px', marginBottom: '4px' }}>Welcome back, {u.firstName || 'User'} {u.lastName || ''}!</div>
                 <div style={{ color: 'rgba(255,255,255,0.35)', fontSize: '11px', fontWeight: '300', marginBottom: '10px' }}>Your investment dashboard overview</div>
 
                 {/* Inner Glass Balance Card */}
@@ -296,8 +296,8 @@ export default function Dashboard() {
                     <svg width='16' height='16' fill='none' stroke='rgba(255,255,255,0.6)' viewBox='0 0 24 24' strokeWidth='2'><rect x='2' y='5' width='20' height='14' rx='2'/><line x1='2' y1='10' x2='22' y2='10'/></svg>
                     <span style={{ color: 'rgba(255,255,255,0.6)', fontSize: '12px', fontWeight: '600' }}>Account Balance</span>
                   </div>
-                  <div style={{ color: 'rgba(255,255,255,0.4)', fontSize: '11px', marginBottom: '10px' }}>Your available funds</div>
-                  <div style={{ color: 'white', fontSize: '16px', fontWeight: '700', marginBottom: '6px' }}>{formatAmountWithCode(u.balance || 0, u.currency)}</div>
+                  <div style={{ color: t.subText, fontSize: '11px', marginBottom: '10px' }}>Your available funds</div>
+                  <div style={{ color: t.text, fontSize: '16px', fontWeight: '700', marginBottom: '6px' }}>{formatAmountWithCode(u.balance || 0, u.currency)}</div>
                   <div style={{ display: 'inline-flex', alignItems: 'center', gap: '5px', background: 'rgba(255,255,255,0.08)', padding: '4px 12px', borderRadius: '20px', marginBottom: '8px' }}>
                     <svg width='12' height='12' fill='none' stroke='rgba(255,255,255,0.6)' viewBox='0 0 24 24' strokeWidth='2'><polyline points='20 6 9 17 4 12'/></svg>
                     <span style={{ color: 'rgba(255,255,255,0.6)', fontSize: '11px' }}>Available for Withdrawal</span>
@@ -308,7 +308,7 @@ export default function Dashboard() {
                       {u.kycStatus === 'approved' ? '✓ KYC Verified' : '✗ KYC Not Verified'}
                     </span>
                   </div>
-                  <div style={{ color: 'rgba(255,255,255,0.3)', fontSize: '8px' }}>Last updated: {new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })} {new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</div>
+                  <div style={{ color: t.subText, fontSize: '8px' }}>Last updated: {new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })} {new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</div>
                 </div>
 
                 {/* Action Buttons */}
@@ -328,19 +328,19 @@ export default function Dashboard() {
             {/* Stats Grid */}
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px', marginBottom: '20px' }}>
               {Array.isArray(stats) && stats.map((s, i) => (
-                <div key={i} style={{ position: 'relative', overflow: 'hidden', background: 'rgba(255,255,255,0.04)', backdropFilter: 'blur(16px)', WebkitBackdropFilter: 'blur(16px)', border: '1px solid rgba(255,255,255,0.08)', borderRadius: '14px', padding: '12px 10px', minHeight: '90px', boxShadow: '0 4px 24px rgba(0,0,0,0.2), inset 0 1px 0 rgba(255,255,255,0.06)' }}>
+                <div key={i} style={{ position: 'relative', overflow: 'hidden', background: 'rgba(255,255,255,0.04)', backdropFilter: 'blur(16px)', WebkitBackdropFilter: 'blur(16px)', border: `1px solid ${t.border}`, borderRadius: '14px', padding: '12px 10px', minHeight: '90px', boxShadow: '0 4px 24px rgba(0,0,0,0.2), inset 0 1px 0 rgba(255,255,255,0.06)' }}>
                   {/* Gradient overlay */}
                   <div style={{ position: 'absolute', inset: 0, background: `linear-gradient(135deg, ${s.iconBg}10, transparent)`, pointerEvents: 'none' }} />
                   {/* Top accent line */}
                   <div style={{ position: 'absolute', top: 0, left: 0, right: 0, height: '2px', background: `linear-gradient(90deg, ${s.iconBg}, transparent)`, borderRadius: '14px 14px 0 0' }} />
                   <div style={{ position: 'relative' }}>
                     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '8px' }}>
-                      <span style={{ color: 'rgba(255,255,255,0.55)', fontSize: 'clamp(9px, 2vw, 11px)' }}>{s.label}</span>
+                      <span style={{ color: t.subText, fontSize: 'clamp(9px, 2vw, 11px)' }}>{s.label}</span>
                       <div style={{ width: '28px', height: '28px', borderRadius: '50%', background: s.iconBg + '20', border: `1px solid ${s.iconBg}40`, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>{s.icon}</div>
                     </div>
-                    <div style={{ color: 'white', fontWeight: '700', fontSize: 'clamp(12px, 2.5vw, 16px)', marginBottom: '8px' }}>{s.value}</div>
+                    <div style={{ color: t.text, fontWeight: '700', fontSize: 'clamp(12px, 2.5vw, 16px)', marginBottom: '8px' }}>{s.value}</div>
                     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                      <span style={{ color: 'rgba(255,255,255,0.3)', fontSize: '8px' }}>{s.btc}</span>
+                      <span style={{ color: t.subText, fontSize: '8px' }}>{s.btc}</span>
                       {s.hasViewTrade && <button onClick={() => navigate('/dashboard/packages')} style={{ background: 'rgba(99,102,241,0.15)', border: '1px solid rgba(99,102,241,0.3)', color: '#818cf8', fontSize: '8px', padding: '2px 6px', cursor: 'pointer', borderRadius: '4px' }}>View</button>}
                     </div>
                   </div>
@@ -354,7 +354,7 @@ export default function Dashboard() {
                 <div style={{ width: '48px', height: '48px', background: 'rgba(99,102,241,0.15)', borderRadius: '12px', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 12px' }}>
                   <svg width='24' height='24' fill='none' stroke='#6366f1' viewBox='0 0 24 24' strokeWidth='2'><path d='M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z'/><polyline points='9 12 11 14 15 10'/></svg>
                 </div>
-                <div style={{ color: 'white', fontSize: '16px', fontWeight: '700', marginBottom: '6px' }}>Identity Verification</div>
+                <div style={{ color: t.text, fontSize: '16px', fontWeight: '700', marginBottom: '6px' }}>Identity Verification</div>
                 <div style={{ color: 'rgba(255,255,255,0.45)', fontSize: '12px', marginBottom: '16px' }}>Complete verification to access all features</div>
                 <button onClick={() => navigate('/dashboard/kyc')} style={{ width: '100%', background: 'linear-gradient(90deg, #3b82f6, #6366f1)', border: 'none', color: 'white', fontSize: '13px', fontWeight: '700', padding: '13px', cursor: 'pointer', borderRadius: '10px', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px', boxShadow: '0 4px 15px rgba(99,102,241,0.4)' }}>
                   View Details
@@ -365,24 +365,24 @@ export default function Dashboard() {
 
             <div style={{ borderRadius: "12px", overflow: "hidden", boxShadow: "0 4px 20px rgba(0,0,0,0.3)", border: "1px solid rgba(255,255,255,0.08)", marginBottom: "12px" }}><BTCChart /></div>
             {/* Transaction List */}
-            <div style={{ background: 'rgba(255,255,255,0.04)', backdropFilter: 'blur(16px)', WebkitBackdropFilter: 'blur(16px)', border: '1px solid rgba(255,255,255,0.08)', borderRadius: '12px', padding: '10px', boxShadow: '0 4px 24px rgba(0,0,0,0.2), inset 0 1px 0 rgba(255,255,255,0.06)', marginBottom: '20px' }}>
+            <div style={{ background: 'rgba(255,255,255,0.04)', backdropFilter: 'blur(16px)', WebkitBackdropFilter: 'blur(16px)', border: `1px solid ${t.border}`, borderRadius: '12px', padding: '10px', boxShadow: '0 4px 24px rgba(0,0,0,0.2), inset 0 1px 0 rgba(255,255,255,0.06)', marginBottom: '20px' }}>
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '12px' }}>
-                <span style={{ color: 'white', fontSize: '9px', fontWeight: '700', letterSpacing: '0.08em' }}>TRANSACTION LIST</span>
-                <select style={{ background: 'rgba(255,255,255,0.15)', border: '1px solid rgba(255,255,255,0.1)', color: 'white', fontSize: '8px', padding: '3px 8px', outline: 'none' }}>
+                <span style={{ color: t.text, fontSize: '9px', fontWeight: '700', letterSpacing: '0.08em' }}>TRANSACTION LIST</span>
+                <select style={{ background: 'rgba(255,255,255,0.15)', border: `1px solid ${t.border}`, color: 'white', fontSize: '8px', padding: '3px 8px', outline: 'none' }}>
                   <option>Today</option><option>This Week</option><option>This Month</option>
                 </select>
               </div>
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
                   <span style={{ color: 'rgba(255,255,255,0.45)', fontSize: '8px' }}>Show</span>
-                  <select style={{ background: 'rgba(255,255,255,0.15)', border: '1px solid rgba(255,255,255,0.1)', color: 'white', fontSize: '8px', padding: '2px 5px', outline: 'none' }}><option>10</option><option>25</option><option>50</option></select>
+                  <select style={{ background: 'rgba(255,255,255,0.15)', border: `1px solid ${t.border}`, color: 'white', fontSize: '8px', padding: '2px 5px', outline: 'none' }}><option>10</option><option>25</option><option>50</option></select>
                   <span style={{ color: 'rgba(255,255,255,0.45)', fontSize: '8px' }}>entries</span>
                 </div>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
                 </div>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
                   <span style={{ color: 'rgba(255,255,255,0.45)', fontSize: '8px' }}>Search:</span>
-                  <input style={{ background: 'rgba(255,255,255,0.15)', border: '1px solid rgba(255,255,255,0.1)', color: 'white', fontSize: '8px', padding: '3px 8px', outline: 'none', width: '90px' }} />
+                  <input style={{ background: 'rgba(255,255,255,0.15)', border: `1px solid ${t.border}`, color: 'white', fontSize: '8px', padding: '3px 8px', outline: 'none', width: '90px' }} />
                 </div>
               </div>
               <div style={{ border: '1px solid rgba(255,255,255,0.15)' }}>
@@ -405,8 +405,8 @@ export default function Dashboard() {
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '7px 10px', borderTop: '1px solid rgba(255,255,255,0.04)' }}>
                   <span style={{ color: 'rgba(255,255,255,0.35)', fontSize: '8px' }}>Showing {Math.min(transactions.length, 10)} of {transactions.length} entries</span>
                   <div style={{ display: 'flex', gap: '4px' }}>
-                    <button style={{ background: 'rgba(255,255,255,0.15)', border: '1px solid rgba(255,255,255,0.1)', color: 'rgba(255,255,255,0.6)', fontSize: '10px', padding: '2px 8px', }}>&#8249;</button>
-                    <button style={{ background: 'rgba(255,255,255,0.15)', border: '1px solid rgba(255,255,255,0.1)', color: 'rgba(255,255,255,0.6)', fontSize: '10px', padding: '2px 8px', }}>&#8250;</button>
+                    <button style={{ background: 'rgba(255,255,255,0.15)', border: `1px solid ${t.border}`, color: 'rgba(255,255,255,0.6)', fontSize: '10px', padding: '2px 8px', }}>&#8249;</button>
+                    <button style={{ background: 'rgba(255,255,255,0.15)', border: `1px solid ${t.border}`, color: 'rgba(255,255,255,0.6)', fontSize: '10px', padding: '2px 8px', }}>&#8250;</button>
                   </div>
                 </div>
               </div>
@@ -428,7 +428,7 @@ export default function Dashboard() {
 
         {/* Trade Assets - Full Width */}
         <div style={{ padding: '0 12px 20px' }}>
-          <div style={{ background: 'rgba(255,255,255,0.05)', backdropFilter: 'blur(10px)', WebkitBackdropFilter: 'blur(10px)', border: '1px solid rgba(255,255,255,0.08)', borderRadius: '12px', padding: '14px', boxShadow: '0 4px 20px rgba(0,0,0,0.3)' }}>
+          <div style={{ background: 'rgba(255,255,255,0.05)', backdropFilter: 'blur(10px)', WebkitBackdropFilter: 'blur(10px)', border: `1px solid ${t.border}`, borderRadius: '12px', padding: '14px', boxShadow: '0 4px 20px rgba(0,0,0,0.3)' }}>
             <div style={{ color: 'white', fontSize: '10px', fontWeight: '700', letterSpacing: '0.08em', marginBottom: '12px' }}>TRADE ASSETS</div>
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '8px', marginBottom: '10px' }}>
               {[
@@ -442,14 +442,14 @@ export default function Dashboard() {
                   <label style={{ color: 'rgba(255,255,255,0.45)', fontSize: '9px', display: 'flex', alignItems: 'center', gap: '3px', marginBottom: '4px' }}>
                     {field.label}{field.hasIcon && <Clock size={9} color="#f59e0b"/>}
                   </label>
-                  <select value={field.val} onChange={e => field.set(e.target.value)} style={{ width: '100%', background: '#0f172a', border: '1px solid rgba(255,255,255,0.08)', color: 'white', fontSize: '9px', padding: '6px 8px', outline: 'none' }}>
+                  <select value={field.val} onChange={e => field.set(e.target.value)} style={{ width: '100%', background: '#0f172a', border: `1px solid ${t.border}`, color: 'white', fontSize: '9px', padding: '6px 8px', outline: 'none' }}>
                     {field.options.map((o, j) => <option key={j}>{o}</option>)}
                   </select>
                 </div>
               ))}
               <div>
                 <label style={{ color: 'rgba(255,255,255,0.45)', fontSize: '9px', display: 'flex', alignItems: 'center', gap: '3px', marginBottom: '4px' }}><DollarSign size={9}/> Amount</label>
-                <input value={amount} onChange={e => setAmount(e.target.value)} style={{ width: '100%', background: '#0f172a', border: '1px solid rgba(255,255,255,0.08)', color: 'white', fontSize: '9px', padding: '6px 8px', outline: 'none', boxSizing: 'border-box' }} />
+                <input value={amount} onChange={e => setAmount(e.target.value)} style={{ width: '100%', background: '#0f172a', border: `1px solid ${t.border}`, color: 'white', fontSize: '9px', padding: '6px 8px', outline: 'none', boxSizing: 'border-box' }} />
               </div>
             </div>
             <div style={{ color: '#ef4444', fontSize: '8px', marginBottom: '8px', minHeight: '12px' }}>{tradeError}</div>
