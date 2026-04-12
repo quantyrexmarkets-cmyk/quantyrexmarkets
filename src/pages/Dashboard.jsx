@@ -163,13 +163,6 @@ export default function Dashboard() {
         </>
       )}
 
-        {navItems.map((item, i) => (
-          <button key={i} onClick={() => { setActiveNav(i); navigate(item.route); }} title={item.label}
-            style={{ width: '34px', height: '34px', background: activeNav === i ? '#6366f1' : 'transparent', border: 'none', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', color: activeNav === i ? 'white' : 'rgba(255,255,255,0.4)' }}>
-            {item.icon}
-          </button>
-        ))}
-      </div>
 
       {/* Main Content */}
       <div style={{ flex: 1, display: 'flex', flexDirection: 'column', overflow: 'hidden', minWidth: 0 }}>
