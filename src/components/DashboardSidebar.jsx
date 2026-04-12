@@ -1,4 +1,4 @@
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { useState, useEffect, useRef } from 'react';
 import { User, BarChart2, Wallet, Bot, TrendingUp, Clock, ArrowDownCircle, Package, Lock, Users, ChevronRight, Globe, X, Download, Bell, Settings, Home } from 'lucide-react';
@@ -75,6 +75,7 @@ const sidebarSections = [
 ];
 
 export default function DashboardSidebar({ open, onClose }) {
+  const location = useLocation();
   const { user } = useAuth();
   const navigate = useNavigate();
   const [openSubmenu, setOpenSubmenu] = useState(null);
@@ -103,15 +104,13 @@ export default function DashboardSidebar({ open, onClose }) {
         {/* Logo */}
         <div style={{ padding: '12px 16px', minHeight: '41px', boxSizing: 'border-box', display: 'flex', alignItems: 'center', justifyContent: 'space-between', background: 'transparent' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '10px', cursor: 'pointer' }} onClick={() => { navigate('/dashboard/profile'); onClose(); }}>
-            {/* Avatar */}
-            <div style={{ width: '45px', height: '45px', borderRadius: '50%', background: '#6366f1', flexShrink: 0, overflow: 'hidden', border: '2px solid rgba(99,102,241,0.4)' }}>
-              {user?.avatar ? (
-                <img src={user.avatar} alt="avatar" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
-              ) : (
-                <div style={{ width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'white', fontSize: '18px', fontWeight: '700' }}>
-                  {user?.firstName?.[0]?.toUpperCase() || 'U'}
-                </div>
-              )}
+            {/* Logo */}
+            <div style={{ width: '45px', height: '45px', flexShrink: 0 }}>
+              <svg viewBox="0 0 40 40" fill="none" style={{ width: '100%', height: '100%' }}>
+                <path d="M20 2L4 10V22L20 38L36 22V10L20 2Z" fill="#0d1117" stroke="#6366F1" strokeWidth="1.5"/>
+                <path d="M20 8L8 14V22L20 34L32 22V14L20 8Z" fill="#0d1117" stroke="#6366F1" strokeWidth="1.2"/>
+                <path d="M20 14L12 18V23L20 30L28 23V18L20 14Z" fill="#6366F1" stroke="#6366F1" strokeWidth="1"/>
+              </svg>
             </div>
             {/* User Info */}
             <div style={{ display: 'flex', flexDirection: 'column', lineHeight: '1.4' }}>
@@ -140,7 +139,7 @@ export default function DashboardSidebar({ open, onClose }) {
                       navigate(item.route); onClose();
                     }
                   }}
-                  style={{ width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '12px 16px', background: 'transparent', border: 'none', cursor: 'pointer', color: 'rgba(255,255,255,0.9)', fontSize: '11px', textAlign: 'left' }}>
+                  style={{ width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '12px 16px', background: location.pathname === item.route ? 'rgba(99,102,241,0.15)' : 'transparent', backdropFilter: location.pathname === item.route ? 'blur(10px)' : 'none', borderLeft: location.pathname === item.route ? '2px solid #6366f1' : '2px solid transparent', border: 'none', cursor: 'pointer', color: location.pathname === item.route ? '#ffffff' : 'rgba(255,255,255,0.7)', fontSize: '11px', textAlign: 'left' }}>
                     <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
                       <span style={{ color: '#6366f1' }}>{item.icon}</span>
                       <span>{item.label}</span>
