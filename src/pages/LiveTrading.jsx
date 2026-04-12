@@ -3,6 +3,7 @@ import { formatAmount } from '../utils/currency';
 import { useAuth } from '../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
 import PageHeader from '../components/PageHeader';
+import { BarChart2, TrendingUp, DollarSign } from 'lucide-react';
 import { getTrades, createTrade } from '../services/api';
 
 const SYMBOLS = [
