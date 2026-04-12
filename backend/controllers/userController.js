@@ -35,8 +35,15 @@ const updateProfile = async (req, res) => {
     };
 
     if (req.file) {
-      const result = await uploadToCloudinary(req.file, 'vertextrade/avatars');
-      update.avatar = result.secure_url;
+      try {
+        const result = await uploadToCloudinary(req.file, 'quantyrex/avatars');
+        update.avatar = result.secure_url;
+      } catch (uploadErr) {
+        console.log('Avatar upload failed:', uploadErr.message);
+        // Convert to base64 as fallback
+        const base64 = req.file.buffer.toString('base64');
+        update.avatar = 'data:' + req.file.mimetype + ';base64,' + base64;
+      }
     }
 
     console.log('Update object:', update);
