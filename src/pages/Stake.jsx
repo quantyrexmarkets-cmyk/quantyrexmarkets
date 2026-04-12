@@ -82,7 +82,7 @@ export default function Stake() {
   const paginated = filtered.slice((page-1)*perPage, page*perPage);
 
   return (
-    <div style={{ minHeight: '100vh', background: t.bg, fontFamily: "'Segoe UI', sans-serif", color: 'white' }}>
+    <div style={{ minHeight: '100vh', background: t.bg, fontFamily: "'Segoe UI', sans-serif", color: t.text }}>
 
       {/* Header */}
       <PageHeader title="Stake" />
@@ -95,12 +95,12 @@ export default function Stake() {
           <div onClick={() => setShowForm(false)} style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.6)', zIndex: 100 }}/>
           <div style={{ position: 'fixed', top: '50%', left: '50%', transform: 'translate(-50%,-50%)', zIndex: 101, background: t.bg, border: '1px solid rgba(99,102,241,0.3)', padding: '16px', width: '340px', maxHeight: '90vh', overflowY: 'auto' }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '14px' }}>
-              <span style={{ color: 'white', fontSize: '11px', fontWeight: '700' }}>New Stake</span>
-              <button onClick={() => setShowForm(false)} style={{ background: 'none', border: 'none', color: 'rgba(255,255,255,0.4)', cursor: 'pointer', fontSize: '16px' }}>×</button>
+              <span style={{ color: t.text, fontSize: '11px', fontWeight: '700' }}>New Stake</span>
+              <button onClick={() => setShowForm(false)} style={{ background: 'none', border: 'none', color: t.subText, cursor: 'pointer', fontSize: '16px' }}>×</button>
             </div>
 
             {/* Plans */}
-            <div style={{ color: 'rgba(255,255,255,0.7)', fontSize: '9px', fontWeight: '600', marginBottom: '8px' }}>Choose a Plan</div>
+            <div style={{ color: t.subText, fontSize: '9px', fontWeight: '600', marginBottom: '8px' }}>Choose a Plan</div>
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '6px', marginBottom: '14px' }}>
               {stakePlans.map((plan, i) => (
                 <div key={i} onClick={() => { setSelectedPlan(plan); setAmount(String(plan.min)); }}
@@ -109,30 +109,30 @@ export default function Stake() {
                     <span style={{ color: plan.color, fontSize: '8px', fontWeight: '800' }}>{plan.name}</span>
                     <span style={{ background: plan.bg, color: plan.color, fontSize: '7px', fontWeight: '700', padding: '1px 5px', border: `1px solid ${plan.color}40` }}>{plan.apy}</span>
                   </div>
-                  <div style={{ color: 'rgba(255,255,255,0.5)', fontSize: '7px' }}>Min: <span style={{ color: 'white' }}>${plan.min.toLocaleString()}</span></div>
-                  <div style={{ color: 'rgba(255,255,255,0.4)', fontSize: '7px' }}>{plan.duration} days</div>
+                  <div style={{ color: t.subText, fontSize: '7px' }}>Min: <span style={{ color: t.text }}>${plan.min.toLocaleString()}</span></div>
+                  <div style={{ color: t.subText, fontSize: '7px' }}>{plan.duration} days</div>
                 </div>
               ))}
             </div>
 
             {/* Form */}
             <div style={{ marginBottom: '10px' }}>
-              <div style={{ color: 'rgba(255,255,255,0.7)', fontSize: '8px', marginBottom: '4px' }}>Selected Plan</div>
-              <div style={{ background: t.cardBg, border: '1px solid rgba(255,255,255,0.08)', padding: '8px 10px', fontSize: '9px', color: selectedPlan ? selectedPlan.color : 'rgba(255,255,255,0.3)' }}>
+              <div style={{ color: t.subText, fontSize: '8px', marginBottom: '4px' }}>Selected Plan</div>
+              <div style={{ background: t.cardBg, border: `1px solid ${t.border}`, padding: '8px 10px', fontSize: '9px', color: selectedPlan ? selectedPlan.color : 'rgba(255,255,255,0.3)' }}>
                 {selectedPlan ? `${selectedPlan.name} — ${selectedPlan.apy} APY — ${selectedPlan.duration} days` : 'No plan selected'}
               </div>
             </div>
             <div style={{ marginBottom: '10px' }}>
-              <div style={{ color: 'rgba(255,255,255,0.7)', fontSize: '8px', marginBottom: '4px' }}>Amount (USD) — Balance: <span style={{ color: '#22c55e' }}>{formatAmount(balance, user?.currency)}</span></div>
+              <div style={{ color: t.subText, fontSize: '8px', marginBottom: '4px' }}>Amount (USD) — Balance: <span style={{ color: '#22c55e' }}>{formatAmount(balance, user?.currency)}</span></div>
               <input value={amount} onChange={e => setAmount(e.target.value)} placeholder="0.00"
-                style={{ width: '100%', background: t.cardBg, border: '1px solid rgba(255,255,255,0.08)', color: 'white', fontSize: '9px', padding: '8px 10px', outline: 'none', boxSizing: 'border-box' }} />
+                style={{ width: '100%', background: t.cardBg, border: `1px solid ${t.border}`, color: t.text, fontSize: '9px', padding: '8px 10px', outline: 'none', boxSizing: 'border-box' }} />
               {amount && Number(amount) > 0 && user?.currency && user.currency !== 'USD' && (
                 <div style={{ fontSize: '7px', color: '#f59e0b', marginTop: '4px' }}>≈ {formatAmount(Number(amount), user.currency)} in your currency</div>
               )}
             </div>
             {error && <div style={{ color: '#ef4444', fontSize: '8px', marginBottom: '8px' }}>{error}</div>}
             <button onClick={handleSubmit} disabled={submitting}
-              style={{ width: '100%', padding: '9px', background: submitting ? '#4b4e9b' : '#6366f1', border: 'none', color: 'white', fontSize: '9px', fontWeight: '700', cursor: submitting ? 'not-allowed' : 'pointer' }}>
+              style={{ width: '100%', padding: '9px', background: submitting ? '#4b4e9b' : '#6366f1', border: 'none', color: t.text, fontSize: '9px', fontWeight: '700', cursor: submitting ? 'not-allowed' : 'pointer' }}>
               {submitting ? 'Processing...' : 'Stake Now'}
             </button>
           </div>
@@ -149,7 +149,7 @@ export default function Stake() {
             </div>
             <div style={{ color: '#111', fontSize: '18px', fontWeight: '700', marginBottom: '10px' }}>Stake Submitted!</div>
             <div style={{ color: '#555', fontSize: '12px', marginBottom: '24px', lineHeight: '1.8' }}>Your staking request has been submitted successfully and is now earning rewards.</div>
-            <button onClick={() => setShowSuccess(false)} style={{ padding: '8px 28px', background: '#6366f1', border: 'none', color: 'white', fontSize: '10px', fontWeight: '600', cursor: 'pointer' }}>Okay</button>
+            <button onClick={() => setShowSuccess(false)} style={{ padding: '8px 28px', background: '#6366f1', border: 'none', color: t.text, fontSize: '10px', fontWeight: '600', cursor: 'pointer' }}>Okay</button>
           </div>
         </>
       )}
@@ -158,46 +158,46 @@ export default function Stake() {
 
         {/* New Stake Button */}
         <div style={{ display: 'flex', justifyContent: 'flex-end', marginBottom: '14px' }}>
-          <button onClick={() => navigate('/dashboard/new-stake')} style={{ background: '#6366f1', border: 'none', color: 'white', fontSize: '9px', fontWeight: '700', padding: '8px 14px', cursor: 'pointer' }}>+ New Stake</button>
+          <button onClick={() => navigate('/dashboard/new-stake')} style={{ background: '#6366f1', border: 'none', color: t.text, fontSize: '9px', fontWeight: '700', padding: '8px 14px', cursor: 'pointer' }}>+ New Stake</button>
         </div>
 
         {/* Stats */}
         <div style={{ display: 'flex', gap: '8px', marginBottom: '14px', flexWrap: 'wrap' }}>
           <div style={{ background: 'linear-gradient(135deg, rgba(15,23,42,0.9), rgba(30,41,59,0.8))', border: '1px solid rgba(99,102,241,0.3)', borderRadius: '12px', padding: '6px', flex: 1, textAlign: 'center', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '3px', boxShadow: '0 4px 24px rgba(99,102,241,0.1)' }}>
             <div style={{ width: '32px', height: '32px', borderRadius: '50%', background: 'rgba(99,102,241,0.15)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}><DollarSign size={14} color="#6366f1"/></div>
-            <div style={{ color: 'rgba(255,255,255,0.45)', fontSize: '7px' }}>Total Staked</div>
+            <div style={{ color: t.subText, fontSize: '7px' }}>Total Staked</div>
             <div style={{ color: '#6366f1', fontSize: '10px', fontWeight: '700' }}>{formatAmount(totalStaked, user?.currency)}</div>
           </div>
           <div style={{ background: 'linear-gradient(135deg, rgba(15,23,42,0.9), rgba(30,41,59,0.8))', border: '1px solid rgba(99,102,241,0.3)', borderRadius: '12px', padding: '6px', flex: 1, textAlign: 'center', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '3px', boxShadow: '0 4px 24px rgba(99,102,241,0.1)' }}>
             <div style={{ width: '32px', height: '32px', borderRadius: '50%', background: 'rgba(34,197,94,0.15)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}><TrendingUp size={14} color="#22c55e"/></div>
-            <div style={{ color: 'rgba(255,255,255,0.45)', fontSize: '7px' }}>Total Earned</div>
+            <div style={{ color: t.subText, fontSize: '7px' }}>Total Earned</div>
             <div style={{ color: '#22c55e', fontSize: '10px', fontWeight: '700' }}>{formatAmount(totalEarned, user?.currency)}</div>
           </div>
           <div style={{ background: 'linear-gradient(135deg, rgba(15,23,42,0.9), rgba(30,41,59,0.8))', border: '1px solid rgba(99,102,241,0.3)', borderRadius: '12px', padding: '6px', flex: 1, textAlign: 'center', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '3px', boxShadow: '0 4px 24px rgba(99,102,241,0.1)' }}>
             <div style={{ width: '32px', height: '32px', borderRadius: '50%', background: 'rgba(245,158,11,0.15)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}><Lock size={14} color="#f59e0b"/></div>
-            <div style={{ color: 'rgba(255,255,255,0.45)', fontSize: '7px' }}>Active</div>
+            <div style={{ color: t.subText, fontSize: '7px' }}>Active</div>
             <div style={{ color: '#f59e0b', fontSize: '10px', fontWeight: '700' }}>{stakes.filter(s=>s.status==='active').length}</div>
           </div>
           <div style={{ background: 'linear-gradient(135deg, rgba(15,23,42,0.9), rgba(30,41,59,0.8))', border: '1px solid rgba(99,102,241,0.3)', borderRadius: '12px', padding: '6px', flex: 1, textAlign: 'center', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '3px', boxShadow: '0 4px 24px rgba(99,102,241,0.1)' }}>
             <div style={{ width: '32px', height: '32px', borderRadius: '50%', background: 'rgba(148,163,184,0.15)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}><Unlock size={14} color="#94a3b8"/></div>
-            <div style={{ color: 'rgba(255,255,255,0.45)', fontSize: '7px' }}>Completed</div>
+            <div style={{ color: t.subText, fontSize: '7px' }}>Completed</div>
             <div style={{ color: '#94a3b8', fontSize: '10px', fontWeight: '700' }}>{stakes.filter(s=>s.status==='completed').length}</div>
           </div>
         </div>
 
         {/* Table */}
         <div style={{ background: t.cardBg, border: '1px solid rgba(255,255,255,0.06)' }}>
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '8px 10px', borderBottom: '1px solid rgba(255,255,255,0.06)' }}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '8px 10px', borderBottom: `1px solid ${t.border}` }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
-              <span style={{ color: 'rgba(255,255,255,0.45)', fontSize: '8px' }}>Show</span>
-              <select value={show} onChange={e => { setShow(Number(e.target.value)); setPage(1); }} style={{ background: 'rgba(255,255,255,0.06)', border: '1px solid rgba(255,255,255,0.1)', color: 'white', fontSize: '8px', padding: '2px 5px', outline: 'none' }}>
+              <span style={{ color: t.subText, fontSize: '8px' }}>Show</span>
+              <select value={show} onChange={e => { setShow(Number(e.target.value)); setPage(1); }} style={{ background: t.border, border: `1px solid ${t.border}`, color: t.text, fontSize: '8px', padding: '2px 5px', outline: 'none' }}>
                 <option>10</option><option>25</option><option>50</option>
               </select>
-              <span style={{ color: 'rgba(255,255,255,0.45)', fontSize: '8px' }}>entries</span>
+              <span style={{ color: t.subText, fontSize: '8px' }}>entries</span>
             </div>
             <div style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
-              <span style={{ color: 'rgba(255,255,255,0.45)', fontSize: '8px' }}>Search:</span>
-              <input value={search} onChange={e => { setSearch(e.target.value); setPage(1); }} style={{ background: 'rgba(255,255,255,0.06)', border: '1px solid rgba(255,255,255,0.1)', color: 'white', fontSize: '8px', padding: '3px 8px', outline: 'none', width: '80px' }}/>
+              <span style={{ color: t.subText, fontSize: '8px' }}>Search:</span>
+              <input value={search} onChange={e => { setSearch(e.target.value); setPage(1); }} style={{ background: t.border, border: `1px solid ${t.border}`, color: t.text, fontSize: '8px', padding: '3px 8px', outline: 'none', width: '80px' }}/>
             </div>
           </div>
 
@@ -205,7 +205,7 @@ export default function Stake() {
             <thead>
               <tr style={{ background: 'rgba(255,255,255,0.04)' }}>
                 {['Plan','Amount','APY','Earned','Duration','Status'].map((h,i) => (
-                  <th key={i} style={{ color: 'rgba(255,255,255,0.7)', fontSize: '8px', fontWeight: '700', padding: '8px 10px', borderRight: '1px solid #6366f1', borderBottom: '1px solid #6366f1', textAlign: 'left' }}>{h} ↕</th>
+                  <th key={i} style={{ color: t.subText, fontSize: '8px', fontWeight: '700', padding: '8px 10px', borderRight: '1px solid #6366f1', borderBottom: '1px solid #6366f1', textAlign: 'left' }}>{h} ↕</th>
                 ))}
               </tr>
             </thead>
@@ -220,10 +220,10 @@ export default function Stake() {
                 return (
                   <tr key={i} style={{ borderBottom: '1px solid rgba(255,255,255,0.04)', background: i%2===0?'transparent':'rgba(255,255,255,0.02)' }}>
                     <td style={{ padding: '8px 10px', color: '#6366f1', fontSize: '8px', fontWeight: '700' }}>{s.plan}</td>
-                    <td style={{ padding: '8px 10px', color: 'white', fontSize: '8px', fontWeight: '700' }}>{formatAmount(s.amount||0, user?.currency)}</td>
+                    <td style={{ padding: '8px 10px', color: t.text, fontSize: '8px', fontWeight: '700' }}>{formatAmount(s.amount||0, user?.currency)}</td>
                     <td style={{ padding: '8px 10px', color: '#22c55e', fontSize: '8px', fontWeight: '700' }}>{s.apy}</td>
                     <td style={{ padding: '8px 10px', color: '#f59e0b', fontSize: '8px', fontWeight: '700' }}>{formatAmount(earned, user?.currency)}</td>
-                    <td style={{ padding: '8px 10px', color: 'rgba(255,255,255,0.5)', fontSize: '8px' }}>{s.duration} days</td>
+                    <td style={{ padding: '8px 10px', color: t.subText, fontSize: '8px' }}>{s.duration} days</td>
                     <td style={{ padding: '8px 10px' }}>
                       <span style={{ background: color+'20', color, fontSize: '7px', padding: '2px 6px', display: 'inline-block', textTransform: 'capitalize' }}>{s.status}</span>
                     </td>
@@ -236,11 +236,11 @@ export default function Stake() {
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '7px 10px', borderTop: '1px solid rgba(255,255,255,0.04)' }}>
             <span style={{ color: 'rgba(255,255,255,0.35)', fontSize: '8px' }}>Showing {filtered.length === 0 ? 0 : (page-1)*perPage+1}–{Math.min(page*perPage, filtered.length)} of {filtered.length} entries</span>
             <div style={{ display: 'flex', gap: '4px' }}>
-              <button onClick={() => setPage(1)} disabled={page===1} style={{ background: 'rgba(255,255,255,0.06)', border: '1px solid rgba(255,255,255,0.1)', color: page===1?'rgba(255,255,255,0.2)':'rgba(255,255,255,0.6)', fontSize: '8px', padding: '2px 6px', cursor: page===1?'default':'pointer' }}>«</button>
-              <button onClick={() => setPage(p=>Math.max(1,p-1))} disabled={page===1} style={{ background: 'rgba(255,255,255,0.06)', border: '1px solid rgba(255,255,255,0.1)', color: page===1?'rgba(255,255,255,0.2)':'rgba(255,255,255,0.6)', fontSize: '10px', padding: '2px 8px', cursor: page===1?'default':'pointer' }}>‹</button>
-              <span style={{ color: 'rgba(255,255,255,0.4)', fontSize: '8px' }}>Page {page} of {totalPages}</span>
-              <button onClick={() => setPage(p=>Math.min(totalPages,p+1))} disabled={page>=totalPages} style={{ background: 'rgba(255,255,255,0.06)', border: '1px solid rgba(255,255,255,0.1)', color: page>=totalPages?'rgba(255,255,255,0.2)':'rgba(255,255,255,0.6)', fontSize: '10px', padding: '2px 8px', cursor: page>=totalPages?'default':'pointer' }}>›</button>
-              <button onClick={() => setPage(totalPages)} disabled={page>=totalPages} style={{ background: 'rgba(255,255,255,0.06)', border: '1px solid rgba(255,255,255,0.1)', color: page>=totalPages?'rgba(255,255,255,0.2)':'rgba(255,255,255,0.6)', fontSize: '8px', padding: '2px 6px', cursor: page>=totalPages?'default':'pointer' }}>»</button>
+              <button onClick={() => setPage(1)} disabled={page===1} style={{ background: t.border, border: `1px solid ${t.border}`, color: page===1?'rgba(255,255,255,0.2)':'rgba(255,255,255,0.6)', fontSize: '8px', padding: '2px 6px', cursor: page===1?'default':'pointer' }}>«</button>
+              <button onClick={() => setPage(p=>Math.max(1,p-1))} disabled={page===1} style={{ background: t.border, border: `1px solid ${t.border}`, color: page===1?'rgba(255,255,255,0.2)':'rgba(255,255,255,0.6)', fontSize: '10px', padding: '2px 8px', cursor: page===1?'default':'pointer' }}>‹</button>
+              <span style={{ color: t.subText, fontSize: '8px' }}>Page {page} of {totalPages}</span>
+              <button onClick={() => setPage(p=>Math.min(totalPages,p+1))} disabled={page>=totalPages} style={{ background: t.border, border: `1px solid ${t.border}`, color: page>=totalPages?'rgba(255,255,255,0.2)':'rgba(255,255,255,0.6)', fontSize: '10px', padding: '2px 8px', cursor: page>=totalPages?'default':'pointer' }}>›</button>
+              <button onClick={() => setPage(totalPages)} disabled={page>=totalPages} style={{ background: t.border, border: `1px solid ${t.border}`, color: page>=totalPages?'rgba(255,255,255,0.2)':'rgba(255,255,255,0.6)', fontSize: '8px', padding: '2px 6px', cursor: page>=totalPages?'default':'pointer' }}>»</button>
             </div>
           </div>
         </div>

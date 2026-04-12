@@ -102,7 +102,7 @@ export default function LiveTrading() {
   const paginated = filtered.slice((page-1)*show, page*show);
 
   return (
-    <div style={{ minHeight: '100vh', background: '#0a0f1e', fontFamily: "'Segoe UI', sans-serif", color: 'white' }}>
+    <div style={{ minHeight: '100vh', background: '#0a0f1e', fontFamily: "'Segoe UI', sans-serif", color: t.text }}>
       <PageHeader title="Live Trading" />
 
       {/* New Trade Modal */}
@@ -125,14 +125,14 @@ export default function LiveTrading() {
 
               {/* BUY/SELL toggle */}
               <div style={{ display: 'flex', gap: '8px', marginBottom: '12px' }}>
-                <button onClick={() => setSheetDir('buy')} style={{ flex: 1, padding: '8px', background: sheetDir === 'buy' ? '#16a34a' : 'rgba(255,255,255,0.06)', border: 'none', color: 'white', fontSize: '11px', fontWeight: '800', cursor: 'pointer' }}>BUY</button>
-                <button onClick={() => setSheetDir('sell')} style={{ flex: 1, padding: '8px', background: sheetDir === 'sell' ? '#dc2626' : 'rgba(255,255,255,0.06)', border: 'none', color: 'white', fontSize: '11px', fontWeight: '800', cursor: 'pointer' }}>SELL</button>
+                <button onClick={() => setSheetDir('buy')} style={{ flex: 1, padding: '8px', background: sheetDir === 'buy' ? '#16a34a' : 'rgba(255,255,255,0.06)', border: 'none', color: t.text, fontSize: '11px', fontWeight: '800', cursor: 'pointer' }}>BUY</button>
+                <button onClick={() => setSheetDir('sell')} style={{ flex: 1, padding: '8px', background: sheetDir === 'sell' ? '#dc2626' : 'rgba(255,255,255,0.06)', border: 'none', color: t.text, fontSize: '11px', fontWeight: '800', cursor: 'pointer' }}>SELL</button>
               </div>
 
               {/* Form fields */}
               <div>
-                <div style={{ color: 'rgba(255,255,255,0.4)', fontSize: '7px', marginBottom: '3px' }}>Amount (USD)</div>
-                <input value={amount} onChange={e => setAmount(e.target.value)} placeholder='Min $10' style={{ width: '100%', background: '#0a0f1e', border: `1px solid ${sheetDir === 'buy' ? 'rgba(34,197,94,0.3)' : 'rgba(239,68,68,0.3)'}`, color: 'white', fontSize: '10px', padding: '6px 8px', outline: 'none', boxSizing: 'border-box', marginBottom: '4px' }} />
+                <div style={{ color: t.subText, fontSize: '7px', marginBottom: '3px' }}>Amount (USD)</div>
+                <input value={amount} onChange={e => setAmount(e.target.value)} placeholder='Min $10' style={{ width: '100%', background: '#0a0f1e', border: `1px solid ${sheetDir === 'buy' ? 'rgba(34,197,94,0.3)' : 'rgba(239,68,68,0.3)'}`, color: t.text, fontSize: '10px', padding: '6px 8px', outline: 'none', boxSizing: 'border-box', marginBottom: '4px' }} />
                 {amount && Number(amount) >= 10 && currency && currency !== 'USD' && (
                   <div style={{ fontSize: '7px', color: '#22c55e', marginBottom: '8px' }}>≈ {formatAmount(Number(amount), currency)} in your local currency</div>
                 )}
@@ -140,14 +140,14 @@ export default function LiveTrading() {
 
               <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '8px', marginBottom: '12px' }}>
                 <div>
-                  <div style={{ color: 'rgba(255,255,255,0.4)', fontSize: '7px', marginBottom: '3px' }}>Duration</div>
-                  <select value={duration} onChange={e => setDuration(e.target.value)} style={{ width: '100%', background: '#0a0f1e', border: '1px solid rgba(255,255,255,0.08)', color: 'white', fontSize: '8px', padding: '6px 4px', outline: 'none', boxSizing: 'border-box' }}>
+                  <div style={{ color: t.subText, fontSize: '7px', marginBottom: '3px' }}>Duration</div>
+                  <select value={duration} onChange={e => setDuration(e.target.value)} style={{ width: '100%', background: '#0a0f1e', border: `1px solid ${t.border}`, color: t.text, fontSize: '8px', padding: '6px 4px', outline: 'none', boxSizing: 'border-box' }}>
                     {DURATIONS.map(d => <option key={d} value={d}>{d}</option>)}
                   </select>
                 </div>
                 <div>
-                  <div style={{ color: 'rgba(255,255,255,0.4)', fontSize: '7px', marginBottom: '3px' }}>Leverage</div>
-                  <select value={leverage} onChange={e => setLeverage(e.target.value)} style={{ width: '100%', background: '#0a0f1e', border: '1px solid rgba(255,255,255,0.08)', color: 'white', fontSize: '8px', padding: '6px 4px', outline: 'none', boxSizing: 'border-box' }}>
+                  <div style={{ color: t.subText, fontSize: '7px', marginBottom: '3px' }}>Leverage</div>
+                  <select value={leverage} onChange={e => setLeverage(e.target.value)} style={{ width: '100%', background: '#0a0f1e', border: `1px solid ${t.border}`, color: t.text, fontSize: '8px', padding: '6px 4px', outline: 'none', boxSizing: 'border-box' }}>
                     {['1x','2x','5x','10x','20x','50x','100x'].map(l => <option key={l} value={l}>{l}</option>)}
                   </select>
                 </div>
@@ -156,7 +156,7 @@ export default function LiveTrading() {
               {msg && <div style={{ color: '#22c55e', fontSize: '8px', marginBottom: '8px' }}>{msg}</div>}
               {error && <div style={{ color: '#ef4444', fontSize: '8px', marginBottom: '8px' }}>{error}</div>}
 
-              <button onClick={handleTrade} disabled={submitting} style={{ width: '100%', padding: '10px', background: sheetDir === 'buy' ? '#16a34a' : '#dc2626', border: 'none', color: 'white', fontSize: '11px', fontWeight: '800', cursor: 'pointer' }}>
+              <button onClick={handleTrade} disabled={submitting} style={{ width: '100%', padding: '10px', background: sheetDir === 'buy' ? '#16a34a' : '#dc2626', border: 'none', color: t.text, fontSize: '11px', fontWeight: '800', cursor: 'pointer' }}>
                 {submitting ? 'Placing...' : `Confirm ${sheetDir === 'buy' ? 'Buy' : 'Sell'}`}
               </button>
             </div>
@@ -168,24 +168,24 @@ export default function LiveTrading() {
 
         {/* New Trade button */}
         <div style={{ display: 'flex', justifyContent: 'flex-end', marginBottom: '14px' }}>
-          <button onClick={() => navigate("/dashboard/new-trade")} style={{ background: '#6366f1', border: 'none', color: 'white', fontSize: '9px', fontWeight: '700', padding: '8px 14px', cursor: 'pointer' }}>+ New Trade</button>
+          <button onClick={() => navigate("/dashboard/new-trade")} style={{ background: '#6366f1', border: 'none', color: t.text, fontSize: '9px', fontWeight: '700', padding: '8px 14px', cursor: 'pointer' }}>+ New Trade</button>
         </div>
 
         {/* Stats Cards */}
         <div style={{ display: 'flex', gap: '8px', marginBottom: '14px' }}>
           <div style={{ background: 'linear-gradient(135deg, rgba(15,23,42,0.9), rgba(30,41,59,0.8))', border: '1px solid rgba(99,102,241,0.3)', borderRadius: '12px', padding: '6px', flex: 1, textAlign: 'center', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '3px', boxShadow: '0 4px 24px rgba(99,102,241,0.1)' }}>
             <div style={{ width: '32px', height: '32px', borderRadius: '50%', background: 'rgba(99,102,241,0.15)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}><BarChart2 size={14} color="#6366f1"/></div>
-            <div style={{ color: 'rgba(255,255,255,0.45)', fontSize: '7px' }}>Total Trades</div>
-            <div style={{ color: 'white', fontSize: '10px', fontWeight: '700' }}>{stats ? stats.totalTrades ?? 0 : '...'}</div>
+            <div style={{ color: t.subText, fontSize: '7px' }}>Total Trades</div>
+            <div style={{ color: t.text, fontSize: '10px', fontWeight: '700' }}>{stats ? stats.totalTrades ?? 0 : '...'}</div>
           </div>
           <div style={{ background: 'linear-gradient(135deg, rgba(15,23,42,0.9), rgba(30,41,59,0.8))', border: '1px solid rgba(99,102,241,0.3)', borderRadius: '12px', padding: '6px', flex: 1, textAlign: 'center', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '3px', boxShadow: '0 4px 24px rgba(99,102,241,0.1)' }}>
             <div style={{ width: '32px', height: '32px', borderRadius: '50%', background: 'rgba(34,197,94,0.15)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}><TrendingUp size={14} color="#22c55e"/></div>
-            <div style={{ color: 'rgba(255,255,255,0.45)', fontSize: '7px' }}>Wins</div>
+            <div style={{ color: t.subText, fontSize: '7px' }}>Wins</div>
             <div style={{ color: '#22c55e', fontSize: '10px', fontWeight: '700' }}>{stats ? stats.wins ?? 0 : '...'}</div>
           </div>
           <div style={{ background: 'linear-gradient(135deg, rgba(15,23,42,0.9), rgba(30,41,59,0.8))', border: '1px solid rgba(99,102,241,0.3)', borderRadius: '12px', padding: '6px', flex: 1, textAlign: 'center', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '3px', boxShadow: '0 4px 24px rgba(99,102,241,0.1)' }}>
             <div style={{ width: '32px', height: '32px', borderRadius: '50%', background: 'rgba(239,68,68,0.15)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}><TrendingUp size={14} color="#ef4444" style={{ transform: 'rotate(180deg)' }}/></div>
-            <div style={{ color: 'rgba(255,255,255,0.45)', fontSize: '7px' }}>Losses</div>
+            <div style={{ color: t.subText, fontSize: '7px' }}>Losses</div>
             <div style={{ color: '#ef4444', fontSize: '10px', fontWeight: '700' }}>{stats ? stats.losses ?? 0 : '...'}</div>
           </div>
         </div>
@@ -193,24 +193,24 @@ export default function LiveTrading() {
         {/* Trades Table */}
         <div style={{ background: t.cardBg, border: '1px solid rgba(255,255,255,0.06)' }}>
           {/* Tabs */}
-          <div style={{ display: 'flex', borderBottom: '1px solid rgba(255,255,255,0.06)' }}>
+          <div style={{ display: 'flex', borderBottom: `1px solid ${t.border}` }}>
             {[['open', `Open (${openTrades.length})`], ['closed', `Closed (${closedTrades.length})`]].map(([key, label]) => (
               <button key={key} onClick={() => { setTab(key); setPage(1); }} style={{ padding: '8px 14px', background: 'transparent', border: 'none', borderBottom: tab === key ? '2px solid #6366f1' : '2px solid transparent', color: tab === key ? '#818cf8' : 'rgba(255,255,255,0.4)', fontSize: '8px', fontWeight: '700', cursor: 'pointer' }}>{label}</button>
             ))}
           </div>
 
           {/* Show/Search */}
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '8px 10px', borderBottom: '1px solid rgba(255,255,255,0.06)' }}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '8px 10px', borderBottom: `1px solid ${t.border}` }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
-              <span style={{ color: 'rgba(255,255,255,0.45)', fontSize: '8px' }}>Show</span>
-              <select value={show} onChange={e => { setShow(Number(e.target.value)); setPage(1); }} style={{ background: 'rgba(255,255,255,0.06)', border: '1px solid rgba(255,255,255,0.1)', color: 'white', fontSize: '8px', padding: '2px 5px', outline: 'none' }}>
+              <span style={{ color: t.subText, fontSize: '8px' }}>Show</span>
+              <select value={show} onChange={e => { setShow(Number(e.target.value)); setPage(1); }} style={{ background: t.border, border: `1px solid ${t.border}`, color: t.text, fontSize: '8px', padding: '2px 5px', outline: 'none' }}>
                 <option>10</option><option>25</option><option>50</option>
               </select>
-              <span style={{ color: 'rgba(255,255,255,0.45)', fontSize: '8px' }}>entries</span>
+              <span style={{ color: t.subText, fontSize: '8px' }}>entries</span>
             </div>
             <div style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
-              <span style={{ color: 'rgba(255,255,255,0.45)', fontSize: '8px' }}>Search:</span>
-              <input value={search} onChange={e => { setSearch(e.target.value); setPage(1); }} style={{ background: 'rgba(255,255,255,0.06)', border: '1px solid rgba(255,255,255,0.1)', color: 'white', fontSize: '8px', padding: '3px 8px', outline: 'none', width: '80px' }} />
+              <span style={{ color: t.subText, fontSize: '8px' }}>Search:</span>
+              <input value={search} onChange={e => { setSearch(e.target.value); setPage(1); }} style={{ background: t.border, border: `1px solid ${t.border}`, color: t.text, fontSize: '8px', padding: '3px 8px', outline: 'none', width: '80px' }} />
             </div>
           </div>
 
@@ -220,10 +220,10 @@ export default function LiveTrading() {
               <tr style={{ background: 'rgba(255,255,255,0.04)' }}>
                 {tab === 'open'
                   ? ['Symbol','Dir','Amount','Duration','Leverage','Status','Action'].map((h,i) => (
-                      <th key={i} style={{ color: 'rgba(255,255,255,0.7)', fontSize: '8px', fontWeight: '700', padding: '8px 6px', borderRight: '1px solid #6366f1', borderBottom: '1px solid #6366f1', textAlign: 'left' }}>{h}</th>
+                      <th key={i} style={{ color: t.subText, fontSize: '8px', fontWeight: '700', padding: '8px 6px', borderRight: '1px solid #6366f1', borderBottom: '1px solid #6366f1', textAlign: 'left' }}>{h}</th>
                     ))
                   : ['Symbol','Dir','Amount','Result','P&L%','Status'].map((h,i) => (
-                      <th key={i} style={{ color: 'rgba(255,255,255,0.7)', fontSize: '8px', fontWeight: '700', padding: '8px 6px', borderRight: '1px solid #6366f1', borderBottom: '1px solid #6366f1', textAlign: 'left' }}>{h}</th>
+                      <th key={i} style={{ color: t.subText, fontSize: '8px', fontWeight: '700', padding: '8px 6px', borderRight: '1px solid #6366f1', borderBottom: '1px solid #6366f1', textAlign: 'left' }}>{h}</th>
                     ))
                 }
               </tr>
@@ -236,9 +236,9 @@ export default function LiveTrading() {
                   <tr key={i} style={{ borderBottom: '1px solid rgba(255,255,255,0.04)', background: i%2===0?'transparent':'rgba(255,255,255,0.02)' }}>
                     <td style={{ padding: '8px 6px', color: '#6366f1', fontSize: '8px', fontWeight: '700' }}>{t.symbol}</td>
                     <td style={{ padding: '8px 6px', color: t.type === 'buy' ? '#22c55e' : '#ef4444', fontSize: '8px', fontWeight: '700', textTransform: 'uppercase' }}>{t.type}</td>
-                    <td style={{ padding: '8px 6px', color: 'white', fontSize: '8px' }}>{formatAmount(parseFloat(t.amount), user?.currency)}</td>
-                    <td style={{ padding: '8px 6px', color: 'rgba(255,255,255,0.5)', fontSize: '8px' }}>{t.duration}</td>
-                    <td style={{ padding: '8px 6px', color: 'rgba(255,255,255,0.5)', fontSize: '8px' }}>{t.leverage}</td>
+                    <td style={{ padding: '8px 6px', color: t.text, fontSize: '8px' }}>{formatAmount(parseFloat(t.amount), user?.currency)}</td>
+                    <td style={{ padding: '8px 6px', color: t.subText, fontSize: '8px' }}>{t.duration}</td>
+                    <td style={{ padding: '8px 6px', color: t.subText, fontSize: '8px' }}>{t.leverage}</td>
                     <td style={{ padding: '8px 6px' }}><span style={{ background: 'rgba(34,197,94,0.1)', color: '#22c55e', fontSize: '7px', padding: '2px 6px', textTransform: 'uppercase' }}>{t.status}</span></td>
                     <td style={{ padding: '8px 6px' }}><button onClick={() => fetchAll()} style={{ background: 'rgba(239,68,68,0.15)', border: '1px solid rgba(239,68,68,0.3)', color: '#ef4444', fontSize: '7px', padding: '2px 6px', cursor: 'pointer' }}>Close</button></td>
                   </tr>
@@ -246,7 +246,7 @@ export default function LiveTrading() {
                   <tr key={i} style={{ borderBottom: '1px solid rgba(255,255,255,0.04)', background: i%2===0?'transparent':'rgba(255,255,255,0.02)' }}>
                     <td style={{ padding: '8px 6px', color: '#6366f1', fontSize: '8px', fontWeight: '700' }}>{t.symbol}</td>
                     <td style={{ padding: '8px 6px', color: t.type === 'buy' ? '#22c55e' : '#ef4444', fontSize: '8px', fontWeight: '700', textTransform: 'uppercase' }}>{t.type}</td>
-                    <td style={{ padding: '8px 6px', color: 'white', fontSize: '8px' }}>{formatAmount(parseFloat(t.amount), user?.currency)}</td>
+                    <td style={{ padding: '8px 6px', color: t.text, fontSize: '8px' }}>{formatAmount(parseFloat(t.amount), user?.currency)}</td>
                     <td style={{ padding: '8px 6px', color: t.result > 0 ? '#22c55e' : '#ef4444', fontSize: '8px', fontWeight: '700' }}>{t.result != null ? formatAmount(parseFloat(t.result), user?.currency) : '—'}</td>
                     <td style={{ padding: '8px 6px', color: t.result > 0 ? '#22c55e' : '#ef4444', fontSize: '8px', fontWeight: '700' }}>{t.amount ? `${((t.result / t.amount) * 100).toFixed(1)}%` : '—'}</td>
                     <td style={{ padding: '8px 6px' }}><span style={{ background: 'rgba(107,114,128,0.1)', color: '#9ca3af', fontSize: '7px', padding: '2px 6px', textTransform: 'capitalize' }}>{t.status}</span></td>
@@ -260,11 +260,11 @@ export default function LiveTrading() {
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '7px 10px', borderTop: '1px solid rgba(255,255,255,0.04)' }}>
             <span style={{ color: 'rgba(255,255,255,0.35)', fontSize: '8px' }}>Showing {filtered.length === 0 ? 0 : (page-1)*show+1}–{Math.min(page*show, filtered.length)} of {filtered.length} entries</span>
             <div style={{ display: 'flex', gap: '4px' }}>
-              <button onClick={() => setPage(1)} disabled={page===1} style={{ background: 'rgba(255,255,255,0.06)', border: '1px solid rgba(255,255,255,0.1)', color: page===1?'rgba(255,255,255,0.2)':'rgba(255,255,255,0.6)', fontSize: '8px', padding: '2px 6px', cursor: page===1?'default':'pointer' }}>«</button>
-              <button onClick={() => setPage(p=>Math.max(1,p-1))} disabled={page===1} style={{ background: 'rgba(255,255,255,0.06)', border: '1px solid rgba(255,255,255,0.1)', color: page===1?'rgba(255,255,255,0.2)':'rgba(255,255,255,0.6)', fontSize: '10px', padding: '2px 8px', cursor: page===1?'default':'pointer' }}>‹</button>
-              <span style={{ color: 'rgba(255,255,255,0.4)', fontSize: '8px' }}>Page {page} of {totalPages}</span>
-              <button onClick={() => setPage(p=>Math.min(totalPages,p+1))} disabled={page>=totalPages} style={{ background: 'rgba(255,255,255,0.06)', border: '1px solid rgba(255,255,255,0.1)', color: page>=totalPages?'rgba(255,255,255,0.2)':'rgba(255,255,255,0.6)', fontSize: '10px', padding: '2px 8px', cursor: page>=totalPages?'default':'pointer' }}>›</button>
-              <button onClick={() => setPage(totalPages)} disabled={page>=totalPages} style={{ background: 'rgba(255,255,255,0.06)', border: '1px solid rgba(255,255,255,0.1)', color: page>=totalPages?'rgba(255,255,255,0.2)':'rgba(255,255,255,0.6)', fontSize: '8px', padding: '2px 6px', cursor: page>=totalPages?'default':'pointer' }}>»</button>
+              <button onClick={() => setPage(1)} disabled={page===1} style={{ background: t.border, border: `1px solid ${t.border}`, color: page===1?'rgba(255,255,255,0.2)':'rgba(255,255,255,0.6)', fontSize: '8px', padding: '2px 6px', cursor: page===1?'default':'pointer' }}>«</button>
+              <button onClick={() => setPage(p=>Math.max(1,p-1))} disabled={page===1} style={{ background: t.border, border: `1px solid ${t.border}`, color: page===1?'rgba(255,255,255,0.2)':'rgba(255,255,255,0.6)', fontSize: '10px', padding: '2px 8px', cursor: page===1?'default':'pointer' }}>‹</button>
+              <span style={{ color: t.subText, fontSize: '8px' }}>Page {page} of {totalPages}</span>
+              <button onClick={() => setPage(p=>Math.min(totalPages,p+1))} disabled={page>=totalPages} style={{ background: t.border, border: `1px solid ${t.border}`, color: page>=totalPages?'rgba(255,255,255,0.2)':'rgba(255,255,255,0.6)', fontSize: '10px', padding: '2px 8px', cursor: page>=totalPages?'default':'pointer' }}>›</button>
+              <button onClick={() => setPage(totalPages)} disabled={page>=totalPages} style={{ background: t.border, border: `1px solid ${t.border}`, color: page>=totalPages?'rgba(255,255,255,0.2)':'rgba(255,255,255,0.6)', fontSize: '8px', padding: '2px 6px', cursor: page>=totalPages?'default':'pointer' }}>»</button>
             </div>
           </div>
         </div>

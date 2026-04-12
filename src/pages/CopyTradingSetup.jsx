@@ -67,23 +67,23 @@ export default function CopyTradingSetup() {
   if (!trader) return null;
 
   if (success) return (
-    <div style={{ minHeight: '100vh', background: t.bg, fontFamily: "'Segoe UI', sans-serif", color: 'white', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: '24px' }}>
+    <div style={{ minHeight: '100vh', background: t.bg, fontFamily: "'Segoe UI', sans-serif", color: t.text, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: '24px' }}>
       <div style={{ width: '72px', height: '72px', background: 'rgba(34,197,94,0.15)', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '16px', border: '2px solid rgba(34,197,94,0.3)' }}>
         <CheckCircle2 size={36} color="#22c55e" />
       </div>
       <div style={{ fontSize: '18px', fontWeight: '700', marginBottom: '6px' }}>Strategy Copied!</div>
-      <div style={{ fontSize: '9px', color: 'rgba(255,255,255,0.5)', textAlign: 'center', marginBottom: '4px' }}>You are now copying <span style={{ color: '#6366f1', fontWeight: '700' }}>{trader.name}</span></div>
-      <div style={{ fontSize: '9px', color: 'rgba(255,255,255,0.5)', textAlign: 'center', marginBottom: '4px' }}>Investment: <span style={{ color: '#22c55e', fontWeight: '700' }}>{getCurrencySymbol(currency)}{Number(amount).toFixed(2)}</span></div>
-      <div style={{ fontSize: '9px', color: 'rgba(255,255,255,0.5)', textAlign: 'center', marginBottom: '24px' }}>Duration: <span style={{ color: 'white', fontWeight: '700' }}>{duration} days</span></div>
+      <div style={{ fontSize: '9px', color: t.subText, textAlign: 'center', marginBottom: '4px' }}>You are now copying <span style={{ color: '#6366f1', fontWeight: '700' }}>{trader.name}</span></div>
+      <div style={{ fontSize: '9px', color: t.subText, textAlign: 'center', marginBottom: '4px' }}>Investment: <span style={{ color: '#22c55e', fontWeight: '700' }}>{getCurrencySymbol(currency)}{Number(amount).toFixed(2)}</span></div>
+      <div style={{ fontSize: '9px', color: t.subText, textAlign: 'center', marginBottom: '24px' }}>Duration: <span style={{ color: t.text, fontWeight: '700' }}>{duration} days</span></div>
       <div style={{ display: 'flex', gap: '10px' }}>
-        <button onClick={() => navigate('/dashboard/copy-trading')} style={{ padding: '10px 20px', background: 'rgba(255,255,255,0.08)', border: '1px solid rgba(255,255,255,0.1)', color: 'white', fontSize: '9px', fontWeight: '600', cursor: 'pointer', borderRadius: '8px' }}>Back to Traders</button>
-        <button onClick={() => navigate('/dashboard/my-copy-trades')} style={{ padding: '10px 20px', background: '#6366f1', border: 'none', color: 'white', fontSize: '9px', fontWeight: '600', cursor: 'pointer', borderRadius: '8px' }}>My Copy Trades</button>
+        <button onClick={() => navigate('/dashboard/copy-trading')} style={{ padding: '10px 20px', background: 'rgba(255,255,255,0.08)', border: `1px solid ${t.border}`, color: t.text, fontSize: '9px', fontWeight: '600', cursor: 'pointer', borderRadius: '8px' }}>Back to Traders</button>
+        <button onClick={() => navigate('/dashboard/my-copy-trades')} style={{ padding: '10px 20px', background: '#6366f1', border: 'none', color: t.text, fontSize: '9px', fontWeight: '600', cursor: 'pointer', borderRadius: '8px' }}>My Copy Trades</button>
       </div>
     </div>
   );
 
   return (
-    <div style={{ minHeight: '100vh', background: t.bg, fontFamily: "'Segoe UI', sans-serif", color: 'white' }}>
+    <div style={{ minHeight: '100vh', background: t.bg, fontFamily: "'Segoe UI', sans-serif", color: t.text }}>
       <PageHeader title="Copy Trading Setup" />
       <div style={{ padding: '14px' }}>
 
@@ -103,7 +103,7 @@ export default function CopyTradingSetup() {
               </div>
               <div style={{ display: 'flex', alignItems: 'center', gap: '3px' }}>
                 <MapPin size={8} color="rgba(255,255,255,0.4)" />
-                <span style={{ fontSize: '8px', color: 'rgba(255,255,255,0.4)' }}>{trader.location}</span>
+                <span style={{ fontSize: '8px', color: t.subText }}>{trader.location}</span>
               </div>
             </div>
           </div>
@@ -112,7 +112,7 @@ export default function CopyTradingSetup() {
           <div style={{ display: 'flex', gap: '6px', marginBottom: '14px', flexWrap: 'wrap' }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: '3px', background: 'rgba(255,255,255,0.07)', padding: '4px 8px', borderRadius: '20px' }}>
               <Users size={9} color="rgba(255,255,255,0.6)" />
-              <span style={{ fontSize: '8px', color: 'rgba(255,255,255,0.6)' }}>{trader.followers} followers</span>
+              <span style={{ fontSize: '8px', color: t.subText }}>{trader.followers} followers</span>
             </div>
             <div style={{ display: 'flex', alignItems: 'center', gap: '3px', background: 'rgba(255,255,255,0.07)', padding: '4px 8px', borderRadius: '20px' }}>
               <FlaskConical size={9} color={riskColor(trader.risk)} />
@@ -120,14 +120,14 @@ export default function CopyTradingSetup() {
             </div>
             <div style={{ display: 'flex', alignItems: 'center', gap: '3px', background: 'rgba(255,255,255,0.07)', padding: '4px 8px', borderRadius: '20px' }}>
               <Heart size={9} color="#ef4444" fill="#ef4444" />
-              <span style={{ fontSize: '8px', color: 'rgba(255,255,255,0.6)' }}>{trader.favorite}</span>
+              <span style={{ fontSize: '8px', color: t.subText }}>{trader.favorite}</span>
             </div>
           </div>
 
           {/* Complete Stats */}
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '6px' }}>
             {[
-              { label: 'Total Trades', value: trader.totalTrades, color: 'white' },
+              { label: 'Total Trades', value: trader.totalTrades, color: t.text },
               { label: 'Total Loss', value: trader.totalLoss, color: '#ef4444' },
               { label: 'Win Rate', value: trader.winRate + '%', color: '#22c55e' },
               { label: 'Profit Share', value: trader.profitShare + '%', color: '#f59e0b' },
@@ -135,7 +135,7 @@ export default function CopyTradingSetup() {
               { label: 'ROI (Est.)', value: ((trader.winRate / 100) * trader.profitShare).toFixed(1) + '%', color: '#6366f1' },
             ].map((s, i) => (
               <div key={i} style={{ background: t.bg, border: '1px solid rgba(255,255,255,0.06)', borderRadius: '6px', padding: '8px 10px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                <span style={{ fontSize: '8px', color: 'rgba(255,255,255,0.45)' }}>{s.label}</span>
+                <span style={{ fontSize: '8px', color: t.subText }}>{s.label}</span>
                 <span style={{ fontSize: '9px', fontWeight: '700', color: s.color }}>{s.value}</span>
               </div>
             ))}
@@ -163,7 +163,7 @@ export default function CopyTradingSetup() {
             {DURATIONS.map(d => (
               <button key={d.value} onClick={() => setDuration(d.value)} style={{ padding: '10px', background: duration === d.value ? 'rgba(99,102,241,0.2)' : '#0e1628', border: duration === d.value ? '1px solid #6366f1' : '1px solid rgba(255,255,255,0.06)', borderRadius: '8px', cursor: 'pointer', textAlign: 'center' }}>
                 <div style={{ fontSize: '10px', fontWeight: '700', color: duration === d.value ? '#6366f1' : 'white', marginBottom: '2px' }}>{d.label}</div>
-                <div style={{ fontSize: '7px', color: 'rgba(255,255,255,0.4)' }}>{d.desc}</div>
+                <div style={{ fontSize: '7px', color: t.subText }}>{d.desc}</div>
               </button>
             ))}
           </div>
@@ -176,8 +176,8 @@ export default function CopyTradingSetup() {
             <span style={{ fontSize: '9px', color: '#22c55e', fontWeight: '600' }}>Balance: {formatAmountWithCode(balance, currency)}</span>
           </div>
           <div style={{ position: 'relative', marginBottom: '4px' }}>
-            <span style={{ position: 'absolute', left: '12px', top: '50%', transform: 'translateY(-50%)', color: 'rgba(255,255,255,0.4)', fontSize: '10px' }}>$</span>
-            <input type="number" value={amount} onChange={e => { setAmount(e.target.value); setError(''); }} placeholder="0.00" style={{ width: '100%', background: t.bg, border: '1px solid rgba(255,255,255,0.1)', color: 'white', fontSize: '11px', fontWeight: '600', padding: '10px 10px 10px 24px', outline: 'none', borderRadius: '8px', boxSizing: 'border-box' }} />
+            <span style={{ position: 'absolute', left: '12px', top: '50%', transform: 'translateY(-50%)', color: t.subText, fontSize: '10px' }}>$</span>
+            <input type="number" value={amount} onChange={e => { setAmount(e.target.value); setError(''); }} placeholder="0.00" style={{ width: '100%', background: t.bg, border: `1px solid ${t.border}`, color: t.text, fontSize: '11px', fontWeight: '600', padding: '10px 10px 10px 24px', outline: 'none', borderRadius: '8px', boxSizing: 'border-box' }} />
           </div>
           {amount && Number(amount) > 0 && currency !== 'USD' && (
             <div style={{ fontSize: '9px', color: '#f59e0b', marginBottom: '8px', display: 'flex', alignItems: 'center', gap: '4px' }}>
@@ -188,7 +188,7 @@ export default function CopyTradingSetup() {
           )}
           <div style={{ display: 'flex', gap: '6px' }}>
             {[25, 50, 100, 250].map(v => (
-              <button key={v} onClick={() => setAmount(String(v))} style={{ flex: 1, padding: '5px', background: 'rgba(255,255,255,0.06)', border: '1px solid rgba(255,255,255,0.08)', color: 'rgba(255,255,255,0.6)', fontSize: '8px', cursor: 'pointer', borderRadius: '6px' }}>${v}</button>
+              <button key={v} onClick={() => setAmount(String(v))} style={{ flex: 1, padding: '5px', background: t.border, border: `1px solid ${t.border}`, color: t.subText, fontSize: '8px', cursor: 'pointer', borderRadius: '6px' }}>${v}</button>
             ))}
           </div>
         </div>
@@ -200,13 +200,13 @@ export default function CopyTradingSetup() {
               <TrendingUp size={12} color="#6366f1" /> Investment Summary
             </div>
             {[
-              { label: 'Investment Amount', value: '$' + Number(amount).toFixed(2) + (currency !== 'USD' ? ' (' + formatAmountWithCode(Number(amount), currency) + ')' : ''), color: 'white' },
-              { label: 'Duration', value: duration + ' days', color: 'white' },
+              { label: 'Investment Amount', value: '$' + Number(amount).toFixed(2) + (currency !== 'USD' ? ' (' + formatAmountWithCode(Number(amount), currency) + ')' : ''), color: t.text },
+              { label: 'Duration', value: duration + ' days', color: t.text },
               { label: 'Trader Commission', value: '$' + traderCommission + (currency !== 'USD' ? ' (' + formatAmountWithCode(Number(traderCommission), currency) + ')' : ''), color: '#f59e0b' },
               { label: 'Est. Profit (if wins)', value: '$' + estimatedProfit + (currency !== 'USD' ? ' (' + formatAmountWithCode(Number(estimatedProfit), currency) + ')' : ''), color: '#22c55e' },
             ].map((s, i) => (
               <div key={i} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '6px 0', borderBottom: i < 3 ? '1px solid rgba(255,255,255,0.04)' : 'none' }}>
-                <span style={{ fontSize: '8px', color: 'rgba(255,255,255,0.45)' }}>{s.label}</span>
+                <span style={{ fontSize: '8px', color: t.subText }}>{s.label}</span>
                 <span style={{ fontSize: '9px', fontWeight: '700', color: s.color }}>{s.value}</span>
               </div>
             ))}
@@ -217,17 +217,17 @@ export default function CopyTradingSetup() {
         {/* Terms */}
         <div style={{ display: 'flex', alignItems: 'flex-start', gap: '8px', marginBottom: '14px' }}>
           <input type="checkbox" id="agree" checked={agreed} onChange={e => setAgreed(e.target.checked)} style={{ marginTop: '2px', accentColor: '#6366f1' }} />
-          <label htmlFor="agree" style={{ fontSize: '8px', color: 'rgba(255,255,255,0.5)', lineHeight: '1.6', cursor: 'pointer' }}>
+          <label htmlFor="agree" style={{ fontSize: '8px', color: t.subText, lineHeight: '1.6', cursor: 'pointer' }}>
             I understand the risks of copy trading and agree to the <span style={{ color: '#6366f1' }}>{trader.profitShare}% profit share</span> terms with <span style={{ color: '#6366f1' }}>{trader.name}</span>. I accept that both profits and losses will be mirrored.
           </label>
         </div>
 
         {error && <div style={{ background: 'rgba(239,68,68,0.1)', border: '1px solid rgba(239,68,68,0.3)', borderRadius: '8px', padding: '10px 12px', fontSize: '9px', color: '#ef4444', marginBottom: '12px' }}>{error}</div>}
 
-        <button onClick={handleConfirm} disabled={loading} style={{ width: '100%', padding: '14px', background: loading ? 'rgba(99,102,241,0.5)' : 'linear-gradient(135deg, #6366f1, #4f46e5)', border: 'none', color: 'white', fontSize: '12px', fontWeight: '700', cursor: loading ? 'not-allowed' : 'pointer', borderRadius: '10px', marginBottom: '10px', boxShadow: '0 4px 12px rgba(99,102,241,0.4)' }}>
+        <button onClick={handleConfirm} disabled={loading} style={{ width: '100%', padding: '14px', background: loading ? 'rgba(99,102,241,0.5)' : 'linear-gradient(135deg, #6366f1, #4f46e5)', border: 'none', color: t.text, fontSize: '12px', fontWeight: '700', cursor: loading ? 'not-allowed' : 'pointer', borderRadius: '10px', marginBottom: '10px', boxShadow: '0 4px 12px rgba(99,102,241,0.4)' }}>
           {loading ? 'Processing...' : '🚀 Start Copying ' + trader.name}
         </button>
-        <button onClick={() => navigate(-1)} style={{ width: '100%', padding: '10px', background: 'transparent', border: '1px solid rgba(255,255,255,0.1)', color: 'rgba(255,255,255,0.5)', fontSize: '9px', cursor: 'pointer', borderRadius: '10px' }}>
+        <button onClick={() => navigate(-1)} style={{ width: '100%', padding: '10px', background: 'transparent', border: `1px solid ${t.border}`, color: t.subText, fontSize: '9px', cursor: 'pointer', borderRadius: '10px' }}>
           Cancel
         </button>
 

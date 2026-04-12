@@ -45,17 +45,17 @@ export default function CopyTrading() {
 
 
   return (
-    <div style={{ minHeight: '100vh', background: t.bg, fontFamily: "'Segoe UI', sans-serif", color: 'white' }}>
+    <div style={{ minHeight: '100vh', background: t.bg, fontFamily: "'Segoe UI', sans-serif", color: t.text }}>
       <PageHeader title="Copy Trading" />
       <div style={{ padding: '14px' }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '6px', marginBottom: '6px' }}>
           <div style={{ width: '4px', height: '16px', background: '#6366f1' }} />
-          <span style={{ color: 'white', fontSize: '11px', fontWeight: '700' }}>Copy Expert Traders</span>
+          <span style={{ color: t.text, fontSize: '11px', fontWeight: '700' }}>Copy Expert Traders</span>
         </div>
-        <p style={{ fontSize: '8px', color: 'rgba(255,255,255,0.45)', margin: '0 0 14px' }}>Copy expert traders from all over the world and enhance your investment portfolio.</p>
+        <p style={{ fontSize: '8px', color: t.subText, margin: '0 0 14px' }}>Copy expert traders from all over the world and enhance your investment portfolio.</p>
         <div style={{ position: 'relative', marginBottom: '16px' }}>
           <Search size={12} color="rgba(255,255,255,0.3)" style={{ position: 'absolute', left: '10px', top: '50%', transform: 'translateY(-50%)' }} />
-          <input value={search} onChange={e => setSearch(e.target.value)} placeholder="Search expert traders" style={{ width: '100%', background: t.cardBg, border: '1px solid rgba(255,255,255,0.08)', color: 'white', fontSize: '9px', padding: '9px 10px 9px 28px', outline: 'none', boxSizing: 'border-box' }} />
+          <input value={search} onChange={e => setSearch(e.target.value)} placeholder="Search expert traders" style={{ width: '100%', background: t.cardBg, border: `1px solid ${t.border}`, color: t.text, fontSize: '9px', padding: '9px 10px 9px 28px', outline: 'none', boxSizing: 'border-box' }} />
         </div>
         {filtered.map(t => (
           <div key={t.id} style={{ background: t.cardBg, border: '1px solid rgba(255,255,255,0.06)', borderRadius: '12px', padding: '16px', marginBottom: '12px', position: 'relative' }}>
@@ -75,13 +75,13 @@ export default function CopyTrading() {
               </div>
               <div style={{ display: 'flex', alignItems: 'center', gap: '3px', marginTop: '3px' }}>
                 <MapPin size={9} color="rgba(255,255,255,0.4)" />
-                <span style={{ fontSize: '8px', color: 'rgba(255,255,255,0.4)' }}>{t.location}</span>
+                <span style={{ fontSize: '8px', color: t.subText }}>{t.location}</span>
               </div>
             </div>
             <div style={{ display: 'flex', justifyContent: 'center', gap: '6px', marginBottom: '12px' }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: '3px', background: 'rgba(255,255,255,0.07)', padding: '4px 8px', borderRadius: '20px' }}>
                 <Users size={9} color="rgba(255,255,255,0.6)" />
-                <span style={{ fontSize: '8px', color: 'rgba(255,255,255,0.6)' }}>{t.followers}</span>
+                <span style={{ fontSize: '8px', color: t.subText }}>{t.followers}</span>
               </div>
               <div style={{ display: 'flex', alignItems: 'center', gap: '3px', background: 'rgba(255,255,255,0.07)', padding: '4px 8px', borderRadius: '20px' }}>
                 <FlaskConical size={9} color={riskColor(t.risk)} />
@@ -89,18 +89,18 @@ export default function CopyTrading() {
               </div>
               <div style={{ display: 'flex', alignItems: 'center', gap: '3px', background: 'rgba(255,255,255,0.07)', padding: '4px 8px', borderRadius: '20px' }}>
                 <Heart size={9} color="#ef4444" fill="#ef4444" />
-                <span style={{ fontSize: '8px', color: 'rgba(255,255,255,0.6)' }}>{t.favorite}</span>
+                <span style={{ fontSize: '8px', color: t.subText }}>{t.favorite}</span>
               </div>
             </div>
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '6px', marginBottom: '14px' }}>
-              {[{ label: 'Total trades', value: t.totalTrades, color: 'white' }, { label: 'Total loss', value: t.totalLoss, color: '#ef4444' }, { label: 'Profit share', value: t.profitShare + '%', color: '#22c55e' }, { label: 'Win rate', value: t.winRate + '%', color: '#22c55e' }].map((s, i) => (
+              {[{ label: 'Total trades', value: t.totalTrades, color: t.text }, { label: 'Total loss', value: t.totalLoss, color: '#ef4444' }, { label: 'Profit share', value: t.profitShare + '%', color: '#22c55e' }, { label: 'Win rate', value: t.winRate + '%', color: '#22c55e' }].map((s, i) => (
                 <div key={i} style={{ background: t.bg, border: '1px solid rgba(255,255,255,0.06)', borderRadius: '6px', padding: '8px 10px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                  <span style={{ fontSize: '8px', color: 'rgba(255,255,255,0.45)' }}>{s.label}</span>
+                  <span style={{ fontSize: '8px', color: t.subText }}>{s.label}</span>
                   <span style={{ fontSize: '9px', fontWeight: '700', color: s.color }}>{s.value}</span>
                 </div>
               ))}
             </div>
-            <button onClick={() => navigate('/dashboard/copy-trading/setup', { state: { trader: t } })} style={{ width: '100%', padding: '10px', background: '#6366f1', border: 'none', color: 'white', fontSize: '10px', fontWeight: '700', cursor: 'pointer', borderRadius: '6px' }}>
+            <button onClick={() => navigate('/dashboard/copy-trading/setup', { state: { trader: t } })} style={{ width: '100%', padding: '10px', background: '#6366f1', border: 'none', color: t.text, fontSize: '10px', fontWeight: '700', cursor: 'pointer', borderRadius: '6px' }}>
               Copy Trader Strategy
             </button>
           </div>

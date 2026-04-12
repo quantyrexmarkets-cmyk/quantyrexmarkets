@@ -226,15 +226,15 @@ export default function Profile() {
   const inputStyle = (field) => ({
     width: '100%', background: t.bg,
     border: '1px solid ' + (errors[field] ? '#ef4444' : 'rgba(255,255,255,0.08)'),
-    color: 'white', fontSize: '9px', padding: '7px 10px', outline: 'none', boxSizing: 'border-box'
+    color: t.text, fontSize: '9px', padding: '7px 10px', outline: 'none', boxSizing: 'border-box'
   });
   const errStyle = { color: '#ef4444', fontSize: '7px', marginTop: '3px' };
-  const labelStyle = { color: 'rgba(255,255,255,0.6)', fontSize: '8px', display: 'block', marginBottom: '4px' };
+  const labelStyle = { color: t.subText, fontSize: '8px', display: 'block', marginBottom: '4px' };
   const avatarSrc = avatarPreview || (user?.avatar && user.avatar !== '' ? user.avatar : null);
   const selectedCountry = getSelectedCountry();
 
   return (
-    <div style={{ minHeight: '100vh', background: t.bg, fontFamily: "'Segoe UI', sans-serif", color: 'white' }}>
+    <div style={{ minHeight: '100vh', background: t.bg, fontFamily: "'Segoe UI', sans-serif", color: t.text }}>
 
       {/* Top Nav */}
       <PageHeader title="Profile" />
@@ -242,17 +242,17 @@ export default function Profile() {
       <div style={{ padding: '14px' }}>
         {activeTab === 'profile' ? (
           <>
-            <h2 style={{ color: 'rgba(255,255,255,0.7)', fontSize: '11px', fontWeight: '500', margin: '0 0 12px 0' }}>Manage Profile</h2>
+            <h2 style={{ color: t.subText, fontSize: '11px', fontWeight: '500', margin: '0 0 12px 0' }}>Manage Profile</h2>
             <div style={{ background: '#6366f1', padding: '16px', marginBottom: '16px' }}>
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '12px' }}>
                 <div>
-                  <div style={{ color: 'white', fontSize: '13px', fontWeight: '700' }}>{form.firstName} {form.lastName}</div>
-                  <div style={{ color: 'rgba(255,255,255,0.7)', fontSize: '8px' }}>{user?.email || ''}</div>
+                  <div style={{ color: t.text, fontSize: '13px', fontWeight: '700' }}>{form.firstName} {form.lastName}</div>
+                  <div style={{ color: t.subText, fontSize: '8px' }}>{user?.email || ''}</div>
                 </div>
-                <button onClick={() => setActiveTab('edit')} style={{ background: 'rgba(0,0,0,0.2)', border: 'none', color: 'white', fontSize: '8px', padding: '6px 12px', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '4px' }}>
+                <button onClick={() => setActiveTab('edit')} style={{ background: 'rgba(0,0,0,0.2)', border: 'none', color: t.text, fontSize: '8px', padding: '6px 12px', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '4px' }}>
                   <Edit2 size={9}/> Edit Profile
                 </button>
-                <button onClick={() => { logout(); navigate('/signin'); }} style={{ background: '#ef4444', border: 'none', color: 'white', fontSize: '8px', padding: '6px 12px', cursor: 'pointer' }}>Logout</button>
+                <button onClick={() => { logout(); navigate('/signin'); }} style={{ background: '#ef4444', border: 'none', color: t.text, fontSize: '8px', padding: '6px 12px', cursor: 'pointer' }}>Logout</button>
               </div>
               <div style={{ display: 'flex', alignItems: 'center', gap: '14px' }}>
                 <div style={{ width: '55px', height: '55px', borderRadius: '50%', background: 'rgba(255,255,255,0.15)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, border: '2px solid rgba(255,255,255,0.2)', overflow: 'hidden' }}>
@@ -260,19 +260,19 @@ export default function Profile() {
                 </div>
                 <div>
                   <div style={{ display: 'flex', gap: '20px', marginBottom: '8px' }}>
-                    <div><div style={{ color: 'white', fontSize: '10px', fontWeight: '700' }}>Starter</div><div style={{ color: 'rgba(255,255,255,0.6)', fontSize: '7px' }}>Plan</div></div>
-                    <div><div style={{ color: 'white', fontSize: '10px', fontWeight: '700' }}>{form.currency?.split('(')[1]?.replace(')', '') || 'USD'}</div><div style={{ color: 'rgba(255,255,255,0.6)', fontSize: '7px' }}>Currency</div></div>
-                    <div><div style={{ color: 'white', fontSize: '10px', fontWeight: '700' }}>—</div><div style={{ color: 'rgba(255,255,255,0.6)', fontSize: '7px' }}>Gender</div></div>
+                    <div><div style={{ color: t.text, fontSize: '10px', fontWeight: '700' }}>Starter</div><div style={{ color: t.subText, fontSize: '7px' }}>Plan</div></div>
+                    <div><div style={{ color: t.text, fontSize: '10px', fontWeight: '700' }}>{form.currency?.split('(')[1]?.replace(')', '') || 'USD'}</div><div style={{ color: t.subText, fontSize: '7px' }}>Currency</div></div>
+                    <div><div style={{ color: t.text, fontSize: '10px', fontWeight: '700' }}>—</div><div style={{ color: t.subText, fontSize: '7px' }}>Gender</div></div>
                   </div>
-                  <div style={{ color: 'rgba(255,255,255,0.7)', fontSize: '8px' }}>Email: {user?.email || 'N/A'}</div>
+                  <div style={{ color: t.subText, fontSize: '8px' }}>Email: {user?.email || 'N/A'}</div>
                 </div>
               </div>
             </div>
           </>
         ) : (
-          <div style={{ background: '#1a2035', padding: '16px', border: '1px solid rgba(255,255,255,0.1)' }}>
+          <div style={{ background: '#1a2035', padding: '16px', border: `1px solid ${t.border}` }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px' }}>
-              <span style={{ color: 'rgba(255,255,255,0.6)', fontSize: '9px' }}>Edit Account</span>
+              <span style={{ color: t.subText, fontSize: '9px' }}>Edit Account</span>
               <button onClick={() => { setActiveTab('profile'); setErrors({}); setAvatarPreview(null); setAvatarFile(null); setFileName('No file chosen'); }} style={{ background: 'none', border: 'none', color: '#6366f1', fontSize: '8px', cursor: 'pointer' }}>Previous →</button>
             </div>
 
@@ -286,7 +286,7 @@ export default function Profile() {
                   </div>
                   <div style={{ color: '#111', fontSize: '14px', fontWeight: '700', marginBottom: '8px' }}>Profile Updated!</div>
                   <div style={{ color: '#555', fontSize: '9px', marginBottom: '20px', lineHeight: '1.6' }}>Your profile has been updated successfully.</div>
-                  <button onClick={() => { setSuccess(false); setActiveTab('profile'); }} style={{ padding: '8px 28px', background: '#6366f1', border: 'none', color: 'white', fontSize: '10px', fontWeight: '600', cursor: 'pointer' }}>Okay</button>
+                  <button onClick={() => { setSuccess(false); setActiveTab('profile'); }} style={{ padding: '8px 28px', background: '#6366f1', border: 'none', color: t.text, fontSize: '10px', fontWeight: '600', cursor: 'pointer' }}>Okay</button>
                 </div>
               </>
             )}
@@ -305,15 +305,15 @@ export default function Profile() {
                 <div style={{ marginBottom: '8px' }}>
                   <img src={avatarPreview || user?.avatar} alt="Preview" style={{ width: '50px', height: '50px', borderRadius: '50%', objectFit: 'cover', border: '2px solid #6366f1' }}/>
                 <button onClick={handleRemoveAvatar} style={{ background: 'rgba(239,68,68,0.15)', border: '1px solid #ef4444', color: '#ef4444', fontSize: '7px', padding: '3px 8px', cursor: 'pointer', marginLeft: '8px' }}>Remove Photo</button>
-                  <div style={{ color: 'rgba(255,255,255,0.4)', fontSize: '7px', marginTop: '3px' }}>Preview — saved when you click Update Profile</div>
+                  <div style={{ color: t.subText, fontSize: '7px', marginTop: '3px' }}>Preview — saved when you click Update Profile</div>
                 </div>
               )}
               <div style={{ display: 'flex', alignItems: 'center' }}>
-                <label style={{ background: t.cardBg, border: '1px solid rgba(255,255,255,0.1)', color: 'rgba(255,255,255,0.7)', fontSize: '8px', padding: '6px 12px', cursor: 'pointer', whiteSpace: 'nowrap' }}>
+                <label style={{ background: t.cardBg, border: `1px solid ${t.border}`, color: t.subText, fontSize: '8px', padding: '6px 12px', cursor: 'pointer', whiteSpace: 'nowrap' }}>
                   Choose File
                   <input type='file' accept='image/*' style={{ display: 'none' }} onChange={handleFileChange}/>
                 </label>
-                <span style={{ background: t.bg, border: '1px solid rgba(255,255,255,0.08)', borderLeft: 'none', color: 'rgba(255,255,255,0.3)', fontSize: '8px', padding: '6px 12px', flex: 1 }}>{fileName}</span>
+                <span style={{ background: t.bg, border: `1px solid ${t.border}`, borderLeft: 'none', color: 'rgba(255,255,255,0.3)', fontSize: '8px', padding: '6px 12px', flex: 1 }}>{fileName}</span>
               </div>
             </div>
 
@@ -336,7 +336,7 @@ export default function Profile() {
             {/* Currency */}
             <div style={{ marginBottom: '14px' }}>
               <label style={labelStyle}>Country Currency</label>
-              <select name='currency' value={form.currency} onChange={handleChange} style={{ width: '60%', background: t.bg, border: '1px solid rgba(255,255,255,0.08)', color: 'white', fontSize: '9px', padding: '7px 10px', outline: 'none' }}>
+              <select name='currency' value={form.currency} onChange={handleChange} style={{ width: '60%', background: t.bg, border: `1px solid ${t.border}`, color: t.text, fontSize: '9px', padding: '7px 10px', outline: 'none' }}>
                 <option>US Dollar (USD)</option>
                 <option>Euro (EUR)</option>
                 <option>British Pound (GBP)</option>
@@ -376,7 +376,7 @@ export default function Profile() {
                     name='phoneCode'
                     value={form.phoneCode}
                     onChange={handlePhoneCodeChange}
-                    style={{ background: t.bg, border: '1px solid rgba(255,255,255,0.08)', borderRight: 'none', color: 'white', fontSize: '8px', padding: '7px 4px', outline: 'none', maxWidth: '70px' }}
+                    style={{ background: t.bg, border: `1px solid ${t.border}`, borderRight: 'none', color: t.text, fontSize: '8px', padding: '7px 4px', outline: 'none', maxWidth: '70px' }}
                   >
                     {COUNTRIES.map((c, i) => (
                       <option key={i} value={c.code}>{c.flag} {c.code}</option>
@@ -388,7 +388,7 @@ export default function Profile() {
                     onChange={handleChange}
                     placeholder={`${selectedCountry.minLen}-${selectedCountry.maxLen} digits`}
                     maxLength={selectedCountry.maxLen}
-                    style={{ flex: 1, background: t.bg, border: '1px solid ' + (errors.phone ? '#ef4444' : 'rgba(255,255,255,0.08)'), color: 'white', fontSize: '9px', padding: '7px 10px', outline: 'none', boxSizing: 'border-box' }}
+                    style={{ flex: 1, background: t.bg, border: '1px solid ' + (errors.phone ? '#ef4444' : 'rgba(255,255,255,0.08)'), color: t.text, fontSize: '9px', padding: '7px 10px', outline: 'none', boxSizing: 'border-box' }}
                   />
                 </div>
                 {errors.phone
@@ -409,7 +409,7 @@ export default function Profile() {
                 name='country'
                 value={form.country}
                 onChange={handleCountryChange}
-                style={{ width: '100%', background: t.bg, border: '1px solid ' + (errors.country ? '#ef4444' : 'rgba(255,255,255,0.08)'), color: 'white', fontSize: '9px', padding: '7px 10px', outline: 'none' }}
+                style={{ width: '100%', background: t.bg, border: '1px solid ' + (errors.country ? '#ef4444' : 'rgba(255,255,255,0.08)'), color: t.text, fontSize: '9px', padding: '7px 10px', outline: 'none' }}
               >
                 <option value=''>Select Country</option>
                 {COUNTRIES.map((c, i) => (
@@ -436,14 +436,14 @@ export default function Profile() {
             {/* Address */}
             <div style={{ marginBottom: '16px' }}>
               <label style={labelStyle}>Address *</label>
-              <textarea name='address' value={form.address} onChange={handleChange} placeholder='Enter your address here' rows={3} style={{ width: '100%', background: t.bg, border: '1px solid ' + (errors.address ? '#ef4444' : 'rgba(255,255,255,0.08)'), color: 'white', fontSize: '9px', padding: '7px 10px', outline: 'none', boxSizing: 'border-box', resize: 'vertical' }}/>
+              <textarea name='address' value={form.address} onChange={handleChange} placeholder='Enter your address here' rows={3} style={{ width: '100%', background: t.bg, border: '1px solid ' + (errors.address ? '#ef4444' : 'rgba(255,255,255,0.08)'), color: t.text, fontSize: '9px', padding: '7px 10px', outline: 'none', boxSizing: 'border-box', resize: 'vertical' }}/>
               {errors.address && <div style={errStyle}>{errors.address}</div>}
             </div>
 
             <button
               onClick={handleSubmit}
               disabled={loading}
-              style={{ padding: '9px 20px', background: loading ? '#4b4e9b' : '#6366f1', border: 'none', color: 'white', fontSize: '9px', fontWeight: '700', cursor: loading ? 'not-allowed' : 'pointer' }}
+              style={{ padding: '9px 20px', background: loading ? '#4b4e9b' : '#6366f1', border: 'none', color: t.text, fontSize: '9px', fontWeight: '700', cursor: loading ? 'not-allowed' : 'pointer' }}
             >
               {loading ? 'Updating...' : 'Update Profile'}
             </button>

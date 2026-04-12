@@ -95,23 +95,23 @@ export default function Packages() {
   const activeInvestments = investments.filter(i => i.status === 'active');
 
   return (
-    <div style={{ minHeight: '100vh', background: t.bg, fontFamily: "'Segoe UI', sans-serif", color: 'white' }}>
+    <div style={{ minHeight: '100vh', background: t.bg, fontFamily: "'Segoe UI', sans-serif", color: t.text }}>
 
       {/* Low Balance Notice */}
       {lowBalance && (
-        <div style={{ position: 'fixed', top: '60px', left: '50%', transform: 'translateX(-50%)', zIndex: 200, background: '#ef4444', color: 'white', padding: '10px 16px', display: 'flex', alignItems: 'center', gap: '8px', fontSize: '9px', fontWeight: '600', boxShadow: '0 4px 20px rgba(0,0,0,0.4)', minWidth: '260px' }}>
+        <div style={{ position: 'fixed', top: '60px', left: '50%', transform: 'translateX(-50%)', zIndex: 200, background: '#ef4444', color: t.text, padding: '10px 16px', display: 'flex', alignItems: 'center', gap: '8px', fontSize: '9px', fontWeight: '600', boxShadow: '0 4px 20px rgba(0,0,0,0.4)', minWidth: '260px' }}>
           <AlertCircle size={13}/>
           <span>Your balance is too low for this plan. Please make a deposit.</span>
-          <button onClick={() => setLowBalance(false)} style={{ background: 'none', border: 'none', color: 'white', cursor: 'pointer', marginLeft: 'auto' }}><X size={12}/></button>
+          <button onClick={() => setLowBalance(false)} style={{ background: 'none', border: 'none', color: t.text, cursor: 'pointer', marginLeft: 'auto' }}><X size={12}/></button>
         </div>
       )}
 
       {/* Error Notice */}
       {error && (
-        <div style={{ position: 'fixed', top: '60px', left: '50%', transform: 'translateX(-50%)', zIndex: 200, background: '#f59e0b', color: 'white', padding: '10px 16px', display: 'flex', alignItems: 'center', gap: '8px', fontSize: '9px', fontWeight: '600', boxShadow: '0 4px 20px rgba(0,0,0,0.4)', minWidth: '260px' }}>
+        <div style={{ position: 'fixed', top: '60px', left: '50%', transform: 'translateX(-50%)', zIndex: 200, background: '#f59e0b', color: t.text, padding: '10px 16px', display: 'flex', alignItems: 'center', gap: '8px', fontSize: '9px', fontWeight: '600', boxShadow: '0 4px 20px rgba(0,0,0,0.4)', minWidth: '260px' }}>
           <AlertCircle size={13}/>
           <span>{error}</span>
-          <button onClick={() => setError('')} style={{ background: 'none', border: 'none', color: 'white', cursor: 'pointer', marginLeft: 'auto' }}><X size={12}/></button>
+          <button onClick={() => setError('')} style={{ background: 'none', border: 'none', color: t.text, cursor: 'pointer', marginLeft: 'auto' }}><X size={12}/></button>
         </div>
       )}
 
@@ -121,8 +121,8 @@ export default function Packages() {
           <div onClick={() => setConfirmPlan(null)} style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.6)', zIndex: 150 }}/>
           <div style={{ position: 'fixed', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', zIndex: 151, background: t.cardBg, border: '1px solid rgba(99,102,241,0.4)', padding: '20px', width: '260px' }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '14px' }}>
-              <span style={{ color: 'white', fontSize: '11px', fontWeight: '700' }}>Confirm Investment</span>
-              <button onClick={() => setConfirmPlan(null)} style={{ background: 'none', border: 'none', color: 'rgba(255,255,255,0.4)', cursor: 'pointer' }}><X size={13}/></button>
+              <span style={{ color: t.text, fontSize: '11px', fontWeight: '700' }}>Confirm Investment</span>
+              <button onClick={() => setConfirmPlan(null)} style={{ background: 'none', border: 'none', color: t.subText, cursor: 'pointer' }}><X size={13}/></button>
             </div>
             {[
               ['Plan', confirmPlan.name],
@@ -131,14 +131,14 @@ export default function Packages() {
               ['Duration', confirmPlan.duration + ' days'],
               ['Your Balance', formatAmount(userBalance, user?.currency)],
             ].map(([k, v]) => (
-              <div key={k} style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '8px', paddingBottom: '8px', borderBottom: '1px solid rgba(255,255,255,0.06)' }}>
-                <span style={{ color: 'rgba(255,255,255,0.5)', fontSize: '8px' }}>{k}</span>
+              <div key={k} style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '8px', paddingBottom: '8px', borderBottom: `1px solid ${t.border}` }}>
+                <span style={{ color: t.subText, fontSize: '8px' }}>{k}</span>
                 <span style={{ color: '#6366f1', fontSize: '8px', fontWeight: '700' }}>{v}</span>
               </div>
             ))}
             <div style={{ display: 'flex', gap: '8px', marginTop: '14px' }}>
-              <button onClick={() => setConfirmPlan(null)} style={{ flex: 1, padding: '8px', background: 'transparent', border: '1px solid rgba(255,255,255,0.15)', color: 'rgba(255,255,255,0.6)', fontSize: '9px', cursor: 'pointer' }}>Cancel</button>
-              <button onClick={handleConfirm} disabled={submitting} style={{ flex: 1, padding: '8px', background: '#6366f1', border: 'none', color: 'white', fontSize: '9px', fontWeight: '700', cursor: submitting ? 'not-allowed' : 'pointer', opacity: submitting ? 0.7 : 1 }}>
+              <button onClick={() => setConfirmPlan(null)} style={{ flex: 1, padding: '8px', background: 'transparent', border: '1px solid rgba(255,255,255,0.15)', color: t.subText, fontSize: '9px', cursor: 'pointer' }}>Cancel</button>
+              <button onClick={handleConfirm} disabled={submitting} style={{ flex: 1, padding: '8px', background: '#6366f1', border: 'none', color: t.text, fontSize: '9px', fontWeight: '700', cursor: submitting ? 'not-allowed' : 'pointer', opacity: submitting ? 0.7 : 1 }}>
                 {submitting ? 'Processing...' : 'Confirm'}
               </button>
             </div>
@@ -158,7 +158,7 @@ export default function Packages() {
             <div style={{ color: '#555', fontSize: '12px', marginBottom: '24px', lineHeight: '1.8' }}>Hello <strong style={{ color: '#111' }}>{user?.name || user?.email?.split('@')[0] || 'there'}</strong>, your balance is too low for this plan. Please make a deposit and try again.</div>
             <div style={{ display: 'flex', gap: '8px' }}>
               <button onClick={() => setShowInsufficient(false)} style={{ flex: 1, padding: '10px', background: 'rgba(0,0,0,0.08)', border: 'none', color: '#333', fontSize: '10px', cursor: 'pointer', borderRadius: '4px' }}>Cancel</button>
-              <button onClick={() => { setShowInsufficient(false); navigate('/dashboard/deposit'); }} style={{ flex: 1, padding: '10px', background: '#6366f1', border: 'none', color: 'white', fontSize: '10px', fontWeight: '600', cursor: 'pointer', borderRadius: '4px' }}>Deposit Now</button>
+              <button onClick={() => { setShowInsufficient(false); navigate('/dashboard/deposit'); }} style={{ flex: 1, padding: '10px', background: '#6366f1', border: 'none', color: t.text, fontSize: '10px', fontWeight: '600', cursor: 'pointer', borderRadius: '4px' }}>Deposit Now</button>
             </div>
           </div>
         </>
@@ -176,7 +176,7 @@ export default function Packages() {
             <div style={{ color: '#555', fontSize: '9px', marginBottom: '20px', lineHeight: '1.6' }}>Your investment has been activated. Check Investment Records for details.</div>
             <div style={{ display: 'flex', gap: '8px' }}>
               <button onClick={() => setSuccess(false)} style={{ flex: 1, padding: '8px', background: 'rgba(0,0,0,0.08)', border: 'none', color: '#333', fontSize: '9px', fontWeight: '600', cursor: 'pointer', borderRadius: '3px' }}>Stay</button>
-              <button onClick={() => { setSuccess(false); navigate('/dashboard/investment-records'); }} style={{ flex: 1, padding: '8px', background: '#6366f1', border: 'none', color: 'white', fontSize: '9px', fontWeight: '600', cursor: 'pointer', borderRadius: '3px' }}>View Records</button>
+              <button onClick={() => { setSuccess(false); navigate('/dashboard/investment-records'); }} style={{ flex: 1, padding: '8px', background: '#6366f1', border: 'none', color: t.text, fontSize: '9px', fontWeight: '600', cursor: 'pointer', borderRadius: '3px' }}>View Records</button>
             </div>
           </div>
         </>
@@ -191,27 +191,27 @@ export default function Packages() {
           <div>
             {/* Header */}
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px' }}>
-              <span style={{ color: 'rgba(255,255,255,0.6)', fontSize: '11px', fontWeight: '600' }}>Current Packages</span>
-              <button onClick={() => setActiveTab('available')} style={{ background: '#6366f1', border: 'none', color: 'white', fontSize: '9px', fontWeight: '700', padding: '8px 14px', cursor: 'pointer' }}>+ Add Plan</button>
+              <span style={{ color: t.subText, fontSize: '11px', fontWeight: '600' }}>Current Packages</span>
+              <button onClick={() => setActiveTab('available')} style={{ background: '#6366f1', border: 'none', color: t.text, fontSize: '9px', fontWeight: '700', padding: '8px 14px', cursor: 'pointer' }}>+ Add Plan</button>
             </div>
 
 
             {/* Records Table */}
             <div style={{ background: t.cardBg, border: '1px solid rgba(255,255,255,0.06)', marginTop: '0' }}>
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '8px 10px', borderBottom: '1px solid rgba(255,255,255,0.06)' }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '8px 10px', borderBottom: `1px solid ${t.border}` }}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
-                  <span style={{ color: 'rgba(255,255,255,0.45)', fontSize: '8px' }}>Show</span>
-                  <select value={show} onChange={e => setShow(Number(e.target.value))} style={{ background: 'rgba(255,255,255,0.06)', border: '1px solid rgba(255,255,255,0.1)', color: 'white', fontSize: '8px', padding: '2px 5px', outline: 'none' }}>
+                  <span style={{ color: t.subText, fontSize: '8px' }}>Show</span>
+                  <select value={show} onChange={e => setShow(Number(e.target.value))} style={{ background: t.border, border: `1px solid ${t.border}`, color: t.text, fontSize: '8px', padding: '2px 5px', outline: 'none' }}>
                     <option>10</option><option>25</option><option>50</option>
                   </select>
-                  <span style={{ color: 'rgba(255,255,255,0.45)', fontSize: '8px' }}>entries</span>
+                  <span style={{ color: t.subText, fontSize: '8px' }}>entries</span>
                 </div>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
-                  <span style={{ color: 'rgba(255,255,255,0.45)', fontSize: '8px' }}>Search:</span>
-                  <input value={search} onChange={e => { setSearch(e.target.value); setPage(1); }} style={{ background: 'rgba(255,255,255,0.06)', border: '1px solid rgba(255,255,255,0.1)', color: 'white', fontSize: '8px', padding: '3px 8px', outline: 'none', width: '80px' }} />
+                  <span style={{ color: t.subText, fontSize: '8px' }}>Search:</span>
+                  <input value={search} onChange={e => { setSearch(e.target.value); setPage(1); }} style={{ background: t.border, border: `1px solid ${t.border}`, color: t.text, fontSize: '8px', padding: '3px 8px', outline: 'none', width: '80px' }} />
                 </div>
               </div>
-              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr 1fr 1fr 1fr 1fr', background: 'rgba(255,255,255,0.04)', borderBottom: '1px solid rgba(255,255,255,0.06)' }}>
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr 1fr 1fr 1fr 1fr', background: 'rgba(255,255,255,0.04)', borderBottom: `1px solid ${t.border}` }}>
                 {['Plan','Amount','ROI','Earned','Start Date','End Date','Status'].map((h,i) => (
                   <span key={i} style={{ color: 'rgba(255,255,255,0.55)', fontSize: '7px', fontWeight: '600', borderRight: '1px solid #6366f1', borderBottom: '1px solid #6366f1', padding: '7px 6px', display: 'block' }}>{h}</span>
                 ))}
@@ -227,23 +227,23 @@ export default function Packages() {
                     ) : paged.map((inv, i) => (
                       <div key={i} style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr 1fr 1fr 1fr 1fr', padding: '8px 6px', borderBottom: '1px solid rgba(255,255,255,0.04)', background: i%2===0?'transparent':'rgba(255,255,255,0.02)' }}>
                         <span style={{ color: '#6366f1', fontSize: '8px', fontWeight: '700' }}>{inv.plan}</span>
-                        <span style={{ color: 'white', fontSize: '8px' }}>${parseFloat(inv.amount).toLocaleString()}</span>
+                        <span style={{ color: t.text, fontSize: '8px' }}>${parseFloat(inv.amount).toLocaleString()}</span>
                         <span style={{ color: '#22c55e', fontSize: '8px' }}>{inv.roi}</span>
                         <span style={{ color: '#f59e0b', fontSize: '8px', fontWeight: '700' }}>+{formatAmount(inv.earned || inv.profit || 0, user?.currency)}</span>
                         <span style={{ color: '#f59e0b', fontSize: '8px', fontWeight: '700' }}>+{formatAmount(inv.earned || inv.profit || 0, user?.currency)}</span>
-                        <span style={{ color: 'rgba(255,255,255,0.5)', fontSize: '8px' }}>{new Date(inv.createdAt).toLocaleDateString()}</span>
-                        <span style={{ color: 'rgba(255,255,255,0.5)', fontSize: '8px' }}>{inv.expiresAt ? new Date(inv.expiresAt).toLocaleDateString() : '—'}</span>
+                        <span style={{ color: t.subText, fontSize: '8px' }}>{new Date(inv.createdAt).toLocaleDateString()}</span>
+                        <span style={{ color: t.subText, fontSize: '8px' }}>{inv.expiresAt ? new Date(inv.expiresAt).toLocaleDateString() : '—'}</span>
                         <span style={{ background: inv.status==='active'?'rgba(34,197,94,0.15)':inv.status==='completed'?'rgba(99,102,241,0.15)':'rgba(239,68,68,0.15)', color: inv.status==='active'?'#22c55e':inv.status==='completed'?'#818cf8':'#ef4444', fontSize: '6px', padding: '2px 5px', fontWeight: '600', textTransform: 'uppercase', display: 'inline-block' }}>{inv.status}</span>
                       </div>
                     ))}
                     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '7px 10px', borderTop: '1px solid rgba(255,255,255,0.04)' }}>
                       <span style={{ color: 'rgba(255,255,255,0.35)', fontSize: '8px' }}>Showing {filtered.length === 0 ? 0 : (page-1)*show+1} to {Math.min(page*show, filtered.length)} of {filtered.length} entries</span>
                       <div style={{ display: 'flex', gap: '4px' }}>
-                        <button onClick={() => setPage(1)} disabled={page===1} style={{ background: 'rgba(255,255,255,0.06)', border: '1px solid rgba(255,255,255,0.1)', color: page===1?'rgba(255,255,255,0.2)':'rgba(255,255,255,0.6)', fontSize: '8px', padding: '2px 6px', cursor: page===1?'default':'pointer' }}>«</button>
-                        <button onClick={() => setPage(p=>Math.max(1,p-1))} disabled={page===1} style={{ background: 'rgba(255,255,255,0.06)', border: '1px solid rgba(255,255,255,0.1)', color: page===1?'rgba(255,255,255,0.2)':'rgba(255,255,255,0.6)', fontSize: '10px', padding: '2px 8px', cursor: page===1?'default':'pointer' }}>‹</button>
-                        <span style={{ color: 'rgba(255,255,255,0.4)', fontSize: '8px' }}>Page {page} of {totalPages}</span>
-                        <button onClick={() => setPage(p=>Math.min(totalPages,p+1))} disabled={page>=totalPages} style={{ background: 'rgba(255,255,255,0.06)', border: '1px solid rgba(255,255,255,0.1)', color: page>=totalPages?'rgba(255,255,255,0.2)':'rgba(255,255,255,0.6)', fontSize: '10px', padding: '2px 8px', cursor: page>=totalPages?'default':'pointer' }}>›</button>
-                        <button onClick={() => setPage(totalPages)} disabled={page>=totalPages} style={{ background: 'rgba(255,255,255,0.06)', border: '1px solid rgba(255,255,255,0.1)', color: page>=totalPages?'rgba(255,255,255,0.2)':'rgba(255,255,255,0.6)', fontSize: '8px', padding: '2px 6px', cursor: page>=totalPages?'default':'pointer' }}>»</button>
+                        <button onClick={() => setPage(1)} disabled={page===1} style={{ background: t.border, border: `1px solid ${t.border}`, color: page===1?'rgba(255,255,255,0.2)':'rgba(255,255,255,0.6)', fontSize: '8px', padding: '2px 6px', cursor: page===1?'default':'pointer' }}>«</button>
+                        <button onClick={() => setPage(p=>Math.max(1,p-1))} disabled={page===1} style={{ background: t.border, border: `1px solid ${t.border}`, color: page===1?'rgba(255,255,255,0.2)':'rgba(255,255,255,0.6)', fontSize: '10px', padding: '2px 8px', cursor: page===1?'default':'pointer' }}>‹</button>
+                        <span style={{ color: t.subText, fontSize: '8px' }}>Page {page} of {totalPages}</span>
+                        <button onClick={() => setPage(p=>Math.min(totalPages,p+1))} disabled={page>=totalPages} style={{ background: t.border, border: `1px solid ${t.border}`, color: page>=totalPages?'rgba(255,255,255,0.2)':'rgba(255,255,255,0.6)', fontSize: '10px', padding: '2px 8px', cursor: page>=totalPages?'default':'pointer' }}>›</button>
+                        <button onClick={() => setPage(totalPages)} disabled={page>=totalPages} style={{ background: t.border, border: `1px solid ${t.border}`, color: page>=totalPages?'rgba(255,255,255,0.2)':'rgba(255,255,255,0.6)', fontSize: '8px', padding: '2px 6px', cursor: page>=totalPages?'default':'pointer' }}>»</button>
                       </div>
                     </div>
                   </>
@@ -268,24 +268,24 @@ export default function Packages() {
                     {i === 5 && <Star size={11} color='#818cf8'/>}
                   </div>
                 </div>
-                <div style={{ color: 'white', fontSize: '11px', fontWeight: '800', marginBottom: '4px' }}>{plan.name}</div>
+                <div style={{ color: t.text, fontSize: '11px', fontWeight: '800', marginBottom: '4px' }}>{plan.name}</div>
                 <div style={{ color: '#6366f1', fontSize: '10px', fontWeight: '700', marginBottom: '10px' }}>{plan.price}</div>
                 <div style={{ marginBottom: '10px' }}>
-                  <div style={{ color: 'rgba(255,255,255,0.5)', fontSize: '7px', marginBottom: '2px' }}>Minimum: ${plan.min.toLocaleString()}</div>
-                  <div style={{ color: 'rgba(255,255,255,0.5)', fontSize: '7px', marginBottom: '2px' }}>Maximum: ${plan.max ? plan.max.toLocaleString() : 'Unlimited'}</div>
-                  <div style={{ color: 'rgba(255,255,255,0.5)', fontSize: '7px', marginBottom: '2px' }}>ROI: {plan.rate}</div>
-                  <div style={{ color: 'rgba(255,255,255,0.5)', fontSize: '7px' }}>Duration: {plan.duration} days</div>
+                  <div style={{ color: t.subText, fontSize: '7px', marginBottom: '2px' }}>Minimum: ${plan.min.toLocaleString()}</div>
+                  <div style={{ color: t.subText, fontSize: '7px', marginBottom: '2px' }}>Maximum: ${plan.max ? plan.max.toLocaleString() : 'Unlimited'}</div>
+                  <div style={{ color: t.subText, fontSize: '7px', marginBottom: '2px' }}>ROI: {plan.rate}</div>
+                  <div style={{ color: t.subText, fontSize: '7px' }}>Duration: {plan.duration} days</div>
                 </div>
-                <div style={{ color: 'rgba(255,255,255,0.4)', fontSize: '7px', marginBottom: '4px' }}>Amount to invest:</div>
+                <div style={{ color: t.subText, fontSize: '7px', marginBottom: '4px' }}>Amount to invest:</div>
                 <input
                   value={amounts[i]}
                   onChange={e => { const a = [...amounts]; a[i] = e.target.value; setAmounts(a); }}
-                  style={{ width: '100%', background: t.bg, border: '1px solid rgba(255,255,255,0.08)', color: 'white', fontSize: '9px', padding: '6px 8px', outline: 'none', boxSizing: 'border-box', marginBottom: '4px' }}
+                  style={{ width: '100%', background: t.bg, border: `1px solid ${t.border}`, color: t.text, fontSize: '9px', padding: '6px 8px', outline: 'none', boxSizing: 'border-box', marginBottom: '4px' }}
                 />
                 {amounts[i] && Number(amounts[i]) >= plan.min && user?.currency && user.currency !== 'USD' && (
                   <div style={{ fontSize: '7px', color: '#22c55e', marginBottom: '10px' }}>≈ {formatAmount(Number(amounts[i]), user.currency)}</div>
                 )}
-                <button onClick={() => handleJoin(plan, i)} style={{ width: '100%', padding: '7px', background: '#6366f1', border: 'none', color: 'white', fontSize: '8px', fontWeight: '700', cursor: 'pointer' }}>
+                <button onClick={() => handleJoin(plan, i)} style={{ width: '100%', padding: '7px', background: '#6366f1', border: 'none', color: t.text, fontSize: '8px', fontWeight: '700', cursor: 'pointer' }}>
                   Join Plan
                 </button>
               </div>

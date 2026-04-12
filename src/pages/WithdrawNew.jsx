@@ -47,8 +47,8 @@ export default function WithdrawNew() {
   const [showSuccess, setShowSuccess] = useState(false);
   const [submitting, setSubmitting] = useState(false);
 
-  const inputStyle = { width: '100%', background: t.cardBg, border: '1px solid rgba(255,255,255,0.08)', color: 'white', fontSize: '9px', padding: '8px 10px', outline: 'none', boxSizing: 'border-box' };
-  const labelStyle = { color: 'rgba(255,255,255,0.7)', fontSize: '8px', display: 'block', marginBottom: '6px' };
+  const inputStyle = { width: '100%', background: t.cardBg, border: `1px solid ${t.border}`, color: t.text, fontSize: '9px', padding: '8px 10px', outline: 'none', boxSizing: 'border-box' };
+  const labelStyle = { color: t.subText, fontSize: '8px', display: 'block', marginBottom: '6px' };
 
   const handleProceed = () => {
     if (!selectedMethod) { setError('Please select a withdrawal method.'); return; }
@@ -107,7 +107,7 @@ export default function WithdrawNew() {
         <button onClick={() => setStep(1)} style={{ background: 'none', border: 'none', color: '#6366f1', fontSize: '8px', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '4px' }}>
           <svg width='10' height='10' viewBox='0 0 24 24' fill='none' stroke='currentColor' strokeWidth='2'><polyline points='15 18 9 12 15 6'/></svg> Back
         </button>
-        <span style={{ color: 'rgba(255,255,255,0.5)', fontSize: '8px' }}>Method: <span style={{ color: '#6366f1' }}>{methodLabel}</span></span>
+        <span style={{ color: t.subText, fontSize: '8px' }}>Method: <span style={{ color: '#6366f1' }}>{methodLabel}</span></span>
       </div>
 
       {/* Amount always shown */}
@@ -181,14 +181,14 @@ export default function WithdrawNew() {
       </>}
 
       <div style={{ color: '#ef4444', fontSize: '8px', marginBottom: '8px', minHeight: '14px' }}>{error}</div>
-      <button onClick={handleSubmit} disabled={submitting} style={{ padding: '10px 28px', background: submitting ? '#4b5563' : '#6366f1', border: 'none', color: 'white', fontSize: '9px', fontWeight: '700', cursor: submitting ? 'not-allowed' : 'pointer' }}>
+      <button onClick={handleSubmit} disabled={submitting} style={{ padding: '10px 28px', background: submitting ? '#4b5563' : '#6366f1', border: 'none', color: t.text, fontSize: '9px', fontWeight: '700', cursor: submitting ? 'not-allowed' : 'pointer' }}>
         {submitting ? 'Processing...' : 'REQUEST WITHDRAWAL'}
       </button>
     </div>
   );
 
   return (
-    <div style={{ minHeight: '100vh', background: t.bg, fontFamily: "'Segoe UI', sans-serif", color: 'white' }}>
+    <div style={{ minHeight: '100vh', background: t.bg, fontFamily: "'Segoe UI', sans-serif", color: t.text }}>
       <DashboardSidebar open={sidebarOpen} onClose={() => setSidebarOpen(false)} />
 
       {/* Header */}
@@ -200,12 +200,12 @@ export default function WithdrawNew() {
                 <path d="M20 14L12 18V23L20 30L28 23V18L20 14Z" fill="#6366F1" stroke="#6366F1" strokeWidth="1"/>
           </svg>
         </div>
-        <button onClick={() => setSidebarOpen(true)} style={{ background: 'none', border: 'none', color: 'rgba(255,255,255,0.5)', cursor: 'pointer' }}>
+        <button onClick={() => setSidebarOpen(true)} style={{ background: 'none', border: 'none', color: t.subText, cursor: 'pointer' }}>
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
         </button>
-        <span style={{ color: 'white', fontSize: '10px', fontWeight: '800' }}>QUANTYREX <span style={{ color: '#6366f1' }}>MARKETS</span></span>
+        <span style={{ color: t.text, fontSize: '10px', fontWeight: '800' }}>QUANTYREX <span style={{ color: '#6366f1' }}>MARKETS</span></span>
         <span style={{ color: 'rgba(255,255,255,0.3)', fontSize: '9px', marginLeft: '4px' }}>/ New Withdrawal</span>
-        <button onClick={() => navigate('/dashboard/withdraw')} style={{ marginLeft: 'auto', background: 'none', border: 'none', color: 'rgba(255,255,255,0.5)', fontSize: '8px', cursor: 'pointer' }}>Back</button>
+        <button onClick={() => navigate('/dashboard/withdraw')} style={{ marginLeft: 'auto', background: 'none', border: 'none', color: t.subText, fontSize: '8px', cursor: 'pointer' }}>Back</button>
       </div>
 
       {/* KYC Warning */}
@@ -214,28 +214,28 @@ export default function WithdrawNew() {
           <svg width="16" height="16" fill="none" stroke="#f59e0b" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 9v2m0 4h.01M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/></svg>
           <div>
             <div style={{ color: '#f59e0b', fontSize: '9px', fontWeight: '700' }}>KYC Verification Required</div>
-            <div style={{ color: 'rgba(255,255,255,0.6)', fontSize: '8px', marginTop: '2px' }}>You must complete KYC verification before withdrawing. <span onClick={() => navigate('/dashboard/kyc')} style={{ color: '#6366f1', cursor: 'pointer', textDecoration: 'underline' }}>Verify now →</span></div>
+            <div style={{ color: t.subText, fontSize: '8px', marginTop: '2px' }}>You must complete KYC verification before withdrawing. <span onClick={() => navigate('/dashboard/kyc')} style={{ color: '#6366f1', cursor: 'pointer', textDecoration: 'underline' }}>Verify now →</span></div>
           </div>
         </div>
       )}
 
       <div style={{ padding: '16px' }}>
         <div style={{ marginBottom: '16px' }}>
-          <span style={{ color: 'white', fontSize: '11px', fontWeight: '700' }}>New Withdrawal</span>
-          <div style={{ color: 'rgba(255,255,255,0.4)', fontSize: '8px', marginTop: '3px' }}>Transfer Limit: <span style={{ color: '#ef4444', fontWeight: '700' }}>$100</span></div>
+          <span style={{ color: t.text, fontSize: '11px', fontWeight: '700' }}>New Withdrawal</span>
+          <div style={{ color: t.subText, fontSize: '8px', marginTop: '3px' }}>Transfer Limit: <span style={{ color: '#ef4444', fontWeight: '700' }}>$100</span></div>
         </div>
 
         {step === 1 && <>
-          <div style={{ color: 'rgba(255,255,255,0.6)', fontSize: '8px', marginBottom: '12px' }}>Select a withdrawal method to continue:</div>
+          <div style={{ color: t.subText, fontSize: '8px', marginBottom: '12px' }}>Select a withdrawal method to continue:</div>
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px', marginBottom: '16px' }}>
             {methods.map(method => (
               <div key={method.id} onClick={() => setSelectedMethod(method.id)}
                 style={{ background: selectedMethod === method.id ? 'rgba(99,102,241,0.08)' : 'rgba(255,255,255,0.03)', border: `1px solid ${selectedMethod === method.id ? '#6366f1' : 'rgba(255,255,255,0.1)'}`, padding: '14px 12px', cursor: 'pointer', borderRadius: '2px' }}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '7px', marginBottom: '6px' }}>
                   {method.icon}
-                  <span style={{ color: 'white', fontSize: '9px', fontWeight: '700' }}>{method.label}</span>
+                  <span style={{ color: t.text, fontSize: '9px', fontWeight: '700' }}>{method.label}</span>
                 </div>
-                <div style={{ color: 'rgba(255,255,255,0.45)', fontSize: '8px', marginBottom: '12px', lineHeight: '1.5' }}>{method.desc}</div>
+                <div style={{ color: t.subText, fontSize: '8px', marginBottom: '12px', lineHeight: '1.5' }}>{method.desc}</div>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
                   <div style={{ width: '14px', height: '14px', borderRadius: '50%', border: `2px solid ${selectedMethod === method.id ? '#6366f1' : 'rgba(255,255,255,0.25)'}`, background: 'transparent', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
                     {selectedMethod === method.id && <div style={{ width: '6px', height: '6px', borderRadius: '50%', background: '#6366f1' }}/>}
@@ -246,7 +246,7 @@ export default function WithdrawNew() {
             ))}
           </div>
           <div style={{ color: '#ef4444', fontSize: '8px', marginBottom: '8px', minHeight: '14px' }}>{error}</div>
-          <button onClick={handleProceed} disabled={submitting} style={{ padding: '10px 28px', background: submitting ? '#4b5563' : '#6366f1', border: 'none', color: 'white', fontSize: '9px', fontWeight: '700', cursor: submitting ? 'not-allowed' : 'pointer' }}>
+          <button onClick={handleProceed} disabled={submitting} style={{ padding: '10px 28px', background: submitting ? '#4b5563' : '#6366f1', border: 'none', color: t.text, fontSize: '9px', fontWeight: '700', cursor: submitting ? 'not-allowed' : 'pointer' }}>
             Continue
           </button>
         </>}
@@ -279,7 +279,7 @@ export default function WithdrawNew() {
                   ...(selectedMethod === 'bank' && { bankName, accountName, accountNumber, routingNumber }),
                 };
                 navigate('/dashboard/withdraw/verify-code', { state: payload });
-              }} style={{ padding: '8px 20px', background: '#6366f1', border: 'none', color: 'white', fontSize: '9px', fontWeight: '600', cursor: 'pointer', borderRadius: '3px' }}>
+              }} style={{ padding: '8px 20px', background: '#6366f1', border: 'none', color: t.text, fontSize: '9px', fontWeight: '600', cursor: 'pointer', borderRadius: '3px' }}>
                 Confirm
               </button>
             </div>
@@ -297,7 +297,7 @@ export default function WithdrawNew() {
             </div>
             <div style={{ color: '#111', fontSize: '18px', fontWeight: '700', marginBottom: '10px' }}>Withdrawal Submitted!</div>
             <div style={{ color: '#555', fontSize: '12px', marginBottom: '24px', lineHeight: '1.8' }}>Withdrawal request sent! Check history for details.</div>
-            <button onClick={() => { setShowSuccess(false); navigate('/dashboard/withdraw'); }} style={{ padding: '8px 28px', background: '#6366f1', border: 'none', color: 'white', fontSize: '10px', fontWeight: '600', cursor: 'pointer', borderRadius: '3px' }}>Okay</button>
+            <button onClick={() => { setShowSuccess(false); navigate('/dashboard/withdraw'); }} style={{ padding: '8px 28px', background: '#6366f1', border: 'none', color: t.text, fontSize: '10px', fontWeight: '600', cursor: 'pointer', borderRadius: '3px' }}>Okay</button>
           </div>
         </>
       )}

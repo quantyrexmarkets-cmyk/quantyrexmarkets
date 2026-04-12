@@ -21,8 +21,8 @@ export default function KYC() {
   const [loading, setLoading] = useState(true);
   const [submitting, setSubmitting] = useState(false);
 
-  const inputStyle = { width: '100%', background: t.cardBg, border: '1px solid rgba(255,255,255,0.08)', color: 'white', fontSize: '9px', padding: '8px 10px', outline: 'none', boxSizing: 'border-box' };
-  const labelStyle = { color: 'rgba(255,255,255,0.7)', fontSize: '8px', display: 'block', marginBottom: '6px' };
+  const inputStyle = { width: '100%', background: t.cardBg, border: `1px solid ${t.border}`, color: t.text, fontSize: '9px', padding: '8px 10px', outline: 'none', boxSizing: 'border-box' };
+  const labelStyle = { color: t.subText, fontSize: '8px', display: 'block', marginBottom: '6px' };
 
   useEffect(() => {
     fetchStatus();
@@ -43,8 +43,8 @@ export default function KYC() {
   const FileInput = ({ label, fileName, onChange }) => (
     <div style={{ marginBottom: '12px' }}>
       <label style={labelStyle}>{label} <span style={{ color: '#ef4444' }}>*</span></label>
-      <div style={{ display: 'flex', alignItems: 'center', gap: '8px', background: t.cardBg, border: '1px solid rgba(255,255,255,0.08)', padding: '6px 10px' }}>
-        <label style={{ background: 'rgba(255,255,255,0.08)', color: 'white', fontSize: '8px', padding: '4px 10px', cursor: 'pointer', whiteSpace: 'nowrap' }}>
+      <div style={{ display: 'flex', alignItems: 'center', gap: '8px', background: t.cardBg, border: `1px solid ${t.border}`, padding: '6px 10px' }}>
+        <label style={{ background: 'rgba(255,255,255,0.08)', color: t.text, fontSize: '8px', padding: '4px 10px', cursor: 'pointer', whiteSpace: 'nowrap' }}>
           Choose File<input type='file' accept='image/*,.pdf' style={{ display: 'none' }} onChange={onChange} />
         </label>
         <span style={{ color: fileName !== 'No file chosen' ? '#22c55e' : 'rgba(255,255,255,0.3)', fontSize: '8px', overflow: 'visible', textOverflow: 'ellipsis', whiteSpace: 'nowrap', maxWidth: '160px' }}>{fileName}</span>
@@ -105,7 +105,7 @@ export default function KYC() {
   const isLocked = kycStatus === 'submitted' || kycStatus === 'approved';
 
   return (
-    <div style={{ minHeight: '100vh', background: t.bg, fontFamily: "'Segoe UI', sans-serif", color: 'white' }}>
+    <div style={{ minHeight: '100vh', background: t.bg, fontFamily: "'Segoe UI', sans-serif", color: t.text }}>
 
       {/* Header */}
       <PageHeader title="KYC" />
@@ -114,7 +114,7 @@ export default function KYC() {
 
       <div style={{ padding: '16px' }}>
         <div style={{ marginBottom: '16px' }}>
-          <span style={{ color: 'white', fontSize: '11px', fontWeight: '700' }}>Identity Verification (KYC)</span>
+          <span style={{ color: t.text, fontSize: '11px', fontWeight: '700' }}>Identity Verification (KYC)</span>
         </div>
 
         {/* Status Banner */}
@@ -127,7 +127,7 @@ export default function KYC() {
             </div>
             <div>
               <div style={{ color: statusColor[kycStatus], fontSize: '10px', fontWeight: '700', textTransform: 'uppercase', marginBottom: '2px' }}>{statusLabel[kycStatus]}</div>
-              <div style={{ color: 'rgba(255,255,255,0.5)', fontSize: '8px' }}>{statusMessage[kycStatus]}</div>
+              <div style={{ color: t.subText, fontSize: '8px' }}>{statusMessage[kycStatus]}</div>
             </div>
           </div>
         )}
@@ -137,8 +137,8 @@ export default function KYC() {
           {['ID Type & Number', 'Upload Documents', 'Selfie with ID'].map((step, i) => (
             <div key={i} style={{ display: 'flex', alignItems: 'center', flex: 1 }}>
               <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', flex: 1 }}>
-                <div style={{ width: '22px', height: '22px', borderRadius: '50%', background: '#6366f1', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '8px', fontWeight: '700', color: 'white', marginBottom: '4px' }}>{i + 1}</div>
-                <span style={{ color: 'rgba(255,255,255,0.6)', fontSize: '7px', textAlign: 'center' }}>{step}</span>
+                <div style={{ width: '22px', height: '22px', borderRadius: '50%', background: '#6366f1', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '8px', fontWeight: '700', color: t.text, marginBottom: '4px' }}>{i + 1}</div>
+                <span style={{ color: t.subText, fontSize: '7px', textAlign: 'center' }}>{step}</span>
               </div>
               {i < 2 && <div style={{ height: '1px', width: '20px', background: 'rgba(255,255,255,0.15)', marginBottom: '14px' }} />}
             </div>
@@ -149,7 +149,7 @@ export default function KYC() {
         <div style={{ maxWidth: '400px', margin: '0 auto' }}>
 
           {isLocked && (
-            <div style={{ background: 'rgba(99,102,241,0.08)', border: '1px solid rgba(99,102,241,0.2)', padding: '10px 12px', marginBottom: '14px', color: 'rgba(255,255,255,0.5)', fontSize: '8px' }}>
+            <div style={{ background: 'rgba(99,102,241,0.08)', border: '1px solid rgba(99,102,241,0.2)', padding: '10px 12px', marginBottom: '14px', color: t.subText, fontSize: '8px' }}>
               {kycStatus === 'approved' ? 'Your KYC is approved. No further action needed.' : 'Your KYC is under review. You cannot resubmit at this time.'}
             </div>
           )}
@@ -158,7 +158,7 @@ export default function KYC() {
             <div style={{ marginBottom: '12px' }}>
               <label style={labelStyle}>ID Type <span style={{ color: '#ef4444' }}>*</span></label>
               <select value={idType} onChange={e => setIdType(e.target.value)}
-                style={{ width: '100%', background: t.cardBg, border: '1px solid rgba(255,255,255,0.08)', color: idType ? 'white' : 'rgba(255,255,255,0.4)', fontSize: '9px', padding: '8px 10px', outline: 'none', boxSizing: 'border-box' }}>
+                style={{ width: '100%', background: t.cardBg, border: `1px solid ${t.border}`, color: idType ? 'white' : 'rgba(255,255,255,0.4)', fontSize: '9px', padding: '8px 10px', outline: 'none', boxSizing: 'border-box' }}>
                 <option value=''>Select ID Type</option>
                 <option value='passport'>International Passport</option>
                 <option value='national_id'>National ID Card</option>
@@ -179,7 +179,7 @@ export default function KYC() {
             {/* Tips */}
             <div style={{ background: 'rgba(99,102,241,0.08)', border: '1px solid rgba(99,102,241,0.2)', padding: '10px 12px', marginBottom: '14px' }}>
               <div style={{ color: '#6366f1', fontSize: '8px', fontWeight: '700', marginBottom: '6px' }}>Tips for successful verification:</div>
-              <div style={{ color: 'rgba(255,255,255,0.5)', fontSize: '7px', lineHeight: '1.8' }}>
+              <div style={{ color: t.subText, fontSize: '7px', lineHeight: '1.8' }}>
                 • Ensure all documents are clear and readable<br/>
                 • ID must be valid and not expired<br/>
                 • Selfie must clearly show your face and ID together<br/>
@@ -195,7 +195,7 @@ export default function KYC() {
             )}
 
             <button onClick={handleSubmit} disabled={submitting}
-              style={{ padding: '10px 28px', background: submitting ? '#374151' : '#6366f1', border: 'none', color: 'white', fontSize: '9px', fontWeight: '700', cursor: submitting ? 'not-allowed' : 'pointer' }}>
+              style={{ padding: '10px 28px', background: submitting ? '#374151' : '#6366f1', border: 'none', color: t.text, fontSize: '9px', fontWeight: '700', cursor: submitting ? 'not-allowed' : 'pointer' }}>
               {submitting ? 'Submitting...' : 'Submit for Verification'}
             </button>
           </div>
@@ -212,7 +212,7 @@ export default function KYC() {
             </div>
             <div style={{ color: '#111', fontSize: '18px', fontWeight: '700', marginBottom: '10px' }}>KYC Submitted!</div>
             <div style={{ color: '#555', fontSize: '12px', marginBottom: '24px', lineHeight: '1.8' }}>Your KYC documents have been submitted successfully. Verification takes 24-48 hours.</div>
-            <button onClick={() => setShowSuccess(false)} style={{ padding: '8px 28px', background: '#6366f1', border: 'none', color: 'white', fontSize: '10px', fontWeight: '600', cursor: 'pointer', borderRadius: '3px' }}>Okay</button>
+            <button onClick={() => setShowSuccess(false)} style={{ padding: '8px 28px', background: '#6366f1', border: 'none', color: t.text, fontSize: '10px', fontWeight: '600', cursor: 'pointer', borderRadius: '3px' }}>Okay</button>
           </div>
         </>
       )}

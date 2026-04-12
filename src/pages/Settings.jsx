@@ -47,8 +47,8 @@ export default function SettingsPage() {
   );
 
   const Section = ({ title, children }) => (
-    <div style={{ background: t.cardBg, border: '1px solid rgba(255,255,255,0.08)', borderRadius: '12px', padding: '16px', marginBottom: '12px' }}>
-      <div style={{ color: 'rgba(255,255,255,0.5)', fontSize: '9px', fontWeight: '700', letterSpacing: '0.1em', marginBottom: '12px', textTransform: 'uppercase' }}>{title}</div>
+    <div style={{ background: t.cardBg, border: `1px solid ${t.border}`, borderRadius: '12px', padding: '16px', marginBottom: '12px' }}>
+      <div style={{ color: t.subText, fontSize: '9px', fontWeight: '700', letterSpacing: '0.1em', marginBottom: '12px', textTransform: 'uppercase' }}>{title}</div>
       {children}
     </div>
   );
@@ -57,8 +57,8 @@ export default function SettingsPage() {
     <div style={{ display: 'flex', alignItems: 'center', gap: '12px', padding: '10px 0', borderBottom: '1px solid rgba(255,255,255,0.04)' }}>
       <div style={{ width: '34px', height: '34px', borderRadius: '8px', background: 'rgba(99,102,241,0.15)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>{icon}</div>
       <div style={{ flex: 1 }}>
-        <div style={{ color: 'white', fontSize: '11px', fontWeight: '600' }}>{title}</div>
-        {desc && <div style={{ color: 'rgba(255,255,255,0.4)', fontSize: '9px', marginTop: '2px' }}>{desc}</div>}
+        <div style={{ color: t.text, fontSize: '11px', fontWeight: '600' }}>{title}</div>
+        {desc && <div style={{ color: t.subText, fontSize: '9px', marginTop: '2px' }}>{desc}</div>}
       </div>
       {right}
     </div>
@@ -69,12 +69,12 @@ export default function SettingsPage() {
       <DashboardSidebar open={sidebarOpen} onClose={() => setSidebarOpen(false)} />
 
       {/* Header */}
-      <div style={{ background: t.bg, padding: '12px 16px', display: 'flex', alignItems: 'center', gap: '12px', borderBottom: '1px solid rgba(255,255,255,0.06)', position: 'sticky', top: 0, zIndex: 100 }}>
-        <button onClick={() => navigate('/dashboard')} style={{ background: 'none', border: 'none', color: 'white', cursor: 'pointer', display: 'flex', alignItems: 'center' }}>
+      <div style={{ background: t.bg, padding: '12px 16px', display: 'flex', alignItems: 'center', gap: '12px', borderBottom: `1px solid ${t.border}`, position: 'sticky', top: 0, zIndex: 100 }}>
+        <button onClick={() => navigate('/dashboard')} style={{ background: 'none', border: 'none', color: t.text, cursor: 'pointer', display: 'flex', alignItems: 'center' }}>
           <ArrowLeft size={20} />
         </button>
         <Settings size={18} color="#6366f1" />
-        <span style={{ color: 'white', fontSize: '14px', fontWeight: '700' }}>Settings</span>
+        <span style={{ color: t.text, fontSize: '14px', fontWeight: '700' }}>Settings</span>
       </div>
 
       <div style={{ padding: '16px 12px' }}>
@@ -82,7 +82,7 @@ export default function SettingsPage() {
         {/* Theme */}
         <Section title="Appearance">
           <div style={{ padding: '10px 0' }}>
-            <div style={{ color: 'white', fontSize: '11px', fontWeight: '600', marginBottom: '12px', display: 'flex', alignItems: 'center', gap: '8px' }}>
+            <div style={{ color: t.text, fontSize: '11px', fontWeight: '600', marginBottom: '12px', display: 'flex', alignItems: 'center', gap: '8px' }}>
               <div style={{ width: '34px', height: '34px', borderRadius: '8px', background: 'rgba(99,102,241,0.15)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                 <Palette size={16} color="#6366f1" />
               </div>
@@ -120,7 +120,7 @@ export default function SettingsPage() {
             title="Two-Factor Authentication"
             desc="Require email OTP on every login"
             right={
-              <button onClick={toggle2FA} disabled={twoFALoading} style={{ padding: '6px 16px', background: twoFAEnabled ? '#22c55e' : '#374151', border: 'none', color: 'white', fontSize: '10px', fontWeight: '700', cursor: 'pointer', borderRadius: '6px', minWidth: '60px' }}>
+              <button onClick={toggle2FA} disabled={twoFALoading} style={{ padding: '6px 16px', background: twoFAEnabled ? '#22c55e' : '#374151', border: 'none', color: t.text, fontSize: '10px', fontWeight: '700', cursor: 'pointer', borderRadius: '6px', minWidth: '60px' }}>
                 {twoFALoading ? '...' : twoFAEnabled ? 'ON' : 'OFF'}
               </button>
             }
@@ -153,7 +153,7 @@ export default function SettingsPage() {
             desc="Get notified on trade updates"
             right={<ToggleSwitch value={notifTrade} onChange={() => setNotifTrade(!notifTrade)} />}
           />
-          <button onClick={saveNotifSettings} style={{ width: '100%', marginTop: '12px', padding: '10px', background: saved ? '#22c55e' : '#6366f1', border: 'none', color: 'white', fontSize: '11px', fontWeight: '700', cursor: 'pointer', borderRadius: '8px' }}>
+          <button onClick={saveNotifSettings} style={{ width: '100%', marginTop: '12px', padding: '10px', background: saved ? '#22c55e' : '#6366f1', border: 'none', color: t.text, fontSize: '11px', fontWeight: '700', cursor: 'pointer', borderRadius: '8px' }}>
             {saved ? '✓ Saved!' : 'Save Preferences'}
           </button>
         </Section>

@@ -75,12 +75,12 @@ export default function ChangePassword() {
 
   return (
     <div style={{ minHeight: '100vh', background: t.bg, fontFamily: "'Segoe UI', sans-serif" }}>
-      <div style={{ background: t.bg, padding: '12px 16px', display: 'flex', alignItems: 'center', gap: '12px', borderBottom: '1px solid rgba(255,255,255,0.06)' }}>
-        <button onClick={() => step > 1 ? setStep(step - 1) : navigate('/dashboard/settings')} style={{ background: 'none', border: 'none', color: 'white', cursor: 'pointer', display: 'flex' }}>
+      <div style={{ background: t.bg, padding: '12px 16px', display: 'flex', alignItems: 'center', gap: '12px', borderBottom: `1px solid ${t.border}` }}>
+        <button onClick={() => step > 1 ? setStep(step - 1) : navigate('/dashboard/settings')} style={{ background: 'none', border: 'none', color: t.text, cursor: 'pointer', display: 'flex' }}>
           <ArrowLeft size={20} />
         </button>
         <Lock size={18} color="#6366f1" />
-        <span style={{ color: 'white', fontSize: '14px', fontWeight: '700' }}>Change Password</span>
+        <span style={{ color: t.text, fontSize: '14px', fontWeight: '700' }}>Change Password</span>
       </div>
 
       <div style={{ padding: '20px 16px' }}>
@@ -91,12 +91,12 @@ export default function ChangePassword() {
           ))}
         </div>
 
-        <div style={{ background: t.cardBg, border: '1px solid rgba(255,255,255,0.08)', borderRadius: '12px', padding: '24px 20px' }}>
+        <div style={{ background: t.cardBg, border: `1px solid ${t.border}`, borderRadius: '12px', padding: '24px 20px' }}>
           {success ? (
             <div style={{ textAlign: 'center', padding: '20px' }}>
               <div style={{ fontSize: '40px', marginBottom: '12px' }}>✅</div>
-              <div style={{ color: 'white', fontSize: '14px', fontWeight: '700', marginBottom: '6px' }}>Password Changed!</div>
-              <div style={{ color: 'rgba(255,255,255,0.5)', fontSize: '11px' }}>Redirecting to settings...</div>
+              <div style={{ color: t.text, fontSize: '14px', fontWeight: '700', marginBottom: '6px' }}>Password Changed!</div>
+              <div style={{ color: t.subText, fontSize: '11px' }}>Redirecting to settings...</div>
             </div>
           ) : (
             <>
@@ -104,16 +104,16 @@ export default function ChangePassword() {
                 <div style={{ width: '52px', height: '52px', borderRadius: '50%', background: 'rgba(99,102,241,0.15)', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 12px' }}>
                   {steps[step-1].icon}
                 </div>
-                <div style={{ color: 'white', fontSize: '14px', fontWeight: '700', marginBottom: '6px' }}>{steps[step-1].title}</div>
-                <div style={{ color: 'rgba(255,255,255,0.4)', fontSize: '10px' }}>{steps[step-1].desc}</div>
+                <div style={{ color: t.text, fontSize: '14px', fontWeight: '700', marginBottom: '6px' }}>{steps[step-1].title}</div>
+                <div style={{ color: t.subText, fontSize: '10px' }}>{steps[step-1].desc}</div>
               </div>
 
               {step === 1 && (
                 <>
                   <input type="email" value={email} onChange={e => setEmail(e.target.value)} placeholder="Enter your email address"
-                    style={{ width: '100%', background: t.bg, border: '1px solid rgba(255,255,255,0.1)', color: 'white', fontSize: '12px', padding: '12px', outline: 'none', borderRadius: '8px', boxSizing: 'border-box', marginBottom: '12px' }} />
+                    style={{ width: '100%', background: t.bg, border: `1px solid ${t.border}`, color: t.text, fontSize: '12px', padding: '12px', outline: 'none', borderRadius: '8px', boxSizing: 'border-box', marginBottom: '12px' }} />
                   {error && <div style={{ color: '#ef4444', fontSize: '10px', marginBottom: '12px' }}>{error}</div>}
-                  <button onClick={sendCode} disabled={loading} style={{ width: '100%', padding: '12px', background: loading ? '#4b5563' : '#6366f1', border: 'none', color: 'white', fontSize: '12px', fontWeight: '700', cursor: 'pointer', borderRadius: '8px' }}>
+                  <button onClick={sendCode} disabled={loading} style={{ width: '100%', padding: '12px', background: loading ? '#4b5563' : '#6366f1', border: 'none', color: t.text, fontSize: '12px', fontWeight: '700', cursor: 'pointer', borderRadius: '8px' }}>
                     {loading ? 'Sending...' : 'Send Verification Code'}
                   </button>
                 </>
@@ -121,11 +121,11 @@ export default function ChangePassword() {
 
               {step === 2 && (
                 <>
-                  <div style={{ color: 'rgba(255,255,255,0.5)', fontSize: '10px', textAlign: 'center', marginBottom: '16px' }}>Code sent to <span style={{ color: '#6366f1' }}>{email}</span></div>
+                  <div style={{ color: t.subText, fontSize: '10px', textAlign: 'center', marginBottom: '16px' }}>Code sent to <span style={{ color: '#6366f1' }}>{email}</span></div>
                   <input type="text" value={code} onChange={e => setCode(e.target.value)} placeholder="Enter 6-digit code" maxLength={6}
-                    style={{ width: '100%', background: t.bg, border: '1px solid rgba(255,255,255,0.1)', color: 'white', fontSize: '18px', padding: '12px', outline: 'none', borderRadius: '8px', boxSizing: 'border-box', marginBottom: '12px', textAlign: 'center', letterSpacing: '6px' }} />
+                    style={{ width: '100%', background: t.bg, border: `1px solid ${t.border}`, color: t.text, fontSize: '18px', padding: '12px', outline: 'none', borderRadius: '8px', boxSizing: 'border-box', marginBottom: '12px', textAlign: 'center', letterSpacing: '6px' }} />
                   {error && <div style={{ color: '#ef4444', fontSize: '10px', marginBottom: '12px' }}>{error}</div>}
-                  <button onClick={verifyCode} disabled={loading} style={{ width: '100%', padding: '12px', background: loading ? '#4b5563' : '#6366f1', border: 'none', color: 'white', fontSize: '12px', fontWeight: '700', cursor: 'pointer', borderRadius: '8px' }}>
+                  <button onClick={verifyCode} disabled={loading} style={{ width: '100%', padding: '12px', background: loading ? '#4b5563' : '#6366f1', border: 'none', color: t.text, fontSize: '12px', fontWeight: '700', cursor: 'pointer', borderRadius: '8px' }}>
                     {loading ? 'Verifying...' : 'Verify Code'}
                   </button>
                   <div onClick={sendCode} style={{ textAlign: 'center', marginTop: '12px', color: '#6366f1', fontSize: '10px', cursor: 'pointer' }}>Resend code</div>
@@ -136,16 +136,16 @@ export default function ChangePassword() {
                 <>
                   {['newPassword', 'confirmPassword'].map(field => (
                     <div key={field} style={{ marginBottom: '14px' }}>
-                      <label style={{ color: 'rgba(255,255,255,0.5)', fontSize: '10px', display: 'block', marginBottom: '6px' }}>
+                      <label style={{ color: t.subText, fontSize: '10px', display: 'block', marginBottom: '6px' }}>
                         {field === 'newPassword' ? 'New Password' : 'Confirm New Password'}
                       </label>
                       <input type="password" value={form[field]} onChange={e => setForm(prev => ({ ...prev, [field]: e.target.value }))}
                         placeholder={field === 'newPassword' ? 'Enter new password' : 'Confirm new password'}
-                        style={{ width: '100%', background: t.bg, border: '1px solid rgba(255,255,255,0.1)', color: 'white', fontSize: '12px', padding: '12px', outline: 'none', borderRadius: '8px', boxSizing: 'border-box' }} />
+                        style={{ width: '100%', background: t.bg, border: `1px solid ${t.border}`, color: t.text, fontSize: '12px', padding: '12px', outline: 'none', borderRadius: '8px', boxSizing: 'border-box' }} />
                     </div>
                   ))}
                   {error && <div style={{ color: '#ef4444', fontSize: '10px', marginBottom: '12px' }}>{error}</div>}
-                  <button onClick={changePassword} disabled={loading} style={{ width: '100%', padding: '12px', background: loading ? '#4b5563' : '#6366f1', border: 'none', color: 'white', fontSize: '12px', fontWeight: '700', cursor: 'pointer', borderRadius: '8px' }}>
+                  <button onClick={changePassword} disabled={loading} style={{ width: '100%', padding: '12px', background: loading ? '#4b5563' : '#6366f1', border: 'none', color: t.text, fontSize: '12px', fontWeight: '700', cursor: 'pointer', borderRadius: '8px' }}>
                     {loading ? 'Changing...' : 'Change Password'}
                   </button>
                 </>

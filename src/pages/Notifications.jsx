@@ -54,20 +54,20 @@ export default function Notifications() {
       <DashboardSidebar open={sidebarOpen} onClose={() => setSidebarOpen(false)} />
 
       {/* Header */}
-      <div style={{ background: t.bg, padding: '12px 16px', display: 'flex', alignItems: 'center', gap: '12px', borderBottom: '1px solid rgba(255,255,255,0.06)', position: 'sticky', top: 0, zIndex: 100 }}>
-        <button onClick={() => navigate('/dashboard')} style={{ background: 'none', border: 'none', color: 'white', cursor: 'pointer', display: 'flex', alignItems: 'center' }}>
+      <div style={{ background: t.bg, padding: '12px 16px', display: 'flex', alignItems: 'center', gap: '12px', borderBottom: `1px solid ${t.border}`, position: 'sticky', top: 0, zIndex: 100 }}>
+        <button onClick={() => navigate('/dashboard')} style={{ background: 'none', border: 'none', color: t.text, cursor: 'pointer', display: 'flex', alignItems: 'center' }}>
           <ArrowLeft size={20} />
         </button>
         <Bell size={18} color="#6366f1" />
-        <span style={{ color: 'white', fontSize: '14px', fontWeight: '700' }}>Notifications</span>
-        {unreadCount > 0 && <span style={{ background: '#ef4444', color: 'white', fontSize: '9px', padding: '2px 7px', borderRadius: '10px' }}>{unreadCount} new</span>}
+        <span style={{ color: t.text, fontSize: '14px', fontWeight: '700' }}>Notifications</span>
+        {unreadCount > 0 && <span style={{ background: '#ef4444', color: t.text, fontSize: '9px', padding: '2px 7px', borderRadius: '10px' }}>{unreadCount} new</span>}
         <button onClick={markAllRead} style={{ marginLeft: 'auto', background: 'none', border: '1px solid rgba(99,102,241,0.4)', color: '#6366f1', fontSize: '9px', padding: '4px 10px', cursor: 'pointer', borderRadius: '6px', display: 'flex', alignItems: 'center', gap: '4px' }}>
           <Check size={10} /> Mark all read
         </button>
       </div>
 
       {/* Filter tabs */}
-      <div style={{ display: 'flex', gap: '0', borderBottom: '1px solid rgba(255,255,255,0.06)', padding: '0 16px' }}>
+      <div style={{ display: 'flex', gap: '0', borderBottom: `1px solid ${t.border}`, padding: '0 16px' }}>
         {['all', 'unread'].map(f => (
           <button key={f} onClick={() => setFilter(f)} style={{ background: 'none', border: 'none', color: filter === f ? '#6366f1' : 'rgba(255,255,255,0.4)', fontSize: '11px', padding: '10px 16px', cursor: 'pointer', borderBottom: filter === f ? '2px solid #6366f1' : '2px solid transparent', fontWeight: filter === f ? '600' : '400', textTransform: 'capitalize' }}>
             {f === 'all' ? `All (${notifications.length})` : `Unread (${unreadCount})`}
@@ -87,10 +87,10 @@ export default function Notifications() {
             <span style={{ fontSize: '22px', flexShrink: 0 }}>{n.icon}</span>
             <div style={{ flex: 1 }}>
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '4px' }}>
-                <span style={{ color: 'white', fontSize: '11px', fontWeight: '600' }}>{n.title}</span>
+                <span style={{ color: t.text, fontSize: '11px', fontWeight: '600' }}>{n.title}</span>
                 {n.unread && <div style={{ width: '7px', height: '7px', borderRadius: '50%', background: '#6366f1', flexShrink: 0 }} />}
               </div>
-              <div style={{ color: 'rgba(255,255,255,0.5)', fontSize: '10px', marginBottom: '4px', lineHeight: '1.4' }}>{n.desc}</div>
+              <div style={{ color: t.subText, fontSize: '10px', marginBottom: '4px', lineHeight: '1.4' }}>{n.desc}</div>
               <div style={{ color: 'rgba(255,255,255,0.25)', fontSize: '9px' }}>{typeof n.time === 'string' && n.time.includes('ago') ? n.time : new Date(n.time).toLocaleDateString('en-US', { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' })}</div>
             </div>
           </div>

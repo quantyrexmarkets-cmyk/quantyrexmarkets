@@ -44,14 +44,14 @@ export default function ReferUsers() {
         {icon}
       </div>
       <div>
-        <div style={{ color: 'rgba(255,255,255,0.45)', fontSize: '7px', marginBottom: '3px' }}>{label}</div>
+        <div style={{ color: t.subText, fontSize: '7px', marginBottom: '3px' }}>{label}</div>
         <div style={{ color, fontSize: '10px', fontWeight: '700' }}>{value}</div>
       </div>
     </div>
   );
 
   return (
-    <div style={{ minHeight: '100vh', background: t.bg, fontFamily: "'Segoe UI', sans-serif", color: 'white' }}>
+    <div style={{ minHeight: '100vh', background: t.bg, fontFamily: "'Segoe UI', sans-serif", color: t.text }}>
 
       {/* Header */}
       <PageHeader title="Refer Users" />
@@ -59,7 +59,7 @@ export default function ReferUsers() {
       <div style={{ padding: '16px', maxWidth: '480px', margin: '0 auto' }}>
         <div style={{ marginBottom: '16px' }}>
           <h2 style={{ fontSize: '13px', fontWeight: '700', margin: '0 0 4px' }}>Refer & Earn</h2>
-          <p style={{ fontSize: '8px', color: 'rgba(255,255,255,0.5)', margin: 0 }}>Invite friends and earn commission on their activity</p>
+          <p style={{ fontSize: '8px', color: t.subText, margin: 0 }}>Invite friends and earn commission on their activity</p>
         </div>
 
         {/* Stats */}
@@ -71,21 +71,21 @@ export default function ReferUsers() {
 
         {/* Referral Code */}
         <div style={{ background: t.cardBg, border: '1px solid rgba(255,255,255,0.06)', padding: '14px', marginBottom: '12px', borderRadius: '4px' }}>
-          <div style={{ fontSize: '8px', color: 'rgba(255,255,255,0.5)', marginBottom: '8px' }}>YOUR REFERRAL CODE</div>
+          <div style={{ fontSize: '8px', color: t.subText, marginBottom: '8px' }}>YOUR REFERRAL CODE</div>
           <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '10px' }}>
             <div style={{ flex: 1, background: t.bg, padding: '8px 10px', fontSize: '11px', fontWeight: '700', color: '#6366f1', letterSpacing: '1px', borderRadius: '4px' }}>
               {loading ? '...' : data.referralCode}
             </div>
-            <button onClick={() => handleCopy(data.referralCode)} style={{ padding: '8px 10px', background: '#6366f1', border: 'none', color: 'white', fontSize: '8px', cursor: 'pointer', borderRadius: '4px', display: 'flex', alignItems: 'center', gap: '4px' }}>
+            <button onClick={() => handleCopy(data.referralCode)} style={{ padding: '8px 10px', background: '#6366f1', border: 'none', color: t.text, fontSize: '8px', cursor: 'pointer', borderRadius: '4px', display: 'flex', alignItems: 'center', gap: '4px' }}>
               <Copy size={10}/> Copy
             </button>
           </div>
-          <div style={{ fontSize: '8px', color: 'rgba(255,255,255,0.5)', marginBottom: '6px' }}>REFERRAL LINK</div>
+          <div style={{ fontSize: '8px', color: t.subText, marginBottom: '6px' }}>REFERRAL LINK</div>
           <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-            <div style={{ flex: 1, background: t.bg, padding: '8px 10px', fontSize: '7px', color: 'rgba(255,255,255,0.6)', borderRadius: '4px', overflow: 'visible', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+            <div style={{ flex: 1, background: t.bg, padding: '8px 10px', fontSize: '7px', color: t.subText, borderRadius: '4px', overflow: 'visible', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
               {loading ? '...' : referralLink}
             </div>
-            <button onClick={() => handleCopy(referralLink)} style={{ padding: '8px 10px', background: '#6366f1', border: 'none', color: 'white', fontSize: '8px', cursor: 'pointer', borderRadius: '4px', display: 'flex', alignItems: 'center', gap: '4px' }}>
+            <button onClick={() => handleCopy(referralLink)} style={{ padding: '8px 10px', background: '#6366f1', border: 'none', color: t.text, fontSize: '8px', cursor: 'pointer', borderRadius: '4px', display: 'flex', alignItems: 'center', gap: '4px' }}>
               <Copy size={10}/> {copied ? 'Copied!' : 'Copy'}
             </button>
           </div>
@@ -93,31 +93,31 @@ export default function ReferUsers() {
 
         {/* Referred Users Table */}
         <div style={{ background: t.cardBg, border: '1px solid rgba(255,255,255,0.06)', borderRadius: '4px', overflow: 'visible' }}>
-          <div style={{ padding: '10px 14px', borderBottom: '1px solid rgba(255,255,255,0.06)' }}>
+          <div style={{ padding: '10px 14px', borderBottom: `1px solid ${t.border}` }}>
             <span style={{ fontSize: '9px', fontWeight: '600' }}>Referred Users ({data.totalReferrals})</span>
           </div>
           <div style={{ overflowX: 'auto' }}>
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr 1fr', borderBottom: '1px solid #6366f1' }}>
               {['Username', 'Commission', 'Status', 'Date'].map(h => (
-                <div key={h} style={{ padding: '6px 8px', fontSize: '7px', fontWeight: '700', color: 'rgba(255,255,255,0.5)', borderRight: '1px solid #6366f1', display: 'block' }}>{h}</div>
+                <div key={h} style={{ padding: '6px 8px', fontSize: '7px', fontWeight: '700', color: t.subText, borderRight: '1px solid #6366f1', display: 'block' }}>{h}</div>
               ))}
             </div>
             {loading ? (
-              <div style={{ padding: '20px', textAlign: 'center', fontSize: '8px', color: 'rgba(255,255,255,0.4)' }}>Loading...</div>
+              <div style={{ padding: '20px', textAlign: 'center', fontSize: '8px', color: t.subText }}>Loading...</div>
             ) : data.referredUsers.length === 0 ? (
-              <div style={{ padding: '20px', textAlign: 'center', fontSize: '8px', color: 'rgba(255,255,255,0.4)' }}>No referrals yet</div>
+              <div style={{ padding: '20px', textAlign: 'center', fontSize: '8px', color: t.subText }}>No referrals yet</div>
             ) : data.referredUsers.slice(0, show).map((u, i) => (
               <div key={i} style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr 1fr', borderBottom: '1px solid rgba(255,255,255,0.04)' }}>
-                <div style={{ padding: '8px', fontSize: '7px', color: 'white' }}>{u.username}</div>
+                <div style={{ padding: '8px', fontSize: '7px', color: t.text }}>{u.username}</div>
                 <div style={{ padding: '8px', fontSize: '7px', color: '#22c55e' }}>${u.commission}</div>
                 <div style={{ padding: '8px', fontSize: '7px', color: u.status === 'Active' ? '#22c55e' : '#f59e0b' }}>{u.status}</div>
-                <div style={{ padding: '8px', fontSize: '7px', color: 'rgba(255,255,255,0.5)' }}>{new Date(u.date).toLocaleDateString()}</div>
+                <div style={{ padding: '8px', fontSize: '7px', color: t.subText }}>{new Date(u.date).toLocaleDateString()}</div>
               </div>
             ))}
           </div>
           {data.referredUsers.length > show && (
             <div style={{ padding: '10px', textAlign: 'center' }}>
-              <button onClick={() => setShow(s => s + 10)} style={{ background: 'none', border: '1px solid rgba(255,255,255,0.1)', color: 'rgba(255,255,255,0.5)', fontSize: '8px', padding: '6px 16px', cursor: 'pointer', borderRadius: '4px' }}>Load More</button>
+              <button onClick={() => setShow(s => s + 10)} style={{ background: 'none', border: `1px solid ${t.border}`, color: t.subText, fontSize: '8px', padding: '6px 16px', cursor: 'pointer', borderRadius: '4px' }}>Load More</button>
             </div>
           )}
         </div>

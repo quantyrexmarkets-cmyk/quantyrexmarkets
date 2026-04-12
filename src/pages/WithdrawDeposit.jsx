@@ -121,20 +121,20 @@ const handleWithdraw = async () => {
 
   const inputStyle = {
     width: '100%', background: '#2a3347',
-    border: '1px solid rgba(255,255,255,0.08)',
-    color: 'white', fontSize: '9px',
+    border: `1px solid ${t.border}`,
+    color: t.text, fontSize: '9px',
     padding: '8px 10px', outline: 'none', boxSizing: 'border-box'
   };
 
   const labelStyle = {
-    color: 'rgba(255,255,255,0.6)', fontSize: '8px',
+    color: t.subText, fontSize: '8px',
     display: 'block', marginBottom: '5px'
   };
 
   const statusColor = (s) => s === 'completed' ? '#22c55e' : s === 'pending' ? '#f59e0b' : '#ef4444';
 
   return (
-    <div style={{ minHeight: '100vh', background: t.bg, fontFamily: "'Segoe UI', sans-serif", color: 'white' }}>
+    <div style={{ minHeight: '100vh', background: t.bg, fontFamily: "'Segoe UI', sans-serif", color: t.text }}>
       <DashboardSidebar open={sidebarOpen} onClose={() => setSidebarOpen(false)} />
 
       {/* Header */}
@@ -146,15 +146,15 @@ const handleWithdraw = async () => {
                 <path d="M20 14L12 18V23L20 30L28 23V18L20 14Z" fill="#6366F1" stroke="#6366F1" strokeWidth="1"/>
           </svg>
         </div>
-        <button onClick={() => setSidebarOpen(true)} style={{ background: 'none', border: 'none', color: 'rgba(255,255,255,0.5)', cursor: 'pointer' }}>
+        <button onClick={() => setSidebarOpen(true)} style={{ background: 'none', border: 'none', color: t.subText, cursor: 'pointer' }}>
           <svg width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='currentColor' strokeWidth='2'><line x1='3' y1='12' x2='21' y2='12'/><line x1='3' y1='6' x2='21' y2='6'/><line x1='3' y1='18' x2='21' y2='18'/></svg>
         </button>
-        <span style={{ color: 'white', fontSize: '10px', fontWeight: '800' }}>QUANTYREX <span style={{ color: '#6366f1' }}>MARKETS</span></span>
-        <button onClick={() => navigate('/dashboard')} style={{ marginLeft: 'auto', background: 'none', border: 'none', color: 'rgba(255,255,255,0.5)', fontSize: '8px', cursor: 'pointer' }}>Back</button>
+        <span style={{ color: t.text, fontSize: '10px', fontWeight: '800' }}>QUANTYREX <span style={{ color: '#6366f1' }}>MARKETS</span></span>
+        <button onClick={() => navigate('/dashboard')} style={{ marginLeft: 'auto', background: 'none', border: 'none', color: t.subText, fontSize: '8px', cursor: 'pointer' }}>Back</button>
       </div>
 
       {/* Deposit Header */}
-      <div style={{ background: '#132035', borderBottom: '1px solid rgba(255,255,255,0.06)', padding: '10px 16px', display: 'flex', alignItems: 'center', gap: '6px' }}>
+      <div style={{ background: '#132035', borderBottom: `1px solid ${t.border}`, padding: '10px 16px', display: 'flex', alignItems: 'center', gap: '6px' }}>
         <Download size={11} color="#22c55e"/>
         <span style={{ color: '#22c55e', fontSize: '9px', fontWeight: '700' }}>DEPOSIT</span>
       </div>
@@ -164,7 +164,7 @@ const handleWithdraw = async () => {
         {/* DEPOSIT TAB */}
         {activeTab === 'deposit' && (
           <div>
-            <div style={{ color: 'white', fontSize: '11px', fontWeight: '600', marginBottom: '14px' }}>Deposit Funds:</div>
+            <div style={{ color: t.text, fontSize: '11px', fontWeight: '600', marginBottom: '14px' }}>Deposit Funds:</div>
 
             {submitMsg && <div style={{ background: 'rgba(34,197,94,0.15)', border: '1px solid #22c55e', color: '#22c55e', fontSize: '8px', padding: '8px 12px', marginBottom: '12px' }}>{submitMsg}</div>}
             {submitError && <div style={{ background: 'rgba(239,68,68,0.15)', border: '1px solid #ef4444', color: '#ef4444', fontSize: '8px', padding: '8px 12px', marginBottom: '12px' }}>{submitError}</div>}
@@ -186,7 +186,7 @@ const handleWithdraw = async () => {
                       <label style={labelStyle}>Select Coin</label>
                       <div style={{ display: 'flex', gap: '5px', flexWrap: 'wrap' }}>
                         {coins.map(c => (
-                          <button key={c} onClick={() => setCoin(c)} style={{ padding: '4px 8px', background: coin === c ? '#6366f1' : 'rgba(255,255,255,0.06)', border: 'none', color: 'white', fontSize: '7px', fontWeight: '700', cursor: 'pointer' }}>{c}</button>
+                          <button key={c} onClick={() => setCoin(c)} style={{ padding: '4px 8px', background: coin === c ? '#6366f1' : 'rgba(255,255,255,0.06)', border: 'none', color: t.text, fontSize: '7px', fontWeight: '700', cursor: 'pointer' }}>{c}</button>
                         ))}
                       </div>
                     </div>
@@ -194,7 +194,7 @@ const handleWithdraw = async () => {
                       <label style={labelStyle}>Select Network</label>
                       <div style={{ display: 'flex', gap: '5px' }}>
                         {['TRC20','ERC20','BEP20'].map(n => (
-                          <button key={n} onClick={() => setNetwork(n)} style={{ padding: '4px 8px', background: network === n ? '#6366f1' : 'rgba(255,255,255,0.06)', border: 'none', color: 'white', fontSize: '7px', fontWeight: '700', cursor: 'pointer' }}>{n}</button>
+                          <button key={n} onClick={() => setNetwork(n)} style={{ padding: '4px 8px', background: network === n ? '#6366f1' : 'rgba(255,255,255,0.06)', border: 'none', color: t.text, fontSize: '7px', fontWeight: '700', cursor: 'pointer' }}>{n}</button>
                         ))}
                       </div>
                     </div>
@@ -213,35 +213,35 @@ const handleWithdraw = async () => {
                 <div style={{ marginBottom: '16px' }}>
                   <label style={labelStyle}>Payment Proof</label>
                   <div style={{ display: 'flex' }}>
-                    <label style={{ background: '#3a4255', border: '1px solid rgba(255,255,255,0.1)', color: 'rgba(255,255,255,0.7)', fontSize: '8px', padding: '7px 12px', cursor: 'pointer', whiteSpace: 'nowrap' }}>
+                    <label style={{ background: '#3a4255', border: `1px solid ${t.border}`, color: t.subText, fontSize: '8px', padding: '7px 12px', cursor: 'pointer', whiteSpace: 'nowrap' }}>
                       Choose File
                       <input type='file' accept='image/*' style={{ display: 'none' }} onChange={e => { setProofFile(e.target.files[0]); setProofName(e.target.files[0]?.name || 'No file chosen'); }} />
                     </label>
-                    <span style={{ background: '#2a3347', border: '1px solid rgba(255,255,255,0.08)', borderLeft: 'none', color: 'rgba(255,255,255,0.3)', fontSize: '8px', padding: '7px 10px', flex: 1, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{proofName}</span>
+                    <span style={{ background: '#2a3347', border: `1px solid ${t.border}`, borderLeft: 'none', color: 'rgba(255,255,255,0.3)', fontSize: '8px', padding: '7px 10px', flex: 1, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{proofName}</span>
                   </div>
                 </div>
-                <button onClick={handleSubmitDeposit} disabled={submitting} style={{ padding: '8px 20px', background: submitting ? '#4b5563' : '#6366f1', border: 'none', color: 'white', fontSize: '9px', fontWeight: '700', cursor: submitting ? 'not-allowed' : 'pointer' }}>
+                <button onClick={handleSubmitDeposit} disabled={submitting} style={{ padding: '8px 20px', background: submitting ? '#4b5563' : '#6366f1', border: 'none', color: t.text, fontSize: '9px', fontWeight: '700', cursor: submitting ? 'not-allowed' : 'pointer' }}>
                   {submitting ? 'Submitting...' : 'Submit Payment'}
                 </button>
               </div>
 
               {/* Right QR */}
               <div style={{ width: '140px', flexShrink: 0 }}>
-                <div style={{ color: 'rgba(255,255,255,0.6)', fontSize: '7px', marginBottom: '4px' }}>{coin} Address:</div>
+                <div style={{ color: t.subText, fontSize: '7px', marginBottom: '4px' }}>{coin} Address:</div>
                 <div style={{ color: '#818cf8', fontSize: '7px', wordBreak: 'break-all', marginBottom: '8px', lineHeight: '1.5' }}>{walletAddress}</div>
-                <div style={{ background: '#0d1117', border: '1px solid rgba(255,255,255,0.08)', padding: '10px' }}>
-                  <div style={{ color: 'white', fontSize: '7px', fontWeight: '600', textAlign: 'center', marginBottom: '8px' }}>Deposit {coin}</div>
+                <div style={{ background: '#0d1117', border: `1px solid ${t.border}`, padding: '10px' }}>
+                  <div style={{ color: t.text, fontSize: '7px', fontWeight: '600', textAlign: 'center', marginBottom: '8px' }}>Deposit {coin}</div>
                   <img src='/qrcode.jpg' alt='QR Code' style={{ width: '100%', display: 'block', marginBottom: '8px' }} />
                   <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '4px' }}>
-                    <span style={{ color: 'rgba(255,255,255,0.4)', fontSize: '6px' }}>Address</span>
-                    <span style={{ color: 'rgba(255,255,255,0.7)', fontSize: '6px' }}>{walletAddress.slice(0,10)}...</span>
+                    <span style={{ color: t.subText, fontSize: '6px' }}>Address</span>
+                    <span style={{ color: t.subText, fontSize: '6px' }}>{walletAddress.slice(0,10)}...</span>
                   </div>
                   <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '6px' }}>
-                    <span style={{ color: 'rgba(255,255,255,0.4)', fontSize: '6px' }}>Network</span>
-                    <span style={{ color: 'rgba(255,255,255,0.7)', fontSize: '6px' }}>{network}</span>
+                    <span style={{ color: t.subText, fontSize: '6px' }}>Network</span>
+                    <span style={{ color: t.subText, fontSize: '6px' }}>{network}</span>
                   </div>
                   <div style={{ color: 'rgba(255,255,255,0.3)', fontSize: '6px', textAlign: 'center', marginBottom: '6px' }}>*Do not deposit assets other than {coin}.</div>
-                  <button onClick={handleCopy} style={{ width: '100%', padding: '5px', background: copied ? '#22c55e' : '#6366f1', border: 'none', color: 'white', fontSize: '7px', cursor: 'pointer' }}>
+                  <button onClick={handleCopy} style={{ width: '100%', padding: '5px', background: copied ? '#22c55e' : '#6366f1', border: 'none', color: t.text, fontSize: '7px', cursor: 'pointer' }}>
                     {copied ? 'Copied!' : 'Copy Address'}
                   </button>
                 </div>
@@ -250,10 +250,10 @@ const handleWithdraw = async () => {
 
             {/* Deposits Table */}
             <div style={{ marginTop: '20px', background: t.cardBg, border: '1px solid rgba(255,255,255,0.06)' }}>
-              <div style={{ padding: '8px 10px', borderBottom: '1px solid rgba(255,255,255,0.06)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                <span style={{ color: 'white', fontSize: '9px', fontWeight: '700' }}>Recent Deposits</span>
+              <div style={{ padding: '8px 10px', borderBottom: `1px solid ${t.border}`, display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                <span style={{ color: t.text, fontSize: '9px', fontWeight: '700' }}>Recent Deposits</span>
               </div>
-              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr 1fr', background: 'rgba(255,255,255,0.04)', padding: '7px 10px', borderBottom: '1px solid rgba(255,255,255,0.06)' }}>
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr 1fr', background: 'rgba(255,255,255,0.04)', padding: '7px 10px', borderBottom: `1px solid ${t.border}` }}>
                 {['Amount','Method','Status','Date'].map((h,i) => (
                   <span key={i} style={{ color: 'rgba(255,255,255,0.55)', fontSize: '7px', fontWeight: '700' }}>{h} ↕</span>
                 ))}
@@ -266,17 +266,17 @@ const handleWithdraw = async () => {
                 deposits.map((d, i) => (
                   <div key={i} style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr 1fr', padding: '7px 10px', borderBottom: '1px solid rgba(255,255,255,0.04)', background: i % 2 === 0 ? 'transparent' : 'rgba(255,255,255,0.02)' }}>
                     <span style={{ color: '#22c55e', fontSize: '7px', fontWeight: '700' }}>+{formatAmount(d.amount || 0, user?.currency)}</span>
-                    <span style={{ color: 'rgba(255,255,255,0.6)', fontSize: '7px' }}>{d.method}</span>
+                    <span style={{ color: t.subText, fontSize: '7px' }}>{d.method}</span>
                     <span style={{ color: statusColor(d.status), fontSize: '7px', fontWeight: '600', textTransform: 'capitalize' }}>{d.status}</span>
-                    <span style={{ color: 'rgba(255,255,255,0.4)', fontSize: '7px' }}>{new Date(d.createdAt).toLocaleDateString()}</span>
+                    <span style={{ color: t.subText, fontSize: '7px' }}>{new Date(d.createdAt).toLocaleDateString()}</span>
                   </div>
                 ))
               )}
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '7px 10px', borderTop: '1px solid rgba(255,255,255,0.04)' }}>
                 <span style={{ color: 'rgba(255,255,255,0.35)', fontSize: '8px' }}>Showing {deposits.length} of {deposits.length} entries</span>
                 <div style={{ display: 'flex', gap: '4px' }}>
-                  <button style={{ background: 'rgba(255,255,255,0.06)', border: '1px solid rgba(255,255,255,0.1)', color: 'rgba(255,255,255,0.6)', fontSize: '10px', padding: '2px 8px', cursor: 'pointer' }}>&#8249;</button>
-                  <button style={{ background: 'rgba(255,255,255,0.06)', border: '1px solid rgba(255,255,255,0.1)', color: 'rgba(255,255,255,0.6)', fontSize: '10px', padding: '2px 8px', cursor: 'pointer' }}>&#8250;</button>
+                  <button style={{ background: t.border, border: `1px solid ${t.border}`, color: t.subText, fontSize: '10px', padding: '2px 8px', cursor: 'pointer' }}>&#8249;</button>
+                  <button style={{ background: t.border, border: `1px solid ${t.border}`, color: t.subText, fontSize: '10px', padding: '2px 8px', cursor: 'pointer' }}>&#8250;</button>
                 </div>
               </div>
             </div>
