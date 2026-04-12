@@ -29,8 +29,9 @@ router.post('/forgot-password', async (req, res) => {
     try {
       await sendEmail({
         to: user.email,
+        type: 'passwordReset',
         name: user.firstName || user.email,
-        subject: 'Reset your password',
+        subject: 'Reset Your Password — Quantyrex Markets',
         resetUrl,
       });
       res.json({ success: true, message: 'Password reset link has been sent to your email.' });

@@ -95,7 +95,7 @@ router.post('/reply/:chatId', adminAuth, async (req, res) => {
 
     // Add "Support joined" system message if first admin reply
     if (!chat.adminJoined) {
-      chat.messages.push({ sender: 'system', text: 'VertexTrade Pro Support joined' });
+      chat.messages.push({ sender: 'system', text: 'Quantyrex Markets Support joined' });
       chat.adminJoined = true;
     }
 
@@ -157,7 +157,7 @@ router.post('/reply-image/:chatId', adminAuth, uploadMem.single('image'), async 
     const result = await uploadToCloudinary(req.file);
     const url = result.secure_url;
     if (!chat.adminJoined) {
-      chat.messages.push({ sender: 'system', text: 'VertexTrade Pro Support joined' });
+      chat.messages.push({ sender: 'system', text: 'Quantyrex Markets Support joined' });
       chat.adminJoined = true;
     }
     chat.messages.push({ sender: 'admin', text: '', image: url });

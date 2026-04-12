@@ -36,7 +36,7 @@ router.get('/', auth, async (req, res) => {
 
     const accountAge = (Date.now() - new Date(user.createdAt).getTime()) / (1000 * 60 * 60 * 24);
     if (accountAge < 7) {
-      notifications.push({ id: 'welcome', icon: '🎉', title: 'Welcome to VertexTrade Pro!', desc: 'Start by making your first deposit to begin trading.', time: user.createdAt, unread: true, type: 'system' });
+      notifications.push({ id: 'welcome', icon: '🎉', title: 'Welcome to Quantyrex Markets!', desc: 'Start by making your first deposit to begin trading.', time: user.createdAt, unread: true, type: 'system' });
     }
 
     notifications.push({ id: 'security', icon: '🛡️', title: 'Security Tip', desc: 'Never share your password or OTP with anyone.', time: new Date(Date.now() - 86400000), unread: false, type: 'system' });
