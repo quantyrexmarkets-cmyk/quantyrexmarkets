@@ -52,9 +52,19 @@ export const ThemeProvider = ({ children }) => {
     return localStorage.getItem('theme') || 'dark';
   });
 
+  useEffect(() => {
+    // Apply theme to document
+    document.documentElement.setAttribute('data-theme', theme);
+    document.body.style.backgroundColor = themes[theme].bg;
+    document.body.style.color = themes[theme].text;
+  }, [theme]);
+
   const changeTheme = (t) => {
     setTheme(t);
     localStorage.setItem('theme', t);
+    document.documentElement.setAttribute('data-theme', t);
+    document.body.style.backgroundColor = themes[t].bg;
+    document.body.style.color = themes[t].text;
   };
 
   return (
