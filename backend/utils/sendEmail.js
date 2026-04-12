@@ -148,15 +148,27 @@ const sendEmail = async (options) => {
   }
 
   try {
-    await transporter.sendMail({
+    console.log('📧 Attempting to send email to:', to);
+    console.log('📧 Subject:', subject);
+    console.log('📧 Type:', type);
+    
+    const info = await transporter.sendMail({
       from: `"Quantyrex Markets" <${process.env.EMAIL_USER}>`,
       to,
       subject,
       html
     });
+    
+    console.log('✅ Email sent successfully!');
+    console.log('📬 Message ID:', info.messageId);
+    console.log('📬 Response:', info.response);
+    
     return { success: true };
   } catch (error) {
-    console.error('Email error:', error.message);
+    console.error('❌ Email sending failed!');
+    console.error('Error message:', error.message);
+    console.error('Error code:', error.code);
+    console.error('Full error:', JSON.stringify(error, null, 2));
     return { success: false, error: error.message };
   }
 };
