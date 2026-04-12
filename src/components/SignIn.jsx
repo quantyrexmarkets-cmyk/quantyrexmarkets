@@ -48,6 +48,7 @@ const SignIn = () => {
         login(res.token, res.user);
         setSuccess(true);
         setTimeout(() => {
+          setSuccess(false);
           window.location.replace('/dashboard');
         }, 1500);
       } else if (res.twoFactorRequired) {
