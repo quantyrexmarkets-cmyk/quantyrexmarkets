@@ -103,19 +103,19 @@ export default function DashboardSidebar({ open, onClose }) {
         <div style={{ padding: '12px 16px', minHeight: '41px', boxSizing: 'border-box', display: 'flex', alignItems: 'center', justifyContent: 'space-between', background: 'transparent' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '10px', cursor: 'pointer' }} onClick={() => { navigate('/dashboard/profile'); onClose(); }}>
             {/* Avatar */}
-            <div style={{ width: '36px', height: '36px', borderRadius: '50%', background: '#6366f1', flexShrink: 0, overflow: 'hidden', border: '2px solid rgba(99,102,241,0.4)' }}>
+            <div style={{ width: '45px', height: '45px', borderRadius: '50%', background: '#6366f1', flexShrink: 0, overflow: 'hidden', border: '2px solid rgba(99,102,241,0.4)' }}>
               {user?.avatar ? (
                 <img src={user.avatar} alt="avatar" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
               ) : (
-                <div style={{ width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'white', fontSize: '14px', fontWeight: '700' }}>
+                <div style={{ width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'white', fontSize: '18px', fontWeight: '700' }}>
                   {user?.firstName?.[0]?.toUpperCase() || 'U'}
                 </div>
               )}
             </div>
             {/* User Info */}
             <div style={{ display: 'flex', flexDirection: 'column', lineHeight: '1.4' }}>
-              <span style={{ color: 'white', fontSize: '11px', fontWeight: '600' }}>{user?.firstName || ''} {user?.lastName || ''}</span>
-              <span style={{ color: '#6366f1', fontSize: '9px', fontWeight: '500' }}>{user?.accountType || 'Member'}</span>
+              <span style={{ color: 'white', fontSize: '13px', fontWeight: '600' }}>{user?.firstName || ''} {user?.lastName || ''}</span>
+              <span style={{ color: '#6366f1', fontSize: '11px', fontWeight: '500' }}>{user?.accountType || 'Member'}</span>
             </div>
           </div>
           <button onClick={onClose} style={{ background: 'none', border: 'none', color: 'rgba(255,255,255,0.4)', cursor: 'pointer' }}>
