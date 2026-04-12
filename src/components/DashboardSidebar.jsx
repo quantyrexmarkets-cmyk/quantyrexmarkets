@@ -1,7 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { useState, useEffect, useRef } from 'react';
-import { User, BarChart2, Wallet, Bot, TrendingUp, Clock, ArrowDownCircle, Package, Lock, Users, ChevronRight, Globe, X, Download, Bell, Settings } from 'lucide-react';
+import { User, BarChart2, Wallet, Bot, TrendingUp, Clock, ArrowDownCircle, Package, Lock, Users, ChevronRight, Globe, X, Download, Bell, Settings, Home } from 'lucide-react';
 
 function useNotifications() {
   const [notifications, setNotifications] = useState([]);
@@ -37,6 +37,7 @@ const sidebarSections = [
   {
     title: 'DASHBOARD',
     items: [
+      { icon: <Home size={16}/>, label: 'Dashboard', route: '/dashboard' },
       { icon: <User size={16}/>, label: 'Profile', route: '/dashboard/profile' },
       { icon: <BarChart2 size={16}/>, label: 'Live Market', badge: 'New', route: '/dashboard/live-market' },
       { icon: <Wallet size={16}/>, label: 'Stake', route: null, submenu: [
