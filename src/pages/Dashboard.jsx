@@ -270,7 +270,7 @@ export default function Dashboard() {
               <path d="M20 8L8 14V22L20 34L32 22V14L20 8Z" fill="#0d1117" stroke="#6366F1" strokeWidth="1.2"/>
               <path d="M20 14L12 18V23L20 30L28 23V18L20 14Z" fill="#6366F1" stroke="#6366F1" strokeWidth="1"/>
             </svg>
-              <span style={{ color: '#6366f1', fontSize: '11px', fontWeight: '800' }}>QUANTYREX MARKETS</span>
+              <span style={{ color: '#ffffff', fontSize: '11px', fontWeight: '800' }}>QUANTYREX MARKETS</span>
               <span style={{ color: 'rgba(255,255,255,0.4)', fontSize: '10px' }}>| {u.firstName || ''} {u.lastName || ''}</span>
             </div>
 
@@ -284,8 +284,8 @@ export default function Dashboard() {
               <div style={{ position: 'absolute', bottom: '-40px', left: '-40px', width: '150px', height: '150px', borderRadius: '50%', background: 'rgba(99,102,241,0.15)', filter: 'blur(40px)', pointerEvents: 'none' }} />
 
               <div style={{ position: 'relative' }}>
-                <div style={{ color: 'white', fontSize: '16px', fontWeight: '700', marginBottom: '4px' }}>Welcome back, {u.firstName || 'User'} {u.lastName || ''}!</div>
-                <div style={{ color: 'rgba(255,255,255,0.45)', fontSize: '11px', marginBottom: '10px' }}>Your investment dashboard overview</div>
+                <div style={{ color: 'white', fontSize: '15px', fontWeight: '300', letterSpacing: '0.3px', marginBottom: '4px' }}>Welcome back, {u.firstName || 'User'} {u.lastName || ''}!</div>
+                <div style={{ color: 'rgba(255,255,255,0.35)', fontSize: '11px', fontWeight: '300', marginBottom: '10px' }}>Your investment dashboard overview</div>
 
                 {/* Inner Glass Balance Card */}
                 <div style={{ background: 'rgba(0,0,0,0.3)', backdropFilter: 'blur(20px)', WebkitBackdropFilter: 'blur(20px)', border: '1px solid rgba(255,255,255,0.06)', borderRadius: '12px', padding: '14px', marginBottom: '8px', position: 'relative', overflow: 'hidden' }}>
