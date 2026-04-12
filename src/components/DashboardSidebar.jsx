@@ -129,7 +129,15 @@ export default function DashboardSidebar({ open, onClose }) {
             <div key={si} style={{ marginBottom: '16px' }}>
               <div style={{ color: 'rgba(255,255,255,0.5)', fontSize: '9px', fontWeight: '700', letterSpacing: '0.1em', padding: '0 16px', marginBottom: '8px', marginTop: '8px' }}>{section.title}</div>
               {section.items.map((item, ii) => (
-                <div key={ii}>
+                <div key={ii} style={{ padding: '2px 8px' }}>
+                  <div style={{
+                    borderRadius: '8px',
+                    background: location.pathname === item.route ? 'rgba(99,102,241,0.12)' : 'transparent',
+                    backdropFilter: location.pathname === item.route ? 'blur(12px)' : 'none',
+                    WebkitBackdropFilter: location.pathname === item.route ? 'blur(12px)' : 'none',
+                    border: location.pathname === item.route ? '1px solid rgba(99,102,241,0.3)' : '1px solid transparent',
+                    boxShadow: location.pathname === item.route ? '0 4px 16px rgba(99,102,241,0.15), inset 0 1px 0 rgba(255,255,255,0.05)' : 'none',
+                  }}>
                   <button onClick={() => {
                     if (item.action === 'smartsupp') { if(window.smartsupp) window.smartsupp('chat:open'); onClose(); }
                     else if (item.external) { window.open(item.external, '_blank'); onClose(); }
@@ -139,7 +147,7 @@ export default function DashboardSidebar({ open, onClose }) {
                       navigate(item.route); onClose();
                     }
                   }}
-                  style={{ width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '12px 16px', background: location.pathname === item.route ? 'rgba(99,102,241,0.15)' : 'transparent', backdropFilter: location.pathname === item.route ? 'blur(10px)' : 'none', borderLeft: location.pathname === item.route ? '2px solid #6366f1' : '2px solid transparent', border: 'none', cursor: 'pointer', color: location.pathname === item.route ? '#ffffff' : 'rgba(255,255,255,0.7)', fontSize: '11px', textAlign: 'left' }}>
+                  style={{ width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '12px 16px', background: 'transparent', border: 'none', cursor: 'pointer', color: 'rgba(255,255,255,0.9)', fontSize: '11px', textAlign: 'left' }}>
                     <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
                       <span style={{ color: '#6366f1' }}>{item.icon}</span>
                       <span>{item.label}</span>
@@ -159,6 +167,7 @@ export default function DashboardSidebar({ open, onClose }) {
                       ))}
                     </div>
                   )}
+                  </div>
                 </div>
               ))}
             </div>
