@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { formatAmount } from '../utils/currency';
 import PageHeader from '../components/PageHeader';
+import { Bot, TrendingUp } from 'lucide-react';
 
 const bots = [
   { name: 'STARTER BOT',  amount: 500,   dailyRate: '10%', duration: '7 days',   days: 7,   color: '#818cf8' },
