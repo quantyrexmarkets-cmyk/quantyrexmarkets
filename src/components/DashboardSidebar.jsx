@@ -36,38 +36,38 @@ const sidebarSections = [
   {
     title: 'DASHBOARD',
     items: [
-      { icon: <User size={13}/>, label: 'Profile', route: '/dashboard/profile' },
-      { icon: <BarChart2 size={13}/>, label: 'Live Market', badge: 'New', route: '/dashboard/live-market' },
-      { icon: <Wallet size={13}/>, label: 'Stake', route: null, submenu: [
+      { icon: <User size={16}/>, label: 'Profile', route: '/dashboard/profile' },
+      { icon: <BarChart2 size={16}/>, label: 'Live Market', badge: 'New', route: '/dashboard/live-market' },
+      { icon: <Wallet size={16}/>, label: 'Stake', route: null, submenu: [
         { label: 'New Stake', route: '/dashboard/new-stake' },
         { label: 'Stake History', route: '/dashboard/stake' },
       ]},
-      { icon: <Bot size={13}/>, label: 'Manage Bots', badge: 'New', route: '/dashboard/manage-bots' },
+      { icon: <Bot size={16}/>, label: 'Manage Bots', badge: 'New', route: '/dashboard/manage-bots' },
     ]
   },
   {
     title: 'INVESTMENTS',
     items: [
-      { icon: <BarChart2 size={13}/>, label: 'Investment records', route: '/dashboard/investment-records' },
-      { icon: <Clock size={13}/>, label: 'Transaction history', route: '/dashboard/transaction-history' },
-      { icon: <Package size={13}/>, label: 'Packages', route: null, submenu: [
+      { icon: <BarChart2 size={16}/>, label: 'Investment records', route: '/dashboard/investment-records' },
+      { icon: <Clock size={16}/>, label: 'Transaction history', route: '/dashboard/transaction-history' },
+      { icon: <Package size={16}/>, label: 'Packages', route: null, submenu: [
         { label: 'Available Packages', route: '/dashboard/packages' },
         { label: 'My Packages', route: '/dashboard/packages?tab=my' },
       ]},
-      { icon: <ArrowDownCircle size={13}/>, label: 'Withdraw / Deposit', route: null, submenu: [
+      { icon: <ArrowDownCircle size={16}/>, label: 'Withdraw / Deposit', route: null, submenu: [
         { label: 'Deposit', route: '/dashboard/deposit' },
         { label: 'Withdraw', route: '/dashboard/withdraw' },
       ]},
-      { icon: <TrendingUp size={13}/>, label: 'Live Trading', badge: 'New', route: '/dashboard/live-trading' },
-      { icon: <Users size={13}/>, label: 'Copy Trading', badge: 'New', route: null, submenu: [
+      { icon: <TrendingUp size={16}/>, label: 'Live Trading', badge: 'New', route: '/dashboard/live-trading' },
+      { icon: <Users size={16}/>, label: 'Copy Trading', badge: 'New', route: null, submenu: [
         { label: 'Browse Traders', route: '/dashboard/copy-trading' },
         { label: 'My Copy Trades', route: '/dashboard/my-copy-trades' },
       ]},
       
-      { icon: <Lock size={13}/>, label: 'KYC', route: '/dashboard/kyc' },
-      { icon: <Users size={13}/>, label: 'Refer Users', route: '/dashboard/refer-users' },
-      { icon: <Bell size={13}/>, label: 'Support', route: null, external: null, action: 'smartsupp' },
-      { icon: <Settings size={13}/>, label: 'Settings', route: '/dashboard/settings' },
+      { icon: <Lock size={16}/>, label: 'KYC', route: '/dashboard/kyc' },
+      { icon: <Users size={16}/>, label: 'Refer Users', route: '/dashboard/refer-users' },
+      { icon: <Bell size={16}/>, label: 'Support', route: null, external: null, action: 'smartsupp' },
+      { icon: <Settings size={16}/>, label: 'Settings', route: '/dashboard/settings' },
     ]
   }
 ];
@@ -93,7 +93,7 @@ export default function DashboardSidebar({ open, onClose }) {
     <>
       {open && <div onClick={onClose} style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.5)', zIndex: 1099 }} />}
       <div style={{
-        position: 'fixed', top: 0, left: open ? '0' : '-180px', height: '100vh', width: '170px',
+        position: 'fixed', top: 0, left: open ? '0' : '-220px', height: '100vh', width: '210px',
         background: '#131b2e', zIndex: 1100, transition: 'left 0.3s ease',
         display: 'flex', flexDirection: 'column', borderRight: '1px solid rgba(255,255,255,0.12)', overflowY: 'auto'
       }}>
@@ -107,7 +107,7 @@ export default function DashboardSidebar({ open, onClose }) {
               <path d="M20 14L12 18V23L20 30L28 23V18L20 14Z" fill="#6366F1" stroke="#6366F1" strokeWidth="1"/>
             </svg>
             </div>
-            <span style={{ color: 'white', fontSize: '10px', fontWeight: '800' }}>QUANTYREX <span style={{ color: '#6366f1' }}>MARKETS</span></span>
+            <span style={{ color: 'white', fontSize: '12px', fontWeight: '800' }}>QUANTYREX <span style={{ color: '#6366f1' }}>MARKETS</span></span>
           </div>
           <button onClick={onClose} style={{ background: 'none', border: 'none', color: 'rgba(255,255,255,0.4)', cursor: 'pointer' }}>
             <X size={14}/>
@@ -118,7 +118,7 @@ export default function DashboardSidebar({ open, onClose }) {
         <div style={{ padding: '12px 0', flex: 1 }}>
           {sidebarSections.map((section, si) => (
             <div key={si} style={{ marginBottom: '16px' }}>
-              <div style={{ color: 'rgba(255,255,255,0.5)', fontSize: '7px', fontWeight: '700', letterSpacing: '0.1em', padding: '0 16px', marginBottom: '6px' }}>{section.title}</div>
+              <div style={{ color: 'rgba(255,255,255,0.5)', fontSize: '9px', fontWeight: '700', letterSpacing: '0.1em', padding: '0 16px', marginBottom: '6px' }}>{section.title}</div>
               {section.items.map((item, ii) => (
                 <div key={ii}>
                   <button onClick={() => {
@@ -130,13 +130,13 @@ export default function DashboardSidebar({ open, onClose }) {
                       navigate(item.route); onClose();
                     }
                   }}
-                  style={{ width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '9px 16px', background: 'transparent', border: 'none', cursor: 'pointer', color: 'rgba(255,255,255,0.9)', fontSize: '9px', textAlign: 'left' }}>
+                  style={{ width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '9px 16px', background: 'transparent', border: 'none', cursor: 'pointer', color: 'rgba(255,255,255,0.9)', fontSize: '11px', textAlign: 'left' }}>
                     <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
                       <span style={{ color: '#6366f1' }}>{item.icon}</span>
                       <span>{item.label}</span>
                     </div>
                     <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
-                      {item.badge && <span style={{ background: '#ef4444', color: 'white', fontSize: '6px', padding: '1px 4px', borderRadius: '2px', fontWeight: '700' }}>{item.badge}</span>}
+                      {item.badge && <span style={{ background: '#ef4444', color: 'white', fontSize: '8px', padding: '2px 5px', borderRadius: '2px', fontWeight: '700' }}>{item.badge}</span>}
                       <ChevronRight size={10} color='rgba(255,255,255,0.2)' style={{ transform: openSubmenu === si+'-'+ii ? 'rotate(90deg)' : 'rotate(0deg)', transition: 'transform 0.2s' }}/>
                     </div>
                   </button>
@@ -144,7 +144,7 @@ export default function DashboardSidebar({ open, onClose }) {
                     <div style={{ background: 'rgba(99,102,241,0.08)', paddingLeft: '38px', borderLeft: '2px solid #6366f1', marginLeft: '16px' }}>
                       {item.submenu.map((sub, si2) => (
                         <button key={si2} onClick={() => { navigate(sub.route); onClose(); }}
-                          style={{ width: '100%', padding: '9px 16px 9px 0', background: 'transparent', border: 'none', cursor: 'pointer', color: 'white', fontSize: '9px', textAlign: 'left', display: 'flex', alignItems: 'center', gap: '6px', fontWeight: '500' }}>
+                          style={{ width: '100%', padding: '9px 16px 9px 0', background: 'transparent', border: 'none', cursor: 'pointer', color: 'white', fontSize: '11px', textAlign: 'left', display: 'flex', alignItems: 'center', gap: '6px', fontWeight: '500' }}>
                           <span style={{ color: '#6366f1', fontSize: '12px' }}>›</span> {sub.label}
                         </button>
                       ))}
@@ -166,7 +166,7 @@ export default function DashboardSidebar({ open, onClose }) {
       {notifOpen && (
         <div ref={notifRef} style={{ position: 'fixed', top: 0, left: '240px', width: '280px', height: '100vh', background: '#132035', borderRight: '1px solid rgba(255,255,255,0.1)', zIndex: 9999, display: 'flex', flexDirection: 'column' }}>
           <div style={{ padding: '14px 16px', borderBottom: '1px solid rgba(255,255,255,0.08)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-            <span style={{ color: 'white', fontSize: '11px', fontWeight: '700' }}>Notifications</span>
+            <span style={{ color: 'white', fontSize: '13px', fontWeight: '700' }}>Notifications</span>
             <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
               {unread > 0 && <button onClick={markAllRead} style={{ background: 'none', border: 'none', color: '#6366f1', fontSize: '8px', cursor: 'pointer' }}>Mark all read</button>}
               <button onClick={() => setNotifOpen(false)} style={{ background: 'none', border: 'none', color: 'rgba(255,255,255,0.5)', fontSize: '16px', cursor: 'pointer' }}>×</button>
@@ -179,8 +179,8 @@ export default function DashboardSidebar({ open, onClose }) {
               <div key={i} style={{ padding: '12px 16px', borderBottom: '1px solid rgba(255,255,255,0.04)', background: n.read ? 'transparent' : 'rgba(99,102,241,0.06)', display: 'flex', gap: '10px' }}>
                 <div style={{ width: '6px', height: '6px', borderRadius: '50%', background: typeColor(n.type), marginTop: '4px', flexShrink: 0 }} />
                 <div>
-                  <div style={{ color: 'white', fontSize: '10px', fontWeight: '600', marginBottom: '2px' }}>{n.title}</div>
-                  <div style={{ color: 'rgba(255,255,255,0.5)', fontSize: '9px', lineHeight: '1.4' }}>{n.message}</div>
+                  <div style={{ color: 'white', fontSize: '12px', fontWeight: '600', marginBottom: '2px' }}>{n.title}</div>
+                  <div style={{ color: 'rgba(255,255,255,0.5)', fontSize: '11px', lineHeight: '1.4' }}>{n.message}</div>
                   <div style={{ color: 'rgba(255,255,255,0.25)', fontSize: '7px', marginTop: '4px' }}>{timeAgo(n.createdAt)}</div>
                 </div>
               </div>
