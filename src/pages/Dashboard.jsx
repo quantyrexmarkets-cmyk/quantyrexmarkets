@@ -177,8 +177,8 @@ export default function Dashboard() {
           </button>
 
           <div style={{ marginLeft: 'auto', display: 'flex', gap: '6px', alignItems: 'stretch' }}>
-            <button onClick={() => getDashboard().then(data => setDashData(data))} style={{ padding: '5px 10px', background: 'rgba(255,255,255,0.15)', border: '1px solid rgba(255,255,255,0.08)', color: 'white', fontSize: '11px', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '4px', whiteSpace: 'nowrap' }}><span style={{ color: '#f7931a' }}>₿</span> {u.balance ? formatAmount(u.balance, u.currency) : '0.00'}</button>
-            <button onClick={() => navigate('/dashboard/live-trading')} style={{ padding: '5px 10px', background: 'transparent', border: '1px solid #6366f1', color: 'white', fontSize: '11px', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '4px', whiteSpace: 'nowrap' }}><RefreshCw size={11}/> Trade</button>
+            <button onClick={() => getDashboard().then(data => setDashData(data))} style={{ padding: '5px 10px', background: t.cardBg, border: `1px solid ${t.border}`, color: t.text, fontSize: '11px', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '4px', whiteSpace: 'nowrap' }}><span style={{ color: '#f7931a' }}>₿</span> {u.balance ? formatAmount(u.balance, u.currency) : '0.00'}</button>
+            <button onClick={() => navigate('/dashboard/live-trading')} style={{ padding: '5px 10px', background: 'transparent', border: '1px solid #6366f1', color: t.text, fontSize: '11px', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '4px', whiteSpace: 'nowrap' }}><RefreshCw size={11}/> Trade</button>
             <div style={{ position: 'relative' }}>
                       <button onClick={() => { const readIds = JSON.parse(localStorage.getItem('readNotifications') || '[]'); setNotifications(prev => prev.map(n => ({ ...n, unread: readIds.includes(String(n.id)) ? false : n.unread }))); setShowNotifications(!showNotifications); setShowProfileMenu(false); }} style={{ background: 'none', border: 'none', color: t.text, cursor: 'pointer', padding: '5px 8px', position: 'relative', display: 'flex', alignItems: 'center' }}>
                         <svg width='18' height='18' fill='none' stroke='currentColor' viewBox='0 0 24 24' strokeWidth='2'><path d='M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9'/><path d='M13.73 21a2 2 0 0 1-3.46 0'/></svg>
@@ -189,7 +189,7 @@ export default function Dashboard() {
                           <div onClick={() => setShowNotifications(false)} style={{ position: 'fixed', inset: 0, zIndex: 998 }} />
                           <div style={{ position: 'absolute', top: '110%', right: 0, background: '#1e2538', border: '1px solid rgba(255,255,255,0.08)', zIndex: 999, minWidth: '260px', boxShadow: '0 8px 24px rgba(0,0,0,0.4)', borderRadius: '8px', overflow: 'hidden' }}>
                             <div style={{ padding: '12px 16px', borderBottom: '1px solid rgba(255,255,255,0.06)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                              <span style={{ color: 'white', fontSize: '11px', fontWeight: '700' }}>Notifications</span>
+                              <span style={{ color: t.text, fontSize: '11px', fontWeight: '700' }}>Notifications</span>
                               <span onClick={() => {
                                 const ids = notifications.map(n => String(n.id));
                                 const existing = JSON.parse(localStorage.getItem('readNotifications') || '[]');
@@ -203,7 +203,7 @@ export default function Dashboard() {
                               <div key={i} style={{ padding: '10px 16px', borderBottom: '1px solid rgba(255,255,255,0.04)', background: n.unread ? 'rgba(99,102,241,0.08)' : 'transparent', display: 'flex', gap: '10px', alignItems: 'flex-start' }}>
                                 <span style={{ fontSize: '16px' }}>{n.icon}</span>
                                 <div style={{ flex: 1 }}>
-                                  <div style={{ color: 'white', fontSize: '10px', fontWeight: '600', marginBottom: '2px' }}>{n.title}</div>
+                                  <div style={{ color: t.text, fontSize: '10px', fontWeight: '600', marginBottom: '2px' }}>{n.title}</div>
                                   <div style={{ color: 'rgba(255,255,255,0.4)', fontSize: '9px', marginBottom: '2px' }}>{n.desc}</div>
                                   <div style={{ color: 'rgba(255,255,255,0.25)', fontSize: '8px' }}>{typeof n.time === 'string' && n.time.includes('ago') ? n.time : new Date(n.time).toLocaleDateString()}</div>
                                 </div>
@@ -370,21 +370,21 @@ export default function Dashboard() {
             <div style={{ background: 'rgba(255,255,255,0.04)', backdropFilter: 'blur(16px)', WebkitBackdropFilter: 'blur(16px)', border: '1px solid rgba(255,255,255,0.08)', borderRadius: '12px', padding: '10px', boxShadow: '0 4px 24px rgba(0,0,0,0.05)', marginBottom: '20px' }}>
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '12px' }}>
                 <span style={{ color: t.text, fontSize: '9px', fontWeight: '700', letterSpacing: '0.08em' }}>TRANSACTION LIST</span>
-                <select style={{ background: 'rgba(255,255,255,0.15)', border: '1px solid rgba(255,255,255,0.08)', color: 'white', fontSize: '8px', padding: '3px 8px', outline: 'none' }}>
+                <select style={{ background: t.cardBg, border: `1px solid ${t.border}`, color: t.text, fontSize: '8px', padding: '3px 8px', outline: 'none' }}>
                   <option>Today</option><option>This Week</option><option>This Month</option>
                 </select>
               </div>
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
-                  <span style={{ color: 'rgba(255,255,255,0.45)', fontSize: '8px' }}>Show</span>
-                  <select style={{ background: 'rgba(255,255,255,0.15)', border: '1px solid rgba(255,255,255,0.08)', color: 'white', fontSize: '8px', padding: '2px 5px', outline: 'none' }}><option>10</option><option>25</option><option>50</option></select>
-                  <span style={{ color: 'rgba(255,255,255,0.45)', fontSize: '8px' }}>entries</span>
+                  <span style={{ color: t.subText, fontSize: '8px' }}>Show</span>
+                  <select style={{ background: t.cardBg, border: `1px solid ${t.border}`, color: t.text, fontSize: '8px', padding: '2px 5px', outline: 'none' }}><option>10</option><option>25</option><option>50</option></select>
+                  <span style={{ color: t.subText, fontSize: '8px' }}>entries</span>
                 </div>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
                 </div>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
-                  <span style={{ color: 'rgba(255,255,255,0.45)', fontSize: '8px' }}>Search:</span>
-                  <input style={{ background: 'rgba(255,255,255,0.15)', border: '1px solid rgba(255,255,255,0.08)', color: 'white', fontSize: '8px', padding: '3px 8px', outline: 'none', width: '90px' }} />
+                  <span style={{ color: t.subText, fontSize: '8px' }}>Search:</span>
+                  <input style={{ background: t.cardBg, border: `1px solid ${t.border}`, color: t.text, fontSize: '8px', padding: '3px 8px', outline: 'none', width: '90px' }} />
                 </div>
               </div>
               <div style={{ border: '1px solid rgba(255,255,255,0.15)' }}>
@@ -423,7 +423,7 @@ export default function Dashboard() {
         <div style={{ padding: '0 12px 16px' }}>
           <div style={{ background: 'linear-gradient(135deg, #6366f1, #4f46e5)', borderRadius: '12px', padding: '20px 16px', textAlign: 'center', }}>
             <svg width='28' height='28' fill='none' stroke='white' strokeWidth='2' viewBox='0 0 24 24' style={{ marginBottom: '8px', display: 'block', margin: '0 auto 8px' }}><polygon points='13 2 3 14 12 14 11 22 21 10 12 10 13 2'/></svg>
-            <div style={{ color: 'white', fontSize: '14px', fontWeight: '700', marginBottom: '4px' }}>Quick Trade</div>
+            <div style={{ color: t.text, fontSize: '14px', fontWeight: '700', marginBottom: '4px' }}>Quick Trade</div>
             <div style={{ color: 'rgba(255,255,255,0.75)', fontSize: '10px' }}>Start a new trade instantly or explore investment plans.</div>
           </div>
         </div>
@@ -431,7 +431,7 @@ export default function Dashboard() {
         {/* Trade Assets - Full Width */}
         <div style={{ padding: '0 12px 20px' }}>
           <div style={{ background: 'rgba(255,255,255,0.05)', backdropFilter: 'blur(10px)', WebkitBackdropFilter: 'blur(10px)', border: '1px solid rgba(255,255,255,0.08)', borderRadius: '12px', padding: '14px', boxShadow: '0 4px 20px rgba(0,0,0,0.3)' }}>
-            <div style={{ color: 'white', fontSize: '10px', fontWeight: '700', letterSpacing: '0.08em', marginBottom: '12px' }}>TRADE ASSETS</div>
+            <div style={{ color: t.text, fontSize: '10px', fontWeight: '700', letterSpacing: '0.08em', marginBottom: '12px' }}>TRADE ASSETS</div>
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '8px', marginBottom: '10px' }}>
               {[
                 { label: 'Account', val: tradeAccount, set: setTradeAccount, options: ['---','Real Account','Demo Account'] },
@@ -444,14 +444,14 @@ export default function Dashboard() {
                   <label style={{ color: 'rgba(255,255,255,0.45)', fontSize: '9px', display: 'flex', alignItems: 'center', gap: '3px', marginBottom: '4px' }}>
                     {field.label}{field.hasIcon && <Clock size={9} color="#f59e0b"/>}
                   </label>
-                  <select value={field.val} onChange={e => field.set(e.target.value)} style={{ width: '100%', background: '#0f172a', border: '1px solid rgba(255,255,255,0.08)', color: 'white', fontSize: '9px', padding: '6px 8px', outline: 'none' }}>
+                  <select value={field.val} onChange={e => field.set(e.target.value)} style={{ width: '100%', background: t.inputBg, border: `1px solid ${t.border}`, color: t.text, fontSize: '9px', padding: '6px 8px', outline: 'none' }}>
                     {field.options.map((o, j) => <option key={j}>{o}</option>)}
                   </select>
                 </div>
               ))}
               <div>
                 <label style={{ color: 'rgba(255,255,255,0.45)', fontSize: '9px', display: 'flex', alignItems: 'center', gap: '3px', marginBottom: '4px' }}><DollarSign size={9}/> Amount</label>
-                <input value={amount} onChange={e => setAmount(e.target.value)} style={{ width: '100%', background: '#0f172a', border: '1px solid rgba(255,255,255,0.08)', color: 'white', fontSize: '9px', padding: '6px 8px', outline: 'none', boxSizing: 'border-box' }} />
+                <input value={amount} onChange={e => setAmount(e.target.value)} style={{ width: '100%', background: t.inputBg, border: `1px solid ${t.border}`, color: t.text, fontSize: '9px', padding: '6px 8px', outline: 'none', boxSizing: 'border-box' }} />
               </div>
             </div>
             <div style={{ color: '#ef4444', fontSize: '8px', marginBottom: '8px', minHeight: '12px' }}>{tradeError}</div>
