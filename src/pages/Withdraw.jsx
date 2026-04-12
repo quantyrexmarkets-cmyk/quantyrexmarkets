@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import PageHeader from '../components/PageHeader';
 import { createWithdrawal, getWithdrawals } from '../services/api';
 import { useAuth } from '../context/AuthContext';
-import { formatAmount, getCurrencySymbol } from '../utils/currency';
+import { formatAmountWithCode, formatAmount, getCurrencySymbol } from '../utils/currency';
 
 const methods = [
   { id: 'crypto', label: 'Crypto (Recommended)', desc: 'Withdraw your funds to your cryptocurrency wallet.', select: 'Select Crypto', icon: 'M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z' },
@@ -198,6 +198,12 @@ export default function Withdraw() {
             <div style={{ marginBottom: '10px' }}>
               <label style={labelStyle}>Amount (USD)</label>
               <input value={amount} onChange={e => setAmount(e.target.value)} placeholder='Enter amount' style={inputStyle} />
+
+              {Number(amount) > 0 && user?.currency && user?.currency !== 'USD' && (
+                <div style={{ fontSize: '9px', color: '#f59e0b', marginTop: '4px', marginBottom: '4px' }}>
+                  ≈ {formatAmountWithCode(Number(amount), user.currency)} in your currency
+                </div>
+              )}
             </div>
             <div style={{ color: 'rgba(255,255,255,0.3)', fontSize: '7px', marginBottom: '8px' }}>Available balance: {formatAmount(user?.balance || 0, user?.currency)}</div>
             <div style={{ background: '#1a2e4a', border: '1px solid rgba(255,255,255,0.08)', padding: '10px', marginBottom: '12px' }}>

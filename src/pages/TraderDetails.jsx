@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { formatAmountWithCode } from '../utils/currency';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { ArrowLeft, TrendingUp, TrendingDown, Users, Calendar, DollarSign, AlertCircle, CheckCircle } from 'lucide-react';

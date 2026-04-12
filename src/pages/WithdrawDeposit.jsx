@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import DashboardSidebar from '../components/DashboardSidebar';
 import { createDeposit, getDeposits, createWithdrawal, getWithdrawals } from '../services/api';
 import { useAuth } from '../context/AuthContext';
-import { formatAmount, getCurrencySymbol } from '../utils/currency';
+import { formatAmountWithCode, formatAmount, getCurrencySymbol } from '../utils/currency';
 
 export default function WithdrawDeposit() {
   const navigate = useNavigate();
@@ -201,6 +201,12 @@ const handleWithdraw = async () => {
                 <div style={{ marginBottom: '12px' }}>
                   <label style={labelStyle}>Amount to deposit</label>
                   <input value={amount} onChange={e => setAmount(e.target.value)} placeholder='Enter amount (min $10)' style={inputStyle} />
+
+              {Number(amount) > 0 && user?.currency && user?.currency !== 'USD' && (
+                <div style={{ fontSize: '9px', color: '#f59e0b', marginTop: '4px', marginBottom: '4px' }}>
+                  ≈ {formatAmountWithCode(Number(amount), user.currency)} in your currency
+                </div>
+              )}
                 </div>
                 <div style={{ marginBottom: '16px' }}>
                   <label style={labelStyle}>Payment Proof</label>

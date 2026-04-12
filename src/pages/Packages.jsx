@@ -4,7 +4,7 @@ import PageHeader from '../components/PageHeader';
 import { CheckCircle, X, AlertCircle, Zap, TrendingUp, Award, Crown, Rocket, Star } from 'lucide-react';
 import { joinPlan, getInvestments } from '../services/api';
 import { useAuth } from '../context/AuthContext';
-import { formatAmount, getCurrencySymbol } from '../utils/currency';
+import { formatAmountWithCode, formatAmount, getCurrencySymbol } from '../utils/currency';
 
 const plans = [
   { name: 'BRONZE',   roi: '10% Daily', price: '$500',     min: 500,    max: 4999,    rate: '10% Daily',  duration: '7',  defaultAmt: '500'    },

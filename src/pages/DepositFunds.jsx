@@ -1,4 +1,6 @@
 import { useState } from 'react';
+import { useAuth } from '../context/AuthContext';
+import { formatAmountWithCode } from '../utils/currency';
 import { createDeposit } from '../services/api';
 import { useNavigate } from 'react-router-dom';
 import PageHeader from '../components/PageHeader';

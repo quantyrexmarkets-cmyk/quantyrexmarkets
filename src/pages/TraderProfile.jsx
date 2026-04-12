@@ -1,4 +1,6 @@
 import { useState } from 'react';
+import { useAuth } from '../context/AuthContext';
+import { formatAmountWithCode } from '../utils/currency';
 import { useParams, useNavigate } from 'react-router-dom';
 import { ArrowLeft, MapPin, Users, FlaskConical, Heart, TrendingUp, BarChart2, Copy, UserCheck, Shield, Star, Clock, DollarSign, Activity, ChevronDown, ChevronUp } from 'lucide-react';
 import PageHeader from '../components/PageHeader';

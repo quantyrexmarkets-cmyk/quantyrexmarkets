@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
-import { formatAmount } from '../utils/currency';
+import { formatAmountWithCode, formatAmount } from '../utils/currency';
 import { useAuth } from '../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
 import PageHeader from '../components/PageHeader';
@@ -108,6 +108,13 @@ export default function NewTrade() {
         <div>
           <div style={{ color: 'rgba(255,255,255,0.6)', fontSize: '8px', marginBottom: '6px' }}>Amount (USD)</div>
           <input value={amount} onChange={e => setAmount(e.target.value)} placeholder='Min. $10.00'
+            style={{ width: '100%', background: '#0d1426', border: `1px solid ${direction === 'buy' ? 'rgba(34,197,94,0.4)' : 'rgba(239,68,68,0.4)'}`, color: 'white', fontSize: '11px', fontWeight: '700', padding: '8px 10px', outline: 'none', boxSizing: 'border-box' }} />
+
+              {Number(amount) > 0 && user?.currency && user?.currency !== 'USD' && (
+                <div style={{ fontSize: '9px', color: '#f59e0b', marginTop: '4px', marginBottom: '4px' }}>
+                  ≈ {formatAmountWithCode(Number(amount), user.currency)} in your currency
+                </div>
+              )}
             style={{ width: '100%', background: '#0d1426', border: `1px solid ${direction === 'buy' ? 'rgba(34,197,94,0.4)' : 'rgba(239,68,68,0.4)'}`, color: 'white', fontSize: '11px', fontWeight: '700', padding: '8px 10px', outline: 'none', boxSizing: 'border-box' }} />
         </div>
 

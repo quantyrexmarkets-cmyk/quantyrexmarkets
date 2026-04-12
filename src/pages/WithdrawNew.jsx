@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { formatAmountWithCode } from '../utils/currency';
 import { createWithdrawal } from '../services/api';
 import { useAuth } from '../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
