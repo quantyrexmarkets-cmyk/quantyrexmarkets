@@ -21,7 +21,7 @@ export const themes = {
     name: 'Black',
     bg: '#111111',
     cardBg: '#1a1a1a',
-    cardBg2: '#222222',
+    cardBg2: '#1a1a2e',
     text: '#ffffff',
     subText: 'rgba(255,255,255,0.5)',
     border: 'rgba(255,255,255,0.08)',
