@@ -1,10 +1,8 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { forgotPassword } from '../services/api';
-import { useTheme } from '../context/ThemeContext';
 
 export default function ForgotPassword() {
-  const { current: t } = useTheme();
   const navigate = useNavigate();
   const [email, setEmail] = useState('');
   const [loading, setLoading] = useState(false);
@@ -25,8 +23,8 @@ export default function ForgotPassword() {
   };
 
   return (
-    <div style={{ minHeight: '100vh', background: t.bg, padding: '16px' }}>
-      <div style={{ background: t.cardBg, padding: '40px 20px', borderRadius: '8px' }}>
+    <div style={{ minHeight: '100vh', background: '#0e1628', padding: '16px' }}>
+      <div style={{ background: '#1a2e4a', padding: '40px 20px', borderRadius: '8px' }}>
         <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '24px' }}>
           <svg viewBox="0 0 40 40" fill="none" width="48" height="48">
                 <path d="M20 2L4 10V22L20 38L36 22V10L20 2Z" fill="#0d1117" stroke="#6366F1" strokeWidth="1.5"/>
@@ -35,7 +33,7 @@ export default function ForgotPassword() {
           </svg>
         </div>
         <h2 style={{ color: 'white', fontSize: '20px', fontWeight: '700', textAlign: 'center', marginBottom: '8px' }}>Forgot your password?</h2>
-        <p style={{ color: t.subText, fontSize: '13px', textAlign: 'center', marginBottom: '28px' }}>Enter your email and we'll send you a reset link.</p>
+        <p style={{ color: 'rgba(255,255,255,0.5)', fontSize: '13px', textAlign: 'center', marginBottom: '28px' }}>Enter your email and we'll send you a reset link.</p>
 
         {!success ? (
           <>
@@ -44,7 +42,7 @@ export default function ForgotPassword() {
               onChange={e => setEmail(e.target.value)}
               onKeyDown={e => e.key === 'Enter' && handleSubmit()}
               placeholder="Enter email"
-              style={{ width: '100%', background: t.border, border: `1px solid ${t.border}`, color: t.text, fontSize: '13px', padding: '8px 16px', outline: 'none', borderRadius: '6px', boxSizing: 'border-box', marginBottom: '12px' }}
+              style={{ width: '100%', background: 'rgba(255,255,255,0.08)', border: `1px solid ${'rgba(255,255,255,0.08)'}`, color: 'white', fontSize: '13px', padding: '8px 16px', outline: 'none', borderRadius: '6px', boxSizing: 'border-box', marginBottom: '12px' }}
             />
             {msg && <div style={{ color: msg.includes('sent') ? '#22c55e' : '#ef4444', fontSize: '11px', marginBottom: '12px' }}>{msg}</div>}
             <button onClick={handleSubmit} disabled={loading} style={{ width: '100%', padding: '9px', background: loading ? '#4b5563' : '#6366f1', border: 'none', color: 'white', fontSize: '14px', fontWeight: '600', cursor: loading ? 'not-allowed' : 'pointer', borderRadius: '6px', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px' }}>
@@ -56,7 +54,7 @@ export default function ForgotPassword() {
           <div style={{ textAlign: 'center' }}>
             <div style={{ color: '#22c55e', fontSize: '40px', marginBottom: '12px' }}>✓</div>
             <div style={{ color: 'white', fontSize: '14px', marginBottom: '8px' }}>Reset link sent!</div>
-            <div style={{ color: t.subText, fontSize: '12px' }}>Check your email inbox.</div>
+            <div style={{ color: 'rgba(255,255,255,0.5)', fontSize: '12px' }}>Check your email inbox.</div>
           </div>
         )}
 

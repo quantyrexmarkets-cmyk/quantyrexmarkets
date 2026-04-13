@@ -1,11 +1,9 @@
-import { useTheme } from '../context/ThemeContext';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { loginUser, forgotPassword } from '../services/api';
 import { useAuth } from '../context/AuthContext';
 
 const SignIn = () => {
-  const { current: t } = useTheme();
   const navigate = useNavigate();
   const [form, setForm] = useState({ username: '', password: '', remember: false });
   const [showOTP, setShowOTP] = useState(false);
@@ -86,7 +84,7 @@ const SignIn = () => {
           <div style={{ width: '260px', height: '260px', borderRadius: '50%', background: 'rgba(180,190,205,0.2)', position: 'absolute' }} />
         </div>
 
-        <div style={{ background: t.cardBg, borderRadius: '0px', padding: 'clamp(16px, 4vw, 28px) clamp(12px, 4vw, 24px)', width: '92vw', maxWidth: '360px', position: 'relative', zIndex: 1 }}>
+        <div style={{ background: '#1a2e4a', borderRadius: '0px', padding: 'clamp(16px, 4vw, 28px) clamp(12px, 4vw, 24px)', width: '92vw', maxWidth: '360px', position: 'relative', zIndex: 1 }}>
           <div style={{ textAlign: 'center', marginBottom: '20px' }}>
             <svg viewBox="0 0 40 40" fill="none" width="40" height="40" style={{ margin: "0 auto 10px" }}>
               <path d="M20 2L4 10V22L20 38L36 22V10L20 2Z" fill="#0d1117" stroke="#6366F1" strokeWidth="1.5"/>
@@ -149,11 +147,11 @@ const SignIn = () => {
       {showForgot && (
         <>
           <div onClick={() => { setShowForgot(false); setForgotMsg(''); }} style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.6)', zIndex: 150 }} />
-          <div style={{ position: 'fixed', top: '50%', left: '50%', transform: 'translate(-50%,-50%)', zIndex: 151, background: t.dropdownBg, padding: '28px 24px', width: '300px', borderRadius: '8px', border: '1px solid rgba(99,102,241,0.3)' }}>
+          <div style={{ position: 'fixed', top: '50%', left: '50%', transform: 'translate(-50%,-50%)', zIndex: 151, background: '#1a2e4a', padding: '28px 24px', width: '300px', borderRadius: '8px', border: '1px solid rgba(99,102,241,0.3)' }}>
             <div style={{ color: 'white', fontSize: '13px', fontWeight: '700', marginBottom: '6px' }}>Forgot Password?</div>
-            <div style={{ color: t.subText, fontSize: '8px', marginBottom: '16px' }}>Enter your email and we'll send a reset link.</div>
+            <div style={{ color: 'rgba(255,255,255,0.5)', fontSize: '8px', marginBottom: '16px' }}>Enter your email and we'll send a reset link.</div>
             <input value={forgotEmail} onChange={e => setForgotEmail(e.target.value)} placeholder='Enter your email'
-              style={{ width: '100%', background: '#374151', border: `1px solid ${t.border}`, borderRadius: '4px', padding: '9px', color: 'white', fontSize: '9px', boxSizing: 'border-box', outline: 'none', marginBottom: '10px' }} />
+              style={{ width: '100%', background: '#374151', border: `1px solid ${'rgba(255,255,255,0.08)'}`, borderRadius: '4px', padding: '9px', color: 'white', fontSize: '9px', boxSizing: 'border-box', outline: 'none', marginBottom: '10px' }} />
             {forgotMsg && <div style={{ color: '#22c55e', fontSize: '8px', marginBottom: '10px' }}>{forgotMsg}{forgotLink && <a href={forgotLink} style={{ display: 'block', color: '#6366f1', marginTop: '6px', wordBreak: 'break-all' }}>Click to Reset Password</a>}</div>}
             <button onClick={async () => {
               if (!forgotEmail) { setForgotMsg('Please enter your email'); return; }
@@ -177,7 +175,7 @@ const SignIn = () => {
             }} disabled={forgotLoading} style={{ width: '100%', padding: '9px', background: '#6366f1', border: 'none', borderRadius: '4px', color: 'white', fontSize: '9px', fontWeight: '600', cursor: 'pointer', marginBottom: '8px' }}>
               {forgotLoading ? 'Sending...' : 'Send Reset Link'}
             </button>
-            <button onClick={() => { setShowForgot(false); setForgotMsg(''); }} style={{ width: '100%', padding: '9px', background: 'transparent', border: `1px solid ${t.border}`, borderRadius: '4px', color: t.subText, fontSize: '9px', cursor: 'pointer' }}>Cancel</button>
+            <button onClick={() => { setShowForgot(false); setForgotMsg(''); }} style={{ width: '100%', padding: '9px', background: 'transparent', border: `1px solid ${'rgba(255,255,255,0.08)'}`, borderRadius: '4px', color: 'rgba(255,255,255,0.5)', fontSize: '9px', cursor: 'pointer' }}>Cancel</button>
           </div>
         </>
       )}
@@ -189,7 +187,7 @@ const SignIn = () => {
               <svg width='22' height='22' fill='none' stroke='#6366f1' viewBox='0 0 24 24' strokeWidth='2'><path strokeLinecap='round' strokeLinejoin='round' d='M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z'/></svg>
             </div>
             <div style={{ color: 'white', fontSize: '14px', fontWeight: '700', marginBottom: '6px' }}>Two-Factor Authentication</div>
-            <div style={{ color: t.subText, fontSize: '11px', marginBottom: '16px', lineHeight: '1.6' }}>
+            <div style={{ color: 'rgba(255,255,255,0.5)', fontSize: '11px', marginBottom: '16px', lineHeight: '1.6' }}>
               Enter the 6-digit code sent to<br/><strong style={{ color: 'white' }}>{otpEmail}</strong>
             </div>
             <input
@@ -197,7 +195,7 @@ const SignIn = () => {
               onChange={e => setOtp(e.target.value)}
               placeholder='······' type='password'
               maxLength={6}
-              style={{ width: '100%', background: '#2d3748', border: `1px solid ${t.border}`, color: 'white', fontSize: '14px', padding: '10px', outline: 'none', boxSizing: 'border-box', borderRadius: '4px', textAlign: 'center', letterSpacing: '4px', fontWeight: '600', marginBottom: '16px' }}
+              style={{ width: '100%', background: '#2d3748', border: `1px solid ${'rgba(255,255,255,0.08)'}`, color: 'white', fontSize: '14px', padding: '10px', outline: 'none', boxSizing: 'border-box', borderRadius: '4px', textAlign: 'center', letterSpacing: '4px', fontWeight: '600', marginBottom: '16px' }}
             />
             {errors.otp && <div style={{ color: '#ef4444', fontSize: '11px', marginBottom: '12px' }}>{errors.otp}</div>}
             <button onClick={async () => {
@@ -223,7 +221,7 @@ const SignIn = () => {
             }} disabled={otpLoading} style={{ width: '100%', padding: '8px', background: otpLoading ? '#4b5563' : '#6366f1', border: 'none', borderRadius: '4px', color: 'white', fontSize: '12px', fontWeight: '600', cursor: otpLoading ? 'not-allowed' : 'pointer', marginBottom: '10px' }}>
               {otpLoading ? 'Verifying...' : 'Verify Code'}
             </button>
-            <button onClick={() => { setShowOTP(false); setOtp(''); }} style={{ width: '100%', padding: '7px', background: 'transparent', border: `1px solid ${t.border}`, borderRadius: '4px', color: t.subText, fontSize: '10px', cursor: 'pointer' }}>
+            <button onClick={() => { setShowOTP(false); setOtp(''); }} style={{ width: '100%', padding: '7px', background: 'transparent', border: `1px solid ${'rgba(255,255,255,0.08)'}`, borderRadius: '4px', color: 'rgba(255,255,255,0.5)', fontSize: '10px', cursor: 'pointer' }}>
               Back to Login
             </button>
           </div>

@@ -1,8 +1,6 @@
 import { useNavigate } from 'react-router-dom';
-import { useTheme } from '../context/ThemeContext';
 
 export default function Terms() {
-  const { current: t } = useTheme();
   const navigate = useNavigate();
   const sections = [
     { title: '1. Acceptance of Terms', content: 'By accessing and using Quantyrex Markets, you accept and agree to be bound by the terms and provisions of this agreement. If you do not agree to these terms, please do not use our platform.' },
@@ -20,12 +18,12 @@ export default function Terms() {
   ];
 
   return (
-    <div style={{ minHeight: '100vh', background: t.bg, color: 'white', fontFamily: "'Segoe UI', sans-serif" }}>
+    <div style={{ minHeight: '100vh', background: '#0e1628', color: 'white', fontFamily: "'Segoe UI', sans-serif" }}>
       {/* Header */}
-      <div style={{ background: t.cardBg, padding: '14px 20px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', borderBottom: `1px solid ${t.border}`, position: 'sticky', top: 0, zIndex: 100 }}>
+      <div style={{ background: '#1a2e4a', padding: '14px 20px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', borderBottom: `1px solid ${'rgba(255,255,255,0.08)'}`, position: 'sticky', top: 0, zIndex: 100 }}>
         <span style={{ fontWeight: '800', fontSize: '13px', cursor: 'pointer' }} onClick={() => navigate('/')}>QUANTYREX <span style={{ color: '#6366f1' }}>MARKETS</span></span>
         <div style={{ display: 'flex', gap: '12px' }}>
-          <button onClick={() => navigate('/')} style={{ background: 'none', border: 'none', color: t.dimText, fontSize: '10px', cursor: 'pointer' }}>Home</button>
+          <button onClick={() => navigate('/')} style={{ background: 'none', border: 'none', color: 'rgba(255,255,255,0.6)', fontSize: '10px', cursor: 'pointer' }}>Home</button>
           <button onClick={() => navigate('/signup')} style={{ background: '#6366f1', border: 'none', color: 'white', fontSize: '10px', padding: '6px 14px', cursor: 'pointer', fontWeight: '700' }}>Get Started</button>
         </div>
       </div>
@@ -33,25 +31,25 @@ export default function Terms() {
       {/* Content */}
       <div style={{ maxWidth: '800px', margin: '0 auto', padding: '40px 20px' }}>
         <h1 style={{ fontSize: '20px', fontWeight: '800', marginBottom: '8px' }}>Terms & Conditions</h1>
-        <p style={{ color: t.mutedText, fontSize: '9px', marginBottom: '32px' }}>Last updated: March 2026</p>
-        <p style={{ color: t.dimText, fontSize: '10px', lineHeight: '1.8', marginBottom: '32px', background: t.cardBg2, padding: '16px', borderLeft: '3px solid #6366f1' }}>
+        <p style={{ color: 'rgba(255,255,255,0.4)', fontSize: '9px', marginBottom: '32px' }}>Last updated: March 2026</p>
+        <p style={{ color: 'rgba(255,255,255,0.6)', fontSize: '10px', lineHeight: '1.8', marginBottom: '32px', background: '#132035', padding: '16px', borderLeft: '3px solid #6366f1' }}>
           Please read these Terms and Conditions carefully before using Quantyrex Markets. These terms govern your use of our platform and services.
         </p>
         {sections.map((s, i) => (
-          <div key={i} style={{ marginBottom: '24px', borderBottom: `1px solid ${t.subtleBorder}`, paddingBottom: '24px' }}>
+          <div key={i} style={{ marginBottom: '24px', borderBottom: `1px solid ${'rgba(255,255,255,0.06)'}`, paddingBottom: '24px' }}>
             <h2 style={{ fontSize: '12px', fontWeight: '700', color: '#6366f1', marginBottom: '8px' }}>{s.title}</h2>
-            <p style={{ color: t.dimText, fontSize: '10px', lineHeight: '1.8', margin: 0 }}>{s.content}</p>
+            <p style={{ color: 'rgba(255,255,255,0.6)', fontSize: '10px', lineHeight: '1.8', margin: 0 }}>{s.content}</p>
           </div>
         ))}
-        <div style={{ background: t.cardBg2, padding: '20px', marginTop: '32px', textAlign: 'center' }}>
-          <p style={{ color: t.dimText, fontSize: '10px', marginBottom: '12px' }}>Have questions about our terms?</p>
+        <div style={{ background: '#132035', padding: '20px', marginTop: '32px', textAlign: 'center' }}>
+          <p style={{ color: 'rgba(255,255,255,0.6)', fontSize: '10px', marginBottom: '12px' }}>Have questions about our terms?</p>
           <button onClick={() => navigate('/#contact')} style={{ background: '#6366f1', border: 'none', color: 'white', padding: '10px 24px', fontSize: '10px', fontWeight: '700', cursor: 'pointer' }}>Contact Us</button>
         </div>
       </div>
 
       {/* Footer */}
-      <div style={{ background: t.cardBg, padding: '16px 20px', textAlign: 'center', borderTop: `1px solid ${t.border}`, marginTop: '40px' }}>
-        <span style={{ color: t.faintText, fontSize: '8px' }}>© 2026 Quantyrex Markets. All rights reserved.</span>
+      <div style={{ background: '#1a2e4a', padding: '16px 20px', textAlign: 'center', borderTop: `1px solid ${'rgba(255,255,255,0.08)'}`, marginTop: '40px' }}>
+        <span style={{ color: 'rgba(255,255,255,0.25)', fontSize: '8px' }}>© 2026 Quantyrex Markets. All rights reserved.</span>
       </div>
     </div>
   );

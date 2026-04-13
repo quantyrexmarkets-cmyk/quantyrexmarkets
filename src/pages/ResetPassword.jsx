@@ -1,11 +1,9 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useTheme } from '../context/ThemeContext';
 
 const BASE_URL = 'https://quantyrexmarkets-api.vercel.app/api';
 
 export default function ResetPassword() {
-  const { current: t } = useTheme();
   const navigate = useNavigate();
   // token comes from URL path param
   const pathToken = window.location.pathname.split('/reset-password/')[1];
@@ -31,7 +29,7 @@ export default function ResetPassword() {
   };
 
   return (
-    <div style={{ minHeight: '100vh', background: t.bg, display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: "'Segoe UI', sans-serif", padding: '16px' }}>
+    <div style={{ minHeight: '100vh', background: '#0e1628', display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: "'Segoe UI', sans-serif", padding: '16px' }}>
       <div style={{ background: '#1a2e4a', border: '1px solid rgba(99,102,241,0.3)', padding: '30px', width: '100%', maxWidth: '360px' }}>
         <div style={{ textAlign: 'center', marginBottom: '24px' }}>
           <div style={{ width: '40px', height: '40px', margin: '0 auto 12px' }}>
@@ -42,14 +40,14 @@ export default function ResetPassword() {
             </svg>
           </div>
           <div style={{ color: 'white', fontSize: '14px', fontWeight: '800' }}>QUANTYREX <span style={{ color: '#6366f1' }}>MARKETS</span></div>
-          <div style={{ color: t.subText, fontSize: '9px', marginTop: '4px' }}>Reset Your Password</div>
+          <div style={{ color: 'rgba(255,255,255,0.5)', fontSize: '9px', marginTop: '4px' }}>Reset Your Password</div>
         </div>
 
         {success ? (
           <div style={{ textAlign: 'center' }}>
             <div style={{ color: '#22c55e', fontSize: '24px', marginBottom: '12px' }}><svg width='24' height='24' fill='none' stroke='#22c55e' viewBox='0 0 24 24' strokeWidth='2'><path strokeLinecap='round' strokeLinejoin='round' d='M5 13l4 4L19 7'/></svg></div>
             <div style={{ color: 'white', fontSize: '10px', marginBottom: '8px' }}>Password reset successfully!</div>
-            <div style={{ color: t.mutedText, fontSize: '8px' }}>Redirecting to login...</div>
+            <div style={{ color: 'rgba(255,255,255,0.4)', fontSize: '8px' }}>Redirecting to login...</div>
           </div>
         ) : (
           <>
@@ -58,12 +56,12 @@ export default function ResetPassword() {
             ) : (
               <>
                 <div style={{ marginBottom: '12px' }}>
-                  <label style={{ color: t.dimText, fontSize: '8px', display: 'block', marginBottom: '6px' }}>New Password</label>
-                  <input type="password" value={password} onChange={e => setPassword(e.target.value)} placeholder="Min 6 characters" style={{ width: '100%', background: t.inputBg, border: `1px solid ${t.border}`, color: t.text, fontSize: '9px', padding: '9px 10px', outline: 'none', boxSizing: 'border-box' }} />
+                  <label style={{ color: 'rgba(255,255,255,0.6)', fontSize: '8px', display: 'block', marginBottom: '6px' }}>New Password</label>
+                  <input type="password" value={password} onChange={e => setPassword(e.target.value)} placeholder="Min 6 characters" style={{ width: '100%', background: '#1a2e4a', border: `1px solid ${'rgba(255,255,255,0.08)'}`, color: 'white', fontSize: '9px', padding: '9px 10px', outline: 'none', boxSizing: 'border-box' }} />
                 </div>
                 <div style={{ marginBottom: '16px' }}>
-                  <label style={{ color: t.dimText, fontSize: '8px', display: 'block', marginBottom: '6px' }}>Confirm Password</label>
-                  <input type="password" value={confirm} onChange={e => setConfirm(e.target.value)} placeholder="Repeat password" style={{ width: '100%', background: t.inputBg, border: `1px solid ${t.border}`, color: t.text, fontSize: '9px', padding: '9px 10px', outline: 'none', boxSizing: 'border-box' }} />
+                  <label style={{ color: 'rgba(255,255,255,0.6)', fontSize: '8px', display: 'block', marginBottom: '6px' }}>Confirm Password</label>
+                  <input type="password" value={confirm} onChange={e => setConfirm(e.target.value)} placeholder="Repeat password" style={{ width: '100%', background: '#1a2e4a', border: `1px solid ${'rgba(255,255,255,0.08)'}`, color: 'white', fontSize: '9px', padding: '9px 10px', outline: 'none', boxSizing: 'border-box' }} />
                 </div>
                 {error && <div style={{ color: '#ef4444', fontSize: '8px', marginBottom: '10px' }}>{error}</div>}
                 <button onClick={handleReset} disabled={loading} style={{ width: '100%', padding: '10px', background: '#6366f1', border: 'none', color: 'white', fontSize: '9px', fontWeight: '700', cursor: loading ? 'not-allowed' : 'pointer', opacity: loading ? 0.7 : 1 }}>
