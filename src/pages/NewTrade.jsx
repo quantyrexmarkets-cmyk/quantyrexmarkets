@@ -47,7 +47,7 @@ export default function NewTrade() {
     script.async = true;
     script.innerHTML = JSON.stringify({
       autosize: true, symbol: symbol.tv, interval: '15', timezone: 'Etc/UTC',
-      theme: 'dark', style: '1', locale: 'en', backgroundColor: '#0a0f1e',
+      theme: 'dark', style: '1', locale: 'en', backgroundColor: t.bg === '#f8fafc' ? '#f8fafc' : t.bg === '#111111' ? '#111111' : '#0f172a',
     });
     chartRef.current.appendChild(script);
   }, [symbol]);
@@ -69,7 +69,7 @@ export default function NewTrade() {
   };
 
   return (
-    <div style={{ minHeight: '100vh', background: '#0a0f1e', fontFamily: "'Segoe UI', sans-serif", color: 'white', display: 'flex', flexDirection: 'column' }}>
+    <div style={{ minHeight: '100vh', background: t.bg, fontFamily: "'Segoe UI', sans-serif", color: t.text, display: 'flex', flexDirection: 'column' }}>
       <PageHeader title="New Trade" />
 
       {/* Chart */}
@@ -110,14 +110,14 @@ export default function NewTrade() {
         <div>
           <div style={{ color: t.dimText, fontSize: '8px', marginBottom: '6px' }}>Amount (USD)</div>
           <input value={amount} onChange={e => setAmount(e.target.value)} placeholder='Min. $10.00'
-            style={{ width: '100%', background: '#0d1426', border: `1px solid ${direction === 'buy' ? 'rgba(34,197,94,0.4)' : 'rgba(239,68,68,0.4)'}`, color: 'white', fontSize: '11px', fontWeight: '700', padding: '8px 10px', outline: 'none', boxSizing: 'border-box' }} />
+            style={{ width: '100%', background: t.inputBg, border: `1px solid ${direction === 'buy' ? 'rgba(34,197,94,0.4)' : 'rgba(239,68,68,0.4)'}`, color: t.text, fontSize: '11px', fontWeight: '700', padding: '8px 10px', outline: 'none', boxSizing: 'border-box' }} />
 
               {Number(amount) > 0 && user?.currency && user?.currency !== 'USD' && (
                 <div style={{ fontSize: '9px', color: '#f59e0b', marginTop: '4px', marginBottom: '4px' }}>
                   ≈ {formatAmountWithCode(Number(amount), user.currency)} in your currency
                 </div>
               )}
-            style={{ width: '100%', background: '#0d1426', border: `1px solid ${direction === 'buy' ? 'rgba(34,197,94,0.4)' : 'rgba(239,68,68,0.4)'}`, color: 'white', fontSize: '11px', fontWeight: '700', padding: '8px 10px', outline: 'none', boxSizing: 'border-box' }} />
+            style={{ width: '100%', background: t.inputBg, border: `1px solid ${direction === 'buy' ? 'rgba(34,197,94,0.4)' : 'rgba(239,68,68,0.4)'}`, color: t.text, fontSize: '11px', fontWeight: '700', padding: '8px 10px', outline: 'none', boxSizing: 'border-box' }} />
         </div>
 
         {/* Quick amounts */}
@@ -135,14 +135,14 @@ export default function NewTrade() {
           <div>
             <div style={{ color: t.dimText, fontSize: '8px', marginBottom: '6px' }}>Duration</div>
             <select value={duration} onChange={e => setDuration(e.target.value)}
-              style={{ width: '100%', background: '#0d1426', border: `1px solid ${t.border}`, color: 'white', fontSize: '9px', padding: '8px', outline: 'none', boxSizing: 'border-box', borderRadius: '8px' }}>
+              style={{ width: '100%', background: t.inputBg, border: `1px solid ${t.border}`, color: t.text, fontSize: '9px', padding: '8px', outline: 'none', boxSizing: 'border-box', borderRadius: '8px' }}>
               {DURATIONS.map(d => <option key={d} value={d}>{d}</option>)}
             </select>
           </div>
           <div>
             <div style={{ color: t.dimText, fontSize: '8px', marginBottom: '6px' }}>Leverage</div>
             <select value={leverage} onChange={e => setLeverage(e.target.value)}
-              style={{ width: '100%', background: '#0d1426', border: `1px solid ${t.border}`, color: 'white', fontSize: '9px', padding: '8px', outline: 'none', boxSizing: 'border-box', borderRadius: '8px' }}>
+              style={{ width: '100%', background: t.inputBg, border: `1px solid ${t.border}`, color: t.text, fontSize: '9px', padding: '8px', outline: 'none', boxSizing: 'border-box', borderRadius: '8px' }}>
               {['1x','2x','5x','10x','20x','50x','100x'].map(l => <option key={l} value={l}>{l}</option>)}
             </select>
           </div>
