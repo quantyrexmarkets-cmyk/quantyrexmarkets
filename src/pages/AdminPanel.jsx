@@ -659,7 +659,9 @@ export default function AdminPanel() {
                       <button onClick={() => toggleBlock(u._id)} style={btnStyle(u.isBlocked ? '#22c55e' : '#ef4444')}>{u.isBlocked ? 'Unblock' : 'Block'}</button>
                       <button onClick={() => toggleWithdrawalBlock(u._id)} style={btnStyle(u.withdrawalBlocked ? '#22c55e' : '#f97316')}>{u.withdrawalBlocked ? 'Allow W.' : 'Block W.'}</button>
                       <button onClick={() => toggleAccountUpgrade(u._id)} style={btnStyle(u.accountUpgraded ? '#ef4444' : '#22c55e')}>{u.accountUpgraded ? 'Revoke Up.' : 'Approve Up.'}</button>
-                      <button onClick={() => { if(window.confirm('DELETE ' + u.email + '? This cannot be undone!')) deleteUser(u._id, u.firstName + ' ' + u.lastName); }} style={btnStyle('#7f1d1d')}>🗑️ Delete</button>
+                      <div style={{ marginTop: '6px', borderTop: '1px solid rgba(239,68,68,0.3)', paddingTop: '6px' }}>
+                        <button onClick={() => { if(window.confirm('DELETE ' + u.email + '? This cannot be undone!')) deleteUser(u._id, u.firstName + ' ' + u.lastName); }} style={{ padding: '6px 12px', background: '#ef4444', border: 'none', color: 'white', fontSize: '11px', cursor: 'pointer', borderRadius: '4px', width: '100%', fontWeight: '700' }}>🗑️ DELETE USER</button>
+                      </div>
 
                     </td>
                   </tr>
