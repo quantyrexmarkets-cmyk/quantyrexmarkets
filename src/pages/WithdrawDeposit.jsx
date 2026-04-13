@@ -249,11 +249,11 @@ const handleWithdraw = async () => {
             </div>
 
             {/* Deposits Table */}
-            <div style={{ marginTop: '20px', background: t.cardBg, border: `1px solid ${t.subtleBorder}` }}>
+            <div style={{ marginTop: '20px', background: t.cardBg, border: `1px solid ${t.tableOuterBorder}` }}>
               <div style={{ padding: '8px 10px', borderBottom: `1px solid ${t.border}`, display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                 <span style={{ color: t.text, fontSize: '9px', fontWeight: '700' }}>Recent Deposits</span>
               </div>
-              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr 1fr', background: t.tableHeaderBg, padding: '7px 10px', borderBottom: `1px solid ${t.border}` }}>
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr 1fr', background: t.tableHeaderBg, padding: '7px 10px', borderBottom: `1px solid ${t.tableOuterBorder}`, borderBottom: `1px solid ${t.border}` }}>
                 {['Amount','Method','Status','Date'].map((h,i) => (
                   <span key={i} style={{ color: t.subText, fontSize: '7px', fontWeight: '700' }}>{h} ↕</span>
                 ))}
@@ -264,7 +264,7 @@ const handleWithdraw = async () => {
                 <div style={{ padding: '24px', textAlign: 'center', color: t.faintText, fontSize: '8px' }}>No data available in table</div>
               ) : (
                 deposits.map((d, i) => (
-                  <div key={i} style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr 1fr', padding: '7px 10px', borderBottom: `1px solid ${t.tableRowBorder}`, background: i % 2 === 0 ? 'transparent' : t.subtleBg }}>
+                  <div key={i} style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr 1fr', padding: '7px 10px', borderBottom: `1px solid ${t.tableRowBorder}`, background: i % 2 === 0 ? 'transparent' : t.tableAltRow }}>
                     <span style={{ color: '#22c55e', fontSize: '7px', fontWeight: '700' }}>+{formatAmount(d.amount || 0, user?.currency)}</span>
                     <span style={{ color: t.subText, fontSize: '7px' }}>{d.method}</span>
                     <span style={{ color: statusColor(d.status), fontSize: '7px', fontWeight: '600', textTransform: 'capitalize' }}>{d.status}</span>

@@ -118,14 +118,14 @@ export default function Stake() {
             {/* Form */}
             <div style={{ marginBottom: '10px' }}>
               <div style={{ color: t.subText, fontSize: '8px', marginBottom: '4px' }}>Selected Plan</div>
-              <div style={{ background: t.cardBg, border: `1px solid ${t.border}`, padding: '8px 10px', fontSize: '9px', color: selectedPlan ? selectedPlan.color : t.faintText }}>
+              <div style={{ background: t.cardBg, border: `1px solid ${t.tableOuterBorder}`, padding: '8px 10px', fontSize: '9px', color: selectedPlan ? selectedPlan.color : t.faintText }}>
                 {selectedPlan ? `${selectedPlan.name} — ${selectedPlan.apy} APY — ${selectedPlan.duration} days` : 'No plan selected'}
               </div>
             </div>
             <div style={{ marginBottom: '10px' }}>
               <div style={{ color: t.subText, fontSize: '8px', marginBottom: '4px' }}>Amount (USD) — Balance: <span style={{ color: '#22c55e' }}>{formatAmount(balance, user?.currency)}</span></div>
               <input value={amount} onChange={e => setAmount(e.target.value)} placeholder="0.00"
-                style={{ width: '100%', background: t.cardBg, border: `1px solid ${t.border}`, color: t.text, fontSize: '9px', padding: '8px 10px', outline: 'none', boxSizing: 'border-box' }} />
+                style={{ width: '100%', background: t.cardBg, border: `1px solid ${t.tableOuterBorder}`, color: t.text, fontSize: '9px', padding: '8px 10px', outline: 'none', boxSizing: 'border-box' }} />
               {amount && Number(amount) > 0 && user?.currency && user.currency !== 'USD' && (
                 <div style={{ fontSize: '7px', color: '#f59e0b', marginTop: '4px' }}>≈ {formatAmount(Number(amount), user.currency)} in your currency</div>
               )}
@@ -186,7 +186,7 @@ export default function Stake() {
         </div>
 
         {/* Table */}
-        <div style={{ background: t.cardBg, border: `1px solid ${t.subtleBorder}` }}>
+        <div style={{ background: t.cardBg, border: `1px solid ${t.tableOuterBorder}` }}>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '8px 10px', borderBottom: `1px solid ${t.border}` }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
               <span style={{ color: t.subText, fontSize: '8px' }}>Show</span>
@@ -218,7 +218,7 @@ export default function Stake() {
                 const color = statusColor(s.status);
                 const earned = s.earned || 0;
                 return (
-                  <tr key={i} style={{ borderBottom: `1px solid ${t.tableRowBorder}`, background: i%2===0?'transparent':t.subtleBg }}>
+                  <tr key={i} style={{ borderBottom: `1px solid ${t.tableRowBorder}`, background: i%2===0?'transparent':t.tableAltRow }}>
                     <td style={{ padding: '8px 10px', color: '#6366f1', fontSize: '8px', fontWeight: '700' }}>{s.plan}</td>
                     <td style={{ padding: '8px 10px', color: t.text, fontSize: '8px', fontWeight: '700' }}>{formatAmount(s.amount||0, user?.currency)}</td>
                     <td style={{ padding: '8px 10px', color: '#22c55e', fontSize: '8px', fontWeight: '700' }}>{s.apy}</td>

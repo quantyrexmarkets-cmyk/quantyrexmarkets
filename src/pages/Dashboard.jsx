@@ -177,7 +177,7 @@ export default function Dashboard() {
           </button>
 
           <div style={{ marginLeft: 'auto', display: 'flex', gap: '6px', alignItems: 'stretch' }}>
-            <button onClick={() => getDashboard().then(data => setDashData(data))} style={{ padding: '5px 10px', background: t.cardBg, border: `1px solid ${t.border}`, color: t.text, fontSize: '11px', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '4px', whiteSpace: 'nowrap' }}><span style={{ color: '#f7931a' }}>₿</span> {u.balance ? formatAmount(u.balance, u.currency) : '0.00'}</button>
+            <button onClick={() => getDashboard().then(data => setDashData(data))} style={{ padding: '5px 10px', background: t.cardBg, border: `1px solid ${t.tableOuterBorder}`, color: t.text, fontSize: '11px', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '4px', whiteSpace: 'nowrap' }}><span style={{ color: '#f7931a' }}>₿</span> {u.balance ? formatAmount(u.balance, u.currency) : '0.00'}</button>
             <button onClick={() => navigate('/dashboard/live-trading')} style={{ padding: '5px 10px', background: 'transparent', border: '1px solid #6366f1', color: t.text, fontSize: '11px', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '4px', whiteSpace: 'nowrap' }}><RefreshCw size={11}/> Trade</button>
             <div style={{ position: 'relative' }}>
                       <button onClick={() => { const readIds = JSON.parse(localStorage.getItem('readNotifications') || '[]'); setNotifications(prev => prev.map(n => ({ ...n, unread: readIds.includes(String(n.id)) ? false : n.unread }))); setShowNotifications(!showNotifications); setShowProfileMenu(false); }} style={{ background: 'none', border: 'none', color: t.text, cursor: 'pointer', padding: '5px 8px', position: 'relative', display: 'flex', alignItems: 'center' }}>
@@ -330,7 +330,7 @@ export default function Dashboard() {
             {/* Stats Grid */}
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px', marginBottom: '20px' }}>
               {Array.isArray(stats) && stats.map((s, i) => (
-                <div key={i} style={{ position: 'relative', overflow: 'hidden', background: t.cardBg, border: `1px solid ${t.border}`, borderRadius: '14px', padding: '12px 10px', minHeight: '90px', boxShadow: t.bg === '#f8fafc' ? '0 2px 8px rgba(0,0,0,0.08)' : '0 4px 24px rgba(0,0,0,0.2)' }}>
+                <div key={i} style={{ position: 'relative', overflow: 'hidden', background: t.cardBg, border: `1px solid ${t.tableOuterBorder}`, borderRadius: '14px', padding: '12px 10px', minHeight: '90px', boxShadow: t.bg === '#f8fafc' ? '0 2px 8px rgba(0,0,0,0.08)' : '0 4px 24px rgba(0,0,0,0.2)' }}>
                   {/* Gradient overlay */}
                   <div style={{ position: 'absolute', inset: 0, background: `linear-gradient(135deg, ${s.iconBg}10, transparent)`, pointerEvents: 'none' }} />
                   {/* Top accent line */}
@@ -352,7 +352,7 @@ export default function Dashboard() {
             {/* Chart */}
             {/* Identity Verification Card */}
             {u.kycStatus !== 'approved' && (
-              <div style={{ background: t.cardBg, border: `1px solid ${t.border}`, borderRadius: '16px', padding: '20px', marginBottom: '16px', textAlign: 'center', boxShadow: t.bg === '#f8fafc' ? '0 2px 8px rgba(0,0,0,0.08)' : '0 4px 24px rgba(0,0,0,0.2)' }}>
+              <div style={{ background: t.cardBg, border: `1px solid ${t.tableOuterBorder}`, borderRadius: '16px', padding: '20px', marginBottom: '16px', textAlign: 'center', boxShadow: t.bg === '#f8fafc' ? '0 2px 8px rgba(0,0,0,0.08)' : '0 4px 24px rgba(0,0,0,0.2)' }}>
                 <div style={{ width: '48px', height: '48px', background: 'rgba(99,102,241,0.15)', borderRadius: '12px', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 12px' }}>
                   <svg width='24' height='24' fill='none' stroke='#6366f1' viewBox='0 0 24 24' strokeWidth='2'><path d='M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z'/><polyline points='9 12 11 14 15 10'/></svg>
                 </div>
@@ -370,25 +370,25 @@ export default function Dashboard() {
             <div style={{ background: t.glassBg, backdropFilter: 'blur(16px)', WebkitBackdropFilter: 'blur(16px)', border: `1px solid ${t.glassBorder}`, borderRadius: '12px', padding: '10px', boxShadow: '0 4px 24px rgba(0,0,0,0.05)', marginBottom: '20px' }}>
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '12px' }}>
                 <span style={{ color: t.text, fontSize: '9px', fontWeight: '700', letterSpacing: '0.08em' }}>TRANSACTION LIST</span>
-                <select style={{ background: t.cardBg, border: `1px solid ${t.border}`, color: t.text, fontSize: '8px', padding: '3px 8px', outline: 'none' }}>
+                <select style={{ background: t.cardBg, border: `1px solid ${t.tableOuterBorder}`, color: t.text, fontSize: '8px', padding: '3px 8px', outline: 'none' }}>
                   <option>Today</option><option>This Week</option><option>This Month</option>
                 </select>
               </div>
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
                   <span style={{ color: t.subText, fontSize: '8px' }}>Show</span>
-                  <select style={{ background: t.cardBg, border: `1px solid ${t.border}`, color: t.text, fontSize: '8px', padding: '2px 5px', outline: 'none' }}><option>10</option><option>25</option><option>50</option></select>
+                  <select style={{ background: t.cardBg, border: `1px solid ${t.tableOuterBorder}`, color: t.text, fontSize: '8px', padding: '2px 5px', outline: 'none' }}><option>10</option><option>25</option><option>50</option></select>
                   <span style={{ color: t.subText, fontSize: '8px' }}>entries</span>
                 </div>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
                 </div>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
                   <span style={{ color: t.subText, fontSize: '8px' }}>Search:</span>
-                  <input style={{ background: t.cardBg, border: `1px solid ${t.border}`, color: t.text, fontSize: '8px', padding: '3px 8px', outline: 'none', width: '90px' }} />
+                  <input style={{ background: t.cardBg, border: `1px solid ${t.tableOuterBorder}`, color: t.text, fontSize: '8px', padding: '3px 8px', outline: 'none', width: '90px' }} />
                 </div>
               </div>
               <div style={{ border: `1px solid ${t.tableDivider}` }}>
-                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr 1fr 1fr', background: t.tableHeaderBg, padding: '7px 10px' }}>
+                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr 1fr 1fr', background: t.tableHeaderBg, padding: '7px 10px', borderBottom: `1px solid ${t.tableOuterBorder}`, borderBottom: `1px solid ${t.tableOuterBorder}` }}>
                   {['Amount','Txn Date','Method','Txn Type','Status'].map((h, i) => (
                     <span key={i} style={{ color: t.subText, fontSize: 'clamp(7px, 1.8vw, 15px)', fontWeight: '600' }}>{h}</span>
                   ))}

@@ -98,7 +98,7 @@ export default function Deposit() {
   const totalPages = Math.ceil(filtered.length / perPage);
   const paginated = filtered.slice((page-1)*perPage, page*perPage);
 
-  const inputStyle = { width: '100%', background: t.cardBg, border: `1px solid ${t.border}`, color: t.text, fontSize: '9px', padding: '8px 10px', outline: 'none', boxSizing: 'border-box' };
+  const inputStyle = { width: '100%', background: t.cardBg, border: `1px solid ${t.tableOuterBorder}`, color: t.text, fontSize: '9px', padding: '8px 10px', outline: 'none', boxSizing: 'border-box' };
   const labelStyle = { color: t.subText, fontSize: '8px', display: 'block', marginBottom: '6px' };
 
   return (
@@ -125,7 +125,7 @@ export default function Deposit() {
                 <div style={{ marginBottom: '12px' }}>
                   <label style={labelStyle}>Payment Method</label>
                   <select value={depositMethod} onChange={e => setDepositMethod(e.target.value)}
-                    style={{ width: '100%', background: t.cardBg, border: `1px solid ${t.border}`, color: t.text, fontSize: '9px', padding: '8px 10px', outline: 'none', boxSizing: 'border-box' }}>
+                    style={{ width: '100%', background: t.cardBg, border: `1px solid ${t.tableOuterBorder}`, color: t.text, fontSize: '9px', padding: '8px 10px', outline: 'none', boxSizing: 'border-box' }}>
                     <option value='crypto'>Crypto (USDT)</option>
                     <option value='bank'>Bank Transfer</option>
                   </select>
@@ -136,7 +136,7 @@ export default function Deposit() {
                 </div>
                 <div style={{ marginBottom: '16px' }}>
                   <label style={labelStyle}>Payment Proof</label>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '6px', background: t.cardBg, border: `1px solid ${t.border}`, padding: '5px 8px' }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '6px', background: t.cardBg, border: `1px solid ${t.tableOuterBorder}`, padding: '5px 8px' }}>
                     <label style={{ background: t.border, color: t.text, fontSize: '7px', padding: '3px 8px', cursor: 'pointer', whiteSpace: 'nowrap' }}>
                       Choose File
                       <input type='file' accept='image/*' style={{ display: 'none' }} onChange={e => { if(e.target.files[0]){ setFileData(e.target.files[0]); setFileName(e.target.files[0].name); }}}/>
@@ -189,7 +189,7 @@ export default function Deposit() {
         </div>
 
         {/* Table */}
-        <div style={{ background: t.cardBg, border: `1px solid ${t.subtleBorder}` }}>
+        <div style={{ background: t.cardBg, border: `1px solid ${t.tableOuterBorder}` }}>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '8px 10px', borderBottom: `1px solid ${t.border}` }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
               <span style={{ color: t.subText, fontSize: '8px' }}>Show</span>
@@ -218,7 +218,7 @@ export default function Deposit() {
               ) : filtered.length === 0 ? (
                 <tr><td colSpan={4} style={{ padding: '24px', textAlign: 'center', color: t.faintText, fontSize: '8px' }}>No deposits found</td></tr>
               ) : filtered.map((d, i) => (
-                <tr key={i} style={{ borderBottom: `1px solid ${t.tableRowBorder}`, background: i % 2 === 0 ? 'transparent' : t.subtleBg }}>
+                <tr key={i} style={{ borderBottom: `1px solid ${t.tableRowBorder}`, background: i % 2 === 0 ? 'transparent' : t.tableAltRow }}>
                   <td style={{ padding: '8px 10px', color: '#22c55e', fontSize: '8px', fontWeight: '700' }}>+{formatAmount(d.amount || 0, user?.currency)}</td>
                   <td style={{ padding: '8px 10px', color: t.subText, fontSize: '8px', textTransform: 'capitalize' }}>{d.method || 'crypto'}</td>
                   <td style={{ padding: '8px 10px' }}>

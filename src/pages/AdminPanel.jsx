@@ -595,7 +595,7 @@ export default function AdminPanel() {
               <button onClick={() => exportCSV(users, 'users.csv')} style={{ ...btnStyle('#22c55e'), whiteSpace: 'nowrap' }}>⬇ CSV</button>
               <button onClick={() => { setEmailTarget(null); setEmailModal(true); setEmailSuccess(''); }} style={{ ...btnStyle('#6366f1'), whiteSpace: 'nowrap' }}>📧 Email All</button>
             </div>
-            <table style={{ width: '100%', borderCollapse: 'collapse' }}>
+            <table style={{ width: '100%', borderCollapse: 'collapse', border: `1px solid ${t.tableOuterBorder}` }}>
               <thead>
                 <tr>{['Name', 'Email', 'Balance', 'Stats', 'KYC', 'Account Status', 'Msg', 'Actions'].map(h => <th key={h} style={thStyle}>{h}</th>)}</tr>
               </thead>
@@ -693,7 +693,7 @@ export default function AdminPanel() {
               ))}
             </div>
           <div style={{ overflowX: 'auto' }}>
-            <table style={{ width: '100%', borderCollapse: 'collapse' }}>
+            <table style={{ width: '100%', borderCollapse: 'collapse', border: `1px solid ${t.tableOuterBorder}` }}>
               <thead>
                 <tr>{['User', 'Amount', 'Method', 'Status', 'Date', 'Actions'].map(h => <th key={h} style={thStyle}>{h}</th>)}</tr>
               </thead>
@@ -735,7 +735,7 @@ export default function AdminPanel() {
               ))}
             </div>
           <div style={{ overflowX: 'auto' }}>
-            <table style={{ width: '100%', borderCollapse: 'collapse' }}>
+            <table style={{ width: '100%', borderCollapse: 'collapse', border: `1px solid ${t.tableOuterBorder}` }}>
               <thead>
                 <tr>{['User', 'Amount', 'Method', 'Status', 'Date', 'Actions'].map(h => <th key={h} style={thStyle}>{h}</th>)}</tr>
               </thead>
@@ -769,7 +769,7 @@ export default function AdminPanel() {
         {/* KYC */}
         {tab === 'kyc' && (
           <div style={{ overflowX: 'auto' }}>
-            <table style={{ width: '100%', borderCollapse: 'collapse' }}>
+            <table style={{ width: '100%', borderCollapse: 'collapse', border: `1px solid ${t.tableOuterBorder}` }}>
               <thead>
                 <tr>{['Name', 'Email', 'ID Type', 'Status', 'Date', 'Docs', 'Actions'].map(h => <th key={h} style={thStyle}>{h}</th>)}</tr>
               </thead>
@@ -802,7 +802,7 @@ export default function AdminPanel() {
         {/* Trades */}
         {tab === 'trades' && (
           <div style={{ overflowX: 'auto' }}>
-            <table style={{ width: '100%', borderCollapse: 'collapse' }}>
+            <table style={{ width: '100%', borderCollapse: 'collapse', border: `1px solid ${t.tableOuterBorder}` }}>
               <thead>
                 <tr>{['User', 'Symbol', 'Type', 'Amount', 'Duration', 'Result', 'Status', 'Date', 'Actions'].map(h => <th key={h} style={thStyle}>{h}</th>)}</tr>
               </thead>
@@ -859,7 +859,7 @@ export default function AdminPanel() {
             {allBots.length === 0 ? (
               <div style={{ padding: '30px', textAlign: 'center', color: t.faintText, fontSize: '10px' }}>No bots found</div>
             ) : (
-              <table style={{ width: '100%', borderCollapse: 'collapse' }}>
+              <table style={{ width: '100%', borderCollapse: 'collapse', border: `1px solid ${t.tableOuterBorder}` }}>
                 <thead>
                   <tr>{['User', 'Bot', 'Amount', 'Daily Rate', 'Earned', 'Status', 'Expires', 'Actions'].map(h => <th key={h} style={thStyle}>{h}</th>)}</tr>
                 </thead>
@@ -915,7 +915,7 @@ export default function AdminPanel() {
             {allStakes.length === 0 ? (
               <div style={{ padding: '30px', textAlign: 'center', color: t.faintText, fontSize: '10px' }}>No stakes found</div>
             ) : (
-              <table style={{ width: '100%', borderCollapse: 'collapse' }}>
+              <table style={{ width: '100%', borderCollapse: 'collapse', border: `1px solid ${t.tableOuterBorder}` }}>
                 <thead>
                   <tr>{['User', 'Plan', 'Amount', 'APY', 'Earned', 'Status', 'Expires', 'Actions'].map(h => <th key={h} style={thStyle}>{h}</th>)}</tr>
                 </thead>
@@ -1234,7 +1234,7 @@ export default function AdminPanel() {
             {activityLog.length === 0 ? (
               <div style={{ padding: '30px', textAlign: 'center', color: t.faintText, fontSize: '9px' }}>No activity recorded yet</div>
             ) : (
-              <table style={{ width: '100%', borderCollapse: 'collapse' }}>
+              <table style={{ width: '100%', borderCollapse: 'collapse', border: `1px solid ${t.tableOuterBorder}` }}>
                 <thead>
                   <tr>{['Action', 'Detail', 'Time'].map(h => <th key={h} style={thStyle}>{h}</th>)}</tr>
                 </thead>

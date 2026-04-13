@@ -94,7 +94,7 @@ export default function TransactionHistory() {
             <button key={f} onClick={() => { setFilter(f); setPage(1); }} style={{ padding: '4px 10px', background: filter === f ? '#6366f1' : t.subtleBg, border: 'none', color: filter === f ? 'white' : t.subText, fontSize: '8px', fontWeight: '600', cursor: 'pointer' }}>{f}</button>
           ))}
         </div>
-        <div style={{ background: t.cardBg, border: `1px solid ${t.subtleBorder}` }}>
+        <div style={{ background: t.cardBg, border: `1px solid ${t.tableOuterBorder}` }}>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '8px 10px', borderBottom: `1px solid ${t.border}` }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
               <span style={{ color: t.subText, fontSize: '8px' }}>Show</span>
@@ -110,7 +110,7 @@ export default function TransactionHistory() {
           </div>
           <div style={{ display: 'grid', gridTemplateColumns: '1.2fr 1.4fr 1.2fr 0.8fr 0.8fr 0.8fr', background: t.tableHeaderBg, borderBottom: `1px solid ${t.border}` }}>
             {['Txn ID', 'Date', 'Method', 'Type', 'Amount', 'Status'].map((h, i) => (
-              <span key={i} style={{ color: t.subText, fontSize: '7px', fontWeight: '700', borderRight: '1px solid #6366f1', borderBottom: '1px solid #6366f1', padding: '7px 8px', display: 'block' }}>{h} ↕</span>
+              <span key={i} style={{ color: t.subText, fontSize: '7px', fontWeight: '700', borderRight: `1px solid ${t.tableOuterBorder}`, borderBottom: `1px solid ${t.tableOuterBorder}`, padding: '7px 8px', display: 'block' }}>{h} ↕</span>
             ))}
           </div>
           {loading ? (
@@ -118,7 +118,7 @@ export default function TransactionHistory() {
           ) : paginated.length === 0 ? (
             <div style={{ padding: '24px', textAlign: 'center', color: t.faintText, fontSize: '8px' }}>No transactions found</div>
           ) : paginated.map((txn, i) => (
-            <div key={i} style={{ display: 'grid', gridTemplateColumns: '1.2fr 1.4fr 1.2fr 0.8fr 0.8fr 0.8fr', padding: '8px 10px', borderBottom: `1px solid ${t.tableRowBorder}`, background: i % 2 === 0 ? 'transparent' : t.subtleBg }}>
+            <div key={i} style={{ display: 'grid', gridTemplateColumns: '1.2fr 1.4fr 1.2fr 0.8fr 0.8fr 0.8fr', padding: '8px 10px', borderBottom: `1px solid ${t.tableRowBorder}`, background: i % 2 === 0 ? 'transparent' : t.tableAltRow }}>
               <span style={{ color: '#818cf8', fontSize: '7px' }}>#{t._id?.slice(-8).toUpperCase()}</span>
               <span style={{ color: t.subText, fontSize: '7px' }}>{new Date(txn.createdAt).toLocaleString()}</span>
               <span style={{ color: t.subText, fontSize: '7px' }}>{txn.method || '—'}</span>

@@ -70,7 +70,7 @@ export default function ReferUsers() {
         </div>
 
         {/* Referral Code */}
-        <div style={{ background: t.cardBg, border: `1px solid ${t.subtleBorder}`, padding: '14px', marginBottom: '12px', borderRadius: '4px' }}>
+        <div style={{ background: t.cardBg, border: `1px solid ${t.tableOuterBorder}`, padding: '14px', marginBottom: '12px', borderRadius: '4px' }}>
           <div style={{ fontSize: '8px', color: t.subText, marginBottom: '8px' }}>YOUR REFERRAL CODE</div>
           <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '10px' }}>
             <div style={{ flex: 1, background: t.bg, padding: '8px 10px', fontSize: '11px', fontWeight: '700', color: '#6366f1', letterSpacing: '1px', borderRadius: '4px' }}>
@@ -92,7 +92,7 @@ export default function ReferUsers() {
         </div>
 
         {/* Referred Users Table */}
-        <div style={{ background: t.cardBg, border: `1px solid ${t.subtleBorder}`, borderRadius: '4px', overflow: 'visible' }}>
+        <div style={{ background: t.cardBg, border: `1px solid ${t.tableOuterBorder}`, borderRadius: '4px', overflow: 'visible' }}>
           <div style={{ padding: '10px 14px', borderBottom: `1px solid ${t.border}` }}>
             <span style={{ fontSize: '9px', fontWeight: '600' }}>Referred Users ({data.totalReferrals})</span>
           </div>

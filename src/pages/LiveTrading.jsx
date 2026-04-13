@@ -191,7 +191,7 @@ export default function LiveTrading() {
         </div>
 
         {/* Trades Table */}
-        <div style={{ background: t.cardBg, border: `1px solid ${t.subtleBorder}` }}>
+        <div style={{ background: t.cardBg, border: `1px solid ${t.tableOuterBorder}` }}>
           {/* Tabs */}
           <div style={{ display: 'flex', borderBottom: `1px solid ${t.border}` }}>
             {[['open', `Open (${openTrades.length})`], ['closed', `Closed (${closedTrades.length})`]].map(([key, label]) => (
@@ -215,15 +215,15 @@ export default function LiveTrading() {
           </div>
 
           {/* Table */}
-          <table style={{ width: '100%', borderCollapse: 'collapse' }}>
+          <table style={{ width: '100%', borderCollapse: 'collapse', border: `1px solid ${t.tableOuterBorder}` }}>
             <thead>
               <tr style={{ background: t.tableHeaderBg }}>
                 {tab === 'open'
                   ? ['Symbol','Dir','Amount','Duration','Leverage','Status','Action'].map((h,i) => (
-                      <th key={i} style={{ color: t.subText, fontSize: '8px', fontWeight: '700', padding: '8px 6px', borderRight: '1px solid #6366f1', borderBottom: '1px solid #6366f1', textAlign: 'left' }}>{h}</th>
+                      <th key={i} style={{ color: t.subText, fontSize: '8px', fontWeight: '700', padding: '8px 6px', borderRight: `1px solid ${t.tableOuterBorder}`, borderBottom: `1px solid ${t.tableOuterBorder}`, textAlign: 'left' }}>{h}</th>
                     ))
                   : ['Symbol','Dir','Amount','Result','P&L%','Status'].map((h,i) => (
-                      <th key={i} style={{ color: t.subText, fontSize: '8px', fontWeight: '700', padding: '8px 6px', borderRight: '1px solid #6366f1', borderBottom: '1px solid #6366f1', textAlign: 'left' }}>{h}</th>
+                      <th key={i} style={{ color: t.subText, fontSize: '8px', fontWeight: '700', padding: '8px 6px', borderRight: `1px solid ${t.tableOuterBorder}`, borderBottom: `1px solid ${t.tableOuterBorder}`, textAlign: 'left' }}>{h}</th>
                     ))
                 }
               </tr>
@@ -233,7 +233,7 @@ export default function LiveTrading() {
                 <tr><td colSpan={7} style={{ padding: '24px', textAlign: 'center', color: t.faintText, fontSize: '8px' }}>No {tab} trades</td></tr>
               ) : paginated.map((tr, i) => (
                 tab === 'open' ? (
-                  <tr key={i} style={{ borderBottom: `1px solid ${t.tableRowBorder}`, background: i%2===0?'transparent':t.subtleBg }}>
+                  <tr key={i} style={{ borderBottom: `1px solid ${t.tableRowBorder}`, background: i%2===0?'transparent':t.tableAltRow }}>
                     <td style={{ padding: '8px 6px', color: '#6366f1', fontSize: '8px', fontWeight: '700' }}>{tr.symbol}</td>
                     <td style={{ padding: '8px 6px', color: tr.type === 'buy' ? '#22c55e' : '#ef4444', fontSize: '8px', fontWeight: '700', textTransform: 'uppercase' }}>{tr.type}</td>
                     <td style={{ padding: '8px 6px', color: t.text, fontSize: '8px' }}>{formatAmount(parseFloat(tr.amount), user?.currency)}</td>
@@ -243,7 +243,7 @@ export default function LiveTrading() {
                     <td style={{ padding: '8px 6px' }}><button onClick={() => fetchAll()} style={{ background: 'rgba(239,68,68,0.15)', border: '1px solid rgba(239,68,68,0.3)', color: '#ef4444', fontSize: '7px', padding: '2px 6px', cursor: 'pointer' }}>Close</button></td>
                   </tr>
                 ) : (
-                  <tr key={i} style={{ borderBottom: `1px solid ${t.tableRowBorder}`, background: i%2===0?'transparent':t.subtleBg }}>
+                  <tr key={i} style={{ borderBottom: `1px solid ${t.tableRowBorder}`, background: i%2===0?'transparent':t.tableAltRow }}>
                     <td style={{ padding: '8px 6px', color: '#6366f1', fontSize: '8px', fontWeight: '700' }}>{tr.symbol}</td>
                     <td style={{ padding: '8px 6px', color: tr.type === 'buy' ? '#22c55e' : '#ef4444', fontSize: '8px', fontWeight: '700', textTransform: 'uppercase' }}>{tr.type}</td>
                     <td style={{ padding: '8px 6px', color: t.text, fontSize: '8px' }}>{formatAmount(parseFloat(tr.amount), user?.currency)}</td>

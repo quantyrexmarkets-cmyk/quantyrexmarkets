@@ -120,7 +120,7 @@ export default function BotTransactionHistory() {
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#6366f1" strokeWidth="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
           Bot History
         </div>
-        <div style={{ background: t.cardBg, border: `1px solid ${t.subtleBorder}` }}>
+        <div style={{ background: t.cardBg, border: `1px solid ${t.tableOuterBorder}` }}>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '8px 10px', borderBottom: `1px solid ${t.border}` }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
               <span style={{ color: t.subText, fontSize: '8px' }}>Show</span>
@@ -134,7 +134,7 @@ export default function BotTransactionHistory() {
             </div>
           </div>
 
-          <div style={{ display: 'grid', gridTemplateColumns: '1.2fr 1fr 1fr 0.8fr 1fr 0.8fr', background: t.tableHeaderBg, padding: '7px 10px', borderBottom: `1px solid ${t.border}` }}>
+          <div style={{ display: 'grid', gridTemplateColumns: '1.2fr 1fr 1fr 0.8fr 1fr 0.8fr', background: t.tableHeaderBg, padding: '7px 10px', borderBottom: `1px solid ${t.tableOuterBorder}`, borderBottom: `1px solid ${t.border}` }}>
             {['Bot Name','Amount','Earned','Status','Date','Duration'].map((h, i) => (
               <span key={i} style={{ color: t.subText, fontSize: '7px', fontWeight: '700', borderRight: '1px solid #6366f1', borderBottom: '1px solid #6366f1', padding: '4px 6px' }}>{h}</span>
             ))}
@@ -145,7 +145,7 @@ export default function BotTransactionHistory() {
           ) : filtered.length === 0 ? (
             <div style={{ padding: '28px', textAlign: 'center', color: t.faintText, fontSize: '8px' }}>No completed or cancelled bots yet</div>
           ) : filtered.slice(0, show).map((b, i) => (
-            <div key={i} style={{ display: 'grid', gridTemplateColumns: '1.2fr 1fr 1fr 0.8fr 1fr 0.8fr', padding: '8px 10px', borderBottom: `1px solid ${t.tableRowBorder}`, background: i%2===0?'transparent':t.subtleBg }}>
+            <div key={i} style={{ display: 'grid', gridTemplateColumns: '1.2fr 1fr 1fr 0.8fr 1fr 0.8fr', padding: '8px 10px', borderBottom: `1px solid ${t.tableRowBorder}`, background: i%2===0?'transparent':t.tableAltRow }}>
               <span style={{ color: '#6366f1', fontSize: '8px', fontWeight: '600' }}>{b.botName}</span>
               <span style={{ color: '#22c55e', fontSize: '8px' }}>${b.amount?.toLocaleString()}</span>
               <span style={{ color: '#f59e0b', fontSize: '8px' }}>${(b.earned||0).toFixed(2)}</span>

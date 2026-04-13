@@ -72,7 +72,7 @@ export default function InvestmentRecords() {
         </div>
 
         {/* Table */}
-        <div style={{ background: t.cardBg, border: `1px solid ${t.subtleBorder}` }}>
+        <div style={{ background: t.cardBg, border: `1px solid ${t.tableOuterBorder}` }}>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '8px 10px', borderBottom: `1px solid ${t.border}` }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
               <span style={{ color: t.subText, fontSize: '8px' }}>Show</span>
@@ -99,7 +99,7 @@ export default function InvestmentRecords() {
           ) : filtered.length === 0 ? (
             <div style={{ padding: '24px', textAlign: 'center', color: t.faintText, fontSize: '8px' }}>No investment records found</div>
           ) : filtered.slice(0, show).map((inv, i) => (
-            <div key={i} style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr 1fr 1fr 1fr', padding: '8px 10px', borderBottom: `1px solid ${t.tableRowBorder}`, background: i % 2 === 0 ? 'transparent' : t.subtleBg }}>
+            <div key={i} style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr 1fr 1fr 1fr', padding: '8px 10px', borderBottom: `1px solid ${t.tableRowBorder}`, background: i % 2 === 0 ? 'transparent' : t.tableAltRow }}>
               <span style={{ color: '#6366f1', fontSize: '8px', fontWeight: '700' }}>{inv.plan}</span>
               <span style={{ color: t.text, fontSize: '8px' }}>{formatAmount(inv.amount || 0, user?.currency)}</span>
               <span style={{ color: '#22c55e', fontSize: '8px' }}>{inv.roi}</span>
