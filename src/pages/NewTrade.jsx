@@ -1,3 +1,4 @@
+import { useTheme } from '../context/ThemeContext';
 import { useState, useEffect, useRef } from 'react';
 import { formatAmountWithCode, formatAmount } from '../utils/currency';
 import { useAuth } from '../context/AuthContext';
@@ -17,6 +18,7 @@ const SYMBOLS = [
 const DURATIONS = ['30 seconds','1 minute','2 minutes','5 minutes','10 minutes','15 minutes','30 minutes','1 hour'];
 
 export default function NewTrade() {
+  const { current: t } = useTheme();
   const { user } = useAuth();
   const navigate = useNavigate();
   const [balance, setBalance] = useState(null);

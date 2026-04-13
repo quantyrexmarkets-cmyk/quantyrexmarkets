@@ -1,9 +1,11 @@
+import { useTheme } from '../context/ThemeContext';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { loginUser, forgotPassword } from '../services/api';
 import { useAuth } from '../context/AuthContext';
 
 const SignIn = () => {
+  const { current: t } = useTheme();
   const navigate = useNavigate();
   const [form, setForm] = useState({ username: '', password: '', remember: false });
   const [showOTP, setShowOTP] = useState(false);

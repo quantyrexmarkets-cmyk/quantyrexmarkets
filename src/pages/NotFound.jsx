@@ -1,6 +1,8 @@
+import { useTheme } from '../context/ThemeContext';
 import { useNavigate } from 'react-router-dom';
 
 export default function NotFound() {
+  const { current: t } = useTheme();
   const navigate = useNavigate();
   return (
     <div style={{ minHeight: '100vh', background: '#0e1628', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', fontFamily: "'Segoe UI', sans-serif" }}>

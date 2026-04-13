@@ -1,3 +1,4 @@
+import { useTheme } from '../context/ThemeContext';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { registerUser } from '../services/api';
@@ -59,6 +60,7 @@ const countries = [
 ];
 
 const SignUp = () => {
+  const { current: t } = useTheme();
   const [form, setForm] = useState({ firstName: '', lastName: '', username: '', email: '', phone: '', currency: 'US Dollar (USD)', password: '', confirmPassword: '', agree: false });
   const [selectedCountry, setSelectedCountry] = useState(countryCodes[0]);
   const [showPass, setShowPass] = useState(false);

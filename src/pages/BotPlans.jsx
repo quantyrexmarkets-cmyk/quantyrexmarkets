@@ -1,3 +1,4 @@
+import { useTheme } from '../context/ThemeContext';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
@@ -17,6 +18,7 @@ const BASE_URL = 'https://quantyrexmarkets-api.vercel.app/api';
 const headers = () => ({ 'Content-Type': 'application/json', 'Authorization': `Bearer ${localStorage.getItem('token')}` });
 
 export default function BotPlans() {
+  const { current: t } = useTheme();
   const navigate = useNavigate();
   const { user } = useAuth();
   const [confirmBot, setConfirmBot] = useState(null);

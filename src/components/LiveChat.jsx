@@ -1,9 +1,11 @@
+import { useTheme } from '../context/ThemeContext';
 import { useState, useEffect, useRef } from 'react';
 import { useAuth } from '../context/AuthContext';
 
 const API = 'https://quantyrexmarkets-api.vercel.app/api/chat';
 
 export default function LiveChat() {
+  const { current: t } = useTheme();
   if (window.location.pathname.startsWith('/admin')) return null;
   const { user } = useAuth();
   const token = localStorage.getItem('token');
