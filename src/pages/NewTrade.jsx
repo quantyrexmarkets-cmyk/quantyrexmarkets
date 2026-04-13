@@ -117,7 +117,6 @@ export default function NewTrade() {
                   ≈ {formatAmountWithCode(Number(amount), user.currency)} in your currency
                 </div>
               )}
-            style={{ width: '100%', background: t.inputBg, border: `1px solid ${direction === 'buy' ? 'rgba(34,197,94,0.4)' : 'rgba(239,68,68,0.4)'}`, color: t.text, fontSize: '11px', fontWeight: '700', padding: '8px 10px', outline: 'none', boxSizing: 'border-box' }} />
         </div>
 
         {/* Quick amounts */}
