@@ -139,11 +139,23 @@ export default function DashboardSidebar({ open, onClose }) {
                 <div key={ii} style={{ padding: '2px 8px' }}>
                   <div style={{
                     borderRadius: '8px',
-                    background: location.pathname === item.route ? 'rgba(99,102,241,0.12)' : 'transparent',
+                    background: location.pathname === item.route
+                      ? t.bg === '#f8fafc'
+                        ? 'rgba(99,102,241,0.1)'
+                        : 'rgba(99,102,241,0.15)'
+                      : 'transparent',
                     backdropFilter: location.pathname === item.route ? 'blur(12px)' : 'none',
                     WebkitBackdropFilter: location.pathname === item.route ? 'blur(12px)' : 'none',
-                    border: location.pathname === item.route ? '1px solid rgba(99,102,241,0.3)' : '1px solid transparent',
-                    boxShadow: location.pathname === item.route ? '0 4px 16px rgba(99,102,241,0.15), inset 0 1px 0 rgba(99,102,241,0.05)' : 'none',
+                    border: location.pathname === item.route
+                      ? t.bg === '#f8fafc'
+                        ? '1px solid rgba(99,102,241,0.4)'
+                        : '1px solid rgba(99,102,241,0.3)'
+                      : `1px solid transparent`,
+                    boxShadow: location.pathname === item.route
+                      ? t.bg === '#f8fafc'
+                        ? '0 2px 8px rgba(99,102,241,0.15)'
+                        : '0 4px 16px rgba(99,102,241,0.15), inset 0 1px 0 rgba(99,102,241,0.05)'
+                      : 'none',
                   }}>
                   <button onClick={() => {
                     if (item.action === 'smartsupp') { if(window.smartsupp) window.smartsupp('chat:open'); onClose(); }
@@ -154,7 +166,7 @@ export default function DashboardSidebar({ open, onClose }) {
                       navigate(item.route); onClose();
                     }
                   }}
-                  style={{ width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '12px 16px', background: 'transparent', border: 'none', cursor: 'pointer', color: t.text, fontSize: '11px', textAlign: 'left' }}>
+                  style={{ width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '12px 16px', background: 'transparent', border: 'none', cursor: 'pointer', color: location.pathname === item.route ? '#6366f1' : t.text, fontSize: '11px', fontWeight: location.pathname === item.route ? '600' : '400', textAlign: 'left' }}>
                     <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
                       <span style={{ color: '#6366f1' }}>{item.icon}</span>
                       <span>{item.label}</span>
@@ -165,7 +177,7 @@ export default function DashboardSidebar({ open, onClose }) {
                     </div>
                   </button>
                   {item.submenu && openSubmenu === si+'-'+ii && (
-                    <div style={{ background: 'rgba(99,102,241,0.08)', paddingLeft: '38px', borderLeft: '2px solid #6366f1', marginLeft: '16px' }}>
+                    <div style={{ background: t.bg === '#f8fafc' ? 'rgba(99,102,241,0.05)' : 'rgba(99,102,241,0.08)', paddingLeft: '38px', borderLeft: '2px solid #6366f1', marginLeft: '16px' }}>
                       {item.submenu.map((sub, si2) => (
                         <button key={si2} onClick={() => { navigate(sub.route); onClose(); }}
                           style={{ width: '100%', padding: '12px 16px 12px 0', background: 'transparent', border: 'none', cursor: 'pointer', color: t.text, fontSize: '11px', textAlign: 'left', display: 'flex', alignItems: 'center', gap: '6px', fontWeight: '500' }}>
