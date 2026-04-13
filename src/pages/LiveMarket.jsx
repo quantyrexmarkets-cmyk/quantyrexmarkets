@@ -117,7 +117,7 @@ export default function LiveMarket() {
         theme: 'dark',
         style: '1',
         locale: 'en',
-        backgroundColor: t.bg,
+        backgroundColor: t.bg === '#f8fafc' ? '#f8fafc' : t.bg === '#111111' ? '#111111' : '#0f172a',
         hide_top_toolbar: false,
         save_image: false,
       });

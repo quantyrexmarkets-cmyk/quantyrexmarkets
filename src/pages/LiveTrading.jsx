@@ -52,7 +52,7 @@ export default function LiveTrading() {
     script.async = true;
     script.innerHTML = JSON.stringify({
       autosize: true, symbol: symbol.tv, interval: '15', timezone: 'Etc/UTC',
-      theme: 'dark', style: '1', locale: 'en', backgroundColor: t.bg,
+      theme: t.bg === '#f8fafc' ? 'light' : 'dark', style: '1', locale: 'en', backgroundColor: t.bg === '#f8fafc' ? '#f8fafc' : t.bg === '#111111' ? '#111111' : '#0f172a',
       hide_top_toolbar: false, save_image: false,
     });
     chartRef.current.appendChild(script);
