@@ -26,7 +26,7 @@ export default function BTCChart() {
       symbol: symbol,
       interval: 'D',
       timezone: 'Etc/UTC',
-      theme: 'dark',
+      theme: t.bg === '#f8fafc' ? 'light' : 'dark',
       style: '1',
       locale: 'en',
       backgroundColor: t.bg === '#f8fafc' ? '#f8fafc' : t.bg === '#111111' ? '#111111' : '#252d3d',
@@ -42,10 +42,10 @@ export default function BTCChart() {
   }, [symbol]);
 
   return (
-    <div style={{ marginBottom: '12px', border: '1px solid rgba(99,102,241,0.5)', background: '#252d3d', overflow: 'hidden' }}>
+    <div style={{ marginBottom: '12px', border: '1px solid rgba(99,102,241,0.5)', background: t.cardBg, overflow: 'hidden' }}>
       <div style={{ display: 'flex', alignItems: 'center', gap: '6px', padding: '6px 8px', borderBottom: `1px solid ${t.subtleBorder}`, background: t.cardBg, overflowX: 'auto' }}>
         {coins.map(c => (
-          <button key={c.value} onClick={() => setSymbol(c.value)} style={{ padding: '3px 8px', fontSize: '8px', background: symbol === c.value ? '#6366f1' : t.hoverBg, border: 'none', color: 'white', cursor: 'pointer', whiteSpace: 'nowrap', borderRadius: '2px' }}>
+          <button key={c.value} onClick={() => setSymbol(c.value)} style={{ padding: '3px 8px', fontSize: '8px', background: symbol === c.value ? '#6366f1' : t.hoverBg, border: 'none', color: symbol === c.value ? 'white' : t.text, cursor: 'pointer', whiteSpace: 'nowrap', borderRadius: '2px' }}>
             {c.label}
           </button>
         ))}
