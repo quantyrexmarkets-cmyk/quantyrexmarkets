@@ -101,7 +101,7 @@ export default function DashboardSidebar({ open, onClose }) {
       <div style={{
         position: 'fixed', top: 0, left: open ? '0' : '-220px', height: '100vh', width: '210px', background: t.sidebarBg,
         background: t.bg, zIndex: 1100, transition: 'left 0.3s ease',
-        display: 'flex', flexDirection: 'column', borderRight: '1px solid rgba(255,255,255,0.12)', overflowY: 'auto'
+        display: 'flex', flexDirection: 'column', borderRight: `1px solid ${t.sidebarBorder}`, overflowY: 'auto'
       }}>
         {/* Logo */}
         <div style={{ padding: '12px 16px', minHeight: '41px', boxSizing: 'border-box', display: 'flex', alignItems: 'center', justifyContent: 'space-between', background: 'transparent' }}>
@@ -143,7 +143,7 @@ export default function DashboardSidebar({ open, onClose }) {
                     backdropFilter: location.pathname === item.route ? 'blur(12px)' : 'none',
                     WebkitBackdropFilter: location.pathname === item.route ? 'blur(12px)' : 'none',
                     border: location.pathname === item.route ? '1px solid rgba(99,102,241,0.3)' : '1px solid transparent',
-                    boxShadow: location.pathname === item.route ? '0 4px 16px rgba(99,102,241,0.15), inset 0 1px 0 rgba(255,255,255,0.05)' : 'none',
+                    boxShadow: location.pathname === item.route ? '0 4px 16px rgba(99,102,241,0.15), inset 0 1px 0 rgba(99,102,241,0.05)' : 'none',
                   }}>
                   <button onClick={() => {
                     if (item.action === 'smartsupp') { if(window.smartsupp) window.smartsupp('chat:open'); onClose(); }
@@ -161,7 +161,7 @@ export default function DashboardSidebar({ open, onClose }) {
                     </div>
                     <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
                       {item.badge && <span style={{ background: '#ef4444', color: t.text, fontSize: '8px', padding: '2px 5px', borderRadius: '2px', fontWeight: '700' }}>{item.badge}</span>}
-                      <ChevronRight size={10} color='rgba(255,255,255,0.2)' style={{ transform: openSubmenu === si+'-'+ii ? 'rotate(90deg)' : 'rotate(0deg)', transition: 'transform 0.2s' }}/>
+                      <ChevronRight size={10} color={t.mutedText} style={{ transform: openSubmenu === si+'-'+ii ? 'rotate(90deg)' : 'rotate(0deg)', transition: 'transform 0.2s' }}/>
                     </div>
                   </button>
                   {item.submenu && openSubmenu === si+'-'+ii && (
@@ -182,14 +182,14 @@ export default function DashboardSidebar({ open, onClose }) {
         </div>
 
         {/* Language */}
-        <div style={{ padding: '12px 16px', borderTop: '1px solid rgba(255,255,255,0.06)', display: 'flex', alignItems: 'center', gap: '6px' }}>
-          <Globe size={11} color='rgba(255,255,255,0.4)'/>
+        <div style={{ padding: '12px 16px', borderTop: `1px solid ${t.subtleBorder}`, display: 'flex', alignItems: 'center', gap: '6px' }}>
+          <Globe size={11} color={t.mutedText}/>
           <span style={{ color: t.subText, fontSize: '8px' }}>EN ^</span>
         </div>
       </div>
       {/* Notification Panel */}
       {notifOpen && (
-        <div ref={notifRef} style={{ position: 'fixed', top: 0, left: '240px', width: '280px', height: '100vh', background: '#132035', borderRight: '1px solid rgba(255,255,255,0.1)', zIndex: 9999, display: 'flex', flexDirection: 'column' }}>
+        <div ref={notifRef} style={{ position: 'fixed', top: 0, left: '240px', width: '280px', height: '100vh', background: t.cardBg, borderRight: `1px solid ${t.border}`, zIndex: 9999, display: 'flex', flexDirection: 'column' }}>
           <div style={{ padding: '14px 16px', borderBottom: `1px solid ${t.border}`, display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
             <span style={{ color: t.text, fontSize: '13px', fontWeight: '700' }}>Notifications</span>
             <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
@@ -199,14 +199,14 @@ export default function DashboardSidebar({ open, onClose }) {
           </div>
           <div style={{ flex: 1, overflowY: 'auto' }}>
             {notifications.length === 0 ? (
-              <div style={{ padding: '30px', textAlign: 'center', color: 'rgba(255,255,255,0.3)', fontSize: '9px' }}>No notifications yet</div>
+              <div style={{ padding: '30px', textAlign: 'center', color: t.faintText, fontSize: '9px' }}>No notifications yet</div>
             ) : notifications.map((n, i) => (
-              <div key={i} style={{ padding: '12px 16px', borderBottom: '1px solid rgba(255,255,255,0.04)', background: n.read ? 'transparent' : 'rgba(99,102,241,0.06)', display: 'flex', gap: '10px' }}>
+              <div key={i} style={{ padding: '12px 16px', borderBottom: `1px solid ${t.tableRowBorder}`, background: n.read ? 'transparent' : 'rgba(99,102,241,0.06)', display: 'flex', gap: '10px' }}>
                 <div style={{ width: '6px', height: '6px', borderRadius: '50%', background: typeColor(n.type), marginTop: '4px', flexShrink: 0 }} />
                 <div>
                   <div style={{ color: t.text, fontSize: '12px', fontWeight: '600', marginBottom: '2px' }}>{n.title}</div>
                   <div style={{ color: t.subText, fontSize: '11px', lineHeight: '1.4' }}>{n.message}</div>
-                  <div style={{ color: 'rgba(255,255,255,0.25)', fontSize: '7px', marginTop: '4px' }}>{timeAgo(n.createdAt)}</div>
+                  <div style={{ color: t.faintText, fontSize: '7px', marginTop: '4px' }}>{timeAgo(n.createdAt)}</div>
                 </div>
               </div>
             ))}

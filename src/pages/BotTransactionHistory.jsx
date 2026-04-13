@@ -96,18 +96,18 @@ export default function BotTransactionHistory() {
                       ['Earned', formatAmount((b.earned||0), user?.currency), '#f59e0b'],
                       ['Days Left', daysLeft, 'white'],
                     ].map(([l,v,c]) => (
-                      <div key={l} style={{ textAlign: 'center', background: 'rgba(255,255,255,0.04)', padding: '6px' }}>
+                      <div key={l} style={{ textAlign: 'center', background: t.tableHeaderBg, padding: '6px' }}>
                         <div style={{ color: t.subText, fontSize: '7px', marginBottom: '3px' }}>{l}</div>
                         <div style={{ color: c, fontSize: '11px', fontWeight: '700' }}>{v}</div>
                       </div>
                     ))}
                   </div>
-                  <div style={{ height: '5px', background: 'rgba(255,255,255,0.08)', borderRadius: '3px', marginBottom: '4px' }}>
+                  <div style={{ height: '5px', background: t.border, borderRadius: '3px', marginBottom: '4px' }}>
                     <div style={{ width: progress + '%', height: '100%', background: color, borderRadius: '3px', transition: 'width 0.3s' }} />
                   </div>
                   <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                    <span style={{ color: 'rgba(255,255,255,0.3)', fontSize: '7px' }}>{progress.toFixed(0)}% complete</span>
-                    <span style={{ color: 'rgba(255,255,255,0.3)', fontSize: '7px' }}>Expires: {new Date(b.expiresAt).toLocaleDateString()}</span>
+                    <span style={{ color: t.faintText, fontSize: '7px' }}>{progress.toFixed(0)}% complete</span>
+                    <span style={{ color: t.faintText, fontSize: '7px' }}>Expires: {new Date(b.expiresAt).toLocaleDateString()}</span>
                   </div>
                 </div>
               );
@@ -120,7 +120,7 @@ export default function BotTransactionHistory() {
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#6366f1" strokeWidth="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
           Bot History
         </div>
-        <div style={{ background: t.cardBg, border: '1px solid rgba(255,255,255,0.06)' }}>
+        <div style={{ background: t.cardBg, border: `1px solid ${t.subtleBorder}` }}>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '8px 10px', borderBottom: `1px solid ${t.border}` }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
               <span style={{ color: t.subText, fontSize: '8px' }}>Show</span>
@@ -134,18 +134,18 @@ export default function BotTransactionHistory() {
             </div>
           </div>
 
-          <div style={{ display: 'grid', gridTemplateColumns: '1.2fr 1fr 1fr 0.8fr 1fr 0.8fr', background: 'rgba(255,255,255,0.04)', padding: '7px 10px', borderBottom: `1px solid ${t.border}` }}>
+          <div style={{ display: 'grid', gridTemplateColumns: '1.2fr 1fr 1fr 0.8fr 1fr 0.8fr', background: t.tableHeaderBg, padding: '7px 10px', borderBottom: `1px solid ${t.border}` }}>
             {['Bot Name','Amount','Earned','Status','Date','Duration'].map((h, i) => (
-              <span key={i} style={{ color: 'rgba(255,255,255,0.55)', fontSize: '7px', fontWeight: '700', borderRight: '1px solid #6366f1', borderBottom: '1px solid #6366f1', padding: '4px 6px' }}>{h}</span>
+              <span key={i} style={{ color: t.subText, fontSize: '7px', fontWeight: '700', borderRight: '1px solid #6366f1', borderBottom: '1px solid #6366f1', padding: '4px 6px' }}>{h}</span>
             ))}
           </div>
 
           {loading ? (
-            <div style={{ padding: '28px', textAlign: 'center', color: 'rgba(255,255,255,0.3)', fontSize: '8px' }}>Loading...</div>
+            <div style={{ padding: '28px', textAlign: 'center', color: t.faintText, fontSize: '8px' }}>Loading...</div>
           ) : filtered.length === 0 ? (
-            <div style={{ padding: '28px', textAlign: 'center', color: 'rgba(255,255,255,0.25)', fontSize: '8px' }}>No completed or cancelled bots yet</div>
+            <div style={{ padding: '28px', textAlign: 'center', color: t.faintText, fontSize: '8px' }}>No completed or cancelled bots yet</div>
           ) : filtered.slice(0, show).map((b, i) => (
-            <div key={i} style={{ display: 'grid', gridTemplateColumns: '1.2fr 1fr 1fr 0.8fr 1fr 0.8fr', padding: '8px 10px', borderBottom: '1px solid rgba(255,255,255,0.04)', background: i%2===0?'transparent':'rgba(255,255,255,0.02)' }}>
+            <div key={i} style={{ display: 'grid', gridTemplateColumns: '1.2fr 1fr 1fr 0.8fr 1fr 0.8fr', padding: '8px 10px', borderBottom: `1px solid ${t.tableRowBorder}`, background: i%2===0?'transparent':t.subtleBg }}>
               <span style={{ color: '#6366f1', fontSize: '8px', fontWeight: '600' }}>{b.botName}</span>
               <span style={{ color: '#22c55e', fontSize: '8px' }}>${b.amount?.toLocaleString()}</span>
               <span style={{ color: '#f59e0b', fontSize: '8px' }}>${(b.earned||0).toFixed(2)}</span>
@@ -155,12 +155,12 @@ export default function BotTransactionHistory() {
             </div>
           ))}
 
-          <div style={{ display: 'flex', justifyContent: 'space-between', padding: '7px 10px', borderTop: '1px solid rgba(255,255,255,0.04)' }}>
-            <span style={{ color: 'rgba(255,255,255,0.35)', fontSize: '8px' }}>Showing {Math.min(filtered.length, show)} of {filtered.length} entries</span>
+          <div style={{ display: 'flex', justifyContent: 'space-between', padding: '7px 10px', borderTop: `1px solid ${t.tableRowBorder}` }}>
+            <span style={{ color: t.faintText, fontSize: '8px' }}>Showing {Math.min(filtered.length, show)} of {filtered.length} entries</span>
           </div>
         </div>
       </div>
-      <div style={{ textAlign: "center", padding: "16px", color: "rgba(255,255,255,0.2)", fontSize: "7px", borderTop: "1px solid rgba(255,255,255,0.04)", marginTop: "16px" }}>2020-2026 &copy; Quantyrex Markets</div>
+      <div style={{ textAlign: "center", padding: "16px", color: t.faintText, fontSize: "7px", borderTop: `1px solid ${t.tableRowBorder}`, marginTop: "16px" }}>2020-2026 &copy; Quantyrex Markets</div>
 
     </div>
   );

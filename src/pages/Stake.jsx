@@ -104,7 +104,7 @@ export default function Stake() {
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '6px', marginBottom: '14px' }}>
               {stakePlans.map((plan, i) => (
                 <div key={i} onClick={() => { setSelectedPlan(plan); setAmount(String(plan.min)); }}
-                  style={{ background: selectedPlan?.name === plan.name ? plan.bg : '#1a2e4a', border: `1px solid ${selectedPlan?.name === plan.name ? plan.color : 'rgba(255,255,255,0.08)'}`, padding: '10px', cursor: 'pointer' }}>
+                  style={{ background: selectedPlan?.name === plan.name ? plan.bg : '#1a2e4a', border: `1px solid ${selectedPlan?.name === plan.name ? plan.color : t.border}`, padding: '10px', cursor: 'pointer' }}>
                   <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '4px' }}>
                     <span style={{ color: plan.color, fontSize: '8px', fontWeight: '800' }}>{plan.name}</span>
                     <span style={{ background: plan.bg, color: plan.color, fontSize: '7px', fontWeight: '700', padding: '1px 5px', border: `1px solid ${plan.color}40` }}>{plan.apy}</span>
@@ -118,7 +118,7 @@ export default function Stake() {
             {/* Form */}
             <div style={{ marginBottom: '10px' }}>
               <div style={{ color: t.subText, fontSize: '8px', marginBottom: '4px' }}>Selected Plan</div>
-              <div style={{ background: t.cardBg, border: `1px solid ${t.border}`, padding: '8px 10px', fontSize: '9px', color: selectedPlan ? selectedPlan.color : 'rgba(255,255,255,0.3)' }}>
+              <div style={{ background: t.cardBg, border: `1px solid ${t.border}`, padding: '8px 10px', fontSize: '9px', color: selectedPlan ? selectedPlan.color : t.faintText }}>
                 {selectedPlan ? `${selectedPlan.name} — ${selectedPlan.apy} APY — ${selectedPlan.duration} days` : 'No plan selected'}
               </div>
             </div>
@@ -186,7 +186,7 @@ export default function Stake() {
         </div>
 
         {/* Table */}
-        <div style={{ background: t.cardBg, border: '1px solid rgba(255,255,255,0.06)' }}>
+        <div style={{ background: t.cardBg, border: `1px solid ${t.subtleBorder}` }}>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '8px 10px', borderBottom: `1px solid ${t.border}` }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
               <span style={{ color: t.subText, fontSize: '8px' }}>Show</span>
@@ -203,7 +203,7 @@ export default function Stake() {
 
           <table style={{ width: '100%', borderCollapse: 'collapse' }}>
             <thead>
-              <tr style={{ background: 'rgba(255,255,255,0.04)' }}>
+              <tr style={{ background: t.tableRowBorder }}>
                 {['Plan','Amount','APY','Earned','Duration','Status'].map((h,i) => (
                   <th key={i} style={{ color: t.subText, fontSize: '8px', fontWeight: '700', padding: '8px 10px', borderRight: '1px solid #6366f1', borderBottom: '1px solid #6366f1', textAlign: 'left' }}>{h} ↕</th>
                 ))}
@@ -211,14 +211,14 @@ export default function Stake() {
             </thead>
             <tbody>
               {loadingStakes ? (
-                <tr><td colSpan={6} style={{ padding: '24px', textAlign: 'center', color: 'rgba(255,255,255,0.3)', fontSize: '8px' }}>Loading...</td></tr>
+                <tr><td colSpan={6} style={{ padding: '24px', textAlign: 'center', color: t.faintText, fontSize: '8px' }}>Loading...</td></tr>
               ) : paginated.length === 0 ? (
-                <tr><td colSpan={6} style={{ padding: '24px', textAlign: 'center', color: 'rgba(255,255,255,0.25)', fontSize: '8px' }}>No stakes found</td></tr>
+                <tr><td colSpan={6} style={{ padding: '24px', textAlign: 'center', color: t.faintText, fontSize: '8px' }}>No stakes found</td></tr>
               ) : paginated.map((s, i) => {
                 const color = statusColor(s.status);
                 const earned = s.earned || 0;
                 return (
-                  <tr key={i} style={{ borderBottom: '1px solid rgba(255,255,255,0.04)', background: i%2===0?'transparent':'rgba(255,255,255,0.02)' }}>
+                  <tr key={i} style={{ borderBottom: `1px solid ${t.tableRowBorder}`, background: i%2===0?'transparent':t.subtleBg }}>
                     <td style={{ padding: '8px 10px', color: '#6366f1', fontSize: '8px', fontWeight: '700' }}>{s.plan}</td>
                     <td style={{ padding: '8px 10px', color: t.text, fontSize: '8px', fontWeight: '700' }}>{formatAmount(s.amount||0, user?.currency)}</td>
                     <td style={{ padding: '8px 10px', color: '#22c55e', fontSize: '8px', fontWeight: '700' }}>{s.apy}</td>
@@ -233,20 +233,20 @@ export default function Stake() {
             </tbody>
           </table>
 
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '7px 10px', borderTop: '1px solid rgba(255,255,255,0.04)' }}>
-            <span style={{ color: 'rgba(255,255,255,0.35)', fontSize: '8px' }}>Showing {filtered.length === 0 ? 0 : (page-1)*perPage+1}–{Math.min(page*perPage, filtered.length)} of {filtered.length} entries</span>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '7px 10px', borderTop: `1px solid ${t.tableRowBorder}` }}>
+            <span style={{ color: t.faintText, fontSize: '8px' }}>Showing {filtered.length === 0 ? 0 : (page-1)*perPage+1}–{Math.min(page*perPage, filtered.length)} of {filtered.length} entries</span>
             <div style={{ display: 'flex', gap: '4px' }}>
-              <button onClick={() => setPage(1)} disabled={page===1} style={{ background: t.border, border: `1px solid ${t.border}`, color: page===1?'rgba(255,255,255,0.2)':'rgba(255,255,255,0.6)', fontSize: '8px', padding: '2px 6px', cursor: page===1?'default':'pointer' }}>«</button>
-              <button onClick={() => setPage(p=>Math.max(1,p-1))} disabled={page===1} style={{ background: t.border, border: `1px solid ${t.border}`, color: page===1?'rgba(255,255,255,0.2)':'rgba(255,255,255,0.6)', fontSize: '10px', padding: '2px 8px', cursor: page===1?'default':'pointer' }}>‹</button>
+              <button onClick={() => setPage(1)} disabled={page===1} style={{ background: t.border, border: `1px solid ${t.border}`, color: page===1?t.faintText:t.dimText, fontSize: '8px', padding: '2px 6px', cursor: page===1?'default':'pointer' }}>«</button>
+              <button onClick={() => setPage(p=>Math.max(1,p-1))} disabled={page===1} style={{ background: t.border, border: `1px solid ${t.border}`, color: page===1?t.faintText:t.dimText, fontSize: '10px', padding: '2px 8px', cursor: page===1?'default':'pointer' }}>‹</button>
               <span style={{ color: t.subText, fontSize: '8px' }}>Page {page} of {totalPages}</span>
-              <button onClick={() => setPage(p=>Math.min(totalPages,p+1))} disabled={page>=totalPages} style={{ background: t.border, border: `1px solid ${t.border}`, color: page>=totalPages?'rgba(255,255,255,0.2)':'rgba(255,255,255,0.6)', fontSize: '10px', padding: '2px 8px', cursor: page>=totalPages?'default':'pointer' }}>›</button>
-              <button onClick={() => setPage(totalPages)} disabled={page>=totalPages} style={{ background: t.border, border: `1px solid ${t.border}`, color: page>=totalPages?'rgba(255,255,255,0.2)':'rgba(255,255,255,0.6)', fontSize: '8px', padding: '2px 6px', cursor: page>=totalPages?'default':'pointer' }}>»</button>
+              <button onClick={() => setPage(p=>Math.min(totalPages,p+1))} disabled={page>=totalPages} style={{ background: t.border, border: `1px solid ${t.border}`, color: page>=totalPages?t.faintText:t.dimText, fontSize: '10px', padding: '2px 8px', cursor: page>=totalPages?'default':'pointer' }}>›</button>
+              <button onClick={() => setPage(totalPages)} disabled={page>=totalPages} style={{ background: t.border, border: `1px solid ${t.border}`, color: page>=totalPages?t.faintText:t.dimText, fontSize: '8px', padding: '2px 6px', cursor: page>=totalPages?'default':'pointer' }}>»</button>
             </div>
           </div>
         </div>
       </div>
 
-      <div style={{ textAlign: 'center', padding: '16px', color: 'rgba(255,255,255,0.2)', fontSize: '7px', borderTop: '1px solid rgba(255,255,255,0.04)', marginTop: '16px' }}>2020-2026 © Quantyrex Markets</div>
+      <div style={{ textAlign: 'center', padding: '16px', color: t.faintText, fontSize: '7px', borderTop: `1px solid ${t.tableRowBorder}`, marginTop: '16px' }}>2020-2026 © Quantyrex Markets</div>
     </div>
   );
 }

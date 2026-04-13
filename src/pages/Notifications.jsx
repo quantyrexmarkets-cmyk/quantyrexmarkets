@@ -69,7 +69,7 @@ export default function Notifications() {
       {/* Filter tabs */}
       <div style={{ display: 'flex', gap: '0', borderBottom: `1px solid ${t.border}`, padding: '0 16px' }}>
         {['all', 'unread'].map(f => (
-          <button key={f} onClick={() => setFilter(f)} style={{ background: 'none', border: 'none', color: filter === f ? '#6366f1' : 'rgba(255,255,255,0.4)', fontSize: '11px', padding: '10px 16px', cursor: 'pointer', borderBottom: filter === f ? '2px solid #6366f1' : '2px solid transparent', fontWeight: filter === f ? '600' : '400', textTransform: 'capitalize' }}>
+          <button key={f} onClick={() => setFilter(f)} style={{ background: 'none', border: 'none', color: filter === f ? '#6366f1' : t.mutedText, fontSize: '11px', padding: '10px 16px', cursor: 'pointer', borderBottom: filter === f ? '2px solid #6366f1' : '2px solid transparent', fontWeight: filter === f ? '600' : '400', textTransform: 'capitalize' }}>
             {f === 'all' ? `All (${notifications.length})` : `Unread (${unreadCount})`}
           </button>
         ))}
@@ -78,12 +78,12 @@ export default function Notifications() {
       {/* Notifications list */}
       <div style={{ padding: '12px' }}>
         {filtered.length === 0 ? (
-          <div style={{ textAlign: 'center', padding: '40px', color: 'rgba(255,255,255,0.3)' }}>
-            <Bell size={32} color="rgba(255,255,255,0.2)" style={{ margin: '0 auto 10px', display: 'block' }} />
+          <div style={{ textAlign: 'center', padding: '40px', color: t.faintText }}>
+            <Bell size={32} color={t.faintText} style={{ margin: '0 auto 10px', display: 'block' }} />
             <div style={{ fontSize: '12px' }}>No notifications</div>
           </div>
         ) : filtered.map(n => (
-          <div key={n.id} onClick={() => markRead(n.id)} style={{ background: n.unread ? 'rgba(99,102,241,0.08)' : '#1e293b', border: '1px solid rgba(255,255,255,0.06)', borderRadius: '10px', padding: '12px 14px', marginBottom: '8px', display: 'flex', gap: '12px', alignItems: 'flex-start', cursor: 'pointer' }}>
+          <div key={n.id} onClick={() => markRead(n.id)} style={{ background: n.unread ? 'rgba(99,102,241,0.08)' : t.cardBg, border: `1px solid ${t.subtleBorder}`, borderRadius: '10px', padding: '12px 14px', marginBottom: '8px', display: 'flex', gap: '12px', alignItems: 'flex-start', cursor: 'pointer' }}>
             <span style={{ fontSize: '22px', flexShrink: 0 }}>{n.icon}</span>
             <div style={{ flex: 1 }}>
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '4px' }}>
@@ -91,7 +91,7 @@ export default function Notifications() {
                 {n.unread && <div style={{ width: '7px', height: '7px', borderRadius: '50%', background: '#6366f1', flexShrink: 0 }} />}
               </div>
               <div style={{ color: t.subText, fontSize: '10px', marginBottom: '4px', lineHeight: '1.4' }}>{n.desc}</div>
-              <div style={{ color: 'rgba(255,255,255,0.25)', fontSize: '9px' }}>{typeof n.time === 'string' && n.time.includes('ago') ? n.time : new Date(n.time).toLocaleDateString('en-US', { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' })}</div>
+              <div style={{ color: t.faintText, fontSize: '9px' }}>{typeof n.time === 'string' && n.time.includes('ago') ? n.time : new Date(n.time).toLocaleDateString('en-US', { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' })}</div>
             </div>
           </div>
         ))}

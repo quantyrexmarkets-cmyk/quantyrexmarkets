@@ -119,7 +119,7 @@ export default function Withdraw() {
                   </div>
                   <p style={{ color: t.subText, fontSize: '7px', lineHeight: '1.5', marginBottom: '8px' }}>{m.desc}</p>
                   <div style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
-                    <div style={{ width: '11px', height: '11px', borderRadius: '50%', border: '2px solid rgba(255,255,255,0.3)' }} />
+                    <div style={{ width: '11px', height: '11px', borderRadius: '50%', border: `2px solid ${t.border}` }} />
                     <span style={{ color: t.subText, fontSize: '7px' }}>{m.select}</span>
                   </div>
                 </div>
@@ -147,13 +147,13 @@ export default function Withdraw() {
                 <div style={{ marginBottom: '12px' }}>
                   <label style={labelStyle}>Select Coin</label>
                   <div style={{ display: 'flex', gap: '5px', flexWrap: 'wrap' }}>
-                    {['BTC','ETH','USDT','BNB','XRP','SOL'].map(c => <button key={c} onClick={() => setCoin(c)} style={{ padding: '4px 8px', background: coin === c ? '#6366f1' : 'rgba(255,255,255,0.06)', border: 'none', color: t.text, fontSize: '7px', fontWeight: '700', cursor: 'pointer' }}>{c}</button>)}
+                    {['BTC','ETH','USDT','BNB','XRP','SOL'].map(c => <button key={c} onClick={() => setCoin(c)} style={{ padding: '4px 8px', background: coin === c ? '#6366f1' : t.subtleBg, border: 'none', color: t.text, fontSize: '7px', fontWeight: '700', cursor: 'pointer' }}>{c}</button>)}
                   </div>
                 </div>
                 <div style={{ marginBottom: '12px' }}>
                   <label style={labelStyle}>Select Network</label>
                   <div style={{ display: 'flex', gap: '5px' }}>
-                    {['TRC20','ERC20','BEP20'].map(n => <button key={n} onClick={() => setNetwork(n)} style={{ padding: '4px 8px', background: network === n ? '#6366f1' : 'rgba(255,255,255,0.06)', border: 'none', color: t.text, fontSize: '7px', fontWeight: '700', cursor: 'pointer' }}>{n}</button>)}
+                    {['TRC20','ERC20','BEP20'].map(n => <button key={n} onClick={() => setNetwork(n)} style={{ padding: '4px 8px', background: network === n ? '#6366f1' : t.subtleBg, border: 'none', color: t.text, fontSize: '7px', fontWeight: '700', cursor: 'pointer' }}>{n}</button>)}
                   </div>
                 </div>
                 <div style={{ marginBottom: '12px' }}>
@@ -207,7 +207,7 @@ export default function Withdraw() {
                 </div>
               )}
             </div>
-            <div style={{ color: 'rgba(255,255,255,0.3)', fontSize: '7px', marginBottom: '8px' }}>Available balance: {formatAmount(user?.balance || 0, user?.currency)}</div>
+            <div style={{ color: t.faintText, fontSize: '7px', marginBottom: '8px' }}>Available balance: {formatAmount(user?.balance || 0, user?.currency)}</div>
             <div style={{ background: t.cardBg, border: `1px solid ${t.border}`, padding: '10px', marginBottom: '12px' }}>
               {[['Withdrawal Fee','1%'],['Minimum','$100.00'],['Processing','1-3 Business Days']].map(([k,v]) => (
                 <div key={k} style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '4px' }}>
@@ -273,7 +273,7 @@ export default function Withdraw() {
         </div>
 
         {/* Table */}
-        <div style={{ background: t.cardBg, border: '1px solid rgba(255,255,255,0.06)' }}>
+        <div style={{ background: t.cardBg, border: `1px solid ${t.subtleBorder}` }}>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '8px 10px', borderBottom: `1px solid ${t.border}` }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
               <span style={{ color: t.subText, fontSize: '8px' }}>Show</span>
@@ -290,7 +290,7 @@ export default function Withdraw() {
 
           <table style={{ width: '100%', borderCollapse: 'collapse' }}>
             <thead>
-              <tr style={{ background: 'rgba(255,255,255,0.04)' }}>
+              <tr style={{ background: t.tableHeaderBg }}>
                 {['Amount','Method','Status','Date Created'].map((h,i) => (
                   <th key={i} style={{ color: t.subText, fontSize: '8px', fontWeight: '700', padding: '8px 10px', borderRight: '1px solid #6366f1', borderBottom: '1px solid #6366f1', textAlign: 'left' }}>{h} ↕</th>
                 ))}
@@ -298,14 +298,14 @@ export default function Withdraw() {
             </thead>
             <tbody>
               {loading ? (
-                <tr><td colSpan='4' style={{ padding: '24px', textAlign: 'center', color: 'rgba(255,255,255,0.3)', fontSize: '8px' }}>Loading...</td></tr>
+                <tr><td colSpan='4' style={{ padding: '24px', textAlign: 'center', color: t.faintText, fontSize: '8px' }}>Loading...</td></tr>
               ) : filtered.length === 0 ? (
-                <tr><td colSpan='4' style={{ padding: '24px', textAlign: 'center', color: 'rgba(255,255,255,0.25)', fontSize: '8px' }}>No data available in table</td></tr>
+                <tr><td colSpan='4' style={{ padding: '24px', textAlign: 'center', color: t.faintText, fontSize: '8px' }}>No data available in table</td></tr>
               ) : filtered.map((w, i) => (
-                <tr key={i} style={{ borderBottom: '1px solid rgba(255,255,255,0.05)', background: i % 2 === 0 ? 'transparent' : 'rgba(255,255,255,0.02)' }}>
-                  <td style={{ padding: '8px 10px', color: '#ec4899', fontSize: '8px', fontWeight: '700', borderRight: '1px solid rgba(255,255,255,0.06)' }}>-${w.amount?.toFixed(2)}</td>
-                  <td style={{ padding: '8px 10px', color: t.subText, fontSize: '8px', borderRight: '1px solid rgba(255,255,255,0.06)' }}>{w.method}</td>
-                  <td style={{ padding: '8px 10px', borderRight: '1px solid rgba(255,255,255,0.06)' }}>
+                <tr key={i} style={{ borderBottom: `1px solid ${t.tableRowBorder}`, background: i % 2 === 0 ? 'transparent' : t.subtleBg }}>
+                  <td style={{ padding: '8px 10px', color: '#ec4899', fontSize: '8px', fontWeight: '700', borderRight: `1px solid ${t.subtleBorder}` }}>-${w.amount?.toFixed(2)}</td>
+                  <td style={{ padding: '8px 10px', color: t.subText, fontSize: '8px', borderRight: `1px solid ${t.subtleBorder}` }}>{w.method}</td>
+                  <td style={{ padding: '8px 10px', borderRight: `1px solid ${t.subtleBorder}` }}>
                     <span style={{ background: statusColor(w.status) + '20', color: statusColor(w.status), fontSize: '7px', padding: '2px 6px', display: 'inline-block', textTransform: 'capitalize' }}>{w.status}</span>
                   </td>
                   <td style={{ padding: '8px 10px', color: t.subText, fontSize: '8px' }}>{new Date(w.createdAt).toLocaleDateString()}</td>
@@ -314,19 +314,19 @@ export default function Withdraw() {
             </tbody>
           </table>
 
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '7px 10px', borderTop: '1px solid rgba(255,255,255,0.04)' }}>
-            <span style={{ color: 'rgba(255,255,255,0.35)', fontSize: '8px' }}>Showing {filtered.length} of {withdrawals.length} entries</span>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '7px 10px', borderTop: `1px solid ${t.tableRowBorder}` }}>
+            <span style={{ color: t.faintText, fontSize: '8px' }}>Showing {filtered.length} of {withdrawals.length} entries</span>
             <div style={{ display: 'flex', gap: '4px' }}>
-              <button onClick={() => setPage(1)} disabled={page === 1} style={{ background: t.border, border: `1px solid ${t.border}`, color: page === 1 ? 'rgba(255,255,255,0.2)' : 'rgba(255,255,255,0.6)', fontSize: '8px', padding: '2px 6px', cursor: page === 1 ? 'default' : 'pointer' }}>«</button>
-              <button onClick={() => setPage(p => Math.max(1, p-1))} disabled={page === 1} style={{ background: t.border, border: `1px solid ${t.border}`, color: page === 1 ? 'rgba(255,255,255,0.2)' : 'rgba(255,255,255,0.6)', fontSize: '10px', padding: '2px 8px', cursor: page === 1 ? 'default' : 'pointer' }}>‹</button>
+              <button onClick={() => setPage(1)} disabled={page === 1} style={{ background: t.border, border: `1px solid ${t.border}`, color: page === 1 ? t.faintText : t.paginationText, fontSize: '8px', padding: '2px 6px', cursor: page === 1 ? 'default' : 'pointer' }}>«</button>
+              <button onClick={() => setPage(p => Math.max(1, p-1))} disabled={page === 1} style={{ background: t.border, border: `1px solid ${t.border}`, color: page === 1 ? t.faintText : t.paginationText, fontSize: '10px', padding: '2px 8px', cursor: page === 1 ? 'default' : 'pointer' }}>‹</button>
               <span style={{ color: t.subText, fontSize: '8px' }}>Page {page} of {totalPages || 1}</span>
-              <button onClick={() => setPage(p => Math.min(totalPages, p+1))} disabled={page >= totalPages} style={{ background: t.border, border: `1px solid ${t.border}`, color: page >= totalPages ? 'rgba(255,255,255,0.2)' : 'rgba(255,255,255,0.6)', fontSize: '10px', padding: '2px 8px', cursor: page >= totalPages ? 'default' : 'pointer' }}>›</button>
-              <button onClick={() => setPage(totalPages)} disabled={page >= totalPages} style={{ background: t.border, border: `1px solid ${t.border}`, color: page >= totalPages ? 'rgba(255,255,255,0.2)' : 'rgba(255,255,255,0.6)', fontSize: '8px', padding: '2px 6px', cursor: page >= totalPages ? 'default' : 'pointer' }}>»</button>
+              <button onClick={() => setPage(p => Math.min(totalPages, p+1))} disabled={page >= totalPages} style={{ background: t.border, border: `1px solid ${t.border}`, color: page >= totalPages ? t.faintText : t.paginationText, fontSize: '10px', padding: '2px 8px', cursor: page >= totalPages ? 'default' : 'pointer' }}>›</button>
+              <button onClick={() => setPage(totalPages)} disabled={page >= totalPages} style={{ background: t.border, border: `1px solid ${t.border}`, color: page >= totalPages ? t.faintText : t.paginationText, fontSize: '8px', padding: '2px 6px', cursor: page >= totalPages ? 'default' : 'pointer' }}>»</button>
             </div>
           </div>
         </div>
       </div>
-      <div style={{ textAlign: "center", padding: "16px", color: "rgba(255,255,255,0.2)", fontSize: "7px", borderTop: "1px solid rgba(255,255,255,0.04)", marginTop: "16px" }}>2020-2026 &copy; Quantyrex Markets</div>
+      <div style={{ textAlign: "center", padding: "16px", color: t.faintText, fontSize: "7px", borderTop: `1px solid ${t.tableRowBorder}`, marginTop: "16px" }}>2020-2026 &copy; Quantyrex Markets</div>
 
     </div>
   );

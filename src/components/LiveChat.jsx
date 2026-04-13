@@ -141,7 +141,7 @@ export default function LiveChat() {
                 </div>
                 <div>
                   <div style={{ color: 'white', fontSize: '11px', fontWeight: '700' }}>Live Chat — Quantyrex Markets Support</div>
-                  <div style={{ color: 'rgba(255,255,255,0.7)', fontSize: '9px' }}>We typically reply within minutes</div>
+                  <div style={{ color: t.overlayText, fontSize: '9px' }}>We typically reply within minutes</div>
                 </div>
               </div>
               <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>

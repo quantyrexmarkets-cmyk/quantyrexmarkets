@@ -85,14 +85,14 @@ export default function BotPlans() {
                   ['Daily Profit', `+$${dailyProfit}`, '#22c55e'],
                   ['Total Profit', `+$${totalProfit}`, '#f59e0b'],
                 ].map(([l,v,c]) => (
-                  <div key={l} style={{ display: 'flex', justifyContent: 'space-between', padding: '4px 0', borderBottom: '1px solid rgba(255,255,255,0.04)' }}>
-                    <span style={{ color: 'rgba(255,255,255,0.4)', fontSize: '8px' }}>{l}</span>
+                  <div key={l} style={{ display: 'flex', justifyContent: 'space-between', padding: '4px 0', borderBottom: `1px solid ${t.tableRowBorder}` }}>
+                    <span style={{ color: t.mutedText, fontSize: '8px' }}>{l}</span>
                     <span style={{ color: c, fontSize: '8px', fontWeight: '600' }}>{v}</span>
                   </div>
                 ))}
                 <button
                   onClick={() => canAfford ? setConfirmBot(bot) : setError(`Insufficient balance. You need $${bot.amount.toLocaleString()}.`)}
-                  style={{ width: '100%', marginTop: '12px', padding: '8px', background: canAfford ? bot.color : 'rgba(255,255,255,0.06)', border: 'none', color: canAfford ? 'white' : 'rgba(255,255,255,0.3)', fontSize: '9px', fontWeight: '700', cursor: canAfford ? 'pointer' : 'not-allowed' }}>
+                  style={{ width: '100%', marginTop: '12px', padding: '8px', background: canAfford ? bot.color : t.subtleBg, border: 'none', color: canAfford ? 'white' : t.faintText, fontSize: '9px', fontWeight: '700', cursor: canAfford ? 'pointer' : 'not-allowed' }}>
                   {canAfford ? 'Subscribe Now' : 'Insufficient Balance'}
                 </button>
               </div>
@@ -106,7 +106,7 @@ export default function BotPlans() {
         <div onClick={() => setConfirmBot(null)} style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.75)', zIndex: 1000, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '16px' }}>
           <div onClick={e => e.stopPropagation()} style={{ background: '#0d1426', border: '1px solid rgba(99,102,241,0.4)', width: '100%', maxWidth: '320px', padding: '20px' }}>
             <div style={{ color: '#818cf8', fontSize: '12px', fontWeight: '800', marginBottom: '12px' }}>{confirmBot.name}</div>
-            <p style={{ color: 'rgba(255,255,255,0.7)', fontSize: '9px', lineHeight: '1.6', marginBottom: '16px' }}>
+            <p style={{ color: t.overlayText, fontSize: '9px', lineHeight: '1.6', marginBottom: '16px' }}>
               Subscribe to <strong style={{ color: 'white' }}>{confirmBot.name}</strong> for <strong style={{ color: '#ef4444' }}>{formatAmount(confirmBot.amount, user?.currency)}</strong>.
             </p>
             {[
@@ -115,13 +115,13 @@ export default function BotPlans() {
               ['Duration', confirmBot.duration],
               ['Balance After', formatAmount(((user?.balance || 0) - confirmBot.amount), user?.currency)],
             ].map(([l,v]) => (
-              <div key={l} style={{ display: 'flex', justifyContent: 'space-between', padding: '4px 0', borderBottom: '1px solid rgba(255,255,255,0.04)' }}>
-                <span style={{ color: 'rgba(255,255,255,0.4)', fontSize: '8px' }}>{l}</span>
+              <div key={l} style={{ display: 'flex', justifyContent: 'space-between', padding: '4px 0', borderBottom: `1px solid ${t.tableRowBorder}` }}>
+                <span style={{ color: t.mutedText, fontSize: '8px' }}>{l}</span>
                 <span style={{ color: 'white', fontSize: '8px', fontWeight: '600' }}>{v}</span>
               </div>
             ))}
             <div style={{ display: 'flex', gap: '8px', marginTop: '16px' }}>
-              <button onClick={() => setConfirmBot(null)} style={{ flex: 1, padding: '9px', background: 'rgba(255,255,255,0.06)', border: 'none', color: 'white', fontSize: '9px', cursor: 'pointer' }}>Cancel</button>
+              <button onClick={() => setConfirmBot(null)} style={{ flex: 1, padding: '9px', background: t.subtleBg, border: 'none', color: 'white', fontSize: '9px', cursor: 'pointer' }}>Cancel</button>
               <button onClick={() => subscribe(confirmBot)} disabled={subscribing === confirmBot.name} style={{ flex: 1, padding: '9px', background: '#6366f1', border: 'none', color: 'white', fontSize: '9px', fontWeight: '700', cursor: 'pointer' }}>
                 {subscribing === confirmBot.name ? 'Activating...' : 'Confirm'}
               </button>
@@ -130,7 +130,7 @@ export default function BotPlans() {
         </div>
       )}
 
-      <div style={{ textAlign: 'center', padding: '16px', color: 'rgba(255,255,255,0.2)', fontSize: '7px', borderTop: '1px solid rgba(255,255,255,0.04)', marginTop: '16px' }}>2020-2026 © Quantyrex Markets</div>
+      <div style={{ textAlign: 'center', padding: '16px', color: t.faintText, fontSize: '7px', borderTop: `1px solid ${t.tableRowBorder}`, marginTop: '16px' }}>2020-2026 © Quantyrex Markets</div>
     </div>
   );
 }

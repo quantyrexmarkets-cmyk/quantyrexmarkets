@@ -81,7 +81,7 @@ export default function NewTrade() {
         <div style={{ display: 'flex', gap: '6px', overflowX: 'auto' }}>
           {SYMBOLS.map(s => (
             <button key={s.label} onClick={() => setSymbol(s)}
-              style={{ background: symbol.label === s.label ? 'rgba(99,102,241,0.2)' : 'transparent', border: symbol.label === s.label ? '1px solid rgba(99,102,241,0.5)' : '1px solid rgba(255,255,255,0.06)', color: symbol.label === s.label ? '#818cf8' : 'rgba(255,255,255,0.4)', fontSize: '9px', fontWeight: '700', padding: '6px 12px', cursor: 'pointer', whiteSpace: 'nowrap' }}>
+              style={{ background: symbol.label === s.label ? 'rgba(99,102,241,0.2)' : 'transparent', border: symbol.label === s.label ? '1px solid rgba(99,102,241,0.5)' : `1px solid ${t.subtleBorder}`, color: symbol.label === s.label ? '#818cf8' : t.mutedText, fontSize: '9px', fontWeight: '700', padding: '6px 12px', cursor: 'pointer', whiteSpace: 'nowrap' }}>
               {s.label}
             </button>
           ))}
@@ -90,23 +90,23 @@ export default function NewTrade() {
         {/* BUY/SELL */}
         <div style={{ display: 'flex', gap: '8px' }}>
           <button onClick={() => setDirection('buy')}
-            style={{ flex: 1, padding: '10px', borderRadius: '8px', background: direction === 'buy' ? '#16a34a' : 'rgba(255,255,255,0.06)', border: 'none', color: 'white', fontSize: '11px', fontWeight: '800', cursor: 'pointer' }}>
+            style={{ flex: 1, padding: '10px', borderRadius: '8px', background: direction === 'buy' ? '#16a34a' : t.subtleBg, border: 'none', color: 'white', fontSize: '11px', fontWeight: '800', cursor: 'pointer' }}>
             BUY
           </button>
           <button onClick={() => setDirection('sell')}
-            style={{ flex: 1, padding: '10px', borderRadius: '8px', background: direction === 'sell' ? '#dc2626' : 'rgba(255,255,255,0.06)', border: 'none', color: 'white', fontSize: '11px', fontWeight: '800', cursor: 'pointer' }}>
+            style={{ flex: 1, padding: '10px', borderRadius: '8px', background: direction === 'sell' ? '#dc2626' : t.subtleBg, border: 'none', color: 'white', fontSize: '11px', fontWeight: '800', cursor: 'pointer' }}>
             SELL
           </button>
         </div>
 
         {/* Balance */}
-        <div style={{ color: 'rgba(255,255,255,0.5)', fontSize: '9px' }}>
+        <div style={{ color: t.subText, fontSize: '9px' }}>
           Available: <span style={{ color: '#22c55e', fontWeight: '700' }}>{formatAmount(balance || 0, user?.currency)}</span>
         </div>
 
         {/* Amount */}
         <div>
-          <div style={{ color: 'rgba(255,255,255,0.6)', fontSize: '8px', marginBottom: '6px' }}>Amount (USD)</div>
+          <div style={{ color: t.dimText, fontSize: '8px', marginBottom: '6px' }}>Amount (USD)</div>
           <input value={amount} onChange={e => setAmount(e.target.value)} placeholder='Min. $10.00'
             style={{ width: '100%', background: '#0d1426', border: `1px solid ${direction === 'buy' ? 'rgba(34,197,94,0.4)' : 'rgba(239,68,68,0.4)'}`, color: 'white', fontSize: '11px', fontWeight: '700', padding: '8px 10px', outline: 'none', boxSizing: 'border-box' }} />
 
@@ -122,7 +122,7 @@ export default function NewTrade() {
         <div style={{ display: 'flex', gap: '6px' }}>
           {[10, 50, 100, 500].map(a => (
             <button key={a} onClick={() => setAmount(String(a))}
-              style={{ flex: 1, padding: '6px', borderRadius: '6px', background: amount === String(a) ? '#6366f1' : 'rgba(255,255,255,0.06)', border: '1px solid rgba(255,255,255,0.1)', color: 'white', fontSize: '9px', cursor: 'pointer' }}>
+              style={{ flex: 1, padding: '6px', borderRadius: '6px', background: amount === String(a) ? '#6366f1' : t.subtleBg, border: `1px solid ${t.border}`, color: 'white', fontSize: '9px', cursor: 'pointer' }}>
               ${a}
             </button>
           ))}
@@ -131,16 +131,16 @@ export default function NewTrade() {
         {/* Duration & Leverage */}
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px' }}>
           <div>
-            <div style={{ color: 'rgba(255,255,255,0.6)', fontSize: '8px', marginBottom: '6px' }}>Duration</div>
+            <div style={{ color: t.dimText, fontSize: '8px', marginBottom: '6px' }}>Duration</div>
             <select value={duration} onChange={e => setDuration(e.target.value)}
-              style={{ width: '100%', background: '#0d1426', border: '1px solid rgba(255,255,255,0.1)', color: 'white', fontSize: '9px', padding: '8px', outline: 'none', boxSizing: 'border-box', borderRadius: '8px' }}>
+              style={{ width: '100%', background: '#0d1426', border: `1px solid ${t.border}`, color: 'white', fontSize: '9px', padding: '8px', outline: 'none', boxSizing: 'border-box', borderRadius: '8px' }}>
               {DURATIONS.map(d => <option key={d} value={d}>{d}</option>)}
             </select>
           </div>
           <div>
-            <div style={{ color: 'rgba(255,255,255,0.6)', fontSize: '8px', marginBottom: '6px' }}>Leverage</div>
+            <div style={{ color: t.dimText, fontSize: '8px', marginBottom: '6px' }}>Leverage</div>
             <select value={leverage} onChange={e => setLeverage(e.target.value)}
-              style={{ width: '100%', background: '#0d1426', border: '1px solid rgba(255,255,255,0.1)', color: 'white', fontSize: '9px', padding: '8px', outline: 'none', boxSizing: 'border-box', borderRadius: '8px' }}>
+              style={{ width: '100%', background: '#0d1426', border: `1px solid ${t.border}`, color: 'white', fontSize: '9px', padding: '8px', outline: 'none', boxSizing: 'border-box', borderRadius: '8px' }}>
               {['1x','2x','5x','10x','20x','50x','100x'].map(l => <option key={l} value={l}>{l}</option>)}
             </select>
           </div>

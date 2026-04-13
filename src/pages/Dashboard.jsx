@@ -68,10 +68,10 @@ function TrendyStocks() {
   }, [activeStock, period]);
 
   return (
-    <div style={{ background: '#1e293b', border: '1px solid rgba(99,102,241,0.2)', borderRadius: '12px', padding: '14px', marginBottom: '16px' }}>
+    <div style={{ background: t.cardBg, border: '1px solid rgba(99,102,241,0.2)', borderRadius: '12px', padding: '14px', marginBottom: '16px' }}>
       {/* Header */}
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px' }}>
-        <div style={{ color: 'white', fontSize: '14px', fontWeight: '700' }}>Trendy Stock Markets</div>
+        <div style={{ color: t.text, fontSize: '14px', fontWeight: '700' }}>Trendy Stock Markets</div>
         <button onClick={() => window.location.href='/dashboard/deposit-funds'} style={{ background: '#6366f1', border: 'none', color: 'white', fontSize: '10px', fontWeight: '700', padding: '8px 16px', borderRadius: '8px', cursor: 'pointer' }}>Deposit</button>
       </div>
 
@@ -79,7 +79,7 @@ function TrendyStocks() {
       <div style={{ display: 'flex', gap: '8px', marginBottom: '16px', overflowX: 'auto' }}>
         {stocks.map(s => (
           <button key={s.symbol} onClick={() => setActiveStock(s.symbol.split(':')[1])}
-            style={{ padding: '6px 14px', borderRadius: '8px', background: activeStock === s.symbol.split(':')[1] ? 'rgba(255,255,255,0.15)' : 'transparent', border: 'none', color: activeStock === s.symbol.split(':')[1] ? 'white' : 'rgba(255,255,255,0.5)', fontSize: '11px', fontWeight: activeStock === s.symbol.split(':')[1] ? '700' : '400', cursor: 'pointer', whiteSpace: 'nowrap' }}>
+            style={{ padding: '6px 14px', borderRadius: '8px', background: activeStock === s.symbol.split(':')[1] ? (t.bg === '#f8fafc' ? 'rgba(0,0,0,0.08)' : 'rgba(255,255,255,0.15)') : 'transparent', border: 'none', color: activeStock === s.symbol.split(':')[1] ? t.text : t.subText, fontSize: '11px', fontWeight: activeStock === s.symbol.split(':')[1] ? '700' : '400', cursor: 'pointer', whiteSpace: 'nowrap' }}>
             {s.label}
           </button>
         ))}
@@ -89,7 +89,7 @@ function TrendyStocks() {
       <div style={{ display: 'flex', gap: '8px', marginBottom: '16px' }}>
         {periods.map(p => (
           <button key={p} onClick={() => setPeriod(p)}
-            style={{ padding: '4px 10px', borderRadius: '6px', background: period === p ? 'rgba(255,255,255,0.15)' : 'transparent', border: 'none', color: period === p ? 'white' : 'rgba(255,255,255,0.4)', fontSize: '10px', fontWeight: period === p ? '700' : '400', cursor: 'pointer' }}>
+            style={{ padding: '4px 10px', borderRadius: '6px', background: period === p ? (t.bg === '#f8fafc' ? 'rgba(0,0,0,0.08)' : 'rgba(255,255,255,0.15)') : 'transparent', border: 'none', color: period === p ? t.text : t.mutedText, fontSize: '10px', fontWeight: period === p ? '700' : '400', cursor: 'pointer' }}>
             {p}
           </button>
         ))}
@@ -145,7 +145,7 @@ export default function Dashboard() {
   ];
 
   if (!user) {
-    return <div style={{ minHeight: '100vh', background: '#0e1628', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'white', fontSize: '14px' }}>Loading...</div>;
+    return <div style={{ minHeight: '100vh', background: t.bg, display: 'flex', alignItems: 'center', justifyContent: 'center', color: t.text, fontSize: '14px' }}>Loading...</div>;
   }
 
   return (
@@ -171,7 +171,7 @@ export default function Dashboard() {
       <div style={{ flex: 1, display: 'flex', flexDirection: 'column', overflow: 'hidden', minWidth: 0 }}>
 
         {/* Top Nav */}
-        <div style={{ position: 'sticky', top: 0, zIndex: 1000, background: t.navBg, backdropFilter: 'blur(20px)', WebkitBackdropFilter: 'blur(20px)', padding: '12px 16px', display: 'flex', alignItems: 'center', gap: '4px', flexShrink: 0, borderBottom: `1px solid ${t.accent}4D`, boxShadow: t.bg === '#f8fafc' ? '0 2px 8px rgba(0,0,0,0.08)' : '0 4px 24px rgba(99,102,241,0.15), 0 1px 0 rgba(255,255,255,0.05) inset' }}>
+        <div style={{ position: 'sticky', top: 0, zIndex: 1000, background: t.navBg, backdropFilter: 'blur(20px)', WebkitBackdropFilter: 'blur(20px)', padding: '12px 16px', display: 'flex', alignItems: 'center', gap: '4px', flexShrink: 0, borderBottom: `1px solid ${t.accent}4D`, boxShadow: t.bg === '#f8fafc' ? '0 2px 8px rgba(0,0,0,0.08)' : '0 4px 24px rgba(99,102,241,0.15), 0 1px 0 {t.subtleBorder} inset' }}>
           <button onClick={() => setSidebarOpen(true)} style={{ background: 'none', border: 'none', color: t.text, cursor: 'pointer', marginRight: '4px', display: 'flex', alignItems: 'center' }}>
             <Menu size={15}/>
           </button>
@@ -187,8 +187,8 @@ export default function Dashboard() {
                       {showNotifications && (
                         <>
                           <div onClick={() => setShowNotifications(false)} style={{ position: 'fixed', inset: 0, zIndex: 998 }} />
-                          <div style={{ position: 'absolute', top: '110%', right: 0, background: '#1e2538', border: '1px solid rgba(255,255,255,0.08)', zIndex: 999, minWidth: '260px', boxShadow: '0 8px 24px rgba(0,0,0,0.4)', borderRadius: '8px', overflow: 'hidden' }}>
-                            <div style={{ padding: '12px 16px', borderBottom: '1px solid rgba(255,255,255,0.06)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                          <div style={{ position: 'absolute', top: '110%', right: 0, background: t.dropdownBg, border: `1px solid ${t.border}`, zIndex: 999, minWidth: '260px', boxShadow: '0 8px 24px rgba(0,0,0,0.4)', borderRadius: '8px', overflow: 'hidden' }}>
+                            <div style={{ padding: '12px 16px', borderBottom: `1px solid ${t.subtleBorder}`, display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                               <span style={{ color: t.text, fontSize: '11px', fontWeight: '700' }}>Notifications</span>
                               <span onClick={() => {
                                 const ids = notifications.map(n => String(n.id));
@@ -200,24 +200,24 @@ export default function Dashboard() {
                             {(notifications.length ? notifications.slice(0,5) : [
                               { id: 1, icon: '🔐', title: 'KYC Reminder', desc: 'Complete verification to unlock all features', time: new Date(), unread: true },
                             ]).map((n, i) => (
-                              <div key={i} style={{ padding: '10px 16px', borderBottom: '1px solid rgba(255,255,255,0.04)', background: n.unread ? 'rgba(99,102,241,0.08)' : 'transparent', display: 'flex', gap: '10px', alignItems: 'flex-start' }}>
+                              <div key={i} style={{ padding: '10px 16px', borderBottom: `1px solid ${t.tableRowBorder}`, background: n.unread ? 'rgba(99,102,241,0.08)' : 'transparent', display: 'flex', gap: '10px', alignItems: 'flex-start' }}>
                                 <span style={{ fontSize: '16px' }}>{n.icon}</span>
                                 <div style={{ flex: 1 }}>
                                   <div style={{ color: t.text, fontSize: '10px', fontWeight: '600', marginBottom: '2px' }}>{n.title}</div>
-                                  <div style={{ color: 'rgba(255,255,255,0.4)', fontSize: '9px', marginBottom: '2px' }}>{n.desc}</div>
-                                  <div style={{ color: 'rgba(255,255,255,0.25)', fontSize: '8px' }}>{typeof n.time === 'string' && n.time.includes('ago') ? n.time : new Date(n.time).toLocaleDateString()}</div>
+                                  <div style={{ color: t.mutedText, fontSize: '9px', marginBottom: '2px' }}>{n.desc}</div>
+                                  <div style={{ color: t.faintText, fontSize: '8px' }}>{typeof n.time === 'string' && n.time.includes('ago') ? n.time : new Date(n.time).toLocaleDateString()}</div>
                                 </div>
                                 {n.unread && <div style={{ width: '6px', height: '6px', borderRadius: '50%', background: '#6366f1', flexShrink: 0, marginTop: '4px' }} />}
                               
                             </div>
                             ))}
-                            <div onClick={() => { navigate('/dashboard/notifications'); setShowNotifications(false); }} style={{ padding: '10px 16px', textAlign: 'center', color: '#6366f1', fontSize: '10px', fontWeight: '600', cursor: 'pointer', borderTop: '1px solid rgba(255,255,255,0.06)' }}>View All Notifications →</div>
+                            <div onClick={() => { navigate('/dashboard/notifications'); setShowNotifications(false); }} style={{ padding: '10px 16px', textAlign: 'center', color: '#6366f1', fontSize: '10px', fontWeight: '600', cursor: 'pointer', borderTop: `1px solid ${t.subtleBorder}` }}>View All Notifications →</div>
                           </div>
                         </>
                       )}
                     </div>
                     <div style={{ position: 'relative' }}>
-              <div onClick={() => setShowProfileMenu(!showProfileMenu)} style={{ display: 'flex', alignItems: 'center', borderLeft: '1px solid rgba(255,255,255,0.15)', borderRight: '1px solid rgba(255,255,255,0.15)', padding: '0 12px', cursor: 'pointer', height: '100%' }}>
+              <div onClick={() => setShowProfileMenu(!showProfileMenu)} style={{ display: 'flex', alignItems: 'center', borderLeft: `1px solid ${t.border}`, borderRight: `1px solid ${t.border}`, padding: '0 12px', cursor: 'pointer', height: '100%' }}>
                 <div style={{ width: '34px', height: '34px', borderRadius: '50%', background: '#5b6477', overflow: 'hidden', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                   {u.avatar ? <img src={u.avatar} style={{ width: '34px', height: '34px', objectFit: 'cover' }} /> : <User size={18} color="white" />}
                 </div>
@@ -225,23 +225,23 @@ export default function Dashboard() {
               {showProfileMenu && (
                 <>
                   <div onClick={() => setShowProfileMenu(false)} style={{ position: 'fixed', inset: 0, zIndex: 998 }} />
-                  <div style={{ position: 'absolute', top: '110%', right: 0, background: '#1e2538', border: '1px solid rgba(255,255,255,0.08)', zIndex: 999, minWidth: '180px', boxShadow: '0 8px 24px rgba(0,0,0,0.4)' }}>
-                    <div onClick={() => { navigate('/dashboard/profile'); setShowProfileMenu(false); }} style={{ display: 'flex', alignItems: 'center', gap: '10px', padding: '12px 16px', cursor: 'pointer', color: 'rgba(255,255,255,0.8)', fontSize: '11px' }}
-                      onMouseEnter={e => e.currentTarget.style.background='rgba(255,255,255,0.05)'}
+                  <div style={{ position: 'absolute', top: '110%', right: 0, background: t.dropdownBg, border: `1px solid ${t.border}`, zIndex: 999, minWidth: '180px', boxShadow: '0 8px 24px rgba(0,0,0,0.4)' }}>
+                    <div onClick={() => { navigate('/dashboard/profile'); setShowProfileMenu(false); }} style={{ display: 'flex', alignItems: 'center', gap: '10px', padding: '12px 16px', cursor: 'pointer', color: t.overlayText, fontSize: '11px' }}
+                      onMouseEnter={e => e.currentTarget.style.background=t.hoverBg}
                       onMouseLeave={e => e.currentTarget.style.background='transparent'}>
                       <User size={14} /> My Account
                     </div>
-                    <div onClick={() => { navigate('/dashboard/profile', { state: { tab: 'edit' } }); setShowProfileMenu(false); }} style={{ display: 'flex', alignItems: 'center', gap: '10px', padding: '12px 16px', cursor: 'pointer', color: 'rgba(255,255,255,0.8)', fontSize: '11px' }}
-                      onMouseEnter={e => e.currentTarget.style.background='rgba(255,255,255,0.05)'}
+                    <div onClick={() => { navigate('/dashboard/profile', { state: { tab: 'edit' } }); setShowProfileMenu(false); }} style={{ display: 'flex', alignItems: 'center', gap: '10px', padding: '12px 16px', cursor: 'pointer', color: t.overlayText, fontSize: '11px' }}
+                      onMouseEnter={e => e.currentTarget.style.background=t.hoverBg}
                       onMouseLeave={e => e.currentTarget.style.background='transparent'}>
                       <Settings size={14} /> Edit Account
                     </div>
-                    <div onClick={() => { navigate('/dashboard/change-password'); setShowProfileMenu(false); }} style={{ display: 'flex', alignItems: 'center', gap: '10px', padding: '12px 16px', cursor: 'pointer', color: 'rgba(255,255,255,0.8)', fontSize: '11px' }}
-                      onMouseEnter={e => e.currentTarget.style.background='rgba(255,255,255,0.05)'}
+                    <div onClick={() => { navigate('/dashboard/change-password'); setShowProfileMenu(false); }} style={{ display: 'flex', alignItems: 'center', gap: '10px', padding: '12px 16px', cursor: 'pointer', color: t.overlayText, fontSize: '11px' }}
+                      onMouseEnter={e => e.currentTarget.style.background=t.hoverBg}
                       onMouseLeave={e => e.currentTarget.style.background='transparent'}>
                       <Lock size={14} /> Change Password
                     </div>
-                    <div style={{ height: '1px', background: 'rgba(255,255,255,0.06)' }} />
+                    <div style={{ height: '1px', background: t.subtleBorder }} />
                     <div onClick={() => { logout(); navigate('/signin'); setShowProfileMenu(false); }} style={{ display: 'flex', alignItems: 'center', gap: '10px', padding: '12px 16px', cursor: 'pointer', color: '#ef4444', fontSize: '11px' }}
                       onMouseEnter={e => e.currentTarget.style.background='rgba(239,68,68,0.05)'}
                       onMouseLeave={e => e.currentTarget.style.background='transparent'}>
@@ -258,7 +258,7 @@ export default function Dashboard() {
           <div style={{ position: 'fixed', top: '60px', left: '50%', transform: 'translateX(-50%)', zIndex: 200, background: '#c0392b', color: 'white', padding: '10px 16px', display: 'flex', alignItems: 'center', gap: '8px', fontSize: '9px', boxShadow: '0 4px 20px rgba(0,0,0,0.4)', minWidth: '260px', maxWidth: '320px' }}>
             <svg width="12" height="12" fill="none" stroke="white" viewBox="0 0 24 24" strokeWidth="2" style={{ flexShrink: 0 }}><path strokeLinecap="round" strokeLinejoin="round" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
             <span style={{ flex: 1 }}>{u.adminMessage}</span>
-            {u.isAdmin && <button onClick={() => navigate('/admin')} style={{ background: 'none', border: '1px solid rgba(255,255,255,0.4)', color: 'white', cursor: 'pointer', fontSize: '7px', padding: '2px 6px', marginRight: '4px' }}>Admin</button>}
+            {u.isAdmin && <button onClick={() => navigate('/admin')} style={{ background: 'none', border: `1px solid ${t.border}`, color: 'white', cursor: 'pointer', fontSize: '7px', padding: '2px 6px', marginRight: '4px' }}>Admin</button>}
             <button onClick={() => setShowNotice(false)} style={{ background: 'none', border: 'none', color: 'white', cursor: 'pointer', fontSize: '12px', padding: 0 }}>×</button>
           </div>
         )}
@@ -274,13 +274,13 @@ export default function Dashboard() {
               <path d="M20 14L12 18V23L20 30L28 23V18L20 14Z" fill="#6366F1" stroke="#6366F1" strokeWidth="1"/>
             </svg>
               <span style={{ color: t.text, fontSize: '13px', fontWeight: '300', letterSpacing: '1px', fontFamily: "'Montserrat', Arial, sans-serif" }}>QUANTYREX</span><span style={{ color: '#6366f1', fontSize: '13px', fontWeight: '300', letterSpacing: '1px', fontFamily: "'Montserrat', Arial, sans-serif" }}>&nbsp;&nbsp;MARKETS</span>
-              <span style={{ color: 'rgba(255,255,255,0.4)', fontSize: '10px' }}>| {u.firstName || ''} {u.lastName || ''}</span>
+              <span style={{ color: t.mutedText, fontSize: '10px' }}>| {u.firstName || ''} {u.lastName || ''}</span>
             </div>
 
             <DashboardTicker />
             <div style={{ height: '16px' }}></div>
             {/* Welcome Card */}
-            <div style={{ position: 'relative', borderRadius: '16px', overflow: 'hidden', marginBottom: '20px', background: t.cardBg, backdropFilter: 'blur(20px)', WebkitBackdropFilter: 'blur(20px)', border: `1px solid ${t.border}`, boxShadow: '0 8px 32px rgba(99,102,241,0.15), inset 0 1px 0 rgba(255,255,255,0.1)', padding: '14px 12px', textAlign: 'center' }}>
+            <div style={{ position: 'relative', borderRadius: '16px', overflow: 'hidden', marginBottom: '20px', background: t.cardBg, backdropFilter: 'blur(20px)', WebkitBackdropFilter: 'blur(20px)', border: `1px solid ${t.border}`, boxShadow: '0 8px 32px rgba(99,102,241,0.15), inset 0 1px 0 ${t.subtleBorder}', padding: '14px 12px', textAlign: 'center' }}>
 
               {/* Glow effects */}
               <div style={{ position: 'absolute', top: '-40px', right: '-40px', width: '150px', height: '150px', borderRadius: '50%', background: 'rgba(99,102,241,0.2)', filter: 'blur(40px)', pointerEvents: 'none', opacity: 1 }} />
@@ -295,14 +295,14 @@ export default function Dashboard() {
                   <div style={{ position: 'absolute', inset: 0, background: 'transparent', pointerEvents: 'none' }} />
                   {t.bg === '#111111' && <div style={{ position: 'absolute', bottom: '-20px', left: '50%', transform: 'translateX(-50%)', width: '80%', height: '60px', borderRadius: '50%', background: 'rgba(99,102,241,0.35)', filter: 'blur(40px)', pointerEvents: 'none' }} />}
                   <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '6px', marginBottom: '4px' }}>
-                    <svg width='16' height='16' fill='none' stroke='rgba(255,255,255,0.6)' viewBox='0 0 24 24' strokeWidth='2'><rect x='2' y='5' width='20' height='14' rx='2'/><line x1='2' y1='10' x2='22' y2='10'/></svg>
+                    <svg width='16' height='16' fill='none' stroke={t.subText} viewBox='0 0 24 24' strokeWidth='2'><rect x='2' y='5' width='20' height='14' rx='2'/><line x1='2' y1='10' x2='22' y2='10'/></svg>
                     <span style={{ color: t.subText, fontSize: '12px', fontWeight: '600' }}>Account Balance</span>
                   </div>
                   <div style={{ color: t.subText, fontSize: '11px', marginBottom: '10px' }}>Your available funds</div>
                   <div style={{ color: t.text, fontSize: '16px', fontWeight: '700', marginBottom: '6px' }}>{formatAmountWithCode(u.balance || 0, u.currency)}</div>
-                  <div style={{ display: 'inline-flex', alignItems: 'center', gap: '5px', background: 'rgba(255,255,255,0.08)', padding: '4px 12px', borderRadius: '20px', marginBottom: '8px' }}>
-                    <svg width='12' height='12' fill='none' stroke='rgba(255,255,255,0.6)' viewBox='0 0 24 24' strokeWidth='2'><polyline points='20 6 9 17 4 12'/></svg>
-                    <span style={{ color: 'rgba(255,255,255,0.6)', fontSize: '11px' }}>Available for Withdrawal</span>
+                  <div style={{ display: 'inline-flex', alignItems: 'center', gap: '5px', background: t.border, padding: '4px 12px', borderRadius: '20px', marginBottom: '8px' }}>
+                    <svg width='12' height='12' fill='none' stroke={t.subText} viewBox='0 0 24 24' strokeWidth='2'><polyline points='20 6 9 17 4 12'/></svg>
+                    <span style={{ color: t.subText, fontSize: '11px' }}>Available for Withdrawal</span>
                   </div>
                   <div style={{ marginBottom: '8px', display: 'block', margin: '0 auto 8px' }}>
                     <span style={{ background: u.kycStatus === 'approved' ? 'rgba(34,197,94,0.2)' : 'rgba(239,68,68,0.2)', color: u.kycStatus === 'approved' ? '#22c55e' : '#ef4444', fontSize: '9px', padding: '3px 10px', borderRadius: '20px', display: 'inline-flex', alignItems: 'center', gap: '4px' }}>
@@ -319,7 +319,7 @@ export default function Dashboard() {
                     <svg width='14' height='14' fill='none' stroke='currentColor' viewBox='0 0 24 24' strokeWidth='2'><circle cx='12' cy='12' r='10'/><line x1='12' y1='8' x2='12' y2='16'/><line x1='8' y1='12' x2='16' y2='12'/></svg>
                     Deposit
                   </button>
-                  <button onClick={() => navigate('/dashboard/withdraw')} style={{ flex: 1, background: 'rgba(255,255,255,0.08)', backdropFilter: 'blur(10px)', WebkitBackdropFilter: 'blur(10px)', border: '1px solid rgba(255,255,255,0.15)', color: t.text, fontSize: '11px', fontWeight: '600', padding: '10px', cursor: 'pointer', borderRadius: '10px', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '6px' }}>
+                  <button onClick={() => navigate('/dashboard/withdraw')} style={{ flex: 1, background: t.cardBg2, border: `1px solid ${t.border}`, color: t.text, fontSize: '11px', fontWeight: '600', padding: '10px', cursor: 'pointer', borderRadius: '10px', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '6px' }}>
                     <svg width='14' height='14' fill='none' stroke='currentColor' viewBox='0 0 24 24' strokeWidth='2'><line x1='7' y1='17' x2='17' y2='7'/><polyline points='7 7 17 7 17 17'/></svg>
                     Withdraw
                   </button>
@@ -330,19 +330,19 @@ export default function Dashboard() {
             {/* Stats Grid */}
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px', marginBottom: '20px' }}>
               {Array.isArray(stats) && stats.map((s, i) => (
-                <div key={i} style={{ position: 'relative', overflow: 'hidden', background: 'rgba(255,255,255,0.04)', backdropFilter: 'blur(16px)', WebkitBackdropFilter: 'blur(16px)', border: '1px solid rgba(255,255,255,0.08)', borderRadius: '14px', padding: '12px 10px', minHeight: '90px', boxShadow: '0 4px 24px rgba(0,0,0,0.2), inset 0 1px 0 rgba(255,255,255,0.06)' }}>
+                <div key={i} style={{ position: 'relative', overflow: 'hidden', background: t.cardBg, border: `1px solid ${t.border}`, borderRadius: '14px', padding: '12px 10px', minHeight: '90px', boxShadow: t.bg === '#f8fafc' ? '0 2px 8px rgba(0,0,0,0.08)' : '0 4px 24px rgba(0,0,0,0.2)' }}>
                   {/* Gradient overlay */}
                   <div style={{ position: 'absolute', inset: 0, background: `linear-gradient(135deg, ${s.iconBg}10, transparent)`, pointerEvents: 'none' }} />
                   {/* Top accent line */}
                   <div style={{ position: 'absolute', top: 0, left: 0, right: 0, height: '2px', background: `linear-gradient(90deg, ${s.iconBg}, transparent)`, borderRadius: '14px 14px 0 0' }} />
                   <div style={{ position: 'relative' }}>
                     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '8px' }}>
-                      <span style={{ color: t.bg === '#f8fafc' ? '#64748b' : 'rgba(255,255,255,0.55)', fontSize: 'clamp(9px, 2vw, 11px)' }}>{s.label}</span>
+                      <span style={{ color: t.subText, fontSize: 'clamp(9px, 2vw, 11px)' }}>{s.label}</span>
                       <div style={{ width: '28px', height: '28px', borderRadius: '50%', background: s.iconBg + '20', border: `1px solid ${s.iconBg}40`, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>{s.icon}</div>
                     </div>
                     <div style={{ color: t.text, fontWeight: '700', fontSize: 'clamp(12px, 2.5vw, 16px)', marginBottom: '8px' }}>{s.value}</div>
                     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                      <span style={{ color: 'rgba(255,255,255,0.3)', fontSize: '8px' }}>{s.btc}</span>
+                      <span style={{ color: t.subText, fontSize: '8px' }}>{s.btc}</span>
                       {s.hasViewTrade && <button onClick={() => navigate('/dashboard/packages')} style={{ background: 'rgba(99,102,241,0.15)', border: '1px solid rgba(99,102,241,0.3)', color: '#818cf8', fontSize: '8px', padding: '2px 6px', cursor: 'pointer', borderRadius: '4px' }}>View</button>}
                     </div>
                   </div>
@@ -352,12 +352,12 @@ export default function Dashboard() {
             {/* Chart */}
             {/* Identity Verification Card */}
             {u.kycStatus !== 'approved' && (
-              <div style={{ background: 'rgba(255,255,255,0.04)', backdropFilter: 'blur(16px)', WebkitBackdropFilter: 'blur(16px)', border: '1px solid rgba(99,102,241,0.2)', borderRadius: '16px', padding: '20px', marginBottom: '16px', textAlign: 'center', boxShadow: '0 4px 24px rgba(0,0,0,0.2), inset 0 1px 0 rgba(255,255,255,0.06)' }}>
+              <div style={{ background: t.cardBg, border: `1px solid ${t.border}`, borderRadius: '16px', padding: '20px', marginBottom: '16px', textAlign: 'center', boxShadow: t.bg === '#f8fafc' ? '0 2px 8px rgba(0,0,0,0.08)' : '0 4px 24px rgba(0,0,0,0.2)' }}>
                 <div style={{ width: '48px', height: '48px', background: 'rgba(99,102,241,0.15)', borderRadius: '12px', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 12px' }}>
                   <svg width='24' height='24' fill='none' stroke='#6366f1' viewBox='0 0 24 24' strokeWidth='2'><path d='M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z'/><polyline points='9 12 11 14 15 10'/></svg>
                 </div>
                 <div style={{ color: t.text, fontSize: '16px', fontWeight: '700', marginBottom: '6px' }}>Identity Verification</div>
-                <div style={{ color: t.bg === '#f8fafc' ? '#64748b' : 'rgba(255,255,255,0.45)', fontSize: '12px', marginBottom: '16px' }}>Complete verification to access all features</div>
+                <div style={{ color: t.subText, fontSize: '12px', marginBottom: '16px' }}>Complete verification to access all features</div>
                 <button onClick={() => navigate('/dashboard/kyc')} style={{ width: '100%', background: 'linear-gradient(90deg, #3b82f6, #6366f1)', border: 'none', color: 'white', fontSize: '13px', fontWeight: '700', padding: '13px', cursor: 'pointer', borderRadius: '10px', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px', boxShadow: '0 4px 15px rgba(99,102,241,0.4)' }}>
                   View Details
                   <svg width='16' height='16' fill='none' stroke='currentColor' viewBox='0 0 24 24' strokeWidth='2'><polyline points='6 9 12 15 18 9'/></svg>
@@ -365,9 +365,9 @@ export default function Dashboard() {
               </div>
             )}
 
-            <div style={{ borderRadius: "12px", overflow: "hidden", boxShadow: "0 4px 20px rgba(0,0,0,0.3)", border: "1px solid rgba(255,255,255,0.08)", marginBottom: "12px" }}><BTCChart /></div>
+            <div style={{ borderRadius: "12px", overflow: "hidden", boxShadow: "0 4px 20px rgba(0,0,0,0.3)", border: `1px solid ${t.border}`, marginBottom: "12px" }}><BTCChart /></div>
             {/* Transaction List */}
-            <div style={{ background: 'rgba(255,255,255,0.04)', backdropFilter: 'blur(16px)', WebkitBackdropFilter: 'blur(16px)', border: '1px solid rgba(255,255,255,0.08)', borderRadius: '12px', padding: '10px', boxShadow: '0 4px 24px rgba(0,0,0,0.05)', marginBottom: '20px' }}>
+            <div style={{ background: t.glassBg, backdropFilter: 'blur(16px)', WebkitBackdropFilter: 'blur(16px)', border: `1px solid ${t.glassBorder}`, borderRadius: '12px', padding: '10px', boxShadow: '0 4px 24px rgba(0,0,0,0.05)', marginBottom: '20px' }}>
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '12px' }}>
                 <span style={{ color: t.text, fontSize: '9px', fontWeight: '700', letterSpacing: '0.08em' }}>TRANSACTION LIST</span>
                 <select style={{ background: t.cardBg, border: `1px solid ${t.border}`, color: t.text, fontSize: '8px', padding: '3px 8px', outline: 'none' }}>
@@ -387,28 +387,28 @@ export default function Dashboard() {
                   <input style={{ background: t.cardBg, border: `1px solid ${t.border}`, color: t.text, fontSize: '8px', padding: '3px 8px', outline: 'none', width: '90px' }} />
                 </div>
               </div>
-              <div style={{ border: '1px solid rgba(255,255,255,0.15)' }}>
-                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr 1fr 1fr', background: 'rgba(255,255,255,0.04)', padding: '7px 10px' }}>
+              <div style={{ border: `1px solid ${t.tableDivider}` }}>
+                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr 1fr 1fr', background: t.tableHeaderBg, padding: '7px 10px' }}>
                   {['Amount','Txn Date','Method','Txn Type','Status'].map((h, i) => (
-                    <span key={i} style={{ color: 'rgba(255,255,255,0.55)', fontSize: 'clamp(7px, 1.8vw, 15px)', fontWeight: '600' }}>{h}</span>
+                    <span key={i} style={{ color: t.subText, fontSize: 'clamp(7px, 1.8vw, 15px)', fontWeight: '600' }}>{h}</span>
                   ))}
                 </div>
                 {transactions.length === 0 ? (
-                  <div style={{ padding: '24px', textAlign: 'center', color: 'rgba(255,255,255,0.25)', fontSize: '8px' }}>No data available in table</div>
+                  <div style={{ padding: '24px', textAlign: 'center', color: t.faintText, fontSize: '8px' }}>No data available in table</div>
                 ) : transactions.slice(0, 10).map((t, i) => (
-                  <div key={i} style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr 1fr 1fr', padding: '7px 10px', borderBottom: '1px solid rgba(255,255,255,0.04)' }}>
+                  <div key={i} style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr 1fr 1fr', padding: '7px 10px', borderBottom: `1px solid ${t.tableRowBorder}` }}>
                     <span style={{ color: t.type === 'withdrawal' ? '#ef4444' : '#22c55e', fontSize: '8px', fontWeight: '700' }}>{t.type === 'withdrawal' ? '-' : '+'}{formatAmount(t.amount || 0, u.currency)}</span>
-                    <span style={{ color: 'rgba(255,255,255,0.6)', fontSize: '7px' }}>{new Date(t.createdAt).toLocaleDateString()}</span>
-                    <span style={{ color: 'rgba(255,255,255,0.6)', fontSize: '7px', textTransform: 'capitalize' }}>{t.method || '---'}</span>
-                    <span style={{ color: 'rgba(255,255,255,0.6)', fontSize: '7px', textTransform: 'capitalize' }}>{t.type}</span>
+                    <span style={{ color: t.dimText, fontSize: '7px' }}>{new Date(t.createdAt).toLocaleDateString()}</span>
+                    <span style={{ color: t.dimText, fontSize: '7px', textTransform: 'capitalize' }}>{t.method || '---'}</span>
+                    <span style={{ color: t.dimText, fontSize: '7px', textTransform: 'capitalize' }}>{t.type}</span>
                     <span style={{ fontSize: '7px', color: t.status === 'approved' ? '#22c55e' : t.status === 'pending' ? '#f59e0b' : '#ef4444', textTransform: 'capitalize' }}>{t.status}</span>
                   </div>
                 ))}
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '7px 10px', borderTop: '1px solid rgba(255,255,255,0.04)' }}>
-                  <span style={{ color: 'rgba(255,255,255,0.35)', fontSize: '8px' }}>Showing {Math.min(transactions.length, 10)} of {transactions.length} entries</span>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '7px 10px', borderTop: `1px solid ${t.tableRowBorder}` }}>
+                  <span style={{ color: t.faintText, fontSize: '8px' }}>Showing {Math.min(transactions.length, 10)} of {transactions.length} entries</span>
                   <div style={{ display: 'flex', gap: '4px' }}>
-                    <button style={{ background: 'rgba(255,255,255,0.15)', border: '1px solid rgba(255,255,255,0.08)', color: 'rgba(255,255,255,0.6)', fontSize: '10px', padding: '2px 8px', }}>&#8249;</button>
-                    <button style={{ background: 'rgba(255,255,255,0.15)', border: '1px solid rgba(255,255,255,0.08)', color: 'rgba(255,255,255,0.6)', fontSize: '10px', padding: '2px 8px', }}>&#8250;</button>
+                    <button style={{ background: t.paginationBg, border: `1px solid ${t.paginationBorder}`, color: t.paginationText, fontSize: '10px', padding: '2px 8px', }}>&#8249;</button>
+                    <button style={{ background: t.paginationBg, border: `1px solid ${t.paginationBorder}`, color: t.paginationText, fontSize: '10px', padding: '2px 8px', }}>&#8250;</button>
                   </div>
                 </div>
               </div>
@@ -424,13 +424,13 @@ export default function Dashboard() {
           <div style={{ background: 'linear-gradient(135deg, #6366f1, #4f46e5)', borderRadius: '12px', padding: '20px 16px', textAlign: 'center', }}>
             <svg width='28' height='28' fill='none' stroke='white' strokeWidth='2' viewBox='0 0 24 24' style={{ marginBottom: '8px', display: 'block', margin: '0 auto 8px' }}><polygon points='13 2 3 14 12 14 11 22 21 10 12 10 13 2'/></svg>
             <div style={{ color: t.text, fontSize: '14px', fontWeight: '700', marginBottom: '4px' }}>Quick Trade</div>
-            <div style={{ color: 'rgba(255,255,255,0.75)', fontSize: '10px' }}>Start a new trade instantly or explore investment plans.</div>
+            <div style={{ color: 'rgba(255,255,255,0.85)', fontSize: '10px' }}>Start a new trade instantly or explore investment plans.</div>
           </div>
         </div>
 
         {/* Trade Assets - Full Width */}
         <div style={{ padding: '0 12px 20px' }}>
-          <div style={{ background: 'rgba(255,255,255,0.05)', backdropFilter: 'blur(10px)', WebkitBackdropFilter: 'blur(10px)', border: '1px solid rgba(255,255,255,0.08)', borderRadius: '12px', padding: '14px', boxShadow: '0 4px 20px rgba(0,0,0,0.3)' }}>
+          <div style={{ background: t.glassBg, backdropFilter: 'blur(10px)', WebkitBackdropFilter: 'blur(10px)', border: `1px solid ${t.glassBorder}`, borderRadius: '12px', padding: '14px', boxShadow: '0 4px 20px rgba(0,0,0,0.3)' }}>
             <div style={{ color: t.text, fontSize: '10px', fontWeight: '700', letterSpacing: '0.08em', marginBottom: '12px' }}>TRADE ASSETS</div>
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '8px', marginBottom: '10px' }}>
               {[
@@ -441,7 +441,7 @@ export default function Dashboard() {
                 { label: 'Leverage', val: tradeLeverage, set: setTradeLeverage, options: ['1x (No Leverage)','2x','5x','10x','20x','50x','100x'] },
               ].map((field, i) => (
                 <div key={i}>
-                  <label style={{ color: 'rgba(255,255,255,0.45)', fontSize: '9px', display: 'flex', alignItems: 'center', gap: '3px', marginBottom: '4px' }}>
+                  <label style={{ color: t.subText, fontSize: '9px', display: 'flex', alignItems: 'center', gap: '3px', marginBottom: '4px' }}>
                     {field.label}{field.hasIcon && <Clock size={9} color="#f59e0b"/>}
                   </label>
                   <select value={field.val} onChange={e => field.set(e.target.value)} style={{ width: '100%', background: t.inputBg, border: `1px solid ${t.border}`, color: t.text, fontSize: '9px', padding: '6px 8px', outline: 'none' }}>
@@ -450,7 +450,7 @@ export default function Dashboard() {
                 </div>
               ))}
               <div>
-                <label style={{ color: 'rgba(255,255,255,0.45)', fontSize: '9px', display: 'flex', alignItems: 'center', gap: '3px', marginBottom: '4px' }}><DollarSign size={9}/> Amount</label>
+                <label style={{ color: t.subText, fontSize: '9px', display: 'flex', alignItems: 'center', gap: '3px', marginBottom: '4px' }}><DollarSign size={9}/> Amount</label>
                 <input value={amount} onChange={e => setAmount(e.target.value)} style={{ width: '100%', background: t.inputBg, border: `1px solid ${t.border}`, color: t.text, fontSize: '9px', padding: '6px 8px', outline: 'none', boxSizing: 'border-box' }} />
               </div>
             </div>

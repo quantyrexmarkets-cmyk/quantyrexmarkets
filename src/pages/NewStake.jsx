@@ -120,7 +120,7 @@ export default function NewStake() {
                     <div style={{ color: '#22c55e', fontSize: '10px', fontWeight: '600' }}>Minimum ROI: {c.roi}</div>
                   </div>
                   {/* Button */}
-                  <button style={{ background: 'rgba(255,255,255,0.08)', border: '1px solid rgba(255,255,255,0.15)', color: t.text, fontSize: '9px', padding: '7px 14px', cursor: 'pointer', whiteSpace: 'nowrap' }}>
+                  <button style={{ background: t.border, border: `1px solid ${t.border}`, color: t.text, fontSize: '9px', padding: '7px 14px', cursor: 'pointer', whiteSpace: 'nowrap' }}>
                     Stake {c.name.split(' ')[0]}
                   </button>
                 </div>
@@ -162,7 +162,7 @@ export default function NewStake() {
               <div style={{ display: 'flex', gap: '6px', marginBottom: '14px' }}>
                 {[100, 500, 1000, 5000].map(a => (
                   <button key={a} onClick={() => setAmount(String(a))}
-                    style={{ flex: 1, padding: '5px', background: amount === String(a) ? '#6366f1' : 'rgba(255,255,255,0.06)', border: `1px solid ${t.border}`, color: t.text, fontSize: '8px', cursor: 'pointer' }}>
+                    style={{ flex: 1, padding: '5px', background: amount === String(a) ? '#6366f1' : t.subtleBorder, border: `1px solid ${t.border}`, color: t.text, fontSize: '8px', cursor: 'pointer' }}>
                     ${a.toLocaleString()}
                   </button>
                 ))}
@@ -173,7 +173,7 @@ export default function NewStake() {
               <div style={{ display: 'flex', gap: '6px', marginBottom: '14px' }}>
                 {[7, 14, 30, 60, 90].map(d => (
                   <button key={d} onClick={() => setDuration(d)}
-                    style={{ flex: 1, padding: '7px 2px', background: duration === d ? selected.color : 'rgba(255,255,255,0.06)', border: `1px solid ${duration === d ? selected.color : 'rgba(255,255,255,0.1)'}`, color: t.text, fontSize: '8px', fontWeight: duration === d ? '700' : '400', cursor: 'pointer' }}>
+                    style={{ flex: 1, padding: '7px 2px', background: duration === d ? selected.color : t.subtleBorder, border: `1px solid ${duration === d ? selected.color : t.border}`, color: t.text, fontSize: '8px', fontWeight: duration === d ? '700' : '400', cursor: 'pointer' }}>
                     {d}d
                   </button>
                 ))}
@@ -181,7 +181,7 @@ export default function NewStake() {
 
               {/* Profit Preview */}
               {amount && Number(amount) >= 100 && (
-                <div style={{ background: 'rgba(255,255,255,0.03)', border: `1px solid ${t.border}`, padding: '12px', marginBottom: '14px' }}>
+                <div style={{ background: t.hoverBg, border: `1px solid ${t.border}`, padding: '12px', marginBottom: '14px' }}>
                   <div style={{ color: t.subText, fontSize: '7px', marginBottom: '8px', letterSpacing: '1px' }}>ESTIMATED RETURNS</div>
                   <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '8px' }}>
                     <div>
@@ -223,7 +223,7 @@ export default function NewStake() {
         )}
       </div>
 
-      <div style={{ textAlign: 'center', padding: '16px', color: 'rgba(255,255,255,0.2)', fontSize: '7px', borderTop: '1px solid rgba(255,255,255,0.04)', marginTop: '16px' }}>2020-2026 © Quantyrex Markets</div>
+      <div style={{ textAlign: 'center', padding: '16px', color: t.faintText, fontSize: '7px', borderTop: `1px solid ${t.tableRowBorder}`, marginTop: '16px' }}>2020-2026 © Quantyrex Markets</div>
     </div>
   );
 }

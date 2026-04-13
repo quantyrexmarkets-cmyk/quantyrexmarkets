@@ -41,7 +41,7 @@ export default function SettingsPage() {
   };
 
   const ToggleSwitch = ({ value, onChange }) => (
-    <div onClick={onChange} style={{ width: '44px', height: '24px', borderRadius: '12px', background: value ? '#6366f1' : 'rgba(255,255,255,0.15)', cursor: 'pointer', position: 'relative', transition: 'background 0.2s', flexShrink: 0 }}>
+    <div onClick={onChange} style={{ width: '44px', height: '24px', borderRadius: '12px', background: value ? '#6366f1' : t.border, cursor: 'pointer', position: 'relative', transition: 'background 0.2s', flexShrink: 0 }}>
       <div style={{ position: 'absolute', top: '3px', left: value ? '23px' : '3px', width: '18px', height: '18px', borderRadius: '50%', background: 'white', transition: 'left 0.2s', boxShadow: '0 1px 4px rgba(0,0,0,0.3)' }} />
     </div>
   );
@@ -54,7 +54,7 @@ export default function SettingsPage() {
   );
 
   const Row = ({ icon, title, desc, right }) => (
-    <div style={{ display: 'flex', alignItems: 'center', gap: '12px', padding: '10px 0', borderBottom: '1px solid rgba(255,255,255,0.04)' }}>
+    <div style={{ display: 'flex', alignItems: 'center', gap: '12px', padding: '10px 0', borderBottom: `1px solid ${t.tableRowBorder}` }}>
       <div style={{ width: '34px', height: '34px', borderRadius: '8px', background: 'rgba(99,102,241,0.15)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>{icon}</div>
       <div style={{ flex: 1 }}>
         <div style={{ color: t.text, fontSize: '11px', fontWeight: '600' }}>{title}</div>
@@ -90,7 +90,7 @@ export default function SettingsPage() {
             </div>
             <div style={{ display: 'flex', gap: '10px' }}>
               {Object.entries(themes).map(([key, t]) => (
-                <div key={key} onClick={() => changeTheme(key)} style={{ flex: 1, cursor: 'pointer', borderRadius: '12px', overflow: 'hidden', border: theme === key ? '2px solid #6366f1' : '2px solid rgba(255,255,255,0.08)', transition: 'all 0.2s', boxShadow: theme === key ? '0 0 12px rgba(99,102,241,0.4)' : 'none' }}>
+                <div key={key} onClick={() => changeTheme(key)} style={{ flex: 1, cursor: 'pointer', borderRadius: '12px', overflow: 'hidden', border: theme === key ? '2px solid #6366f1' : `2px solid ${t.border}`, transition: 'all 0.2s', boxShadow: theme === key ? '0 0 12px rgba(99,102,241,0.4)' : 'none' }}>
                   {/* Theme preview */}
                   <div style={{ background: t.bg, height: '60px', padding: '8px', position: 'relative' }}>
                     <div style={{ background: t.cardBg, borderRadius: '6px', height: '100%', border: `1px solid ${t.border}`, display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', gap: '4px' }}>
@@ -168,7 +168,7 @@ export default function SettingsPage() {
           />
         </Section>
 
-        <div style={{ textAlign: 'center', color: 'rgba(255,255,255,0.2)', fontSize: '9px', padding: '16px 0' }}>Quantyrex Markets © 2020-2026</div>
+        <div style={{ textAlign: 'center', color: t.faintText, fontSize: '9px', padding: '16px 0' }}>Quantyrex Markets © 2020-2026</div>
       </div>
     </div>
   );

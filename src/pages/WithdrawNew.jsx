@@ -192,7 +192,7 @@ export default function WithdrawNew() {
       <DashboardSidebar open={sidebarOpen} onClose={() => setSidebarOpen(false)} />
 
       {/* Header */}
-      <div style={{ background: '#132035', padding: '10px 16px', display: 'flex', alignItems: 'center', gap: '10px', borderBottom: '1px solid rgba(255,255,255,0.1)' }}>
+      <div style={{ background: t.cardBg, padding: '10px 16px', display: 'flex', alignItems: 'center', gap: '10px', borderBottom: `1px solid ${t.border}` }}>
         <div style={{ width: '16px', height: '16px' }}>
           <svg viewBox="0 0 40 40" fill="none" style={{ width: '100%', height: '100%' }}>
                 <path d="M20 2L4 10V22L20 38L36 22V10L20 2Z" fill="#0d1117" stroke="#6366F1" strokeWidth="1.5"/>
@@ -204,7 +204,7 @@ export default function WithdrawNew() {
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
         </button>
         <span style={{ color: t.text, fontSize: '10px', fontWeight: '800' }}>QUANTYREX <span style={{ color: '#6366f1' }}>MARKETS</span></span>
-        <span style={{ color: 'rgba(255,255,255,0.3)', fontSize: '9px', marginLeft: '4px' }}>/ New Withdrawal</span>
+        <span style={{ color: t.faintText, fontSize: '9px', marginLeft: '4px' }}>/ New Withdrawal</span>
         <button onClick={() => navigate('/dashboard/withdraw')} style={{ marginLeft: 'auto', background: 'none', border: 'none', color: t.subText, fontSize: '8px', cursor: 'pointer' }}>Back</button>
       </div>
 
@@ -230,17 +230,17 @@ export default function WithdrawNew() {
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px', marginBottom: '16px' }}>
             {methods.map(method => (
               <div key={method.id} onClick={() => setSelectedMethod(method.id)}
-                style={{ background: selectedMethod === method.id ? 'rgba(99,102,241,0.08)' : 'rgba(255,255,255,0.03)', border: `1px solid ${selectedMethod === method.id ? '#6366f1' : 'rgba(255,255,255,0.1)'}`, padding: '14px 12px', cursor: 'pointer', borderRadius: '2px' }}>
+                style={{ background: selectedMethod === method.id ? 'rgba(99,102,241,0.08)' : t.hoverBg, border: `1px solid ${selectedMethod === method.id ? '#6366f1' : t.border}`, padding: '14px 12px', cursor: 'pointer', borderRadius: '2px' }}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '7px', marginBottom: '6px' }}>
                   {method.icon}
                   <span style={{ color: t.text, fontSize: '9px', fontWeight: '700' }}>{method.label}</span>
                 </div>
                 <div style={{ color: t.subText, fontSize: '8px', marginBottom: '12px', lineHeight: '1.5' }}>{method.desc}</div>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-                  <div style={{ width: '14px', height: '14px', borderRadius: '50%', border: `2px solid ${selectedMethod === method.id ? '#6366f1' : 'rgba(255,255,255,0.25)'}`, background: 'transparent', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+                  <div style={{ width: '14px', height: '14px', borderRadius: '50%', border: `2px solid ${selectedMethod === method.id ? '#6366f1' : t.faintText}`, background: 'transparent', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
                     {selectedMethod === method.id && <div style={{ width: '6px', height: '6px', borderRadius: '50%', background: '#6366f1' }}/>}
                   </div>
-                  <span style={{ color: selectedMethod === method.id ? '#6366f1' : 'rgba(255,255,255,0.35)', fontSize: '8px' }}>Select {method.label}</span>
+                  <span style={{ color: selectedMethod === method.id ? '#6366f1' : t.faintText, fontSize: '8px' }}>Select {method.label}</span>
                 </div>
               </div>
             ))}

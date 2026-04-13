@@ -388,8 +388,8 @@ export default function AdminPanel() {
     { label: 'Pending KYC', value: stats.pendingKyc || 0, color: '#22c55e' },
   ];
 
-  const thStyle = { padding: '10px 12px', fontSize: '11px', color: 'rgba(255,255,255,0.5)', fontWeight: '700', textAlign: 'left', border: '1px solid rgba(255,255,255,0.1)', whiteSpace: 'nowrap', background: '#0f1a2e' };
-  const tdStyle = { padding: '10px 12px', fontSize: '11px', color: 'white', border: '1px solid rgba(255,255,255,0.08)', whiteSpace: 'nowrap', verticalAlign: 'top' };
+  const thStyle = { padding: '10px 12px', fontSize: '11px', color: t.subText, fontWeight: '700', textAlign: 'left', border: `1px solid ${t.border}`, whiteSpace: 'nowrap', background: '#0f1a2e' };
+  const tdStyle = { padding: '10px 12px', fontSize: '11px', color: 'white', border: `1px solid ${t.border}`, whiteSpace: 'nowrap', verticalAlign: 'top' };
   const btnStyle = (color) => ({ padding: '6px 12px', background: color, border: 'none', color: 'white', fontSize: '11px', cursor: 'pointer', borderRadius: '0px', marginRight: '6px', marginBottom: '6px', display: 'inline-block' });
 
   const handleSendEmail = async () => {
@@ -455,14 +455,14 @@ export default function AdminPanel() {
   };
 
   return (
-    <div style={{ minHeight: '100vh', background: '#0e1628', fontFamily: "'Segoe UI', sans-serif", color: 'white' }}>
+    <div style={{ minHeight: '100vh', background: t.bg, fontFamily: "'Segoe UI', sans-serif", color: 'white' }}>
 
       {/* Header */}
-      <div style={{ background: '#132035', padding: '10px 16px', display: 'flex', alignItems: 'center', gap: '10px', borderBottom: '1px solid rgba(255,255,255,0.1)' }}>
+      <div style={{ background: t.cardBg, padding: '10px 16px', display: 'flex', alignItems: 'center', gap: '10px', borderBottom: `1px solid ${t.border}` }}>
         <span style={{ color: 'white', fontSize: '8px', fontWeight: '800' }}>QUANTYREX <span style={{ color: '#6366f1' }}>MARKETS</span></span>
-        <span style={{ color: 'rgba(255,255,255,0.3)', fontSize: '8px' }}>/ Admin Panel</span>
+        <span style={{ color: t.faintText, fontSize: '8px' }}>/ Admin Panel</span>
         <div style={{ marginLeft: 'auto', display: 'flex', gap: '8px' }}>
-          <button onClick={() => navigate('/dashboard')} style={{ background: 'none', border: '1px solid rgba(255,255,255,0.2)', color: 'white', fontSize: '9px', padding: '4px 10px', cursor: 'pointer' }}>Dashboard</button>
+          <button onClick={() => navigate('/dashboard')} style={{ background: 'none', border: `1px solid ${t.border}`, color: 'white', fontSize: '9px', padding: '4px 10px', cursor: 'pointer' }}>Dashboard</button>
           <button onClick={logout} style={{ background: '#ef4444', border: 'none', color: 'white', fontSize: '9px', padding: '4px 10px', cursor: 'pointer' }}>Logout</button>
         </div>
       </div>
@@ -470,9 +470,9 @@ export default function AdminPanel() {
       {msg && <div style={{ background: '#22c55e', color: 'white', padding: '8px 16px', fontSize: '8px', fontWeight: '600' }}>{msg}</div>}
 
       {/* Tabs */}
-      <div style={{ background: '#132035', padding: '0 16px', display: 'flex', gap: '2px', borderBottom: '1px solid rgba(255,255,255,0.1)', overflowX: 'auto' }}>
+      <div style={{ background: t.cardBg, padding: '0 16px', display: 'flex', gap: '2px', borderBottom: `1px solid ${t.border}`, overflowX: 'auto' }}>
         {tabs.map(t => (
-          <button key={t} onClick={() => setTab(t)} style={{ padding: '8px 14px', background: 'none', border: 'none', color: tab === t ? '#6366f1' : 'rgba(255,255,255,0.5)', fontSize: '9px', fontWeight: '700', cursor: 'pointer', borderBottom: tab === t ? '2px solid #6366f1' : '2px solid transparent', textTransform: 'uppercase', whiteSpace: 'nowrap' }}>{t}</button>
+          <button key={t} onClick={() => setTab(t)} style={{ padding: '8px 14px', background: 'none', border: 'none', color: tab === t ? '#6366f1' : t.subText, fontSize: '9px', fontWeight: '700', cursor: 'pointer', borderBottom: tab === t ? '2px solid #6366f1' : '2px solid transparent', textTransform: 'uppercase', whiteSpace: 'nowrap' }}>{t}</button>
         ))}
       </div>
 
@@ -483,15 +483,15 @@ export default function AdminPanel() {
           <div>
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '10px', marginBottom: '16px' }}>
               {statCards.map((s, i) => (
-                <div key={i} style={{ background: '#1a2e4a', border: `1px solid ${s.color}40`, padding: '14px' }}>
-                  <div style={{ color: 'rgba(255,255,255,0.5)', fontSize: '8px', marginBottom: '6px' }}>{s.label}</div>
+                <div key={i} style={{ background: t.cardBg2, border: `1px solid ${s.color}40`, padding: '14px' }}>
+                  <div style={{ color: t.subText, fontSize: '8px', marginBottom: '6px' }}>{s.label}</div>
                   <div style={{ color: s.color, fontSize: '8px', fontWeight: '700' }}>{s.value}</div>
                 </div>
               ))}
             </div>
 
             {/* Deposits by status chart */}
-            <div style={{ background: '#1a2e4a', padding: '14px', marginBottom: '12px' }}>
+            <div style={{ background: t.cardBg2, padding: '14px', marginBottom: '12px' }}>
               <div style={{ color: 'white', fontSize: '8px', fontWeight: '700', marginBottom: '12px' }}>Deposits Overview</div>
               {(() => {
                 const pending = deposits.filter(d => d.status === 'pending').length;
@@ -505,15 +505,15 @@ export default function AdminPanel() {
                       {[['Pending', pending, '#f59e0b'], ['Approved', approved, '#22c55e'], ['Rejected', rejected, '#ef4444']].map(([l,v,col]) => (
                         <div key={l} style={{ textAlign: 'center' }}>
                           <div style={{ color: col, fontSize: '9px', fontWeight: '700' }}>{v}</div>
-                          <div style={{ color: 'rgba(255,255,255,0.4)', fontSize: '8px' }}>{l}</div>
+                          <div style={{ color: t.mutedText, fontSize: '8px' }}>{l}</div>
                         </div>
                       ))}
                       <div style={{ textAlign: 'center' }}>
                         <div style={{ color: '#6366f1', fontSize: '9px', fontWeight: '700' }}>${totalAmount.toFixed(0)}</div>
-                        <div style={{ color: 'rgba(255,255,255,0.4)', fontSize: '8px' }}>Approved $</div>
+                        <div style={{ color: t.mutedText, fontSize: '8px' }}>Approved $</div>
                       </div>
                     </div>
-                    <div style={{ height: '8px', background: 'rgba(255,255,255,0.06)', borderRadius: '0', display: 'flex', overflow: 'hidden' }}>
+                    <div style={{ height: '8px', background: t.subtleBg, borderRadius: '0', display: 'flex', overflow: 'hidden' }}>
                       <div style={{ width: (approved/total*100) + '%', background: '#22c55e' }} />
                       <div style={{ width: (pending/total*100) + '%', background: '#f59e0b' }} />
                       <div style={{ width: (rejected/total*100) + '%', background: '#ef4444' }} />
@@ -522,7 +522,7 @@ export default function AdminPanel() {
                       {[['Approved', '#22c55e'], ['Pending', '#f59e0b'], ['Rejected', '#ef4444']].map(([l,c]) => (
                         <div key={l} style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
                           <div style={{ width: '8px', height: '8px', background: c, borderRadius: '0' }} />
-                          <span style={{ color: 'rgba(255,255,255,0.4)', fontSize: '8px' }}>{l}</span>
+                          <span style={{ color: t.mutedText, fontSize: '8px' }}>{l}</span>
                         </div>
                       ))}
                     </div>
@@ -532,7 +532,7 @@ export default function AdminPanel() {
             </div>
 
             {/* Withdrawals by status chart */}
-            <div style={{ background: '#1a2e4a', padding: '14px', marginBottom: '12px' }}>
+            <div style={{ background: t.cardBg2, padding: '14px', marginBottom: '12px' }}>
               <div style={{ color: 'white', fontSize: '8px', fontWeight: '700', marginBottom: '12px' }}>Withdrawals Overview</div>
               {(() => {
                 const pending = withdrawals.filter(w => w.status === 'pending').length;
@@ -546,15 +546,15 @@ export default function AdminPanel() {
                       {[['Pending', pending, '#f59e0b'], ['Approved', approved, '#22c55e'], ['Rejected', rejected, '#ef4444']].map(([l,v,col]) => (
                         <div key={l} style={{ textAlign: 'center' }}>
                           <div style={{ color: col, fontSize: '9px', fontWeight: '700' }}>{v}</div>
-                          <div style={{ color: 'rgba(255,255,255,0.4)', fontSize: '8px' }}>{l}</div>
+                          <div style={{ color: t.mutedText, fontSize: '8px' }}>{l}</div>
                         </div>
                       ))}
                       <div style={{ textAlign: 'center' }}>
                         <div style={{ color: '#ec4899', fontSize: '9px', fontWeight: '700' }}>${totalAmount.toFixed(0)}</div>
-                        <div style={{ color: 'rgba(255,255,255,0.4)', fontSize: '8px' }}>Approved $</div>
+                        <div style={{ color: t.mutedText, fontSize: '8px' }}>Approved $</div>
                       </div>
                     </div>
-                    <div style={{ height: '8px', background: 'rgba(255,255,255,0.06)', borderRadius: '0', display: 'flex', overflow: 'hidden' }}>
+                    <div style={{ height: '8px', background: t.subtleBg, borderRadius: '0', display: 'flex', overflow: 'hidden' }}>
                       <div style={{ width: (approved/total*100) + '%', background: '#22c55e' }} />
                       <div style={{ width: (pending/total*100) + '%', background: '#f59e0b' }} />
                       <div style={{ width: (rejected/total*100) + '%', background: '#ef4444' }} />
@@ -565,7 +565,7 @@ export default function AdminPanel() {
             </div>
 
             {/* Users overview */}
-            <div style={{ background: '#1a2e4a', padding: '14px' }}>
+            <div style={{ background: t.cardBg2, padding: '14px' }}>
               <div style={{ color: 'white', fontSize: '8px', fontWeight: '700', marginBottom: '12px' }}>Users Overview</div>
               <div style={{ display: 'flex', justifyContent: 'space-between' }}>
                 {[
@@ -576,7 +576,7 @@ export default function AdminPanel() {
                 ].map(([l,v,col]) => (
                   <div key={l} style={{ textAlign: 'center' }}>
                     <div style={{ color: col, fontSize: '9px', fontWeight: '700' }}>{v}</div>
-                    <div style={{ color: 'rgba(255,255,255,0.4)', fontSize: '8px' }}>{l}</div>
+                    <div style={{ color: t.mutedText, fontSize: '8px' }}>{l}</div>
                   </div>
                 ))}
               </div>
@@ -589,7 +589,7 @@ export default function AdminPanel() {
           <div style={{ overflowX: "auto", overflowY: "auto", maxHeight: "80vh" }}>
             <div style={{ padding: "8px 0", marginBottom: "8px", display: "flex", gap: "8px", alignItems: "center" }}>
               <input value={userSearch} onChange={e => { setUserSearch(e.target.value); setUserPage(1); }} placeholder="Search by name or email..." style={{ flex: 1, background: "#374151", border: "none", color: "white", fontSize: "8px", padding: "6px 10px", outline: "none" }} />
-              <span style={{ color: "rgba(255,255,255,0.4)", fontSize: "7px" }}>{users.filter(u => (u.firstName + " " + u.lastName + " " + u.email).toLowerCase().includes(userSearch.toLowerCase())).length} users</span>
+              <span style={{ color: t.mutedText, fontSize: "7px" }}>{users.filter(u => (u.firstName + " " + u.lastName + " " + u.email).toLowerCase().includes(userSearch.toLowerCase())).length} users</span>
               <button onClick={() => exportCSV(users, 'users.csv')} style={{ ...btnStyle('#22c55e'), whiteSpace: 'nowrap' }}>⬇ CSV</button>
               <button onClick={() => { setEmailTarget(null); setEmailModal(true); setEmailSuccess(''); }} style={{ ...btnStyle('#6366f1'), whiteSpace: 'nowrap' }}>📧 Email All</button>
             </div>
@@ -612,14 +612,14 @@ export default function AdminPanel() {
                       <div style={{ display: "flex", flexDirection: "column", gap: "3px" }}>
                         {[["totalDeposits","Deposits"],["totalWithdrawals","Withdrawals"],["totalProfit","Profit"],["totalReferrals","Referrals"],["totalPackages","Packages"]].map(([field, label]) => (
                           <div key={field} style={{ display: "flex", gap: "3px", alignItems: "center" }}>
-                            <span style={{ color: "rgba(255,255,255,0.4)", fontSize: "10px", width: "70px" }}>{label}:</span>
+                            <span style={{ color: t.mutedText, fontSize: "10px", width: "70px" }}>{label}:</span>
                             <input type="number" placeholder={u[field]?.toFixed(2) ?? "0"} value={editStats[u._id]?.[field] ?? ""} onChange={e => setEditStats(p => ({ ...p, [u._id]: { ...p[u._id], [field]: e.target.value } }))} style={{ width: "80px", background: "#374151", border: "none", color: "white", fontSize: "10px", padding: "4px 6px" }} />
                           </div>
                         ))}
                         <button onClick={() => updateUserStats(u._id)} style={{ ...btnStyle("#22c55e"), marginTop: "3px" }}>Update</button>
                       </div>
                     </td>
-                    <td style={{ ...tdStyle, color: u.kycStatus === 'approved' ? '#22c55e' : u.kycStatus === 'submitted' ? '#f59e0b' : 'rgba(255,255,255,0.4)' }}>{u.kycStatus || 'none'}</td>
+                    <td style={{ ...tdStyle, color: u.kycStatus === 'approved' ? '#22c55e' : u.kycStatus === 'submitted' ? '#f59e0b' : t.mutedText }}>{u.kycStatus || 'none'}</td>
                     <td style={tdStyle}>
                       <div style={{ display: 'flex', flexDirection: 'column', gap: '3px' }}>
                         <span style={{ padding: '4px 8px', borderRadius: '0px', fontSize: '10px', fontWeight: '700', background: u.isBlocked ? 'rgba(239,68,68,0.2)' : 'rgba(34,197,94,0.2)', color: u.isBlocked ? '#ef4444' : '#22c55e' }}>
@@ -670,7 +670,7 @@ export default function AdminPanel() {
               if (totalPages <= 1) return null;
               return (
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '8px 0', marginTop: '8px' }}>
-                  <span style={{ color: 'rgba(255,255,255,0.4)', fontSize: '8px' }}>Page {userPage} of {totalPages} ({filtered.length} users)</span>
+                  <span style={{ color: t.mutedText, fontSize: '8px' }}>Page {userPage} of {totalPages} ({filtered.length} users)</span>
                   <div style={{ display: 'flex', gap: '4px' }}>
                     <button onClick={() => setUserPage(p => Math.max(1, p-1))} disabled={userPage === 1} style={{ ...btnStyle('#374151'), opacity: userPage === 1 ? 0.4 : 1 }}>‹ Prev</button>
                     <button onClick={() => setUserPage(p => Math.min(totalPages, p+1))} disabled={userPage === totalPages} style={{ ...btnStyle('#374151'), opacity: userPage === totalPages ? 0.4 : 1 }}>Next ›</button>
@@ -685,9 +685,9 @@ export default function AdminPanel() {
         {tab === 'deposits' && (
           <div>
             <div style={{ display: 'flex', gap: '8px', marginBottom: '12px', flexWrap: 'wrap' }}>
-              <input value={depositSearch} onChange={e => setDepositSearch(e.target.value)} placeholder="Search user or method..." style={{ background: '#2a3347', border: '1px solid rgba(255,255,255,0.1)', color: 'white', fontSize: '8px', padding: '6px 10px', outline: 'none', flex: 1, minWidth: '150px' }} />
+              <input value={depositSearch} onChange={e => setDepositSearch(e.target.value)} placeholder="Search user or method..." style={{ background: t.cardBg2, border: `1px solid ${t.border}`, color: 'white', fontSize: '8px', padding: '6px 10px', outline: 'none', flex: 1, minWidth: '150px' }} />
               {['all','pending','approved','rejected'].map(f => (
-                <button key={f} onClick={() => setDepositFilter(f)} style={{ padding: '6px 12px', background: depositFilter === f ? '#6366f1' : 'rgba(255,255,255,0.06)', border: 'none', color: 'white', fontSize: '8px', fontWeight: '600', cursor: 'pointer', textTransform: 'capitalize' }}>{f}</button>
+                <button key={f} onClick={() => setDepositFilter(f)} style={{ padding: '6px 12px', background: depositFilter === f ? '#6366f1' : t.subtleBg, border: 'none', color: 'white', fontSize: '8px', fontWeight: '600', cursor: 'pointer', textTransform: 'capitalize' }}>{f}</button>
               ))}
             </div>
           <div style={{ overflowX: 'auto' }}>
@@ -702,7 +702,7 @@ export default function AdminPanel() {
                   return matchFilter && matchSearch;
                 }).map((d, i) => (
                   <tr key={i}>
-                    <td style={tdStyle}>{d.user?.firstName} {d.user?.lastName}<br/><span style={{ color: 'rgba(255,255,255,0.4)' }}>{d.user?.email}</span></td>
+                    <td style={tdStyle}>{d.user?.firstName} {d.user?.lastName}<br/><span style={{ color: t.mutedText }}>{d.user?.email}</span></td>
                     <td style={{ ...tdStyle, color: '#22c55e' }}>${d.amount?.toFixed(2)}</td>
                     <td style={tdStyle}>{d.method || d.paymentMethod}</td>
                     <td style={{ ...tdStyle, color: d.status === 'approved' ? '#22c55e' : d.status === 'pending' ? '#f59e0b' : '#ef4444' }}>{d.status}</td>
@@ -727,9 +727,9 @@ export default function AdminPanel() {
         {tab === 'withdrawals' && (
           <div>
             <div style={{ display: 'flex', gap: '8px', marginBottom: '12px', flexWrap: 'wrap' }}>
-              <input value={withdrawalSearch} onChange={e => setWithdrawalSearch(e.target.value)} placeholder="Search user or method..." style={{ background: '#2a3347', border: '1px solid rgba(255,255,255,0.1)', color: 'white', fontSize: '8px', padding: '6px 10px', outline: 'none', flex: 1, minWidth: '150px' }} />
+              <input value={withdrawalSearch} onChange={e => setWithdrawalSearch(e.target.value)} placeholder="Search user or method..." style={{ background: t.cardBg2, border: `1px solid ${t.border}`, color: 'white', fontSize: '8px', padding: '6px 10px', outline: 'none', flex: 1, minWidth: '150px' }} />
               {['all','pending','approved','rejected'].map(f => (
-                <button key={f} onClick={() => setWithdrawalFilter(f)} style={{ padding: '6px 12px', background: withdrawalFilter === f ? '#6366f1' : 'rgba(255,255,255,0.06)', border: 'none', color: 'white', fontSize: '8px', fontWeight: '600', cursor: 'pointer', textTransform: 'capitalize' }}>{f}</button>
+                <button key={f} onClick={() => setWithdrawalFilter(f)} style={{ padding: '6px 12px', background: withdrawalFilter === f ? '#6366f1' : t.subtleBg, border: 'none', color: 'white', fontSize: '8px', fontWeight: '600', cursor: 'pointer', textTransform: 'capitalize' }}>{f}</button>
               ))}
             </div>
           <div style={{ overflowX: 'auto' }}>
@@ -744,7 +744,7 @@ export default function AdminPanel() {
                   return matchFilter && matchSearch;
                 }).map((w, i) => (
                   <tr key={i}>
-                    <td style={tdStyle}>{w.user?.firstName} {w.user?.lastName}<br/><span style={{ color: 'rgba(255,255,255,0.4)' }}>{w.user?.email}</span></td>
+                    <td style={tdStyle}>{w.user?.firstName} {w.user?.lastName}<br/><span style={{ color: t.mutedText }}>{w.user?.email}</span></td>
                     <td style={{ ...tdStyle, color: '#ec4899' }}>${w.amount?.toFixed(2)}</td>
                     <td style={{ ...tdStyle, maxWidth: '100px', overflow: 'hidden', textOverflow: 'ellipsis' }}>{w.walletAddress}</td>
                     <td style={{ ...tdStyle, color: w.status === 'approved' ? '#22c55e' : w.status === 'pending' ? '#f59e0b' : '#ef4444' }}>{w.status}</td>
@@ -807,12 +807,12 @@ export default function AdminPanel() {
               <tbody>
                 {trades.map((t, i) => (
                   <tr key={i}>
-                    <td style={tdStyle}>{t.user?.firstName} {t.user?.lastName}<br/><span style={{ color: 'rgba(255,255,255,0.4)' }}>{t.user?.email}</span></td>
+                    <td style={tdStyle}>{t.user?.firstName} {t.user?.lastName}<br/><span style={{ color: t.mutedText }}>{t.user?.email}</span></td>
                     <td style={tdStyle}>{t.symbol}</td>
                     <td style={{ ...tdStyle, color: t.type === 'buy' ? '#22c55e' : '#ef4444', textTransform: 'capitalize' }}>{t.type}</td>
                     <td style={tdStyle}>${t.amount?.toFixed(2)}</td>
                     <td style={tdStyle}>{t.duration}</td>
-                    <td style={{ ...tdStyle, color: t.result > 0 ? '#22c55e' : t.result < 0 ? '#ef4444' : 'rgba(255,255,255,0.4)' }}>{t.result > 0 ? '+' : ''}${Math.abs(t.result || 0).toFixed(2)}</td>
+                    <td style={{ ...tdStyle, color: t.result > 0 ? '#22c55e' : t.result < 0 ? '#ef4444' : t.mutedText }}>{t.result > 0 ? '+' : ''}${Math.abs(t.result || 0).toFixed(2)}</td>
                     <td style={{ ...tdStyle, color: t.status === 'closed' ? '#9ca3af' : t.status === 'active' ? '#22c55e' : '#818cf8', textTransform: 'capitalize' }}>{t.status}</td>
                     <td style={tdStyle}>{new Date(t.createdAt).toLocaleDateString()}</td>
                     <td style={tdStyle}>
@@ -849,13 +849,13 @@ export default function AdminPanel() {
         {tab === 'bots' && (
           <div style={{ padding: '12px' }}>
             <div style={{ display: 'flex', gap: '8px', marginBottom: '12px', alignItems: 'center' }}>
-              <input placeholder="Search user or bot..." onChange={e => setBotSearch(e.target.value)} style={{ flex: 1, background: '#2a3347', border: '1px solid rgba(255,255,255,0.1)', color: 'white', fontSize: '8px', padding: '6px 10px', outline: 'none' }} />
+              <input placeholder="Search user or bot..." onChange={e => setBotSearch(e.target.value)} style={{ flex: 1, background: t.cardBg2, border: `1px solid ${t.border}`, color: 'white', fontSize: '8px', padding: '6px 10px', outline: 'none' }} />
               {['all','active','completed','cancelled'].map(f => (
-                <button key={f} onClick={() => setBotFilter(f)} style={{ padding: '5px 10px', background: botFilter===f?'#6366f1':'rgba(255,255,255,0.06)', border: 'none', color: 'white', fontSize: '7px', cursor: 'pointer', textTransform: 'capitalize' }}>{f}</button>
+                <button key={f} onClick={() => setBotFilter(f)} style={{ padding: '5px 10px', background: botFilter===f?'#6366f1':t.subtleBg, border: 'none', color: 'white', fontSize: '7px', cursor: 'pointer', textTransform: 'capitalize' }}>{f}</button>
               ))}
             </div>
             {allBots.length === 0 ? (
-              <div style={{ padding: '30px', textAlign: 'center', color: 'rgba(255,255,255,0.3)', fontSize: '10px' }}>No bots found</div>
+              <div style={{ padding: '30px', textAlign: 'center', color: t.faintText, fontSize: '10px' }}>No bots found</div>
             ) : (
               <table style={{ width: '100%', borderCollapse: 'collapse' }}>
                 <thead>
@@ -868,7 +868,7 @@ export default function AdminPanel() {
                     return matchFilter && matchSearch;
                   }).map((b, i) => (
                     <tr key={i}>
-                      <td style={tdStyle}>{b.user?.firstName} {b.user?.lastName}<br/><span style={{ color: 'rgba(255,255,255,0.4)', fontSize: '7px' }}>{b.user?.email}</span></td>
+                      <td style={tdStyle}>{b.user?.firstName} {b.user?.lastName}<br/><span style={{ color: t.mutedText, fontSize: '7px' }}>{b.user?.email}</span></td>
                       <td style={{ ...tdStyle, color: '#6366f1', fontWeight: '700' }}>{b.botName}</td>
                       <td style={tdStyle}>${(b.amount||0).toLocaleString()}</td>
                       <td style={{ ...tdStyle, color: '#22c55e' }}>{b.dailyRate}</td>
@@ -882,7 +882,7 @@ export default function AdminPanel() {
                         </div>
                       </td>
                       <td style={{ ...tdStyle }}><span style={{ background: b.status==='active'?'rgba(34,197,94,0.1)':'rgba(99,102,241,0.1)', color: b.status==='active'?'#22c55e':'#6366f1', padding: '2px 6px', fontSize: '7px' }}>{b.status}</span></td>
-                      <td style={{ ...tdStyle, color: 'rgba(255,255,255,0.4)' }}>{b.expiresAt ? new Date(b.expiresAt).toLocaleDateString() : '-'}</td>
+                      <td style={{ ...tdStyle, color: t.mutedText }}>{b.expiresAt ? new Date(b.expiresAt).toLocaleDateString() : '-'}</td>
                       <td style={tdStyle}>
                         <div style={{ display: 'flex', gap: '4px', flexWrap: 'wrap' }}>
                           {b.status === 'active' && (
@@ -905,13 +905,13 @@ export default function AdminPanel() {
         {tab === 'stakes' && (
           <div style={{ padding: '12px' }}>
             <div style={{ display: 'flex', gap: '8px', marginBottom: '12px', alignItems: 'center' }}>
-              <input placeholder="Search user or plan..." onChange={e => setStakeSearch(e.target.value)} style={{ flex: 1, background: '#2a3347', border: '1px solid rgba(255,255,255,0.1)', color: 'white', fontSize: '8px', padding: '6px 10px', outline: 'none' }} />
+              <input placeholder="Search user or plan..." onChange={e => setStakeSearch(e.target.value)} style={{ flex: 1, background: t.cardBg2, border: `1px solid ${t.border}`, color: 'white', fontSize: '8px', padding: '6px 10px', outline: 'none' }} />
               {['all','active','completed','cancelled'].map(f => (
-                <button key={f} onClick={() => setStakeFilter(f)} style={{ padding: '5px 10px', background: stakeFilter===f?'#6366f1':'rgba(255,255,255,0.06)', border: 'none', color: 'white', fontSize: '7px', cursor: 'pointer', textTransform: 'capitalize' }}>{f}</button>
+                <button key={f} onClick={() => setStakeFilter(f)} style={{ padding: '5px 10px', background: stakeFilter===f?'#6366f1':t.subtleBg, border: 'none', color: 'white', fontSize: '7px', cursor: 'pointer', textTransform: 'capitalize' }}>{f}</button>
               ))}
             </div>
             {allStakes.length === 0 ? (
-              <div style={{ padding: '30px', textAlign: 'center', color: 'rgba(255,255,255,0.3)', fontSize: '10px' }}>No stakes found</div>
+              <div style={{ padding: '30px', textAlign: 'center', color: t.faintText, fontSize: '10px' }}>No stakes found</div>
             ) : (
               <table style={{ width: '100%', borderCollapse: 'collapse' }}>
                 <thead>
@@ -924,7 +924,7 @@ export default function AdminPanel() {
                     return matchFilter && matchSearch;
                   }).map((s, i) => (
                     <tr key={i}>
-                      <td style={tdStyle}>{s.user?.firstName} {s.user?.lastName}<br/><span style={{ color: 'rgba(255,255,255,0.4)', fontSize: '7px' }}>{s.user?.email}</span></td>
+                      <td style={tdStyle}>{s.user?.firstName} {s.user?.lastName}<br/><span style={{ color: t.mutedText, fontSize: '7px' }}>{s.user?.email}</span></td>
                       <td style={{ ...tdStyle, color: '#6366f1', fontWeight: '700' }}>{s.plan}</td>
                       <td style={tdStyle}>${(s.amount||0).toLocaleString()}</td>
                       <td style={{ ...tdStyle, color: '#22c55e' }}>{s.apy}</td>
@@ -938,7 +938,7 @@ export default function AdminPanel() {
                         </div>
                       </td>
                       <td style={{ ...tdStyle }}><span style={{ background: s.status==='active'?'rgba(34,197,94,0.1)':'rgba(99,102,241,0.1)', color: s.status==='active'?'#22c55e':'#6366f1', padding: '2px 6px', fontSize: '7px' }}>{s.status}</span></td>
-                      <td style={{ ...tdStyle, color: 'rgba(255,255,255,0.4)' }}>{s.expiresAt ? new Date(s.expiresAt).toLocaleDateString() : '-'}</td>
+                      <td style={{ ...tdStyle, color: t.mutedText }}>{s.expiresAt ? new Date(s.expiresAt).toLocaleDateString() : '-'}</td>
                       <td style={tdStyle}>
                         <div style={{ display: 'flex', gap: '4px', flexWrap: 'wrap' }}>
                           {s.status === 'active' && (
@@ -960,9 +960,9 @@ export default function AdminPanel() {
         {/* Contacts */}
         {tab === 'contacts' && (
           <div style={{ padding: '0', display: 'flex', gap: '0', height: 'calc(100vh - 210px)', background: '#000000' }}>
-            <div style={{ width: chatFullscreen ? '0px' : '220px', flexShrink: 0, overflowY: 'auto', borderRight: chatFullscreen ? 'none' : '1px solid rgba(255,255,255,0.06)', paddingRight: '0', overflow: 'hidden', transition: 'width 0.2s', background: '#0a0a0a' }}>
-              <div style={{ color: 'rgba(255,255,255,0.5)', fontSize: '8px', fontWeight: '700', marginBottom: '8px', padding: '12px 12px 0' }}>CONVERSATIONS ({contacts.length})</div>
-              {contacts.length === 0 && <div style={{ color: 'rgba(255,255,255,0.3)', fontSize: '8px' }}>No chats yet</div>}
+            <div style={{ width: chatFullscreen ? '0px' : '220px', flexShrink: 0, overflowY: 'auto', borderRight: chatFullscreen ? 'none' : `1px solid ${t.subtleBorder}`, paddingRight: '0', overflow: 'hidden', transition: 'width 0.2s', background: '#0a0a0a' }}>
+              <div style={{ color: t.subText, fontSize: '8px', fontWeight: '700', marginBottom: '8px', padding: '12px 12px 0' }}>CONVERSATIONS ({contacts.length})</div>
+              {contacts.length === 0 && <div style={{ color: t.faintText, fontSize: '8px' }}>No chats yet</div>}
               {contacts.map((c, i) => (
                 <div key={i} onClick={async () => {
                   setSelectedChat(c);
@@ -971,24 +971,24 @@ export default function AdminPanel() {
                     method: 'PATCH',
                     headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
                   });
-                }} style={{ padding: '10px 12px', marginBottom: '0', background: selectedChat?._id === c._id ? 'rgba(99,102,241,0.15)' : 'transparent', borderLeft: selectedChat?._id === c._id ? '3px solid #6366f1' : '3px solid transparent', cursor: 'pointer', borderBottom: '1px solid rgba(255,255,255,0.04)' }}>
+                }} style={{ padding: '10px 12px', marginBottom: '0', background: selectedChat?._id === c._id ? 'rgba(99,102,241,0.15)' : 'transparent', borderLeft: selectedChat?._id === c._id ? '3px solid #6366f1' : '3px solid transparent', cursor: 'pointer', borderBottom: `1px solid ${t.tableRowBorder}` }}>
                   <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                     <span style={{ color: 'white', fontSize: '8px', fontWeight: '600' }}>{c.name || c.email || 'User'}</span>
                     {c.unreadAdmin > 0 && <span style={{ background: '#ef4444', color: 'white', fontSize: '7px', padding: '1px 4px', borderRadius: '8px' }}>{c.unreadAdmin}</span>}
                   </div>
-                  <div style={{ color: 'rgba(255,255,255,0.4)', fontSize: '7px', marginTop: '2px' }}>{c.messages?.length || 0} messages</div>
-                  <div style={{ color: c.status === 'open' ? '#22c55e' : 'rgba(255,255,255,0.3)', fontSize: '7px' }}>{c.status}</div>
+                  <div style={{ color: t.mutedText, fontSize: '7px', marginTop: '2px' }}>{c.messages?.length || 0} messages</div>
+                  <div style={{ color: c.status === 'open' ? '#22c55e' : t.faintText, fontSize: '7px' }}>{c.status}</div>
                 </div>
               ))}
             </div>
             <div style={{ flex: 1, display: 'flex', flexDirection: 'column', background: '#000000' }}>
               {!selectedChat ? (
-                <div style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'rgba(255,255,255,0.3)', fontSize: '9px' }}>Select a conversation</div>
+                <div style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', color: t.faintText, fontSize: '9px' }}>Select a conversation</div>
               ) : (
                 <>
                   {/* Smartsupp-style user info panel */}
-                  <div style={{ background: '#0a0a0a', borderBottom: '1px solid rgba(255,255,255,0.08)' }}>
-                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '10px 14px', borderBottom: '1px solid rgba(255,255,255,0.06)' }}>
+                  <div style={{ background: '#0a0a0a', borderBottom: `1px solid ${t.border}` }}>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '10px 14px', borderBottom: `1px solid ${t.subtleBorder}` }}>
                       <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
                         {chatFullscreen && (
                           <button onClick={() => { setChatFullscreen(false); setSelectedChat(null); }} style={{ background: 'none', border: 'none', color: 'white', cursor: 'pointer', fontSize: '18px', padding: '0' }}>←</button>
@@ -1018,24 +1018,24 @@ export default function AdminPanel() {
                       <div style={{ flex: 1 }}>
                         <div style={{ color: 'white', fontSize: '13px', fontWeight: '700', marginBottom: '8px' }}>{selectedChat.name || 'Unknown'}</div>
                         <div style={{ display: 'flex', flexDirection: 'column', gap: '5px' }}>
-                          <div style={{ display: 'flex', alignItems: 'center', gap: '6px', color: 'rgba(255,255,255,0.5)', fontSize: '8px' }}>
+                          <div style={{ display: 'flex', alignItems: 'center', gap: '6px', color: t.subText, fontSize: '8px' }}>
                             <svg width='10' height='10' fill='none' stroke='currentColor' viewBox='0 0 24 24' strokeWidth='2'><path d='M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z'/><polyline points='22,6 12,13 2,6'/></svg>
                             {selectedChat.email}
                           </div>
                           {selectedChat.userInfo?.country && (
-                            <div style={{ display: 'flex', alignItems: 'center', gap: '6px', color: 'rgba(255,255,255,0.5)', fontSize: '8px' }}>
+                            <div style={{ display: 'flex', alignItems: 'center', gap: '6px', color: t.subText, fontSize: '8px' }}>
                               <svg width='10' height='10' fill='none' stroke='currentColor' viewBox='0 0 24 24' strokeWidth='2'><path d='M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z'/><circle cx='12' cy='9' r='2.5'/></svg>
                               {selectedChat.userInfo.country}
                             </div>
                           )}
                           {selectedChat.userInfo?.device && (
-                            <div style={{ display: 'flex', alignItems: 'center', gap: '6px', color: 'rgba(255,255,255,0.5)', fontSize: '8px' }}>
+                            <div style={{ display: 'flex', alignItems: 'center', gap: '6px', color: t.subText, fontSize: '8px' }}>
                               <svg width='10' height='10' fill='none' stroke='currentColor' viewBox='0 0 24 24' strokeWidth='2'><rect x='5' y='2' width='14' height='20' rx='2'/></svg>
                               {selectedChat.userInfo.device}
                             </div>
                           )}
                           {selectedChat.userInfo?.browser && (
-                            <div style={{ display: 'flex', alignItems: 'center', gap: '6px', color: 'rgba(255,255,255,0.5)', fontSize: '8px' }}>
+                            <div style={{ display: 'flex', alignItems: 'center', gap: '6px', color: t.subText, fontSize: '8px' }}>
                               <svg width='10' height='10' fill='none' stroke='currentColor' viewBox='0 0 24 24' strokeWidth='2'><circle cx='12' cy='12' r='10'/><line x1='2' y1='12' x2='22' y2='12'/><path d='M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10'/></svg>
                               {selectedChat.userInfo.browser.includes('Chrome') ? 'Chrome' : selectedChat.userInfo.browser.includes('Firefox') ? 'Firefox' : selectedChat.userInfo.browser.includes('Safari') ? 'Safari' : 'Browser'}
                             </div>
@@ -1046,8 +1046,8 @@ export default function AdminPanel() {
                               <span style={{ color: '#6366f1' }}>vertextradspro.vercel.app{selectedChat.userInfo.page}</span>
                             </div>
                           )}
-                          <div style={{ display: 'flex', alignItems: 'center', gap: '6px', color: selectedChat.visitorOnline ? '#22c55e' : 'rgba(255,255,255,0.3)', fontSize: '8px' }}>
-                            <div style={{ width: '6px', height: '6px', borderRadius: '50%', background: selectedChat.visitorOnline ? '#22c55e' : 'rgba(255,255,255,0.3)' }}></div>
+                          <div style={{ display: 'flex', alignItems: 'center', gap: '6px', color: selectedChat.visitorOnline ? '#22c55e' : t.faintText, fontSize: '8px' }}>
+                            <div style={{ width: '6px', height: '6px', borderRadius: '50%', background: selectedChat.visitorOnline ? '#22c55e' : t.faintText }}></div>
                             {selectedChat.visitorOnline ? 'Online' : 'Offline'}
                           </div>
                         </div>
@@ -1064,23 +1064,23 @@ export default function AdminPanel() {
                         <div key={i}>
                           {showDate && (
                             <div style={{ textAlign: 'center', margin: '8px 0' }}>
-                              <span style={{ background: 'rgba(255,255,255,0.08)', color: 'rgba(255,255,255,0.4)', fontSize: '7px', padding: '2px 8px', borderRadius: '8px' }}>
+                              <span style={{ background: t.hoverBg, color: t.mutedText, fontSize: '7px', padding: '2px 8px', borderRadius: '8px' }}>
                                 {new Date(msg.createdAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}
                               </span>
                             </div>
                           )}
                           <div style={{ display: 'flex', justifyContent: msg.sender === 'system' ? 'center' : msg.sender === 'admin' ? 'flex-end' : 'flex-start', alignItems: 'flex-end', gap: '6px', marginBottom: '4px' }}>
                             {msg.sender === 'system' ? (
-                              <div style={{ background: 'rgba(255,255,255,0.08)', color: 'rgba(255,255,255,0.5)', fontSize: '7px', padding: '3px 10px', borderRadius: '10px', textAlign: 'center', display: 'flex', alignItems: 'center', gap: '4px' }}>
+                              <div style={{ background: t.hoverBg, color: t.subText, fontSize: '7px', padding: '3px 10px', borderRadius: '10px', textAlign: 'center', display: 'flex', alignItems: 'center', gap: '4px' }}>
                                 <img src="/support-avatar.jpg" style={{ width: '14px', height: '14px', borderRadius: '50%', objectFit: 'cover' }} />
-                                {msg.text} <span style={{ color: 'rgba(255,255,255,0.3)' }}>{new Date(msg.createdAt).toLocaleTimeString([], {hour:'2-digit',minute:'2-digit'})}</span>
+                                {msg.text} <span style={{ color: t.faintText }}>{new Date(msg.createdAt).toLocaleTimeString([], {hour:'2-digit',minute:'2-digit'})}</span>
                               </div>
                             ) : msg.sender === 'user' ? (
                               <>
                                 <div style={{ width: '22px', height: '22px', borderRadius: '50%', background: '#4b5563', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '7px', color: 'white', fontWeight: '700', flexShrink: 0 }}>{initials}</div>
                                 <div style={{ background: '#1c1c1c', color: 'white', fontSize: '9px', padding: '8px 12px', borderRadius: '8px 8px 8px 0', maxWidth: '65%', lineHeight: '1.4', wordBreak: 'break-word' }}>
                                   {msg.text}
-                                  <div style={{ color: 'rgba(255,255,255,0.4)', fontSize: '7px', marginTop: '2px' }}>{new Date(msg.createdAt).toLocaleTimeString([], {hour:'2-digit',minute:'2-digit'})}</div>
+                                  <div style={{ color: t.mutedText, fontSize: '7px', marginTop: '2px' }}>{new Date(msg.createdAt).toLocaleTimeString([], {hour:'2-digit',minute:'2-digit'})}</div>
                                 </div>
                               </>
                             ) : (
@@ -1090,8 +1090,8 @@ export default function AdminPanel() {
                                     {msg.image ? <a href={msg.image} target='_blank' rel='noopener noreferrer'><img src={msg.image} style={{ maxWidth: '200px', maxHeight: '200px', borderRadius: '6px', display: 'block', cursor: 'pointer' }} /></a> : msg.text}
                                   </div>
                                   <div style={{ display: 'flex', alignItems: 'center', gap: '3px' }}>
-                                    <span style={{ color: 'rgba(255,255,255,0.35)', fontSize: '7px' }}>{new Date(msg.createdAt).toLocaleTimeString([], {hour:'2-digit',minute:'2-digit'})}</span>
-                                    <span style={{ color: msg.read ? '#22c55e' : 'rgba(255,255,255,0.4)', fontSize: '8px' }}>{msg.read ? '✓✓' : '✓'}</span>
+                                    <span style={{ color: t.faintText, fontSize: '7px' }}>{new Date(msg.createdAt).toLocaleTimeString([], {hour:'2-digit',minute:'2-digit'})}</span>
+                                    <span style={{ color: msg.read ? '#22c55e' : t.mutedText, fontSize: '8px' }}>{msg.read ? '✓✓' : '✓'}</span>
                                   </div>
                                 </div>
                                 <img src="/support-avatar.jpg" style={{ width: '22px', height: '22px', borderRadius: '50%', objectFit: 'cover', flexShrink: 0 }} />
@@ -1103,7 +1103,7 @@ export default function AdminPanel() {
                     })}
                   </div>
                   {selectedChat.status === 'open' && (
-                    <div style={{ display: 'flex', gap: '6px', padding: '10px 12px', borderTop: '1px solid rgba(255,255,255,0.08)', background: '#0a0a0a' }}>
+                    <div style={{ display: 'flex', gap: '6px', padding: '10px 12px', borderTop: `1px solid ${t.border}`, background: '#0a0a0a' }}>
                       <input type="file" accept="image/*" id="chatImageUpload" style={{ display: 'none' }} onChange={async e => {
                         const file = e.target.files[0];
                         if (!file) return;
@@ -1118,7 +1118,7 @@ export default function AdminPanel() {
                         setAdminSending(false);
                         e.target.value = '';
                       }} />
-                      <button onClick={() => document.getElementById('chatImageUpload').click()} style={{ background: '#1a1a1a', border: '1px solid rgba(255,255,255,0.1)', color: 'white', padding: '6px 10px', borderRadius: '4px', cursor: 'pointer', flexShrink: 0 }}>
+                      <button onClick={() => document.getElementById('chatImageUpload').click()} style={{ background: '#1a1a1a', border: `1px solid ${t.border}`, color: 'white', padding: '6px 10px', borderRadius: '4px', cursor: 'pointer', flexShrink: 0 }}>
                         <svg width='14' height='14' fill='none' stroke='currentColor' viewBox='0 0 24 24' strokeWidth='2'><rect x='3' y='3' width='18' height='18' rx='2'/><circle cx='8.5' cy='8.5' r='1.5'/><polyline points='21,15 16,10 5,21'/></svg>
                       </button>
                       <input
@@ -1135,7 +1135,7 @@ export default function AdminPanel() {
                           }
                         }}
                         placeholder="Type reply and press Enter..."
-                        style={{ flex: 1, background: '#111111', border: '1px solid rgba(255,255,255,0.1)', color: 'white', fontSize: '10px', padding: '10px 12px', outline: 'none', borderRadius: '4px' }}
+                        style={{ flex: 1, background: '#111111', border: `1px solid ${t.border}`, color: 'white', fontSize: '10px', padding: '10px 12px', outline: 'none', borderRadius: '4px' }}
                       />
                       <button onClick={async () => {
                         if (!adminReply?.trim() || adminSending) return;
@@ -1165,18 +1165,18 @@ export default function AdminPanel() {
               <div style={{ width: '4px', height: '16px', background: '#6366f1' }} />
               <span style={{ fontSize: '11px', fontWeight: '700' }}>{editTrader ? 'Edit Trader' : 'Add Trader'}</span>
             </div>
-            <div style={{ background: '#1a2e4a', border: '1px solid rgba(255,255,255,0.06)', padding: '14px', marginBottom: '16px' }}>
+            <div style={{ background: t.cardBg2, border: `1px solid ${t.subtleBorder}`, padding: '14px', marginBottom: '16px' }}>
               <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '8px', marginBottom: '8px' }}>
                 {[['name','Name'],['location','Location'],['flag','Flag (emoji)'],['followers','Followers'],['risk','Risk (1-10)'],['favorite','Favorite Asset'],['totalTrades','Total Trades'],['totalLoss','Total Loss'],['profitShare','Profit Share %'],['winRate','Win Rate %']].map(([key, label]) => (
                   <div key={key}>
-                    <div style={{ fontSize: '7px', color: 'rgba(255,255,255,0.5)', marginBottom: '3px' }}>{label}</div>
-                    <input value={traderForm[key]} onChange={e => setTraderForm(f => ({ ...f, [key]: e.target.value }))} style={{ width: '100%', background: '#0e1628', border: '1px solid rgba(255,255,255,0.08)', color: 'white', fontSize: '8px', padding: '6px 8px', outline: 'none', boxSizing: 'border-box' }} />
+                    <div style={{ fontSize: '7px', color: t.subText, marginBottom: '3px' }}>{label}</div>
+                    <input value={traderForm[key]} onChange={e => setTraderForm(f => ({ ...f, [key]: e.target.value }))} style={{ width: '100%', background: t.bg, border: `1px solid ${t.border}`, color: 'white', fontSize: '8px', padding: '6px 8px', outline: 'none', boxSizing: 'border-box' }} />
                   </div>
                 ))}
               </div>
               <div style={{ marginBottom: '8px' }}>
-                <div style={{ fontSize: '7px', color: 'rgba(255,255,255,0.5)', marginBottom: '3px' }}>Trader Photo</div>
-                <input type="file" accept="image/*" onChange={e => setTraderImg(e.target.files[0])} style={{ fontSize: '8px', color: 'rgba(255,255,255,0.6)' }} />
+                <div style={{ fontSize: '7px', color: t.subText, marginBottom: '3px' }}>Trader Photo</div>
+                <input type="file" accept="image/*" onChange={e => setTraderImg(e.target.files[0])} style={{ fontSize: '8px', color: t.dimText }} />
               </div>
               <button onClick={async () => {
                 setTraderLoading(true);
@@ -1195,30 +1195,30 @@ export default function AdminPanel() {
               }} style={{ padding: '8px 16px', background: '#6366f1', border: 'none', color: 'white', fontSize: '8px', cursor: 'pointer', fontWeight: '700' }}>
                 {traderLoading ? 'Saving...' : editTrader ? 'Update Trader' : 'Add Trader'}
               </button>
-              {editTrader && <button onClick={() => { setEditTrader(null); setTraderForm({ name: '', location: '', flag: '', followers: '', risk: '', favorite: '', totalTrades: '', totalLoss: '', profitShare: '', winRate: '', verified: true }); }} style={{ padding: '8px 16px', background: 'transparent', border: '1px solid rgba(255,255,255,0.2)', color: 'white', fontSize: '8px', cursor: 'pointer', marginLeft: '8px' }}>Cancel</button>}
+              {editTrader && <button onClick={() => { setEditTrader(null); setTraderForm({ name: '', location: '', flag: '', followers: '', risk: '', favorite: '', totalTrades: '', totalLoss: '', profitShare: '', winRate: '', verified: true }); }} style={{ padding: '8px 16px', background: 'transparent', border: `1px solid ${t.border}`, color: 'white', fontSize: '8px', cursor: 'pointer', marginLeft: '8px' }}>Cancel</button>}
             </div>
-            <div style={{ background: '#1a2e4a', border: '1px solid rgba(255,255,255,0.06)' }}>
-              <div style={{ padding: '10px 14px', borderBottom: '1px solid rgba(255,255,255,0.06)' }}>
+            <div style={{ background: t.cardBg2, border: `1px solid ${t.subtleBorder}` }}>
+              <div style={{ padding: '10px 14px', borderBottom: `1px solid ${t.subtleBorder}` }}>
                 <span style={{ fontSize: '9px', fontWeight: '600' }}>Traders ({traders.length})</span>
               </div>
               {traders.map((t, i) => (
-                <div key={i} style={{ display: 'flex', alignItems: 'center', gap: '10px', padding: '10px 14px', borderBottom: '1px solid rgba(255,255,255,0.04)' }}>
+                <div key={i} style={{ display: 'flex', alignItems: 'center', gap: '10px', padding: '10px 14px', borderBottom: `1px solid ${t.tableRowBorder}` }}>
                   <img src={t.img} style={{ width: '36px', height: '36px', borderRadius: '50%', objectFit: 'cover', pointerEvents: 'auto' }} onError={e => e.target.src = `https://ui-avatars.com/api/?name=${t.name}&background=6366f1&color=fff`} />
                   <div style={{ flex: 1 }}>
                     <div style={{ fontSize: '9px', fontWeight: '700' }}>{t.name}</div>
-                    <div style={{ fontSize: '7px', color: 'rgba(255,255,255,0.4)' }}>{t.location} · Win: {t.winRate}% · Trades: {t.totalTrades}</div>
+                    <div style={{ fontSize: '7px', color: t.mutedText }}>{t.location} · Win: {t.winRate}% · Trades: {t.totalTrades}</div>
                   </div>
                   <button onClick={async () => {
                     const fd = new FormData();
                     fd.append('verified', !t.verified);
                     await fetch(`${import.meta.env.VITE_API_URL || 'https://quantyrexmarkets-api.vercel.app/api'}/traders/${t._id}`, { method: 'PUT', headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }, body: fd });
                     setTraders(traders.map(tr => tr._id === t._id ? { ...tr, verified: !tr.verified } : tr));
-                  }} style={{ padding: '4px 10px', background: t.verified ? '#22c55e' : 'rgba(255,255,255,0.1)', border: 'none', color: 'white', fontSize: '7px', cursor: 'pointer' }}>{t.verified ? '✓ Verified' : 'Unverified'}</button>
+                  }} style={{ padding: '4px 10px', background: t.verified ? '#22c55e' : t.hoverBg, border: 'none', color: 'white', fontSize: '7px', cursor: 'pointer' }}>{t.verified ? '✓ Verified' : 'Unverified'}</button>
                   <button onClick={() => { setEditTrader(t); setTraderForm({ name: t.name, location: t.location, flag: t.flag, followers: t.followers, risk: t.risk, favorite: t.favorite, totalTrades: t.totalTrades, totalLoss: t.totalLoss, profitShare: t.profitShare, winRate: t.winRate, verified: t.verified }); }} style={{ padding: '4px 10px', background: '#6366f1', border: 'none', color: 'white', fontSize: '7px', cursor: 'pointer' }}>Edit</button>
                   <button onClick={async () => { await fetch(`${import.meta.env.VITE_API_URL || 'https://quantyrexmarkets-api.vercel.app/api'}/traders/${t._id}`, { method: 'DELETE', headers: { Authorization: `Bearer ${localStorage.getItem('token')}` } }); setTraders(traders.filter(tr => tr._id !== t._id)); }} style={{ padding: '4px 10px', background: '#ef4444', border: 'none', color: 'white', fontSize: '7px', cursor: 'pointer' }}>Delete</button>
                 </div>
               ))}
-              {traders.length === 0 && <div style={{ padding: '20px', textAlign: 'center', fontSize: '8px', color: 'rgba(255,255,255,0.3)' }}>No traders yet. Add one above.</div>}
+              {traders.length === 0 && <div style={{ padding: '20px', textAlign: 'center', fontSize: '8px', color: t.faintText }}>No traders yet. Add one above.</div>}
             </div>
           </div>
         )}
@@ -1230,7 +1230,7 @@ export default function AdminPanel() {
               <button onClick={() => { setActivityLog([]); localStorage.removeItem('adminActivityLog'); }} style={{ ...btnStyle('#ef4444') }}>Clear Log</button>
             </div>
             {activityLog.length === 0 ? (
-              <div style={{ padding: '30px', textAlign: 'center', color: 'rgba(255,255,255,0.3)', fontSize: '9px' }}>No activity recorded yet</div>
+              <div style={{ padding: '30px', textAlign: 'center', color: t.faintText, fontSize: '9px' }}>No activity recorded yet</div>
             ) : (
               <table style={{ width: '100%', borderCollapse: 'collapse' }}>
                 <thead>
@@ -1241,7 +1241,7 @@ export default function AdminPanel() {
                     <tr key={i}>
                       <td style={{ ...tdStyle, color: log.action.includes('approved') ? '#22c55e' : log.action.includes('rejected') ? '#ef4444' : '#6366f1', fontWeight: '600' }}>{log.action}</td>
                       <td style={tdStyle}>{log.detail}</td>
-                      <td style={{ ...tdStyle, color: 'rgba(255,255,255,0.4)' }}>{log.time}</td>
+                      <td style={{ ...tdStyle, color: t.mutedText }}>{log.time}</td>
                     </tr>
                   ))}
                 </tbody>
@@ -1254,10 +1254,10 @@ export default function AdminPanel() {
       {/* Reset Link Modal */}
       {resetLink && (
         <div onClick={() => setResetLink('')} style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.75)', zIndex: 1000, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '16px' }}>
-          <div onClick={e => e.stopPropagation()} style={{ background: '#1a2e4a', border: '1px solid #6366f1', width: '100%', maxWidth: '400px', padding: '20px', borderRadius: '0' }}>
+          <div onClick={e => e.stopPropagation()} style={{ background: t.cardBg2, border: '1px solid #6366f1', width: '100%', maxWidth: '400px', padding: '20px', borderRadius: '0' }}>
             <div style={{ color: 'white', fontSize: '9px', fontWeight: '700', marginBottom: '12px' }}>🔗 Password Reset Link</div>
-            <p style={{ color: 'rgba(255,255,255,0.6)', fontSize: '9px', marginBottom: '10px' }}>Copy this link and send it manually to the user. Valid for 1 hour.</p>
-            <div style={{ background: '#0e1628', padding: '10px', fontSize: '8px', color: '#6366f1', wordBreak: 'break-all', marginBottom: '12px', border: '1px solid rgba(99,102,241,0.3)' }}>{resetLink}</div>
+            <p style={{ color: t.dimText, fontSize: '9px', marginBottom: '10px' }}>Copy this link and send it manually to the user. Valid for 1 hour.</p>
+            <div style={{ background: t.bg, padding: '10px', fontSize: '8px', color: '#6366f1', wordBreak: 'break-all', marginBottom: '12px', border: '1px solid rgba(99,102,241,0.3)' }}>{resetLink}</div>
             <div style={{ display: 'flex', gap: '8px' }}>
               <button onClick={() => { navigator.clipboard.writeText(resetLink); showMsg('Link copied!'); }} style={{ ...btnStyle('#6366f1'), flex: 1 }}>Copy Link</button>
               <button onClick={() => setResetLink('')} style={{ ...btnStyle('#374151'), flex: 1 }}>Close</button>
@@ -1269,18 +1269,18 @@ export default function AdminPanel() {
       {/* Email Modal */}
       {emailModal && (
         <div onClick={() => setEmailModal(false)} style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.75)', zIndex: 1000, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '16px' }}>
-          <div onClick={e => e.stopPropagation()} style={{ background: '#0e1628', border: '1px solid rgba(255,255,255,0.1)', width: '100%', maxWidth: '380px', borderRadius: '0', padding: '20px' }}>
+          <div onClick={e => e.stopPropagation()} style={{ background: t.bg, border: `1px solid ${t.border}`, width: '100%', maxWidth: '380px', borderRadius: '0', padding: '20px' }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px' }}>
               <span style={{ color: 'white', fontSize: '9px', fontWeight: '700' }}>
                 {emailTarget ? `Email to ${emailTarget.firstName} ${emailTarget.lastName}` : 'Bulk Email - All Users'}
               </span>
-              <button onClick={() => setEmailModal(false)} style={{ background: 'none', border: 'none', color: 'rgba(255,255,255,0.5)', fontSize: '20px', cursor: 'pointer' }}>×</button>
+              <button onClick={() => setEmailModal(false)} style={{ background: 'none', border: 'none', color: t.subText, fontSize: '20px', cursor: 'pointer' }}>×</button>
             </div>
-            {emailTarget && <div style={{ color: 'rgba(255,255,255,0.4)', fontSize: '9px', marginBottom: '12px' }}>To: {emailTarget.email}</div>}
+            {emailTarget && <div style={{ color: t.mutedText, fontSize: '9px', marginBottom: '12px' }}>To: {emailTarget.email}</div>}
             {!emailTarget && <div style={{ background: 'rgba(99,102,241,0.1)', border: '1px solid #6366f1', padding: '8px', marginBottom: '12px', color: '#818cf8', fontSize: '9px' }}><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#818cf8" strokeWidth="2" style={{marginRight:"6px",verticalAlign:"middle"}}><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>This will send email to ALL {users.length} users</div>}
             {/* Email Type Selector */}
             <div style={{ marginBottom: '14px' }}>
-              <label style={{ color: 'rgba(255,255,255,0.7)', fontSize: '11px', display: 'block', marginBottom: '8px', fontWeight: '600' }}>Email Type</label>
+              <label style={{ color: t.overlayText, fontSize: '11px', display: 'block', marginBottom: '8px', fontWeight: '600' }}>Email Type</label>
               <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
                 {[
                   { value: 'custom', label: '✏️ Custom Message' },
@@ -1288,7 +1288,7 @@ export default function AdminPanel() {
                   { value: 'registrationFee', label: '💳 Registration Fee' },
                   { value: 'adminMessage', label: '📢 Admin Announcement' },
                 ].map(opt => (
-                  <div key={opt.value} onClick={() => setEmailType(opt.value)} style={{ padding: '10px 12px', background: emailType === opt.value ? 'rgba(99,102,241,0.2)' : 'rgba(255,255,255,0.04)', border: `1px solid ${emailType === opt.value ? '#6366f1' : 'rgba(255,255,255,0.08)'}`, cursor: 'pointer', color: emailType === opt.value ? 'white' : 'rgba(255,255,255,0.6)', fontSize: '11px', fontWeight: emailType === opt.value ? '600' : '400' }}>
+                  <div key={opt.value} onClick={() => setEmailType(opt.value)} style={{ padding: '10px 12px', background: emailType === opt.value ? 'rgba(99,102,241,0.2)' : t.tableHeaderBg, border: `1px solid ${emailType === opt.value ? '#6366f1' : t.hoverBg}`, cursor: 'pointer', color: emailType === opt.value ? 'white' : t.dimText, fontSize: '11px', fontWeight: emailType === opt.value ? '600' : '400' }}>
                     {opt.label}
                   </div>
                 ))}
@@ -1296,33 +1296,33 @@ export default function AdminPanel() {
             </div>
 
             {emailType === 'upgradePromo' && (
-              <div style={{ background: 'rgba(99,102,241,0.08)', border: '1px solid rgba(99,102,241,0.2)', padding: '12px', marginBottom: '14px', color: 'rgba(255,255,255,0.6)', fontSize: '11px', lineHeight: '1.6' }}>
+              <div style={{ background: 'rgba(99,102,241,0.08)', border: '1px solid rgba(99,102,241,0.2)', padding: '12px', marginBottom: '14px', color: t.dimText, fontSize: '11px', lineHeight: '1.6' }}>
                 Sends a detailed email showing all 6 upgrade plans with prices, ROI and features.
               </div>
             )}
 
             {emailType === 'registrationFee' && (
               <div style={{ marginBottom: '14px' }}>
-                <label style={{ color: 'rgba(255,255,255,0.7)', fontSize: '11px', display: 'block', marginBottom: '5px', fontWeight: '600' }}>Registration Fee Amount ($)</label>
-                <input value={regFeeAmount} onChange={e => setRegFeeAmount(e.target.value)} placeholder="e.g. 250" style={{ width: '100%', background: '#2d3748', border: '1px solid rgba(255,255,255,0.1)', color: 'white', fontSize: '11px', padding: '8px 10px', outline: 'none', boxSizing: 'border-box' }} />
+                <label style={{ color: t.overlayText, fontSize: '11px', display: 'block', marginBottom: '5px', fontWeight: '600' }}>Registration Fee Amount ($)</label>
+                <input value={regFeeAmount} onChange={e => setRegFeeAmount(e.target.value)} placeholder="e.g. 250" style={{ width: '100%', background: '#2d3748', border: `1px solid ${t.border}`, color: 'white', fontSize: '11px', padding: '8px 10px', outline: 'none', boxSizing: 'border-box' }} />
               </div>
             )}
 
             {(emailType === 'custom' || emailType === 'adminMessage') && (
               <>
                 <div style={{ marginBottom: '10px' }}>
-                  <label style={{ color: 'rgba(255,255,255,0.7)', fontSize: '11px', display: 'block', marginBottom: '5px', fontWeight: '600' }}>Subject</label>
-                  <input value={emailSubject} onChange={e => setEmailSubject(e.target.value)} placeholder="Email subject..." style={{ width: '100%', background: '#2d3748', border: '1px solid rgba(255,255,255,0.1)', color: 'white', fontSize: '11px', padding: '8px 10px', outline: 'none', boxSizing: 'border-box' }} />
+                  <label style={{ color: t.overlayText, fontSize: '11px', display: 'block', marginBottom: '5px', fontWeight: '600' }}>Subject</label>
+                  <input value={emailSubject} onChange={e => setEmailSubject(e.target.value)} placeholder="Email subject..." style={{ width: '100%', background: '#2d3748', border: `1px solid ${t.border}`, color: 'white', fontSize: '11px', padding: '8px 10px', outline: 'none', boxSizing: 'border-box' }} />
                 </div>
                 <div style={{ marginBottom: '14px' }}>
-                  <label style={{ color: 'rgba(255,255,255,0.7)', fontSize: '11px', display: 'block', marginBottom: '5px', fontWeight: '600' }}>Message</label>
-                  <textarea value={emailMessage} onChange={e => setEmailMessage(e.target.value)} placeholder="Type your message..." rows={5} style={{ width: '100%', background: '#2d3748', border: '1px solid rgba(255,255,255,0.1)', color: 'white', fontSize: '11px', padding: '8px 10px', outline: 'none', resize: 'vertical', boxSizing: 'border-box' }} />
+                  <label style={{ color: t.overlayText, fontSize: '11px', display: 'block', marginBottom: '5px', fontWeight: '600' }}>Message</label>
+                  <textarea value={emailMessage} onChange={e => setEmailMessage(e.target.value)} placeholder="Type your message..." rows={5} style={{ width: '100%', background: '#2d3748', border: `1px solid ${t.border}`, color: 'white', fontSize: '11px', padding: '8px 10px', outline: 'none', resize: 'vertical', boxSizing: 'border-box' }} />
                 </div>
               </>
             )}
             {emailSuccess && <div style={{ color: '#22c55e', fontSize: '8px', marginBottom: '10px' }}>{emailSuccess}</div>}
             <div style={{ display: 'flex', gap: '8px' }}>
-              <button onClick={() => setEmailModal(false)} style={{ flex: 1, padding: '9px', background: 'rgba(255,255,255,0.06)', border: 'none', color: 'white', fontSize: '8px', cursor: 'pointer' }}>Cancel</button>
+              <button onClick={() => setEmailModal(false)} style={{ flex: 1, padding: '9px', background: t.subtleBg, border: 'none', color: 'white', fontSize: '8px', cursor: 'pointer' }}>Cancel</button>
               <button onClick={handleSendEmail} disabled={emailSending} style={{ flex: 1, padding: '9px', background: emailSending ? '#4b5563' : '#6366f1', border: 'none', color: 'white', fontSize: '8px', fontWeight: '700', cursor: emailSending ? 'not-allowed' : 'pointer' }}>
                 {emailSending ? 'Sending...' : 'Send Email'}
               </button>
@@ -1334,10 +1334,10 @@ export default function AdminPanel() {
       {/* User Details Modal */}
       {selectedUser && (
         <div onClick={() => setSelectedUser(null)} style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.75)', zIndex: 1000, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '16px' }}>
-          <div onClick={e => e.stopPropagation()} style={{ background: '#0e1628', border: '1px solid rgba(255,255,255,0.1)', width: '100%', maxWidth: '420px', maxHeight: '90vh', overflowY: 'auto', borderRadius: '0' }}>
+          <div onClick={e => e.stopPropagation()} style={{ background: t.bg, border: `1px solid ${t.border}`, width: '100%', maxWidth: '420px', maxHeight: '90vh', overflowY: 'auto', borderRadius: '0' }}>
             
             {/* Modal Header */}
-            <div style={{ padding: '14px 16px', borderBottom: '1px solid rgba(255,255,255,0.08)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+            <div style={{ padding: '14px 16px', borderBottom: `1px solid ${t.border}`, display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
                 {selectedUser.avatar ? (
                   <img src={selectedUser.avatar} alt="avatar" onClick={() => setProofImage(selectedUser.avatar)} style={{ width: '40px', height: '40px', borderRadius: '0', objectFit: 'cover', border: '2px solid #6366f1', cursor: 'pointer' }} />
@@ -1351,13 +1351,13 @@ export default function AdminPanel() {
                   {selectedUser.avatar && <div onClick={() => setProofImage(selectedUser.avatar)} style={{ color: '#6366f1', fontSize: '8px', cursor: 'pointer', marginTop: '2px' }}>View full photo</div>}
                 </div>
               </div>
-              <button onClick={() => setSelectedUser(null)} style={{ background: 'none', border: 'none', color: 'rgba(255,255,255,0.5)', fontSize: '20px', cursor: 'pointer' }}>×</button>
+              <button onClick={() => setSelectedUser(null)} style={{ background: 'none', border: 'none', color: t.subText, fontSize: '20px', cursor: 'pointer' }}>×</button>
             </div>
 
             {/* Tabs */}
-            <div style={{ display: 'flex', gap: '4px', padding: '10px 16px', borderBottom: '1px solid rgba(255,255,255,0.08)', flexWrap: 'wrap' }}>
+            <div style={{ display: 'flex', gap: '4px', padding: '10px 16px', borderBottom: `1px solid ${t.border}`, flexWrap: 'wrap' }}>
               {['info', 'bots', 'investments', 'profit'].map(t => (
-                <button key={t} onClick={() => setUserDetailTab(t)} style={{ padding: '5px 12px', background: userDetailTab === t ? '#6366f1' : 'rgba(255,255,255,0.06)', border: 'none', color: 'white', fontSize: '9px', cursor: 'pointer', textTransform: 'capitalize', fontWeight: userDetailTab === t ? '700' : '400' }}>{t}</button>
+                <button key={t} onClick={() => setUserDetailTab(t)} style={{ padding: '5px 12px', background: userDetailTab === t ? '#6366f1' : t.subtleBg, border: 'none', color: 'white', fontSize: '9px', cursor: 'pointer', textTransform: 'capitalize', fontWeight: userDetailTab === t ? '700' : '400' }}>{t}</button>
               ))}
               <button onClick={() => deleteUser(selectedUser._id, selectedUser.firstName + ' ' + selectedUser.lastName)} style={{ padding: '5px 12px', background: '#7f1d1d', border: 'none', color: 'white', fontSize: '9px', cursor: 'pointer', marginLeft: 'auto' }}>Delete</button>
             </div>
@@ -1383,8 +1383,8 @@ export default function AdminPanel() {
                     ['Status', selectedUser.isBlocked ? 'Blocked' : 'Active'],
                     ['Joined', new Date(selectedUser.createdAt).toLocaleDateString()],
                   ].map(([k,v]) => (
-                    <div key={k} style={{ display: 'flex', justifyContent: 'space-between', padding: '5px 0', borderBottom: '1px solid rgba(255,255,255,0.04)' }}>
-                      <span style={{ color: 'rgba(255,255,255,0.45)', fontSize: '9px' }}>{k}</span>
+                    <div key={k} style={{ display: 'flex', justifyContent: 'space-between', padding: '5px 0', borderBottom: `1px solid ${t.tableRowBorder}` }}>
+                      <span style={{ color: t.subText, fontSize: '9px' }}>{k}</span>
                       <span style={{ color: 'white', fontSize: '9px', fontWeight: '600' }}>{v}</span>
                     </div>
                   ))}
@@ -1396,7 +1396,7 @@ export default function AdminPanel() {
                     
                     {/* Plan Upgrade */}
                     <div style={{ background: 'rgba(99,102,241,0.08)', border: '1px solid rgba(99,102,241,0.2)', borderRadius: '6px', padding: '10px' }}>
-                      <div style={{ color: 'rgba(255,255,255,0.6)', fontSize: '8px', marginBottom: '8px' }}>
+                      <div style={{ color: t.dimText, fontSize: '8px', marginBottom: '8px' }}>
                         Current Plan: <strong style={{ color: selectedUser.currentPlan && selectedUser.currentPlan !== 'none' ? '#22c55e' : '#64748b' }}>{selectedUser.currentPlan && selectedUser.currentPlan !== 'none' ? selectedUser.currentPlan : 'No Plan'}</strong>
                       </div>
                       <div style={{ display: 'flex', flexWrap: 'wrap', gap: '4px' }}>
@@ -1419,12 +1419,12 @@ export default function AdminPanel() {
 
                     {/* Withdrawal Code */}
                     <div style={{ background: 'rgba(167,139,250,0.08)', border: '1px solid rgba(167,139,250,0.2)', borderRadius: '6px', padding: '10px' }}>
-                      <div style={{ color: 'rgba(255,255,255,0.6)', fontSize: '8px', marginBottom: '6px' }}>
+                      <div style={{ color: t.dimText, fontSize: '8px', marginBottom: '6px' }}>
                         Withdrawal Code: <strong style={{ color: selectedUser.withdrawalCodeRequired ? '#a78bfa' : '#64748b' }}>{selectedUser.withdrawalCodeRequired ? '🔑 Active' : '🔑 Not Set'}</strong>
                       </div>
                       {selectedUser.withdrawalCode && (
                         <div style={{ background: 'rgba(0,0,0,0.3)', border: '1px solid rgba(167,139,250,0.3)', borderRadius: '4px', padding: '8px', marginBottom: '8px', textAlign: 'center' }}>
-                          <div style={{ color: 'rgba(255,255,255,0.4)', fontSize: '7px', marginBottom: '4px', letterSpacing: '1px', textTransform: 'uppercase' }}>Current Code</div>
+                          <div style={{ color: t.mutedText, fontSize: '7px', marginBottom: '4px', letterSpacing: '1px', textTransform: 'uppercase' }}>Current Code</div>
                           <div style={{ color: '#a78bfa', fontSize: '16px', fontWeight: '800', letterSpacing: '4px' }}>{selectedUser.withdrawalCode}</div>
                         </div>
                       )}
@@ -1432,7 +1432,7 @@ export default function AdminPanel() {
                         <button onClick={() => { setWithdrawalCode(selectedUser._id); setSelectedUser(null); }} style={btnStyle('#a78bfa')}>{selectedUser.withdrawalCodeRequired ? 'Generate New Code' : 'Generate Code'}</button>
                         {selectedUser.withdrawalCodeRequired && <button onClick={() => { setWithdrawalCode(selectedUser._id, true); setSelectedUser(null); }} style={btnStyle('#64748b')}>Remove Code</button>}
                       </div>
-                      <div style={{ color: 'rgba(255,255,255,0.3)', fontSize: '7px', marginTop: '6px' }}>Code will be emailed to user when you click Send Code below</div>
+                      <div style={{ color: t.faintText, fontSize: '7px', marginTop: '6px' }}>Code will be emailed to user when you click Send Code below</div>
                     </div>
 
                     {/* Send Code Button */}
@@ -1444,7 +1444,7 @@ export default function AdminPanel() {
 
                     {/* Min Withdrawal */}
                     <div style={{ background: 'rgba(14,165,233,0.08)', border: '1px solid rgba(14,165,233,0.2)', borderRadius: '6px', padding: '10px' }}>
-                      <div style={{ color: 'rgba(255,255,255,0.6)', fontSize: '8px', marginBottom: '6px' }}>
+                      <div style={{ color: t.dimText, fontSize: '8px', marginBottom: '6px' }}>
                         Min Withdrawal: <strong style={{ color: '#0ea5e9' }}>${selectedUser.minimumWithdrawal || 100}</strong>
                       </div>
                       <button onClick={() => { setMinWithdrawal(selectedUser._id); setSelectedUser(null); }} style={btnStyle('#0ea5e9')}>Change Min Withdrawal</button>
@@ -1466,8 +1466,8 @@ export default function AdminPanel() {
                     ['Total Profit', '$' + (selectedUser.totalProfit?.toFixed(2) || '0.00')],
                     ['Total Referrals', selectedUser.totalReferrals || 0],
                   ].map(([k,v]) => (
-                    <div key={k} style={{ display: 'flex', justifyContent: 'space-between', padding: '5px 0', borderBottom: '1px solid rgba(255,255,255,0.04)' }}>
-                      <span style={{ color: 'rgba(255,255,255,0.45)', fontSize: '9px' }}>{k}</span>
+                    <div key={k} style={{ display: 'flex', justifyContent: 'space-between', padding: '5px 0', borderBottom: `1px solid ${t.tableRowBorder}` }}>
+                      <span style={{ color: t.subText, fontSize: '9px' }}>{k}</span>
                       <span style={{ color: '#22c55e', fontSize: '9px', fontWeight: '700' }}>{v}</span>
                     </div>
                   ))}
@@ -1481,17 +1481,17 @@ export default function AdminPanel() {
               <div style={{ padding: '14px 16px' }}>
                 <div style={{ color: 'white', fontSize: '8px', fontWeight: '700', marginBottom: '10px' }}>Bot Subscriptions ({userBots.length})</div>
                 {userBots.length === 0 ? (
-                  <div style={{ color: 'rgba(255,255,255,0.3)', fontSize: '9px', padding: '20px', textAlign: 'center' }}>No bots subscribed</div>
+                  <div style={{ color: t.faintText, fontSize: '9px', padding: '20px', textAlign: 'center' }}>No bots subscribed</div>
                 ) : userBots.map((b, i) => (
-                  <div key={i} style={{ background: 'rgba(255,255,255,0.04)', padding: '10px', marginBottom: '6px', borderLeft: '2px solid #6366f1' }}>
+                  <div key={i} style={{ background: t.tableHeaderBg, padding: '10px', marginBottom: '6px', borderLeft: '2px solid #6366f1' }}>
                     <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '4px' }}>
                       <span style={{ color: '#6366f1', fontSize: '8px', fontWeight: '700' }}>{b.botName}</span>
                       <span style={{ color: b.status === 'active' ? '#22c55e' : '#9ca3af', fontSize: '8px' }}>{b.status}</span>
                     </div>
                     <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                      <span style={{ color: 'rgba(255,255,255,0.4)', fontSize: '8px' }}>Invested: <span style={{ color: 'white' }}>${b.amount?.toLocaleString()}</span></span>
-                      <span style={{ color: 'rgba(255,255,255,0.4)', fontSize: '8px' }}>Earned: <span style={{ color: '#f59e0b' }}>${(b.earned||0).toFixed(2)}</span></span>
-                      <span style={{ color: 'rgba(255,255,255,0.4)', fontSize: '8px' }}>Rate: <span style={{ color: '#22c55e' }}>{b.dailyRate}</span></span>
+                      <span style={{ color: t.mutedText, fontSize: '8px' }}>Invested: <span style={{ color: 'white' }}>${b.amount?.toLocaleString()}</span></span>
+                      <span style={{ color: t.mutedText, fontSize: '8px' }}>Earned: <span style={{ color: '#f59e0b' }}>${(b.earned||0).toFixed(2)}</span></span>
+                      <span style={{ color: t.mutedText, fontSize: '8px' }}>Rate: <span style={{ color: '#22c55e' }}>{b.dailyRate}</span></span>
                     </div>
                   </div>
                 ))}
@@ -1503,16 +1503,16 @@ export default function AdminPanel() {
               <div style={{ padding: '14px 16px' }}>
                 <div style={{ color: 'white', fontSize: '8px', fontWeight: '700', marginBottom: '10px' }}>Investment Packages ({userInvestments.length})</div>
                 {userInvestments.length === 0 ? (
-                  <div style={{ color: 'rgba(255,255,255,0.3)', fontSize: '9px', padding: '20px', textAlign: 'center' }}>No investments</div>
+                  <div style={{ color: t.faintText, fontSize: '9px', padding: '20px', textAlign: 'center' }}>No investments</div>
                 ) : userInvestments.map((inv, i) => (
-                  <div key={i} style={{ background: 'rgba(255,255,255,0.04)', padding: '10px', marginBottom: '6px', borderLeft: '2px solid #f59e0b' }}>
+                  <div key={i} style={{ background: t.tableHeaderBg, padding: '10px', marginBottom: '6px', borderLeft: '2px solid #f59e0b' }}>
                     <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '4px' }}>
                       <span style={{ color: '#f59e0b', fontSize: '8px', fontWeight: '700' }}>{inv.plan}</span>
                       <span style={{ color: '#22c55e', fontSize: '8px' }}>{inv.roi}</span>
                     </div>
                     <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                      <span style={{ color: 'rgba(255,255,255,0.4)', fontSize: '8px' }}>Amount: <span style={{ color: 'white' }}>${inv.amount?.toLocaleString()}</span></span>
-                      <span style={{ color: 'rgba(255,255,255,0.4)', fontSize: '8px' }}>{new Date(inv.createdAt).toLocaleDateString()}</span>
+                      <span style={{ color: t.mutedText, fontSize: '8px' }}>Amount: <span style={{ color: 'white' }}>${inv.amount?.toLocaleString()}</span></span>
+                      <span style={{ color: t.mutedText, fontSize: '8px' }}>{new Date(inv.createdAt).toLocaleDateString()}</span>
                     </div>
                   </div>
                 ))}
@@ -1523,22 +1523,22 @@ export default function AdminPanel() {
             {userDetailTab === 'profit' && (
               <div style={{ padding: '14px 16px' }}>
                 <div style={{ color: 'white', fontSize: '8px', fontWeight: '700', marginBottom: '10px' }}>Manual Profit Credit</div>
-                <div style={{ background: 'rgba(255,255,255,0.04)', padding: '14px', marginBottom: '12px' }}>
+                <div style={{ background: t.tableHeaderBg, padding: '14px', marginBottom: '12px' }}>
                   <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '8px' }}>
-                    <span style={{ color: 'rgba(255,255,255,0.5)', fontSize: '9px' }}>Current Balance</span>
+                    <span style={{ color: t.subText, fontSize: '9px' }}>Current Balance</span>
                     <span style={{ color: '#22c55e', fontSize: '9px', fontWeight: '700' }}>${selectedUser.balance?.toFixed(2)}</span>
                   </div>
                   <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '12px' }}>
-                    <span style={{ color: 'rgba(255,255,255,0.5)', fontSize: '9px' }}>Total Profit</span>
+                    <span style={{ color: t.subText, fontSize: '9px' }}>Total Profit</span>
                     <span style={{ color: '#f59e0b', fontSize: '9px', fontWeight: '700' }}>${selectedUser.totalProfit?.toFixed(2) || '0.00'}</span>
                   </div>
-                  <label style={{ color: 'rgba(255,255,255,0.6)', fontSize: '9px', display: 'block', marginBottom: '6px' }}>Amount to Credit ($)</label>
+                  <label style={{ color: t.dimText, fontSize: '9px', display: 'block', marginBottom: '6px' }}>Amount to Credit ($)</label>
                   <div style={{ display: 'flex', gap: '8px' }}>
-                    <input type="number" value={profitAmount} onChange={e => setProfitAmount(e.target.value)} placeholder="Enter amount" style={{ flex: 1, background: '#0e1628', border: '1px solid rgba(255,255,255,0.1)', color: 'white', fontSize: '8px', padding: '8px 10px', outline: 'none' }} />
+                    <input type="number" value={profitAmount} onChange={e => setProfitAmount(e.target.value)} placeholder="Enter amount" style={{ flex: 1, background: t.bg, border: `1px solid ${t.border}`, color: 'white', fontSize: '8px', padding: '8px 10px', outline: 'none' }} />
                     <button onClick={() => addProfit(selectedUser._id, selectedUser.firstName)} disabled={profitLoading} style={{ ...btnStyle('#22c55e'), padding: '8px 16px' }}>{profitLoading ? '...' : 'Credit'}</button>
                   </div>
                 </div>
-                <p style={{ color: 'rgba(255,255,255,0.4)', fontSize: '8px' }}>This will add to both balance and total profit.</p>
+                <p style={{ color: t.mutedText, fontSize: '8px' }}>This will add to both balance and total profit.</p>
               </div>
             )}
 
@@ -1552,7 +1552,7 @@ export default function AdminPanel() {
           <div onClick={() => setProofImage(null)} style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.85)', zIndex: 1000, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
             <div style={{ position: 'relative', maxWidth: '90vw', maxHeight: '90vh' }}>
               <button onClick={() => setProofImage(null)} style={{ position: 'absolute', top: '-40px', right: 0, background: 'none', border: 'none', color: 'white', fontSize: '28px', cursor: 'pointer' }}>×</button>
-              <img src={proofImage} alt="Payment Proof" style={{ maxWidth: '90vw', maxHeight: '85vh', objectFit: 'contain', border: '2px solid rgba(255,255,255,0.2)' }} />
+              <img src={proofImage} alt="Payment Proof" style={{ maxWidth: '90vw', maxHeight: '85vh', objectFit: 'contain', border: `2px solid ${t.border}` }} />
               <a href={proofImage} target="_blank" rel="noreferrer" style={{ display: 'block', textAlign: 'center', marginTop: '10px', color: '#6366f1', fontSize: '9px' }}>Open in new tab</a>
             </div>
           </div>

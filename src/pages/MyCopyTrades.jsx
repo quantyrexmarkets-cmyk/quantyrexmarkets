@@ -79,7 +79,7 @@ export default function MyCopyTrades() {
               Are you sure you want to stop copying {selectedTrade?.traderName}?
             </div>
             <div style={{ display: 'flex', gap: '10px' }}>
-              <button onClick={() => setShowStopModal(false)} style={{ flex: 1, padding: '8px', background: 'rgba(255,255,255,0.1)', border: 'none', borderRadius: '6px', color: t.text, fontSize: '9px', cursor: 'pointer' }}>Cancel</button>
+              <button onClick={() => setShowStopModal(false)} style={{ flex: 1, padding: '8px', background: t.hoverBg, border: 'none', borderRadius: '6px', color: t.text, fontSize: '9px', cursor: 'pointer' }}>Cancel</button>
               <button onClick={handleStop} style={{ flex: 1, padding: '8px', background: '#ef4444', border: 'none', borderRadius: '6px', color: t.text, fontSize: '9px', fontWeight: '700', cursor: 'pointer' }}>Stop</button>
             </div>
           </div>
@@ -108,10 +108,10 @@ export default function MyCopyTrades() {
 
         {/* Active Trades */}
         {loading ? (
-          <div style={{ padding: '40px', textAlign: 'center', color: 'rgba(255,255,255,0.3)', fontSize: '10px' }}>Loading...</div>
+          <div style={{ padding: '40px', textAlign: 'center', color: t.faintText, fontSize: '10px' }}>Loading...</div>
         ) : copyTrades.length === 0 ? (
           <div style={{ padding: '40px', textAlign: 'center' }}>
-            <div style={{ fontSize: '12px', color: 'rgba(255,255,255,0.3)', marginBottom: '10px' }}>No active copy trades</div>
+            <div style={{ fontSize: '12px', color: t.faintText, marginBottom: '10px' }}>No active copy trades</div>
             <button onClick={() => navigate('/dashboard/copy-trading')} style={{ padding: '8px 16px', background: '#6366f1', border: 'none', borderRadius: '6px', color: t.text, fontSize: '10px', fontWeight: '700', cursor: 'pointer' }}>Browse Traders</button>
           </div>
         ) : (
@@ -134,16 +134,16 @@ export default function MyCopyTrades() {
                     <button onClick={() => { setSelectedTrade(trade); setShowStopModal(true); }} style={{ background: 'rgba(239,68,68,0.1)', border: '1px solid rgba(239,68,68,0.25)', padding: '6px 10px', borderRadius: '6px', color: '#ef4444', fontSize: '8px', cursor: 'pointer' }}>✕ Stop</button>
                   </div>
                   <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '6px' }}>
-                    <div style={{ background: t.bg, borderRadius: '8px', padding: '8px', textAlign: 'center', border: '1px solid rgba(255,255,255,0.04)' }}>
-                      <div style={{ fontSize: '7px', color: 'rgba(255,255,255,0.35)', marginBottom: '4px' }}>Invested</div>
+                    <div style={{ background: t.bg, borderRadius: '8px', padding: '8px', textAlign: 'center', border: `1px solid ${t.tableRowBorder}` }}>
+                      <div style={{ fontSize: '7px', color: t.faintText, marginBottom: '4px' }}>Invested</div>
                       <div style={{ fontSize: '9px', fontWeight: '700', color: t.text }}>{formatAmountWithCode(trade.amount, currency)}</div>
                     </div>
-                    <div style={{ background: t.bg, borderRadius: '8px', padding: '8px', textAlign: 'center', border: '1px solid rgba(255,255,255,0.04)' }}>
-                      <div style={{ fontSize: '7px', color: 'rgba(255,255,255,0.35)', marginBottom: '4px' }}>Earned</div>
+                    <div style={{ background: t.bg, borderRadius: '8px', padding: '8px', textAlign: 'center', border: `1px solid ${t.tableRowBorder}` }}>
+                      <div style={{ fontSize: '7px', color: t.faintText, marginBottom: '4px' }}>Earned</div>
                       <div style={{ fontSize: '9px', fontWeight: '700', color: isProfit ? '#22c55e' : '#ef4444' }}>{(isProfit ? '+' : '-') + formatAmountWithCode(Math.abs(trade.totalEarned || 0), currency)}</div>
                     </div>
-                    <div style={{ background: t.bg, borderRadius: '8px', padding: '8px', textAlign: 'center', border: '1px solid rgba(255,255,255,0.04)' }}>
-                      <div style={{ fontSize: '7px', color: 'rgba(255,255,255,0.35)', marginBottom: '4px' }}>ROI</div>
+                    <div style={{ background: t.bg, borderRadius: '8px', padding: '8px', textAlign: 'center', border: `1px solid ${t.tableRowBorder}` }}>
+                      <div style={{ fontSize: '7px', color: t.faintText, marginBottom: '4px' }}>ROI</div>
                       <div style={{ fontSize: '9px', fontWeight: '700', color: isProfit ? '#22c55e' : '#ef4444' }}>{(isProfit ? '+' : '') + roi.toFixed(2)}%</div>
                     </div>
                   </div>

@@ -5,10 +5,10 @@ export default function StakingInfo() {
   const navigate = useNavigate();
   return (
     <div style={{ minHeight: '100vh', background: '#0e1628', color: 'white', fontFamily: "'Segoe UI', sans-serif" }}>
-      <div style={{ background: '#132035', padding: '14px 20px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', borderBottom: '1px solid rgba(255,255,255,0.08)' }}>
+      <div style={{ background: '#132035', padding: '14px 20px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', borderBottom: `1px solid ${t.border}` }}>
         <span style={{ fontWeight: '800', fontSize: '13px' }}>QUANTYREX <span style={{ color: '#6366f1' }}>MARKETS</span></span>
         <div style={{ display: 'flex', gap: '12px' }}>
-          <button onClick={() => navigate('/')} style={{ background: 'none', border: 'none', color: 'rgba(255,255,255,0.6)', fontSize: '10px', cursor: 'pointer' }}>Home</button>
+          <button onClick={() => navigate('/')} style={{ background: 'none', border: 'none', color: t.dimText, fontSize: '10px', cursor: 'pointer' }}>Home</button>
           <button onClick={() => navigate('/signup')} style={{ background: '#6366f1', border: 'none', color: 'white', fontSize: '10px', padding: '6px 14px', cursor: 'pointer', fontWeight: '700' }}>Get Started</button>
         </div>
       </div>
@@ -17,7 +17,7 @@ export default function StakingInfo() {
           <Lock size={22} color="#22c55e" />
           <h1 style={{ fontSize: '18px', fontWeight: '800', margin: 0 }}>Staking</h1>
         </div>
-        <p style={{ color: 'rgba(255,255,255,0.6)', fontSize: '10px', lineHeight: '1.8', marginBottom: '24px' }}>
+        <p style={{ color: t.dimText, fontSize: '10px', lineHeight: '1.8', marginBottom: '24px' }}>
           Earn passive income by staking your crypto assets. Simply lock your tokens and earn rewards automatically — no trading experience required.
         </p>
         {[
@@ -30,7 +30,7 @@ export default function StakingInfo() {
             <div style={{ marginTop: '2px' }}>{item.icon}</div>
             <div>
               <div style={{ fontWeight: '700', fontSize: '10px', marginBottom: '4px' }}>{item.title}</div>
-              <div style={{ color: 'rgba(255,255,255,0.6)', fontSize: '9px', lineHeight: '1.6' }}>{item.desc}</div>
+              <div style={{ color: t.dimText, fontSize: '9px', lineHeight: '1.6' }}>{item.desc}</div>
             </div>
           </div>
         ))}

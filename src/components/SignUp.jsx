@@ -157,7 +157,7 @@ const SignUp = () => {
   const errStyle = { color: '#ef4444', fontSize: 'clamp(6px, 1.6vw, 8px)', marginTop: '2px' };
 
   if (checkEmail) return (
-    <div style={{ minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', background: '#0e1628' }}>
+    <div style={{ minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', background: t.bg }}>
       <div style={{ background: '#1a2e4a', width: '340px', padding: '40px 24px', textAlign: 'center', borderRadius: '4px' }}>
         <div style={{ marginBottom: '20px' }}>
           <svg width='64' height='64' viewBox='0 0 64 64' fill='none' xmlns='http://www.w3.org/2000/svg' style={{ margin: '0 auto' }}>
@@ -176,7 +176,7 @@ const SignUp = () => {
           <svg width='12' height='12' fill='none' stroke='white' viewBox='0 0 24 24' strokeWidth='2'><path strokeLinecap='round' strokeLinejoin='round' d='M3 8l7.89 5.26a2 2 0 002.22 0L21 8'/></svg>
           Resend email
         </button>
-        <div style={{ borderTop: '1px solid rgba(255,255,255,0.08)', paddingTop: '10px' }}>
+        <div style={{ borderTop: `1px solid ${t.border}`, paddingTop: '10px' }}>
           <button onClick={() => window.location.href='/signin'} style={{ background: 'none', border: 'none', color: '#f59e0b', fontSize: '9px', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '4px', margin: '0 auto' }}>
             ← Return to login
           </button>
@@ -266,7 +266,7 @@ const SignUp = () => {
               </select>
             </div>
             <div style={{ flex: 1 }}>
-              <label style={{ color: 'rgba(255,255,255,0.6)', fontSize: '8px', fontWeight: '600', display: 'block', marginBottom: '4px' }}>Referral Code <span style={{ color: 'rgba(255,255,255,0.3)' }}>(Optional)</span></label>
+              <label style={{ color: t.dimText, fontSize: '8px', fontWeight: '600', display: 'block', marginBottom: '4px' }}>Referral Code <span style={{ color: t.faintText }}>(Optional)</span></label>
               <input name="referralCode" value={form.referralCode} onChange={handleChange} placeholder="Enter code" style={{ width: '100%', background: '#374151', border: '1px solid transparent', borderRadius: '4px', padding: '8px', color: 'white', fontSize: '8px', boxSizing: 'border-box', outline: 'none' }} />
             </div>
           </div>

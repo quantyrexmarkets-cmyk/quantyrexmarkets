@@ -13,10 +13,10 @@ export default function InvestingInfo() {
   ];
   return (
     <div style={{ minHeight: '100vh', background: '#0e1628', color: 'white', fontFamily: "'Segoe UI', sans-serif" }}>
-      <div style={{ background: '#132035', padding: '14px 20px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', borderBottom: '1px solid rgba(255,255,255,0.08)' }}>
+      <div style={{ background: '#132035', padding: '14px 20px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', borderBottom: `1px solid ${t.border}` }}>
         <span style={{ fontWeight: '800', fontSize: '13px' }}>QUANTYREX <span style={{ color: '#6366f1' }}>MARKETS</span></span>
         <div style={{ display: 'flex', gap: '12px' }}>
-          <button onClick={() => navigate('/')} style={{ background: 'none', border: 'none', color: 'rgba(255,255,255,0.6)', fontSize: '10px', cursor: 'pointer' }}>Home</button>
+          <button onClick={() => navigate('/')} style={{ background: 'none', border: 'none', color: t.dimText, fontSize: '10px', cursor: 'pointer' }}>Home</button>
           <button onClick={() => navigate('/signup')} style={{ background: '#6366f1', border: 'none', color: 'white', fontSize: '10px', padding: '6px 14px', cursor: 'pointer', fontWeight: '700' }}>Get Started</button>
         </div>
       </div>
@@ -25,7 +25,7 @@ export default function InvestingInfo() {
           <Package size={22} color="#f59e0b" />
           <h1 style={{ fontSize: '18px', fontWeight: '800', margin: 0 }}>Investment Plans</h1>
         </div>
-        <p style={{ color: 'rgba(255,255,255,0.6)', fontSize: '10px', lineHeight: '1.8', marginBottom: '24px' }}>
+        <p style={{ color: t.dimText, fontSize: '10px', lineHeight: '1.8', marginBottom: '24px' }}>
           Choose an investment plan that suits your goals. Our managed investment packages deliver consistent daily returns with your capital fully protected.
         </p>
         {[
@@ -38,7 +38,7 @@ export default function InvestingInfo() {
             <div style={{ marginTop: '2px' }}>{item.icon}</div>
             <div>
               <div style={{ fontWeight: '700', fontSize: '10px', marginBottom: '4px' }}>{item.title}</div>
-              <div style={{ color: 'rgba(255,255,255,0.6)', fontSize: '9px', lineHeight: '1.6' }}>{item.desc}</div>
+              <div style={{ color: t.dimText, fontSize: '9px', lineHeight: '1.6' }}>{item.desc}</div>
             </div>
           </div>
         ))}
@@ -54,9 +54,9 @@ export default function InvestingInfo() {
               </div>
               <div style={{ color: 'white', fontWeight: '800', fontSize: '13px', letterSpacing: '0.5px' }}>{p.name}</div>
               <div style={{ color: '#6366f1', fontWeight: '700', fontSize: '12px' }}>{p.min}</div>
-              <div style={{ display: 'flex', justifyContent: 'space-between', padding: '6px 0', borderTop: '1px solid rgba(255,255,255,0.06)' }}>
-                <span style={{ color: 'rgba(255,255,255,0.6)', fontSize: '9px' }}>Duration</span>
-                <span style={{ color: 'rgba(255,255,255,0.9)', fontSize: '9px', fontWeight: '500' }}>{p.duration}</span>
+              <div style={{ display: 'flex', justifyContent: 'space-between', padding: '6px 0', borderTop: `1px solid ${t.subtleBorder}` }}>
+                <span style={{ color: t.dimText, fontSize: '9px' }}>Duration</span>
+                <span style={{ color: t.text, fontSize: '9px', fontWeight: '500' }}>{p.duration}</span>
               </div>
               <button onClick={() => navigate('/signup')} style={{ width: '100%', background: '#6366f1', border: 'none', color: 'white', padding: '8px', fontSize: '9px', fontWeight: '600', cursor: 'pointer' }}>Join Plan</button>
             </div>

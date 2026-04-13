@@ -75,7 +75,7 @@ export default function TraderDetails() {
 
   if (loading) {
     return (
-      <div style={{ minHeight: '100vh', background: '#0e1628' }}>
+      <div style={{ minHeight: '100vh', background: t.bg }}>
         <PageHeader title="Trader Details" />
         <div style={{ padding: '20px', textAlign: 'center', color: 'white' }}>Loading...</div>
       </div>
@@ -84,7 +84,7 @@ export default function TraderDetails() {
 
   if (!trader) {
     return (
-      <div style={{ minHeight: '100vh', background: '#0e1628' }}>
+      <div style={{ minHeight: '100vh', background: t.bg }}>
         <PageHeader title="Trader Details" />
         <div style={{ padding: '20px', textAlign: 'center', color: 'white' }}>Trader not found</div>
       </div>
@@ -94,7 +94,7 @@ export default function TraderDetails() {
   const profitPercent = ((trader.totalProfit || 0) / (trader.totalInvested || 1) * 100).toFixed(1);
 
   return (
-    <div style={{ minHeight: '100vh', background: '#0e1628', fontFamily: "'Segoe UI', sans-serif", color: 'white' }}>
+    <div style={{ minHeight: '100vh', background: t.bg, fontFamily: "'Segoe UI', sans-serif", color: 'white' }}>
       <PageHeader title="Trader Details" />
       
       <div style={{ padding: '16px', maxWidth: '600px', margin: '0 auto' }}>
@@ -115,7 +115,7 @@ export default function TraderDetails() {
             />
             <div>
               <h1 style={{ fontSize: '18px', fontWeight: '700', marginBottom: '4px' }}>{trader.name}</h1>
-              <div style={{ display: 'flex', gap: '12px', fontSize: '11px', color: 'rgba(255,255,255,0.5)' }}>
+              <div style={{ display: 'flex', gap: '12px', fontSize: '11px', color: t.subText }}>
                 <span>{trader.location || 'Professional Trader'}</span>
                 <span>⭐ {trader.rating || 4.8}</span>
               </div>
@@ -123,41 +123,41 @@ export default function TraderDetails() {
           </div>
 
           {/* Stats Grid */}
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '12px', marginBottom: '16px', padding: '12px 0', borderTop: '1px solid rgba(255,255,255,0.08)', borderBottom: '1px solid rgba(255,255,255,0.08)' }}>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '12px', marginBottom: '16px', padding: '12px 0', borderTop: `1px solid ${t.border}`, borderBottom: `1px solid ${t.border}` }}>
             <div style={{ textAlign: 'center' }}>
-              <div style={{ fontSize: '10px', color: 'rgba(255,255,255,0.5)' }}>Win Rate</div>
+              <div style={{ fontSize: '10px', color: t.subText }}>Win Rate</div>
               <div style={{ fontSize: '16px', fontWeight: '700', color: '#22c55e' }}>{trader.winRate || 75}%</div>
             </div>
             <div style={{ textAlign: 'center' }}>
-              <div style={{ fontSize: '10px', color: 'rgba(255,255,255,0.5)' }}>Risk Level</div>
+              <div style={{ fontSize: '10px', color: t.subText }}>Risk Level</div>
               <div style={{ fontSize: '16px', fontWeight: '700', color: '#f59e0b' }}>{trader.risk || 5}/10</div>
             </div>
             <div style={{ textAlign: 'center' }}>
-              <div style={{ fontSize: '10px', color: 'rgba(255,255,255,0.5)' }}>Profit Share</div>
+              <div style={{ fontSize: '10px', color: t.subText }}>Profit Share</div>
               <div style={{ fontSize: '16px', fontWeight: '700', color: '#6366f1' }}>{trader.profitShare || 20}%</div>
             </div>
             <div style={{ textAlign: 'center' }}>
-              <div style={{ fontSize: '10px', color: 'rgba(255,255,255,0.5)' }}>Total ROI</div>
+              <div style={{ fontSize: '10px', color: t.subText }}>Total ROI</div>
               <div style={{ fontSize: '16px', fontWeight: '700', color: '#22c55e' }}>+{profitPercent}%</div>
             </div>
           </div>
 
           {/* Additional Stats */}
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '8px' }}>
-            <div style={{ background: '#0e1628', borderRadius: '8px', padding: '8px 12px', display: 'flex', justifyContent: 'space-between' }}>
-              <span style={{ fontSize: '10px', color: 'rgba(255,255,255,0.5)' }}>Total Trades</span>
+            <div style={{ background: t.bg, borderRadius: '8px', padding: '8px 12px', display: 'flex', justifyContent: 'space-between' }}>
+              <span style={{ fontSize: '10px', color: t.subText }}>Total Trades</span>
               <span style={{ fontSize: '11px', fontWeight: '600' }}>{trader.totalTrades || 0}</span>
             </div>
-            <div style={{ background: '#0e1628', borderRadius: '8px', padding: '8px 12px', display: 'flex', justifyContent: 'space-between' }}>
-              <span style={{ fontSize: '10px', color: 'rgba(255,255,255,0.5)' }}>Followers</span>
+            <div style={{ background: t.bg, borderRadius: '8px', padding: '8px 12px', display: 'flex', justifyContent: 'space-between' }}>
+              <span style={{ fontSize: '10px', color: t.subText }}>Followers</span>
               <span style={{ fontSize: '11px', fontWeight: '600' }}>{trader.followers || 0}</span>
             </div>
-            <div style={{ background: '#0e1628', borderRadius: '8px', padding: '8px 12px', display: 'flex', justifyContent: 'space-between' }}>
-              <span style={{ fontSize: '10px', color: 'rgba(255,255,255,0.5)' }}>Favorite Asset</span>
+            <div style={{ background: t.bg, borderRadius: '8px', padding: '8px 12px', display: 'flex', justifyContent: 'space-between' }}>
+              <span style={{ fontSize: '10px', color: t.subText }}>Favorite Asset</span>
               <span style={{ fontSize: '11px', fontWeight: '600' }}>{trader.favorite || '—'}</span>
             </div>
-            <div style={{ background: '#0e1628', borderRadius: '8px', padding: '8px 12px', display: 'flex', justifyContent: 'space-between' }}>
-              <span style={{ fontSize: '10px', color: 'rgba(255,255,255,0.5)' }}>Total Loss</span>
+            <div style={{ background: t.bg, borderRadius: '8px', padding: '8px 12px', display: 'flex', justifyContent: 'space-between' }}>
+              <span style={{ fontSize: '10px', color: t.subText }}>Total Loss</span>
               <span style={{ fontSize: '11px', fontWeight: '600', color: '#ef4444' }}>${trader.totalLoss || 0}</span>
             </div>
           </div>
@@ -169,9 +169,9 @@ export default function TraderDetails() {
           
           {/* Investment Amount */}
           <div style={{ marginBottom: '16px' }}>
-            <label style={{ fontSize: '11px', color: 'rgba(255,255,255,0.6)', marginBottom: '6px', display: 'block' }}>Investment Amount (min $10)</label>
+            <label style={{ fontSize: '11px', color: t.dimText, marginBottom: '6px', display: 'block' }}>Investment Amount (min $10)</label>
             <div style={{ position: 'relative' }}>
-              <span style={{ position: 'absolute', left: '12px', top: '50%', transform: 'translateY(-50%)', color: 'rgba(255,255,255,0.4)', fontSize: '12px' }}>$</span>
+              <span style={{ position: 'absolute', left: '12px', top: '50%', transform: 'translateY(-50%)', color: t.mutedText, fontSize: '12px' }}>$</span>
               <input
                 type="number"
                 min="10"
@@ -179,14 +179,14 @@ export default function TraderDetails() {
                 value={amount}
                 onChange={(e) => setAmount(e.target.value)}
                 placeholder="0.00"
-                style={{ width: '100%', background: '#0e1628', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '10px', padding: '12px 12px 12px 28px', color: 'white', fontSize: '14px', outline: 'none' }}
+                style={{ width: '100%', background: t.bg, border: `1px solid ${t.border}`, borderRadius: '10px', padding: '12px 12px 12px 28px', color: 'white', fontSize: '14px', outline: 'none' }}
               />
             </div>
           </div>
 
           {/* Duration */}
           <div style={{ marginBottom: '20px' }}>
-            <label style={{ fontSize: '11px', color: 'rgba(255,255,255,0.6)', marginBottom: '6px', display: 'block' }}>Copy Duration</label>
+            <label style={{ fontSize: '11px', color: t.dimText, marginBottom: '6px', display: 'block' }}>Copy Duration</label>
             <div style={{ display: 'flex', gap: '10px' }}>
               {['30', '60', '90', '180'].map(d => (
                 <button
@@ -195,7 +195,7 @@ export default function TraderDetails() {
                   style={{
                     flex: 1,
                     padding: '8px',
-                    background: duration === d ? '#6366f1' : 'rgba(255,255,255,0.1)',
+                    background: duration === d ? '#6366f1' : t.hoverBg,
                     border: 'none',
                     borderRadius: '8px',
                     color: 'white',
@@ -210,17 +210,17 @@ export default function TraderDetails() {
           </div>
 
           {/* Summary */}
-          <div style={{ background: '#0e1628', borderRadius: '10px', padding: '12px', marginBottom: '20px' }}>
+          <div style={{ background: t.bg, borderRadius: '10px', padding: '12px', marginBottom: '20px' }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '8px' }}>
-              <span style={{ fontSize: '10px', color: 'rgba(255,255,255,0.5)' }}>Investment</span>
+              <span style={{ fontSize: '10px', color: t.subText }}>Investment</span>
               <span style={{ fontSize: '12px', fontWeight: '600' }}>${amount || 0}</span>
             </div>
             <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '8px' }}>
-              <span style={{ fontSize: '10px', color: 'rgba(255,255,255,0.5)' }}>Trader Commission</span>
+              <span style={{ fontSize: '10px', color: t.subText }}>Trader Commission</span>
               <span style={{ fontSize: '12px', fontWeight: '600' }}>{trader.profitShare || 20}% of profits</span>
             </div>
             <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-              <span style={{ fontSize: '10px', color: 'rgba(255,255,255,0.5)' }}>Duration</span>
+              <span style={{ fontSize: '10px', color: t.subText }}>Duration</span>
               <span style={{ fontSize: '12px', fontWeight: '600' }}>{duration} Days</span>
             </div>
           </div>
@@ -244,7 +244,7 @@ export default function TraderDetails() {
           <div style={{ display: 'flex', gap: '12px' }}>
             <button
               onClick={() => navigate('/dashboard/copy-trading')}
-              style={{ flex: 1, padding: '12px', background: 'rgba(255,255,255,0.1)', border: 'none', borderRadius: '10px', color: 'white', fontSize: '12px', cursor: 'pointer' }}
+              style={{ flex: 1, padding: '12px', background: t.hoverBg, border: 'none', borderRadius: '10px', color: 'white', fontSize: '12px', cursor: 'pointer' }}
             >
               Cancel
             </button>

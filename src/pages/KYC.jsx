@@ -44,10 +44,10 @@ export default function KYC() {
     <div style={{ marginBottom: '12px' }}>
       <label style={labelStyle}>{label} <span style={{ color: '#ef4444' }}>*</span></label>
       <div style={{ display: 'flex', alignItems: 'center', gap: '8px', background: t.cardBg, border: `1px solid ${t.border}`, padding: '6px 10px' }}>
-        <label style={{ background: 'rgba(255,255,255,0.08)', color: t.text, fontSize: '8px', padding: '4px 10px', cursor: 'pointer', whiteSpace: 'nowrap' }}>
+        <label style={{ background: t.hoverBg, color: t.text, fontSize: '8px', padding: '4px 10px', cursor: 'pointer', whiteSpace: 'nowrap' }}>
           Choose File<input type='file' accept='image/*,.pdf' style={{ display: 'none' }} onChange={onChange} />
         </label>
-        <span style={{ color: fileName !== 'No file chosen' ? '#22c55e' : 'rgba(255,255,255,0.3)', fontSize: '8px', overflow: 'visible', textOverflow: 'ellipsis', whiteSpace: 'nowrap', maxWidth: '160px' }}>{fileName}</span>
+        <span style={{ color: fileName !== 'No file chosen' ? '#22c55e' : t.faintText, fontSize: '8px', overflow: 'visible', textOverflow: 'ellipsis', whiteSpace: 'nowrap', maxWidth: '160px' }}>{fileName}</span>
       </div>
     </div>
   );
@@ -119,7 +119,7 @@ export default function KYC() {
 
         {/* Status Banner */}
         {loading ? (
-          <div style={{ background: t.cardBg, padding: '12px 16px', marginBottom: '16px', color: 'rgba(255,255,255,0.3)', fontSize: '8px' }}>Loading status...</div>
+          <div style={{ background: t.cardBg, padding: '12px 16px', marginBottom: '16px', color: t.faintText, fontSize: '8px' }}>Loading status...</div>
         ) : kycStatus && (
           <div style={{ background: t.cardBg, border: `1px solid ${statusColor[kycStatus]}40`, padding: '12px 16px', marginBottom: '16px', display: 'flex', alignItems: 'center', gap: '10px' }}>
             <div style={{ width: '36px', height: '36px', borderRadius: '50%', border: `2px solid ${statusColor[kycStatus]}`, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
@@ -140,7 +140,7 @@ export default function KYC() {
                 <div style={{ width: '22px', height: '22px', borderRadius: '50%', background: '#6366f1', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '8px', fontWeight: '700', color: t.text, marginBottom: '4px' }}>{i + 1}</div>
                 <span style={{ color: t.subText, fontSize: '7px', textAlign: 'center' }}>{step}</span>
               </div>
-              {i < 2 && <div style={{ height: '1px', width: '20px', background: 'rgba(255,255,255,0.15)', marginBottom: '14px' }} />}
+              {i < 2 && <div style={{ height: '1px', width: '20px', background: t.border, marginBottom: '14px' }} />}
             </div>
           ))}
         </div>
@@ -158,7 +158,7 @@ export default function KYC() {
             <div style={{ marginBottom: '12px' }}>
               <label style={labelStyle}>ID Type <span style={{ color: '#ef4444' }}>*</span></label>
               <select value={idType} onChange={e => setIdType(e.target.value)}
-                style={{ width: '100%', background: t.cardBg, border: `1px solid ${t.border}`, color: idType ? 'white' : 'rgba(255,255,255,0.4)', fontSize: '9px', padding: '8px 10px', outline: 'none', boxSizing: 'border-box' }}>
+                style={{ width: '100%', background: t.cardBg, border: `1px solid ${t.border}`, color: idType ? 'white' : t.mutedText, fontSize: '9px', padding: '8px 10px', outline: 'none', boxSizing: 'border-box' }}>
                 <option value=''>Select ID Type</option>
                 <option value='passport'>International Passport</option>
                 <option value='national_id'>National ID Card</option>
@@ -216,7 +216,7 @@ export default function KYC() {
           </div>
         </>
       )}
-      <div style={{ textAlign: "center", padding: "16px", color: "rgba(255,255,255,0.2)", fontSize: "7px", borderTop: "1px solid rgba(255,255,255,0.04)", marginTop: "16px" }}>2020-2026 &copy; Quantyrex Markets</div>
+      <div style={{ textAlign: "center", padding: "16px", color: t.faintText, fontSize: "7px", borderTop: `1px solid ${t.tableRowBorder}`, marginTop: "16px" }}>2020-2026 &copy; Quantyrex Markets</div>
 
     </div>
   );

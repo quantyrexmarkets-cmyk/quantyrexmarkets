@@ -48,13 +48,13 @@ export default function CheckEmail() {
           </div>
         )}
 
-        <div style={{ borderTop: '1px solid rgba(255,255,255,0.08)', paddingTop: '16px', marginBottom: '12px' }}>
+        <div style={{ borderTop: `1px solid ${t.border}`, paddingTop: '16px', marginBottom: '12px' }}>
           <button onClick={handleResend} disabled={loading} style={{ width: '100%', padding: '10px', background: '#6366f1', border: 'none', color: 'white', fontSize: '10px', fontWeight: '600', cursor: loading ? 'not-allowed' : 'pointer', borderRadius: '4px', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '6px', marginBottom: '10px', opacity: loading ? 0.7 : 1 }}>
             <svg width='12' height='12' fill='none' stroke='white' viewBox='0 0 24 24' strokeWidth='2'><path strokeLinecap='round' strokeLinejoin='round' d='M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z'/></svg>
             {loading ? 'Sending...' : 'Resend email'}
           </button>
         </div>
-        <div style={{ borderTop: '1px solid rgba(255,255,255,0.08)', paddingTop: '12px' }}>
+        <div style={{ borderTop: `1px solid ${t.border}`, paddingTop: '12px' }}>
           <button onClick={() => navigate('/signin')} style={{ background: 'none', border: 'none', color: '#f59e0b', fontSize: '9px', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '4px', margin: '0 auto' }}>
             ← Return to login
           </button>

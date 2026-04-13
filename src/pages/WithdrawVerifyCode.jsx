@@ -46,8 +46,8 @@ export default function WithdrawVerifyCode() {
           </button>
         </div>
         <h2 style={{ color: 'white', fontSize: '20px', fontWeight: '700', margin: '0 0 4px' }}>Withdrawal Verification</h2>
-        <p style={{ color: 'rgba(255,255,255,0.4)', fontSize: '12px', margin: '0 0 24px' }}>Enter your withdrawal code to complete this transaction</p>
-        <div style={{ background: t.bg, border: '1px solid rgba(255,255,255,0.1)', borderRadius: '8px', padding: '32px 24px', width: '100%', textAlign: 'center' }}>
+        <p style={{ color: t.mutedText, fontSize: '12px', margin: '0 0 24px' }}>Enter your withdrawal code to complete this transaction</p>
+        <div style={{ background: t.bg, border: `1px solid ${t.border}`, borderRadius: '8px', padding: '32px 24px', width: '100%', textAlign: 'center' }}>
           
           {/* Icon */}
           <div style={{ width: '64px', height: '64px', borderRadius: '50%', border: '2px solid #6366f1', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 20px' }}>
@@ -57,7 +57,7 @@ export default function WithdrawVerifyCode() {
           </div>
 
           <h2 style={{ color: 'white', fontSize: '18px', fontWeight: '700', margin: '0 0 8px' }}>Withdrawal Code Required</h2>
-          <p style={{ color: 'rgba(255,255,255,0.5)', fontSize: '12px', margin: '0 0 8px', lineHeight: '1.6' }}>
+          <p style={{ color: t.subText, fontSize: '12px', margin: '0 0 8px', lineHeight: '1.6' }}>
             Enter your withdrawal code to complete this transaction.
           </p>
           <p style={{ color: '#6366f1', fontSize: '12px', margin: '0 0 24px' }}>
@@ -66,13 +66,13 @@ export default function WithdrawVerifyCode() {
 
           {/* Code Input */}
           <div style={{ marginBottom: '16px', textAlign: 'left' }}>
-            <label style={{ color: 'rgba(255,255,255,0.7)', fontSize: '10px', display: 'block', marginBottom: '6px', fontWeight: '600', letterSpacing: '1px', textTransform: 'uppercase' }}>Withdrawal Code</label>
+            <label style={{ color: t.dimText, fontSize: '10px', display: 'block', marginBottom: '6px', fontWeight: '600', letterSpacing: '1px', textTransform: 'uppercase' }}>Withdrawal Code</label>
             <input
               type='text'
               value={code}
               onChange={e => setCode(e.target.value)}
               placeholder='Enter your withdrawal code'
-              style={{ width: '100%', background: '#2d3748', border: '1px solid rgba(255,255,255,0.1)', color: 'white', fontSize: '14px', padding: '12px', outline: 'none', boxSizing: 'border-box', borderRadius: '4px', textAlign: 'center', letterSpacing: '4px', fontWeight: '700' }}
+              style={{ width: '100%', background: '#2d3748', border: `1px solid ${t.border}`, color: t.text, fontSize: '14px', padding: '12px', outline: 'none', boxSizing: 'border-box', borderRadius: '4px', textAlign: 'center', letterSpacing: '4px', fontWeight: '700' }}
             />
           </div>
 
@@ -92,12 +92,12 @@ export default function WithdrawVerifyCode() {
 
           <button
             onClick={() => navigate('/dashboard/withdraw')}
-            style={{ width: '100%', padding: '10px', background: 'transparent', border: '1px solid rgba(255,255,255,0.1)', color: 'rgba(255,255,255,0.5)', fontSize: '11px', cursor: 'pointer', borderRadius: '4px' }}
+            style={{ width: '100%', padding: '10px', background: 'transparent', border: `1px solid ${t.border}`, color: t.subText, fontSize: '11px', cursor: 'pointer', borderRadius: '4px' }}
           >
             Cancel
           </button>
 
-          <p style={{ color: 'rgba(255,255,255,0.3)', fontSize: '10px', margin: '16px 0 0', lineHeight: '1.6' }}>
+          <p style={{ color: t.faintText, fontSize: '10px', margin: '16px 0 0', lineHeight: '1.6' }}>
             Do not share your withdrawal code with anyone including support staff.
           </p>
         </div>

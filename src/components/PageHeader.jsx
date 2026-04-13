@@ -29,7 +29,7 @@ export default function PageHeader({ title }) {
   return (
     <>
       <DashboardSidebar open={sidebarOpen} onClose={() => setSidebarOpen(false)} />
-      <div style={{ position: 'sticky', top: 0, zIndex: 1000, background: t.navBg, backdropFilter: 'blur(20px)', WebkitBackdropFilter: 'blur(20px)', padding: '12px 16px', display: 'flex', alignItems: 'center', gap: '4px', flexShrink: 0, borderBottom: `1px solid ${t.accent}4D`, boxShadow: t.bg === '#f8fafc' ? '0 2px 8px rgba(0,0,0,0.08)' : '0 4px 24px rgba(99,102,241,0.15), 0 1px 0 rgba(255,255,255,0.05) inset' }}>
+      <div style={{ position: 'sticky', top: 0, zIndex: 1000, background: t.navBg, backdropFilter: 'blur(20px)', WebkitBackdropFilter: 'blur(20px)', padding: '12px 16px', display: 'flex', alignItems: 'center', gap: '4px', flexShrink: 0, borderBottom: `1px solid ${t.accent}4D`, boxShadow: t.bg === '#f8fafc' ? '0 2px 8px rgba(0,0,0,0.08)' : '0 4px 24px rgba(99,102,241,0.15), 0 1px 0 rgba(99,102,241,0.05) inset' }}>
 
         {/* Hamburger */}
         <button onClick={() => setSidebarOpen(true)} style={{ background: 'none', border: 'none', color: t.text, cursor: 'pointer', marginRight: '4px', display: 'flex', alignItems: 'center' }}>
@@ -67,7 +67,7 @@ export default function PageHeader({ title }) {
                   {(notifications.length ? notifications.slice(0,5) : [
                     { id: 1, icon: '🔐', title: 'KYC Reminder', desc: 'Complete verification to unlock all features', time: new Date(), unread: true },
                   ]).map((n, i) => (
-                    <div key={i} style={{ padding: '10px 16px', borderBottom: '1px solid rgba(255,255,255,0.04)', background: n.unread ? 'rgba(99,102,241,0.08)' : 'transparent', display: 'flex', gap: '10px', alignItems: 'flex-start' }}>
+                    <div key={i} style={{ padding: '10px 16px', borderBottom: `1px solid ${t.tableRowBorder}`, background: n.unread ? 'rgba(99,102,241,0.08)' : 'transparent', display: 'flex', gap: '10px', alignItems: 'flex-start' }}>
                       <span style={{ fontSize: '16px' }}>{n.icon || '🔔'}</span>
                       <div style={{ flex: 1 }}>
                         <div style={{ color: t.text, fontSize: '10px', fontWeight: '600', marginBottom: '2px' }}>{n.title}</div>
@@ -76,7 +76,7 @@ export default function PageHeader({ title }) {
                       {n.unread && <div style={{ width: '6px', height: '6px', borderRadius: '50%', background: '#6366f1', flexShrink: 0, marginTop: '4px' }} />}
                     </div>
                   ))}
-                  <div onClick={() => { navigate('/dashboard/notifications'); setShowNotifications(false); }} style={{ padding: '10px 16px', textAlign: 'center', color: '#6366f1', fontSize: '10px', fontWeight: '600', cursor: 'pointer', borderTop: '1px solid rgba(255,255,255,0.06)' }}>View All Notifications →</div>
+                  <div onClick={() => { navigate('/dashboard/notifications'); setShowNotifications(false); }} style={{ padding: '10px 16px', textAlign: 'center', color: '#6366f1', fontSize: '10px', fontWeight: '600', cursor: 'pointer', borderTop: `1px solid ${t.subtleBorder}` }}>View All Notifications →</div>
                 </div>
               </>
             )}
@@ -84,7 +84,7 @@ export default function PageHeader({ title }) {
 
           {/* Profile */}
           <div style={{ position: 'relative' }}>
-            <div onClick={() => { setShowProfileMenu(!showProfileMenu); setShowNotifications(false); }} style={{ display: 'flex', alignItems: 'center', borderLeft: '1px solid rgba(255,255,255,0.15)', borderRight: '1px solid rgba(255,255,255,0.15)', padding: '0 12px', cursor: 'pointer', height: '100%' }}>
+            <div onClick={() => { setShowProfileMenu(!showProfileMenu); setShowNotifications(false); }} style={{ display: 'flex', alignItems: 'center', borderLeft: `1px solid ${t.border}`, borderRight: `1px solid ${t.border}`, padding: '0 12px', cursor: 'pointer', height: '100%' }}>
               <div style={{ width: '34px', height: '34px', borderRadius: '50%', background: '#5b6477', overflow: 'hidden', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                 {user?.avatar ? <img src={user.avatar} style={{ width: '34px', height: '34px', objectFit: 'cover' }} /> : <User size={18} color="white" />}
               </div>
@@ -99,8 +99,8 @@ export default function PageHeader({ title }) {
                     { icon: <Lock size={14}/>, label: 'Change Password', action: () => navigate('/dashboard/change-password') },
                   ].map((item, i) => (
                     <div key={i} onClick={() => { item.action(); setShowProfileMenu(false); }}
-                      style={{ display: 'flex', alignItems: 'center', gap: '10px', padding: '12px 16px', cursor: 'pointer', color: 'rgba(255,255,255,0.8)', fontSize: '11px' }}
-                      onMouseEnter={e => e.currentTarget.style.background='rgba(255,255,255,0.05)'}
+                      style={{ display: 'flex', alignItems: 'center', gap: '10px', padding: '12px 16px', cursor: 'pointer', color: t.overlayText, fontSize: '11px' }}
+                      onMouseEnter={e => e.currentTarget.style.background=t.tableRowBorder}
                       onMouseLeave={e => e.currentTarget.style.background='transparent'}>
                       {item.icon} {item.label}
                     </div>

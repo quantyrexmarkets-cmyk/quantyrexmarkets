@@ -154,7 +154,7 @@ export default function LiveMarket() {
 
       <div style={{ padding: '14px 16px' }}>
         {/* Tabs */}
-        <div style={{ display: 'flex', marginBottom: '14px', borderBottom: '1px solid rgba(255,255,255,0.08)' }}>
+        <div style={{ display: 'flex', marginBottom: '14px', borderBottom: `1px solid ${t.border}` }}>
           {[
             { id: 'overview', label: 'Overview', icon: <TrendingUp size={10}/> },
             { id: 'chart', label: 'Chart', icon: <BarChart2 size={10}/> },
@@ -163,7 +163,7 @@ export default function LiveMarket() {
             <button key={tab.id} onClick={() => setActiveTab(tab.id)} style={{
               padding: '8px 14px', background: 'transparent', border: 'none',
               borderBottom: activeTab === tab.id ? '2px solid #6366f1' : '2px solid transparent',
-              color: activeTab === tab.id ? '#818cf8' : 'rgba(255,255,255,0.4)',
+              color: activeTab === tab.id ? '#818cf8' : t.mutedText,
               fontSize: '8px', fontWeight: '700', cursor: 'pointer',
               display: 'flex', alignItems: 'center', gap: '4px',
             }}>{tab.icon} {tab.label}</button>
@@ -176,7 +176,7 @@ export default function LiveMarket() {
             {symbols.map(s => (
               <button key={s} onClick={() => setSymbol(s)} style={{
                 padding: '4px 8px',
-                background: symbol === s ? '#6366f1' : 'rgba(255,255,255,0.06)',
+                background: symbol === s ? '#6366f1' : t.subtleBg,
                 border: 'none', color: 'white', fontSize: '7px', fontWeight: '700', cursor: 'pointer',
               }}>{s.replace('USD', '')}</button>
             ))}
@@ -205,7 +205,7 @@ export default function LiveMarket() {
         </div>
 
       </div>
-      <div style={{ textAlign: "center", padding: "16px", color: "rgba(255,255,255,0.2)", fontSize: "7px", borderTop: "1px solid rgba(255,255,255,0.04)", marginTop: "16px" }}>2020-2026 &copy; Quantyrex Markets</div>
+      <div style={{ textAlign: "center", padding: "16px", color: t.faintText, fontSize: "7px", borderTop: `1px solid ${t.tableRowBorder}`, marginTop: "16px" }}>2020-2026 &copy; Quantyrex Markets</div>
 
     </div>
   );

@@ -34,19 +34,19 @@ export default function CryptoNews() {
   };
 
   return (
-    <div style={{ background: 'rgba(255,255,255,0.05)', backdropFilter: 'blur(10px)', border: '1px solid rgba(99,102,241,0.3)', padding: '8px', marginTop: '12px', borderRadius: '12px', boxShadow: '0 4px 20px rgba(0,0,0,0.3)', marginLeft: '8px', marginRight: '8px' }}>
+    <div style={{ background: t.glassBg, backdropFilter: 'blur(10px)', border: '1px solid rgba(99,102,241,0.3)', padding: '8px', marginTop: '12px', borderRadius: '12px', boxShadow: '0 4px 20px rgba(0,0,0,0.3)', marginLeft: '8px', marginRight: '8px' }}>
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '12px' }}>
         <span style={{ color: 'white', fontSize: '9px', fontWeight: '700', letterSpacing: '0.08em' }}>CRYPTO NEWS</span>
-        <span style={{ color: 'rgba(255,255,255,0.3)', fontSize: '7px' }}>via CoinTelegraph</span>
+        <span style={{ color: t.faintText, fontSize: '7px' }}>via CoinTelegraph</span>
       </div>
 
-      {loading && <div style={{ padding: '20px', textAlign: 'center', color: 'rgba(255,255,255,0.3)', fontSize: '8px' }}>Loading news...</div>}
-      {error && <div style={{ padding: '20px', textAlign: 'center', color: 'rgba(255,255,255,0.3)', fontSize: '8px' }}>Unable to load news</div>}
+      {loading && <div style={{ padding: '20px', textAlign: 'center', color: t.faintText, fontSize: '8px' }}>Loading news...</div>}
+      {error && <div style={{ padding: '20px', textAlign: 'center', color: t.faintText, fontSize: '8px' }}>Unable to load news</div>}
 
       {!loading && !error && news.map((item, i) => (
         <a key={i} href={item.link} target="_blank" rel="noopener noreferrer" style={{ textDecoration: 'none', display: 'block' }}>
-          <div style={{ display: 'flex', gap: '8px', padding: '8px 0', borderBottom: '1px solid rgba(255,255,255,0.04)' }}
-            onMouseEnter={e => e.currentTarget.style.background = 'rgba(255,255,255,0.03)'}
+          <div style={{ display: 'flex', gap: '8px', padding: '8px 0', borderBottom: `1px solid ${t.tableRowBorder}` }}
+            onMouseEnter={e => e.currentTarget.style.background = t.hoverBg}
             onMouseLeave={e => e.currentTarget.style.background = 'transparent'}
           >
             {item.thumbnail && (
@@ -55,12 +55,12 @@ export default function CryptoNews() {
               />
             )}
             <div style={{ flex: 1, minWidth: 0 }}>
-              <div style={{ color: 'rgba(255,255,255,0.85)', fontSize: '8px', fontWeight: '600', lineHeight: '1.4', marginBottom: '4px', overflow: 'hidden', display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical' }}>
+              <div style={{ color: t.text, fontSize: '8px', fontWeight: '600', lineHeight: '1.4', marginBottom: '4px', overflow: 'hidden', display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical' }}>
                 {item.title}
               </div>
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                 <span style={{ color: '#6366f1', fontSize: '7px' }}>{item.author || 'CoinTelegraph'}</span>
-                <span style={{ color: 'rgba(255,255,255,0.3)', fontSize: '7px' }}>{timeAgo(item.pubDate)}</span>
+                <span style={{ color: t.faintText, fontSize: '7px' }}>{timeAgo(item.pubDate)}</span>
               </div>
             </div>
           </div>

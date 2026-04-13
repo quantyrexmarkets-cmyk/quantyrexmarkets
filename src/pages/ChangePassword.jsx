@@ -87,7 +87,7 @@ export default function ChangePassword() {
         {/* Step indicator */}
         <div style={{ display: 'flex', gap: '6px', marginBottom: '24px' }}>
           {[1,2,3].map(s => (
-            <div key={s} style={{ flex: 1, height: '3px', borderRadius: '2px', background: s <= step ? '#6366f1' : 'rgba(255,255,255,0.1)', transition: 'background 0.3s' }} />
+            <div key={s} style={{ flex: 1, height: '3px', borderRadius: '2px', background: s <= step ? '#6366f1' : t.hoverBg, transition: 'background 0.3s' }} />
           ))}
         </div>
 

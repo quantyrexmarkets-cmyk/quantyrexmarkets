@@ -138,7 +138,7 @@ const handleWithdraw = async () => {
       <DashboardSidebar open={sidebarOpen} onClose={() => setSidebarOpen(false)} />
 
       {/* Header */}
-      <div style={{ background: '#132035', padding: '10px 16px', display: 'flex', alignItems: 'center', gap: '10px', borderBottom: '1px solid rgba(255,255,255,0.1)' }}>
+      <div style={{ background: t.cardBg, padding: '10px 16px', display: 'flex', alignItems: 'center', gap: '10px', borderBottom: `1px solid ${t.border}` }}>
         <div style={{ width: '16px', height: '16px' }}>
           <svg viewBox='0 0 40 40' fill='none' style={{ width: '100%', height: '100%' }}>
                 <path d="M20 2L4 10V22L20 38L36 22V10L20 2Z" fill="#0d1117" stroke="#6366F1" strokeWidth="1.5"/>
@@ -186,7 +186,7 @@ const handleWithdraw = async () => {
                       <label style={labelStyle}>Select Coin</label>
                       <div style={{ display: 'flex', gap: '5px', flexWrap: 'wrap' }}>
                         {coins.map(c => (
-                          <button key={c} onClick={() => setCoin(c)} style={{ padding: '4px 8px', background: coin === c ? '#6366f1' : 'rgba(255,255,255,0.06)', border: 'none', color: t.text, fontSize: '7px', fontWeight: '700', cursor: 'pointer' }}>{c}</button>
+                          <button key={c} onClick={() => setCoin(c)} style={{ padding: '4px 8px', background: coin === c ? '#6366f1' : t.subtleBg, border: 'none', color: t.text, fontSize: '7px', fontWeight: '700', cursor: 'pointer' }}>{c}</button>
                         ))}
                       </div>
                     </div>
@@ -194,7 +194,7 @@ const handleWithdraw = async () => {
                       <label style={labelStyle}>Select Network</label>
                       <div style={{ display: 'flex', gap: '5px' }}>
                         {['TRC20','ERC20','BEP20'].map(n => (
-                          <button key={n} onClick={() => setNetwork(n)} style={{ padding: '4px 8px', background: network === n ? '#6366f1' : 'rgba(255,255,255,0.06)', border: 'none', color: t.text, fontSize: '7px', fontWeight: '700', cursor: 'pointer' }}>{n}</button>
+                          <button key={n} onClick={() => setNetwork(n)} style={{ padding: '4px 8px', background: network === n ? '#6366f1' : t.subtleBg, border: 'none', color: t.text, fontSize: '7px', fontWeight: '700', cursor: 'pointer' }}>{n}</button>
                         ))}
                       </div>
                     </div>
@@ -217,7 +217,7 @@ const handleWithdraw = async () => {
                       Choose File
                       <input type='file' accept='image/*' style={{ display: 'none' }} onChange={e => { setProofFile(e.target.files[0]); setProofName(e.target.files[0]?.name || 'No file chosen'); }} />
                     </label>
-                    <span style={{ background: '#2a3347', border: `1px solid ${t.border}`, borderLeft: 'none', color: 'rgba(255,255,255,0.3)', fontSize: '8px', padding: '7px 10px', flex: 1, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{proofName}</span>
+                    <span style={{ background: t.cardBg2, border: `1px solid ${t.border}`, borderLeft: 'none', color: t.faintText, fontSize: '8px', padding: '7px 10px', flex: 1, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{proofName}</span>
                   </div>
                 </div>
                 <button onClick={handleSubmitDeposit} disabled={submitting} style={{ padding: '8px 20px', background: submitting ? '#4b5563' : '#6366f1', border: 'none', color: t.text, fontSize: '9px', fontWeight: '700', cursor: submitting ? 'not-allowed' : 'pointer' }}>
@@ -240,7 +240,7 @@ const handleWithdraw = async () => {
                     <span style={{ color: t.subText, fontSize: '6px' }}>Network</span>
                     <span style={{ color: t.subText, fontSize: '6px' }}>{network}</span>
                   </div>
-                  <div style={{ color: 'rgba(255,255,255,0.3)', fontSize: '6px', textAlign: 'center', marginBottom: '6px' }}>*Do not deposit assets other than {coin}.</div>
+                  <div style={{ color: t.faintText, fontSize: '6px', textAlign: 'center', marginBottom: '6px' }}>*Do not deposit assets other than {coin}.</div>
                   <button onClick={handleCopy} style={{ width: '100%', padding: '5px', background: copied ? '#22c55e' : '#6366f1', border: 'none', color: t.text, fontSize: '7px', cursor: 'pointer' }}>
                     {copied ? 'Copied!' : 'Copy Address'}
                   </button>
@@ -249,22 +249,22 @@ const handleWithdraw = async () => {
             </div>
 
             {/* Deposits Table */}
-            <div style={{ marginTop: '20px', background: t.cardBg, border: '1px solid rgba(255,255,255,0.06)' }}>
+            <div style={{ marginTop: '20px', background: t.cardBg, border: `1px solid ${t.subtleBorder}` }}>
               <div style={{ padding: '8px 10px', borderBottom: `1px solid ${t.border}`, display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                 <span style={{ color: t.text, fontSize: '9px', fontWeight: '700' }}>Recent Deposits</span>
               </div>
-              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr 1fr', background: 'rgba(255,255,255,0.04)', padding: '7px 10px', borderBottom: `1px solid ${t.border}` }}>
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr 1fr', background: t.tableHeaderBg, padding: '7px 10px', borderBottom: `1px solid ${t.border}` }}>
                 {['Amount','Method','Status','Date'].map((h,i) => (
-                  <span key={i} style={{ color: 'rgba(255,255,255,0.55)', fontSize: '7px', fontWeight: '700' }}>{h} ↕</span>
+                  <span key={i} style={{ color: t.subText, fontSize: '7px', fontWeight: '700' }}>{h} ↕</span>
                 ))}
               </div>
               {loadingDeposits ? (
-                <div style={{ padding: '20px', textAlign: 'center', color: 'rgba(255,255,255,0.3)', fontSize: '8px' }}>Loading...</div>
+                <div style={{ padding: '20px', textAlign: 'center', color: t.faintText, fontSize: '8px' }}>Loading...</div>
               ) : deposits.length === 0 ? (
-                <div style={{ padding: '24px', textAlign: 'center', color: 'rgba(255,255,255,0.25)', fontSize: '8px' }}>No data available in table</div>
+                <div style={{ padding: '24px', textAlign: 'center', color: t.faintText, fontSize: '8px' }}>No data available in table</div>
               ) : (
                 deposits.map((d, i) => (
-                  <div key={i} style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr 1fr', padding: '7px 10px', borderBottom: '1px solid rgba(255,255,255,0.04)', background: i % 2 === 0 ? 'transparent' : 'rgba(255,255,255,0.02)' }}>
+                  <div key={i} style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr 1fr', padding: '7px 10px', borderBottom: `1px solid ${t.tableRowBorder}`, background: i % 2 === 0 ? 'transparent' : t.subtleBg }}>
                     <span style={{ color: '#22c55e', fontSize: '7px', fontWeight: '700' }}>+{formatAmount(d.amount || 0, user?.currency)}</span>
                     <span style={{ color: t.subText, fontSize: '7px' }}>{d.method}</span>
                     <span style={{ color: statusColor(d.status), fontSize: '7px', fontWeight: '600', textTransform: 'capitalize' }}>{d.status}</span>
@@ -272,8 +272,8 @@ const handleWithdraw = async () => {
                   </div>
                 ))
               )}
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '7px 10px', borderTop: '1px solid rgba(255,255,255,0.04)' }}>
-                <span style={{ color: 'rgba(255,255,255,0.35)', fontSize: '8px' }}>Showing {deposits.length} of {deposits.length} entries</span>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '7px 10px', borderTop: `1px solid ${t.tableRowBorder}` }}>
+                <span style={{ color: t.faintText, fontSize: '8px' }}>Showing {deposits.length} of {deposits.length} entries</span>
                 <div style={{ display: 'flex', gap: '4px' }}>
                   <button style={{ background: t.border, border: `1px solid ${t.border}`, color: t.subText, fontSize: '10px', padding: '2px 8px', cursor: 'pointer' }}>&#8249;</button>
                   <button style={{ background: t.border, border: `1px solid ${t.border}`, color: t.subText, fontSize: '10px', padding: '2px 8px', cursor: 'pointer' }}>&#8250;</button>
@@ -285,7 +285,7 @@ const handleWithdraw = async () => {
 
 
       </div>
-      <div style={{ textAlign: "center", padding: "16px", color: "rgba(255,255,255,0.2)", fontSize: "7px", borderTop: "1px solid rgba(255,255,255,0.04)", marginTop: "16px" }}>2020-2026 &copy; Quantyrex Markets</div>
+      <div style={{ textAlign: "center", padding: "16px", color: t.faintText, fontSize: "7px", borderTop: `1px solid ${t.tableRowBorder}`, marginTop: "16px" }}>2020-2026 &copy; Quantyrex Markets</div>
 
     </div>
   );

@@ -225,7 +225,7 @@ export default function Profile() {
 
   const inputStyle = (field) => ({
     width: '100%', background: t.bg,
-    border: '1px solid ' + (errors[field] ? '#ef4444' : 'rgba(255,255,255,0.08)'),
+    border: '1px solid ' + (errors[field] ? '#ef4444' : t.border),
     color: t.text, fontSize: '9px', padding: '7px 10px', outline: 'none', boxSizing: 'border-box'
   });
   const errStyle = { color: '#ef4444', fontSize: '7px', marginTop: '3px' };
@@ -255,8 +255,8 @@ export default function Profile() {
                 <button onClick={() => { logout(); navigate('/signin'); }} style={{ background: '#ef4444', border: 'none', color: t.text, fontSize: '8px', padding: '6px 12px', cursor: 'pointer' }}>Logout</button>
               </div>
               <div style={{ display: 'flex', alignItems: 'center', gap: '14px' }}>
-                <div style={{ width: '55px', height: '55px', borderRadius: '50%', background: 'rgba(255,255,255,0.15)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, border: '2px solid rgba(255,255,255,0.2)', overflow: 'hidden' }}>
-                  {avatarSrc ? <img src={avatarSrc} style={{ width: '100%', height: '100%', objectFit: 'cover' }} alt="avatar" onError={e => { e.target.style.display='none'; e.target.nextSibling.style.display='flex'; }}/> : null}<User size={26} color='rgba(255,255,255,0.7)' style={{ display: avatarSrc ? 'none' : 'block' }}/>
+                <div style={{ width: '55px', height: '55px', borderRadius: '50%', background: t.hoverBg, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, border: `2px solid ${t.border}`, overflow: 'hidden' }}>
+                  {avatarSrc ? <img src={avatarSrc} style={{ width: '100%', height: '100%', objectFit: 'cover' }} alt="avatar" onError={e => { e.target.style.display='none'; e.target.nextSibling.style.display='flex'; }}/> : null}<User size={26} color={t.subText} style={{ display: avatarSrc ? 'none' : 'block' }}/>
                 </div>
                 <div>
                   <div style={{ display: 'flex', gap: '20px', marginBottom: '8px' }}>
@@ -313,7 +313,7 @@ export default function Profile() {
                   Choose File
                   <input type='file' accept='image/*' style={{ display: 'none' }} onChange={handleFileChange}/>
                 </label>
-                <span style={{ background: t.bg, border: `1px solid ${t.border}`, borderLeft: 'none', color: 'rgba(255,255,255,0.3)', fontSize: '8px', padding: '6px 12px', flex: 1 }}>{fileName}</span>
+                <span style={{ background: t.bg, border: `1px solid ${t.border}`, borderLeft: 'none', color: t.faintText, fontSize: '8px', padding: '6px 12px', flex: 1 }}>{fileName}</span>
               </div>
             </div>
 
@@ -331,7 +331,7 @@ export default function Profile() {
               </div>
             </div>
 
-            <div style={{ borderTop: '1px solid rgba(255,255,255,0.06)', marginBottom: '14px' }}/>
+            <div style={{ borderTop: `1px solid ${t.subtleBorder}`, marginBottom: '14px' }}/>
 
             {/* Currency */}
             <div style={{ marginBottom: '14px' }}>
@@ -360,7 +360,7 @@ export default function Profile() {
               </select>
             </div>
 
-            <div style={{ borderTop: '1px solid rgba(255,255,255,0.06)', marginBottom: '14px' }}/>
+            <div style={{ borderTop: `1px solid ${t.subtleBorder}`, marginBottom: '14px' }}/>
 
             {/* DOB & Phone */}
             <div style={{ display: 'flex', gap: '10px', marginBottom: '14px' }}>
@@ -388,19 +388,19 @@ export default function Profile() {
                     onChange={handleChange}
                     placeholder={`${selectedCountry.minLen}-${selectedCountry.maxLen} digits`}
                     maxLength={selectedCountry.maxLen}
-                    style={{ flex: 1, background: t.bg, border: '1px solid ' + (errors.phone ? '#ef4444' : 'rgba(255,255,255,0.08)'), color: t.text, fontSize: '9px', padding: '7px 10px', outline: 'none', boxSizing: 'border-box' }}
+                    style={{ flex: 1, background: t.bg, border: '1px solid ' + (errors.phone ? '#ef4444' : t.border), color: t.text, fontSize: '9px', padding: '7px 10px', outline: 'none', boxSizing: 'border-box' }}
                   />
                 </div>
                 {errors.phone
                   ? <div style={errStyle}>{errors.phone}</div>
-                  : <div style={{ color: 'rgba(255,255,255,0.3)', fontSize: '7px', marginTop: '3px' }}>
+                  : <div style={{ color: t.faintText, fontSize: '7px', marginTop: '3px' }}>
                       {selectedCountry.flag} {selectedCountry.name} — {selectedCountry.minLen === selectedCountry.maxLen ? `${selectedCountry.minLen} digits` : `${selectedCountry.minLen}-${selectedCountry.maxLen} digits`}
                     </div>
                 }
               </div>
             </div>
 
-            <div style={{ borderTop: '1px solid rgba(255,255,255,0.06)', marginBottom: '14px' }}/>
+            <div style={{ borderTop: `1px solid ${t.subtleBorder}`, marginBottom: '14px' }}/>
 
             {/* Country dropdown */}
             <div style={{ marginBottom: '14px' }}>
@@ -409,7 +409,7 @@ export default function Profile() {
                 name='country'
                 value={form.country}
                 onChange={handleCountryChange}
-                style={{ width: '100%', background: t.bg, border: '1px solid ' + (errors.country ? '#ef4444' : 'rgba(255,255,255,0.08)'), color: t.text, fontSize: '9px', padding: '7px 10px', outline: 'none' }}
+                style={{ width: '100%', background: t.bg, border: '1px solid ' + (errors.country ? '#ef4444' : t.border), color: t.text, fontSize: '9px', padding: '7px 10px', outline: 'none' }}
               >
                 <option value=''>Select Country</option>
                 {COUNTRIES.map((c, i) => (
@@ -436,7 +436,7 @@ export default function Profile() {
             {/* Address */}
             <div style={{ marginBottom: '16px' }}>
               <label style={labelStyle}>Address *</label>
-              <textarea name='address' value={form.address} onChange={handleChange} placeholder='Enter your address here' rows={3} style={{ width: '100%', background: t.bg, border: '1px solid ' + (errors.address ? '#ef4444' : 'rgba(255,255,255,0.08)'), color: t.text, fontSize: '9px', padding: '7px 10px', outline: 'none', boxSizing: 'border-box', resize: 'vertical' }}/>
+              <textarea name='address' value={form.address} onChange={handleChange} placeholder='Enter your address here' rows={3} style={{ width: '100%', background: t.bg, border: '1px solid ' + (errors.address ? '#ef4444' : t.border), color: t.text, fontSize: '9px', padding: '7px 10px', outline: 'none', boxSizing: 'border-box', resize: 'vertical' }}/>
               {errors.address && <div style={errStyle}>{errors.address}</div>}
             </div>
 
@@ -450,7 +450,7 @@ export default function Profile() {
           </div>
         )}
       </div>
-      <div style={{ textAlign: "center", padding: "16px", color: "rgba(255,255,255,0.2)", fontSize: "7px", borderTop: "1px solid rgba(255,255,255,0.04)", marginTop: "16px" }}>2020-2026 &copy; Quantyrex Markets</div>
+      <div style={{ textAlign: "center", padding: "16px", color: t.faintText, fontSize: "7px", borderTop: `1px solid ${t.tableRowBorder}`, marginTop: "16px" }}>2020-2026 &copy; Quantyrex Markets</div>
 
     </div>
   );

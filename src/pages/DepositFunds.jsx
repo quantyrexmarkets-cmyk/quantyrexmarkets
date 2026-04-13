@@ -50,14 +50,14 @@ export default function DepositFunds() {
       <PageHeader title="Deposit Funds" />
 
       <div style={{ padding: '16px' }}>
-        <div style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.06)', padding: '14px', display: 'flex', flexDirection: 'column', gap: '10px' }}>
+        <div style={{ background: t.subtleBg, border: `1px solid ${t.subtleBorder}`, padding: '14px', display: 'flex', flexDirection: 'column', gap: '10px' }}>
 
           <div style={{ color: 'white', fontSize: '14px', fontWeight: '700' }}>Deposit Funds:</div>
 
           {/* Payment Method */}
           <div>
-            <div style={{ color: 'rgba(255,255,255,0.6)', fontSize: '9px', marginBottom: '6px' }}>Payment Method</div>
-            <select value={method} onChange={e => setMethod(e.target.value)} style={{ width: '100%', background: t.cardBg, border: '1px solid rgba(255,255,255,0.15)', color: 'white', fontSize: '9px', padding: '10px', outline: 'none', boxSizing: 'border-box' }}>
+            <div style={{ color: t.dimText, fontSize: '9px', marginBottom: '6px' }}>Payment Method</div>
+            <select value={method} onChange={e => setMethod(e.target.value)} style={{ width: '100%', background: t.cardBg, border: `1px solid ${t.border}`, color: 'white', fontSize: '9px', padding: '10px', outline: 'none', boxSizing: 'border-box' }}>
               <option value='crypto'>Crypto</option>
               <option value='bank'>Bank Transfer</option>
             </select>
@@ -65,24 +65,24 @@ export default function DepositFunds() {
 
           {/* Amount */}
           <div>
-            <div style={{ color: 'rgba(255,255,255,0.6)', fontSize: '9px', marginBottom: '6px' }}>Amount to deposit</div>
+            <div style={{ color: t.dimText, fontSize: '9px', marginBottom: '6px' }}>Amount to deposit</div>
             <input value={amount} onChange={e => setAmount(e.target.value)}
-              style={{ width: '100%', background: t.cardBg, border: '1px solid rgba(255,255,255,0.15)', color: 'white', fontSize: '9px', padding: '10px', outline: 'none', boxSizing: 'border-box' }} />
+              style={{ width: '100%', background: t.cardBg, border: `1px solid ${t.border}`, color: 'white', fontSize: '9px', padding: '10px', outline: 'none', boxSizing: 'border-box' }} />
           </div>
 
           {/* Payment Proof */}
           <div>
-            <div style={{ color: 'rgba(255,255,255,0.6)', fontSize: '9px', marginBottom: '6px' }}>Payment Proof</div>
-            <label style={{ display: 'flex', alignItems: 'center', gap: '10px', background: t.cardBg, border: '1px solid rgba(255,255,255,0.15)', padding: '10px', cursor: 'pointer', width: '100%', boxSizing: 'border-box' }}>
-              <span style={{ background: 'rgba(255,255,255,0.1)', padding: '4px 10px', fontSize: '9px', color: 'white', whiteSpace: 'nowrap' }}>Choose File</span>
-              <span style={{ color: fileData ? 'white' : 'rgba(255,255,255,0.3)', fontSize: '9px' }}>{fileName}</span>
+            <div style={{ color: t.dimText, fontSize: '9px', marginBottom: '6px' }}>Payment Proof</div>
+            <label style={{ display: 'flex', alignItems: 'center', gap: '10px', background: t.cardBg, border: `1px solid ${t.border}`, padding: '10px', cursor: 'pointer', width: '100%', boxSizing: 'border-box' }}>
+              <span style={{ background: t.hoverBg, padding: '4px 10px', fontSize: '9px', color: 'white', whiteSpace: 'nowrap' }}>Choose File</span>
+              <span style={{ color: fileData ? 'white' : t.faintText, fontSize: '9px' }}>{fileName}</span>
               <input type='file' accept='image/*,application/pdf' style={{ display: 'none' }} onChange={e => { if(e.target.files[0]) { setFileName(e.target.files[0].name); setFileData(e.target.files[0]); } }} />
             </label>
           </div>
 
           {/* Bank Transfer Details */}
           {method === 'bank' && (
-            <div style={{ background: t.cardBg, border: '1px solid rgba(255,255,255,0.15)', padding: '12px', display: 'flex', flexDirection: 'column', gap: '8px' }}>
+            <div style={{ background: t.cardBg, border: `1px solid ${t.border}`, padding: '12px', display: 'flex', flexDirection: 'column', gap: '8px' }}>
               <div style={{ color: 'white', fontSize: '10px', fontWeight: '700', marginBottom: '4px' }}>Bank Transfer Details</div>
               {[
                 ['Bank Name', 'VertexTrade Bank'],
@@ -92,7 +92,7 @@ export default function DepositFunds() {
                 ['SWIFT/BIC', 'VTPROUS33'],
               ].map(([l, v]) => (
                 <div key={l} style={{ display: 'flex', justifyContent: 'space-between' }}>
-                  <span style={{ color: 'rgba(255,255,255,0.5)', fontSize: '9px' }}>{l}</span>
+                  <span style={{ color: t.subText, fontSize: '9px' }}>{l}</span>
                   <span style={{ color: 'white', fontSize: '9px', fontWeight: '600' }}>{v}</span>
                 </div>
               ))}
@@ -102,7 +102,7 @@ export default function DepositFunds() {
           {/* Crypto Address */}
           {method === 'crypto' && (
             <div>
-              <div style={{ color: 'rgba(255,255,255,0.6)', fontSize: '9px', marginBottom: '6px' }}>USDT Address:</div>
+              <div style={{ color: t.dimText, fontSize: '9px', marginBottom: '6px' }}>USDT Address:</div>
               <div onClick={handleCopy} style={{ color: '#6366f1', fontSize: '13px', wordBreak: 'break-all', fontWeight: '700', lineHeight: '1.5', cursor: 'pointer' }}>
                 {address}
               </div>
@@ -117,19 +117,19 @@ export default function DepositFunds() {
               <div style={{ color: 'white', fontSize: '16px', fontWeight: '700', textAlign: 'center' }}>Deposit USDT to Bitget</div>
               <img src="/qr-usdt.jpg" alt="USDT QR" style={{ width: '180px', height: '180px', borderRadius: '12px', objectFit: 'contain' }} />
               <div style={{ width: '100%', display: 'flex', flexDirection: 'column', gap: '12px' }}>
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', paddingBottom: '12px', borderBottom: '1px solid rgba(255,255,255,0.08)' }}>
-                  <span style={{ color: 'rgba(255,255,255,0.5)', fontSize: '13px' }}>Address</span>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', paddingBottom: '12px', borderBottom: `1px solid ${t.border}` }}>
+                  <span style={{ color: t.subText, fontSize: '13px' }}>Address</span>
                   <span style={{ color: 'white', fontSize: '13px', fontWeight: '600', textAlign: 'right', maxWidth: '200px', wordBreak: 'break-all' }}>{address}</span>
                 </div>
-                <div style={{ display: 'flex', justifyContent: 'space-between', paddingBottom: '12px', borderBottom: '1px solid rgba(255,255,255,0.08)' }}>
-                  <span style={{ color: 'rgba(255,255,255,0.5)', fontSize: '13px' }}>Network</span>
+                <div style={{ display: 'flex', justifyContent: 'space-between', paddingBottom: '12px', borderBottom: `1px solid ${t.border}` }}>
+                  <span style={{ color: t.subText, fontSize: '13px' }}>Network</span>
                   <span style={{ color: 'white', fontSize: '13px', fontWeight: '600' }}>{network}</span>
                 </div>
-                <div style={{ display: 'flex', justifyContent: 'space-between', paddingBottom: '12px', borderBottom: '1px solid rgba(255,255,255,0.08)' }}>
-                  <span style={{ color: 'rgba(255,255,255,0.5)', fontSize: '13px' }}>Minimum deposit amount</span>
+                <div style={{ display: 'flex', justifyContent: 'space-between', paddingBottom: '12px', borderBottom: `1px solid ${t.border}` }}>
+                  <span style={{ color: t.subText, fontSize: '13px' }}>Minimum deposit amount</span>
                   <span style={{ color: 'white', fontSize: '13px', fontWeight: '600' }}>0.01</span>
                 </div>
-                <div style={{ color: 'rgba(255,255,255,0.4)', fontSize: '11px' }}>* Do not deposit any assets other than USDT to the address.</div>
+                <div style={{ color: t.mutedText, fontSize: '11px' }}>* Do not deposit any assets other than USDT to the address.</div>
               </div>
               <img src='/bitget-logo.png' alt='Bitget' style={{ width: '160px', height: '55px', objectFit: 'contain' }} />
               <button onClick={handleSubmit} style={{ width: '100%', padding: '12px', background: '#22c55e', border: 'none', color: 'white', fontSize: '10px', fontWeight: '700', cursor: 'pointer' }}>
@@ -166,7 +166,7 @@ export default function DepositFunds() {
         </>
       )}
 
-      <div style={{ textAlign: 'center', padding: '16px', color: 'rgba(255,255,255,0.2)', fontSize: '7px', borderTop: '1px solid rgba(255,255,255,0.04)', marginTop: '16px' }}>2020-2026 © Quantyrex Markets</div>
+      <div style={{ textAlign: 'center', padding: '16px', color: t.faintText, fontSize: '7px', borderTop: `1px solid ${t.tableRowBorder}`, marginTop: '16px' }}>2020-2026 © Quantyrex Markets</div>
     </div>
   );
 }

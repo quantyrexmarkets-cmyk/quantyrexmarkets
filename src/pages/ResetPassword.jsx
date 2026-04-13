@@ -40,14 +40,14 @@ export default function ResetPassword() {
             </svg>
           </div>
           <div style={{ color: 'white', fontSize: '14px', fontWeight: '800' }}>QUANTYREX <span style={{ color: '#6366f1' }}>MARKETS</span></div>
-          <div style={{ color: 'rgba(255,255,255,0.5)', fontSize: '9px', marginTop: '4px' }}>Reset Your Password</div>
+          <div style={{ color: t.subText, fontSize: '9px', marginTop: '4px' }}>Reset Your Password</div>
         </div>
 
         {success ? (
           <div style={{ textAlign: 'center' }}>
             <div style={{ color: '#22c55e', fontSize: '24px', marginBottom: '12px' }}><svg width='24' height='24' fill='none' stroke='#22c55e' viewBox='0 0 24 24' strokeWidth='2'><path strokeLinecap='round' strokeLinejoin='round' d='M5 13l4 4L19 7'/></svg></div>
             <div style={{ color: 'white', fontSize: '10px', marginBottom: '8px' }}>Password reset successfully!</div>
-            <div style={{ color: 'rgba(255,255,255,0.4)', fontSize: '8px' }}>Redirecting to login...</div>
+            <div style={{ color: t.mutedText, fontSize: '8px' }}>Redirecting to login...</div>
           </div>
         ) : (
           <>
@@ -56,12 +56,12 @@ export default function ResetPassword() {
             ) : (
               <>
                 <div style={{ marginBottom: '12px' }}>
-                  <label style={{ color: 'rgba(255,255,255,0.6)', fontSize: '8px', display: 'block', marginBottom: '6px' }}>New Password</label>
-                  <input type="password" value={password} onChange={e => setPassword(e.target.value)} placeholder="Min 6 characters" style={{ width: '100%', background: '#0e1628', border: '1px solid rgba(255,255,255,0.1)', color: 'white', fontSize: '9px', padding: '9px 10px', outline: 'none', boxSizing: 'border-box' }} />
+                  <label style={{ color: t.dimText, fontSize: '8px', display: 'block', marginBottom: '6px' }}>New Password</label>
+                  <input type="password" value={password} onChange={e => setPassword(e.target.value)} placeholder="Min 6 characters" style={{ width: '100%', background: t.inputBg, border: `1px solid ${t.border}`, color: t.text, fontSize: '9px', padding: '9px 10px', outline: 'none', boxSizing: 'border-box' }} />
                 </div>
                 <div style={{ marginBottom: '16px' }}>
-                  <label style={{ color: 'rgba(255,255,255,0.6)', fontSize: '8px', display: 'block', marginBottom: '6px' }}>Confirm Password</label>
-                  <input type="password" value={confirm} onChange={e => setConfirm(e.target.value)} placeholder="Repeat password" style={{ width: '100%', background: '#0e1628', border: '1px solid rgba(255,255,255,0.1)', color: 'white', fontSize: '9px', padding: '9px 10px', outline: 'none', boxSizing: 'border-box' }} />
+                  <label style={{ color: t.dimText, fontSize: '8px', display: 'block', marginBottom: '6px' }}>Confirm Password</label>
+                  <input type="password" value={confirm} onChange={e => setConfirm(e.target.value)} placeholder="Repeat password" style={{ width: '100%', background: t.inputBg, border: `1px solid ${t.border}`, color: t.text, fontSize: '9px', padding: '9px 10px', outline: 'none', boxSizing: 'border-box' }} />
                 </div>
                 {error && <div style={{ color: '#ef4444', fontSize: '8px', marginBottom: '10px' }}>{error}</div>}
                 <button onClick={handleReset} disabled={loading} style={{ width: '100%', padding: '10px', background: '#6366f1', border: 'none', color: 'white', fontSize: '9px', fontWeight: '700', cursor: loading ? 'not-allowed' : 'pointer', opacity: loading ? 0.7 : 1 }}>

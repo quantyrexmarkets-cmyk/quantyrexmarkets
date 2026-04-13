@@ -70,7 +70,7 @@ export default function ReferUsers() {
         </div>
 
         {/* Referral Code */}
-        <div style={{ background: t.cardBg, border: '1px solid rgba(255,255,255,0.06)', padding: '14px', marginBottom: '12px', borderRadius: '4px' }}>
+        <div style={{ background: t.cardBg, border: `1px solid ${t.subtleBorder}`, padding: '14px', marginBottom: '12px', borderRadius: '4px' }}>
           <div style={{ fontSize: '8px', color: t.subText, marginBottom: '8px' }}>YOUR REFERRAL CODE</div>
           <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '10px' }}>
             <div style={{ flex: 1, background: t.bg, padding: '8px 10px', fontSize: '11px', fontWeight: '700', color: '#6366f1', letterSpacing: '1px', borderRadius: '4px' }}>
@@ -92,7 +92,7 @@ export default function ReferUsers() {
         </div>
 
         {/* Referred Users Table */}
-        <div style={{ background: t.cardBg, border: '1px solid rgba(255,255,255,0.06)', borderRadius: '4px', overflow: 'visible' }}>
+        <div style={{ background: t.cardBg, border: `1px solid ${t.subtleBorder}`, borderRadius: '4px', overflow: 'visible' }}>
           <div style={{ padding: '10px 14px', borderBottom: `1px solid ${t.border}` }}>
             <span style={{ fontSize: '9px', fontWeight: '600' }}>Referred Users ({data.totalReferrals})</span>
           </div>
@@ -107,7 +107,7 @@ export default function ReferUsers() {
             ) : data.referredUsers.length === 0 ? (
               <div style={{ padding: '20px', textAlign: 'center', fontSize: '8px', color: t.subText }}>No referrals yet</div>
             ) : data.referredUsers.slice(0, show).map((u, i) => (
-              <div key={i} style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr 1fr', borderBottom: '1px solid rgba(255,255,255,0.04)' }}>
+              <div key={i} style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr 1fr', borderBottom: `1px solid ${t.tableRowBorder}` }}>
                 <div style={{ padding: '8px', fontSize: '7px', color: t.text }}>{u.username}</div>
                 <div style={{ padding: '8px', fontSize: '7px', color: '#22c55e' }}>${u.commission}</div>
                 <div style={{ padding: '8px', fontSize: '7px', color: u.status === 'Active' ? '#22c55e' : '#f59e0b' }}>{u.status}</div>
@@ -122,7 +122,7 @@ export default function ReferUsers() {
           )}
         </div>
       </div>
-      <div style={{ textAlign: "center", padding: "16px", color: "rgba(255,255,255,0.2)", fontSize: "7px", borderTop: "1px solid rgba(255,255,255,0.04)", marginTop: "16px" }}>2020-2026 &copy; Quantyrex Markets</div>
+      <div style={{ textAlign: "center", padding: "16px", color: t.faintText, fontSize: "7px", borderTop: `1px solid ${t.tableRowBorder}`, marginTop: "16px" }}>2020-2026 &copy; Quantyrex Markets</div>
 
     </div>
   );
