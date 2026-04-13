@@ -198,7 +198,7 @@ export default function AdminPanel() {
   useEffect(() => { api('/stats').then(setStats); }, []);
 
   useEffect(() => {
-    if (tab === 'users') api('/users').then(setUsers);
+    if (tab === 'users') api('/users').then(d => setUsers(Array.isArray(d) ? d : d.users || []));
     if (tab === 'deposits') api('/deposits').then(setDeposits);
     if (tab === 'withdrawals') api('/withdrawals').then(setWithdrawals);
     if (tab === 'kyc') api('/kyc').then(setKyc);
@@ -275,7 +275,7 @@ export default function AdminPanel() {
   const updateBalance = async (id) => {
     if (!editBalance[id]) return;
     await api(`/users/${id}/balance`, 'PUT', { balance: parseFloat(editBalance[id]) });
-    api('/users').then(setUsers);
+    api('/users').then(d => setUsers(Array.isArray(d) ? d : d.users || []));
     showMsg('Balance updated');
   };
 
@@ -290,7 +290,7 @@ export default function AdminPanel() {
       totalReferrals: parseFloat(s.totalReferrals || 0),
       totalPackages: parseFloat(s.totalPackages || 0),
     });
-    api('/users').then(setUsers);
+    api('/users').then(d => setUsers(Array.isArray(d) ? d : d.users || []));
     showMsg('User stats updated');
   };
 
@@ -312,38 +312,38 @@ export default function AdminPanel() {
 
   const deleteMessage = async (id) => {
     await api(`/users/${id}/message`, 'DELETE');
-    api('/users').then(setUsers);
+    api('/users').then(d => setUsers(Array.isArray(d) ? d : d.users || []));
     showMsg('Message deleted');
   };
 
   const toggleBlock = async (id) => {
     await api(`/users/${id}/block`, 'PUT');
-    api('/users').then(setUsers);
+    api('/users').then(d => setUsers(Array.isArray(d) ? d : d.users || []));
     showMsg('User status updated');
   };
 
   const toggleWithdrawalBlock = async (id) => {
     await api(`/users/${id}/withdrawal-block`, 'PUT');
-    api('/users').then(setUsers);
+    api('/users').then(d => setUsers(Array.isArray(d) ? d : d.users || []));
     showMsg('Withdrawal status updated');
   };
 
   const toggleAccountUpgrade = async (id) => {
     await api(`/users/${id}/account-upgrade`, 'PUT');
-    api('/users').then(setUsers);
+    api('/users').then(d => setUsers(Array.isArray(d) ? d : d.users || []));
     showMsg('Account upgrade status updated');
   };
 
   const setWithdrawalCode = async (id, disable = false) => {
     if (disable) {
       await api(`/users/${id}/withdrawal-code`, 'PUT', { withdrawalCode: '', withdrawalCodeRequired: false });
-      api('/users').then(setUsers);
+      api('/users').then(d => setUsers(Array.isArray(d) ? d : d.users || []));
       showMsg('Withdrawal code removed');
       return;
     }
     const code = Math.random().toString(36).substring(2, 8).toUpperCase() + Math.floor(1000 + Math.random() * 9000);
     await api(`/users/${id}/withdrawal-code`, 'PUT', { withdrawalCode: code, withdrawalCodeRequired: true });
-    api('/users').then(setUsers);
+    api('/users').then(d => setUsers(Array.isArray(d) ? d : d.users || []));
     showMsg('Withdrawal code generated and emailed: ' + code);
   };
 
@@ -361,7 +361,7 @@ export default function AdminPanel() {
     const amount = window.prompt('Set minimum withdrawal amount:');
     if (!amount || isNaN(amount)) return;
     await api(`/users/${id}/minimum-withdrawal`, 'PUT', { minimumWithdrawal: parseFloat(amount) });
-    api('/users').then(setUsers);
+    api('/users').then(d => setUsers(Array.isArray(d) ? d : d.users || []));
     showMsg('Minimum withdrawal updated');
   };
 
