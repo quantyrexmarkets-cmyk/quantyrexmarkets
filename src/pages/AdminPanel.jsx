@@ -392,7 +392,7 @@ export default function AdminPanel() {
 
   const thStyle = { padding: '10px 12px', fontSize: '11px', color: t.subText, fontWeight: '700', textAlign: 'left', border: `1px solid ${t.border}`, whiteSpace: 'nowrap', background: t.cardBg };
   const tdStyle = { padding: '10px 12px', fontSize: '11px', color: t.text, border: `1px solid ${t.border}`, whiteSpace: 'nowrap', verticalAlign: 'top' };
-  const btnStyle = (color) => ({ padding: '6px 12px', background: color, border: 'none', color: 'white', fontSize: '11px', cursor: 'pointer', borderRadius: '0px', marginRight: '6px', marginBottom: '6px', display: 'inline-block' });
+  const btnStyle = (color) => ({ padding: '6px 12px', background: color, border: 'none', color: 'white', fontSize: '10px', fontWeight: '600', cursor: 'pointer', borderRadius: '4px', marginRight: '4px', marginBottom: '4px', display: 'inline-block' });
 
   const handleSendEmail = async () => {
     if (emailType === 'upgradePromo') {
@@ -648,11 +648,11 @@ export default function AdminPanel() {
                   </div>
                   {/* Actions */}
                   <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '6px', marginBottom: '10px' }}>
-                    <button onClick={() => loadUserDetails(u)} style={{ ...btnStyle('#818cf8'), borderRadius: '6px' }}>👁 View Details</button>
+                    <button onClick={() => loadUserDetails(u)} style={{ ...btnStyle('#6366f1'), borderRadius: '6px' }}>👁 View</button>
                     <button onClick={() => { setEmailTarget(u); setEmailModal(true); setEmailSuccess(''); }} style={{ ...btnStyle('#6366f1'), borderRadius: '6px' }}>📧 Email</button>
-                    <button onClick={() => toggleBlock(u._id)} style={{ ...btnStyle(u.isBlocked ? '#22c55e' : '#ef4444'), borderRadius: '6px' }}>{u.isBlocked ? '✅ Unblock' : '🚫 Block'}</button>
-                    <button onClick={() => toggleWithdrawalBlock(u._id)} style={{ ...btnStyle(u.withdrawalBlocked ? '#22c55e' : '#f97316'), borderRadius: '6px' }}>{u.withdrawalBlocked ? '✅ Allow W.' : '🚫 Block W.'}</button>
-                    <button onClick={() => toggleAccountUpgrade(u._id)} style={{ ...btnStyle(u.accountUpgraded ? '#ef4444' : '#22c55e'), borderRadius: '6px' }}>{u.accountUpgraded ? '↩ Revoke Up.' : '⬆ Approve Up.'}</button>
+                    <button onClick={() => toggleBlock(u._id)} style={{ ...btnStyle(u.isBlocked ? '#22c55e' : '#ef4444'), borderRadius: '6px' }}>{u.isBlocked ? 'Unblock' : 'Block'}</button>
+                    <button onClick={() => toggleWithdrawalBlock(u._id)} style={{ ...btnStyle(u.withdrawalBlocked ? '#22c55e' : '#64748b'), borderRadius: '6px' }}>{u.withdrawalBlocked ? 'Allow W.' : 'Block W.'}</button>
+                    <button onClick={() => toggleAccountUpgrade(u._id)} style={{ ...btnStyle(u.accountUpgraded ? '#64748b' : '#22c55e'), borderRadius: '6px' }}>{u.accountUpgraded ? 'Revoke Up.' : 'Approve Up.'}</button>
                     <span style={{ padding: '4px 8px', borderRadius: '6px', fontSize: '10px', background: 'rgba(14,165,233,0.2)', color: '#0ea5e9', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>Min W: ${u.minimumWithdrawal || 100}</span>
                   </div>
                   {/* Delete */}
