@@ -100,7 +100,7 @@ export default function CopyTrading() {
                 </div>
               ))}
             </div>
-            <button onClick={() => navigate('/dashboard/copy-trading/setup', { state: { trader: t } })} style={{ width: '100%', padding: '10px', background: '#6366f1', border: 'none', color: t.text, fontSize: '10px', fontWeight: '700', cursor: 'pointer', borderRadius: '6px' }}>
+            <button onClick={() => navigate('/dashboard/copy-trading/setup', { state: { trader: tr } })} style={{ width: '100%', padding: '10px', background: '#6366f1', border: 'none', color: t.text, fontSize: '10px', fontWeight: '700', cursor: 'pointer', borderRadius: '6px' }}>
               Copy Trader Strategy
             </button>
           </div>
