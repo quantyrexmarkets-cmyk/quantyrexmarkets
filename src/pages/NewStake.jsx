@@ -110,7 +110,7 @@ export default function NewStake() {
             <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
               {cryptoPlans.map((c, i) => (
                 <div key={i} onClick={() => setSelected(c)}
-                  style={{ background: '#132035', border: '1px solid rgba(99,102,241,0.2)', padding: '16px', display: 'flex', alignItems: 'center', gap: '16px', cursor: 'pointer' }}>
+                  style={{ background: t.cardBg, border: '1px solid rgba(99,102,241,0.2)', padding: '16px', display: 'flex', alignItems: 'center', gap: '16px', cursor: 'pointer' }}>
                   {/* Coin icon */}
                   <img src={c.logo} alt={c.symbol} style={{ width: '48px', height: '48px', objectFit: 'contain', flexShrink: 0 }} />
                   {/* Info */}
@@ -143,7 +143,7 @@ export default function NewStake() {
               </div>
             </div>
 
-            <div style={{ background: '#132035', border: '1px solid rgba(99,102,241,0.2)', padding: '16px' }}>
+            <div style={{ background: t.cardBg, border: '1px solid rgba(99,102,241,0.2)', padding: '16px' }}>
               <div style={{ color: t.subText, fontSize: '8px', marginBottom: '4px' }}>
                 Available Balance: <span style={{ color: '#22c55e', fontWeight: '700' }}>{formatAmount(user?.balance || 0, user?.currency)}</span>
               </div>

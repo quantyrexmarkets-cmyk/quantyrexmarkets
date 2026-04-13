@@ -151,7 +151,7 @@ export default function Deposit() {
               </div>
 
               {/* QR Panel */}
-              <div style={{ width: '120px', flexShrink: 0, background: '#0d1117', border: `1px solid ${t.border}`, padding: '10px', textAlign: 'center' }}>
+              <div style={{ width: '120px', flexShrink: 0, background: t.inputBg, border: `1px solid ${t.border}`, padding: '10px', textAlign: 'center' }}>
                 <div style={{ color: t.subText, fontSize: '6px', marginBottom: '3px', textAlign: 'left' }}>USDT Address:</div>
                 <div style={{ color: '#6366f1', fontSize: '6px', wordBreak: 'break-all', marginBottom: '4px', textAlign: 'left' }}>{walletAddress}</div>
                 <button onClick={handleCopy} style={{ display: 'flex', alignItems: 'center', gap: '3px', background: copied ? '#22c55e' : '#6366f1', border: 'none', color: t.text, fontSize: '6px', padding: '3px 6px', cursor: 'pointer', marginBottom: '6px', width: '100%', justifyContent: 'center' }}>

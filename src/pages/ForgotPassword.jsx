@@ -25,8 +25,8 @@ export default function ForgotPassword() {
   };
 
   return (
-    <div style={{ minHeight: '100vh', background: '#131b2e', padding: '16px' }}>
-      <div style={{ background: '#1e2538', padding: '40px 20px', borderRadius: '8px' }}>
+    <div style={{ minHeight: '100vh', background: t.bg, padding: '16px' }}>
+      <div style={{ background: t.cardBg, padding: '40px 20px', borderRadius: '8px' }}>
         <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '24px' }}>
           <svg viewBox="0 0 40 40" fill="none" width="48" height="48">
                 <path d="M20 2L4 10V22L20 38L36 22V10L20 2Z" fill="#0d1117" stroke="#6366F1" strokeWidth="1.5"/>

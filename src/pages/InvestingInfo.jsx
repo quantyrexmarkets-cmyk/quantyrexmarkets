@@ -14,8 +14,8 @@ export default function InvestingInfo() {
     { name: 'ELITE', roi: '40% Daily', min: '$100,000', duration: '60 Days', color: '#ec4899' },
   ];
   return (
-    <div style={{ minHeight: '100vh', background: '#0e1628', color: 'white', fontFamily: "'Segoe UI', sans-serif" }}>
-      <div style={{ background: '#132035', padding: '14px 20px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', borderBottom: `1px solid ${t.border}` }}>
+    <div style={{ minHeight: '100vh', background: t.bg, color: t.text, fontFamily: "'Segoe UI', sans-serif" }}>
+      <div style={{ background: t.cardBg, padding: '14px 20px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', borderBottom: `1px solid ${t.border}` }}>
         <span style={{ fontWeight: '800', fontSize: '13px' }}>QUANTYREX <span style={{ color: '#6366f1' }}>MARKETS</span></span>
         <div style={{ display: 'flex', gap: '12px' }}>
           <button onClick={() => navigate('/')} style={{ background: 'none', border: 'none', color: t.dimText, fontSize: '10px', cursor: 'pointer' }}>Home</button>

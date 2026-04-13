@@ -59,7 +59,7 @@ export default function PageHeader({ title }) {
             {showNotifications && (
               <>
                 <div onClick={() => setShowNotifications(false)} style={{ position: 'fixed', inset: 0, zIndex: 998 }} />
-                <div style={{ position: 'absolute', top: '110%', right: 0, background: '#1e2538', border: `1px solid ${t.border}`, zIndex: 999, minWidth: '260px', boxShadow: '0 8px 24px rgba(0,0,0,0.4)', borderRadius: '8px', overflow: 'hidden' }}>
+                <div style={{ position: 'absolute', top: '110%', right: 0, background: t.dropdownBg, border: `1px solid ${t.border}`, zIndex: 999, minWidth: '260px', boxShadow: '0 8px 24px rgba(0,0,0,0.4)', borderRadius: '8px', overflow: 'hidden' }}>
                   <div style={{ padding: '12px 16px', borderBottom: `1px solid ${t.border}`, display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                     <span style={{ color: t.text, fontSize: '11px', fontWeight: '700' }}>Notifications</span>
                     <span onClick={() => setNotifications(prev => prev.map(n => ({ ...n, unread: false })))} style={{ color: '#6366f1', fontSize: '9px', cursor: 'pointer' }}>Mark all read</span>
@@ -92,7 +92,7 @@ export default function PageHeader({ title }) {
             {showProfileMenu && (
               <>
                 <div onClick={() => setShowProfileMenu(false)} style={{ position: 'fixed', inset: 0, zIndex: 998 }} />
-                <div style={{ position: 'absolute', top: '110%', right: 0, background: '#1e2538', border: `1px solid ${t.border}`, zIndex: 999, minWidth: '180px', boxShadow: '0 8px 24px rgba(0,0,0,0.4)' }}>
+                <div style={{ position: 'absolute', top: '110%', right: 0, background: t.dropdownBg, border: `1px solid ${t.border}`, zIndex: 999, minWidth: '180px', boxShadow: '0 8px 24px rgba(0,0,0,0.4)' }}>
                   {[
                     { icon: <User size={14}/>, label: 'My Account', action: () => navigate('/dashboard/profile') },
                     { icon: <Settings size={14}/>, label: 'Edit Account', action: () => navigate('/dashboard/profile', { state: { tab: 'edit' } }) },

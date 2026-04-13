@@ -144,7 +144,7 @@ export default function CopyTradingSetup() {
 
         {/* Trader Bio */}
         {trader.bio && (
-          <div style={{ background: "#1a2e4a", border: `1px solid ${t.subtleBorder}`, borderRadius: "12px", padding: "14px", marginBottom: "14px" }}>
+          <div style={{ background: t.cardBg2, border: `1px solid ${t.subtleBorder}`, borderRadius: "12px", padding: "14px", marginBottom: "14px" }}>
             <div style={{ fontSize: "10px", fontWeight: "700", marginBottom: "8px", display: "flex", alignItems: "center", gap: "6px" }}>
               <TrendingUp size={12} color="#6366f1" /> About {trader.name}
             </div>

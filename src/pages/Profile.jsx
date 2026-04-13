@@ -270,7 +270,7 @@ export default function Profile() {
             </div>
           </>
         ) : (
-          <div style={{ background: '#1a2035', padding: '16px', border: `1px solid ${t.border}` }}>
+          <div style={{ background: t.cardBg, padding: '16px', border: `1px solid ${t.border}` }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px' }}>
               <span style={{ color: t.subText, fontSize: '9px' }}>Edit Account</span>
               <button onClick={() => { setActiveTab('profile'); setErrors({}); setAvatarPreview(null); setAvatarFile(null); setFileName('No file chosen'); }} style={{ background: 'none', border: 'none', color: '#6366f1', fontSize: '8px', cursor: 'pointer' }}>Previous →</button>

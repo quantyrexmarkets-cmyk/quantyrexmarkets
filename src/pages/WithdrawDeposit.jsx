@@ -120,7 +120,7 @@ const handleWithdraw = async () => {
   };
 
   const inputStyle = {
-    width: '100%', background: '#2a3347',
+    width: '100%', background: t.inputBg,
     border: `1px solid ${t.border}`,
     color: t.text, fontSize: '9px',
     padding: '8px 10px', outline: 'none', boxSizing: 'border-box'
@@ -154,7 +154,7 @@ const handleWithdraw = async () => {
       </div>
 
       {/* Deposit Header */}
-      <div style={{ background: '#132035', borderBottom: `1px solid ${t.border}`, padding: '10px 16px', display: 'flex', alignItems: 'center', gap: '6px' }}>
+      <div style={{ background: t.cardBg, borderBottom: `1px solid ${t.border}`, padding: '10px 16px', display: 'flex', alignItems: 'center', gap: '6px' }}>
         <Download size={11} color="#22c55e"/>
         <span style={{ color: '#22c55e', fontSize: '9px', fontWeight: '700' }}>DEPOSIT</span>
       </div>
@@ -213,7 +213,7 @@ const handleWithdraw = async () => {
                 <div style={{ marginBottom: '16px' }}>
                   <label style={labelStyle}>Payment Proof</label>
                   <div style={{ display: 'flex' }}>
-                    <label style={{ background: '#3a4255', border: `1px solid ${t.border}`, color: t.subText, fontSize: '8px', padding: '7px 12px', cursor: 'pointer', whiteSpace: 'nowrap' }}>
+                    <label style={{ background: t.cardBg2, border: `1px solid ${t.border}`, color: t.subText, fontSize: '8px', padding: '7px 12px', cursor: 'pointer', whiteSpace: 'nowrap' }}>
                       Choose File
                       <input type='file' accept='image/*' style={{ display: 'none' }} onChange={e => { setProofFile(e.target.files[0]); setProofName(e.target.files[0]?.name || 'No file chosen'); }} />
                     </label>
@@ -229,7 +229,7 @@ const handleWithdraw = async () => {
               <div style={{ width: '140px', flexShrink: 0 }}>
                 <div style={{ color: t.subText, fontSize: '7px', marginBottom: '4px' }}>{coin} Address:</div>
                 <div style={{ color: '#818cf8', fontSize: '7px', wordBreak: 'break-all', marginBottom: '8px', lineHeight: '1.5' }}>{walletAddress}</div>
-                <div style={{ background: '#0d1117', border: `1px solid ${t.border}`, padding: '10px' }}>
+                <div style={{ background: t.inputBg, border: `1px solid ${t.border}`, padding: '10px' }}>
                   <div style={{ color: t.text, fontSize: '7px', fontWeight: '600', textAlign: 'center', marginBottom: '8px' }}>Deposit {coin}</div>
                   <img src='/qrcode.jpg' alt='QR Code' style={{ width: '100%', display: 'block', marginBottom: '8px' }} />
                   <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '4px' }}>

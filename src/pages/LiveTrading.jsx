@@ -52,7 +52,7 @@ export default function LiveTrading() {
     script.async = true;
     script.innerHTML = JSON.stringify({
       autosize: true, symbol: symbol.tv, interval: '15', timezone: 'Etc/UTC',
-      theme: 'dark', style: '1', locale: 'en', backgroundColor: '#0a0f1e',
+      theme: 'dark', style: '1', locale: 'en', backgroundColor: t.bg,
       hide_top_toolbar: false, save_image: false,
     });
     chartRef.current.appendChild(script);
@@ -102,7 +102,7 @@ export default function LiveTrading() {
   const paginated = filtered.slice((page-1)*show, page*show);
 
   return (
-    <div style={{ minHeight: '100vh', background: '#0a0f1e', fontFamily: "'Segoe UI', sans-serif", color: t.text }}>
+    <div style={{ minHeight: '100vh', background: t.bg, fontFamily: "'Segoe UI', sans-serif", color: t.text }}>
       <PageHeader title="Live Trading" />
 
       {/* New Trade Modal */}
@@ -132,7 +132,7 @@ export default function LiveTrading() {
               {/* Form fields */}
               <div>
                 <div style={{ color: t.subText, fontSize: '7px', marginBottom: '3px' }}>Amount (USD)</div>
-                <input value={amount} onChange={e => setAmount(e.target.value)} placeholder='Min $10' style={{ width: '100%', background: '#0a0f1e', border: `1px solid ${sheetDir === 'buy' ? 'rgba(34,197,94,0.3)' : 'rgba(239,68,68,0.3)'}`, color: t.text, fontSize: '10px', padding: '6px 8px', outline: 'none', boxSizing: 'border-box', marginBottom: '4px' }} />
+                <input value={amount} onChange={e => setAmount(e.target.value)} placeholder='Min $10' style={{ width: '100%', background: t.inputBg, border: `1px solid ${sheetDir === 'buy' ? 'rgba(34,197,94,0.3)' : 'rgba(239,68,68,0.3)'}`, color: t.text, fontSize: '10px', padding: '6px 8px', outline: 'none', boxSizing: 'border-box', marginBottom: '4px' }} />
                 {amount && Number(amount) >= 10 && currency && currency !== 'USD' && (
                   <div style={{ fontSize: '7px', color: '#22c55e', marginBottom: '8px' }}>≈ {formatAmount(Number(amount), currency)} in your local currency</div>
                 )}
@@ -141,13 +141,13 @@ export default function LiveTrading() {
               <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '8px', marginBottom: '12px' }}>
                 <div>
                   <div style={{ color: t.subText, fontSize: '7px', marginBottom: '3px' }}>Duration</div>
-                  <select value={duration} onChange={e => setDuration(e.target.value)} style={{ width: '100%', background: '#0a0f1e', border: `1px solid ${t.border}`, color: t.text, fontSize: '8px', padding: '6px 4px', outline: 'none', boxSizing: 'border-box' }}>
+                  <select value={duration} onChange={e => setDuration(e.target.value)} style={{ width: '100%', background: t.inputBg, border: `1px solid ${t.border}`, color: t.text, fontSize: '8px', padding: '6px 4px', outline: 'none', boxSizing: 'border-box' }}>
                     {DURATIONS.map(d => <option key={d} value={d}>{d}</option>)}
                   </select>
                 </div>
                 <div>
                   <div style={{ color: t.subText, fontSize: '7px', marginBottom: '3px' }}>Leverage</div>
-                  <select value={leverage} onChange={e => setLeverage(e.target.value)} style={{ width: '100%', background: '#0a0f1e', border: `1px solid ${t.border}`, color: t.text, fontSize: '8px', padding: '6px 4px', outline: 'none', boxSizing: 'border-box' }}>
+                  <select value={leverage} onChange={e => setLeverage(e.target.value)} style={{ width: '100%', background: t.inputBg, border: `1px solid ${t.border}`, color: t.text, fontSize: '8px', padding: '6px 4px', outline: 'none', boxSizing: 'border-box' }}>
                     {['1x','2x','5x','10x','20x','50x','100x'].map(l => <option key={l} value={l}>{l}</option>)}
                   </select>
                 </div>

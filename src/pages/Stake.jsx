@@ -104,7 +104,7 @@ export default function Stake() {
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '6px', marginBottom: '14px' }}>
               {stakePlans.map((plan, i) => (
                 <div key={i} onClick={() => { setSelectedPlan(plan); setAmount(String(plan.min)); }}
-                  style={{ background: selectedPlan?.name === plan.name ? plan.bg : '#1a2e4a', border: `1px solid ${selectedPlan?.name === plan.name ? plan.color : t.border}`, padding: '10px', cursor: 'pointer' }}>
+                  style={{ background: selectedPlan?.name === plan.name ? plan.bg : t.cardBg2, border: `1px solid ${selectedPlan?.name === plan.name ? plan.color : t.border}`, padding: '10px', cursor: 'pointer' }}>
                   <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '4px' }}>
                     <span style={{ color: plan.color, fontSize: '8px', fontWeight: '800' }}>{plan.name}</span>
                     <span style={{ background: plan.bg, color: plan.color, fontSize: '7px', fontWeight: '700', padding: '1px 5px', border: `1px solid ${plan.color}40` }}>{plan.apy}</span>

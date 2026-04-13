@@ -55,7 +55,7 @@ function TrendyStocks() {
       theme: 'dark',
       style: '3',
       locale: 'en',
-      backgroundColor: '#132035',
+      backgroundColor: t.cardBg,
       hide_top_toolbar: true,
       hide_side_toolbar: true,
       hide_legend: false,
@@ -219,7 +219,7 @@ export default function Dashboard() {
                     <div style={{ position: 'relative' }}>
               <div onClick={() => setShowProfileMenu(!showProfileMenu)} style={{ display: 'flex', alignItems: 'center', borderLeft: `1px solid ${t.border}`, borderRight: `1px solid ${t.border}`, padding: '0 12px', cursor: 'pointer', height: '100%' }}>
                 <div style={{ width: '34px', height: '34px', borderRadius: '50%', background: '#5b6477', overflow: 'hidden', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                  {u.avatar ? <img src={u.avatar} style={{ width: '34px', height: '34px', objectFit: 'cover' }} /> : <User size={18} color="white" />}
+                  {u.avatar ? <img src={u.avatar} style={{ width: '34px', height: '34px', objectFit: 'cover' }} /> : <User size={18} color={t.text} />}
                 </div>
               </div>
               {showProfileMenu && (
@@ -255,11 +255,11 @@ export default function Dashboard() {
         </div>
 
         {u.adminMessage && showNotice && (
-          <div style={{ position: 'fixed', top: '60px', left: '50%', transform: 'translateX(-50%)', zIndex: 200, background: '#c0392b', color: 'white', padding: '10px 16px', display: 'flex', alignItems: 'center', gap: '8px', fontSize: '9px', boxShadow: '0 4px 20px rgba(0,0,0,0.4)', minWidth: '260px', maxWidth: '320px' }}>
+          <div style={{ position: 'fixed', top: '60px', left: '50%', transform: 'translateX(-50%)', zIndex: 200, background: '#c0392b', color: '#ffffff', padding: '10px 16px', display: 'flex', alignItems: 'center', gap: '8px', fontSize: '9px', boxShadow: '0 4px 20px rgba(0,0,0,0.4)', minWidth: '260px', maxWidth: '320px' }}>
             <svg width="12" height="12" fill="none" stroke="white" viewBox="0 0 24 24" strokeWidth="2" style={{ flexShrink: 0 }}><path strokeLinecap="round" strokeLinejoin="round" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
             <span style={{ flex: 1 }}>{u.adminMessage}</span>
-            {u.isAdmin && <button onClick={() => navigate('/admin')} style={{ background: 'none', border: `1px solid ${t.border}`, color: 'white', cursor: 'pointer', fontSize: '7px', padding: '2px 6px', marginRight: '4px' }}>Admin</button>}
-            <button onClick={() => setShowNotice(false)} style={{ background: 'none', border: 'none', color: 'white', cursor: 'pointer', fontSize: '12px', padding: 0 }}>×</button>
+            {u.isAdmin && <button onClick={() => navigate('/admin')} style={{ background: 'none', border: `1px solid ${t.border}`, color: '#ffffff', cursor: 'pointer', fontSize: '7px', padding: '2px 6px', marginRight: '4px' }}>Admin</button>}
+            <button onClick={() => setShowNotice(false)} style={{ background: 'none', border: 'none', color: '#ffffff', cursor: 'pointer', fontSize: '12px', padding: 0 }}>×</button>
           </div>
         )}
 

@@ -120,7 +120,7 @@ export default function SettingsPage() {
             title="Two-Factor Authentication"
             desc="Require email OTP on every login"
             right={
-              <button onClick={toggle2FA} disabled={twoFALoading} style={{ padding: '6px 16px', background: twoFAEnabled ? '#22c55e' : '#374151', border: 'none', color: t.text, fontSize: '10px', fontWeight: '700', cursor: 'pointer', borderRadius: '6px', minWidth: '60px' }}>
+              <button onClick={toggle2FA} disabled={twoFALoading} style={{ padding: '6px 16px', background: twoFAEnabled ? '#22c55e' : t.cardBg2, border: 'none', color: t.text, fontSize: '10px', fontWeight: '700', cursor: 'pointer', borderRadius: '6px', minWidth: '60px' }}>
                 {twoFALoading ? '...' : twoFAEnabled ? 'ON' : 'OFF'}
               </button>
             }

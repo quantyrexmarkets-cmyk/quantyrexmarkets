@@ -390,7 +390,7 @@ export default function AdminPanel() {
     { label: 'Pending KYC', value: stats.pendingKyc || 0, color: '#22c55e' },
   ];
 
-  const thStyle = { padding: '10px 12px', fontSize: '11px', color: t.subText, fontWeight: '700', textAlign: 'left', border: `1px solid ${t.border}`, whiteSpace: 'nowrap', background: '#0f1a2e' };
+  const thStyle = { padding: '10px 12px', fontSize: '11px', color: t.subText, fontWeight: '700', textAlign: 'left', border: `1px solid ${t.border}`, whiteSpace: 'nowrap', background: t.cardBg };
   const tdStyle = { padding: '10px 12px', fontSize: '11px', color: 'white', border: `1px solid ${t.border}`, whiteSpace: 'nowrap', verticalAlign: 'top' };
   const btnStyle = (color) => ({ padding: '6px 12px', background: color, border: 'none', color: 'white', fontSize: '11px', cursor: 'pointer', borderRadius: '0px', marginRight: '6px', marginBottom: '6px', display: 'inline-block' });
 
@@ -961,8 +961,8 @@ export default function AdminPanel() {
 
         {/* Contacts */}
         {tab === 'contacts' && (
-          <div style={{ padding: '0', display: 'flex', gap: '0', height: 'calc(100vh - 210px)', background: '#000000' }}>
-            <div style={{ width: chatFullscreen ? '0px' : '220px', flexShrink: 0, overflowY: 'auto', borderRight: chatFullscreen ? 'none' : `1px solid ${t.subtleBorder}`, paddingRight: '0', overflow: 'hidden', transition: 'width 0.2s', background: '#0a0a0a' }}>
+          <div style={{ padding: '0', display: 'flex', gap: '0', height: 'calc(100vh - 210px)', background: t.bg }}>
+            <div style={{ width: chatFullscreen ? '0px' : '220px', flexShrink: 0, overflowY: 'auto', borderRight: chatFullscreen ? 'none' : `1px solid ${t.subtleBorder}`, paddingRight: '0', overflow: 'hidden', transition: 'width 0.2s', background: t.bg }}>
               <div style={{ color: t.subText, fontSize: '8px', fontWeight: '700', marginBottom: '8px', padding: '12px 12px 0' }}>CONVERSATIONS ({contacts.length})</div>
               {contacts.length === 0 && <div style={{ color: t.faintText, fontSize: '8px' }}>No chats yet</div>}
               {contacts.map((c, i) => (
@@ -983,13 +983,13 @@ export default function AdminPanel() {
                 </div>
               ))}
             </div>
-            <div style={{ flex: 1, display: 'flex', flexDirection: 'column', background: '#000000' }}>
+            <div style={{ flex: 1, display: 'flex', flexDirection: 'column', background: t.bg }}>
               {!selectedChat ? (
                 <div style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', color: t.faintText, fontSize: '9px' }}>Select a conversation</div>
               ) : (
                 <>
                   {/* Smartsupp-style user info panel */}
-                  <div style={{ background: '#0a0a0a', borderBottom: `1px solid ${t.border}` }}>
+                  <div style={{ background: t.bg, borderBottom: `1px solid ${t.border}` }}>
                     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '10px 14px', borderBottom: `1px solid ${t.subtleBorder}` }}>
                       <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
                         {chatFullscreen && (
@@ -1056,7 +1056,7 @@ export default function AdminPanel() {
                       </div>
                     </div>
                   </div>
-                  <div style={{ flex: 1, overflowY: 'auto', background: '#000000', padding: '12px', display: 'flex', flexDirection: 'column', gap: '6px', marginBottom: '8px' }}>
+                  <div style={{ flex: 1, overflowY: 'auto', background: t.bg, padding: '12px', display: 'flex', flexDirection: 'column', gap: '6px', marginBottom: '8px' }}>
                     {selectedChat.messages?.map((msg, i) => {
                       const msgDate = new Date(msg.createdAt).toDateString();
                       const prevDate = i > 0 ? new Date(selectedChat.messages[i-1].createdAt).toDateString() : null;
@@ -1080,7 +1080,7 @@ export default function AdminPanel() {
                             ) : msg.sender === 'user' ? (
                               <>
                                 <div style={{ width: '22px', height: '22px', borderRadius: '50%', background: '#4b5563', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '7px', color: 'white', fontWeight: '700', flexShrink: 0 }}>{initials}</div>
-                                <div style={{ background: '#1c1c1c', color: 'white', fontSize: '9px', padding: '8px 12px', borderRadius: '8px 8px 8px 0', maxWidth: '65%', lineHeight: '1.4', wordBreak: 'break-word' }}>
+                                <div style={{ background: t.cardBg, color: t.text, fontSize: '9px', padding: '8px 12px', borderRadius: '8px 8px 8px 0', maxWidth: '65%', lineHeight: '1.4', wordBreak: 'break-word' }}>
                                   {msg.text}
                                   <div style={{ color: t.mutedText, fontSize: '7px', marginTop: '2px' }}>{new Date(msg.createdAt).toLocaleTimeString([], {hour:'2-digit',minute:'2-digit'})}</div>
                                 </div>
@@ -1105,7 +1105,7 @@ export default function AdminPanel() {
                     })}
                   </div>
                   {selectedChat.status === 'open' && (
-                    <div style={{ display: 'flex', gap: '6px', padding: '10px 12px', borderTop: `1px solid ${t.border}`, background: '#0a0a0a' }}>
+                    <div style={{ display: 'flex', gap: '6px', padding: '10px 12px', borderTop: `1px solid ${t.border}`, background: t.bg }}>
                       <input type="file" accept="image/*" id="chatImageUpload" style={{ display: 'none' }} onChange={async e => {
                         const file = e.target.files[0];
                         if (!file) return;
@@ -1120,7 +1120,7 @@ export default function AdminPanel() {
                         setAdminSending(false);
                         e.target.value = '';
                       }} />
-                      <button onClick={() => document.getElementById('chatImageUpload').click()} style={{ background: '#1a1a1a', border: `1px solid ${t.border}`, color: 'white', padding: '6px 10px', borderRadius: '4px', cursor: 'pointer', flexShrink: 0 }}>
+                      <button onClick={() => document.getElementById('chatImageUpload').click()} style={{ background: t.cardBg2, border: `1px solid ${t.border}`, color: t.text, padding: '6px 10px', borderRadius: '4px', cursor: 'pointer', flexShrink: 0 }}>
                         <svg width='14' height='14' fill='none' stroke='currentColor' viewBox='0 0 24 24' strokeWidth='2'><rect x='3' y='3' width='18' height='18' rx='2'/><circle cx='8.5' cy='8.5' r='1.5'/><polyline points='21,15 16,10 5,21'/></svg>
                       </button>
                       <input
@@ -1137,7 +1137,7 @@ export default function AdminPanel() {
                           }
                         }}
                         placeholder="Type reply and press Enter..."
-                        style={{ flex: 1, background: '#111111', border: `1px solid ${t.border}`, color: 'white', fontSize: '10px', padding: '10px 12px', outline: 'none', borderRadius: '4px' }}
+                        style={{ flex: 1, background: t.inputBg, border: `1px solid ${t.border}`, color: t.text, fontSize: '10px', padding: '10px 12px', outline: 'none', borderRadius: '4px' }}
                       />
                       <button onClick={async () => {
                         if (!adminReply?.trim() || adminSending) return;

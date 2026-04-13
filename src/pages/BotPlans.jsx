@@ -43,7 +43,7 @@ export default function BotPlans() {
   };
 
   return (
-    <div style={{ minHeight: '100vh', background: '#0a0f1e', fontFamily: "'Segoe UI', sans-serif", color: 'white' }}>
+    <div style={{ minHeight: '100vh', background: t.bg, fontFamily: "'Segoe UI', sans-serif", color: t.text }}>
       <PageHeader title="Bot Plans" />
 
       {error && <div style={{ background: '#ef4444', color: 'white', padding: '8px 16px', fontSize: '9px' }}>{error}</div>}
@@ -75,7 +75,7 @@ export default function BotPlans() {
             const totalProfit = (bot.amount * rateNum * bot.days).toLocaleString();
             const canAfford = (user?.balance || 0) >= bot.amount;
             return (
-              <div key={i} style={{ background: '#1a2e4a', border: '1px solid rgba(99,102,241,0.3)', padding: '12px', position: 'relative' }}>
+              <div key={i} style={{ background: t.cardBg, border: '1px solid rgba(99,102,241,0.3)', padding: '12px', position: 'relative' }}>
                 <div style={{ color: bot.color, fontSize: '9px', fontWeight: '800', marginBottom: '4px' }}>{bot.name}</div>
                 <div style={{ color: bot.color, fontSize: '10px', fontWeight: '800', marginBottom: '2px' }}>${bot.amount.toLocaleString()}</div>
                 {user?.currency && user.currency !== 'USD' && (
@@ -106,7 +106,7 @@ export default function BotPlans() {
       {/* Confirm Modal */}
       {confirmBot && (
         <div onClick={() => setConfirmBot(null)} style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.75)', zIndex: 1000, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '16px' }}>
-          <div onClick={e => e.stopPropagation()} style={{ background: '#0d1426', border: '1px solid rgba(99,102,241,0.4)', width: '100%', maxWidth: '320px', padding: '20px' }}>
+          <div onClick={e => e.stopPropagation()} style={{ background: t.cardBg, border: '1px solid rgba(99,102,241,0.4)', width: '100%', maxWidth: '320px', padding: '20px' }}>
             <div style={{ color: '#818cf8', fontSize: '12px', fontWeight: '800', marginBottom: '12px' }}>{confirmBot.name}</div>
             <p style={{ color: t.overlayText, fontSize: '9px', lineHeight: '1.6', marginBottom: '16px' }}>
               Subscribe to <strong style={{ color: 'white' }}>{confirmBot.name}</strong> for <strong style={{ color: '#ef4444' }}>{formatAmount(confirmBot.amount, user?.currency)}</strong>.
