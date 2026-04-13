@@ -197,16 +197,33 @@ export default function DashboardSidebar({ open, onClose }) {
                       <ChevronRight size={10} color={t.mutedText} style={{ transform: openSubmenu === si+'-'+ii ? 'rotate(90deg)' : 'rotate(0deg)', transition: 'transform 0.2s' }}/>
                     </div>
                   </button>
-                  {item.submenu && openSubmenu === si+'-'+ii && (
-                    <div style={{ paddingLeft: '8px', paddingRight: '8px', marginTop: '2px', marginBottom: '2px' }}>
-                      {item.submenu.map((sub, si2) => (
+                {item.submenu && openSubmenu === si+'-'+ii && (
+                  <div style={{ paddingLeft: '8px', paddingRight: '8px', marginTop: '2px', marginBottom: '2px' }}>
+                    {item.submenu.map((sub, si2) => {
+                      const subActive = location.pathname === sub.route;
+                      return (
                         <button key={si2} onClick={() => { navigate(sub.route); onClose(); }}
-                          style={{ width: '100%', padding: '12px 16px 12px 0', background: 'transparent', border: 'none', cursor: 'pointer', color: t.text, fontSize: '11px', textAlign: 'left', display: 'flex', alignItems: 'center', gap: '6px', fontWeight: '500' }}>
-                          <span style={{ color: '#6366f1', fontSize: '12px' }}>›</span> {sub.label}
+                          style={{
+                            width: '100%', padding: '9px 14px', marginBottom: '2px',
+                            background: subActive ? (t.bg === '#f8fafc' ? 'rgba(99,102,241,0.1)' : 'rgba(99,102,241,0.18)') : 'transparent',
+                            border: subActive ? '1px solid rgba(99,102,241,0.35)' : '1px solid transparent',
+                            borderRadius: '8px',
+                            backdropFilter: subActive ? 'blur(12px)' : 'none',
+                            WebkitBackdropFilter: subActive ? 'blur(12px)' : 'none',
+                            boxShadow: subActive ? (t.bg === '#f8fafc' ? '0 2px 8px rgba(99,102,241,0.12)' : '0 4px 12px rgba(99,102,241,0.2)') : 'none',
+                            cursor: 'pointer',
+                            color: subActive ? '#6366f1' : t.subText,
+                            fontSize: '11px', fontWeight: subActive ? '600' : '400',
+                            textAlign: 'left', display: 'flex', alignItems: 'center', gap: '8px',
+                            transition: 'all 0.15s ease',
+                          }}>
+                          <span style={{ width: '5px', height: '5px', borderRadius: '50%', background: subActive ? '#6366f1' : t.subText, flexShrink: 0 }}/>
+                          {sub.label}
                         </button>
-                      ))}
-                    </div>
-                  )}
+                      );
+                    })}
+                  </div>
+                )}
                   </div>
                 </div>
               ))}
