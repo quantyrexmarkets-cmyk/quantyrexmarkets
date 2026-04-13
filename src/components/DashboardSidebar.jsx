@@ -127,8 +127,9 @@ export default function DashboardSidebar({ open, onClose }) {
 
   const { notifications, unread, markAllRead } = useNotifications();
 
-  // Auto-open submenu if current path matches a child
+  // Auto-open submenu if current path matches a child, close others
   useEffect(() => {
+    let found = null;
     sidebarSections.forEach((section, si) => {
       section.items.forEach((item, ii) => {
         if (item.submenu && item.submenu.some(sub => {
@@ -136,10 +137,11 @@ export default function DashboardSidebar({ open, onClose }) {
           return location.pathname === subPath || 
                  location.pathname + location.search === sub.route;
         })) {
-          setOpenSubmenu(si+'-'+ii);
+          found = si+'-'+ii;
         }
       });
     });
+    if (found) setOpenSubmenu(found);
   }, [location.pathname, location.search]);
   const [notifOpen, setNotifOpen] = useState(false);
   const notifRef = useRef();
@@ -237,7 +239,7 @@ export default function DashboardSidebar({ open, onClose }) {
                 {item.submenu && openSubmenu === si+'-'+ii && (
                   <div style={{ paddingLeft: '8px', paddingRight: '8px', marginTop: '2px', marginBottom: '2px' }}>
                     {item.submenu.map((sub, si2) => {
-                      const subActive = isSubActive(sub);
+                      const subActive = isSubActive(sub) && openSubmenu === si+'-'+ii;
                       return (
                         <button key={si2} onClick={() => { navigate(sub.route); onClose(); }}
                           style={{
