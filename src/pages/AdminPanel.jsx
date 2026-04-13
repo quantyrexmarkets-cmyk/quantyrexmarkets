@@ -474,7 +474,7 @@ export default function AdminPanel() {
       {/* Tabs */}
       <div style={{ background: t.cardBg, padding: '0 16px', display: 'flex', gap: '2px', borderBottom: `1px solid ${t.border}`, overflowX: 'auto' }}>
         {tabs.map(tabItem => (
-          <button key={tabItem} onClick={() => setTab(tabItem)} style={{ padding: '8px 14px', background: 'none', border: 'none', color: tab === tabItem ? '#6366f1' : t.subText, fontSize: '9px', fontWeight: '700', cursor: 'pointer', borderBottom: tab === tabItem ? '2px solid #6366f1' : '2px solid transparent', textTransform: 'uppercase', whiteSpace: 'nowrap' }}>{tabItem}</button>
+          <button key={tabItem} onClick={() => setTab(tabItem)} style={{ padding: '8px 14px', background: 'none', border: 'none', color: tab === tabItem ? '#6366f1' : t.subText, fontSize: '9px', fontWeight: '700', cursor: 'pointer', borderBottom: tab === tabItem ? '2px solid #6366f1' : '2px solid transparent', background: tab === tabItem ? (t.bg === '#f8fafc' ? 'rgba(99,102,241,0.08)' : 'rgba(99,102,241,0.1)') : 'transparent', borderRadius: tab === tabItem ? '6px 6px 0 0' : '0', textTransform: 'uppercase', whiteSpace: 'nowrap' }}>{tabItem}</button>
         ))}
       </div>
 

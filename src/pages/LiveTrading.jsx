@@ -195,7 +195,7 @@ export default function LiveTrading() {
           {/* Tabs */}
           <div style={{ display: 'flex', borderBottom: `1px solid ${t.border}` }}>
             {[['open', `Open (${openTrades.length})`], ['closed', `Closed (${closedTrades.length})`]].map(([key, label]) => (
-              <button key={key} onClick={() => { setTab(key); setPage(1); }} style={{ padding: '8px 14px', background: 'transparent', border: 'none', borderBottom: tab === key ? '2px solid #6366f1' : '2px solid transparent', color: tab === key ? '#818cf8' : t.mutedText, fontSize: '8px', fontWeight: '700', cursor: 'pointer' }}>{label}</button>
+              <button key={key} onClick={() => { setTab(key); setPage(1); }} style={{ padding: '8px 14px', background: tab === key ? (t.bg === '#f8fafc' ? 'rgba(99,102,241,0.1)' : 'rgba(99,102,241,0.15)') : 'transparent', border: 'none', borderBottom: tab === key ? '2px solid #6366f1' : '2px solid transparent', borderRadius: tab === key ? '6px 6px 0 0' : '0', color: tab === key ? '#6366f1' : t.mutedText, fontSize: '8px', fontWeight: tab === key ? '700' : '400', cursor: 'pointer' }}>{label}</button>
             ))}
           </div>
 

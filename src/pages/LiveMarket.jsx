@@ -162,9 +162,12 @@ export default function LiveMarket() {
             { id: 'screener', label: 'Screener', icon: <Bitcoin size={10}/> },
           ].map(tab => (
             <button key={tab.id} onClick={() => setActiveTab(tab.id)} style={{
+              background: activeTab === tab.id ? (t.bg === '#f8fafc' ? 'rgba(99,102,241,0.1)' : 'rgba(99,102,241,0.15)') : 'transparent',
+              borderRadius: activeTab === tab.id ? '6px 6px 0 0' : '0',
               padding: '8px 14px', background: 'transparent', border: 'none',
               borderBottom: activeTab === tab.id ? '2px solid #6366f1' : '2px solid transparent',
-              color: activeTab === tab.id ? '#818cf8' : t.mutedText,
+              color: activeTab === tab.id ? '#6366f1' : t.mutedText,
+              fontWeight: activeTab === tab.id ? '700' : '400',
               fontSize: '8px', fontWeight: '700', cursor: 'pointer',
               display: 'flex', alignItems: 'center', gap: '4px',
             }}>{tab.icon} {tab.label}</button>

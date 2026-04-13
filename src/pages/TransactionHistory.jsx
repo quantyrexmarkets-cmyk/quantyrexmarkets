@@ -91,7 +91,7 @@ export default function TransactionHistory() {
         </div>
         <div style={{ display: 'flex', gap: '6px', marginBottom: '14px', flexWrap: 'wrap' }}>
           {['All', 'Deposit', 'Withdrawal', 'Completed', 'Pending', 'Failed'].map(f => (
-            <button key={f} onClick={() => { setFilter(f); setPage(1); }} style={{ padding: '4px 10px', background: filter === f ? '#6366f1' : t.subtleBg, border: 'none', color: filter === f ? 'white' : t.subText, fontSize: '8px', fontWeight: '600', cursor: 'pointer' }}>{f}</button>
+            <button key={f} onClick={() => { setFilter(f); setPage(1); }} style={{ padding: '4px 10px', background: filter === f ? (t.bg === '#f8fafc' ? 'rgba(99,102,241,0.15)' : '#6366f1') : t.subtleBg, border: filter === f ? '1px solid rgba(99,102,241,0.4)' : `1px solid ${t.border}`, color: filter === f ? '#6366f1' : t.subText, borderRadius: '6px', fontSize: '8px', fontWeight: '600', cursor: 'pointer' }}>{f}</button>
           ))}
         </div>
         <div style={{ background: t.cardBg, border: `1px solid ${t.tableOuterBorder}` }}>
