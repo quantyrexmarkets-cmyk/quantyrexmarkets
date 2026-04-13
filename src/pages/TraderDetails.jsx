@@ -4,11 +4,13 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { ArrowLeft, TrendingUp, TrendingDown, Users, Calendar, DollarSign, AlertCircle, CheckCircle } from 'lucide-react';
 import PageHeader from '../components/PageHeader';
+import { useTheme } from '../context/ThemeContext';
 
 export default function TraderDetails() {
   const { id } = useParams();
   const navigate = useNavigate();
   const { token } = useAuth();
+  const { current: t } = useTheme();
   const [trader, setTrader] = useState(null);
   const [loading, setLoading] = useState(true);
   const [amount, setAmount] = useState('');

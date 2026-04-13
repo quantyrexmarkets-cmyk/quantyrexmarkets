@@ -1,7 +1,9 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useTheme } from '../context/ThemeContext';
 
 export default function SupportPage() {
+  const { current: t } = useTheme();
   const [contacts, setContacts] = useState([]);
   const [selectedChat, setSelectedChat] = useState(null);
   const [adminReply, setAdminReply] = useState('');

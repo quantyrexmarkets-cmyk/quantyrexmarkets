@@ -4,6 +4,7 @@ import { formatAmountWithCode } from '../utils/currency';
 import { useParams, useNavigate } from 'react-router-dom';
 import { ArrowLeft, MapPin, Users, FlaskConical, Heart, TrendingUp, BarChart2, Copy, UserCheck, Shield, Star, Clock, DollarSign, Activity, ChevronDown, ChevronUp } from 'lucide-react';
 import PageHeader from '../components/PageHeader';
+import { useTheme } from '../context/ThemeContext';
 import { startCopyTrade } from '../services/api';
 
 const TRADERS_DEFAULT = [
@@ -50,6 +51,7 @@ function PerfChart() {
 }
 
 export default function TraderProfile() {
+  const { current: t } = useTheme();
   const { id } = useParams();
   const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState('overview');

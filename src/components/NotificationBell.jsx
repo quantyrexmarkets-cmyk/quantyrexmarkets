@@ -1,9 +1,11 @@
 import { useState, useEffect, useRef } from 'react';
 import { Bell } from 'lucide-react';
+import { useTheme } from '../context/ThemeContext';
 
 const API = 'https://quantyrexmarkets-api.vercel.app/api';
 
 export default function NotificationBell() {
+  const { current: t } = useTheme();
   const [notifications, setNotifications] = useState([]);
   const [unread, setUnread] = useState(0);
   const [open, setOpen] = useState(false);

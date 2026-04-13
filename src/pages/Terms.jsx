@@ -1,6 +1,8 @@
 import { useNavigate } from 'react-router-dom';
+import { useTheme } from '../context/ThemeContext';
 
 export default function Terms() {
+  const { current: t } = useTheme();
   const navigate = useNavigate();
   const sections = [
     { title: '1. Acceptance of Terms', content: 'By accessing and using Quantyrex Markets, you accept and agree to be bound by the terms and provisions of this agreement. If you do not agree to these terms, please do not use our platform.' },

@@ -1,8 +1,10 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { forgotPassword } from '../services/api';
+import { useTheme } from '../context/ThemeContext';
 
 export default function ForgotPassword() {
+  const { current: t } = useTheme();
   const navigate = useNavigate();
   const [email, setEmail] = useState('');
   const [loading, setLoading] = useState(false);

@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
+import { useTheme } from '../context/ThemeContext';
 
 const BASE_URL = 'https://quantyrexmarkets-api.vercel.app/api';
 const getToken = () => localStorage.getItem('token');
@@ -9,6 +10,7 @@ const headers = () => ({ 'Content-Type': 'application/json', 'Authorization': `B
 export default function AdminPanel() {
   const navigate = useNavigate();
   const { logout } = useAuth();
+  const { current: t } = useTheme();
   const [tab, setTab] = useState('stats');
   const [traders, setTraders] = useState([]);
   const [traderForm, setTraderForm] = useState({ name: '', location: '', flag: '', followers: '', risk: '', favorite: '', totalTrades: '', totalLoss: '', profitShare: '', winRate: '', verified: true });

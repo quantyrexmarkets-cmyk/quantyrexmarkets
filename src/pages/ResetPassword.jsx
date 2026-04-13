@@ -1,9 +1,11 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useTheme } from '../context/ThemeContext';
 
 const BASE_URL = 'https://quantyrexmarkets-api.vercel.app/api';
 
 export default function ResetPassword() {
+  const { current: t } = useTheme();
   const navigate = useNavigate();
   // token comes from URL path param
   const pathToken = window.location.pathname.split('/reset-password/')[1];

@@ -5,6 +5,7 @@ import PageHeader from '../components/PageHeader';
 import { BarChart2, TrendingUp, Bitcoin } from 'lucide-react';
 
 export default function LiveMarket() {
+  const { current: t } = useTheme();
   const [activeTab, setActiveTab] = useState('overview');
   const [symbol, setSymbol] = useState('BTCUSD');
   const overviewRef = useRef(null);

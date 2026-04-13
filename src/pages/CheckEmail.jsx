@@ -1,8 +1,10 @@
 import { useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { resendVerification } from '../services/api';
+import { useTheme } from '../context/ThemeContext';
 
 export default function CheckEmail() {
+  const { current: t } = useTheme();
   const navigate = useNavigate();
   const location = useLocation();
   const email = location.state?.email || '';

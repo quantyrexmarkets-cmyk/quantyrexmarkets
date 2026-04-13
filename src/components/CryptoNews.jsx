@@ -1,6 +1,8 @@
 import { useState, useEffect } from 'react';
+import { useTheme } from '../context/ThemeContext';
 
 export default function CryptoNews() {
+  const { current: t } = useTheme();
   const [news, setNews] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);

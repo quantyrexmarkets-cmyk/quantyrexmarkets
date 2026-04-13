@@ -1,7 +1,9 @@
 import { useNavigate } from 'react-router-dom';
 import { Package, TrendingUp, Shield, Star, ArrowRight } from 'lucide-react';
+import { useTheme } from '../context/ThemeContext';
 
 export default function InvestingInfo() {
+  const { current: t } = useTheme();
   const navigate = useNavigate();
   const plans = [
     { name: 'BRONZE', roi: '10% Daily', min: '$500', duration: '7 Days', color: '#cd7f32' },

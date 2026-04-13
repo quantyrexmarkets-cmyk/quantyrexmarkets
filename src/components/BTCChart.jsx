@@ -1,6 +1,8 @@
 import React, { useEffect, useRef, useState } from 'react';
+import { useTheme } from '../context/ThemeContext';
 
 export default function BTCChart() {
+  const { current: t } = useTheme();
   const containerRef = useRef(null);
   const [symbol, setSymbol] = useState('BINANCE:BTCUSDT');
 

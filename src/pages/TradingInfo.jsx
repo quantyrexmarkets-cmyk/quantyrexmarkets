@@ -1,7 +1,9 @@
 import { useNavigate } from 'react-router-dom';
 import { TrendingUp, BarChart2, Shield, Zap, ArrowRight } from 'lucide-react';
+import { useTheme } from '../context/ThemeContext';
 
 export default function TradingInfo() {
+  const { current: t } = useTheme();
   const navigate = useNavigate();
   return (
     <div style={{ minHeight: '100vh', background: '#0e1628', color: 'white', fontFamily: "'Segoe UI', sans-serif" }}>
