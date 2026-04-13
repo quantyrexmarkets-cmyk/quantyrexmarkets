@@ -45,7 +45,7 @@ export default function Withdraw() {
   const [receiverPhone, setReceiverPhone] = useState('');
   const [withdrawalCode, setWithdrawalCode] = useState('');
 
-  const inputStyle = { width: '100%', background: '#2d3748', border: `1px solid ${t.border}`, color: t.text, fontSize: '10px', padding: '10px 12px', outline: 'none', boxSizing: 'border-box' };
+  const inputStyle = { width: '100%', background: t.inputBg, border: `1px solid ${t.border}`, color: t.text, fontSize: '10px', padding: '10px 12px', outline: 'none', boxSizing: 'border-box' };
   const labelStyle = { color: t.subText, fontSize: '9px', display: 'block', marginBottom: '6px', fontWeight: '600' };
 
   useEffect(() => {

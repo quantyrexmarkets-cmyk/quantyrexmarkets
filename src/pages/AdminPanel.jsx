@@ -830,7 +830,7 @@ export default function AdminPanel() {
                             <option value="loss">Loss</option>
                           </select>
                           <input placeholder="$ profit/loss" type="number" value={tradeEdit[tr._id]?.result ?? ''} onChange={e => setTradeEdit(p => ({ ...p, [tr._id]: { ...p[tr._id], result: e.target.value } }))} style={{ width: '65px', background: '#374151', border: 'none', color: tradeEdit[tr._id]?.outcome === 'win' ? '#22c55e' : '#ef4444', fontSize: '8px', padding: '3px 5px' }} />
-                          <select value={tradeEdit[tr._id]?.status ?? t.status} onChange={e => setTradeEdit(p => ({ ...p, [t._id]: { ...p[t._id], status: e.target.value } }))} style={{ background: '#374151', border: 'none', color: 'white', fontSize: '8px', padding: '3px' }}>
+                          <select value={tradeEdit[tr._id]?.status ?? tr.status} onChange={e => setTradeEdit(p => ({ ...p, [tr._id]: { ...p[tr._id], status: e.target.value } }))} style={{ background: '#374151', border: 'none', color: 'white', fontSize: '8px', padding: '3px' }}>
                             <option value="pending">Pending</option>
                             <option value="active">Active</option>
                             <option value="closed">Closed</option>

@@ -29,7 +29,7 @@ export default function BTCChart() {
       theme: 'dark',
       style: '1',
       locale: 'en',
-      backgroundColor: '#252d3d',
+      backgroundColor: t.bg === '#f8fafc' ? '#f8fafc' : t.bg === '#111111' ? '#111111' : '#252d3d',
       gridColor: t.tableRowBorder,
       hide_top_toolbar: false,
       hide_legend: false,
