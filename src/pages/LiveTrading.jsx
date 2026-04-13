@@ -247,8 +247,8 @@ export default function LiveTrading() {
                     <td style={{ padding: '8px 6px', color: '#6366f1', fontSize: '8px', fontWeight: '700' }}>{tr.symbol}</td>
                     <td style={{ padding: '8px 6px', color: tr.type === 'buy' ? '#22c55e' : '#ef4444', fontSize: '8px', fontWeight: '700', textTransform: 'uppercase' }}>{tr.type}</td>
                     <td style={{ padding: '8px 6px', color: t.text, fontSize: '8px' }}>{formatAmount(parseFloat(t.amount), user?.currency)}</td>
-                    <td style={{ padding: '8px 6px', color: t.result > 0 ? '#22c55e' : '#ef4444', fontSize: '8px', fontWeight: '700' }}>{t.result != null ? formatAmount(parseFloat(t.result), user?.currency) : '—'}</td>
-                    <td style={{ padding: '8px 6px', color: t.result > 0 ? '#22c55e' : '#ef4444', fontSize: '8px', fontWeight: '700' }}>{t.amount ? `${((t.result / t.amount) * 100).toFixed(1)}%` : '—'}</td>
+                    <td style={{ padding: '8px 6px', color: tr.result > 0 ? '#22c55e' : '#ef4444', fontSize: '8px', fontWeight: '700' }}>{tr.result != null ? formatAmount(parseFloat(tr.result), user?.currency) : '—'}</td>
+                    <td style={{ padding: '8px 6px', color: tr.result > 0 ? '#22c55e' : '#ef4444', fontSize: '8px', fontWeight: '700' }}>{tr.amount ? `${((tr.result / tr.amount) * 100).toFixed(1)}%` : '—'}</td>
                     <td style={{ padding: '8px 6px' }}><span style={{ background: 'rgba(107,114,128,0.1)', color: '#9ca3af', fontSize: '7px', padding: '2px 6px', textTransform: 'capitalize' }}>{tr.status}</span></td>
                   </tr>
                 )

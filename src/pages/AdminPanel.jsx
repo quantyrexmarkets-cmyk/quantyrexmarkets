@@ -473,8 +473,8 @@ export default function AdminPanel() {
 
       {/* Tabs */}
       <div style={{ background: t.cardBg, padding: '0 16px', display: 'flex', gap: '2px', borderBottom: `1px solid ${t.border}`, overflowX: 'auto' }}>
-        {tabs.map(tab => (
-          <button key={t} onClick={() => setTab(tab)} style={{ padding: '8px 14px', background: 'none', border: 'none', color: tab === tab ? '#6366f1' : t.subText, fontSize: '9px', fontWeight: '700', cursor: 'pointer', borderBottom: tab === tab ? '2px solid #6366f1' : '2px solid transparent', textTransform: 'uppercase', whiteSpace: 'nowrap' }}>{tab}</button>
+        {tabs.map(tabItem => (
+          <button key={tabItem} onClick={() => setTab(tabItem)} style={{ padding: '8px 14px', background: 'none', border: 'none', color: tab === tabItem ? '#6366f1' : t.subText, fontSize: '9px', fontWeight: '700', cursor: 'pointer', borderBottom: tab === tabItem ? '2px solid #6366f1' : '2px solid transparent', textTransform: 'uppercase', whiteSpace: 'nowrap' }}>{tabItem}</button>
         ))}
       </div>
 
@@ -809,12 +809,12 @@ export default function AdminPanel() {
               <tbody>
                 {trades.map((tr, i) => (
                   <tr key={i}>
-                    <td style={tdStyle}>{t.user?.firstName} {t.user?.lastName}<br/><span style={{ color: t.mutedText }}>{t.user?.email}</span></td>
+                    <td style={tdStyle}>{tr.user?.firstName} {tr.user?.lastName}<br/><span style={{ color: t.mutedText }}>{tr.user?.email}</span></td>
                     <td style={tdStyle}>{tr.symbol}</td>
                     <td style={{ ...tdStyle, color: tr.type === 'buy' ? '#22c55e' : '#ef4444', textTransform: 'capitalize' }}>{tr.type}</td>
                     <td style={tdStyle}>${tr.amount?.toFixed(2)}</td>
                     <td style={tdStyle}>{tr.duration}</td>
-                    <td style={{ ...tdStyle, color: t.result > 0 ? '#22c55e' : t.result < 0 ? '#ef4444' : t.mutedText }}>{t.result > 0 ? '+' : ''}${Math.abs(t.result || 0).toFixed(2)}</td>
+                    <td style={{ ...tdStyle, color: tr.result > 0 ? '#22c55e' : tr.result < 0 ? '#ef4444' : t.mutedText }}>{tr.result > 0 ? '+' : ''}${Math.abs(tr.result || 0).toFixed(2)}</td>
                     <td style={{ ...tdStyle, color: tr.status === 'closed' ? '#9ca3af' : tr.status === 'active' ? '#22c55e' : '#818cf8', textTransform: 'capitalize' }}>{tr.status}</td>
                     <td style={tdStyle}>{new Date(tr.createdAt).toLocaleDateString()}</td>
                     <td style={tdStyle}>
@@ -830,7 +830,7 @@ export default function AdminPanel() {
                             <option value="loss">Loss</option>
                           </select>
                           <input placeholder="$ profit/loss" type="number" value={tradeEdit[tr._id]?.result ?? ''} onChange={e => setTradeEdit(p => ({ ...p, [tr._id]: { ...p[tr._id], result: e.target.value } }))} style={{ width: '65px', background: '#374151', border: 'none', color: tradeEdit[tr._id]?.outcome === 'win' ? '#22c55e' : '#ef4444', fontSize: '8px', padding: '3px 5px' }} />
-                          <select value={tradeEdit[t._id]?.status ?? t.status} onChange={e => setTradeEdit(p => ({ ...p, [t._id]: { ...p[t._id], status: e.target.value } }))} style={{ background: '#374151', border: 'none', color: 'white', fontSize: '8px', padding: '3px' }}>
+                          <select value={tradeEdit[tr._id]?.status ?? t.status} onChange={e => setTradeEdit(p => ({ ...p, [t._id]: { ...p[t._id], status: e.target.value } }))} style={{ background: '#374151', border: 'none', color: 'white', fontSize: '8px', padding: '3px' }}>
                             <option value="pending">Pending</option>
                             <option value="active">Active</option>
                             <option value="closed">Closed</option>
@@ -1358,8 +1358,8 @@ export default function AdminPanel() {
 
             {/* Tabs */}
             <div style={{ display: 'flex', gap: '4px', padding: '10px 16px', borderBottom: `1px solid ${t.border}`, flexWrap: 'wrap' }}>
-              {['info', 'bots', 'investments', 'profit'].map(tab => (
-                <button key={t} onClick={() => setUserDetailTab(t)} style={{ padding: '5px 12px', background: userDetailTab === t ? '#6366f1' : t.subtleBg, border: 'none', color: 'white', fontSize: '9px', cursor: 'pointer', textTransform: 'capitalize', fontWeight: userDetailTab === t ? '700' : '400' }}>{tab}</button>
+              {['info', 'bots', 'investments', 'profit'].map(tabItem => (
+                <button key={tabItem} onClick={() => setUserDetailTab(tabItem)} style={{ padding: '5px 12px', background: userDetailTab === tabItem ? '#6366f1' : t.subtleBg, border: 'none', color: 'white', fontSize: '9px', cursor: 'pointer', textTransform: 'capitalize', fontWeight: userDetailTab === tabItem ? '700' : '400' }}>{tabItem}</button>
               ))}
               <button onClick={() => deleteUser(selectedUser._id, selectedUser.firstName + ' ' + selectedUser.lastName)} style={{ padding: '5px 12px', background: '#7f1d1d', border: 'none', color: 'white', fontSize: '9px', cursor: 'pointer', marginLeft: 'auto' }}>Delete</button>
             </div>
