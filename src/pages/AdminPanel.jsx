@@ -392,7 +392,18 @@ export default function AdminPanel() {
 
   const thStyle = { padding: '10px 12px', fontSize: '11px', color: t.subText, fontWeight: '700', textAlign: 'left', border: `1px solid ${t.border}`, whiteSpace: 'nowrap', background: t.cardBg };
   const tdStyle = { padding: '10px 12px', fontSize: '11px', color: t.text, border: `1px solid ${t.border}`, whiteSpace: 'nowrap', verticalAlign: 'top' };
-  const btnStyle = (color) => ({ padding: '6px 12px', background: color, border: 'none', color: 'white', fontSize: '10px', fontWeight: '600', cursor: 'pointer', borderRadius: '4px', marginRight: '4px', marginBottom: '4px', display: 'inline-block' });
+  const btnStyle = (color) => {
+    const isDanger = color === '#ef4444' || color === '#7f1d1d' || color === '#dc2626';
+    const isSuccess = color === '#22c55e' || color === '#16a34a';
+    return {
+      padding: '6px 12px', 
+      background: isDanger ? 'rgba(239,68,68,0.12)' : isSuccess ? 'rgba(34,197,94,0.12)' : 'rgba(99,102,241,0.12)',
+      border: isDanger ? '1px solid rgba(239,68,68,0.3)' : isSuccess ? '1px solid rgba(34,197,94,0.3)' : '1px solid rgba(99,102,241,0.3)',
+      color: isDanger ? '#ef4444' : isSuccess ? '#22c55e' : '#818cf8',
+      fontSize: '10px', fontWeight: '600', cursor: 'pointer', 
+      borderRadius: '6px', marginRight: '4px', marginBottom: '4px', display: 'inline-block'
+    };
+  };
 
   const handleSendEmail = async () => {
     if (emailType === 'upgradePromo') {
@@ -620,7 +631,7 @@ export default function AdminPanel() {
                     <div style={{ color: t.subText, fontSize: '10px', marginBottom: '6px', fontWeight: '600' }}>💰 BALANCE</div>
                     <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
                       <input value={editBalance[u._id] ?? u.balance?.toFixed(2) ?? '0'} onChange={e => setEditBalance(b => ({ ...b, [u._id]: e.target.value }))} style={{ flex: 1, background: t.inputBg, border: `1px solid ${t.border}`, color: t.text, fontSize: '13px', padding: '6px 10px', outline: 'none', borderRadius: '6px', fontWeight: '700' }} />
-                      <button onClick={() => updateBalance(u._id)} style={{ ...btnStyle('#6366f1'), borderRadius: '6px' }}>Set Balance</button>
+                      <button onClick={() => updateBalance(u._id)} style={{ ...btnStyle('#6366f1'), borderRadius: '6px' }}>✓ Set</button>
                     </div>
                   </div>
                   {/* Stats */}
@@ -634,7 +645,7 @@ export default function AdminPanel() {
                         </div>
                       ))}
                     </div>
-                    <button onClick={() => updateUserStats(u._id)} style={{ ...btnStyle("#22c55e"), marginTop: "8px", borderRadius: '6px', width: '100%' }}>Update Stats</button>
+                    <button onClick={() => updateUserStats(u._id)} style={{ ...btnStyle("#22c55e"), marginTop: "8px", borderRadius: '6px', width: '100%' }}>✓ Update Stats</button>
                   </div>
                   {/* Message */}
                   <div style={{ background: t.cardBg2, borderRadius: '8px', padding: '10px', marginBottom: '10px' }}>
@@ -642,17 +653,17 @@ export default function AdminPanel() {
                     {u.adminMessage && <div style={{ color: '#f59e0b', fontSize: '10px', marginBottom: '6px', wordBreak: 'break-word' }}>Current: {u.adminMessage}</div>}
                     <div style={{ display: 'flex', gap: '6px' }}>
                       <input value={msgInput[u._id] || ''} onChange={e => setMsgInput(m => ({ ...m, [u._id]: e.target.value }))} placeholder="Type message..." style={{ flex: 1, background: t.inputBg, border: `1px solid ${t.border}`, color: t.text, fontSize: '11px', padding: '6px 10px', outline: 'none', borderRadius: '6px' }} />
-                      <button onClick={() => sendMessage(u._id)} style={{ ...btnStyle('#f59e0b'), borderRadius: '6px' }}>Send</button>
-                      <button onClick={() => deleteMessage(u._id)} style={{ ...btnStyle("#ef4444"), borderRadius: '6px' }}>Del</button>
+                      <button onClick={() => sendMessage(u._id)} style={{ ...btnStyle('#6366f1'), borderRadius: '6px' }}>↗ Send</button>
+                      <button onClick={() => deleteMessage(u._id)} style={{ ...btnStyle("#ef4444"), borderRadius: '6px' }}>✕ Del</button>
                     </div>
                   </div>
                   {/* Actions */}
                   <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '6px', marginBottom: '10px' }}>
                     <button onClick={() => loadUserDetails(u)} style={{ ...btnStyle('#6366f1'), borderRadius: '6px' }}>👁 View</button>
-                    <button onClick={() => { setEmailTarget(u); setEmailModal(true); setEmailSuccess(''); }} style={{ ...btnStyle('#6366f1'), borderRadius: '6px' }}>📧 Email</button>
-                    <button onClick={() => toggleBlock(u._id)} style={{ ...btnStyle(u.isBlocked ? '#22c55e' : '#ef4444'), borderRadius: '6px' }}>{u.isBlocked ? 'Unblock' : 'Block'}</button>
-                    <button onClick={() => toggleWithdrawalBlock(u._id)} style={{ ...btnStyle(u.withdrawalBlocked ? '#22c55e' : '#64748b'), borderRadius: '6px' }}>{u.withdrawalBlocked ? 'Allow W.' : 'Block W.'}</button>
-                    <button onClick={() => toggleAccountUpgrade(u._id)} style={{ ...btnStyle(u.accountUpgraded ? '#64748b' : '#22c55e'), borderRadius: '6px' }}>{u.accountUpgraded ? 'Revoke Up.' : 'Approve Up.'}</button>
+                    <button onClick={() => { setEmailTarget(u); setEmailModal(true); setEmailSuccess(''); }} style={{ ...btnStyle('#6366f1'), borderRadius: '6px' }}>✉ Email</button>
+                    <button onClick={() => toggleBlock(u._id)} style={{ ...btnStyle(u.isBlocked ? '#22c55e' : '#ef4444'), borderRadius: '6px' }}>{u.isBlocked ? '🔓 Unblock' : '🔒 Block'}</button>
+                    <button onClick={() => toggleWithdrawalBlock(u._id)} style={{ ...btnStyle(u.withdrawalBlocked ? '#22c55e' : '#ef4444'), borderRadius: '6px' }}>{u.withdrawalBlocked ? '💸 Allow W.' : '💸 Block W.'}</button>
+                    <button onClick={() => toggleAccountUpgrade(u._id)} style={{ ...btnStyle(u.accountUpgraded ? '#ef4444' : '#22c55e'), borderRadius: '6px' }}>{u.accountUpgraded ? '↩ Revoke' : '⬆ Upgrade'}</button>
                     <span style={{ padding: '4px 8px', borderRadius: '6px', fontSize: '10px', background: 'rgba(14,165,233,0.2)', color: '#0ea5e9', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>Min W: ${u.minimumWithdrawal || 100}</span>
                   </div>
                   {/* Delete */}
