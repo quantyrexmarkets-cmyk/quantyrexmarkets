@@ -198,7 +198,7 @@ export default function DashboardSidebar({ open, onClose }) {
                     </div>
                   </button>
                   {item.submenu && openSubmenu === si+'-'+ii && (
-                    <div style={{ background: t.bg === '#f8fafc' ? 'rgba(99,102,241,0.05)' : 'rgba(99,102,241,0.08)', paddingLeft: '38px', borderLeft: '2px solid #6366f1', marginLeft: '16px' }}>
+                    <div style={{ paddingLeft: '8px', paddingRight: '8px', marginTop: '2px', marginBottom: '2px' }}>
                       {item.submenu.map((sub, si2) => (
                         <button key={si2} onClick={() => { navigate(sub.route); onClose(); }}
                           style={{ width: '100%', padding: '12px 16px 12px 0', background: 'transparent', border: 'none', cursor: 'pointer', color: t.text, fontSize: '11px', textAlign: 'left', display: 'flex', alignItems: 'center', gap: '6px', fontWeight: '500' }}>
