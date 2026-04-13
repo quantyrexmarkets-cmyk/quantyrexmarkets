@@ -160,19 +160,19 @@ export default function DashboardSidebar({ open, onClose }) {
                 <div key={ii} style={{ padding: '2px 8px' }}>
                   <div style={{
                     borderRadius: '8px',
-                    background: isActive(item)
+                    background: isActive(item) && openSubmenu !== si+'-'+ii
                       ? t.bg === '#f8fafc'
                         ? 'rgba(99,102,241,0.1)'
                         : 'rgba(99,102,241,0.15)'
                       : 'transparent',
-                    backdropFilter: isActive(item) ? 'blur(12px)' : 'none',
-                    WebkitBackdropFilter: isActive(item) ? 'blur(12px)' : 'none',
-                    border: isActive(item)
+                    backdropFilter: isActive(item) && openSubmenu !== si+'-'+ii ? 'blur(12px)' : 'none',
+                    WebkitBackdropFilter: isActive(item) && openSubmenu !== si+'-'+ii ? 'blur(12px)' : 'none',
+                    border: isActive(item) && openSubmenu !== si+'-'+ii
                       ? t.bg === '#f8fafc'
                         ? '1px solid rgba(99,102,241,0.4)'
                         : '1px solid rgba(99,102,241,0.3)'
-                      : `1px solid transparent`,
-                    boxShadow: isActive(item)
+                      : '1px solid transparent',
+                    boxShadow: isActive(item) && openSubmenu !== si+'-'+ii
                       ? t.bg === '#f8fafc'
                         ? '0 2px 8px rgba(99,102,241,0.15)'
                         : '0 4px 16px rgba(99,102,241,0.15), inset 0 1px 0 rgba(99,102,241,0.05)'
@@ -187,7 +187,7 @@ export default function DashboardSidebar({ open, onClose }) {
                       navigate(item.route); onClose();
                     }
                   }}
-                  style={{ width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '12px 16px', background: 'transparent', border: 'none', cursor: 'pointer', color: isActive(item) ? '#6366f1' : t.text, fontSize: '11px', fontWeight: isActive(item) ? '600' : '400', textAlign: 'left' }}>
+                  style={{ width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '12px 16px', background: 'transparent', border: 'none', cursor: 'pointer', color: isActive(item) && openSubmenu !== si+'-'+ii ? '#6366f1' : t.text, fontSize: '11px', fontWeight: isActive(item) && openSubmenu !== si+'-'+ii ? '600' : '400', textAlign: 'left' }}>
                     <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
                       <span style={{ color: '#6366f1' }}>{item.icon}</span>
                       <span>{item.label}</span>
