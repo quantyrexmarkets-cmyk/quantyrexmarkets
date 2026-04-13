@@ -65,7 +65,7 @@ export default function TraderProfile() {
   const trader = TRADERS_DEFAULT.find(t => t.id === parseInt(id));
 
   if (!trader) return (
-    <div style={{minHeight:'100vh',background:'#0e1628',display:'flex',alignItems:'center',justifyContent:'center'}}>
+    <div style={{minHeight:'100vh',background:t.bg,display:'flex',alignItems:'center',justifyContent:'center'}}>
       <div style={{textAlign:'center'}}>
         <p style={{fontSize:'12px',color:t.mutedText}}>Trader not found</p>
         <button onClick={() => navigate('/dashboard/copy-trading')} style={{marginTop:'12px',background:'#6366f1',border:'none',color:'white',padding:'8px 16px',borderRadius:'6px',cursor:'pointer',fontSize:'10px'}}>Go Back</button>
@@ -87,7 +87,7 @@ export default function TraderProfile() {
   const trades = showAllTrades ? MOCK_TRADES : MOCK_TRADES.slice(0, 3);
 
   return (
-    <div style={{minHeight:'100vh',background:'#0e1628',fontFamily:"'Segoe UI', sans-serif",color:'white',paddingBottom:'40px'}}>
+    <div style={{minHeight:'100vh',background:t.bg,fontFamily:"'Segoe UI', sans-serif",color:t.text,paddingBottom:'40px'}}>
       <PageHeader title="Trader Profile" />
       <div style={{padding:'12px 14px 0'}}>
         <button onClick={() => navigate('/dashboard/copy-trading')} style={{display:'flex',alignItems:'center',gap:'5px',background:'none',border:'none',color:t.subText,cursor:'pointer',fontSize:'9px',padding:'0'}}>
@@ -96,7 +96,7 @@ export default function TraderProfile() {
       </div>
 
       {/* Hero */}
-      <div style={{margin:'12px 14px 0',background:'#1a2e4a',border:`1px solid ${t.border}`,borderRadius:'14px',padding:'20px 16px 16px',position:'relative',overflow:'hidden'}}>
+      <div style={{margin:'12px 14px 0',background:t.cardBg,border:`1px solid ${t.border}`,borderRadius:'14px',padding:'20px 16px 16px',position:'relative',overflow:'hidden'}}>
         <div style={{position:'absolute',top:'12px',right:'12px',fontSize:'22px'}}>{trader.flag}</div>
         <div style={{display:'flex',flexDirection:'column',alignItems:'center',marginBottom:'14px'}}>
           <div style={{width:'76px',height:'76px',borderRadius:'50%',overflow:'hidden',border:'3px solid rgba(99,102,241,0.6)',marginBottom:'10px'}}>
@@ -124,7 +124,7 @@ export default function TraderProfile() {
         </div>
         <div style={{display:'grid',gridTemplateColumns:'1fr 1fr 1fr',gap:'6px',marginBottom:'14px'}}>
           {[{label:'Win Rate',value:trader.winRate+'%',color:'#22c55e'},{label:'Avg Return',value:trader.avgReturn,color:'#22c55e'},{label:'Total Trades',value:trader.totalTrades,color:'white'}].map((s,i)=>(
-            <div key={i} style={{background:'#0e1628',border:`1px solid ${t.subtleBorder}`,borderRadius:'8px',padding:'8px',textAlign:'center'}}>
+            <div key={i} style={{background:t.cardBg2,border:`1px solid ${t.subtleBorder}`,borderRadius:'8px',padding:'8px',textAlign:'center'}}>
               <div style={{fontSize:'11px',fontWeight:'800',color:s.color}}>{s.value}</div>
               <div style={{fontSize:'7px',color:t.faintText,marginTop:'2px'}}>{s.label}</div>
             </div>
@@ -136,7 +136,7 @@ export default function TraderProfile() {
       </div>
 
       {/* Tabs */}
-      <div style={{margin:'14px 14px 0',display:'grid',gridTemplateColumns:'repeat(4,1fr)',background:'#1a2e4a',borderRadius:'10px',padding:'3px',border:`1px solid ${t.subtleBorder}`}}>
+      <div style={{margin:'14px 14px 0',display:'grid',gridTemplateColumns:'repeat(4,1fr)',background:t.cardBg2,borderRadius:'10px',padding:'3px',border:`1px solid ${t.subtleBorder}`}}>
         {['overview','trades','followers','copy'].map(tab=>(
           <button key={tab} onClick={()=>setActiveTab(tab)} style={{padding:'7px 4px',background:activeTab===tab?'#6366f1':'transparent',border:'none',color:activeTab===tab?'white':t.mutedText,fontSize:'8px',fontWeight:activeTab===tab?'700':'400',cursor:'pointer',borderRadius:'7px',textTransform:'capitalize'}}>
             {tab==='copy'?'Copy Info':tab.charAt(0).toUpperCase()+tab.slice(1)}
@@ -147,11 +147,11 @@ export default function TraderProfile() {
       <div style={{margin:'12px 14px 0'}}>
         {activeTab==='overview' && (
           <div>
-            <div style={{background:'#1a2e4a',border:`1px solid ${t.subtleBorder}`,borderRadius:'12px',padding:'14px',marginBottom:'10px'}}>
+            <div style={{background:t.cardBg,border:`1px solid ${t.subtleBorder}`,borderRadius:'12px',padding:'14px',marginBottom:'10px'}}>
               <div style={{display:'flex',alignItems:'center',gap:'6px',marginBottom:'8px'}}><div style={{width:'3px',height:'12px',background:'#6366f1',borderRadius:'2px'}}/><span style={{fontSize:'9px',fontWeight:'700',color:t.dimText}}>ABOUT</span></div>
               <p style={{fontSize:'8.5px',color:t.subText,lineHeight:'1.6',margin:0}}>{trader.bio}</p>
             </div>
-            <div style={{background:'#1a2e4a',border:`1px solid ${t.subtleBorder}`,borderRadius:'12px',padding:'14px',marginBottom:'10px'}}>
+            <div style={{background:t.cardBg,border:`1px solid ${t.subtleBorder}`,borderRadius:'12px',padding:'14px',marginBottom:'10px'}}>
               <div style={{display:'flex',alignItems:'center',gap:'6px',marginBottom:'8px'}}><div style={{width:'3px',height:'12px',background:'#22c55e',borderRadius:'2px'}}/><span style={{fontSize:'9px',fontWeight:'700',color:t.dimText}}>PERFORMANCE (6 months)</span></div>
               <div style={{display:'flex',justifyContent:'space-between',marginBottom:'6px'}}>
                 {['Oct','Nov','Dec','Jan','Feb','Mar'].map(m=><span key={m} style={{fontSize:'7px',color:t.faintText}}>{m}</span>)}
@@ -162,7 +162,7 @@ export default function TraderProfile() {
                 <span style={{fontSize:'9px',fontWeight:'700',color:'#22c55e'}}>+{(parseFloat(trader.avgReturn)/6).toFixed(1)}%</span>
               </div>
             </div>
-            <div style={{background:'#1a2e4a',border:`1px solid ${t.subtleBorder}`,borderRadius:'12px',padding:'14px'}}>
+            <div style={{background:t.cardBg,border:`1px solid ${t.subtleBorder}`,borderRadius:'12px',padding:'14px'}}>
               <div style={{display:'flex',alignItems:'center',gap:'6px',marginBottom:'10px'}}><div style={{width:'3px',height:'12px',background:'#f59e0b',borderRadius:'2px'}}/><span style={{fontSize:'9px',fontWeight:'700',color:t.dimText}}>TOP ASSETS</span></div>
               {trader.topAssets.map((a,i)=>{const p=[65,54,42,31,22][i];const c=['#6366f1','#22c55e','#f59e0b','#3b82f6','#ec4899'][i];return(
                 <div key={a} style={{marginBottom:'8px'}}>
@@ -176,7 +176,7 @@ export default function TraderProfile() {
 
         {activeTab==='trades' && (
           <div>
-            <div style={{background:'#1a2e4a',border:`1px solid ${t.subtleBorder}`,borderRadius:'12px',overflow:'hidden'}}>
+            <div style={{background:t.cardBg,border:`1px solid ${t.subtleBorder}`,borderRadius:'12px',overflow:'hidden'}}>
               <div style={{padding:'12px 14px',borderBottom:`1px solid ${t.subtleBorder}`,display:'flex',justifyContent:'space-between',alignItems:'center'}}>
                 <div style={{display:'flex',alignItems:'center',gap:'6px'}}><div style={{width:'3px',height:'12px',background:'#6366f1',borderRadius:'2px'}}/><span style={{fontSize:'9px',fontWeight:'700',color:t.dimText}}>TRADE HISTORY</span></div>
                 <span style={{fontSize:'8px',color:t.faintText}}>{trader.totalTrades} total</span>
@@ -198,7 +198,7 @@ export default function TraderProfile() {
             </div>
             <div style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:'8px',marginTop:'10px'}}>
               {[{label:'Total Trades',value:trader.totalTrades,color:'white'},{label:'Total Loss',value:trader.totalLoss,color:'#ef4444'},{label:'Profit Share',value:trader.profitShare+'%',color:'#22c55e'},{label:'Win Rate',value:trader.winRate+'%',color:'#22c55e'}].map((s,i)=>(
-                <div key={i} style={{background:'#1a2e4a',border:`1px solid ${t.subtleBorder}`,borderRadius:'8px',padding:'10px',display:'flex',justifyContent:'space-between',alignItems:'center'}}>
+                <div key={i} style={{background:t.cardBg,border:`1px solid ${t.subtleBorder}`,borderRadius:'8px',padding:'10px',display:'flex',justifyContent:'space-between',alignItems:'center'}}>
                   <span style={{fontSize:'8px',color:t.mutedText}}>{s.label}</span>
                   <span style={{fontSize:'10px',fontWeight:'700',color:s.color}}>{s.value}</span>
                 </div>
@@ -209,7 +209,7 @@ export default function TraderProfile() {
 
         {activeTab==='followers' && (
           <div>
-            <div style={{background:'#1a2e4a',border:`1px solid ${t.subtleBorder}`,borderRadius:'12px',overflow:'hidden'}}>
+            <div style={{background:t.cardBg,border:`1px solid ${t.subtleBorder}`,borderRadius:'12px',overflow:'hidden'}}>
               <div style={{padding:'12px 14px',borderBottom:`1px solid ${t.subtleBorder}`,display:'flex',justifyContent:'space-between'}}>
                 <div style={{display:'flex',alignItems:'center',gap:'6px'}}><div style={{width:'3px',height:'12px',background:'#6366f1',borderRadius:'2px'}}/><span style={{fontSize:'9px',fontWeight:'700',color:t.dimText}}>FOLLOWERS</span></div>
                 <span style={{fontSize:'8px',color:'#6366f1',fontWeight:'600'}}>{trader.totalFollowers.toLocaleString()} total</span>
@@ -233,7 +233,7 @@ export default function TraderProfile() {
 
         {activeTab==='copy' && (
           <div>
-            <div style={{background:'#1a2e4a',border:`1px solid ${t.subtleBorder}`,borderRadius:'12px',padding:'14px',marginBottom:'10px'}}>
+            <div style={{background:t.cardBg,border:`1px solid ${t.subtleBorder}`,borderRadius:'12px',padding:'14px',marginBottom:'10px'}}>
               <div style={{display:'flex',alignItems:'center',gap:'6px',marginBottom:'12px'}}><div style={{width:'3px',height:'12px',background:'#6366f1',borderRadius:'2px'}}/><span style={{fontSize:'9px',fontWeight:'700',color:t.dimText}}>COPY INFO</span></div>
               {[{label:'Profit Share',value:trader.profitShare+'%',color:'#22c55e'},{label:'Risk Level',value:riskLabel(trader.risk)+' ('+trader.risk+'/10)',color:riskColor(trader.risk)},{label:'Min. Investment',value:'$10',color:'#6366f1'},{label:'Favorite Asset',value:trader.favorite,color:'#f59e0b'}].map((item,i)=>(
                 <div key={i} style={{display:'flex',justifyContent:'space-between',alignItems:'center',padding:'10px 0',borderBottom:i<3?`1px solid ${t.tableRowBorder}`:'none'}}>
@@ -258,7 +258,7 @@ export default function TraderProfile() {
       {/* Modal */}
       {modal && (
         <div onClick={()=>setModal(false)} style={{position:'fixed',inset:0,background:'rgba(0,0,0,0.7)',zIndex:9999,display:'flex',alignItems:'flex-end',justifyContent:'center'}}>
-          <div onClick={e=>e.stopPropagation()} style={{background:'#1a2e4a',borderRadius:'16px 16px 0 0',padding:'20px 16px',width:'100%',maxWidth:'480px',border:`1px solid ${t.border}`}}>
+          <div onClick={e=>e.stopPropagation()} style={{background:t.cardBg,borderRadius:'16px 16px 0 0',padding:'20px 16px',width:'100%',maxWidth:'480px',border:`1px solid ${t.border}`}}>
             <div style={{display:'flex',alignItems:'center',gap:'10px',marginBottom:'16px'}}>
               <img src={trader.img} style={{width:'44px',height:'44px',borderRadius:'50%',border:'2px solid rgba(99,102,241,0.5)'}}/>
               <div>
@@ -269,7 +269,7 @@ export default function TraderProfile() {
             <div style={{fontSize:'8px',color:t.mutedText,marginBottom:'6px'}}>Investment Amount (min $10)</div>
             <div style={{position:'relative',marginBottom:'12px'}}>
               <span style={{position:'absolute',left:'10px',top:'50%',transform:'translateY(-50%)',color:t.mutedText,fontSize:'11px'}}>$</span>
-              <input type="number" value={amount} onChange={e=>{setAmount(e.target.value);setCopyError('');}} placeholder="0.00" style={{width:'100%',background:'#0e1628',border:`1px solid ${t.border}`,color:'white',fontSize:'13px',fontWeight:'700',padding:'11px 10px 11px 22px',outline:'none',borderRadius:'8px',boxSizing:'border-box'}}/>
+              <input type="number" value={amount} onChange={e=>{setAmount(e.target.value);setCopyError('');}} placeholder="0.00" style={{width:'100%',background:t.inputBg,border:`1px solid ${t.border}`,color:t.text,fontSize:'13px',fontWeight:'700',padding:'11px 10px 11px 22px',outline:'none',borderRadius:'8px',boxSizing:'border-box'}}/>
             </div>
             {copyError && <div style={{fontSize:'8px',color:'#ef4444',marginBottom:'10px',background:'rgba(239,68,68,0.1)',padding:'8px 10px',borderRadius:'6px'}}>{copyError}</div>}
             {copySuccess && <div style={{fontSize:'8px',color:'#22c55e',marginBottom:'10px',background:'rgba(34,197,94,0.1)',padding:'8px 10px',borderRadius:'6px'}}>✓ {copySuccess}</div>}

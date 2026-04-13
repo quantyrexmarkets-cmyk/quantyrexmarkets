@@ -123,7 +123,7 @@ export default function NewTrade() {
         <div style={{ display: 'flex', gap: '6px' }}>
           {[10, 50, 100, 500].map(a => (
             <button key={a} onClick={() => setAmount(String(a))}
-              style={{ flex: 1, padding: '6px', borderRadius: '6px', background: amount === String(a) ? '#6366f1' : t.subtleBg, border: `1px solid ${t.border}`, color: 'white', fontSize: '9px', cursor: 'pointer' }}>
+              style={{ flex: 1, padding: '6px', borderRadius: '6px', background: amount === String(a) ? '#6366f1' : t.subtleBg, border: `1px solid ${t.border}`, color: amount === String(a) ? 'white' : t.text, fontSize: '9px', cursor: 'pointer' }}>
               ${a}
             </button>
           ))}

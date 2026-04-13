@@ -67,7 +67,7 @@ export default function BotPlans() {
       )}
 
       <div style={{ padding: '16px' }}>
-        <div style={{ color: 'white', fontSize: '11px', fontWeight: '700', marginBottom: '14px' }}>Choose a Bot Plan</div>
+        <div style={{ color: t.text, fontSize: '11px', fontWeight: '700', marginBottom: '14px' }}>Choose a Bot Plan</div>
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '10px' }}>
           {bots.map((bot, i) => {
             const rateNum = parseFloat(bot.dailyRate) / 100;
@@ -109,7 +109,7 @@ export default function BotPlans() {
           <div onClick={e => e.stopPropagation()} style={{ background: t.cardBg, border: '1px solid rgba(99,102,241,0.4)', width: '100%', maxWidth: '320px', padding: '20px' }}>
             <div style={{ color: '#818cf8', fontSize: '12px', fontWeight: '800', marginBottom: '12px' }}>{confirmBot.name}</div>
             <p style={{ color: t.overlayText, fontSize: '9px', lineHeight: '1.6', marginBottom: '16px' }}>
-              Subscribe to <strong style={{ color: 'white' }}>{confirmBot.name}</strong> for <strong style={{ color: '#ef4444' }}>{formatAmount(confirmBot.amount, user?.currency)}</strong>.
+              Subscribe to <strong style={{ color: t.text }}>{confirmBot.name}</strong> for <strong style={{ color: '#ef4444' }}>{formatAmount(confirmBot.amount, user?.currency)}</strong>.
             </p>
             {[
               ['Investment', formatAmount(confirmBot.amount, user?.currency)],
@@ -119,11 +119,11 @@ export default function BotPlans() {
             ].map(([l,v]) => (
               <div key={l} style={{ display: 'flex', justifyContent: 'space-between', padding: '4px 0', borderBottom: `1px solid ${t.tableRowBorder}` }}>
                 <span style={{ color: t.mutedText, fontSize: '8px' }}>{l}</span>
-                <span style={{ color: 'white', fontSize: '8px', fontWeight: '600' }}>{v}</span>
+                <span style={{ color: t.text, fontSize: '8px', fontWeight: '600' }}>{v}</span>
               </div>
             ))}
             <div style={{ display: 'flex', gap: '8px', marginTop: '16px' }}>
-              <button onClick={() => setConfirmBot(null)} style={{ flex: 1, padding: '9px', background: t.subtleBg, border: 'none', color: 'white', fontSize: '9px', cursor: 'pointer' }}>Cancel</button>
+              <button onClick={() => setConfirmBot(null)} style={{ flex: 1, padding: '9px', background: t.subtleBg, border: 'none', color: t.text, fontSize: '9px', cursor: 'pointer' }}>Cancel</button>
               <button onClick={() => subscribe(confirmBot)} disabled={subscribing === confirmBot.name} style={{ flex: 1, padding: '9px', background: '#6366f1', border: 'none', color: 'white', fontSize: '9px', fontWeight: '700', cursor: 'pointer' }}>
                 {subscribing === confirmBot.name ? 'Activating...' : 'Confirm'}
               </button>

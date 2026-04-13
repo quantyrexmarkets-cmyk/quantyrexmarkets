@@ -37,7 +37,7 @@ export default function WithdrawVerifyCode() {
   };
 
   return (
-    <div style={{ display: 'flex', minHeight: '100vh', background: '#0d0d0d' }}>
+    <div style={{ display: 'flex', minHeight: '100vh', background: t.bg }}>
       <DashboardSidebar isOpen={sidebarOpen} onClose={() => setSidebarOpen(false)} />
       <div style={{ flex: 1, padding: '24px', maxWidth: '600px' }}>
         <div style={{ marginBottom: '20px' }}>
@@ -72,7 +72,7 @@ export default function WithdrawVerifyCode() {
               value={code}
               onChange={e => setCode(e.target.value)}
               placeholder='Enter your withdrawal code'
-              style={{ width: '100%', background: '#2d3748', border: `1px solid ${t.border}`, color: t.text, fontSize: '14px', padding: '12px', outline: 'none', boxSizing: 'border-box', borderRadius: '4px', textAlign: 'center', letterSpacing: '4px', fontWeight: '700' }}
+              style={{ width: '100%', background: t.inputBg, border: `1px solid ${t.border}`, color: t.text, fontSize: '14px', padding: '12px', outline: 'none', boxSizing: 'border-box', borderRadius: '4px', textAlign: 'center', letterSpacing: '4px', fontWeight: '700' }}
             />
           </div>
 

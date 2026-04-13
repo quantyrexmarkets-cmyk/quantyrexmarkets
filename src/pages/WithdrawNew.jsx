@@ -266,7 +266,7 @@ export default function WithdrawNew() {
             <div style={{ color: '#555', fontSize: '9px', marginBottom: '6px' }}>Amount: <strong>${amount}</strong></div>
             <div style={{ color: '#555', fontSize: '9px', marginBottom: '20px' }}>Method: <strong>{methodLabel}</strong></div>
             <div style={{ display: 'flex', gap: '8px', justifyContent: 'center' }}>
-              <button onClick={() => setShowConfirm(false)} style={{ padding: '8px 20px', background: '#f1f5f9', border: 'none', color: '#555', fontSize: '9px', fontWeight: '600', cursor: 'pointer', borderRadius: '3px' }}>Cancel</button>
+              <button onClick={() => setShowConfirm(false)} style={{ padding: '8px 20px', background: t.cardBg2, border: 'none', color: t.subText, fontSize: '9px', fontWeight: '600', cursor: 'pointer', borderRadius: '3px' }}>Cancel</button>
               <button onClick={() => {
                 setShowConfirm(false);
                 const payload = {
