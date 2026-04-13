@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react';
-import { useTheme } from '../context/ThemeContext';
 
 const coins = [
   { id: 'bitcoin', symbol: 'BTC', logo: 'https://assets.coingecko.com/coins/images/1/small/bitcoin.png' },
@@ -13,7 +12,6 @@ const coins = [
 ];
 
 export default function MarketTicker() {
-  const { current: t } = useTheme();
   const [prices, setPrices] = useState({});
   const [loading, setLoading] = useState(true);
 
@@ -36,10 +34,10 @@ export default function MarketTicker() {
     const change = data.usd_24h_change?.toFixed(2);
     const isPos = parseFloat(change) >= 0;
     return (
-      <div key={coin.id} style={{ display: 'flex', alignItems: 'center', gap: '4px', flexShrink: 0, padding: '0 14px', borderRight: `1px solid ${t.border}` }}>
+      <div key={coin.id} style={{ display: 'flex', alignItems: 'center', gap: '4px', flexShrink: 0, padding: '0 14px', borderRight: '1px solid rgba(255,255,255,0.08)' }}>
         <img src={coin.logo} style={{ width: '12px', height: '12px', borderRadius: '50%' }} alt={coin.symbol} onError={e => e.target.style.display='none'} />
-        <span style={{ color: t.subText, fontSize: '8px' }}>{coin.symbol} to USD</span>
-        <span style={{ color: t.text, fontSize: '8px', fontWeight: '600' }}>${data.usd?.toLocaleString()}</span>
+        <span style={{ color: 'rgba(255,255,255,0.5)', fontSize: '8px' }}>{coin.symbol} to USD</span>
+        <span style={{ color: 'white', fontSize: '8px', fontWeight: '600' }}>${data.usd?.toLocaleString()}</span>
         <span style={{ color: isPos ? '#22c55e' : '#ef4444', fontSize: '7px' }}>{isPos ? '+' : ''}{change}%</span>
       </div>
     );
@@ -54,7 +52,7 @@ export default function MarketTicker() {
         }
       `}</style>
       {loading ? (
-        <span style={{ color: t.subText, fontSize: '8px', padding: '0 12px' }}>Loading...</span>
+        <span style={{ color: 'rgba(255,255,255,0.5)', fontSize: '8px', padding: '0 12px' }}>Loading...</span>
       ) : (
         <div style={{ display: 'flex', animation: 'marquee 35s linear infinite', width: 'max-content' }}>
           {tickerItems}
