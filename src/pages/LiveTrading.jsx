@@ -94,10 +94,10 @@ export default function LiveTrading() {
     setSubmitting(false);
   };
 
-  const openTrades = trades.filter(t => t.status === 'pending' || t.status === 'active');
-  const closedTrades = trades.filter(t => t.status === 'closed' || t.status === 'cancelled');
+  const openTrades = trades.filter(tr => tr.status === 'pending' || tr.status === 'active');
+  const closedTrades = trades.filter(tr => tr.status === 'closed' || tr.status === 'cancelled');
   const currentList = tab === 'open' ? openTrades : closedTrades;
-  const filtered = currentList.filter(t => !search || t.symbol?.toLowerCase().includes(search.toLowerCase()) || t.type?.toLowerCase().includes(search.toLowerCase()));
+  const filtered = currentList.filter(tr => !search || tr.symbol?.toLowerCase().includes(search.toLowerCase()) || tr.type?.toLowerCase().includes(search.toLowerCase()));
   const totalPages = Math.max(1, Math.ceil(filtered.length / show));
   const paginated = filtered.slice((page-1)*show, page*show);
 
@@ -231,25 +231,25 @@ export default function LiveTrading() {
             <tbody>
               {paginated.length === 0 ? (
                 <tr><td colSpan={7} style={{ padding: '24px', textAlign: 'center', color: t.faintText, fontSize: '8px' }}>No {tab} trades</td></tr>
-              ) : paginated.map((t, i) => (
+              ) : paginated.map((tr, i) => (
                 tab === 'open' ? (
                   <tr key={i} style={{ borderBottom: `1px solid ${t.tableRowBorder}`, background: i%2===0?'transparent':t.subtleBg }}>
-                    <td style={{ padding: '8px 6px', color: '#6366f1', fontSize: '8px', fontWeight: '700' }}>{t.symbol}</td>
-                    <td style={{ padding: '8px 6px', color: t.type === 'buy' ? '#22c55e' : '#ef4444', fontSize: '8px', fontWeight: '700', textTransform: 'uppercase' }}>{t.type}</td>
+                    <td style={{ padding: '8px 6px', color: '#6366f1', fontSize: '8px', fontWeight: '700' }}>{tr.symbol}</td>
+                    <td style={{ padding: '8px 6px', color: tr.type === 'buy' ? '#22c55e' : '#ef4444', fontSize: '8px', fontWeight: '700', textTransform: 'uppercase' }}>{tr.type}</td>
                     <td style={{ padding: '8px 6px', color: t.text, fontSize: '8px' }}>{formatAmount(parseFloat(t.amount), user?.currency)}</td>
-                    <td style={{ padding: '8px 6px', color: t.subText, fontSize: '8px' }}>{t.duration}</td>
-                    <td style={{ padding: '8px 6px', color: t.subText, fontSize: '8px' }}>{t.leverage}</td>
-                    <td style={{ padding: '8px 6px' }}><span style={{ background: 'rgba(34,197,94,0.1)', color: '#22c55e', fontSize: '7px', padding: '2px 6px', textTransform: 'uppercase' }}>{t.status}</span></td>
+                    <td style={{ padding: '8px 6px', color: t.subText, fontSize: '8px' }}>{tr.duration}</td>
+                    <td style={{ padding: '8px 6px', color: t.subText, fontSize: '8px' }}>{tr.leverage}</td>
+                    <td style={{ padding: '8px 6px' }}><span style={{ background: 'rgba(34,197,94,0.1)', color: '#22c55e', fontSize: '7px', padding: '2px 6px', textTransform: 'uppercase' }}>{tr.status}</span></td>
                     <td style={{ padding: '8px 6px' }}><button onClick={() => fetchAll()} style={{ background: 'rgba(239,68,68,0.15)', border: '1px solid rgba(239,68,68,0.3)', color: '#ef4444', fontSize: '7px', padding: '2px 6px', cursor: 'pointer' }}>Close</button></td>
                   </tr>
                 ) : (
                   <tr key={i} style={{ borderBottom: `1px solid ${t.tableRowBorder}`, background: i%2===0?'transparent':t.subtleBg }}>
-                    <td style={{ padding: '8px 6px', color: '#6366f1', fontSize: '8px', fontWeight: '700' }}>{t.symbol}</td>
-                    <td style={{ padding: '8px 6px', color: t.type === 'buy' ? '#22c55e' : '#ef4444', fontSize: '8px', fontWeight: '700', textTransform: 'uppercase' }}>{t.type}</td>
+                    <td style={{ padding: '8px 6px', color: '#6366f1', fontSize: '8px', fontWeight: '700' }}>{tr.symbol}</td>
+                    <td style={{ padding: '8px 6px', color: tr.type === 'buy' ? '#22c55e' : '#ef4444', fontSize: '8px', fontWeight: '700', textTransform: 'uppercase' }}>{tr.type}</td>
                     <td style={{ padding: '8px 6px', color: t.text, fontSize: '8px' }}>{formatAmount(parseFloat(t.amount), user?.currency)}</td>
                     <td style={{ padding: '8px 6px', color: t.result > 0 ? '#22c55e' : '#ef4444', fontSize: '8px', fontWeight: '700' }}>{t.result != null ? formatAmount(parseFloat(t.result), user?.currency) : '—'}</td>
                     <td style={{ padding: '8px 6px', color: t.result > 0 ? '#22c55e' : '#ef4444', fontSize: '8px', fontWeight: '700' }}>{t.amount ? `${((t.result / t.amount) * 100).toFixed(1)}%` : '—'}</td>
-                    <td style={{ padding: '8px 6px' }}><span style={{ background: 'rgba(107,114,128,0.1)', color: '#9ca3af', fontSize: '7px', padding: '2px 6px', textTransform: 'capitalize' }}>{t.status}</span></td>
+                    <td style={{ padding: '8px 6px' }}><span style={{ background: 'rgba(107,114,128,0.1)', color: '#9ca3af', fontSize: '7px', padding: '2px 6px', textTransform: 'capitalize' }}>{tr.status}</span></td>
                   </tr>
                 )
               ))}

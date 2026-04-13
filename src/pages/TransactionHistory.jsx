@@ -37,19 +37,19 @@ export default function TransactionHistory() {
     fetchAll();
   }, []);
 
-  const filtered = transactions.filter(t => {
+  const filtered = transactions.filter(txn => {
     const matchSearch =
       t._id?.toLowerCase().includes(search.toLowerCase()) ||
-      t.method?.toLowerCase().includes(search.toLowerCase()) ||
-      t.txnType?.toLowerCase().includes(search.toLowerCase()) ||
-      t.status?.toLowerCase().includes(search.toLowerCase());
+      txn.method?.toLowerCase().includes(search.toLowerCase()) ||
+      txn.txnType?.toLowerCase().includes(search.toLowerCase()) ||
+      txn.status?.toLowerCase().includes(search.toLowerCase());
     const matchFilter =
       filter === 'All' ||
-      (filter === 'Deposit' && t.txnType === 'Deposit') ||
-      (filter === 'Withdrawal' && t.txnType === 'Withdrawal') ||
-      (filter === 'Completed' && t.status === 'approved') ||
-      (filter === 'Pending' && t.status === 'pending') ||
-      (filter === 'Failed' && t.status === 'rejected');
+      (filter === 'Deposit' && txn.txnType === 'Deposit') ||
+      (filter === 'Withdrawal' && txn.txnType === 'Withdrawal') ||
+      (filter === 'Completed' && txn.status === 'approved') ||
+      (filter === 'Pending' && txn.status === 'pending') ||
+      (filter === 'Failed' && txn.status === 'rejected');
     return matchSearch && matchFilter;
   });
 
@@ -60,9 +60,9 @@ export default function TransactionHistory() {
   const statusColor = s => s === 'approved' ? '#22c55e' : s === 'rejected' ? '#ef4444' : '#f59e0b';
   const typeColor = t => t === 'Deposit' ? '#22c55e' : '#ec4899';
 
-  const totalDeposits = transactions.filter(t => t.txnType === 'Deposit' && t.status === 'approved').reduce((s, t) => s + t.amount, 0);
-  const totalWithdrawals = transactions.filter(t => t.txnType === 'Withdrawal' && t.status === 'approved').reduce((s, t) => s + t.amount, 0);
-  const pendingCount = transactions.filter(t => t.status === 'pending').length;
+  const totalDeposits = transactions.filter(txn => txn.txnType === 'Deposit' && txn.status === 'approved').reduce((s, txn) => s + txn.amount, 0);
+  const totalWithdrawals = transactions.filter(txn => txn.txnType === 'Withdrawal' && txn.status === 'approved').reduce((s, txn) => s + txn.amount, 0);
+  const pendingCount = transactions.filter(txn => txn.status === 'pending').length;
 
   return (
     <div style={{ minHeight: '100vh', background: t.bg, fontFamily: "'Segoe UI', sans-serif", color: t.text }}>
@@ -117,14 +117,14 @@ export default function TransactionHistory() {
             <div style={{ padding: '24px', textAlign: 'center', color: t.faintText, fontSize: '8px' }}>Loading...</div>
           ) : paginated.length === 0 ? (
             <div style={{ padding: '24px', textAlign: 'center', color: t.faintText, fontSize: '8px' }}>No transactions found</div>
-          ) : paginated.map((t, i) => (
+          ) : paginated.map((txn, i) => (
             <div key={i} style={{ display: 'grid', gridTemplateColumns: '1.2fr 1.4fr 1.2fr 0.8fr 0.8fr 0.8fr', padding: '8px 10px', borderBottom: `1px solid ${t.tableRowBorder}`, background: i % 2 === 0 ? 'transparent' : t.subtleBg }}>
               <span style={{ color: '#818cf8', fontSize: '7px' }}>#{t._id?.slice(-8).toUpperCase()}</span>
-              <span style={{ color: t.subText, fontSize: '7px' }}>{new Date(t.createdAt).toLocaleString()}</span>
-              <span style={{ color: t.subText, fontSize: '7px' }}>{t.method || '—'}</span>
-              <span style={{ color: typeColor(t.txnType), fontSize: '7px', fontWeight: '600' }}>{t.txnType}</span>
-              <span style={{ color: typeColor(t.txnType), fontSize: '7px', fontWeight: '700' }}>{t.txnType === 'Deposit' ? '+' : '-'}{formatAmount(t.amount || 0, user?.currency)}</span>
-              <span style={{ background: statusColor(t.status) + '20', color: statusColor(t.status), fontSize: '6px', fontWeight: '700', padding: '2px 5px', display: 'inline-block' }}>{statusLabel(t.status)}</span>
+              <span style={{ color: t.subText, fontSize: '7px' }}>{new Date(txn.createdAt).toLocaleString()}</span>
+              <span style={{ color: t.subText, fontSize: '7px' }}>{txn.method || '—'}</span>
+              <span style={{ color: typeColor(txn.txnType), fontSize: '7px', fontWeight: '600' }}>{txn.txnType}</span>
+              <span style={{ color: typeColor(txn.txnType), fontSize: '7px', fontWeight: '700' }}>{txn.txnType === 'Deposit' ? '+' : '-'}{formatAmount(txn.amount || 0, user?.currency)}</span>
+              <span style={{ background: statusColor(txn.status) + '20', color: statusColor(txn.status), fontSize: '6px', fontWeight: '700', padding: '2px 5px', display: 'inline-block' }}>{statusLabel(txn.status)}</span>
             </div>
           ))}
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '7px 10px', borderTop: `1px solid ${t.tableRowBorder}` }}>

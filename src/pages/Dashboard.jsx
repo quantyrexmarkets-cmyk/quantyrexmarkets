@@ -395,13 +395,13 @@ export default function Dashboard() {
                 </div>
                 {transactions.length === 0 ? (
                   <div style={{ padding: '24px', textAlign: 'center', color: t.faintText, fontSize: '8px' }}>No data available in table</div>
-                ) : transactions.slice(0, 10).map((t, i) => (
+                ) : transactions.slice(0, 10).map((txn, i) => (
                   <div key={i} style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr 1fr 1fr', padding: '7px 10px', borderBottom: `1px solid ${t.tableRowBorder}` }}>
-                    <span style={{ color: t.type === 'withdrawal' ? '#ef4444' : '#22c55e', fontSize: '8px', fontWeight: '700' }}>{t.type === 'withdrawal' ? '-' : '+'}{formatAmount(t.amount || 0, u.currency)}</span>
-                    <span style={{ color: t.dimText, fontSize: '7px' }}>{new Date(t.createdAt).toLocaleDateString()}</span>
-                    <span style={{ color: t.dimText, fontSize: '7px', textTransform: 'capitalize' }}>{t.method || '---'}</span>
-                    <span style={{ color: t.dimText, fontSize: '7px', textTransform: 'capitalize' }}>{t.type}</span>
-                    <span style={{ fontSize: '7px', color: t.status === 'approved' ? '#22c55e' : t.status === 'pending' ? '#f59e0b' : '#ef4444', textTransform: 'capitalize' }}>{t.status}</span>
+                    <span style={{ color: txn.type === 'withdrawal' ? '#ef4444' : '#22c55e', fontSize: '8px', fontWeight: '700' }}>{txn.type === 'withdrawal' ? '-' : '+'}{formatAmount(txn.amount || 0, u.currency)}</span>
+                    <span style={{ color: t.dimText, fontSize: '7px' }}>{new Date(txn.createdAt).toLocaleDateString()}</span>
+                    <span style={{ color: t.dimText, fontSize: '7px', textTransform: 'capitalize' }}>{txn.method || '---'}</span>
+                    <span style={{ color: t.dimText, fontSize: '7px', textTransform: 'capitalize' }}>{txn.type}</span>
+                    <span style={{ fontSize: '7px', color: txn.status === 'approved' ? '#22c55e' : txn.status === 'pending' ? '#f59e0b' : '#ef4444', textTransform: 'capitalize' }}>{txn.status}</span>
                   </div>
                 ))}
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '7px 10px', borderTop: `1px solid ${t.tableRowBorder}` }}>

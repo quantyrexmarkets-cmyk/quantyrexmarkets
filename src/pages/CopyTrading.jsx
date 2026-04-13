@@ -35,10 +35,10 @@ export default function CopyTrading() {
   }, []);
   const [copied, setCopied] = useState(new Set());
 
-  const filtered = traders.filter(t =>
-    t.name.toLowerCase().includes(search.toLowerCase()) ||
-    t.location.toLowerCase().includes(search.toLowerCase()) ||
-    t.favorite.toLowerCase().includes(search.toLowerCase())
+  const filtered = traders.filter(tr =>
+    tr.name.toLowerCase().includes(search.toLowerCase()) ||
+    tr.location.toLowerCase().includes(search.toLowerCase()) ||
+    tr.favorite.toLowerCase().includes(search.toLowerCase())
   );
 
   const riskColor = r => r <= 4 ? '#22c55e' : r <= 7 ? '#f59e0b' : '#ef4444';
@@ -57,16 +57,16 @@ export default function CopyTrading() {
           <Search size={12} color={t.faintText} style={{ position: 'absolute', left: '10px', top: '50%', transform: 'translateY(-50%)' }} />
           <input value={search} onChange={e => setSearch(e.target.value)} placeholder="Search expert traders" style={{ width: '100%', background: t.cardBg, border: `1px solid ${t.border}`, color: t.text, fontSize: '9px', padding: '9px 10px 9px 28px', outline: 'none', boxSizing: 'border-box' }} />
         </div>
-        {filtered.map(t => (
-          <div key={t.id} style={{ background: t.cardBg, border: `1px solid ${t.subtleBorder}`, borderRadius: '12px', padding: '16px', marginBottom: '12px', position: 'relative' }}>
-            <div style={{ position: 'absolute', top: '12px', right: '12px', fontSize: '20px' }}>{t.flag}</div>
+        {filtered.map(tr => (
+          <div key={tr.id} style={{ background: t.cardBg, border: `1px solid ${t.subtleBorder}`, borderRadius: '12px', padding: '16px', marginBottom: '12px', position: 'relative' }}>
+            <div style={{ position: 'absolute', top: '12px', right: '12px', fontSize: '20px' }}>{tr.flag}</div>
             <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', marginBottom: '10px' }}>
               <div style={{ width: '64px', height: '64px', borderRadius: '50%', overflow: 'hidden', border: '2px solid rgba(99,102,241,0.5)', marginBottom: '8px' }}>
-                <img src={t.img} style={{ width: '100%', height: '100%', objectFit: 'cover', pointerEvents: 'auto' }} onError={e => e.target.src = 'https://ui-avatars.com/api/?name=' + t.name + '&background=6366f1&color=fff'} />
+                <img src={tr.img} style={{ width: '100%', height: '100%', objectFit: 'cover', pointerEvents: 'auto' }} onError={e => e.target.src = 'https://ui-avatars.com/api/?name=' + tr.name + '&background=6366f1&color=fff'} />
               </div>
               <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
-                <span style={{ fontSize: '13px', fontWeight: '700' }}>{t.name}</span>
-                {t.verified && (
+                <span style={{ fontSize: '13px', fontWeight: '700' }}>{tr.name}</span>
+                {tr.verified && (
                   <svg width="18" height="18" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
                     <path d="M 50.0,3.0 L 57.4,12.7 L 68.0,6.6 L 71.1,18.4 L 83.2,16.8 L 81.6,28.9 L 93.4,32.0 L 87.3,42.6 L 97.0,50.0 L 87.3,57.4 L 93.4,68.0 L 81.6,71.1 L 83.2,83.2 L 71.1,81.6 L 68.0,93.4 L 57.4,87.3 L 50.0,97.0 L 42.6,87.3 L 32.0,93.4 L 28.9,81.6 L 16.8,83.2 L 18.4,71.1 L 6.6,68.0 L 12.7,57.4 L 3.0,50.0 L 12.7,42.6 L 6.6,32.0 L 18.4,28.9 L 16.8,16.8 L 28.9,18.4 L 32.0,6.6 L 42.6,12.7 Z" fill="#3b82f6"/>
                     <path d="M32 51l12 12 24-26" stroke="white" strokeWidth="7" strokeLinecap="round" strokeLinejoin="round" fill="none"/>
@@ -75,25 +75,25 @@ export default function CopyTrading() {
               </div>
               <div style={{ display: 'flex', alignItems: 'center', gap: '3px', marginTop: '3px' }}>
                 <MapPin size={9} color={t.mutedText} />
-                <span style={{ fontSize: '8px', color: t.subText }}>{t.location}</span>
+                <span style={{ fontSize: '8px', color: t.subText }}>{tr.location}</span>
               </div>
             </div>
             <div style={{ display: 'flex', justifyContent: 'center', gap: '6px', marginBottom: '12px' }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: '3px', background: t.hoverBg, padding: '4px 8px', borderRadius: '20px' }}>
                 <Users size={9} color={t.dimText} />
-                <span style={{ fontSize: '8px', color: t.subText }}>{t.followers}</span>
+                <span style={{ fontSize: '8px', color: t.subText }}>{tr.followers}</span>
               </div>
               <div style={{ display: 'flex', alignItems: 'center', gap: '3px', background: t.hoverBg, padding: '4px 8px', borderRadius: '20px' }}>
-                <FlaskConical size={9} color={riskColor(t.risk)} />
-                <span style={{ fontSize: '8px', color: riskColor(t.risk) }}>{t.risk}</span>
+                <FlaskConical size={9} color={riskColor(tr.risk)} />
+                <span style={{ fontSize: '8px', color: riskColor(tr.risk) }}>{tr.risk}</span>
               </div>
               <div style={{ display: 'flex', alignItems: 'center', gap: '3px', background: t.hoverBg, padding: '4px 8px', borderRadius: '20px' }}>
                 <Heart size={9} color="#ef4444" fill="#ef4444" />
-                <span style={{ fontSize: '8px', color: t.subText }}>{t.favorite}</span>
+                <span style={{ fontSize: '8px', color: t.subText }}>{tr.favorite}</span>
               </div>
             </div>
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '6px', marginBottom: '14px' }}>
-              {[{ label: 'Total trades', value: t.totalTrades, color: t.text }, { label: 'Total loss', value: t.totalLoss, color: '#ef4444' }, { label: 'Profit share', value: t.profitShare + '%', color: '#22c55e' }, { label: 'Win rate', value: t.winRate + '%', color: '#22c55e' }].map((s, i) => (
+              {[{ label: 'Total trades', value: tr.totalTrades, color: t.text }, { label: 'Total loss', value: tr.totalLoss, color: '#ef4444' }, { label: 'Profit share', value: tr.profitShare + '%', color: '#22c55e' }, { label: 'Win rate', value: tr.winRate + '%', color: '#22c55e' }].map((s, i) => (
                 <div key={i} style={{ background: t.bg, border: `1px solid ${t.subtleBorder}`, borderRadius: '6px', padding: '8px 10px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                   <span style={{ fontSize: '8px', color: t.subText }}>{s.label}</span>
                   <span style={{ fontSize: '9px', fontWeight: '700', color: s.color }}>{s.value}</span>

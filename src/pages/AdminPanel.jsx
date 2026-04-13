@@ -473,8 +473,8 @@ export default function AdminPanel() {
 
       {/* Tabs */}
       <div style={{ background: t.cardBg, padding: '0 16px', display: 'flex', gap: '2px', borderBottom: `1px solid ${t.border}`, overflowX: 'auto' }}>
-        {tabs.map(t => (
-          <button key={t} onClick={() => setTab(t)} style={{ padding: '8px 14px', background: 'none', border: 'none', color: tab === t ? '#6366f1' : t.subText, fontSize: '9px', fontWeight: '700', cursor: 'pointer', borderBottom: tab === t ? '2px solid #6366f1' : '2px solid transparent', textTransform: 'uppercase', whiteSpace: 'nowrap' }}>{t}</button>
+        {tabs.map(tab => (
+          <button key={t} onClick={() => setTab(tab)} style={{ padding: '8px 14px', background: 'none', border: 'none', color: tab === tab ? '#6366f1' : t.subText, fontSize: '9px', fontWeight: '700', cursor: 'pointer', borderBottom: tab === tab ? '2px solid #6366f1' : '2px solid transparent', textTransform: 'uppercase', whiteSpace: 'nowrap' }}>{tab}</button>
         ))}
       </div>
 
@@ -807,29 +807,29 @@ export default function AdminPanel() {
                 <tr>{['User', 'Symbol', 'Type', 'Amount', 'Duration', 'Result', 'Status', 'Date', 'Actions'].map(h => <th key={h} style={thStyle}>{h}</th>)}</tr>
               </thead>
               <tbody>
-                {trades.map((t, i) => (
+                {trades.map((tr, i) => (
                   <tr key={i}>
                     <td style={tdStyle}>{t.user?.firstName} {t.user?.lastName}<br/><span style={{ color: t.mutedText }}>{t.user?.email}</span></td>
-                    <td style={tdStyle}>{t.symbol}</td>
-                    <td style={{ ...tdStyle, color: t.type === 'buy' ? '#22c55e' : '#ef4444', textTransform: 'capitalize' }}>{t.type}</td>
-                    <td style={tdStyle}>${t.amount?.toFixed(2)}</td>
-                    <td style={tdStyle}>{t.duration}</td>
+                    <td style={tdStyle}>{tr.symbol}</td>
+                    <td style={{ ...tdStyle, color: tr.type === 'buy' ? '#22c55e' : '#ef4444', textTransform: 'capitalize' }}>{tr.type}</td>
+                    <td style={tdStyle}>${tr.amount?.toFixed(2)}</td>
+                    <td style={tdStyle}>{tr.duration}</td>
                     <td style={{ ...tdStyle, color: t.result > 0 ? '#22c55e' : t.result < 0 ? '#ef4444' : t.mutedText }}>{t.result > 0 ? '+' : ''}${Math.abs(t.result || 0).toFixed(2)}</td>
-                    <td style={{ ...tdStyle, color: t.status === 'closed' ? '#9ca3af' : t.status === 'active' ? '#22c55e' : '#818cf8', textTransform: 'capitalize' }}>{t.status}</td>
-                    <td style={tdStyle}>{new Date(t.createdAt).toLocaleDateString()}</td>
+                    <td style={{ ...tdStyle, color: tr.status === 'closed' ? '#9ca3af' : tr.status === 'active' ? '#22c55e' : '#818cf8', textTransform: 'capitalize' }}>{tr.status}</td>
+                    <td style={tdStyle}>{new Date(tr.createdAt).toLocaleDateString()}</td>
                     <td style={tdStyle}>
                       <div style={{ display: 'flex', flexDirection: 'column', gap: '4px', minWidth: '150px' }}>
                         <div style={{ display: 'flex', gap: '4px', alignItems: 'center' }}>
-                          <select value={tradeEdit[t._id]?.outcome ?? ''} onChange={e => {
+                          <select value={tradeEdit[tr._id]?.outcome ?? ''} onChange={e => {
                             const outcome = e.target.value;
-                            const profit = outcome === 'win' ? Math.abs(t.amount) : outcome === 'loss' ? -Math.abs(t.amount) : 0;
-                            setTradeEdit(p => ({ ...p, [t._id]: { ...p[t._id], outcome, result: profit, status: outcome ? "closed" : p[t._id]?.status } }));
-                          }} style={{ background: tradeEdit[t._id]?.outcome === 'win' ? '#166534' : tradeEdit[t._id]?.outcome === 'loss' ? '#7f1d1d' : '#374151', border: 'none', color: 'white', fontSize: '8px', padding: '3px', cursor: 'pointer' }}>
+                            const profit = outcome === 'win' ? Math.abs(tr.amount) : outcome === 'loss' ? -Math.abs(tr.amount) : 0;
+                            setTradeEdit(p => ({ ...p, [tr._id]: { ...p[tr._id], outcome, result: profit, status: outcome ? "closed" : p[tr._id]?.status } }));
+                          }} style={{ background: tradeEdit[tr._id]?.outcome === 'win' ? '#166534' : tradeEdit[tr._id]?.outcome === 'loss' ? '#7f1d1d' : '#374151', border: 'none', color: 'white', fontSize: '8px', padding: '3px', cursor: 'pointer' }}>
                             <option value="">Outcome</option>
                             <option value="win">Win</option>
                             <option value="loss">Loss</option>
                           </select>
-                          <input placeholder="$ profit/loss" type="number" value={tradeEdit[t._id]?.result ?? ''} onChange={e => setTradeEdit(p => ({ ...p, [t._id]: { ...p[t._id], result: e.target.value } }))} style={{ width: '65px', background: '#374151', border: 'none', color: tradeEdit[t._id]?.outcome === 'win' ? '#22c55e' : '#ef4444', fontSize: '8px', padding: '3px 5px' }} />
+                          <input placeholder="$ profit/loss" type="number" value={tradeEdit[tr._id]?.result ?? ''} onChange={e => setTradeEdit(p => ({ ...p, [tr._id]: { ...p[tr._id], result: e.target.value } }))} style={{ width: '65px', background: '#374151', border: 'none', color: tradeEdit[tr._id]?.outcome === 'win' ? '#22c55e' : '#ef4444', fontSize: '8px', padding: '3px 5px' }} />
                           <select value={tradeEdit[t._id]?.status ?? t.status} onChange={e => setTradeEdit(p => ({ ...p, [t._id]: { ...p[t._id], status: e.target.value } }))} style={{ background: '#374151', border: 'none', color: 'white', fontSize: '8px', padding: '3px' }}>
                             <option value="pending">Pending</option>
                             <option value="active">Active</option>
@@ -1203,21 +1203,21 @@ export default function AdminPanel() {
               <div style={{ padding: '10px 14px', borderBottom: `1px solid ${t.subtleBorder}` }}>
                 <span style={{ fontSize: '9px', fontWeight: '600' }}>Traders ({traders.length})</span>
               </div>
-              {traders.map((t, i) => (
+              {traders.map((tr, i) => (
                 <div key={i} style={{ display: 'flex', alignItems: 'center', gap: '10px', padding: '10px 14px', borderBottom: `1px solid ${t.tableRowBorder}` }}>
-                  <img src={t.img} style={{ width: '36px', height: '36px', borderRadius: '50%', objectFit: 'cover', pointerEvents: 'auto' }} onError={e => e.target.src = `https://ui-avatars.com/api/?name=${t.name}&background=6366f1&color=fff`} />
+                  <img src={tr.img} style={{ width: '36px', height: '36px', borderRadius: '50%', objectFit: 'cover', pointerEvents: 'auto' }} onError={e => e.target.src = `https://ui-avatars.com/api/?name=${tr.name}&background=6366f1&color=fff`} />
                   <div style={{ flex: 1 }}>
-                    <div style={{ fontSize: '9px', fontWeight: '700' }}>{t.name}</div>
-                    <div style={{ fontSize: '7px', color: t.mutedText }}>{t.location} · Win: {t.winRate}% · Trades: {t.totalTrades}</div>
+                    <div style={{ fontSize: '9px', fontWeight: '700' }}>{tr.name}</div>
+                    <div style={{ fontSize: '7px', color: t.mutedText }}>{tr.location} · Win: {tr.winRate}% · Trades: {tr.totalTrades}</div>
                   </div>
                   <button onClick={async () => {
                     const fd = new FormData();
-                    fd.append('verified', !t.verified);
-                    await fetch(`${import.meta.env.VITE_API_URL || 'https://quantyrexmarkets-api.vercel.app/api'}/traders/${t._id}`, { method: 'PUT', headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }, body: fd });
-                    setTraders(traders.map(tr => tr._id === t._id ? { ...tr, verified: !tr.verified } : tr));
-                  }} style={{ padding: '4px 10px', background: t.verified ? '#22c55e' : t.hoverBg, border: 'none', color: 'white', fontSize: '7px', cursor: 'pointer' }}>{t.verified ? '✓ Verified' : 'Unverified'}</button>
-                  <button onClick={() => { setEditTrader(t); setTraderForm({ name: t.name, location: t.location, flag: t.flag, followers: t.followers, risk: t.risk, favorite: t.favorite, totalTrades: t.totalTrades, totalLoss: t.totalLoss, profitShare: t.profitShare, winRate: t.winRate, verified: t.verified }); }} style={{ padding: '4px 10px', background: '#6366f1', border: 'none', color: 'white', fontSize: '7px', cursor: 'pointer' }}>Edit</button>
-                  <button onClick={async () => { await fetch(`${import.meta.env.VITE_API_URL || 'https://quantyrexmarkets-api.vercel.app/api'}/traders/${t._id}`, { method: 'DELETE', headers: { Authorization: `Bearer ${localStorage.getItem('token')}` } }); setTraders(traders.filter(tr => tr._id !== t._id)); }} style={{ padding: '4px 10px', background: '#ef4444', border: 'none', color: 'white', fontSize: '7px', cursor: 'pointer' }}>Delete</button>
+                    fd.append('verified', !tr.verified);
+                    await fetch(`${import.meta.env.VITE_API_URL || 'https://quantyrexmarkets-api.vercel.app/api'}/traders/${tr._id}`, { method: 'PUT', headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }, body: fd });
+                    setTraders(traders.map(tr => tr._id === tr._id ? { ...tr, verified: !tr.verified } : tr));
+                  }} style={{ padding: '4px 10px', background: tr.verified ? '#22c55e' : t.hoverBg, border: 'none', color: 'white', fontSize: '7px', cursor: 'pointer' }}>{tr.verified ? '✓ Verified' : 'Unverified'}</button>
+                  <button onClick={() => { setEditTrader(t); setTraderForm({ name: tr.name, location: tr.location, flag: tr.flag, followers: tr.followers, risk: tr.risk, favorite: tr.favorite, totalTrades: tr.totalTrades, totalLoss: tr.totalLoss, profitShare: tr.profitShare, winRate: tr.winRate, verified: tr.verified }); }} style={{ padding: '4px 10px', background: '#6366f1', border: 'none', color: 'white', fontSize: '7px', cursor: 'pointer' }}>Edit</button>
+                  <button onClick={async () => { await fetch(`${import.meta.env.VITE_API_URL || 'https://quantyrexmarkets-api.vercel.app/api'}/traders/${tr._id}`, { method: 'DELETE', headers: { Authorization: `Bearer ${localStorage.getItem('token')}` } }); setTraders(traders.filter(tr => tr._id !== tr._id)); }} style={{ padding: '4px 10px', background: '#ef4444', border: 'none', color: 'white', fontSize: '7px', cursor: 'pointer' }}>Delete</button>
                 </div>
               ))}
               {traders.length === 0 && <div style={{ padding: '20px', textAlign: 'center', fontSize: '8px', color: t.faintText }}>No traders yet. Add one above.</div>}
@@ -1358,8 +1358,8 @@ export default function AdminPanel() {
 
             {/* Tabs */}
             <div style={{ display: 'flex', gap: '4px', padding: '10px 16px', borderBottom: `1px solid ${t.border}`, flexWrap: 'wrap' }}>
-              {['info', 'bots', 'investments', 'profit'].map(t => (
-                <button key={t} onClick={() => setUserDetailTab(t)} style={{ padding: '5px 12px', background: userDetailTab === t ? '#6366f1' : t.subtleBg, border: 'none', color: 'white', fontSize: '9px', cursor: 'pointer', textTransform: 'capitalize', fontWeight: userDetailTab === t ? '700' : '400' }}>{t}</button>
+              {['info', 'bots', 'investments', 'profit'].map(tab => (
+                <button key={t} onClick={() => setUserDetailTab(t)} style={{ padding: '5px 12px', background: userDetailTab === t ? '#6366f1' : t.subtleBg, border: 'none', color: 'white', fontSize: '9px', cursor: 'pointer', textTransform: 'capitalize', fontWeight: userDetailTab === t ? '700' : '400' }}>{tab}</button>
               ))}
               <button onClick={() => deleteUser(selectedUser._id, selectedUser.firstName + ' ' + selectedUser.lastName)} style={{ padding: '5px 12px', background: '#7f1d1d', border: 'none', color: 'white', fontSize: '9px', cursor: 'pointer', marginLeft: 'auto' }}>Delete</button>
             </div>
