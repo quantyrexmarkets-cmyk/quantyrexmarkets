@@ -105,10 +105,13 @@ export default function DashboardSidebar({ open, onClose }) {
     if (item.route && (effectivePath === item.route || location.pathname === item.route)) return true;
     if (item.submenu) {
       return item.submenu.some(sub => {
-        const subPath = sub.route?.split('?')[0]; // ignore query params
-        return location.pathname === subPath || 
-               location.pathname + location.search === sub.route ||
-               effectivePath === subPath;
+        if (!sub.route) return false;
+        const subPath = sub.route.split('?')[0];
+        const subQuery = sub.route.includes('?') ? '?' + sub.route.split('?')[1] : '';
+        if (subQuery) {
+          return location.pathname === subPath && location.search === subQuery;
+        }
+        return location.pathname === subPath && !location.search;
       });
     }
     return false;
@@ -116,13 +119,18 @@ export default function DashboardSidebar({ open, onClose }) {
 
   // Check if specific submenu child is active
   const isSubActive = (sub) => {
-    const subPath = sub.route?.split('?')[0];
-    // Handle query param routes like /dashboard/packages?tab=my
-    if (sub.route?.includes('?')) {
-      return location.pathname + location.search === sub.route ||
-             (location.pathname === subPath && location.search === '?' + sub.route.split('?')[1]);
+    if (!sub.route) return false;
+    const subPath = sub.route.split('?')[0];
+    const subQuery = sub.route.includes('?') ? '?' + sub.route.split('?')[1] : '';
+    
+    // Route has query params (e.g. /dashboard/packages?tab=my)
+    if (subQuery) {
+      return location.pathname === subPath && location.search === subQuery;
     }
-    return location.pathname === sub.route || effectivePath === sub.route;
+    
+    // Route has no query params (e.g. /dashboard/packages)
+    // Only match if there's no query string OR query doesn't belong to another sub
+    return location.pathname === sub.route && !location.search;
   };
 
   const { notifications, unread, markAllRead } = useNotifications();
