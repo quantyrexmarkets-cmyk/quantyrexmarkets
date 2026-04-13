@@ -595,79 +595,71 @@ export default function AdminPanel() {
               <button onClick={() => exportCSV(users, 'users.csv')} style={{ ...btnStyle('#22c55e'), whiteSpace: 'nowrap' }}>⬇ CSV</button>
               <button onClick={() => { setEmailTarget(null); setEmailModal(true); setEmailSuccess(''); }} style={{ ...btnStyle('#6366f1'), whiteSpace: 'nowrap' }}>📧 Email All</button>
             </div>
-            <table style={{ width: '100%', borderCollapse: 'collapse', border: `1px solid ${t.tableOuterBorder}` }}>
-              <thead>
-                <tr>{['Name', 'Email', 'Balance', 'Stats', 'KYC', 'Account Status', 'Msg', 'Actions'].map(h => <th key={h} style={thStyle}>{h}</th>)}</tr>
-              </thead>
-              <tbody>
-                {(() => { const filtered = users.filter(u => (u.firstName + " " + u.lastName + " " + u.email).toLowerCase().includes(userSearch.toLowerCase())); const paginated = filtered.slice((userPage-1)*PAGE_SIZE, userPage*PAGE_SIZE); return paginated; })().map((u, i) => (
-                  <tr key={i} style={{ verticalAlign: "top" }}>
-                    <td style={tdStyle}>{u.firstName} {u.lastName}</td>
-                    <td style={tdStyle}>{u.email}</td>
-                    <td style={tdStyle}>
-                      <div style={{ display: 'flex', gap: '4px', alignItems: 'center' }}>
-                        <input value={editBalance[u._id] ?? u.balance?.toFixed(2) ?? '0'} onChange={e => setEditBalance(b => ({ ...b, [u._id]: e.target.value }))} style={{ width: '100px', background: t.inputBg, border: `1px solid ${t.border}`, color: t.text, fontSize: '12px', padding: '5px 8px' }} />
-                        <button onClick={() => updateBalance(u._id)} style={btnStyle('#6366f1')}>Set</button>
-                      </div>
-                    </td>
-                    <td style={tdStyle}>
-                      <div style={{ display: "flex", flexDirection: "column", gap: "3px" }}>
-                        {[["totalDeposits","Deposits"],["totalWithdrawals","Withdrawals"],["totalProfit","Profit"],["totalReferrals","Referrals"],["totalPackages","Packages"]].map(([field, label]) => (
-                          <div key={field} style={{ display: "flex", gap: "3px", alignItems: "center" }}>
-                            <span style={{ color: t.mutedText, fontSize: "10px", width: "70px" }}>{label}:</span>
-                            <input type="number" placeholder={u[field]?.toFixed(2) ?? "0"} value={editStats[u._id]?.[field] ?? ""} onChange={e => setEditStats(p => ({ ...p, [u._id]: { ...p[u._id], [field]: e.target.value } }))} style={{ width: "80px", background: "#374151", border: "none", color: "white", fontSize: "10px", padding: "4px 6px" }} />
-                          </div>
-                        ))}
-                        <button onClick={() => updateUserStats(u._id)} style={{ ...btnStyle("#22c55e"), marginTop: "3px" }}>Update</button>
-                      </div>
-                    </td>
-                    <td style={{ ...tdStyle, color: u.kycStatus === 'approved' ? '#22c55e' : u.kycStatus === 'submitted' ? '#f59e0b' : t.mutedText }}>{u.kycStatus || 'none'}</td>
-                    <td style={tdStyle}>
-                      <div style={{ display: 'flex', flexDirection: 'column', gap: '3px' }}>
-                        <span style={{ padding: '4px 8px', borderRadius: '0px', fontSize: '10px', fontWeight: '700', background: u.isBlocked ? 'rgba(239,68,68,0.2)' : 'rgba(34,197,94,0.2)', color: u.isBlocked ? '#ef4444' : '#22c55e' }}>
-                          {u.isBlocked ? 'Blocked' : 'Active'}
-                        </span>
-                        <span style={{ padding: '4px 8px', borderRadius: '0px', fontSize: '10px', fontWeight: '700', background: u.accountUpgraded ? 'rgba(34,197,94,0.2)' : 'rgba(239,68,68,0.2)', color: u.accountUpgraded ? '#22c55e' : '#ef4444' }}>
-                          {u.accountUpgraded ? '⬆ Upgraded' : '⬆ Not Upgraded'}
-                        </span>
-                        <span style={{ padding: '4px 8px', borderRadius: '0px', fontSize: '10px', fontWeight: '700', background: u.withdrawalBlocked ? 'rgba(239,68,68,0.2)' : 'rgba(34,197,94,0.2)', color: u.withdrawalBlocked ? '#ef4444' : '#22c55e' }}>
-                          {u.withdrawalBlocked ? '💸 W.Blocked' : '💸 W.Allowed'}
-                        </span>
-                        <span style={{ padding: '4px 8px', borderRadius: '0px', fontSize: '10px', fontWeight: '700', background: u.withdrawalCodeRequired ? 'rgba(167,139,250,0.2)' : 'rgba(100,116,139,0.2)', color: u.withdrawalCodeRequired ? '#a78bfa' : '#64748b' }}>
-                          {u.withdrawalCodeRequired ? '🔑 Code On' : '🔑 Code Off'}
-                        </span>
-                        <span style={{ padding: '4px 8px', borderRadius: '0px', fontSize: '10px', background: 'rgba(14,165,233,0.2)', color: '#0ea5e9' }}>
-                          Min: ${u.minimumWithdrawal || 100}
-                        </span>
-                        <span style={{ padding: '4px 8px', borderRadius: '0px', fontSize: '10px', background: 'rgba(99,102,241,0.2)', color: '#6366f1' }}>
-                          Plan: {u.currentPlan && u.currentPlan !== 'none' ? u.currentPlan : 'None'}
-                        </span>
-                      </div>
-                    </td>
-                    <td style={{ ...tdStyle, color: u.isBlocked ? '#ef4444' : '#22c55e' }}>{u.isBlocked ? 'Blocked' : 'Active'}</td>
-                    <td style={tdStyle}>
-                      <div style={{ display: "flex", flexDirection: "column", gap: "3px" }}>{u.adminMessage && <span style={{ color: "#f59e0b", fontSize: "6px", maxWidth: "140px", wordBreak: "break-word", whiteSpace: "normal" }}>Current: {u.adminMessage}</span>}<div style={{ display: "flex", gap: "2px" }}>
-                        <input value={msgInput[u._id] || ''} onChange={e => setMsgInput(m => ({ ...m, [u._id]: e.target.value }))} placeholder="Message..." style={{ width: '140px', background: t.inputBg, border: `1px solid ${t.border}`, color: t.text, fontSize: '8px', padding: '3px 4px' }} />
-                        <button onClick={() => sendMessage(u._id)} style={btnStyle('#f59e0b')}>Send</button>
-                        <button onClick={() => deleteMessage(u._id)} style={btnStyle("#ef4444")}>Del Msg</button>
-                      </div>
-                      </div>
-                    </td>
-                    <td style={tdStyle}>
-                      <button onClick={() => loadUserDetails(u)} style={btnStyle('#818cf8')}>View</button>
-                      <button onClick={() => { setEmailTarget(u); setEmailModal(true); setEmailSuccess(''); }} style={btnStyle('#6366f1')}>Email</button>
-                      <button onClick={() => toggleBlock(u._id)} style={btnStyle(u.isBlocked ? '#22c55e' : '#ef4444')}>{u.isBlocked ? 'Unblock' : 'Block'}</button>
-                      <button onClick={() => toggleWithdrawalBlock(u._id)} style={btnStyle(u.withdrawalBlocked ? '#22c55e' : '#f97316')}>{u.withdrawalBlocked ? 'Allow W.' : 'Block W.'}</button>
-                      <button onClick={() => toggleAccountUpgrade(u._id)} style={btnStyle(u.accountUpgraded ? '#ef4444' : '#22c55e')}>{u.accountUpgraded ? 'Revoke Up.' : 'Approve Up.'}</button>
-                      <div style={{ marginTop: '6px', borderTop: '1px solid rgba(239,68,68,0.3)', paddingTop: '6px' }}>
-                        <button onClick={() => { if(window.confirm('DELETE ' + u.email + '? This cannot be undone!')) deleteUser(u._id, u.firstName + ' ' + u.lastName); }} style={{ padding: '6px 12px', background: '#ef4444', border: 'none', color: 'white', fontSize: '11px', cursor: 'pointer', borderRadius: '4px', width: '100%', fontWeight: '700' }}>🗑️ DELETE USER</button>
-                      </div>
-
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+              {(() => {
+                const filtered = users.filter(u => (u.firstName + " " + u.lastName + " " + u.email).toLowerCase().includes(userSearch.toLowerCase()));
+                const paginated = filtered.slice((userPage-1)*PAGE_SIZE, userPage*PAGE_SIZE);
+                return paginated;
+              })().map((u, i) => (
+                <div key={i} style={{ background: t.cardBg, border: `1px solid ${t.border}`, borderRadius: '12px', padding: '16px' }}>
+                  {/* Header */}
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '12px' }}>
+                    <div>
+                      <div style={{ color: t.text, fontSize: '14px', fontWeight: '700' }}>{u.firstName} {u.lastName}</div>
+                      <div style={{ color: t.subText, fontSize: '11px' }}>{u.email}</div>
+                      <div style={{ color: t.mutedText, fontSize: '10px', marginTop: '2px' }}>KYC: <span style={{ color: u.kycStatus === 'approved' ? '#22c55e' : u.kycStatus === 'submitted' ? '#f59e0b' : '#ef4444', fontWeight: '600' }}>{u.kycStatus || 'none'}</span></div>
+                    </div>
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: '4px', alignItems: 'flex-end' }}>
+                      <span style={{ padding: '3px 8px', borderRadius: '4px', fontSize: '10px', fontWeight: '700', background: u.isBlocked ? 'rgba(239,68,68,0.2)' : 'rgba(34,197,94,0.2)', color: u.isBlocked ? '#ef4444' : '#22c55e' }}>{u.isBlocked ? '🔴 Blocked' : '🟢 Active'}</span>
+                      <span style={{ padding: '3px 8px', borderRadius: '4px', fontSize: '10px', fontWeight: '700', background: u.accountUpgraded ? 'rgba(34,197,94,0.2)' : 'rgba(100,116,139,0.2)', color: u.accountUpgraded ? '#22c55e' : '#64748b' }}>{u.accountUpgraded ? '⬆ Upgraded' : '⬆ Standard'}</span>
+                      <span style={{ padding: '3px 8px', borderRadius: '4px', fontSize: '10px', background: 'rgba(99,102,241,0.2)', color: '#6366f1' }}>Plan: {u.currentPlan && u.currentPlan !== 'none' ? u.currentPlan : 'None'}</span>
+                    </div>
+                  </div>
+                  {/* Balance */}
+                  <div style={{ background: t.cardBg2, borderRadius: '8px', padding: '10px', marginBottom: '10px' }}>
+                    <div style={{ color: t.subText, fontSize: '10px', marginBottom: '6px', fontWeight: '600' }}>💰 BALANCE</div>
+                    <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
+                      <input value={editBalance[u._id] ?? u.balance?.toFixed(2) ?? '0'} onChange={e => setEditBalance(b => ({ ...b, [u._id]: e.target.value }))} style={{ flex: 1, background: t.inputBg, border: `1px solid ${t.border}`, color: t.text, fontSize: '13px', padding: '6px 10px', outline: 'none', borderRadius: '6px', fontWeight: '700' }} />
+                      <button onClick={() => updateBalance(u._id)} style={{ ...btnStyle('#6366f1'), borderRadius: '6px' }}>Set Balance</button>
+                    </div>
+                  </div>
+                  {/* Stats */}
+                  <div style={{ background: t.cardBg2, borderRadius: '8px', padding: '10px', marginBottom: '10px' }}>
+                    <div style={{ color: t.subText, fontSize: '10px', marginBottom: '6px', fontWeight: '600' }}>📊 STATS</div>
+                    <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '6px' }}>
+                      {[["totalDeposits","Deposits"],["totalWithdrawals","Withdrawals"],["totalProfit","Profit"],["totalReferrals","Referrals"],["totalPackages","Packages"]].map(([field, label]) => (
+                        <div key={field}>
+                          <div style={{ color: t.mutedText, fontSize: '9px', marginBottom: '2px' }}>{label}</div>
+                          <input type="number" placeholder={u[field]?.toFixed(2) ?? "0"} value={editStats[u._id]?.[field] ?? ""} onChange={e => setEditStats(p => ({ ...p, [u._id]: { ...p[u._id], [field]: e.target.value } }))} style={{ width: '100%', background: t.inputBg, border: `1px solid ${t.border}`, color: t.text, fontSize: '11px', padding: '5px 8px', outline: 'none', borderRadius: '4px', boxSizing: 'border-box' }} />
+                        </div>
+                      ))}
+                    </div>
+                    <button onClick={() => updateUserStats(u._id)} style={{ ...btnStyle("#22c55e"), marginTop: "8px", borderRadius: '6px', width: '100%' }}>Update Stats</button>
+                  </div>
+                  {/* Message */}
+                  <div style={{ background: t.cardBg2, borderRadius: '8px', padding: '10px', marginBottom: '10px' }}>
+                    <div style={{ color: t.subText, fontSize: '10px', marginBottom: '6px', fontWeight: '600' }}>💬 MESSAGE</div>
+                    {u.adminMessage && <div style={{ color: '#f59e0b', fontSize: '10px', marginBottom: '6px', wordBreak: 'break-word' }}>Current: {u.adminMessage}</div>}
+                    <div style={{ display: 'flex', gap: '6px' }}>
+                      <input value={msgInput[u._id] || ''} onChange={e => setMsgInput(m => ({ ...m, [u._id]: e.target.value }))} placeholder="Type message..." style={{ flex: 1, background: t.inputBg, border: `1px solid ${t.border}`, color: t.text, fontSize: '11px', padding: '6px 10px', outline: 'none', borderRadius: '6px' }} />
+                      <button onClick={() => sendMessage(u._id)} style={{ ...btnStyle('#f59e0b'), borderRadius: '6px' }}>Send</button>
+                      <button onClick={() => deleteMessage(u._id)} style={{ ...btnStyle("#ef4444"), borderRadius: '6px' }}>Del</button>
+                    </div>
+                  </div>
+                  {/* Actions */}
+                  <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '6px', marginBottom: '10px' }}>
+                    <button onClick={() => loadUserDetails(u)} style={{ ...btnStyle('#818cf8'), borderRadius: '6px' }}>👁 View Details</button>
+                    <button onClick={() => { setEmailTarget(u); setEmailModal(true); setEmailSuccess(''); }} style={{ ...btnStyle('#6366f1'), borderRadius: '6px' }}>📧 Email</button>
+                    <button onClick={() => toggleBlock(u._id)} style={{ ...btnStyle(u.isBlocked ? '#22c55e' : '#ef4444'), borderRadius: '6px' }}>{u.isBlocked ? '✅ Unblock' : '🚫 Block'}</button>
+                    <button onClick={() => toggleWithdrawalBlock(u._id)} style={{ ...btnStyle(u.withdrawalBlocked ? '#22c55e' : '#f97316'), borderRadius: '6px' }}>{u.withdrawalBlocked ? '✅ Allow W.' : '🚫 Block W.'}</button>
+                    <button onClick={() => toggleAccountUpgrade(u._id)} style={{ ...btnStyle(u.accountUpgraded ? '#ef4444' : '#22c55e'), borderRadius: '6px' }}>{u.accountUpgraded ? '↩ Revoke Up.' : '⬆ Approve Up.'}</button>
+                    <span style={{ padding: '4px 8px', borderRadius: '6px', fontSize: '10px', background: 'rgba(14,165,233,0.2)', color: '#0ea5e9', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>Min W: ${u.minimumWithdrawal || 100}</span>
+                  </div>
+                  {/* Delete */}
+                  <button onClick={() => { if(window.confirm('DELETE ' + u.email + '? This cannot be undone!')) deleteUser(u._id, u.firstName + ' ' + u.lastName); }} style={{ width: '100%', padding: '10px', background: '#ef4444', border: 'none', color: 'white', fontSize: '12px', cursor: 'pointer', borderRadius: '8px', fontWeight: '700' }}>🗑️ DELETE USER</button>
+                </div>
+              ))}
+            </div>
             {/* User Pagination */}
             {(() => {
               const filtered = users.filter(u => (u.firstName + " " + u.lastName + " " + u.email).toLowerCase().includes(userSearch.toLowerCase()));
