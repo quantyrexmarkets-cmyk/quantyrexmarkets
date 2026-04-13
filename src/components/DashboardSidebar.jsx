@@ -82,14 +82,47 @@ export default function DashboardSidebar({ open, onClose }) {
   const navigate = useNavigate();
   const [openSubmenu, setOpenSubmenu] = useState(null);
 
-  // Check if item or any of its submenu children match current path
+  // Related routes - pages that should highlight a sidebar item
+  const relatedRoutes = {
+    '/dashboard/live-trading': '/dashboard/live-trading',
+    '/dashboard/new-trade': '/dashboard/live-trading',
+    '/dashboard/bot-transactions': '/dashboard/manage-bots',
+    '/dashboard/bot-plans': '/dashboard/manage-bots',
+    '/dashboard/deposit-funds': '/dashboard/deposit',
+    '/dashboard/withdraw/new': '/dashboard/withdraw',
+    '/dashboard/withdraw/verify-code': '/dashboard/withdraw',
+    '/dashboard/trader': '/dashboard/copy-trading',
+    '/dashboard/copy-trading/setup': '/dashboard/copy-trading',
+  };
+
+  // Get the effective path (handles related routes)
+  const effectivePath = relatedRoutes[location.pathname] || 
+    Object.entries(relatedRoutes).find(([k]) => location.pathname.startsWith(k))?.[1] ||
+    location.pathname;
+
+  // Check if item is active
   const isActive = (item) => {
-    if (item.route && location.pathname === item.route) return true;
+    if (item.route && (effectivePath === item.route || location.pathname === item.route)) return true;
     if (item.submenu) {
-      return item.submenu.some(sub => location.pathname === sub.route ||
-        location.pathname.startsWith(sub.route || '___'));
+      return item.submenu.some(sub => {
+        const subPath = sub.route?.split('?')[0]; // ignore query params
+        return location.pathname === subPath || 
+               location.pathname + location.search === sub.route ||
+               effectivePath === subPath;
+      });
     }
     return false;
+  };
+
+  // Check if specific submenu child is active
+  const isSubActive = (sub) => {
+    const subPath = sub.route?.split('?')[0];
+    // Handle query param routes like /dashboard/packages?tab=my
+    if (sub.route?.includes('?')) {
+      return location.pathname + location.search === sub.route ||
+             (location.pathname === subPath && location.search === '?' + sub.route.split('?')[1]);
+    }
+    return location.pathname === sub.route || effectivePath === sub.route;
   };
 
   const { notifications, unread, markAllRead } = useNotifications();
@@ -98,12 +131,16 @@ export default function DashboardSidebar({ open, onClose }) {
   useEffect(() => {
     sidebarSections.forEach((section, si) => {
       section.items.forEach((item, ii) => {
-        if (item.submenu && item.submenu.some(sub => location.pathname === sub.route)) {
+        if (item.submenu && item.submenu.some(sub => {
+          const subPath = sub.route?.split('?')[0];
+          return location.pathname === subPath || 
+                 location.pathname + location.search === sub.route;
+        })) {
           setOpenSubmenu(si+'-'+ii);
         }
       });
     });
-  }, [location.pathname]);
+  }, [location.pathname, location.search]);
   const [notifOpen, setNotifOpen] = useState(false);
   const notifRef = useRef();
 
@@ -200,17 +237,21 @@ export default function DashboardSidebar({ open, onClose }) {
                 {item.submenu && openSubmenu === si+'-'+ii && (
                   <div style={{ paddingLeft: '8px', paddingRight: '8px', marginTop: '2px', marginBottom: '2px' }}>
                     {item.submenu.map((sub, si2) => {
-                      const subActive = location.pathname === sub.route;
+                      const subActive = isSubActive(sub);
                       return (
                         <button key={si2} onClick={() => { navigate(sub.route); onClose(); }}
                           style={{
                             width: '100%', padding: '9px 14px', marginBottom: '2px',
-                            background: subActive ? (t.bg === '#f8fafc' ? 'rgba(99,102,241,0.1)' : 'rgba(99,102,241,0.18)') : 'transparent',
+                            background: subActive
+                              ? t.bg === '#f8fafc' ? 'rgba(99,102,241,0.1)' : 'rgba(99,102,241,0.18)'
+                              : 'transparent',
                             border: subActive ? '1px solid rgba(99,102,241,0.35)' : '1px solid transparent',
                             borderRadius: '8px',
                             backdropFilter: subActive ? 'blur(12px)' : 'none',
                             WebkitBackdropFilter: subActive ? 'blur(12px)' : 'none',
-                            boxShadow: subActive ? (t.bg === '#f8fafc' ? '0 2px 8px rgba(99,102,241,0.12)' : '0 4px 12px rgba(99,102,241,0.2)') : 'none',
+                            boxShadow: subActive
+                              ? t.bg === '#f8fafc' ? '0 2px 8px rgba(99,102,241,0.12)' : '0 4px 12px rgba(99,102,241,0.2)'
+                              : 'none',
                             cursor: 'pointer',
                             color: subActive ? '#6366f1' : t.subText,
                             fontSize: '11px', fontWeight: subActive ? '600' : '400',
