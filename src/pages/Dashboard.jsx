@@ -388,7 +388,7 @@ export default function Dashboard() {
                 </div>
               </div>
               <div style={{ border: `1px solid ${t.tableDivider}` }}>
-                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr 1fr 1fr', background: t.tableHeaderBg, padding: '7px 10px', borderBottom: `1px solid ${t.tableOuterBorder}`, borderBottom: `1px solid ${t.tableOuterBorder}` }}>
+                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr 1fr 1fr', background: t.tableHeaderBg, padding: '7px 10px', borderBottom: `1px solid ${t.tableOuterBorder}` }}>
                   {['Amount','Txn Date','Method','Txn Type','Status'].map((h, i) => (
                     <span key={i} style={{ color: t.subText, fontSize: 'clamp(7px, 1.8vw, 15px)', fontWeight: '600' }}>{h}</span>
                   ))}

@@ -134,7 +134,7 @@ export default function BotTransactionHistory() {
             </div>
           </div>
 
-          <div style={{ display: 'grid', gridTemplateColumns: '1.2fr 1fr 1fr 0.8fr 1fr 0.8fr', background: t.tableHeaderBg, padding: '7px 10px', borderBottom: `1px solid ${t.tableOuterBorder}`, borderBottom: `1px solid ${t.border}` }}>
+          <div style={{ display: 'grid', gridTemplateColumns: '1.2fr 1fr 1fr 0.8fr 1fr 0.8fr', background: t.tableHeaderBg, padding: '7px 10px', borderBottom: `1px solid ${t.tableOuterBorder}` }}>
             {['Bot Name','Amount','Earned','Status','Date','Duration'].map((h, i) => (
               <span key={i} style={{ color: t.subText, fontSize: '7px', fontWeight: '700', borderRight: '1px solid #6366f1', borderBottom: '1px solid #6366f1', padding: '4px 6px' }}>{h}</span>
             ))}

@@ -253,7 +253,7 @@ const handleWithdraw = async () => {
               <div style={{ padding: '8px 10px', borderBottom: `1px solid ${t.border}`, display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                 <span style={{ color: t.text, fontSize: '9px', fontWeight: '700' }}>Recent Deposits</span>
               </div>
-              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr 1fr', background: t.tableHeaderBg, padding: '7px 10px', borderBottom: `1px solid ${t.tableOuterBorder}`, borderBottom: `1px solid ${t.border}` }}>
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr 1fr', background: t.tableHeaderBg, padding: '7px 10px', borderBottom: `1px solid ${t.tableOuterBorder}` }}>
                 {['Amount','Method','Status','Date'].map((h,i) => (
                   <span key={i} style={{ color: t.subText, fontSize: '7px', fontWeight: '700' }}>{h} ↕</span>
                 ))}

@@ -69,7 +69,7 @@ export default function Notifications() {
       {/* Filter tabs */}
       <div style={{ display: 'flex', gap: '0', borderBottom: `1px solid ${t.border}`, padding: '0 16px' }}>
         {['all', 'unread'].map(f => (
-          <button key={f} onClick={() => setFilter(f)} style={{ background: 'none', border: 'none', color: filter === f ? '#6366f1' : t.mutedText, fontSize: '11px', padding: '10px 16px', cursor: 'pointer', borderBottom: filter === f ? '2px solid #6366f1' : '2px solid transparent', fontWeight: filter === f ? '600' : '400', background: filter === f ? (t.bg === '#f8fafc' ? 'rgba(99,102,241,0.08)' : 'rgba(99,102,241,0.1)') : 'transparent', borderRadius: filter === f ? '6px 6px 0 0' : '0', textTransform: 'capitalize' }}>
+          <button key={f} onClick={() => setFilter(f)} style={{ border: 'none', color: filter === f ? '#6366f1' : t.mutedText, fontSize: '11px', padding: '10px 16px', cursor: 'pointer', borderBottom: filter === f ? '2px solid #6366f1' : '2px solid transparent', fontWeight: filter === f ? '600' : '400', background: filter === f ? (t.bg === '#f8fafc' ? 'rgba(99,102,241,0.08)' : 'rgba(99,102,241,0.1)') : 'transparent', borderRadius: filter === f ? '6px 6px 0 0' : '0', textTransform: 'capitalize' }}>
             {f === 'all' ? `All (${notifications.length})` : `Unread (${unreadCount})`}
           </button>
         ))}
