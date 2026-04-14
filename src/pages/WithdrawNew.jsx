@@ -181,7 +181,7 @@ export default function WithdrawNew() {
       </>}
 
       <div style={{ color: '#ef4444', fontSize: '8px', marginBottom: '8px', minHeight: '14px' }}>{error}</div>
-      <button onClick={handleSubmit} disabled={submitting} style={{ padding: '10px 28px', background: submitting ? t.subtleBg : '#6366f1', border: 'none', color: submitting ? t.text : 'white', fontSize: '9px', fontWeight: '700', cursor: submitting ? 'not-allowed' : 'pointer' }}>
+      <button onClick={handleSubmit} disabled={submitting} style={{ padding: '10px 28px', background: submitting ? t.subtleBg : '#6366f1', border: 'none', color: 'white', fontSize: '9px', fontWeight: '700', cursor: submitting ? 'not-allowed' : 'pointer' }}>
         {submitting ? 'Processing...' : 'REQUEST WITHDRAWAL'}
       </button>
     </div>
@@ -246,7 +246,7 @@ export default function WithdrawNew() {
             ))}
           </div>
           <div style={{ color: '#ef4444', fontSize: '8px', marginBottom: '8px', minHeight: '14px' }}>{error}</div>
-          <button onClick={handleProceed} disabled={submitting} style={{ padding: '10px 28px', background: submitting ? t.subtleBg : '#6366f1', border: 'none', color: submitting ? t.text : 'white', fontSize: '9px', fontWeight: '700', cursor: submitting ? 'not-allowed' : 'pointer' }}>
+          <button onClick={handleProceed} disabled={submitting} style={{ padding: '10px 28px', background: submitting ? t.subtleBg : '#6366f1', border: 'none', color: 'white', fontSize: '9px', fontWeight: '700', cursor: submitting ? 'not-allowed' : 'pointer' }}>
             Continue
           </button>
         </>}
@@ -279,7 +279,7 @@ export default function WithdrawNew() {
                   ...(selectedMethod === 'bank' && { bankName, accountName, accountNumber, routingNumber }),
                 };
                 navigate('/dashboard/withdraw/verify-code', { state: payload });
-              }} style={{ padding: '8px 20px', background: '#6366f1', border: 'none', color: t.text, fontSize: '9px', fontWeight: '600', cursor: 'pointer', borderRadius: '3px' }}>
+              }} style={{ padding: '8px 20px', background: '#6366f1', border: 'none', color: 'white', fontSize: '9px', fontWeight: '600', cursor: 'pointer', borderRadius: '3px' }}>
                 Confirm
               </button>
             </div>
@@ -297,7 +297,7 @@ export default function WithdrawNew() {
             </div>
             <div style={{ color: '#111', fontSize: '18px', fontWeight: '700', marginBottom: '10px' }}>Withdrawal Submitted!</div>
             <div style={{ color: '#555', fontSize: '12px', marginBottom: '24px', lineHeight: '1.8' }}>Withdrawal request sent! Check history for details.</div>
-            <button onClick={() => { setShowSuccess(false); navigate('/dashboard/withdraw'); }} style={{ padding: '8px 28px', background: '#6366f1', border: 'none', color: t.text, fontSize: '10px', fontWeight: '600', cursor: 'pointer', borderRadius: '3px' }}>Okay</button>
+            <button onClick={() => { setShowSuccess(false); navigate('/dashboard/withdraw'); }} style={{ padding: '8px 28px', background: '#6366f1', border: 'none', color: 'white', fontSize: '10px', fontWeight: '600', cursor: 'pointer', borderRadius: '3px' }}>Okay</button>
           </div>
         </>
       )}

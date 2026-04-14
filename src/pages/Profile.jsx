@@ -252,7 +252,7 @@ export default function Profile() {
                 <button onClick={() => setActiveTab('edit')} style={{ background: 'rgba(0,0,0,0.2)', border: 'none', color: t.text, fontSize: '8px', padding: '6px 12px', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '4px' }}>
                   <Edit2 size={9}/> Edit Profile
                 </button>
-                <button onClick={() => { logout(); navigate('/signin'); }} style={{ background: '#ef4444', border: 'none', color: t.text, fontSize: '8px', padding: '6px 12px', cursor: 'pointer' }}>Logout</button>
+                <button onClick={() => { logout(); navigate('/signin'); }} style={{ background: '#ef4444', border: 'none', color: 'white', fontSize: '8px', padding: '6px 12px', cursor: 'pointer' }}>Logout</button>
               </div>
               <div style={{ display: 'flex', alignItems: 'center', gap: '14px' }}>
                 <div style={{ width: '55px', height: '55px', borderRadius: '50%', background: t.hoverBg, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, border: `2px solid ${t.border}`, overflow: 'hidden' }}>
@@ -286,7 +286,7 @@ export default function Profile() {
                   </div>
                   <div style={{ color: '#111', fontSize: '14px', fontWeight: '700', marginBottom: '8px' }}>Profile Updated!</div>
                   <div style={{ color: '#555', fontSize: '9px', marginBottom: '20px', lineHeight: '1.6' }}>Your profile has been updated successfully.</div>
-                  <button onClick={() => { setSuccess(false); setActiveTab('profile'); }} style={{ padding: '8px 28px', background: '#6366f1', border: 'none', color: t.text, fontSize: '10px', fontWeight: '600', cursor: 'pointer' }}>Okay</button>
+                  <button onClick={() => { setSuccess(false); setActiveTab('profile'); }} style={{ padding: '8px 28px', background: '#6366f1', border: 'none', color: 'white', fontSize: '10px', fontWeight: '600', cursor: 'pointer' }}>Okay</button>
                 </div>
               </>
             )}

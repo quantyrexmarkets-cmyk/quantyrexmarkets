@@ -76,7 +76,7 @@ export default function NewStake() {
             <div style={{ color: '#555', fontSize: '12px', marginBottom: '24px', lineHeight: '1.8' }}>Your {selected?.name} stake is pending approval.</div>
             <div style={{ display: 'flex', gap: '8px' }}>
               <button onClick={() => { setShowSuccess(false); setSelected(null); setAmount(''); }} style={{ flex: 1, padding: '8px', background: t.subtleBg, border: `1px solid ${t.border}`, color: t.text, fontSize: '9px', cursor: 'pointer' }}>New Stake</button>
-              <button onClick={() => navigate('/dashboard/stake')} style={{ flex: 1, padding: '8px', background: '#6366f1', border: 'none', color: t.text, fontSize: '9px', fontWeight: '600', cursor: 'pointer' }}>View History</button>
+              <button onClick={() => navigate('/dashboard/stake')} style={{ flex: 1, padding: '8px', background: '#6366f1', border: 'none', color: 'white', fontSize: '9px', fontWeight: '600', cursor: 'pointer' }}>View History</button>
             </div>
           </div>
         </>
@@ -95,7 +95,7 @@ export default function NewStake() {
             <div style={{ color: '#555', fontSize: '9px', marginBottom: '20px' }}>Available: <strong style={{ color: '#22c55e' }}>{formatAmount(user?.balance || 0, user?.currency)}</strong></div>
             <div style={{ display: 'flex', gap: '8px' }}>
               <button onClick={() => setShowInsufficient(false)} style={{ flex: 1, padding: '8px', background: t.subtleBg, border: `1px solid ${t.border}`, color: t.text, fontSize: '9px', cursor: 'pointer' }}>Cancel</button>
-              <button onClick={() => { setShowInsufficient(false); navigate('/dashboard/deposit'); }} style={{ flex: 1, padding: '8px', background: '#6366f1', border: 'none', color: t.text, fontSize: '9px', fontWeight: '600', cursor: 'pointer' }}>Deposit Now</button>
+              <button onClick={() => { setShowInsufficient(false); navigate('/dashboard/deposit'); }} style={{ flex: 1, padding: '8px', background: '#6366f1', border: 'none', color: 'white', fontSize: '9px', fontWeight: '600', cursor: 'pointer' }}>Deposit Now</button>
             </div>
           </div>
         </>

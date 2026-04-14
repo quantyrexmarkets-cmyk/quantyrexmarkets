@@ -220,7 +220,7 @@ const handleWithdraw = async () => {
                     <span style={{ background: t.cardBg2, border: `1px solid ${t.border}`, borderLeft: 'none', color: t.faintText, fontSize: '8px', padding: '7px 10px', flex: 1, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{proofName}</span>
                   </div>
                 </div>
-                <button onClick={handleSubmitDeposit} disabled={submitting} style={{ padding: '8px 20px', background: submitting ? t.subtleBg : '#6366f1', border: 'none', color: submitting ? t.text : 'white', fontSize: '9px', fontWeight: '700', cursor: submitting ? 'not-allowed' : 'pointer' }}>
+                <button onClick={handleSubmitDeposit} disabled={submitting} style={{ padding: '8px 20px', background: submitting ? t.subtleBg : '#6366f1', border: 'none', color: 'white', fontSize: '9px', fontWeight: '700', cursor: submitting ? 'not-allowed' : 'pointer' }}>
                   {submitting ? 'Submitting...' : 'Submit Payment'}
                 </button>
               </div>
