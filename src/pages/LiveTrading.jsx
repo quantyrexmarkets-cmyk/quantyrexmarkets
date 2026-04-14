@@ -86,7 +86,8 @@ export default function LiveTrading() {
   const paginated = filtered.slice((page-1)*show, page*show);
 
   const tvTheme = t.bg === '#f8fafc' ? 'light' : 'dark';
-  const tvSrc = `https://www.tradingview.com/chart/?symbol=${symbol.tv}&interval=15&theme=${tvTheme}`;
+  const [tvInterval, setTvInterval] = useState('15');
+  const tvSrc = `https://www.tradingview.com/widgetembed/?frameElementId=tv_${symbol.tv.replace(':','_')}&symbol=${symbol.tv}&interval=${tvInterval}&hidesidetoolbar=0&hidetoptoolbar=0&symboledit=0&saveimage=0&toolbarbg=${t.bg === '#f8fafc' ? 'ffffff' : '0f172a'}&studies=[]&theme=${tvTheme}&style=1&timezone=Etc%2FUTC&locale=en&utm_source=quantyrexmarkets.vercel.app`;
 
   return (
     <div style={{ minHeight: '100vh', background: t.bg, fontFamily: "'Segoe UI', sans-serif", color: t.text }}>
@@ -114,7 +115,39 @@ export default function LiveTrading() {
             </div>
           </div>
 
-          {/* Chart - fixed height */}
+          {/* Chart Tools Bar */}
+          <div style={{ display: 'flex', alignItems: 'center', gap: '4px', padding: '6px 12px', background: t.cardBg2, borderBottom: `1px solid ${t.border}`, flexShrink: 0, overflowX: 'auto' }}>
+            <span style={{ color: t.subText, fontSize: '8px', marginRight: '4px' }}>⏱</span>
+            {[
+              { label: '1m', value: '1' },
+              { label: '5m', value: '5' },
+              { label: '15m', value: '15' },
+              { label: '1H', value: '60' },
+              { label: '4H', value: '240' },
+              { label: '1D', value: 'D' },
+              { label: '1W', value: 'W' },
+            ].map(iv => (
+              <button key={iv.value} onClick={() => setTvInterval(iv.value)}
+                style={{ padding: '3px 8px', background: tvInterval === iv.value ? '#6366f1' : 'transparent', border: `1px solid ${tvInterval === iv.value ? '#6366f1' : t.border}`, color: tvInterval === iv.value ? 'white' : t.subText, fontSize: '8px', fontWeight: '700', cursor: 'pointer', borderRadius: '4px', whiteSpace: 'nowrap' }}>
+                {iv.label}
+              </button>
+            ))}
+            <div style={{ marginLeft: 'auto', display: 'flex', gap: '4px' }}>
+              <span style={{ color: t.subText, fontSize: '8px', marginRight: '2px' }}>📊</span>
+              {[
+                { label: 'Candle', value: '1' },
+                { label: 'Line', value: '2' },
+                { label: 'Area', value: '3' },
+              ].map(st => (
+                <button key={st.value} onClick={() => {}}
+                  style={{ padding: '3px 6px', background: 'transparent', border: `1px solid ${t.border}`, color: t.subText, fontSize: '7px', cursor: 'pointer', borderRadius: '4px' }}>
+                  {st.label}
+                </button>
+              ))}
+            </div>
+          </div>
+
+          {/* Chart */}
           <iframe
             key={symbol.tv + t.bg}
             src={tvSrc}
