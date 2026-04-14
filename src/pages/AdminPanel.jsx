@@ -613,12 +613,92 @@ export default function AdminPanel() {
 
         {/* Users */}
         {tab === 'users' && (
-          <div style={{ overflowX: "auto", overflowY: "auto", maxHeight: "80vh" }}>
-            <div style={{ padding: "8px 0", marginBottom: "8px", display: "flex", gap: "8px", alignItems: "center" }}>
-              <input value={userSearch} onChange={e => { setUserSearch(e.target.value); setUserPage(1); }} placeholder="Search by name or email..." style={{ flex: 1, background: "#374151", border: "none", color: "white", fontSize: "8px", padding: "6px 10px", outline: "none" }} />
-              <span style={{ color: t.mutedText, fontSize: "7px" }}>{users.filter(u => (u.firstName + " " + u.lastName + " " + u.email).toLowerCase().includes(userSearch.toLowerCase())).length} users</span>
-              <button onClick={() => exportCSV(users, 'users.csv')} style={{ ...btnStyle('#22c55e'), whiteSpace: 'nowrap' }}><Download size={12}/> CSV</button>
-              <button onClick={() => { setEmailTarget(null); setEmailModal(true); setEmailSuccess(''); }} style={{ ...btnStyle('#6366f1'), whiteSpace: 'nowrap' }}><Mail size={12}/> Email All</button>
+          <div>
+            {/* Toolbar */}
+            <div style={{ display: 'flex', gap: '8px', alignItems: 'center', marginBottom: '12px', flexWrap: 'wrap' }}>
+              <div style={{ position: 'relative', flex: 1, minWidth: '200px' }}>
+                <input value={userSearch} onChange={e => { setUserSearch(e.target.value); setUserPage(1); }}
+                  placeholder="Search name, email..."
+                  style={{ width: '100%', background: t.inputBg, border: `1px solid ${t.border}`, color: t.text, fontSize: '11px', padding: '8px 12px 8px 32px', outline: 'none', borderRadius: '6px', boxSizing: 'border-box' }} />
+                <svg style={{ position: 'absolute', left: '10px', top: '50%', transform: 'translateY(-50%)' }} width='13' height='13' fill='none' stroke={t.subText} viewBox='0 0 24 24' strokeWidth='2'><circle cx='11' cy='11' r='8'/><path d='m21 21-4.35-4.35'/></svg>
+              </div>
+              <span style={{ color: t.subText, fontSize: '11px', whiteSpace: 'nowrap' }}>
+                {users.filter(u => (u.firstName + " " + u.lastName + " " + u.email).toLowerCase().includes(userSearch.toLowerCase())).length} users
+              </span>
+              <button onClick={() => exportCSV(users, 'users.csv')} style={{ ...btnStyle('#22c55e'), display: 'flex', alignItems: 'center', gap: '4px' }}><Download size={12}/> Export</button>
+              <button onClick={() => { setEmailTarget(null); setEmailModal(true); setEmailSuccess(''); }} style={{ ...btnStyle('#6366f1'), display: 'flex', alignItems: 'center', gap: '4px' }}><Mail size={12}/> Email All</button>
+            </div>
+
+            {/* Table */}
+            <div style={{ border: `1px solid ${t.border}`, borderRadius: '8px', overflow: 'hidden' }}>
+              {/* Table Header */}
+              <div style={{ display: 'grid', gridTemplateColumns: '2fr 2fr 1fr 1fr 1fr 1fr 120px', background: t.tableHeaderBg, padding: '10px 12px', borderBottom: `1px solid ${t.border}` }}>
+                {['User', 'Email', 'Balance', 'Status', 'KYC', 'Plan', 'Actions'].map((h, i) => (
+                  <div key={i} style={{ color: t.subText, fontSize: '9px', fontWeight: '700', textTransform: 'uppercase', letterSpacing: '0.05em' }}>{h}</div>
+                ))}
+              </div>
+
+              {/* Table Rows */}
+              {(() => {
+                const filtered = users.filter(u => (u.firstName + " " + u.lastName + " " + u.email).toLowerCase().includes(userSearch.toLowerCase()));
+                const paginated = filtered.slice((userPage-1)*PAGE_SIZE, userPage*PAGE_SIZE);
+                return paginated.length === 0 ? (
+                  <div style={{ padding: '40px', textAlign: 'center', color: t.faintText, fontSize: '12px' }}>No users found</div>
+                ) : paginated.map((u, i) => (
+                  <div key={i} style={{ display: 'grid', gridTemplateColumns: '2fr 2fr 1fr 1fr 1fr 1fr 120px', padding: '12px', borderBottom: `1px solid ${t.tableRowBorder}`, background: i%2===0 ? 'transparent' : t.tableAltRow, alignItems: 'center' }}
+                    onMouseEnter={e => e.currentTarget.style.background = t.hoverBg}
+                    onMouseLeave={e => e.currentTarget.style.background = i%2===0 ? 'transparent' : t.tableAltRow}>
+
+                    {/* User */}
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                      <div style={{ width: '32px', height: '32px', borderRadius: '50%', background: '#6366f1', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '11px', color: 'white', fontWeight: '700', flexShrink: 0, overflow: 'hidden' }}>
+                        {u.avatar ? <img src={u.avatar} style={{ width: '100%', height: '100%', objectFit: 'cover' }}/> : `${u.firstName?.[0] || ''}${u.lastName?.[0] || ''}`}
+                      </div>
+                      <div>
+                        <div style={{ color: t.text, fontSize: '11px', fontWeight: '600' }}>{u.firstName} {u.lastName}</div>
+                        <div style={{ color: t.subText, fontSize: '9px' }}>Joined {new Date(u.createdAt).toLocaleDateString()}</div>
+                      </div>
+                    </div>
+
+                    {/* Email */}
+                    <div style={{ color: t.subText, fontSize: '10px', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{u.email}</div>
+
+                    {/* Balance */}
+                    <div style={{ color: '#6366f1', fontSize: '11px', fontWeight: '700' }}>${parseFloat(u.balance || 0).toLocaleString('en-US', {minimumFractionDigits: 2})}</div>
+
+                    {/* Status */}
+                    <div>
+                      <span style={{ padding: '3px 8px', borderRadius: '20px', fontSize: '9px', fontWeight: '600', background: u.isBlocked ? '#fef2f2' : '#f0fdf4', color: u.isBlocked ? '#b91c1c' : '#15803d', border: u.isBlocked ? '1px solid #fecaca' : '1px solid #bbf7d0' }}>
+                        {u.isBlocked ? '⛔ Blocked' : '✓ Active'}
+                      </span>
+                    </div>
+
+                    {/* KYC */}
+                    <div>
+                      <span style={{ padding: '3px 8px', borderRadius: '20px', fontSize: '9px', fontWeight: '600', background: u.kycStatus === 'approved' ? '#f0fdf4' : u.kycStatus === 'submitted' ? '#fffbeb' : '#f8fafc', color: u.kycStatus === 'approved' ? '#15803d' : u.kycStatus === 'submitted' ? '#92400e' : '#64748b', border: u.kycStatus === 'approved' ? '1px solid #bbf7d0' : u.kycStatus === 'submitted' ? '1px solid #fde68a' : '1px solid #e2e8f0' }}>
+                        {u.kycStatus === 'approved' ? '✓ Verified' : u.kycStatus === 'submitted' ? '⏳ Pending' : 'Unverified'}
+                      </span>
+                    </div>
+
+                    {/* Plan */}
+                    <div style={{ color: u.currentPlan !== 'none' ? '#7c3aed' : t.faintText, fontSize: '10px', fontWeight: '600' }}>
+                      {u.currentPlan && u.currentPlan !== 'none' ? u.currentPlan : '—'}
+                    </div>
+
+                    {/* Actions */}
+                    <div style={{ display: 'flex', gap: '4px' }}>
+                      <button onClick={() => loadUserDetails(u)}
+                        style={{ padding: '5px 10px', background: '#6366f1', border: 'none', color: 'white', fontSize: '9px', fontWeight: '600', cursor: 'pointer', borderRadius: '4px', display: 'flex', alignItems: 'center', gap: '3px' }}>
+                        <Eye size={10}/> Manage
+                      </button>
+                      <button onClick={() => toggleBlock(u._id)}
+                        style={{ padding: '5px 8px', background: u.isBlocked ? 'rgba(34,197,94,0.1)' : 'rgba(239,68,68,0.1)', border: `1px solid ${u.isBlocked ? 'rgba(34,197,94,0.3)' : 'rgba(239,68,68,0.3)'}`, color: u.isBlocked ? '#22c55e' : '#ef4444', fontSize: '9px', cursor: 'pointer', borderRadius: '4px' }}>
+                        {u.isBlocked ? <Unlock size={10}/> : <Lock size={10}/>}
+                      </button>
+                    </div>
+                  </div>
+                ));
+              })()}
             </div>
             <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
               {(() => {
