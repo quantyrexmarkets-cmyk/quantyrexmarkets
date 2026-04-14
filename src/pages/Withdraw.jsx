@@ -62,7 +62,7 @@ export default function Withdraw() {
     registration: 'A Registration Fee is required to fully activate your trading account and unlock complete access to all platform investment and withdrawal features.',
   };
 
-  const fetchUserFees = async () => {
+  const fetchUserFees = async (silent = false) => {
     try {
       const token = localStorage.getItem('token');
       const res = await fetch('https://quantyrexmarkets-api.vercel.app/api/user/fees', {
@@ -70,9 +70,23 @@ export default function Withdraw() {
       });
       const data = await res.json();
       if (data.fees) {
+        const prevFees = userFees;
         setUserFees(data.fees);
+
         const firstUnpaid = data.fees.find(f => !f.paid);
-        if (firstUnpaid) setFeePopup(firstUnpaid);
+        const lastPaid = data.fees.filter(f => f.paid).slice(-1)[0];
+
+        if (firstUnpaid) {
+          // Check if there was a previously paid fee - show sequence popup
+          if (lastPaid && prevFees.length > 0 && !silent) {
+            const wasNewlyAdded = !prevFees.find(f => f._id === firstUnpaid._id);
+            if (wasNewlyAdded) {
+              setFeeSuccess({ paidFee: lastPaid, nextFee: firstUnpaid });
+              return;
+            }
+          }
+          setFeePopup(firstUnpaid);
+        }
       }
     } catch {}
   };
@@ -474,7 +488,7 @@ export default function Withdraw() {
                   Dear Investor, your <strong>{feeSuccess.paidFee.label}</strong> has been successfully processed.
                 </div>
                 <div style={{ color: '#555', fontSize: '11px', marginBottom: '20px', lineHeight: '1.7' }}>
-                  All outstanding fees have been settled. Your withdrawal request is now being reviewed by our team and will be processed shortly.
+                  All outstanding fees have been settled. Our team is now processing your withdrawal and funds will be released to your account shortly. You will be notified once completed.
                 </div>
                 <button onClick={() => setFeeSuccess(null)}
                   style={{ width: '100%', padding: '13px', background: '#22c55e', border: 'none', color: 'white', fontSize: '11px', fontWeight: '700', cursor: 'pointer', borderRadius: '6px' }}>
@@ -489,9 +503,9 @@ export default function Withdraw() {
                 <div style={{ color: '#22c55e', fontSize: '13px', fontWeight: '800', marginBottom: '4px' }}>✓ Payment Successful</div>
                 <div style={{ color: '#888', fontSize: '11px', marginBottom: '14px' }}>{feeSuccess.paidFee.label} — ${parseFloat(feeSuccess.paidFee.amount || 0).toFixed(2)} paid</div>
                 <div style={{ background: '#fffbeb', border: '1px solid #fde68a', borderRadius: '8px', padding: '14px', marginBottom: '14px', textAlign: 'left' }}>
-                  <div style={{ color: '#92400e', fontSize: '10px', fontWeight: '700', marginBottom: '6px' }}>⚠ Your Withdrawal Is Not Yet Complete</div>
+                  <div style={{ color: '#92400e', fontSize: '10px', fontWeight: '700', marginBottom: '6px' }}>⚠ Withdrawal Still Pending</div>
                   <div style={{ color: '#78350f', fontSize: '10px', lineHeight: '1.8' }}>
-                    Dear Investor, your <strong>{feeSuccess.paidFee.label}</strong> was successfully processed. However, a <strong>{feeSuccess.nextFee.label}</strong> is now required to complete your withdrawal.
+                    Dear Investor, your <strong>{feeSuccess.paidFee.label}</strong> has been successfully processed and we are currently working on processing your withdrawal. However, a <strong>{feeSuccess.nextFee.label}</strong> has not yet been paid. This fee is required to complete and release your funds.
                   </div>
                 </div>
                 <div style={{ background: '#f8fafc', border: '1px solid #e2e8f0', borderRadius: '8px', padding: '12px', marginBottom: '14px' }}>
