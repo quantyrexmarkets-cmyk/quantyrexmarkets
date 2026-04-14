@@ -24,7 +24,7 @@ export default function BTCChart() {
     script.innerHTML = JSON.stringify({
       autosize: true,
       symbol: symbol,
-      interval: 'W',
+      interval: 'D',
       timezone: 'Etc/UTC',
       theme: t.bg === '#f8fafc' ? 'light' : 'dark',
       style: '1',
@@ -35,7 +35,7 @@ export default function BTCChart() {
       hide_legend: false,
       save_image: false,
       calendar: false,
-      range: '12M',
+      range: '1M',
       support_host: 'https://www.tradingview.com',
     });
 
