@@ -119,22 +119,6 @@ export default function LiveTrading() {
     <div style={{ minHeight: '100vh', background: t.bg, fontFamily: "'Segoe UI', sans-serif", color: t.text }}>
       <PageHeader title="Live Trading" />
 
-      {/* Live Price Ticker Bar */}
-      <div style={{ display: 'flex', gap: '0', overflowX: 'auto', borderBottom: `1px solid ${t.border}`, background: t.cardBg }}>
-        {SYMBOLS.map(s => {
-          const p = prices[s.id];
-          const isPos = (p?.usd_24h_change || 0) >= 0;
-          return (
-            <div key={s.id} onClick={() => { setSymbol(s); setShowForm(true); }}
-              style={{ flexShrink: 0, padding: '6px 14px', cursor: 'pointer', borderRight: `1px solid ${t.border}`, display: 'flex', alignItems: 'center', gap: '8px' }}>
-              <span style={{ color: t.text, fontSize: '9px', fontWeight: '700' }}>{s.label.split('/')[0]}</span>
-              <span style={{ color: t.text, fontSize: '9px', fontWeight: '800' }}>{p ? `$${p.usd?.toLocaleString()}` : '...'}</span>
-              <span style={{ color: isPos ? '#22c55e' : '#ef4444', fontSize: '8px', fontWeight: '600' }}>{isPos ? '▲' : '▼'}{Math.abs(p?.usd_24h_change || 0).toFixed(2)}%</span>
-            </div>
-          );
-        })}
-      </div>
-
       {tradeNotif && (
         <div style={{ position: 'fixed', top: '70px', right: '16px', zIndex: 500, background: tradeNotif.type === 'buy' ? '#16a34a' : '#dc2626', color: 'white', padding: '12px 16px', borderRadius: '10px', boxShadow: '0 4px 20px rgba(0,0,0,0.3)', display: 'flex', alignItems: 'center', gap: '8px', fontSize: '11px', fontWeight: '600' }}>
           {tradeNotif.type === 'buy' ? <ArrowUpCircle size={16}/> : <ArrowDownCircle size={16}/>}
@@ -179,7 +163,23 @@ export default function LiveTrading() {
             )}
           </div>
 
-          <iframe key={symbol.tv + tvInterval + t.bg} src={tvSrc} width="100%" height="55%" frameBorder="0" allowFullScreen={true} style={{ display: 'block', flexShrink: 0 }}/>
+          {/* Price Ticker inside chart */}
+          <div style={{ display: 'flex', gap: '0', overflowX: 'auto', borderBottom: `1px solid ${t.border}`, background: t.cardBg, flexShrink: 0 }}>
+            {SYMBOLS.map(s => {
+              const p = prices[s.id];
+              const isPos = (p?.usd_24h_change || 0) >= 0;
+              return (
+                <div key={s.id} onClick={() => setSymbol(s)}
+                  style={{ flexShrink: 0, padding: '5px 12px', cursor: 'pointer', borderRight: `1px solid ${t.border}`, display: 'flex', alignItems: 'center', gap: '6px', background: symbol.label === s.label ? 'rgba(99,102,241,0.1)' : 'transparent' }}>
+                  <span style={{ color: symbol.label === s.label ? '#6366f1' : t.text, fontSize: '8px', fontWeight: '700' }}>{s.label.split('/')[0]}</span>
+                  <span style={{ color: t.text, fontSize: '8px', fontWeight: '800' }}>{p ? `$${p.usd?.toLocaleString()}` : '...'}</span>
+                  <span style={{ color: isPos ? '#22c55e' : '#ef4444', fontSize: '7px', fontWeight: '600' }}>{isPos ? '▲' : '▼'}{Math.abs(p?.usd_24h_change || 0).toFixed(2)}%</span>
+                </div>
+              );
+            })}
+          </div>
+
+          <iframe key={symbol.tv + tvInterval + t.bg} src={tvSrc} width="100%" height="50%" frameBorder="0" allowFullScreen={true} style={{ display: 'block', flexShrink: 0 }}/>
 
           <div style={{ flexShrink: 0, background: t.cardBg, borderTop: `1px solid ${t.border}`, flex: 1, display: 'flex', flexDirection: 'column' }}>
             <div style={{ display: 'flex', borderBottom: `1px solid ${t.border}`, flexShrink: 0 }}>
