@@ -94,17 +94,23 @@ export default function LiveTrading() {
       {/* New Trade Fullscreen */}
       {showForm && (
         <div style={{ position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, zIndex: 200, display: 'flex', flexDirection: 'column', background: t.bg }}>
-          {/* Header */}
-          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '8px 12px', borderBottom: `1px solid ${t.border}`, flexShrink: 0, background: t.cardBg }}>
-            <div style={{ display: 'flex', gap: '4px', overflowX: 'auto' }}>
+          
+          {/* Top Nav Bar */}
+          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '10px 14px', background: t.cardBg, borderBottom: `1px solid ${t.border}`, flexShrink: 0 }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+              <button onClick={() => setShowForm(false)} style={{ background: 'none', border: 'none', color: t.text, cursor: 'pointer', fontSize: '20px', padding: '0', lineHeight: 1 }}>←</button>
+              <span style={{ color: t.text, fontSize: '12px', fontWeight: '700' }}>{symbol.label}</span>
+              <span style={{ color: t.subText, fontSize: '9px' }}>15m • Live</span>
+              <span style={{ background: 'rgba(34,197,94,0.15)', color: '#22c55e', fontSize: '8px', fontWeight: '700', padding: '2px 6px', borderRadius: '4px' }}>LIVE</span>
+            </div>
+            <div style={{ display: 'flex', gap: '4px' }}>
               {SYMBOLS.map(s => (
                 <button key={s.label} onClick={() => setSymbol(s)}
-                  style={{ padding: '4px 10px', background: symbol.label === s.label ? '#6366f1' : t.subtleBg, border: 'none', color: symbol.label === s.label ? 'white' : t.text, fontSize: '9px', fontWeight: '700', cursor: 'pointer', borderRadius: '4px', whiteSpace: 'nowrap' }}>
+                  style={{ padding: '3px 8px', background: symbol.label === s.label ? '#6366f1' : t.subtleBg, border: `1px solid ${symbol.label === s.label ? '#6366f1' : t.border}`, color: symbol.label === s.label ? 'white' : t.subText, fontSize: '8px', fontWeight: '700', cursor: 'pointer', borderRadius: '4px', whiteSpace: 'nowrap' }}>
                   {s.label}
                 </button>
               ))}
             </div>
-            <button onClick={() => setShowForm(false)} style={{ background: 'none', border: 'none', color: t.text, cursor: 'pointer', fontSize: '22px', padding: '0 4px' }}>×</button>
           </div>
 
           {/* Chart - fixed height */}
