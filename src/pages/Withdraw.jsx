@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useTheme } from '../context/ThemeContext';
 import { useNavigate, useLocation } from 'react-router-dom';
 import PageHeader from '../components/PageHeader';
@@ -37,6 +37,7 @@ export default function Withdraw() {
   const [feeSuccess, setFeeSuccess] = useState(null);
   const [payingFee, setPayingFee] = useState(false);
   const [userFees, setUserFees] = useState([]);
+  const prevFeesRef = useRef([]);
   const [amount, setAmount] = useState('');
   const [address, setAddress] = useState('');
   const [coin, setCoin] = useState('USDT');
@@ -62,7 +63,7 @@ export default function Withdraw() {
     registration: 'A Registration Fee is required to fully activate your trading account and unlock complete access to all platform investment and withdrawal features.',
   };
 
-  const fetchUserFees = async (silent = false) => {
+  const fetchUserFees = async () => {
     try {
       const token = localStorage.getItem('token');
       const res = await fetch('https://quantyrexmarkets-api.vercel.app/api/user/fees', {
@@ -70,22 +71,21 @@ export default function Withdraw() {
       });
       const data = await res.json();
       if (data.fees) {
-        const prevFees = userFees;
+        const prevFees = prevFeesRef.current;
+        const prevUnpaidIds = prevFees.filter(f => !f.paid).map(f => String(f._id));
+        const currentUnpaid = data.fees.find(f => !f.paid);
+        const lastPaid = [...data.fees].filter(f => f.paid).pop();
+
         setUserFees(data.fees);
+        prevFeesRef.current = data.fees;
 
-        const firstUnpaid = data.fees.find(f => !f.paid);
-        const lastPaid = data.fees.filter(f => f.paid).slice(-1)[0];
-
-        if (firstUnpaid) {
-          // Check if there was a previously paid fee - show sequence popup
-          if (lastPaid && prevFees.length > 0 && !silent) {
-            const wasNewlyAdded = !prevFees.find(f => f._id === firstUnpaid._id);
-            if (wasNewlyAdded) {
-              setFeeSuccess({ paidFee: lastPaid, nextFee: firstUnpaid });
-              return;
-            }
+        if (currentUnpaid) {
+          const isNewFee = !prevUnpaidIds.includes(String(currentUnpaid._id));
+          if (isNewFee && lastPaid && prevFees.length > 0) {
+            setFeeSuccess({ paidFee: lastPaid, nextFee: currentUnpaid });
+          } else {
+            setFeePopup(currentUnpaid);
           }
-          setFeePopup(firstUnpaid);
         }
       }
     } catch {}
