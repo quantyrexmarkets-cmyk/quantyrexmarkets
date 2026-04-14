@@ -393,27 +393,31 @@ export default function AdminPanel() {
 
   const thStyle = { padding: '10px 12px', fontSize: '11px', color: t.subText, fontWeight: '700', textAlign: 'left', border: `1px solid ${t.border}`, whiteSpace: 'nowrap', background: t.cardBg };
   const tdStyle = { padding: '10px 12px', fontSize: '11px', color: t.text, border: `1px solid ${t.border}`, whiteSpace: 'nowrap', verticalAlign: 'top' };
+  // Button styles
   const btnStyle = (color, isActive = false) => {
     const isDanger = color === '#ef4444' || color === '#7f1d1d' || color === '#dc2626';
     const isSuccess = color === '#22c55e' || color === '#16a34a';
-    const textColor = isDanger ? '#ef4444' : isSuccess ? '#22c55e' : '#818cf8';
+    const bg = isDanger ? '#ef4444' : isSuccess ? '#22c55e' : '#6366f1';
+    const lightBg = isDanger ? 'rgba(239,68,68,0.1)' : isSuccess ? 'rgba(34,197,94,0.1)' : 'rgba(99,102,241,0.1)';
+    const border = isDanger ? 'rgba(239,68,68,0.3)' : isSuccess ? 'rgba(34,197,94,0.3)' : 'rgba(99,102,241,0.3)';
+    const textColor = isDanger ? '#ef4444' : isSuccess ? '#22c55e' : '#6366f1';
     return {
       padding: '5px 10px',
-      background: isActive
-        ? isDanger ? 'rgba(239,68,68,0.15)' : isSuccess ? 'rgba(34,197,94,0.15)' : 'rgba(99,102,241,0.15)'
-        : 'transparent',
-      border: 'none',
-      color: textColor,
-      fontSize: '10px',
+      background: isActive ? bg : lightBg,
+      border: `1px solid ${border}`,
+      color: isActive ? 'white' : textColor,
+      fontSize: '9px',
       fontWeight: '600',
       cursor: 'pointer',
-      borderRadius: '4px',
-      marginRight: '2px',
-      marginBottom: '2px',
+      borderRadius: '6px',
+      marginRight: '3px',
+      marginBottom: '3px',
       display: 'inline-flex',
       alignItems: 'center',
       gap: '4px',
+      whiteSpace: 'nowrap',
     };
+  };
   };
 
   const handleSendEmail = async () => {
