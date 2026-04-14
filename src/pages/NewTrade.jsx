@@ -1,5 +1,5 @@
 import { useTheme } from '../context/ThemeContext';
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect } from 'react';
 import { formatAmountWithCode, formatAmount } from '../utils/currency';
 import { useAuth } from '../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
@@ -31,7 +31,6 @@ export default function NewTrade() {
   const [msg, setMsg] = useState('');
   const [error, setError] = useState('');
   const [showError, setShowError] = useState(false);
-  const chartRef = useRef(null);
 
   useEffect(() => {
     const token = localStorage.getItem('token');
@@ -39,18 +38,7 @@ export default function NewTrade() {
       .then(r => r.json()).then(d => setBalance(d.user?.balance ?? d.balance ?? 0)).catch(() => {});
   }, []);
 
-  useEffect(() => {
-    if (!chartRef.current) return;
-    chartRef.current.innerHTML = '';
-    const script = document.createElement('script');
-    script.src = 'https://s3.tradingview.com/external-embedding/embed-widget-advanced-chart.js';
-    script.async = true;
-    script.innerHTML = JSON.stringify({
-      autosize: true, symbol: symbol.tv, interval: '15', timezone: 'Etc/UTC',
-      theme: 'dark', style: '1', locale: 'en', backgroundColor: t.bg === '#f8fafc' ? '#f8fafc' : t.bg === '#111111' ? '#111111' : '#0f172a',
-    });
-    chartRef.current.appendChild(script);
-  }, [symbol]);
+  // Chart uses iframe now
 
   const handleTrade = async () => {
     if (!amount || parseFloat(amount) <= 0) { setError('Enter a valid amount'); return; }
