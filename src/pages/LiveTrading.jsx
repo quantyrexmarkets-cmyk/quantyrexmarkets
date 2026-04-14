@@ -172,10 +172,12 @@ export default function LiveTrading() {
         </div>
 
         {/* New Trade Button */}
-        <button onClick={() => setShowForm(true)}
-          style={{ width: '100%', padding: '14px', background: 'linear-gradient(135deg, #6366f1, #4f46e5)', border: 'none', color: 'white', fontSize: '13px', fontWeight: '700', cursor: 'pointer', borderRadius: '10px', boxShadow: '0 4px 15px rgba(99,102,241,0.4)' }}>
-          + New Trade
-        </button>
+        <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
+          <button onClick={() => setShowForm(true)}
+            style={{ padding: '8px 16px', background: '#6366f1', border: 'none', color: 'white', fontSize: '10px', fontWeight: '700', cursor: 'pointer', borderRadius: '8px', boxShadow: '0 2px 8px rgba(99,102,241,0.4)' }}>
+            + New Trade
+          </button>
+        </div>
 
         {/* Trades Table */}
         <div style={{ background: t.cardBg, border: `1px solid ${t.tableOuterBorder}`, borderRadius: '10px', overflow: 'hidden' }}>
