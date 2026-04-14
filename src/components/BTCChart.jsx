@@ -1,96 +1,48 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useState } from 'react';
 import { useTheme } from '../context/ThemeContext';
 
 const coins = [
-  { label: 'BTC', full: 'BTC/USDT', value: 'BINANCE:BTCUSDT' },
-  { label: 'ETH', full: 'ETH/USDT', value: 'BINANCE:ETHUSDT' },
-  { label: 'BNB', full: 'BNB/USDT', value: 'BINANCE:BNBUSDT' },
-  { label: 'SOL', full: 'SOL/USDT', value: 'BINANCE:SOLUSDT' },
-  { label: 'XRP', full: 'XRP/USDT', value: 'BINANCE:XRPUSDT' },
+  { label: 'BTC', value: 'BINANCE:BTCUSDT' },
+  { label: 'ETH', value: 'BINANCE:ETHUSDT' },
+  { label: 'BNB', value: 'BINANCE:BNBUSDT' },
+  { label: 'SOL', value: 'BINANCE:SOLUSDT' },
+  { label: 'XRP', value: 'BINANCE:XRPUSDT' },
 ];
 
 const intervals = [
-  { label: '1H', value: '60', range: '3D' },
-  { label: '4H', value: '240', range: '1M' },
-  { label: '1D', value: 'D', range: '3M' },
-  { label: '1W', value: 'W', range: '12M' },
+  { label: '1H', value: '60' },
+  { label: '4H', value: '240' },
+  { label: '1D', value: 'D' },
+  { label: '1W', value: 'W' },
 ];
 
 export default function BTCChart() {
   const { current: t } = useTheme();
-  const containerRef = useRef(null);
   const [symbol, setSymbol] = useState(coins[0]);
   const [interval, setInterval] = useState(intervals[2]);
 
-  useEffect(() => {
-    if (!containerRef.current) return;
-    containerRef.current.innerHTML = '';
+  const isDark = t.bg !== '#f8fafc';
+  const theme = isDark ? 'dark' : 'light';
 
-    const isDark = t.bg !== '#f8fafc';
-    const bgColor = t.bg === '#f8fafc' ? '#ffffff' : t.bg === '#111111' ? '#111111' : '#0f172a';
+  const src = `https://www.tradingview.com/widgetembed/?frameElementId=tradingview_chart&symbol=${symbol.value}&interval=${interval.value}&hidesidetoolbar=0&hidetoptoolbar=0&symboledit=0&saveimage=0&toolbarbg=${isDark ? '0f172a' : 'ffffff'}&studies=[]&theme=${theme}&style=1&timezone=Etc%2FUTC&studies_overrides={}&overrides={}&enabled_features=[]&disabled_features=[]&locale=en&utm_source=quantyrexmarkets.vercel.app`;
 
-    const widget = document.createElement('div');
-    widget.className = 'tradingview-widget-container';
-    widget.style.height = '100%';
-    widget.style.width = '100%';
-
-    const widgetDiv = document.createElement('div');
-    widgetDiv.className = 'tradingview-widget-container__widget';
-    widgetDiv.style.height = 'calc(100% - 32px)';
-    widgetDiv.style.width = '100%';
-    widget.appendChild(widgetDiv);
-
-    const script = document.createElement('script');
-    script.src = 'https://s3.tradingview.com/external-embedding/embed-widget-advanced-chart.js';
-    script.async = true;
-    script.type = 'text/javascript';
-    script.innerHTML = JSON.stringify({
-      autosize: true,
-      symbol: symbol.value,
-      interval: interval.value,
-      range: interval.range,
-      timezone: 'Etc/UTC',
-      theme: isDark ? 'dark' : 'light',
-      style: '1',
-      locale: 'en',
-      enable_publishing: false,
-      backgroundColor: bgColor,
-      hide_top_toolbar: false,
-      hide_legend: false,
-      hide_side_toolbar: false,
-      allow_symbol_change: false,
-      save_image: false,
-      calendar: false,
-      hide_volume: false,
-      support_host: 'https://www.tradingview.com',
-    });
-
-    widget.appendChild(script);
-    containerRef.current.appendChild(widget);
-
-    return () => {
-      if (containerRef.current) containerRef.current.innerHTML = '';
-    };
-  }, [symbol, interval, t.bg]);
-
-  const activeTabStyle = {
-    padding: '4px 10px',
+  const activeTab = {
+    padding: '4px 12px',
     background: '#6366f1',
     border: 'none',
     color: 'white',
-    fontSize: '9px',
+    fontSize: '10px',
     fontWeight: '700',
     cursor: 'pointer',
     borderRadius: '4px',
   };
 
-  const inactiveTabStyle = {
-    padding: '4px 10px',
+  const inactiveTab = {
+    padding: '4px 12px',
     background: 'transparent',
     border: `1px solid ${t.border}`,
     color: t.subText,
-    fontSize: '9px',
-    fontWeight: '400',
+    fontSize: '10px',
     cursor: 'pointer',
     borderRadius: '4px',
   };
@@ -109,40 +61,40 @@ export default function BTCChart() {
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'space-between',
-        flexWrap: 'wrap',
         gap: '8px',
+        flexWrap: 'wrap',
       }}>
-        {/* Symbol selector */}
         <div style={{ display: 'flex', gap: '4px', flexWrap: 'wrap' }}>
           {coins.map(c => (
-            <button
-              key={c.value}
-              onClick={() => setSymbol(c)}
-              style={symbol.value === c.value ? activeTabStyle : inactiveTabStyle}
-            >
+            <button key={c.value} onClick={() => setSymbol(c)}
+              style={symbol.value === c.value ? activeTab : inactiveTab}>
               {c.label}
             </button>
           ))}
         </div>
-
-        {/* Interval selector */}
         <div style={{ display: 'flex', gap: '4px' }}>
           {intervals.map(iv => (
-            <button
-              key={iv.value}
-              onClick={() => setInterval(iv)}
-              style={interval.value === iv.value ? activeTabStyle : inactiveTabStyle}
-            >
+            <button key={iv.value} onClick={() => setInterval(iv)}
+              style={interval.value === iv.value ? activeTab : inactiveTab}>
               {iv.label}
             </button>
           ))}
         </div>
       </div>
 
-      {/* Chart */}
-      <div
-        ref={containerRef}
-        style={{ height: '420px', width: '100%' }}
+      {/* Chart iframe */}
+      <iframe
+        key={`${symbol.value}-${interval.value}-${theme}`}
+        src={src}
+        style={{
+          width: '100%',
+          height: '420px',
+          border: 'none',
+          display: 'block',
+        }}
+        allowTransparency={true}
+        scrolling="no"
+        allowFullScreen={true}
       />
     </div>
   );
