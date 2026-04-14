@@ -72,12 +72,19 @@ function TradingChart({ symbol, theme }) {
   const src = `https://www.tradingview.com/widgetembed/?frameElementId=tv_live_${symbol.replace(':','_')}&symbol=${symbol}&interval=15&hidesidetoolbar=0&hidetoptoolbar=0&symboledit=0&saveimage=0&toolbarbg=${isDark ? '0f172a' : 'ffffff'}&studies=[]&theme=${theme}&style=1&timezone=Etc%2FUTC&studies_overrides={}&overrides={}&enabled_features=[]&disabled_features=[]&locale=en&utm_source=quantyrexmarkets.vercel.app`;
 
   return (
-    <iframe
-      key={src}
-      src={src}
-      style={{ flex: 1, width: '100%', border: 'none', display: 'block', minHeight: 0 }}
-      allowFullScreen={true}
-    />
+    <div style={{ flex: 1, minHeight: 0, display: 'flex', flexDirection: 'column', background: 'red' }}>
+      <div style={{ color: 'white', fontSize: '8px', padding: '4px', background: 'black', flexShrink: 0 }}>
+        DEBUG: symbol={symbol} theme={theme} src={src.slice(0,60)}...
+      </div>
+      <iframe
+        key={src}
+        src={src}
+        style={{ flex: 1, width: '100%', border: 'none', display: 'block', minHeight: 0 }}
+        allowFullScreen={true}
+        onLoad={() => console.log('iframe loaded')}
+        onError={() => console.log('iframe error')}
+      />
+    </div>
   );
 }
 
