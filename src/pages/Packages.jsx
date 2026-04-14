@@ -102,7 +102,7 @@ export default function Packages() {
         <div style={{ position: 'fixed', top: '60px', left: '50%', transform: 'translateX(-50%)', zIndex: 200, background: '#ef4444', color: t.text, padding: '10px 16px', display: 'flex', alignItems: 'center', gap: '8px', fontSize: '9px', fontWeight: '600', boxShadow: '0 4px 20px rgba(0,0,0,0.4)', minWidth: '260px' }}>
           <AlertCircle size={13}/>
           <span>Your balance is too low for this plan. Please make a deposit.</span>
-          <button onClick={() => setLowBalance(false)} style={{ background: 'none', border: 'none', color: 'white', cursor: 'pointer', marginLeft: 'auto' }}><X size={12}/></button>
+          <button onClick={() => setLowBalance(false)} style={{ background: 'none', border: 'none', color: t.text, cursor: 'pointer', marginLeft: 'auto' }}><X size={12}/></button>
         </div>
       )}
 
@@ -111,7 +111,7 @@ export default function Packages() {
         <div style={{ position: 'fixed', top: '60px', left: '50%', transform: 'translateX(-50%)', zIndex: 200, background: '#f59e0b', color: t.text, padding: '10px 16px', display: 'flex', alignItems: 'center', gap: '8px', fontSize: '9px', fontWeight: '600', boxShadow: '0 4px 20px rgba(0,0,0,0.4)', minWidth: '260px' }}>
           <AlertCircle size={13}/>
           <span>{error}</span>
-          <button onClick={() => setError('')} style={{ background: 'none', border: 'none', color: 'white', cursor: 'pointer', marginLeft: 'auto' }}><X size={12}/></button>
+          <button onClick={() => setError('')} style={{ background: 'none', border: 'none', color: t.text, cursor: 'pointer', marginLeft: 'auto' }}><X size={12}/></button>
         </div>
       )}
 

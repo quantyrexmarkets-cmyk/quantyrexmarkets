@@ -70,7 +70,7 @@ export default function SettingsPage() {
 
       {/* Header */}
       <div style={{ background: t.bg, padding: '12px 16px', display: 'flex', alignItems: 'center', gap: '12px', borderBottom: `1px solid ${t.border}`, position: 'sticky', top: 0, zIndex: 100 }}>
-        <button onClick={() => navigate('/dashboard')} style={{ background: 'none', border: 'none', color: 'white', cursor: 'pointer', display: 'flex', alignItems: 'center' }}>
+        <button onClick={() => navigate('/dashboard')} style={{ background: 'none', border: 'none', color: t.text, cursor: 'pointer', display: 'flex', alignItems: 'center' }}>
           <ArrowLeft size={20} />
         </button>
         <Settings size={18} color="#6366f1" />

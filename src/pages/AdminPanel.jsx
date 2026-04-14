@@ -1000,7 +1000,7 @@ export default function AdminPanel() {
                     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '10px 14px', borderBottom: `1px solid ${t.subtleBorder}` }}>
                       <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
                         {chatFullscreen && (
-                          <button onClick={() => { setChatFullscreen(false); setSelectedChat(null); }} style={{ background: 'none', border: 'none', color: 'white', cursor: 'pointer', fontSize: '18px', padding: '0' }}>←</button>
+                          <button onClick={() => { setChatFullscreen(false); setSelectedChat(null); }} style={{ background: 'none', border: 'none', color: t.text, cursor: 'pointer', fontSize: '18px', padding: '0' }}>←</button>
                         )}
                         <span style={{ color: t.text, fontSize: '10px', fontWeight: '700' }}>{selectedChat.name || selectedChat.email}</span>
                       </div>
@@ -1560,7 +1560,7 @@ export default function AdminPanel() {
         <>
           <div onClick={() => setProofImage(null)} style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.85)', zIndex: 1000, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
             <div style={{ position: 'relative', maxWidth: '90vw', maxHeight: '90vh' }}>
-              <button onClick={() => setProofImage(null)} style={{ position: 'absolute', top: '-40px', right: 0, background: 'none', border: 'none', color: 'white', fontSize: '28px', cursor: 'pointer' }}>×</button>
+              <button onClick={() => setProofImage(null)} style={{ position: 'absolute', top: '-40px', right: 0, background: 'none', border: 'none', color: t.text, fontSize: '28px', cursor: 'pointer' }}>×</button>
               <img src={proofImage} alt="Payment Proof" style={{ maxWidth: '90vw', maxHeight: '85vh', objectFit: 'contain', border: `2px solid ${t.border}` }} />
               <a href={proofImage} target="_blank" rel="noreferrer" style={{ display: 'block', textAlign: 'center', marginTop: '10px', color: '#6366f1', fontSize: '9px' }}>Open in new tab</a>
             </div>

@@ -130,7 +130,7 @@ export default function LiveTrading() {
         <div style={{ position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, zIndex: 200, display: 'flex', flexDirection: 'column', background: t.bg }}>
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '10px 14px', background: t.cardBg, borderBottom: `1px solid ${t.border}`, flexShrink: 0 }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-              <button onClick={() => setShowForm(false)} style={{ background: 'none', border: 'none', color: 'white', cursor: 'pointer', fontSize: '20px', lineHeight: 1 }}>←</button>
+              <button onClick={() => setShowForm(false)} style={{ background: 'none', border: 'none', color: t.text, cursor: 'pointer', fontSize: '20px', lineHeight: 1 }}>←</button>
               <div>
                 <div style={{ color: t.text, fontSize: '13px', fontWeight: '700' }}>{symbol.label}</div>
                 <div style={{ color: currentPrice?.usd_24h_change >= 0 ? '#22c55e' : '#ef4444', fontSize: '9px' }}>
