@@ -4,7 +4,7 @@ import { formatAmount } from '../utils/currency';
 import { useAuth } from '../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
 import PageHeader from '../components/PageHeader';
-import { BarChart2, TrendingUp, DollarSign } from 'lucide-react';
+import { BarChart2, TrendingUp, DollarSign, RefreshCw, ClipboardList, Activity } from 'lucide-react';
 import { getTrades, createTrade } from '../services/api';
 
 const SYMBOLS = [
@@ -164,9 +164,9 @@ export default function LiveTrading() {
             {/* Bottom Tabs */}
             <div style={{ display: 'flex', borderBottom: `1px solid ${t.border}`, flexShrink: 0 }}>
               {[
-                { key: 'trade', label: '🔄 Trade' },
-                { key: 'positions', label: '📊 Positions' },
-                { key: 'orders', label: '📋 Orders' },
+                { key: 'trade', label: <><RefreshCw size={10}/> Trade</> },
+                { key: 'positions', label: <><Activity size={10}/> Positions</> },
+                { key: 'orders', label: <><ClipboardList size={10}/> Orders</> },
               ].map(bt => (
                 <button key={bt.key} onClick={() => setBottomTab(bt.key)}
                   style={{ flex: 1, padding: '8px', background: bottomTab === bt.key ? (t.bg === '#f8fafc' ? 'rgba(99,102,241,0.08)' : 'rgba(99,102,241,0.15)') : 'transparent', border: 'none', borderBottom: bottomTab === bt.key ? '2px solid #6366f1' : '2px solid transparent', color: bottomTab === bt.key ? '#6366f1' : t.subText, fontSize: '9px', fontWeight: bottomTab === bt.key ? '700' : '400', cursor: 'pointer' }}>
