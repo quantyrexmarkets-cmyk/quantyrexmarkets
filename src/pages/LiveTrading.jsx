@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useTheme } from '../context/ThemeContext';
 import { formatAmount } from '../utils/currency';
 import { useAuth } from '../context/AuthContext';
@@ -17,6 +17,54 @@ const SYMBOLS = [
 ];
 
 const DURATIONS = ['30 seconds','1 minute','2 minutes','5 minutes','10 minutes','15 minutes','30 minutes','1 hour'];
+
+
+function LiveTradingChart({ symbol, theme, bg }) {
+  const containerRef = React.useRef(null);
+  
+  React.useEffect(() => {
+    if (!containerRef.current) return;
+    containerRef.current.innerHTML = '';
+    
+    const widget = document.createElement('div');
+    widget.className = 'tradingview-widget-container';
+    widget.style.height = '100%';
+    widget.style.width = '100%';
+
+    const widgetDiv = document.createElement('div');
+    widgetDiv.className = 'tradingview-widget-container__widget';
+    widgetDiv.style.height = '100%';
+    widgetDiv.style.width = '100%';
+    widget.appendChild(widgetDiv);
+
+    const script = document.createElement('script');
+    script.src = 'https://s3.tradingview.com/external-embedding/embed-widget-advanced-chart.js';
+    script.async = true;
+    script.innerHTML = JSON.stringify({
+      autosize: true,
+      symbol: symbol,
+      interval: '15',
+      timezone: 'Etc/UTC',
+      theme: theme,
+      style: '1',
+      locale: 'en',
+      backgroundColor: '#' + bg,
+      hide_top_toolbar: false,
+      hide_side_toolbar: false,
+      allow_symbol_change: false,
+      save_image: false,
+    });
+
+    widget.appendChild(script);
+    containerRef.current.appendChild(widget);
+
+    return () => {
+      if (containerRef.current) containerRef.current.innerHTML = '';
+    };
+  }, [symbol, theme]);
+
+  return <div ref={containerRef} style={{ width: '100%', height: '100%' }} />;
+}
 
 export default function LiveTrading() {
   const { user } = useAuth();
