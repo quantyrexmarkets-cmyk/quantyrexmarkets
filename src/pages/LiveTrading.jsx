@@ -108,7 +108,7 @@ export default function LiveTrading() {
           <div style={{ flex: 1, minHeight: 0, position: 'relative' }}>
             <iframe
               key={symbol.tv}
-              src={`https://www.tradingview.com/widgetembed/?frameElementId=tv_live&symbol=${symbol.tv}&interval=15&hidesidetoolbar=0&hidetoptoolbar=0&symboledit=0&saveimage=0&theme=${t.bg === '#f8fafc' ? 'light' : 'dark'}&style=1&timezone=Etc%2FUTC&locale=en`}
+              src={`https://www.tradingview.com/widgetembed/?frameElementId=tv_live&symbol=${symbol.tv}&interval=15&hidesidetoolbar=0&hidetoptoolbar=0&symboledit=0&saveimage=0&toolbarbg=${t.bg === '#f8fafc' ? 'ffffff' : '0f172a'}&studies=[]&theme=${t.bg === '#f8fafc' ? 'light' : 'dark'}&style=1&timezone=Etc%2FUTC&studies_overrides={}&overrides={}&enabled_features=[]&disabled_features=[]&locale=en&utm_source=quantyrexmarkets.vercel.app`}
               style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', border: 'none' }}
               allowFullScreen={true}
             />
