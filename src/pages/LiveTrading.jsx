@@ -96,12 +96,17 @@ export default function LiveTrading() {
       {showForm && (
         <>
           <div onClick={() => setShowForm(false)} style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.75)', zIndex: 100 }}/>
-          <div style={{ position: 'fixed', top: '50%', left: '50%', transform: 'translate(-50%,-50%)', zIndex: 101, background: t.bg, border: '1px solid rgba(99,102,241,0.3)', width: '340px', maxHeight: '90vh', overflowY: 'auto' }}>
-            {/* Chart */}
+          <div style={{ position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, zIndex: 101, background: t.bg, display: 'flex', flexDirection: 'column' }}>
+              {/* Header */}
+              <div style={{ padding: '10px 14px', borderBottom: `1px solid ${t.border}`, display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexShrink: 0 }}>
+                <span style={{ color: t.text, fontSize: '12px', fontWeight: '700' }}>📈 {symbol.label}</span>
+                <button onClick={() => setShowForm(false)} style={{ background: 'none', border: 'none', color: t.text, cursor: 'pointer', fontSize: '22px', lineHeight: 1 }}>×</button>
+              </div>
+              {/* Chart */}
             <iframe
               key={symbol.tv + (t.bg === '#f8fafc' ? 'light' : 'dark')}
               src={`https://www.tradingview.com/widgetembed/?frameElementId=tv_live&symbol=${symbol.tv}&interval=15&hidesidetoolbar=0&hidetoptoolbar=0&symboledit=0&saveimage=0&theme=${t.bg === '#f8fafc' ? 'light' : 'dark'}&style=1&timezone=Etc%2FUTC&locale=en`}
-              style={{ width: '100%', height: '280px', border: 'none', display: 'block' }}
+              style={{ width: '100%', flex: 1, border: 'none', display: 'block', minHeight: 0 }}
               allowFullScreen={true}
             />
 
