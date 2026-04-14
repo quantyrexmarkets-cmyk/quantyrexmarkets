@@ -1298,7 +1298,7 @@ export default function AdminPanel() {
             {/* Modal Header */}
             <div style={{ padding: '14px 16px', borderBottom: `1px solid ${t.border}`, display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-                {selectedUser.avatar ? (
+                {selectedUser.avatar && selectedUser.avatar !== '' ? (
                   <img src={selectedUser.avatar} alt="avatar" onClick={() => setProofImage(selectedUser.avatar)} style={{ width: '40px', height: '40px', borderRadius: '0', objectFit: 'cover', border: '2px solid #6366f1', cursor: 'pointer' }} />
                 ) : (
                   <div style={{ width: '40px', height: '40px', borderRadius: '0', background: '#6366f1', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '9px', fontWeight: '700', color: 'white' }}>
@@ -1307,7 +1307,7 @@ export default function AdminPanel() {
                 )}
                 <div>
                   <div style={{ color: t.text, fontSize: '9px', fontWeight: '700' }}>{selectedUser.firstName} {selectedUser.lastName}</div>
-                  {selectedUser.avatar && <div onClick={() => setProofImage(selectedUser.avatar)} style={{ color: '#6366f1', fontSize: '8px', cursor: 'pointer', marginTop: '2px' }}>View full photo</div>}
+                  {selectedUser.avatar && selectedUser.avatar !== '' && <div onClick={() => setProofImage(selectedUser.avatar)} style={{ color: '#6366f1', fontSize: '8px', cursor: 'pointer', marginTop: '2px' }}>View full photo</div>}
                 </div>
               </div>
               <button onClick={() => setSelectedUser(null)} style={{ background: 'none', border: 'none', color: t.subText, fontSize: '20px', cursor: 'pointer' }}>×</button>

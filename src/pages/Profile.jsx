@@ -82,6 +82,7 @@ export default function Profile() {
         setAvatarPreview(null);
         setAvatarFile(null);
         localStorage.setItem('user', JSON.stringify(data.user));
+        if (updateUser) updateUser(data.user);
         setSuccess(true);
       }
     } catch (e) {
