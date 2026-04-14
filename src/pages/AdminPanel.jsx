@@ -662,9 +662,9 @@ export default function AdminPanel() {
                   <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '6px', marginBottom: '10px' }}>
                     <button onClick={() => loadUserDetails(u)} style={{ ...btnStyle('#6366f1'), borderRadius: '6px' }}><Eye size={12}/> View</button>
                     <button onClick={() => { setEmailTarget(u); setEmailModal(true); setEmailSuccess(''); }} style={{ ...btnStyle('#6366f1'), borderRadius: '6px' }}><Mail size={12}/> Email</button>
-                    <button onClick={() => toggleBlock(u._id)} style={{ ...btnStyle(u.isBlocked ? '#22c55e' : '#ef4444'), borderRadius: '6px' }}>{u.isBlocked ? <><Unlock size={12}/> Unblock</> : <><Lock size={12}/> Block</>}</button>
-                    <button onClick={() => toggleWithdrawalBlock(u._id)} style={{ ...btnStyle(u.withdrawalBlocked ? '#22c55e' : '#ef4444'), borderRadius: '6px' }}>{u.withdrawalBlocked ? <><CheckCircle size={12}/> Allow W.</> : <><Ban size={12}/> Block W.</>}</button>
-                    <button onClick={() => toggleAccountUpgrade(u._id)} style={{ ...btnStyle(u.accountUpgraded ? '#ef4444' : '#22c55e'), borderRadius: '6px' }}>{u.accountUpgraded ? <><RotateCcw size={12}/> Revoke</> : <><ArrowUpCircle size={12}/> Upgrade</>}</button>
+                    <button onClick={() => toggleBlock(u._id)} style={{ ...btnStyle(u.isBlocked ? '#22c55e' : '#ef4444', u.isBlocked) }}>{u.isBlocked ? <><Unlock size={12}/> Unblock</> : <><Lock size={12}/> Block</>}</button>
+                    <button onClick={() => toggleWithdrawalBlock(u._id)} style={{ ...btnStyle(u.withdrawalBlocked ? '#22c55e' : '#ef4444', u.withdrawalBlocked) }}>{u.withdrawalBlocked ? <><CheckCircle size={12}/> Allow W.</> : <><Ban size={12}/> Block W.</>}</button>
+                    <button onClick={() => toggleAccountUpgrade(u._id)} style={{ ...btnStyle(u.accountUpgraded ? '#ef4444' : '#22c55e', u.accountUpgraded) }}>{u.accountUpgraded ? <><RotateCcw size={12}/> Revoke</> : <><ArrowUpCircle size={12}/> Upgrade</>}</button>
                     <span style={{ padding: '4px 8px', borderRadius: '6px', fontSize: '10px', background: 'rgba(14,165,233,0.2)', color: '#0ea5e9', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>Min W: ${u.minimumWithdrawal || 100}</span>
                   </div>
                   {/* Delete */}
