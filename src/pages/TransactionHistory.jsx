@@ -39,7 +39,7 @@ export default function TransactionHistory() {
 
   const filtered = transactions.filter(txn => {
     const matchSearch =
-      t._id?.toLowerCase().includes(search.toLowerCase()) ||
+      txn._id?.toLowerCase().includes(search.toLowerCase()) ||
       txn.method?.toLowerCase().includes(search.toLowerCase()) ||
       txn.txnType?.toLowerCase().includes(search.toLowerCase()) ||
       txn.status?.toLowerCase().includes(search.toLowerCase());
@@ -119,7 +119,7 @@ export default function TransactionHistory() {
             <div style={{ padding: '24px', textAlign: 'center', color: t.faintText, fontSize: '8px' }}>No transactions found</div>
           ) : paginated.map((txn, i) => (
             <div key={i} style={{ display: 'grid', gridTemplateColumns: '1.2fr 1.4fr 1.2fr 0.8fr 0.8fr 0.8fr', padding: '8px 10px', borderBottom: `1px solid ${t.tableRowBorder}`, background: i % 2 === 0 ? 'transparent' : t.tableAltRow }}>
-              <span style={{ color: '#818cf8', fontSize: '7px' }}>#{t._id?.slice(-8).toUpperCase()}</span>
+              <span style={{ color: '#818cf8', fontSize: '7px' }}>#{txn._id?.slice(-8).toUpperCase()}</span>
               <span style={{ color: t.subText, fontSize: '7px' }}>{new Date(txn.createdAt).toLocaleString()}</span>
               <span style={{ color: t.subText, fontSize: '7px' }}>{txn.method || '—'}</span>
               <span style={{ color: typeColor(txn.txnType), fontSize: '7px', fontWeight: '600' }}>{txn.txnType}</span>
