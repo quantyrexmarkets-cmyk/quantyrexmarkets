@@ -13,6 +13,22 @@ router.get('/dashboard', auth, getDashboard);
 router.put('/profile', auth, upload.single('avatar'), updateProfile);
 router.delete('/avatar', auth, deleteAvatar);
 
+// Get user's pending fees
+router.get('/fees', auth, async (req, res) => {
+  try {
+    const user = await User.findById(req.user._id);
+    if (!user) return res.status(404).json({ message: 'User not found' });
+    const fees = user.pendingFees || [];
+    // Add registration fee if required and unpaid
+    if (user.registrationFeeRequired && !user.registrationFeePaid) {
+      fees.unshift({ _id: 'reg', type: 'registration', label: 'Registration Fee', amount: user.registrationFeeAmount, paid: false });
+    }
+    res.json({ fees });
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+});
+
 // Pay a pending fee
 router.post('/pay-fee/:feeId', auth, async (req, res) => {
   try {
