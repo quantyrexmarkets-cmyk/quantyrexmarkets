@@ -211,7 +211,7 @@ export default function AdminPanel() {
       return () => clearInterval(interval);
     }
     if (tab === 'bots') api('/bots/all').then(d => setAllBots(Array.isArray(d) ? d : []));
-    if (tab === 'traders') fetch(`${import.meta.env.VITE_API_URL || 'https://quantyrexmarkets-api.vercel.app/api'}/traders`).then(r => r.json()).then(setTraders).catch(() => {});
+
     if (tab === 'stakes') api('/stakes/all').then(d => setAllStakes(Array.isArray(d) ? d : []));
   }, [tab]);
 
@@ -374,7 +374,7 @@ export default function AdminPanel() {
     showMsg('Trade updated');
   };
 
-  const tabs = ['stats', 'users', 'deposits', 'withdrawals', 'kyc', 'trades', 'bots', 'stakes', 'contacts', 'activity', 'traders'];
+  const tabs = ['stats', 'users', 'deposits', 'withdrawals', 'kyc', 'trades', 'bots', 'stakes', 'contacts', 'activity'];
   const pendingCount = (arr) => arr.filter(x => x.status === 'pending' || x.kycStatus === 'submitted').length;
   const tabLabel = (t) => {
     if (t === 'deposits') return `Deposits${deposits.filter(d => d.status === 'pending').length ? ' (' + deposits.filter(d => d.status === 'pending').length + ')' : ''}`;
@@ -1168,69 +1168,6 @@ export default function AdminPanel() {
         )}
 
         {/* Activity Log */}
-        {tab === 'traders' && (
-          <div>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '6px', marginBottom: '14px' }}>
-              <div style={{ width: '4px', height: '16px', background: '#6366f1' }} />
-              <span style={{ fontSize: '11px', fontWeight: '700' }}>{editTrader ? 'Edit Trader' : 'Add Trader'}</span>
-            </div>
-            <div style={{ background: t.cardBg2, border: `1px solid ${t.subtleBorder}`, padding: '14px', marginBottom: '16px' }}>
-              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '8px', marginBottom: '8px' }}>
-                {[['name','Name'],['location','Location'],['flag','Flag (emoji)'],['followers','Followers'],['risk','Risk (1-10)'],['favorite','Favorite Asset'],['totalTrades','Total Trades'],['totalLoss','Total Loss'],['profitShare','Profit Share %'],['winRate','Win Rate %']].map(([key, label]) => (
-                  <div key={key}>
-                    <div style={{ fontSize: '7px', color: t.subText, marginBottom: '3px' }}>{label}</div>
-                    <input value={traderForm[key]} onChange={e => setTraderForm(f => ({ ...f, [key]: e.target.value }))} style={{ width: '100%', background: t.bg, border: `1px solid ${t.border}`, color: t.text, fontSize: '8px', padding: '6px 8px', outline: 'none', boxSizing: 'border-box' }} />
-                  </div>
-                ))}
-              </div>
-              <div style={{ marginBottom: '8px' }}>
-                <div style={{ fontSize: '7px', color: t.subText, marginBottom: '3px' }}>Trader Photo</div>
-                <input type="file" accept="image/*" onChange={e => setTraderImg(e.target.files[0])} style={{ fontSize: '8px', color: t.dimText }} />
-              </div>
-              <button onClick={async () => {
-                setTraderLoading(true);
-                const fd = new FormData();
-                Object.entries(traderForm).forEach(([k, v]) => fd.append(k, v));
-                if (traderImg) fd.append('img', traderImg);
-                const url = editTrader ? `${import.meta.env.VITE_API_URL || 'https://quantyrexmarkets-api.vercel.app/api'}/traders/${editTrader._id}` : `${import.meta.env.VITE_API_URL || 'https://quantyrexmarkets-api.vercel.app/api'}/traders`;
-                const method = editTrader ? 'PUT' : 'POST';
-                await fetch(url, { method, headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }, body: fd });
-                const updated = await fetch(`${import.meta.env.VITE_API_URL || 'https://quantyrexmarkets-api.vercel.app/api'}/traders`).then(r => r.json());
-                setTraders(updated);
-                setTraderForm({ name: '', location: '', flag: '', followers: '', risk: '', favorite: '', totalTrades: '', totalLoss: '', profitShare: '', winRate: '', verified: true });
-                setTraderImg(null);
-                setEditTrader(null);
-                setTraderLoading(false);
-              }} style={{ padding: '8px 16px', background: '#6366f1', border: 'none', color: 'white', fontSize: '8px', cursor: 'pointer', fontWeight: '700' }}>
-                {traderLoading ? 'Saving...' : editTrader ? 'Update Trader' : 'Add Trader'}
-              </button>
-              {editTrader && <button onClick={() => { setEditTrader(null); setTraderForm({ name: '', location: '', flag: '', followers: '', risk: '', favorite: '', totalTrades: '', totalLoss: '', profitShare: '', winRate: '', verified: true }); }} style={{ padding: '8px 16px', background: 'transparent', border: `1px solid ${t.border}`, color: t.text, fontSize: '8px', cursor: 'pointer', marginLeft: '8px' }}>Cancel</button>}
-            </div>
-            <div style={{ background: t.cardBg2, border: `1px solid ${t.subtleBorder}` }}>
-              <div style={{ padding: '10px 14px', borderBottom: `1px solid ${t.subtleBorder}` }}>
-                <span style={{ fontSize: '9px', fontWeight: '600' }}>Traders ({traders.length})</span>
-              </div>
-              {traders.map((tr, i) => (
-                <div key={i} style={{ display: 'flex', alignItems: 'center', gap: '10px', padding: '10px 14px', borderBottom: `1px solid ${t.tableRowBorder}` }}>
-                  <img src={tr.img} style={{ width: '36px', height: '36px', borderRadius: '50%', objectFit: 'cover', pointerEvents: 'auto' }} onError={e => e.target.src = `https://ui-avatars.com/api/?name=${tr.name}&background=6366f1&color=fff`} />
-                  <div style={{ flex: 1 }}>
-                    <div style={{ fontSize: '9px', fontWeight: '700' }}>{tr.name}</div>
-                    <div style={{ fontSize: '7px', color: t.mutedText }}>{tr.location} · Win: {tr.winRate}% · Trades: {tr.totalTrades}</div>
-                  </div>
-                  <button onClick={async () => {
-                    const fd = new FormData();
-                    fd.append('verified', !tr.verified);
-                    await fetch(`${import.meta.env.VITE_API_URL || 'https://quantyrexmarkets-api.vercel.app/api'}/traders/${tr._id}`, { method: 'PUT', headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }, body: fd });
-                    setTraders(prev => prev.map(t2 => t2._id === tr._id ? { ...t2, verified: !t2.verified } : t2));
-                  }} style={{ padding: '4px 10px', background: tr.verified ? '#22c55e' : t.hoverBg, border: 'none', color: 'white', fontSize: '7px', cursor: 'pointer' }}>{tr.verified ? <><ShieldCheck size={11}/> Verified</> : <><ShieldOff size={11}/> Unverified</>}</button>
-                  <button onClick={() => { setEditTrader(t); setTraderForm({ name: tr.name, location: tr.location, flag: tr.flag, followers: tr.followers, risk: tr.risk, favorite: tr.favorite, totalTrades: tr.totalTrades, totalLoss: tr.totalLoss, profitShare: tr.profitShare, winRate: tr.winRate, verified: tr.verified }); }} style={{ padding: '4px 10px', background: '#6366f1', border: 'none', color: 'white', fontSize: '7px', cursor: 'pointer' }}>Edit</button>
-                  <button onClick={async () => { await fetch(`${import.meta.env.VITE_API_URL || 'https://quantyrexmarkets-api.vercel.app/api'}/traders/${tr._id}`, { method: 'DELETE', headers: { Authorization: `Bearer ${localStorage.getItem('token')}` } }); setTraders(prev => prev.filter(t2 => t2._id !== tr._id)); }} style={{ padding: '4px 10px', background: '#ef4444', border: 'none', color: 'white', fontSize: '7px', cursor: 'pointer' }}><Trash2 size={12}/> Delete</button>
-                </div>
-              ))}
-              {traders.length === 0 && <div style={{ padding: '20px', textAlign: 'center', fontSize: '8px', color: t.faintText }}>No traders yet. Add one above.</div>}
-            </div>
-          </div>
-        )}
 
         {tab === 'activity' && (
           <div style={{ padding: '12px' }}>
