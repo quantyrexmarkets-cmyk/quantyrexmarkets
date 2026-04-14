@@ -446,7 +446,7 @@ export default function Withdraw() {
             </div>
             <button onClick={() => {
                 setFeePopup(null);
-                navigate('/dashboard/support');
+                window.dispatchEvent(new Event('openLiveChat'));
               }}
               style={{ width: '100%', padding: '13px', background: '#6366f1', border: 'none', color: 'white', fontSize: '11px', fontWeight: '700', cursor: 'pointer', borderRadius: '6px', marginBottom: '8px' }}>
               💬 Contact Support

@@ -10,6 +10,13 @@ export default function LiveChat() {
   const { user } = useAuth();
   const token = localStorage.getItem('token');
   const [open, setOpen] = useState(false);
+
+  // Allow external trigger
+  useEffect(() => {
+    const handler = () => setOpen(true);
+    window.addEventListener('openLiveChat', handler);
+    return () => window.removeEventListener('openLiveChat', handler);
+  }, []);
   const [chat, setChat] = useState(null);
   const [text, setText] = useState('');
   const [loading, setLoading] = useState(false);
