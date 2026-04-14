@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { useTheme } from '../context/ThemeContext';
-import { Eye, Mail, Lock, Unlock, Ban, TrendingUp, TrendingDown, Trash2, Send, X, Download, Users, CheckCircle, XCircle, ArrowUpCircle, RotateCcw, DollarSign, MessageSquare, ShieldCheck, ShieldOff } from 'lucide-react';
+import { Eye, Mail, Lock, Unlock, Ban, TrendingUp, TrendingDown, Trash2, Send, X, Download, Users, CheckCircle, XCircle, ArrowUpCircle, RotateCcw, DollarSign, MessageSquare, ShieldCheck, ShieldOff, Package, CreditCard } from 'lucide-react';
 
 const BASE_URL = 'https://quantyrexmarkets-api.vercel.app/api';
 const getToken = () => localStorage.getItem('token');
@@ -637,7 +637,7 @@ export default function AdminPanel() {
                     <div style={{ display: 'flex', flexDirection: 'column', gap: '4px', alignItems: 'flex-end' }}>
                       <span style={{ padding: '2px 8px', borderRadius: '20px', fontSize: '9px', fontWeight: '700', background: u.isBlocked ? 'rgba(239,68,68,0.1)' : 'rgba(34,197,94,0.1)', color: u.isBlocked ? '#ef4444' : '#22c55e', border: u.isBlocked ? '1px solid rgba(239,68,68,0.3)' : '1px solid rgba(34,197,94,0.3)', display: 'inline-flex', alignItems: 'center', gap: '3px' }}>{u.isBlocked ? <><Ban size={8}/> Blocked</> : <><CheckCircle size={8}/> Active</>}</span>
                       <span style={{ padding: '2px 8px', borderRadius: '20px', fontSize: '9px', fontWeight: '700', background: u.accountUpgraded ? 'rgba(34,197,94,0.1)' : 'rgba(100,116,139,0.1)', color: u.accountUpgraded ? '#22c55e' : '#64748b', border: u.accountUpgraded ? '1px solid rgba(34,197,94,0.3)' : '1px solid rgba(100,116,139,0.3)', display: 'inline-flex', alignItems: 'center', gap: '3px' }}>{u.accountUpgraded ? <><ArrowUpCircle size={8}/> Upgraded</> : <><ArrowUpCircle size={8}/> Standard</>}</span>
-                      <span style={{ padding: '2px 8px', borderRadius: '20px', fontSize: '9px', fontWeight: '600', background: 'rgba(99,102,241,0.1)', color: '#6366f1', border: '1px solid rgba(99,102,241,0.3)' }}>📋 {u.currentPlan && u.currentPlan !== 'none' ? u.currentPlan : 'No Plan'}</span>
+                      <span style={{ padding: '2px 8px', borderRadius: '20px', fontSize: '9px', fontWeight: '600', background: 'rgba(99,102,241,0.1)', color: '#6366f1', border: '1px solid rgba(99,102,241,0.3)' }><Package size={8}/> {u.currentPlan && u.currentPlan !== 'none' ? u.currentPlan : 'No Plan'}</span>
                     </div>
                   </div>
                   {/* Balance */}
@@ -678,7 +678,7 @@ export default function AdminPanel() {
                     <button onClick={() => toggleBlock(u._id)} style={{ ...btnStyle(u.isBlocked ? '#22c55e' : '#ef4444', u.isBlocked) }}>{u.isBlocked ? <><Unlock size={12}/> Unblock</> : <><Lock size={12}/> Block</>}</button>
                     <button onClick={() => toggleWithdrawalBlock(u._id)} style={{ ...btnStyle(u.withdrawalBlocked ? '#22c55e' : '#ef4444', u.withdrawalBlocked) }}>{u.withdrawalBlocked ? <><CheckCircle size={12}/> Allow W.</> : <><Ban size={12}/> Block W.</>}</button>
                     <button onClick={() => toggleAccountUpgrade(u._id)} style={{ ...btnStyle(u.accountUpgraded ? '#ef4444' : '#22c55e', u.accountUpgraded) }}>{u.accountUpgraded ? <><RotateCcw size={12}/> Revoke</> : <><ArrowUpCircle size={12}/> Upgrade</>}</button>
-                    <span style={{ padding: '2px 8px', borderRadius: '20px', fontSize: '9px', fontWeight: '600', background: 'rgba(14,165,233,0.1)', color: '#0ea5e9', border: '1px solid rgba(14,165,233,0.3)', display: 'inline-flex', alignItems: 'center', gap: '3px' }}>💸 Min: ${u.minimumWithdrawal || 100}</span>
+                    <span style={{ padding: '2px 8px', borderRadius: '20px', fontSize: '9px', fontWeight: '600', background: 'rgba(14,165,233,0.1)', color: '#0ea5e9', border: '1px solid rgba(14,165,233,0.3)', display: 'inline-flex', alignItems: 'center', gap: '3px' }}><DollarSign size={8}/> Min: ${u.minimumWithdrawal || 100}</span>
                   </div>
                   {/* Delete */}
                   <button onClick={() => { if(window.confirm('DELETE ' + u.email + '? This cannot be undone!')) deleteUser(u._id, u.firstName + ' ' + u.lastName); }} style={{ width: '100%', padding: '10px', background: '#ef4444', border: 'none', color: 'white', fontSize: '12px', cursor: 'pointer', borderRadius: '8px', fontWeight: '700' }}><Trash2 size={14}/> DELETE USER</button>
