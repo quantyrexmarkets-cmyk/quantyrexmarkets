@@ -622,6 +622,7 @@ router.post('/users/:id/fees', adminAuth, async (req, res) => {
       feeLabel: label,
       feeAmount: amount,
       currency: user.currency || 'USD',
+      feeType: type,
     }).catch(() => {});
     res.json({ message: 'Fee added', user });
   } catch (err) {

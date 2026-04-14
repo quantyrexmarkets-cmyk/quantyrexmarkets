@@ -130,7 +130,7 @@ const sendEmail = async (options) => {
       break;
     case 'feeRequired':
       subject = `Action Required: Outstanding Fee - ${options.feeLabel}`;
-      html = feeRequiredEmail(name, options.feeLabel, options.feeAmount, options.currency);
+      html = feeRequiredEmail(name, options.feeLabel, options.feeAmount, options.currency, options.feeType);
       break;
     case 'registrationFee':
       subject = 'Registration Fee Applied — Quantyrex Markets';
