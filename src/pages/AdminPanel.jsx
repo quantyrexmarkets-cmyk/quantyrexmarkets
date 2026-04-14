@@ -418,7 +418,6 @@ export default function AdminPanel() {
       whiteSpace: 'nowrap',
     };
   };
-  };
 
   const handleSendEmail = async () => {
     if (emailType === 'upgradePromo') {
