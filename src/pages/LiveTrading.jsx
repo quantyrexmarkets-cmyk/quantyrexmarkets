@@ -159,14 +159,14 @@ export default function LiveTrading() {
         {/* Stats */}
         <div style={{ display: 'flex', gap: '8px' }}>
           {[
-            { label: 'Balance', value: formatAmount(balance || 0, currency), icon: <DollarSign size={14} color="#6366f1"/>, color: '#6366f1' },
-            { label: 'Open', value: openTrades.length, icon: <BarChart2 size={14} color="#22c55e"/>, color: '#22c55e' },
-            { label: 'Closed', value: closedTrades.length, icon: <TrendingUp size={14} color="#ef4444"/>, color: '#ef4444' },
+            { label: 'Balance', value: formatAmount(balance || 0, currency), icon: <DollarSign size={14} color="#6366f1"/>, color: '#6366f1', iconBg: 'rgba(99,102,241,0.15)' },
+            { label: 'Open Trades', value: openTrades.length, icon: <BarChart2 size={14} color="#22c55e"/>, color: '#22c55e', iconBg: 'rgba(34,197,94,0.15)' },
+            { label: 'Closed Trades', value: closedTrades.length, icon: <TrendingUp size={14} color="#ef4444"/>, color: '#ef4444', iconBg: 'rgba(239,68,68,0.15)' },
           ].map((s, i) => (
-            <div key={i} style={{ flex: 1, background: t.cardBg, border: `1px solid ${t.border}`, borderRadius: '10px', padding: '10px', textAlign: 'center' }}>
-              <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '4px' }}>{s.icon}</div>
-              <div style={{ color: s.color, fontSize: '13px', fontWeight: '700' }}>{s.value}</div>
-              <div style={{ color: t.subText, fontSize: '8px' }}>{s.label}</div>
+            <div key={i} style={{ background: 'linear-gradient(135deg, rgba(15,23,42,0.9), rgba(30,41,59,0.8))', border: '1px solid rgba(99,102,241,0.3)', borderRadius: '12px', padding: '8px', flex: 1, textAlign: 'center', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '4px', boxShadow: '0 4px 24px rgba(99,102,241,0.1)' }}>
+              <div style={{ width: '32px', height: '32px', borderRadius: '50%', background: s.iconBg, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>{s.icon}</div>
+              <div style={{ color: t.subText, fontSize: '7px' }}>{s.label}</div>
+              <div style={{ color: s.color, fontSize: '11px', fontWeight: '700' }}>{s.value}</div>
             </div>
           ))}
         </div>
