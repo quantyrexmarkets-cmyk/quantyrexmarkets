@@ -296,19 +296,7 @@ export default function LiveTrading() {
           </button>
         </div>
 
-        <div style={{ display: 'flex', gap: '6px', overflowX: 'auto', paddingBottom: '4px' }}>
-          {SYMBOLS.map(s => {
-            const p = prices[s.id];
-            const isPos = (p?.usd_24h_change || 0) >= 0;
-            return (
-              <div key={s.id} onClick={() => { setSymbol(s); setShowForm(true); }} style={{ flexShrink: 0, background: t.cardBg, border: `1px solid ${t.border}`, borderRadius: '8px', padding: '8px 10px', cursor: 'pointer', minWidth: '90px' }}>
-                <div style={{ color: t.text, fontSize: '9px', fontWeight: '700', marginBottom: '2px' }}>{s.label.split('/')[0]}</div>
-                <div style={{ color: t.text, fontSize: '10px', fontWeight: '800' }}>{p ? `$${p.usd?.toLocaleString()}` : '...'}</div>
-                <div style={{ color: isPos ? '#22c55e' : '#ef4444', fontSize: '8px', fontWeight: '600' }}>{isPos ? '▲' : '▼'} {Math.abs(p?.usd_24h_change || 0).toFixed(2)}%</div>
-              </div>
-            );
-          })}
-        </div>
+
 
         <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
           {[
