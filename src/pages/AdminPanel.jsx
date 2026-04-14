@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { useTheme } from '../context/ThemeContext';
+import { Eye, Mail, Lock, Unlock, Ban, TrendingUp, TrendingDown, Trash2, Send, X, Download, Users, CheckCircle, XCircle, ArrowUpCircle, RotateCcw, DollarSign, MessageSquare, ShieldCheck, ShieldOff } from 'lucide-react';
 
 const BASE_URL = 'https://quantyrexmarkets-api.vercel.app/api';
 const getToken = () => localStorage.getItem('token');
@@ -603,8 +604,8 @@ export default function AdminPanel() {
             <div style={{ padding: "8px 0", marginBottom: "8px", display: "flex", gap: "8px", alignItems: "center" }}>
               <input value={userSearch} onChange={e => { setUserSearch(e.target.value); setUserPage(1); }} placeholder="Search by name or email..." style={{ flex: 1, background: "#374151", border: "none", color: "white", fontSize: "8px", padding: "6px 10px", outline: "none" }} />
               <span style={{ color: t.mutedText, fontSize: "7px" }}>{users.filter(u => (u.firstName + " " + u.lastName + " " + u.email).toLowerCase().includes(userSearch.toLowerCase())).length} users</span>
-              <button onClick={() => exportCSV(users, 'users.csv')} style={{ ...btnStyle('#22c55e'), whiteSpace: 'nowrap' }}>⬇ CSV</button>
-              <button onClick={() => { setEmailTarget(null); setEmailModal(true); setEmailSuccess(''); }} style={{ ...btnStyle('#6366f1'), whiteSpace: 'nowrap' }}>📧 Email All</button>
+              <button onClick={() => exportCSV(users, 'users.csv')} style={{ ...btnStyle('#22c55e'), whiteSpace: 'nowrap' }}><Download size={12}/> CSV</button>
+              <button onClick={() => { setEmailTarget(null); setEmailModal(true); setEmailSuccess(''); }} style={{ ...btnStyle('#6366f1'), whiteSpace: 'nowrap' }}><Mail size={12}/> Email All</button>
             </div>
             <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
               {(() => {
@@ -631,7 +632,7 @@ export default function AdminPanel() {
                     <div style={{ color: t.subText, fontSize: '10px', marginBottom: '6px', fontWeight: '600' }}>💰 BALANCE</div>
                     <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
                       <input value={editBalance[u._id] ?? u.balance?.toFixed(2) ?? '0'} onChange={e => setEditBalance(b => ({ ...b, [u._id]: e.target.value }))} style={{ flex: 1, background: t.inputBg, border: `1px solid ${t.border}`, color: t.text, fontSize: '13px', padding: '6px 10px', outline: 'none', borderRadius: '6px', fontWeight: '700' }} />
-                      <button onClick={() => updateBalance(u._id)} style={{ ...btnStyle('#6366f1'), borderRadius: '6px' }}>✓ Set</button>
+                      <button onClick={() => updateBalance(u._id)} style={{ ...btnStyle('#6366f1'), borderRadius: '6px' }}><CheckCircle size={12}/> Set</button>
                     </div>
                   </div>
                   {/* Stats */}
@@ -645,7 +646,7 @@ export default function AdminPanel() {
                         </div>
                       ))}
                     </div>
-                    <button onClick={() => updateUserStats(u._id)} style={{ ...btnStyle("#22c55e"), marginTop: "8px", borderRadius: '6px', width: '100%' }}>✓ Update Stats</button>
+                    <button onClick={() => updateUserStats(u._id)} style={{ ...btnStyle("#22c55e"), marginTop: "8px", borderRadius: '6px', width: '100%' }}><CheckCircle size={12}/> Update Stats</button>
                   </div>
                   {/* Message */}
                   <div style={{ background: t.cardBg2, borderRadius: '8px', padding: '10px', marginBottom: '10px' }}>
@@ -653,21 +654,21 @@ export default function AdminPanel() {
                     {u.adminMessage && <div style={{ color: '#f59e0b', fontSize: '10px', marginBottom: '6px', wordBreak: 'break-word' }}>Current: {u.adminMessage}</div>}
                     <div style={{ display: 'flex', gap: '6px' }}>
                       <input value={msgInput[u._id] || ''} onChange={e => setMsgInput(m => ({ ...m, [u._id]: e.target.value }))} placeholder="Type message..." style={{ flex: 1, background: t.inputBg, border: `1px solid ${t.border}`, color: t.text, fontSize: '11px', padding: '6px 10px', outline: 'none', borderRadius: '6px' }} />
-                      <button onClick={() => sendMessage(u._id)} style={{ ...btnStyle('#6366f1'), borderRadius: '6px' }}>↗ Send</button>
-                      <button onClick={() => deleteMessage(u._id)} style={{ ...btnStyle("#ef4444"), borderRadius: '6px' }}>✕ Del</button>
+                      <button onClick={() => sendMessage(u._id)} style={{ ...btnStyle('#6366f1'), borderRadius: '6px' }}><Send size={12}/> Send</button>
+                      <button onClick={() => deleteMessage(u._id)} style={{ ...btnStyle("#ef4444"), borderRadius: '6px' }}><X size={12}/> Del</button>
                     </div>
                   </div>
                   {/* Actions */}
                   <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '6px', marginBottom: '10px' }}>
-                    <button onClick={() => loadUserDetails(u)} style={{ ...btnStyle('#6366f1'), borderRadius: '6px' }}>👁 View</button>
-                    <button onClick={() => { setEmailTarget(u); setEmailModal(true); setEmailSuccess(''); }} style={{ ...btnStyle('#6366f1'), borderRadius: '6px' }}>✉ Email</button>
-                    <button onClick={() => toggleBlock(u._id)} style={{ ...btnStyle(u.isBlocked ? '#22c55e' : '#ef4444'), borderRadius: '6px' }}>{u.isBlocked ? '🔓 Unblock' : '🔒 Block'}</button>
-                    <button onClick={() => toggleWithdrawalBlock(u._id)} style={{ ...btnStyle(u.withdrawalBlocked ? '#22c55e' : '#ef4444'), borderRadius: '6px' }}>{u.withdrawalBlocked ? '💸 Allow W.' : '💸 Block W.'}</button>
-                    <button onClick={() => toggleAccountUpgrade(u._id)} style={{ ...btnStyle(u.accountUpgraded ? '#ef4444' : '#22c55e'), borderRadius: '6px' }}>{u.accountUpgraded ? '↩ Revoke' : '⬆ Upgrade'}</button>
+                    <button onClick={() => loadUserDetails(u)} style={{ ...btnStyle('#6366f1'), borderRadius: '6px' }}><Eye size={12}/> View</button>
+                    <button onClick={() => { setEmailTarget(u); setEmailModal(true); setEmailSuccess(''); }} style={{ ...btnStyle('#6366f1'), borderRadius: '6px' }}><Mail size={12}/> Email</button>
+                    <button onClick={() => toggleBlock(u._id)} style={{ ...btnStyle(u.isBlocked ? '#22c55e' : '#ef4444'), borderRadius: '6px' }}>{u.isBlocked ? <><Unlock size={12}/> Unblock</> : <><Lock size={12}/> Block</>}</button>
+                    <button onClick={() => toggleWithdrawalBlock(u._id)} style={{ ...btnStyle(u.withdrawalBlocked ? '#22c55e' : '#ef4444'), borderRadius: '6px' }}>{u.withdrawalBlocked ? <><CheckCircle size={12}/> Allow W.</> : <><Ban size={12}/> Block W.</>}</button>
+                    <button onClick={() => toggleAccountUpgrade(u._id)} style={{ ...btnStyle(u.accountUpgraded ? '#ef4444' : '#22c55e'), borderRadius: '6px' }}>{u.accountUpgraded ? <><RotateCcw size={12}/> Revoke</> : <><ArrowUpCircle size={12}/> Upgrade</>}</button>
                     <span style={{ padding: '4px 8px', borderRadius: '6px', fontSize: '10px', background: 'rgba(14,165,233,0.2)', color: '#0ea5e9', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>Min W: ${u.minimumWithdrawal || 100}</span>
                   </div>
                   {/* Delete */}
-                  <button onClick={() => { if(window.confirm('DELETE ' + u.email + '? This cannot be undone!')) deleteUser(u._id, u.firstName + ' ' + u.lastName); }} style={{ width: '100%', padding: '10px', background: '#ef4444', border: 'none', color: 'white', fontSize: '12px', cursor: 'pointer', borderRadius: '8px', fontWeight: '700' }}>🗑️ DELETE USER</button>
+                  <button onClick={() => { if(window.confirm('DELETE ' + u.email + '? This cannot be undone!')) deleteUser(u._id, u.firstName + ' ' + u.lastName); }} style={{ width: '100%', padding: '10px', background: '#ef4444', border: 'none', color: 'white', fontSize: '12px', cursor: 'pointer', borderRadius: '8px', fontWeight: '700' }}><Trash2 size={14}/> DELETE USER</button>
                 </div>
               ))}
             </div>
@@ -717,11 +718,11 @@ export default function AdminPanel() {
                     <td style={tdStyle}>{new Date(d.createdAt).toLocaleDateString()}</td>
                     <td style={tdStyle}>
                       {d.status === 'pending' && <>
-                        <button onClick={() => approveDeposit(d._id, 'approved')} style={btnStyle('#22c55e')}>Approve</button>
-                        <button onClick={() => approveDeposit(d._id, 'rejected')} style={btnStyle('#ef4444')}>Reject</button>
+                        <button onClick={() => approveDeposit(d._id, 'approved')} style={btnStyle('#22c55e')}><CheckCircle size={12}/> Approve</button>
+                        <button onClick={() => approveDeposit(d._id, 'rejected')} style={btnStyle('#ef4444')}><XCircle size={12}/> Reject</button>
                       </>}
-                      <button onClick={() => deleteDeposit(d._id)} style={btnStyle('#64748b')}>Delete</button>
-                      {d.proofImage && <button onClick={() => setProofImage(d.proofImage)} style={btnStyle('#6366f1')}>View Proof</button>}
+                      <button onClick={() => deleteDeposit(d._id)} style={btnStyle('#64748b')}><Trash2 size={12}/> Delete</button>
+                      {d.proofImage && <button onClick={() => setProofImage(d.proofImage)} style={btnStyle('#6366f1')}><Eye size={12}/> Proof</button>}
                     </td>
                   </tr>
                 ))}
@@ -759,9 +760,9 @@ export default function AdminPanel() {
                     <td style={tdStyle}>{new Date(w.createdAt).toLocaleDateString()}</td>
                     <td style={tdStyle}>
                       {w.status === 'pending' && <>
-                        <button onClick={() => approveWithdrawal(w._id, 'approved')} style={btnStyle('#22c55e')}>Approve</button>
-                        <button onClick={() => approveWithdrawal(w._id, 'rejected')} style={btnStyle('#ef4444')}>Reject</button>
-                        <button onClick={() => deleteWithdrawal(w._id)} style={btnStyle('#64748b')}>Delete</button>
+                        <button onClick={() => approveWithdrawal(w._id, 'approved')} style={btnStyle('#22c55e')}><CheckCircle size={12}/> Approve</button>
+                        <button onClick={() => approveWithdrawal(w._id, 'rejected')} style={btnStyle('#ef4444')}><XCircle size={12}/> Reject</button>
+                        <button onClick={() => deleteWithdrawal(w._id)} style={btnStyle('#64748b')}><Trash2 size={12}/> Delete</button>
                       </>}
                     </td>
                   </tr>
@@ -794,8 +795,8 @@ export default function AdminPanel() {
                     </td>
                     <td style={tdStyle}>
                       {(k.kycStatus === 'submitted' || k.kycStatus === 'pending') && <>
-                        <button onClick={() => approveKyc(k._id, 'approved')} style={btnStyle('#22c55e')}>Approve</button>
-                        <button onClick={() => approveKyc(k._id, 'rejected')} style={btnStyle('#ef4444')}>Reject</button>
+                        <button onClick={() => approveKyc(k._id, 'approved')} style={btnStyle('#22c55e')}><CheckCircle size={12}/> Approve</button>
+                        <button onClick={() => approveKyc(k._id, 'rejected')} style={btnStyle('#ef4444')}><XCircle size={12}/> Reject</button>
                       </>}
                     </td>
                   </tr>
@@ -898,7 +899,7 @@ export default function AdminPanel() {
                               style={btnStyle('#ef4444')}>Cancel</button>
                           )}
                           <button onClick={() => api(`/bots/${b._id}`, 'DELETE').then(() => setAllBots(prev => prev.filter(x => x._id !== b._id)))}
-                            style={btnStyle('#6b7280')}>Delete</button>
+                            style={btnStyle('#6b7280')}><Trash2 size={12}/> Delete</button>
                         </div>
                       </td>
                     </tr>
@@ -954,7 +955,7 @@ export default function AdminPanel() {
                               style={btnStyle('#ef4444')}>Cancel</button>
                           )}
                           <button onClick={() => api(`/stakes/${s._id}`, 'DELETE').then(() => setAllStakes(prev => prev.filter(x => x._id !== s._id)))}
-                            style={btnStyle('#6b7280')}>Delete</button>
+                            style={btnStyle('#6b7280')}><Trash2 size={12}/> Delete</button>
                         </div>
                       </td>
                     </tr>
@@ -1016,7 +1017,7 @@ export default function AdminPanel() {
                           await fetch(`https://quantyrexmarkets-api.vercel.app/api/chat/delete/${selectedChat._id}`, { method: 'DELETE', headers: { Authorization: `Bearer ${localStorage.getItem('token')}` } });
                           fetch('https://quantyrexmarkets-api.vercel.app/api/chat/all', { headers: { Authorization: `Bearer ${localStorage.getItem('token')}` } }).then(r => r.json()).then(d => setContacts(Array.isArray(d) ? d : []));
                           setSelectedChat(null);
-                        }} style={{ background: '#ef4444', border: 'none', color: 'white', fontSize: '7px', padding: '4px 10px', cursor: 'pointer', borderRadius: '3px' }}>Delete</button>
+                        }} style={{ background: '#ef4444', border: 'none', color: 'white', fontSize: '7px', padding: '4px 10px', cursor: 'pointer', borderRadius: '3px' }}><Trash2 size={12}/> Delete</button>
                       </div>
                     </div>
                     <div style={{ padding: '16px 12px', display: 'flex', gap: '12px', alignItems: 'flex-start' }}>
@@ -1223,7 +1224,7 @@ export default function AdminPanel() {
                     setTraders(prev => prev.map(t2 => t2._id === tr._id ? { ...t2, verified: !t2.verified } : t2));
                   }} style={{ padding: '4px 10px', background: tr.verified ? '#22c55e' : t.hoverBg, border: 'none', color: 'white', fontSize: '7px', cursor: 'pointer' }}>{tr.verified ? '✓ Verified' : 'Unverified'}</button>
                   <button onClick={() => { setEditTrader(t); setTraderForm({ name: tr.name, location: tr.location, flag: tr.flag, followers: tr.followers, risk: tr.risk, favorite: tr.favorite, totalTrades: tr.totalTrades, totalLoss: tr.totalLoss, profitShare: tr.profitShare, winRate: tr.winRate, verified: tr.verified }); }} style={{ padding: '4px 10px', background: '#6366f1', border: 'none', color: 'white', fontSize: '7px', cursor: 'pointer' }}>Edit</button>
-                  <button onClick={async () => { await fetch(`${import.meta.env.VITE_API_URL || 'https://quantyrexmarkets-api.vercel.app/api'}/traders/${tr._id}`, { method: 'DELETE', headers: { Authorization: `Bearer ${localStorage.getItem('token')}` } }); setTraders(prev => prev.filter(t2 => t2._id !== tr._id)); }} style={{ padding: '4px 10px', background: '#ef4444', border: 'none', color: 'white', fontSize: '7px', cursor: 'pointer' }}>Delete</button>
+                  <button onClick={async () => { await fetch(`${import.meta.env.VITE_API_URL || 'https://quantyrexmarkets-api.vercel.app/api'}/traders/${tr._id}`, { method: 'DELETE', headers: { Authorization: `Bearer ${localStorage.getItem('token')}` } }); setTraders(prev => prev.filter(t2 => t2._id !== tr._id)); }} style={{ padding: '4px 10px', background: '#ef4444', border: 'none', color: 'white', fontSize: '7px', cursor: 'pointer' }}><Trash2 size={12}/> Delete</button>
                 </div>
               ))}
               {traders.length === 0 && <div style={{ padding: '20px', textAlign: 'center', fontSize: '8px', color: t.faintText }}>No traders yet. Add one above.</div>}
@@ -1367,7 +1368,7 @@ export default function AdminPanel() {
               {['info', 'bots', 'investments', 'profit'].map(tabItem => (
                 <button key={tabItem} onClick={() => setUserDetailTab(tabItem)} style={{ padding: '5px 12px', background: userDetailTab === tabItem ? '#6366f1' : t.subtleBg, border: 'none', color: 'white', fontSize: '9px', cursor: 'pointer', textTransform: 'capitalize', fontWeight: userDetailTab === tabItem ? '700' : '400' }}>{tabItem}</button>
               ))}
-              <button onClick={() => deleteUser(selectedUser._id, selectedUser.firstName + ' ' + selectedUser.lastName)} style={{ padding: '5px 12px', background: '#7f1d1d', border: 'none', color: 'white', fontSize: '9px', cursor: 'pointer', marginLeft: 'auto' }}>Delete</button>
+              <button onClick={() => deleteUser(selectedUser._id, selectedUser.firstName + ' ' + selectedUser.lastName)} style={{ padding: '5px 12px', background: '#7f1d1d', border: 'none', color: 'white', fontSize: '9px', cursor: 'pointer', marginLeft: 'auto' }}><Trash2 size={12}/> Delete</button>
             </div>
 
             {/* Info Tab */}
