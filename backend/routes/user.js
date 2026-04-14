@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const auth = require('../middleware/auth');
+const User = require('../models/User');
 const { updateProfile, getDashboard, deleteAvatar } = require('../controllers/userController');
 const multer = require('multer');
 const path = require('path');
