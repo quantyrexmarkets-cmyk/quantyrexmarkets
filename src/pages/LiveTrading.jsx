@@ -307,8 +307,8 @@ export default function LiveTrading() {
 
       <div style={{ padding: '16px', display: 'flex', flexDirection: 'column', gap: '20px' }}>
         <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
-          <button onClick={() => setShowForm(true)} style={{ background: '#6366f1', border: 'none', color: 'white', fontSize: '9px', fontWeight: '700', padding: '8px 14px', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '4px' }}>
-            <Zap size={12}/> New Trade
+          <button onClick={() => setShowForm(true)} style={{ background: '#6366f1', border: 'none', color: 'white', fontSize: '9px', fontWeight: '700', padding: '8px 14px', cursor: 'pointer' }}>
+            + New Trade
           </button>
         </div>
 
