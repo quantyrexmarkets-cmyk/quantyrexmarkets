@@ -393,17 +393,28 @@ export default function AdminPanel() {
 
   const thStyle = { padding: '10px 12px', fontSize: '11px', color: t.subText, fontWeight: '700', textAlign: 'left', border: `1px solid ${t.border}`, whiteSpace: 'nowrap', background: t.cardBg };
   const tdStyle = { padding: '10px 12px', fontSize: '11px', color: t.text, border: `1px solid ${t.border}`, whiteSpace: 'nowrap', verticalAlign: 'top' };
-  const btnStyle = (color) => {
+  const btnStyle = (color, isActive = false) => {
     const isDanger = color === '#ef4444' || color === '#7f1d1d' || color === '#dc2626';
     const isSuccess = color === '#22c55e' || color === '#16a34a';
+    const textColor = isDanger ? '#ef4444' : isSuccess ? '#22c55e' : '#818cf8';
     return {
-      padding: '6px 12px', 
-      background: isDanger ? 'rgba(239,68,68,0.12)' : isSuccess ? 'rgba(34,197,94,0.12)' : 'rgba(99,102,241,0.12)',
-      border: isDanger ? '1px solid rgba(239,68,68,0.3)' : isSuccess ? '1px solid rgba(34,197,94,0.3)' : '1px solid rgba(99,102,241,0.3)',
-      color: isDanger ? '#ef4444' : isSuccess ? '#22c55e' : '#818cf8',
-      fontSize: '10px', fontWeight: '600', cursor: 'pointer', 
-      borderRadius: '6px', marginRight: '4px', marginBottom: '4px', display: 'inline-block'
+      padding: '5px 10px',
+      background: isActive
+        ? isDanger ? 'rgba(239,68,68,0.15)' : isSuccess ? 'rgba(34,197,94,0.15)' : 'rgba(99,102,241,0.15)'
+        : 'transparent',
+      border: 'none',
+      color: textColor,
+      fontSize: '10px',
+      fontWeight: '600',
+      cursor: 'pointer',
+      borderRadius: '4px',
+      marginRight: '2px',
+      marginBottom: '2px',
+      display: 'inline-flex',
+      alignItems: 'center',
+      gap: '4px',
     };
+  };
   };
 
   const handleSendEmail = async () => {
