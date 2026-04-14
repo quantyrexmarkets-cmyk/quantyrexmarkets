@@ -40,6 +40,7 @@ export default function LiveTrading() {
   const [search, setSearch] = useState('');
   const [show, setShow] = useState(10);
   const [page, setPage] = useState(1);
+  const [bottomTab, setBottomTab] = useState('trade');
 
   useEffect(() => { fetchAll(); }, []);
 
@@ -158,12 +159,29 @@ export default function LiveTrading() {
             style={{ display: 'block', flexShrink: 0 }}
           />
 
-          {/* Form */}
-          <div style={{ flex: 1, overflowY: 'auto', padding: '12px', background: t.cardBg, borderTop: `1px solid ${t.border}` }}>
-            <div style={{ display: 'flex', gap: '8px', marginBottom: '10px' }}>
-              <button onClick={() => setSheetDir('buy')} style={{ flex: 1, padding: '10px', background: sheetDir === 'buy' ? '#16a34a' : t.subtleBg, border: 'none', color: sheetDir === 'buy' ? 'white' : t.text, fontSize: '12px', fontWeight: '800', cursor: 'pointer', borderRadius: '6px' }}>BUY ▲</button>
-              <button onClick={() => setSheetDir('sell')} style={{ flex: 1, padding: '10px', background: sheetDir === 'sell' ? '#dc2626' : t.subtleBg, border: 'none', color: sheetDir === 'sell' ? 'white' : t.text, fontSize: '12px', fontWeight: '800', cursor: 'pointer', borderRadius: '6px' }}>SELL ▼</button>
+          {/* Bottom Panel */}
+          <div style={{ flexShrink: 0, background: t.cardBg, borderTop: `1px solid ${t.border}`, maxHeight: '42vh', display: 'flex', flexDirection: 'column' }}>
+            {/* Bottom Tabs */}
+            <div style={{ display: 'flex', borderBottom: `1px solid ${t.border}`, flexShrink: 0 }}>
+              {[
+                { key: 'trade', label: '🔄 Trade' },
+                { key: 'positions', label: '📊 Positions' },
+                { key: 'orders', label: '📋 Orders' },
+              ].map(bt => (
+                <button key={bt.key} onClick={() => setBottomTab(bt.key)}
+                  style={{ flex: 1, padding: '8px', background: bottomTab === bt.key ? (t.bg === '#f8fafc' ? 'rgba(99,102,241,0.08)' : 'rgba(99,102,241,0.15)') : 'transparent', border: 'none', borderBottom: bottomTab === bt.key ? '2px solid #6366f1' : '2px solid transparent', color: bottomTab === bt.key ? '#6366f1' : t.subText, fontSize: '9px', fontWeight: bottomTab === bt.key ? '700' : '400', cursor: 'pointer' }}>
+                  {bt.label}
+                </button>
+              ))}
             </div>
+
+            <div style={{ flex: 1, overflowY: 'auto', padding: '10px 12px' }}>
+              {bottomTab === 'trade' && (
+                <div>
+                  <div style={{ display: 'flex', gap: '8px', marginBottom: '10px' }}>
+                    <button onClick={() => setSheetDir('buy')} style={{ flex: 1, padding: '10px', background: sheetDir === 'buy' ? '#16a34a' : t.subtleBg, border: 'none', color: sheetDir === 'buy' ? 'white' : t.text, fontSize: '12px', fontWeight: '800', cursor: 'pointer', borderRadius: '6px' }}>BUY ▲</button>
+                    <button onClick={() => setSheetDir('sell')} style={{ flex: 1, padding: '10px', background: sheetDir === 'sell' ? '#dc2626' : t.subtleBg, border: 'none', color: sheetDir === 'sell' ? 'white' : t.text, fontSize: '12px', fontWeight: '800', cursor: 'pointer', borderRadius: '6px' }}>SELL ▼</button>
+                  </div>
             <div style={{ marginBottom: '8px' }}>
               <div style={{ color: t.subText, fontSize: '9px', marginBottom: '4px' }}>Amount (USD)</div>
               <input value={amount} onChange={e => setAmount(e.target.value)} placeholder='Min $10'
@@ -191,6 +209,49 @@ export default function LiveTrading() {
               style={{ width: '100%', padding: '12px', background: sheetDir === 'buy' ? '#16a34a' : '#dc2626', border: 'none', color: 'white', fontSize: '13px', fontWeight: '800', cursor: 'pointer', borderRadius: '8px' }}>
               {submitting ? 'Placing...' : `Confirm ${sheetDir === 'buy' ? 'Buy' : 'Sell'}`}
             </button>
+                </div>
+              )}
+
+              {bottomTab === 'positions' && (
+                <div>
+                  {openTrades.length === 0 ? (
+                    <div style={{ textAlign: 'center', padding: '20px', color: t.faintText, fontSize: '9px' }}>No open positions</div>
+                  ) : openTrades.map((tr, i) => (
+                    <div key={i} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '8px 0', borderBottom: `1px solid ${t.tableRowBorder}` }}>
+                      <div>
+                        <span style={{ color: '#6366f1', fontSize: '10px', fontWeight: '700' }}>{tr.symbol}</span>
+                        <span style={{ color: tr.type === 'buy' ? '#22c55e' : '#ef4444', fontSize: '8px', fontWeight: '700', marginLeft: '6px', textTransform: 'uppercase' }}>{tr.type}</span>
+                      </div>
+                      <div style={{ textAlign: 'right' }}>
+                        <div style={{ color: t.text, fontSize: '9px', fontWeight: '700' }}>${parseFloat(tr.amount || 0).toFixed(2)}</div>
+                        <div style={{ color: t.subText, fontSize: '7px' }}>{tr.duration} • {tr.leverage}</div>
+                      </div>
+                      <span style={{ background: 'rgba(34,197,94,0.1)', color: '#22c55e', fontSize: '7px', padding: '2px 6px', borderRadius: '4px' }}>{tr.status}</span>
+                    </div>
+                  ))}
+                </div>
+              )}
+
+              {bottomTab === 'orders' && (
+                <div>
+                  {closedTrades.length === 0 ? (
+                    <div style={{ textAlign: 'center', padding: '20px', color: t.faintText, fontSize: '9px' }}>No closed orders</div>
+                  ) : closedTrades.slice(0, 10).map((tr, i) => (
+                    <div key={i} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '8px 0', borderBottom: `1px solid ${t.tableRowBorder}` }}>
+                      <div>
+                        <span style={{ color: '#6366f1', fontSize: '10px', fontWeight: '700' }}>{tr.symbol}</span>
+                        <span style={{ color: tr.type === 'buy' ? '#22c55e' : '#ef4444', fontSize: '8px', fontWeight: '700', marginLeft: '6px', textTransform: 'uppercase' }}>{tr.type}</span>
+                      </div>
+                      <div style={{ textAlign: 'right' }}>
+                        <div style={{ color: tr.result > 0 ? '#22c55e' : '#ef4444', fontSize: '9px', fontWeight: '700' }}>{tr.result > 0 ? '+' : ''}{parseFloat(tr.result || 0).toFixed(2)}</div>
+                        <div style={{ color: t.subText, fontSize: '7px' }}>{tr.amount ? `${((tr.result / tr.amount) * 100).toFixed(1)}%` : '—'}</div>
+                      </div>
+                      <span style={{ background: 'rgba(107,114,128,0.1)', color: '#9ca3af', fontSize: '7px', padding: '2px 6px', borderRadius: '4px' }}>{tr.status}</span>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
           </div>
         </div>
       )}
