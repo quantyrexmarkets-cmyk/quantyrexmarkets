@@ -236,7 +236,7 @@ export default function Withdraw() {
             <div style={{ color: '#555', fontSize: '9px', marginBottom: '4px' }}>Amount: <strong>${amount}</strong></div>
             <div style={{ color: '#555', fontSize: '9px', marginBottom: '20px' }}>Method: <strong>{methods.find(m => m.id === selected)?.label}</strong></div>
             <div style={{ display: 'flex', gap: '8px' }}>
-              <button onClick={() => setShowConfirm(false)} style={{ flex: 1, padding: '10px', background: '#f3f4f6', border: 'none', color: '#111', fontSize: '9px', fontWeight: '600', cursor: 'pointer' }}>Cancel</button>
+              <button onClick={() => setShowConfirm(false)} style={{ flex: 1, padding: '10px', background: t.subtleBg, border: `1px solid ${t.border}`, color: t.text, fontSize: '9px', fontWeight: '600', cursor: 'pointer' }}>Cancel</button>
               <button onClick={handleConfirm} style={{ flex: 1, padding: '10px', background: '#6366f1', border: 'none', color: t.text, fontSize: '9px', fontWeight: '600', cursor: 'pointer' }}>Confirm</button>
             </div>
           </div>

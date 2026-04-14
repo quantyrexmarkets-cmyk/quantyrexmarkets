@@ -59,7 +59,7 @@ export default function BotPlans() {
             <div style={{ color: '#111', fontSize: '18px', fontWeight: '700', marginBottom: '10px' }}>Bot Activated!</div>
             <div style={{ color: '#555', fontSize: '12px', marginBottom: '24px', lineHeight: '1.8' }}>Your trading bot has been activated and is now running. Profits will be credited daily.</div>
             <div style={{ display: 'flex', gap: '8px' }}>
-              <button onClick={() => { setShowSuccess(false); }} style={{ flex: 1, padding: '8px', background: 'rgba(0,0,0,0.08)', border: 'none', color: '#333', fontSize: '9px', cursor: 'pointer' }}>Subscribe More</button>
+              <button onClick={() => { setShowSuccess(false); }} style={{ flex: 1, padding: '8px', background: t.subtleBg, border: `1px solid ${t.border}`, color: t.text, fontSize: '9px', cursor: 'pointer' }}>Subscribe More</button>
               <button onClick={() => navigate('/dashboard/manage-bots')} style={{ flex: 1, padding: '8px', background: '#6366f1', border: 'none', color: 'white', fontSize: '9px', fontWeight: '600', cursor: 'pointer' }}>View Bots</button>
             </div>
           </div>

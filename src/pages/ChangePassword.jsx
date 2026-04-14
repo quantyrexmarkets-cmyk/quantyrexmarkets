@@ -113,7 +113,7 @@ export default function ChangePassword() {
                   <input type="email" value={email} onChange={e => setEmail(e.target.value)} placeholder="Enter your email address"
                     style={{ width: '100%', background: t.bg, border: `1px solid ${t.border}`, color: t.text, fontSize: '12px', padding: '12px', outline: 'none', borderRadius: '8px', boxSizing: 'border-box', marginBottom: '12px' }} />
                   {error && <div style={{ color: '#ef4444', fontSize: '10px', marginBottom: '12px' }}>{error}</div>}
-                  <button onClick={sendCode} disabled={loading} style={{ width: '100%', padding: '12px', background: loading ? '#4b5563' : '#6366f1', border: 'none', color: t.text, fontSize: '12px', fontWeight: '700', cursor: 'pointer', borderRadius: '8px' }}>
+                  <button onClick={sendCode} disabled={loading} style={{ width: '100%', padding: '12px', background: loading ? t.subtleBg : '#6366f1', border: 'none', color: loading ? t.text : 'white', fontSize: '12px', fontWeight: '700', cursor: 'pointer', borderRadius: '8px' }}>
                     {loading ? 'Sending...' : 'Send Verification Code'}
                   </button>
                 </>
@@ -125,7 +125,7 @@ export default function ChangePassword() {
                   <input type="text" value={code} onChange={e => setCode(e.target.value)} placeholder="Enter 6-digit code" maxLength={6}
                     style={{ width: '100%', background: t.bg, border: `1px solid ${t.border}`, color: t.text, fontSize: '18px', padding: '12px', outline: 'none', borderRadius: '8px', boxSizing: 'border-box', marginBottom: '12px', textAlign: 'center', letterSpacing: '6px' }} />
                   {error && <div style={{ color: '#ef4444', fontSize: '10px', marginBottom: '12px' }}>{error}</div>}
-                  <button onClick={verifyCode} disabled={loading} style={{ width: '100%', padding: '12px', background: loading ? '#4b5563' : '#6366f1', border: 'none', color: t.text, fontSize: '12px', fontWeight: '700', cursor: 'pointer', borderRadius: '8px' }}>
+                  <button onClick={verifyCode} disabled={loading} style={{ width: '100%', padding: '12px', background: loading ? t.subtleBg : '#6366f1', border: 'none', color: loading ? t.text : 'white', fontSize: '12px', fontWeight: '700', cursor: 'pointer', borderRadius: '8px' }}>
                     {loading ? 'Verifying...' : 'Verify Code'}
                   </button>
                   <div onClick={sendCode} style={{ textAlign: 'center', marginTop: '12px', color: '#6366f1', fontSize: '10px', cursor: 'pointer' }}>Resend code</div>
@@ -145,7 +145,7 @@ export default function ChangePassword() {
                     </div>
                   ))}
                   {error && <div style={{ color: '#ef4444', fontSize: '10px', marginBottom: '12px' }}>{error}</div>}
-                  <button onClick={changePassword} disabled={loading} style={{ width: '100%', padding: '12px', background: loading ? '#4b5563' : '#6366f1', border: 'none', color: t.text, fontSize: '12px', fontWeight: '700', cursor: 'pointer', borderRadius: '8px' }}>
+                  <button onClick={changePassword} disabled={loading} style={{ width: '100%', padding: '12px', background: loading ? t.subtleBg : '#6366f1', border: 'none', color: loading ? t.text : 'white', fontSize: '12px', fontWeight: '700', cursor: 'pointer', borderRadius: '8px' }}>
                     {loading ? 'Changing...' : 'Change Password'}
                   </button>
                 </>

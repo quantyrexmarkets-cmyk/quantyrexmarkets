@@ -204,7 +204,7 @@ export default function SupportPage() {
                   <svg width='16' height='16' fill='none' stroke='currentColor' viewBox='0 0 24 24' strokeWidth='2'><rect x='3' y='3' width='18' height='18' rx='2'/><circle cx='8.5' cy='8.5' r='1.5'/><polyline points='21,15 16,10 5,21'/></svg>
                 </button>
                 <input value={adminReply || ''} onChange={e => setAdminReply(e.target.value)} onKeyDown={e => { if (e.key === 'Enter') sendReply(); }} placeholder="Type a message..." style={{ flex: 1, background: '#111', border: `1px solid ${t.border}`, color: t.text, fontSize: '12px', padding: '10px 14px', outline: 'none', borderRadius: '6px' }} />
-                <button onClick={sendReply} disabled={adminSending} style={{ background: adminSending ? '#4b5563' : '#6366f1', border: 'none', color: 'white', fontSize: '11px', padding: '10px 16px', cursor: 'pointer', borderRadius: '6px', fontWeight: '600' }}>{adminSending ? '...' : 'Send'}</button>
+                <button onClick={sendReply} disabled={adminSending} style={{ background: adminSending ? t.subtleBg : '#6366f1', border: 'none', color: 'white', fontSize: '11px', padding: '10px 16px', cursor: 'pointer', borderRadius: '6px', fontWeight: '600' }}>{adminSending ? '...' : 'Send'}</button>
               </div>
             )}
           </>

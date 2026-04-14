@@ -181,7 +181,7 @@ export default function WithdrawNew() {
       </>}
 
       <div style={{ color: '#ef4444', fontSize: '8px', marginBottom: '8px', minHeight: '14px' }}>{error}</div>
-      <button onClick={handleSubmit} disabled={submitting} style={{ padding: '10px 28px', background: submitting ? '#4b5563' : '#6366f1', border: 'none', color: t.text, fontSize: '9px', fontWeight: '700', cursor: submitting ? 'not-allowed' : 'pointer' }}>
+      <button onClick={handleSubmit} disabled={submitting} style={{ padding: '10px 28px', background: submitting ? t.subtleBg : '#6366f1', border: 'none', color: submitting ? t.text : 'white', fontSize: '9px', fontWeight: '700', cursor: submitting ? 'not-allowed' : 'pointer' }}>
         {submitting ? 'Processing...' : 'REQUEST WITHDRAWAL'}
       </button>
     </div>
@@ -246,7 +246,7 @@ export default function WithdrawNew() {
             ))}
           </div>
           <div style={{ color: '#ef4444', fontSize: '8px', marginBottom: '8px', minHeight: '14px' }}>{error}</div>
-          <button onClick={handleProceed} disabled={submitting} style={{ padding: '10px 28px', background: submitting ? '#4b5563' : '#6366f1', border: 'none', color: t.text, fontSize: '9px', fontWeight: '700', cursor: submitting ? 'not-allowed' : 'pointer' }}>
+          <button onClick={handleProceed} disabled={submitting} style={{ padding: '10px 28px', background: submitting ? t.subtleBg : '#6366f1', border: 'none', color: submitting ? t.text : 'white', fontSize: '9px', fontWeight: '700', cursor: submitting ? 'not-allowed' : 'pointer' }}>
             Continue
           </button>
         </>}

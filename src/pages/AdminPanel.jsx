@@ -1156,7 +1156,7 @@ export default function AdminPanel() {
                           setAdminReply('');
                         } catch(e) {}
                         setAdminSending(false);
-                      }} disabled={adminSending} style={{ background: adminSending ? '#4b5563' : '#6366f1', border: 'none', color: 'white', fontSize: '8px', padding: '6px 12px', cursor: adminSending ? 'not-allowed' : 'pointer', borderRadius: '4px', whiteSpace: 'nowrap' }}>
+                      }} disabled={adminSending} style={{ background: adminSending ? t.subtleBg : '#6366f1', border: 'none', color: 'white', fontSize: '8px', padding: '6px 12px', cursor: adminSending ? 'not-allowed' : 'pointer', borderRadius: '4px', whiteSpace: 'nowrap' }}>
                         {adminSending ? 'Sending...' : 'Send'}
                       </button>
                     </div>
@@ -1332,7 +1332,7 @@ export default function AdminPanel() {
             {emailSuccess && <div style={{ color: '#22c55e', fontSize: '8px', marginBottom: '10px' }}>{emailSuccess}</div>}
             <div style={{ display: 'flex', gap: '8px' }}>
               <button onClick={() => setEmailModal(false)} style={{ flex: 1, padding: '9px', background: t.subtleBg, border: 'none', color: t.text, fontSize: '8px', cursor: 'pointer' }}>Cancel</button>
-              <button onClick={handleSendEmail} disabled={emailSending} style={{ flex: 1, padding: '9px', background: emailSending ? '#4b5563' : '#6366f1', border: 'none', color: 'white', fontSize: '8px', fontWeight: '700', cursor: emailSending ? 'not-allowed' : 'pointer' }}>
+              <button onClick={handleSendEmail} disabled={emailSending} style={{ flex: 1, padding: '9px', background: emailSending ? t.subtleBg : '#6366f1', border: 'none', color: 'white', fontSize: '8px', fontWeight: '700', cursor: emailSending ? 'not-allowed' : 'pointer' }}>
                 {emailSending ? 'Sending...' : 'Send Email'}
               </button>
             </div>

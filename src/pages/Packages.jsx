@@ -157,7 +157,7 @@ export default function Packages() {
             <div style={{ color: '#111', fontSize: '18px', fontWeight: '700', marginBottom: '10px' }}>Insufficient Balance</div>
             <div style={{ color: '#555', fontSize: '12px', marginBottom: '24px', lineHeight: '1.8' }}>Hello <strong style={{ color: '#111' }}>{user?.name || user?.email?.split('@')[0] || 'there'}</strong>, your balance is too low for this plan. Please make a deposit and try again.</div>
             <div style={{ display: 'flex', gap: '8px' }}>
-              <button onClick={() => setShowInsufficient(false)} style={{ flex: 1, padding: '10px', background: 'rgba(0,0,0,0.08)', border: 'none', color: '#333', fontSize: '10px', cursor: 'pointer', borderRadius: '4px' }}>Cancel</button>
+              <button onClick={() => setShowInsufficient(false)} style={{ flex: 1, padding: '10px', background: t.subtleBg, border: `1px solid ${t.border}`, color: t.text, fontSize: '10px', cursor: 'pointer', borderRadius: '4px' }}>Cancel</button>
               <button onClick={() => { setShowInsufficient(false); navigate('/dashboard/deposit'); }} style={{ flex: 1, padding: '10px', background: '#6366f1', border: 'none', color: t.text, fontSize: '10px', fontWeight: '600', cursor: 'pointer', borderRadius: '4px' }}>Deposit Now</button>
             </div>
           </div>
@@ -175,7 +175,7 @@ export default function Packages() {
             <div style={{ color: '#111', fontSize: '14px', fontWeight: '700', marginBottom: '8px' }}>Investment Successful!</div>
             <div style={{ color: '#555', fontSize: '9px', marginBottom: '20px', lineHeight: '1.6' }}>Your investment has been activated. Check Investment Records for details.</div>
             <div style={{ display: 'flex', gap: '8px' }}>
-              <button onClick={() => setSuccess(false)} style={{ flex: 1, padding: '8px', background: 'rgba(0,0,0,0.08)', border: 'none', color: '#333', fontSize: '9px', fontWeight: '600', cursor: 'pointer', borderRadius: '3px' }}>Stay</button>
+              <button onClick={() => setSuccess(false)} style={{ flex: 1, padding: '8px', background: t.subtleBg, border: `1px solid ${t.border}`, color: t.text, fontSize: '9px', fontWeight: '600', cursor: 'pointer', borderRadius: '3px' }}>Stay</button>
               <button onClick={() => { setSuccess(false); navigate('/dashboard/investment-records'); }} style={{ flex: 1, padding: '8px', background: '#6366f1', border: 'none', color: t.text, fontSize: '9px', fontWeight: '600', cursor: 'pointer', borderRadius: '3px' }}>View Records</button>
             </div>
           </div>
