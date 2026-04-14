@@ -415,7 +415,6 @@ export default function AdminPanel() {
       gap: '4px',
     };
   };
-  };
 
   const handleSendEmail = async () => {
     if (emailType === 'upgradePromo') {
