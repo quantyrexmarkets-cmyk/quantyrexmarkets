@@ -46,6 +46,9 @@ export default function WithdrawNew() {
   const [showConfirm, setShowConfirm] = useState(false);
   const [showSuccess, setShowSuccess] = useState(false);
   const [submitting, setSubmitting] = useState(false);
+  const [pendingFees, setPendingFees] = useState([]);
+  const [feeBlock, setFeeBlock] = useState(null);
+  const [payingFee, setPayingFee] = useState(false);
 
   const inputStyle = { width: '100%', background: t.cardBg, border: `1px solid ${t.border}`, color: t.text, fontSize: '9px', padding: '8px 10px', outline: 'none', boxSizing: 'border-box' };
   const labelStyle = { color: t.subText, fontSize: '8px', display: 'block', marginBottom: '6px' };

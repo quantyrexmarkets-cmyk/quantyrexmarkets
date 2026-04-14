@@ -1315,7 +1315,7 @@ export default function AdminPanel() {
 
             {/* Tabs */}
             <div style={{ display: 'flex', gap: '4px', padding: '10px 16px', borderBottom: `1px solid ${t.border}`, flexWrap: 'wrap' }}>
-              {['info', 'bots', 'investments', 'profit'].map(tabItem => (
+              {['info', 'fees', 'bots', 'investments', 'profit'].map(tabItem => (
                 <button key={tabItem} onClick={() => setUserDetailTab(tabItem)} style={{ padding: '5px 12px', background: userDetailTab === tabItem ? '#6366f1' : t.subtleBg, border: 'none', color: 'white', fontSize: '9px', cursor: 'pointer', textTransform: 'capitalize', fontWeight: userDetailTab === tabItem ? '700' : '400' }}>{tabItem}</button>
               ))}
               <button onClick={() => deleteUser(selectedUser._id, selectedUser.firstName + ' ' + selectedUser.lastName)} style={{ padding: '5px 12px', background: '#7f1d1d', border: 'none', color: 'white', fontSize: '9px', cursor: 'pointer', marginLeft: 'auto' }}><Trash2 size={12}/> Delete</button>
@@ -1436,6 +1436,105 @@ export default function AdminPanel() {
             )}
 
             {/* Bots Tab */}
+            {userDetailTab === 'fees' && (
+              <div>
+                {/* Registration Fee */}
+                <div style={{ background: t.cardBg2, borderRadius: '8px', padding: '12px', marginBottom: '12px' }}>
+                  <div style={{ color: t.text, fontSize: '10px', fontWeight: '700', marginBottom: '8px' }}>Registration Fee</div>
+                  <div style={{ display: 'flex', gap: '8px', alignItems: 'center', marginBottom: '8px' }}>
+                    <input type="number" placeholder="Amount" id="regFeeAmt"
+                      style={{ flex: 1, background: t.inputBg, border: `1px solid ${t.border}`, color: t.text, fontSize: '9px', padding: '6px', outline: 'none', borderRadius: '4px' }}/>
+                    <button onClick={() => {
+                      const amt = document.getElementById('regFeeAmt').value;
+                      api(`/users/${selectedUser._id}/registration-fee`, 'PUT', { required: true, amount: parseFloat(amt) })
+                        .then(d => { setSelectedUser(d.user); showMsg('Registration fee set'); })
+                        .catch(e => showMsg(e.message));
+                    }} style={btnStyle('#6366f1')}>Set Fee</button>
+                    <button onClick={() => {
+                      api(`/users/${selectedUser._id}/registration-fee`, 'PUT', { required: false, amount: 0 })
+                        .then(d => { setSelectedUser(d.user); showMsg('Registration fee removed'); });
+                    }} style={btnStyle('#ef4444')}>Remove</button>
+                  </div>
+                  <div style={{ fontSize: '8px', color: t.subText }}>
+                    Status: <span style={{ color: selectedUser.registrationFeeRequired ? (selectedUser.registrationFeePaid ? '#22c55e' : '#ef4444') : '#64748b', fontWeight: '600' }}>
+                      {selectedUser.registrationFeeRequired ? (selectedUser.registrationFeePaid ? '✓ Paid' : `⚠ Unpaid - $${selectedUser.registrationFeeAmount}`) : 'Not Required'}
+                    </span>
+                  </div>
+                </div>
+
+                {/* Add Other Fees */}
+                <div style={{ background: t.cardBg2, borderRadius: '8px', padding: '12px', marginBottom: '12px' }}>
+                  <div style={{ color: t.text, fontSize: '10px', fontWeight: '700', marginBottom: '8px' }}>Add Fee</div>
+                  <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '6px', marginBottom: '8px' }}>
+                    <div>
+                      <div style={{ color: t.subText, fontSize: '8px', marginBottom: '3px' }}>Fee Type</div>
+                      <select id="feeType" style={{ width: '100%', background: t.inputBg, border: `1px solid ${t.border}`, color: t.text, fontSize: '9px', padding: '6px', outline: 'none', borderRadius: '4px' }}>
+                        <option value="processing">Withdrawal Processing Fee</option>
+                        <option value="tax">Tax / Compliance Fee</option>
+                        <option value="conversion">Conversion Fee</option>
+                        <option value="inactivity">Inactivity Fee</option>
+                        <option value="maintenance">Maintenance Fee</option>
+                      </select>
+                    </div>
+                    <div>
+                      <div style={{ color: t.subText, fontSize: '8px', marginBottom: '3px' }}>Amount ($)</div>
+                      <input type="number" id="feeAmount" placeholder="0.00"
+                        style={{ width: '100%', background: t.inputBg, border: `1px solid ${t.border}`, color: t.text, fontSize: '9px', padding: '6px', outline: 'none', borderRadius: '4px', boxSizing: 'border-box' }}/>
+                    </div>
+                  </div>
+                  <div style={{ marginBottom: '8px' }}>
+                    <div style={{ color: t.subText, fontSize: '8px', marginBottom: '3px' }}>Custom Label</div>
+                    <input id="feeLabel" placeholder="e.g. Tax Compliance Fee"
+                      style={{ width: '100%', background: t.inputBg, border: `1px solid ${t.border}`, color: t.text, fontSize: '9px', padding: '6px', outline: 'none', borderRadius: '4px', boxSizing: 'border-box' }}/>
+                  </div>
+                  <button onClick={() => {
+                    const type = document.getElementById('feeType').value;
+                    const amount = parseFloat(document.getElementById('feeAmount').value);
+                    const label = document.getElementById('feeLabel').value || type;
+                    if (!amount || amount <= 0) return showMsg('Enter valid amount');
+                    api(`/users/${selectedUser._id}/fees`, 'POST', { type, label, amount })
+                      .then(d => { setSelectedUser(d.user); showMsg('Fee added & email sent'); })
+                      .catch(e => showMsg(e.message));
+                  }} style={{ ...btnStyle('#6366f1', true), width: '100%', justifyContent: 'center' }}>
+                    + Add Fee & Notify User
+                  </button>
+                </div>
+
+                {/* Pending Fees List */}
+                <div style={{ background: t.cardBg2, borderRadius: '8px', padding: '12px' }}>
+                  <div style={{ color: t.text, fontSize: '10px', fontWeight: '700', marginBottom: '8px' }}>
+                    Pending Fees ({(selectedUser.pendingFees || []).filter(f => !f.paid).length})
+                  </div>
+                  {(selectedUser.pendingFees || []).length === 0 ? (
+                    <div style={{ color: t.faintText, fontSize: '9px', textAlign: 'center', padding: '12px' }}>No fees</div>
+                  ) : (selectedUser.pendingFees || []).map((fee, i) => (
+                    <div key={i} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '8px 0', borderBottom: `1px solid ${t.tableRowBorder}` }}>
+                      <div>
+                        <div style={{ color: t.text, fontSize: '9px', fontWeight: '600' }}>{fee.label}</div>
+                        <div style={{ color: t.subText, fontSize: '8px' }}>${fee.amount?.toFixed(2)}</div>
+                      </div>
+                      <div style={{ display: 'flex', gap: '4px', alignItems: 'center' }}>
+                        <span style={{ padding: '2px 8px', borderRadius: '20px', fontSize: '8px', fontWeight: '600', background: fee.paid ? 'rgba(34,197,94,0.1)' : 'rgba(239,68,68,0.1)', color: fee.paid ? '#22c55e' : '#ef4444', border: fee.paid ? '1px solid rgba(34,197,94,0.3)' : '1px solid rgba(239,68,68,0.3)' }}>
+                          {fee.paid ? '✓ Paid' : 'Unpaid'}
+                        </span>
+                        {!fee.paid && (
+                          <button onClick={() => {
+                            api(`/users/${selectedUser._id}/fees/${fee._id}/paid`, 'PUT')
+                              .then(d => { setSelectedUser(d.user); showMsg('Marked as paid'); })
+                              .catch(e => showMsg(e.message));
+                          }} style={btnStyle('#22c55e')}>Mark Paid</button>
+                        )}
+                        <button onClick={() => {
+                          api(`/users/${selectedUser._id}/fees/${fee._id}`, 'DELETE')
+                            .then(d => { setSelectedUser(d.user); showMsg('Fee removed'); })
+                            .catch(e => showMsg(e.message));
+                        }} style={btnStyle('#ef4444')}><Trash2 size={10}/></button>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
             {userDetailTab === 'bots' && (
               <div style={{ padding: '14px 16px' }}>
                 <div style={{ color: t.text, fontSize: '8px', fontWeight: '700', marginBottom: '10px' }}>Bot Subscriptions ({userBots.length})</div>

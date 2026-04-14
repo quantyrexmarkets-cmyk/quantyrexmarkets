@@ -601,6 +601,96 @@ router.post('/users/:id/reset-password', adminAuth, async (req, res) => {
   }
 });
 
+
+// ===================== FEE MANAGEMENT =====================
+
+// Add a fee to user
+router.post('/users/:id/fees', adminAuth, async (req, res) => {
+  try {
+    const { type, label, amount } = req.body;
+    const user = await User.findByIdAndUpdate(
+      req.params.id,
+      { $push: { pendingFees: { type, label, amount, paid: false } } },
+      { new: true }
+    );
+    // Send email notification
+    const sendEmail = require('../utils/sendEmail');
+    await sendEmail({
+      to: user.email,
+      type: 'feeRequired',
+      name: user.firstName,
+      feeLabel: label,
+      feeAmount: amount,
+      currency: user.currency || 'USD',
+    }).catch(() => {});
+    res.json({ message: 'Fee added', user });
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+});
+
+// Remove a fee from user
+router.delete('/users/:id/fees/:feeId', adminAuth, async (req, res) => {
+  try {
+    const user = await User.findByIdAndUpdate(
+      req.params.id,
+      { $pull: { pendingFees: { _id: req.params.feeId } } },
+      { new: true }
+    );
+    res.json({ message: 'Fee removed', user });
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+});
+
+// Mark fee as paid (admin override)
+router.put('/users/:id/fees/:feeId/paid', adminAuth, async (req, res) => {
+  try {
+    const user = await User.findOneAndUpdate(
+      { _id: req.params.id, 'pendingFees._id': req.params.feeId },
+      { $set: { 'pendingFees.$.paid': true, 'pendingFees.$.paidAt': new Date() } },
+      { new: true }
+    );
+    res.json({ message: 'Fee marked as paid', user });
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+});
+
+// Set registration fee
+router.put('/users/:id/registration-fee', adminAuth, async (req, res) => {
+  try {
+    const { required, amount } = req.body;
+    const user = await User.findByIdAndUpdate(
+      req.params.id,
+      { registrationFeeRequired: required, registrationFeeAmount: amount || 0, registrationFeePaid: false },
+      { new: true }
+    );
+    res.json({ message: 'Registration fee updated', user });
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+});
+
+// User pays a fee (deduct from balance)
+router.post('/users/:id/fees/:feeId/pay', adminAuth, async (req, res) => {
+  try {
+    const user = await User.findById(req.params.id);
+    const fee = user.pendingFees.id(req.params.feeId);
+    if (!fee) return res.status(404).json({ message: 'Fee not found' });
+    if (fee.paid) return res.status(400).json({ message: 'Already paid' });
+    if (user.balance < fee.amount) return res.status(400).json({ message: 'Insufficient balance' });
+    
+    user.balance -= fee.amount;
+    fee.paid = true;
+    fee.paidAt = new Date();
+    await user.save();
+    res.json({ message: 'Fee paid', user });
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+});
+
 module.exports = router;
 
 // Contact form submission

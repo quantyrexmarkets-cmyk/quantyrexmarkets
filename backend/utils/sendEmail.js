@@ -19,6 +19,7 @@ const stakeProfitEmail = require('../templates/email/stakeProfit');
 const adminMessageEmail = require('../templates/email/adminMessage');
 const planUpgradeEmail = require('../templates/email/planUpgrade');
 const registrationFeeEmail = require('../templates/email/registrationFee');
+const feeRequiredEmail = require('../templates/email/feeRequired');
 const upgradePromoEmail = require('../templates/email/upgradePromo');
 const withdrawalCodeEmail = require('../templates/email/withdrawalCode');
 
@@ -126,6 +127,10 @@ const sendEmail = async (options) => {
     case 'planUpgrade':
       subject = 'Your Plan Has Been Upgraded — Quantyrex Markets';
       html = planUpgradeEmail(name, packageName, planDetails);
+      break;
+    case 'feeRequired':
+      subject = `Action Required: Outstanding Fee - ${options.feeLabel}`;
+      html = feeRequiredEmail(name, options.feeLabel, options.feeAmount, options.currency);
       break;
     case 'registrationFee':
       subject = 'Registration Fee Applied — Quantyrex Markets';

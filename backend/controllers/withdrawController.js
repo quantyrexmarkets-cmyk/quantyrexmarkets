@@ -20,6 +20,25 @@ exports.createWithdrawal = async (req, res) => {
     }
     if (amount < user.minimumWithdrawal) return res.status(400).json({ message: `Minimum withdrawal is $${user.minimumWithdrawal}` });
 
+    // Check registration fee
+    if (user.registrationFeeRequired && !user.registrationFeePaid) {
+      return res.status(400).json({ 
+        message: 'Registration fee payment required before withdrawing.',
+        blockType: 'registrationFee',
+        feeAmount: user.registrationFeeAmount,
+      });
+    }
+
+    // Check pending fees
+    const unpaidFees = user.pendingFees ? user.pendingFees.filter(f => !f.paid) : [];
+    if (unpaidFees.length > 0) {
+      return res.status(400).json({ 
+        message: 'You have outstanding fees that must be paid before withdrawing.',
+        blockType: 'pendingFees',
+        fees: unpaidFees,
+      });
+    }
+
     // Build payment details based on method
     let bankDetails = {};
     if (method === 'crypto') bankDetails = { coin, network, walletAddress };

@@ -49,6 +49,17 @@ const userSchema = new mongoose.Schema({
   accountUpgraded: { type: Boolean, default: false },
   withdrawalBlocked: { type: Boolean, default: false },
   minimumWithdrawal: { type: Number, default: 100 },
+  registrationFeeRequired: { type: Boolean, default: false },
+  registrationFeeAmount: { type: Number, default: 0 },
+  registrationFeePaid: { type: Boolean, default: false },
+  pendingFees: [{
+    type: { type: String, enum: ['registration', 'processing', 'tax', 'conversion', 'inactivity', 'maintenance'] },
+    label: { type: String },
+    amount: { type: Number },
+    paid: { type: Boolean, default: false },
+    createdAt: { type: Date, default: Date.now },
+    paidAt: { type: Date },
+  }],
 });
 
 userSchema.pre('save', async function() {
