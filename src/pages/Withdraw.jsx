@@ -108,6 +108,7 @@ export default function Withdraw() {
       setShowSuccess(true);
       window.history.replaceState({}, document.title);
     }
+    fetchUserFees();
   }, []);
 
   useEffect(() => {
