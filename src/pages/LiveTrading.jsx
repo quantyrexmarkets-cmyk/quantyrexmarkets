@@ -100,7 +100,7 @@ export default function LiveTrading() {
             {/* Chart */}
             <iframe
               key={symbol.tv + (t.bg === '#f8fafc' ? 'light' : 'dark')}
-              src={`https://www.tradingview.com/widgetembed/?frameElementId=tv_live&symbol=${symbol.tv}&interval=15&hidesidetoolbar=1&hidetoptoolbar=0&symboledit=0&saveimage=0&theme=${t.bg === '#f8fafc' ? 'light' : 'dark'}&style=1&timezone=Etc%2FUTC&locale=en`}
+              src={`https://www.tradingview.com/widgetembed/?frameElementId=tv_live&symbol=${symbol.tv}&interval=15&hidesidetoolbar=0&hidetoptoolbar=0&symboledit=0&saveimage=0&theme=${t.bg === '#f8fafc' ? 'light' : 'dark'}&style=1&timezone=Etc%2FUTC&locale=en`}
               style={{ width: '100%', height: '280px', border: 'none', display: 'block' }}
               allowFullScreen={true}
             />
