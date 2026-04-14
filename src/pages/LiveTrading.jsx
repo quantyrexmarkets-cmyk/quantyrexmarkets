@@ -157,7 +157,7 @@ export default function LiveTrading() {
 
       <div style={{ padding: '16px', display: 'flex', flexDirection: 'column', gap: '20px' }}>
         {/* New Trade Button */}
-        <div style={{ display: 'flex', justifyContent: 'flex-end', marginBottom: '-12px' }}>
+        <div style={{ display: 'flex', justifyContent: 'flex-end', marginBottom: '0px' }}>
           <button onClick={() => setShowForm(true)} style={{ background: '#6366f1', border: 'none', color: t.text, fontSize: '9px', fontWeight: '700', padding: '8px 14px', cursor: 'pointer' }}>+ New Trade</button>
         </div>
 
