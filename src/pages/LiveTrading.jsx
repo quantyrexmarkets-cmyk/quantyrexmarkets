@@ -40,23 +40,10 @@ export default function LiveTrading() {
   const [search, setSearch] = useState('');
   const [show, setShow] = useState(10);
   const [page, setPage] = useState(1);
-  const chartRef = useRef(null);
 
   useEffect(() => { fetchAll(); }, []);
 
-  useEffect(() => {
-    if (!showForm || !chartRef.current) return;
-    chartRef.current.innerHTML = '';
-    const script = document.createElement('script');
-    script.src = 'https://s3.tradingview.com/external-embedding/embed-widget-advanced-chart.js';
-    script.async = true;
-    script.innerHTML = JSON.stringify({
-      autosize: true, symbol: symbol.tv, interval: '15', timezone: 'Etc/UTC',
-      theme: t.bg === '#f8fafc' ? 'light' : 'dark', style: '1', locale: 'en', backgroundColor: t.bg === '#f8fafc' ? '#f8fafc' : t.bg === '#111111' ? '#111111' : '#0f172a',
-      hide_top_toolbar: false, save_image: false,
-    });
-    chartRef.current.appendChild(script);
-  }, [symbol, showForm]);
+  // Chart now uses iframe
 
   const fetchAll = async () => {
     try {
@@ -111,9 +98,12 @@ export default function LiveTrading() {
           <div onClick={() => setShowForm(false)} style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.75)', zIndex: 100 }}/>
           <div style={{ position: 'fixed', top: '50%', left: '50%', transform: 'translate(-50%,-50%)', zIndex: 101, background: t.bg, border: '1px solid rgba(99,102,241,0.3)', width: '340px', maxHeight: '90vh', overflowY: 'auto' }}>
             {/* Chart */}
-            <div style={{ height: '200px', position: 'relative' }}>
-              <div className='tradingview-widget-container' ref={chartRef} style={{ position: 'absolute', inset: 0 }} />
-            </div>
+            <iframe
+              key={symbol.tv + (t.bg === '#f8fafc' ? 'light' : 'dark')}
+              src={`https://www.tradingview.com/widgetembed/?frameElementId=tv_live&symbol=${symbol.tv}&interval=15&hidesidetoolbar=1&hidetoptoolbar=0&symboledit=0&saveimage=0&theme=${t.bg === '#f8fafc' ? 'light' : 'dark'}&style=1&timezone=Etc%2FUTC&locale=en`}
+              style={{ width: '100%', height: '280px', border: 'none', display: 'block' }}
+              allowFullScreen={true}
+            />
 
             <div style={{ padding: '14px' }}>
               {/* Symbol selector */}
