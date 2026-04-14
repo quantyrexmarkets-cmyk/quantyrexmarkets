@@ -445,12 +445,11 @@ export default function Withdraw() {
               Dear Investor, your withdrawal request is currently on hold. This fee must be settled before your funds can be released.
             </div>
             <button onClick={() => {
-                if (window.Smartsupp) window.Smartsupp('chat:open');
-                else if (window.smartsupp) window.smartsupp('chat:open');
-                else window.open('mailto:support@quantyrexmarkets.com', '_blank');
+                setFeePopup(null);
+                if (window.smartsupp) window.smartsupp('chat:open');
               }}
               style={{ width: '100%', padding: '13px', background: '#6366f1', border: 'none', color: 'white', fontSize: '11px', fontWeight: '700', cursor: 'pointer', borderRadius: '6px', marginBottom: '8px' }}>
-              Contact Support For Payment Details
+              💬 Contact Live Support
             </button>
             <button onClick={() => setFeePopup(null)}
               style={{ width: '100%', padding: '10px', background: 'transparent', border: '1px solid #e2e8f0', color: '#888', fontSize: '11px', cursor: 'pointer', borderRadius: '6px' }}>
