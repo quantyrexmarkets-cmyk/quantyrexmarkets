@@ -249,7 +249,7 @@ export default function Profile() {
                   <div style={{ color: t.text, fontSize: '13px', fontWeight: '700' }}>{form.firstName} {form.lastName}</div>
                   <div style={{ color: t.subText, fontSize: '8px' }}>{user?.email || ''}</div>
                 </div>
-                <button onClick={() => setActiveTab('edit')} style={{ background: 'rgba(0,0,0,0.2)', border: 'none', color: t.text, fontSize: '8px', padding: '6px 12px', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '4px' }}>
+                <button onClick={() => setActiveTab('edit')} style={{ background: 'rgba(0,0,0,0.2)', border: 'none', color: 'white', fontSize: '8px', padding: '6px 12px', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '4px' }}>
                   <Edit2 size={9}/> Edit Profile
                 </button>
                 <button onClick={() => { logout(); navigate('/signin'); }} style={{ background: '#ef4444', border: 'none', color: 'white', fontSize: '8px', padding: '6px 12px', cursor: 'pointer' }}>Logout</button>
@@ -443,7 +443,7 @@ export default function Profile() {
             <button
               onClick={handleSubmit}
               disabled={loading}
-              style={{ padding: '9px 20px', background: loading ? '#4b4e9b' : '#6366f1', border: 'none', color: t.text, fontSize: '9px', fontWeight: '700', cursor: loading ? 'not-allowed' : 'pointer' }}
+              style={{ padding: '9px 20px', background: loading ? '#4b4e9b' : '#6366f1', border: 'none', color: 'white', fontSize: '9px', fontWeight: '700', cursor: loading ? 'not-allowed' : 'pointer' }}
             >
               {loading ? 'Updating...' : 'Update Profile'}
             </button>

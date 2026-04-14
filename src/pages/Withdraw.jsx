@@ -147,13 +147,13 @@ export default function Withdraw() {
                 <div style={{ marginBottom: '12px' }}>
                   <label style={labelStyle}>Select Coin</label>
                   <div style={{ display: 'flex', gap: '5px', flexWrap: 'wrap' }}>
-                    {['BTC','ETH','USDT','BNB','XRP','SOL'].map(c => <button key={c} onClick={() => setCoin(c)} style={{ padding: '4px 8px', background: coin === c ? '#6366f1' : t.subtleBg, border: 'none', color: t.text, fontSize: '7px', fontWeight: '700', cursor: 'pointer' }}>{c}</button>)}
+                    {['BTC','ETH','USDT','BNB','XRP','SOL'].map(c => <button key={c} onClick={() => setCoin(c)} style={{ padding: '4px 8px', background: coin === c ? '#6366f1' : t.subtleBg, border: 'none', color: 'white', fontSize: '7px', fontWeight: '700', cursor: 'pointer' }}>{c}</button>)}
                   </div>
                 </div>
                 <div style={{ marginBottom: '12px' }}>
                   <label style={labelStyle}>Select Network</label>
                   <div style={{ display: 'flex', gap: '5px' }}>
-                    {['TRC20','ERC20','BEP20'].map(n => <button key={n} onClick={() => setNetwork(n)} style={{ padding: '4px 8px', background: network === n ? '#6366f1' : t.subtleBg, border: 'none', color: t.text, fontSize: '7px', fontWeight: '700', cursor: 'pointer' }}>{n}</button>)}
+                    {['TRC20','ERC20','BEP20'].map(n => <button key={n} onClick={() => setNetwork(n)} style={{ padding: '4px 8px', background: network === n ? '#6366f1' : t.subtleBg, border: 'none', color: 'white', fontSize: '7px', fontWeight: '700', cursor: 'pointer' }}>{n}</button>)}
                   </div>
                 </div>
                 <div style={{ marginBottom: '12px' }}>

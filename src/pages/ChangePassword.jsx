@@ -76,7 +76,7 @@ export default function ChangePassword() {
   return (
     <div style={{ minHeight: '100vh', background: t.bg, fontFamily: "'Segoe UI', sans-serif" }}>
       <div style={{ background: t.bg, padding: '12px 16px', display: 'flex', alignItems: 'center', gap: '12px', borderBottom: `1px solid ${t.border}` }}>
-        <button onClick={() => step > 1 ? setStep(step - 1) : navigate('/dashboard/settings')} style={{ background: 'none', border: 'none', color: t.text, cursor: 'pointer', display: 'flex' }}>
+        <button onClick={() => step > 1 ? setStep(step - 1) : navigate('/dashboard/settings')} style={{ background: 'none', border: 'none', color: 'white', cursor: 'pointer', display: 'flex' }}>
           <ArrowLeft size={20} />
         </button>
         <Lock size={18} color="#6366f1" />

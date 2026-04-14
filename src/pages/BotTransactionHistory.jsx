@@ -53,7 +53,7 @@ export default function BotTransactionHistory() {
         {/* Top bar */}
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '14px' }}>
           <span style={{ color: t.text, fontSize: '11px', fontWeight: '700' }}>Trading Bots</span>
-          <button onClick={() => navigate('/dashboard/manage-bots')} style={{ background: '#6366f1', border: 'none', color: t.text, fontSize: '8px', fontWeight: '700', padding: '7px 14px', cursor: 'pointer' }}>+ Subscribe Bot</button>
+          <button onClick={() => navigate('/dashboard/manage-bots')} style={{ background: '#6366f1', border: 'none', color: 'white', fontSize: '8px', fontWeight: '700', padding: '7px 14px', cursor: 'pointer' }}>+ Subscribe Bot</button>
         </div>
 
         {/* Stats */}

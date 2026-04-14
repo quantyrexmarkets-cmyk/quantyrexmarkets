@@ -60,7 +60,7 @@ export default function InvestmentRecords() {
       <div style={{ padding: '16px' }}>
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px' }}>
           <span style={{ color: t.text, fontSize: '11px', fontWeight: '700' }}>Investment Records</span>
-          <button onClick={() => navigate('/dashboard/packages')} style={{ background: '#6366f1', border: 'none', color: t.text, fontSize: '8px', fontWeight: '700', padding: '6px 12px', cursor: 'pointer' }}>+ New Investment</button>
+          <button onClick={() => navigate('/dashboard/packages')} style={{ background: '#6366f1', border: 'none', color: 'white', fontSize: '8px', fontWeight: '700', padding: '6px 12px', cursor: 'pointer' }}>+ New Investment</button>
         </div>
 
         {/* Stats */}

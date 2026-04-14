@@ -215,7 +215,7 @@ export default function NewStake() {
               {error && <div style={{ color: '#ef4444', fontSize: '8px', marginBottom: '10px' }}>{error}</div>}
 
               <button onClick={handleStake} disabled={submitting}
-                style={{ width: '100%', padding: '11px', background: submitting ? '#4b4e9b' : selected.color, border: 'none', color: t.text, fontSize: '11px', fontWeight: '700', cursor: submitting ? 'not-allowed' : 'pointer' }}>
+                style={{ width: '100%', padding: '11px', background: submitting ? '#4b4e9b' : selected.color, border: 'none', color: 'white', fontSize: '11px', fontWeight: '700', cursor: submitting ? 'not-allowed' : 'pointer' }}>
                 {submitting ? 'Processing...' : `Stake ${selected.name}`}
               </button>
             </div>

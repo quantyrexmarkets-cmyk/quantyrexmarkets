@@ -88,7 +88,7 @@ export default function ManageBots() {
 
         {/* Subscribe Button */}
         <div style={{ display: 'flex', justifyContent: 'flex-end', marginBottom: '14px' }}>
-          <button onClick={() => navigate('/dashboard/bot-plans')} style={{ background: '#6366f1', border: 'none', color: t.text, fontSize: '9px', fontWeight: '700', padding: '8px 14px', cursor: 'pointer' }}>+ Subscribe Bot</button>
+          <button onClick={() => navigate('/dashboard/bot-plans')} style={{ background: '#6366f1', border: 'none', color: 'white', fontSize: '9px', fontWeight: '700', padding: '8px 14px', cursor: 'pointer' }}>+ Subscribe Bot</button>
         </div>
 
         {/* Stats */}
@@ -234,8 +234,8 @@ export default function ManageBots() {
               </div>
             ))}
             <div style={{ display: 'flex', gap: '8px', marginTop: '16px' }}>
-              <button onClick={() => setConfirmBot(null)} style={{ flex: 1, padding: '9px', background: t.border, border: 'none', color: t.text, fontSize: '9px', cursor: 'pointer' }}>Cancel</button>
-              <button onClick={() => subscribe(confirmBot)} style={{ flex: 1, padding: '9px', background: '#6366f1', border: 'none', color: t.text, fontSize: '9px', fontWeight: '700', cursor: 'pointer' }}>Confirm</button>
+              <button onClick={() => setConfirmBot(null)} style={{ flex: 1, padding: '9px', background: t.border, border: 'none', color: 'white', fontSize: '9px', cursor: 'pointer' }}>Cancel</button>
+              <button onClick={() => subscribe(confirmBot)} style={{ flex: 1, padding: '9px', background: '#6366f1', border: 'none', color: 'white', fontSize: '9px', fontWeight: '700', cursor: 'pointer' }}>Confirm</button>
             </div>
           </div>
         </div>

@@ -132,7 +132,7 @@ export default function Stake() {
             </div>
             {error && <div style={{ color: '#ef4444', fontSize: '8px', marginBottom: '8px' }}>{error}</div>}
             <button onClick={handleSubmit} disabled={submitting}
-              style={{ width: '100%', padding: '9px', background: submitting ? '#4b4e9b' : '#6366f1', border: 'none', color: t.text, fontSize: '9px', fontWeight: '700', cursor: submitting ? 'not-allowed' : 'pointer' }}>
+              style={{ width: '100%', padding: '9px', background: submitting ? '#4b4e9b' : '#6366f1', border: 'none', color: 'white', fontSize: '9px', fontWeight: '700', cursor: submitting ? 'not-allowed' : 'pointer' }}>
               {submitting ? 'Processing...' : 'Stake Now'}
             </button>
           </div>

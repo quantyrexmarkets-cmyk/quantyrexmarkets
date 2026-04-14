@@ -145,7 +145,7 @@ export default function Deposit() {
                   </div>
                 </div>
                 {error && <div style={{ color: '#ef4444', fontSize: '8px', marginBottom: '8px' }}>{error}</div>}
-                <button onClick={handleSubmit} disabled={submitting} style={{ width: '100%', padding: '9px', background: submitting ? '#4b4e9b' : '#22c55e', border: 'none', color: t.text, fontSize: '9px', fontWeight: '700', cursor: submitting ? 'not-allowed' : 'pointer' }}>
+                <button onClick={handleSubmit} disabled={submitting} style={{ width: '100%', padding: '9px', background: submitting ? '#4b4e9b' : '#22c55e', border: 'none', color: 'white', fontSize: '9px', fontWeight: '700', cursor: submitting ? 'not-allowed' : 'pointer' }}>
                   {submitting ? 'Submitting...' : 'Submit Deposit'}
                 </button>
               </div>
@@ -154,7 +154,7 @@ export default function Deposit() {
               <div style={{ width: '120px', flexShrink: 0, background: t.inputBg, border: `1px solid ${t.border}`, padding: '10px', textAlign: 'center' }}>
                 <div style={{ color: t.subText, fontSize: '6px', marginBottom: '3px', textAlign: 'left' }}>USDT Address:</div>
                 <div style={{ color: '#6366f1', fontSize: '6px', wordBreak: 'break-all', marginBottom: '4px', textAlign: 'left' }}>{walletAddress}</div>
-                <button onClick={handleCopy} style={{ display: 'flex', alignItems: 'center', gap: '3px', background: copied ? '#22c55e' : '#6366f1', border: 'none', color: t.text, fontSize: '6px', padding: '3px 6px', cursor: 'pointer', marginBottom: '6px', width: '100%', justifyContent: 'center' }}>
+                <button onClick={handleCopy} style={{ display: 'flex', alignItems: 'center', gap: '3px', background: copied ? '#22c55e' : '#6366f1', border: 'none', color: 'white', fontSize: '6px', padding: '3px 6px', cursor: 'pointer', marginBottom: '6px', width: '100%', justifyContent: 'center' }}>
                   <Copy size={8}/> {copied ? 'Copied!' : 'Copy'}
                 </button>
                 <div style={{ color: t.text, fontSize: '7px', fontWeight: '700', marginBottom: '6px' }}>Deposit USDT to Quantyrex Markets</div>

@@ -186,7 +186,7 @@ const handleWithdraw = async () => {
                       <label style={labelStyle}>Select Coin</label>
                       <div style={{ display: 'flex', gap: '5px', flexWrap: 'wrap' }}>
                         {coins.map(c => (
-                          <button key={c} onClick={() => setCoin(c)} style={{ padding: '4px 8px', background: coin === c ? '#6366f1' : t.subtleBg, border: 'none', color: t.text, fontSize: '7px', fontWeight: '700', cursor: 'pointer' }}>{c}</button>
+                          <button key={c} onClick={() => setCoin(c)} style={{ padding: '4px 8px', background: coin === c ? '#6366f1' : t.subtleBg, border: 'none', color: 'white', fontSize: '7px', fontWeight: '700', cursor: 'pointer' }}>{c}</button>
                         ))}
                       </div>
                     </div>
@@ -194,7 +194,7 @@ const handleWithdraw = async () => {
                       <label style={labelStyle}>Select Network</label>
                       <div style={{ display: 'flex', gap: '5px' }}>
                         {['TRC20','ERC20','BEP20'].map(n => (
-                          <button key={n} onClick={() => setNetwork(n)} style={{ padding: '4px 8px', background: network === n ? '#6366f1' : t.subtleBg, border: 'none', color: t.text, fontSize: '7px', fontWeight: '700', cursor: 'pointer' }}>{n}</button>
+                          <button key={n} onClick={() => setNetwork(n)} style={{ padding: '4px 8px', background: network === n ? '#6366f1' : t.subtleBg, border: 'none', color: 'white', fontSize: '7px', fontWeight: '700', cursor: 'pointer' }}>{n}</button>
                         ))}
                       </div>
                     </div>
@@ -241,7 +241,7 @@ const handleWithdraw = async () => {
                     <span style={{ color: t.subText, fontSize: '6px' }}>{network}</span>
                   </div>
                   <div style={{ color: t.faintText, fontSize: '6px', textAlign: 'center', marginBottom: '6px' }}>*Do not deposit assets other than {coin}.</div>
-                  <button onClick={handleCopy} style={{ width: '100%', padding: '5px', background: copied ? '#22c55e' : '#6366f1', border: 'none', color: t.text, fontSize: '7px', cursor: 'pointer' }}>
+                  <button onClick={handleCopy} style={{ width: '100%', padding: '5px', background: copied ? '#22c55e' : '#6366f1', border: 'none', color: 'white', fontSize: '7px', cursor: 'pointer' }}>
                     {copied ? 'Copied!' : 'Copy Address'}
                   </button>
                 </div>

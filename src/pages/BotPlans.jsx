@@ -123,7 +123,7 @@ export default function BotPlans() {
               </div>
             ))}
             <div style={{ display: 'flex', gap: '8px', marginTop: '16px' }}>
-              <button onClick={() => setConfirmBot(null)} style={{ flex: 1, padding: '9px', background: t.subtleBg, border: 'none', color: t.text, fontSize: '9px', cursor: 'pointer' }}>Cancel</button>
+              <button onClick={() => setConfirmBot(null)} style={{ flex: 1, padding: '9px', background: t.subtleBg, border: 'none', color: 'white', fontSize: '9px', cursor: 'pointer' }}>Cancel</button>
               <button onClick={() => subscribe(confirmBot)} disabled={subscribing === confirmBot.name} style={{ flex: 1, padding: '9px', background: '#6366f1', border: 'none', color: 'white', fontSize: '9px', fontWeight: '700', cursor: 'pointer' }}>
                 {subscribing === confirmBot.name ? 'Activating...' : 'Confirm'}
               </button>

@@ -195,7 +195,7 @@ export default function KYC() {
             )}
 
             <button onClick={handleSubmit} disabled={submitting}
-              style={{ padding: '10px 28px', background: submitting ? '#374151' : '#6366f1', border: 'none', color: t.text, fontSize: '9px', fontWeight: '700', cursor: submitting ? 'not-allowed' : 'pointer' }}>
+              style={{ padding: '10px 28px', background: submitting ? '#374151' : '#6366f1', border: 'none', color: 'white', fontSize: '9px', fontWeight: '700', cursor: submitting ? 'not-allowed' : 'pointer' }}>
               {submitting ? 'Submitting...' : 'Submit for Verification'}
             </button>
           </div>

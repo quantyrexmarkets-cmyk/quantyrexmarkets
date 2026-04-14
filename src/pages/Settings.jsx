@@ -70,7 +70,7 @@ export default function SettingsPage() {
 
       {/* Header */}
       <div style={{ background: t.bg, padding: '12px 16px', display: 'flex', alignItems: 'center', gap: '12px', borderBottom: `1px solid ${t.border}`, position: 'sticky', top: 0, zIndex: 100 }}>
-        <button onClick={() => navigate('/dashboard')} style={{ background: 'none', border: 'none', color: t.text, cursor: 'pointer', display: 'flex', alignItems: 'center' }}>
+        <button onClick={() => navigate('/dashboard')} style={{ background: 'none', border: 'none', color: 'white', cursor: 'pointer', display: 'flex', alignItems: 'center' }}>
           <ArrowLeft size={20} />
         </button>
         <Settings size={18} color="#6366f1" />
@@ -120,7 +120,7 @@ export default function SettingsPage() {
             title="Two-Factor Authentication"
             desc="Require email OTP on every login"
             right={
-              <button onClick={toggle2FA} disabled={twoFALoading} style={{ padding: '6px 16px', background: twoFAEnabled ? '#22c55e' : t.cardBg2, border: 'none', color: t.text, fontSize: '10px', fontWeight: '700', cursor: 'pointer', borderRadius: '6px', minWidth: '60px' }}>
+              <button onClick={toggle2FA} disabled={twoFALoading} style={{ padding: '6px 16px', background: twoFAEnabled ? '#22c55e' : t.cardBg2, border: 'none', color: 'white', fontSize: '10px', fontWeight: '700', cursor: 'pointer', borderRadius: '6px', minWidth: '60px' }}>
                 {twoFALoading ? '...' : twoFAEnabled ? 'ON' : 'OFF'}
               </button>
             }
@@ -153,7 +153,7 @@ export default function SettingsPage() {
             desc="Get notified on trade updates"
             right={<ToggleSwitch value={notifTrade} onChange={() => setNotifTrade(!notifTrade)} />}
           />
-          <button onClick={saveNotifSettings} style={{ width: '100%', marginTop: '12px', padding: '10px', background: saved ? '#22c55e' : '#6366f1', border: 'none', color: t.text, fontSize: '11px', fontWeight: '700', cursor: 'pointer', borderRadius: '8px' }}>
+          <button onClick={saveNotifSettings} style={{ width: '100%', marginTop: '12px', padding: '10px', background: saved ? '#22c55e' : '#6366f1', border: 'none', color: 'white', fontSize: '11px', fontWeight: '700', cursor: 'pointer', borderRadius: '8px' }}>
             {saved ? '✓ Saved!' : 'Save Preferences'}
           </button>
         </Section>

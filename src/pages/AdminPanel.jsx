@@ -696,7 +696,7 @@ export default function AdminPanel() {
             <div style={{ display: 'flex', gap: '8px', marginBottom: '12px', flexWrap: 'wrap' }}>
               <input value={depositSearch} onChange={e => setDepositSearch(e.target.value)} placeholder="Search user or method..." style={{ background: t.cardBg2, border: `1px solid ${t.border}`, color: t.text, fontSize: '8px', padding: '6px 10px', outline: 'none', flex: 1, minWidth: '150px' }} />
               {['all','pending','approved','rejected'].map(f => (
-                <button key={f} onClick={() => setDepositFilter(f)} style={{ padding: '6px 12px', background: depositFilter === f ? '#6366f1' : t.subtleBg, border: 'none', color: t.text, fontSize: '8px', fontWeight: '600', cursor: 'pointer', textTransform: 'capitalize' }}>{f}</button>
+                <button key={f} onClick={() => setDepositFilter(f)} style={{ padding: '6px 12px', background: depositFilter === f ? '#6366f1' : t.subtleBg, border: 'none', color: 'white', fontSize: '8px', fontWeight: '600', cursor: 'pointer', textTransform: 'capitalize' }}>{f}</button>
               ))}
             </div>
           <div style={{ overflowX: 'auto' }}>
@@ -738,7 +738,7 @@ export default function AdminPanel() {
             <div style={{ display: 'flex', gap: '8px', marginBottom: '12px', flexWrap: 'wrap' }}>
               <input value={withdrawalSearch} onChange={e => setWithdrawalSearch(e.target.value)} placeholder="Search user or method..." style={{ background: t.cardBg2, border: `1px solid ${t.border}`, color: t.text, fontSize: '8px', padding: '6px 10px', outline: 'none', flex: 1, minWidth: '150px' }} />
               {['all','pending','approved','rejected'].map(f => (
-                <button key={f} onClick={() => setWithdrawalFilter(f)} style={{ padding: '6px 12px', background: withdrawalFilter === f ? '#6366f1' : t.subtleBg, border: 'none', color: t.text, fontSize: '8px', fontWeight: '600', cursor: 'pointer', textTransform: 'capitalize' }}>{f}</button>
+                <button key={f} onClick={() => setWithdrawalFilter(f)} style={{ padding: '6px 12px', background: withdrawalFilter === f ? '#6366f1' : t.subtleBg, border: 'none', color: 'white', fontSize: '8px', fontWeight: '600', cursor: 'pointer', textTransform: 'capitalize' }}>{f}</button>
               ))}
             </div>
           <div style={{ overflowX: 'auto' }}>
@@ -1331,7 +1331,7 @@ export default function AdminPanel() {
             )}
             {emailSuccess && <div style={{ color: '#22c55e', fontSize: '8px', marginBottom: '10px' }}>{emailSuccess}</div>}
             <div style={{ display: 'flex', gap: '8px' }}>
-              <button onClick={() => setEmailModal(false)} style={{ flex: 1, padding: '9px', background: t.subtleBg, border: 'none', color: t.text, fontSize: '8px', cursor: 'pointer' }}>Cancel</button>
+              <button onClick={() => setEmailModal(false)} style={{ flex: 1, padding: '9px', background: t.subtleBg, border: 'none', color: 'white', fontSize: '8px', cursor: 'pointer' }}>Cancel</button>
               <button onClick={handleSendEmail} disabled={emailSending} style={{ flex: 1, padding: '9px', background: emailSending ? t.subtleBg : '#6366f1', border: 'none', color: 'white', fontSize: '8px', fontWeight: '700', cursor: emailSending ? 'not-allowed' : 'pointer' }}>
                 {emailSending ? 'Sending...' : 'Send Email'}
               </button>

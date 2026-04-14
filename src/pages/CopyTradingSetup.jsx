@@ -77,7 +77,7 @@ export default function CopyTradingSetup() {
       <div style={{ fontSize: '9px', color: t.subText, textAlign: 'center', marginBottom: '24px' }}>Duration: <span style={{ color: t.text, fontWeight: '700' }}>{duration} days</span></div>
       <div style={{ display: 'flex', gap: '10px' }}>
         <button onClick={() => navigate('/dashboard/copy-trading')} style={{ padding: '10px 20px', background: t.border, border: `1px solid ${t.border}`, color: t.text, fontSize: '9px', fontWeight: '600', cursor: 'pointer', borderRadius: '8px' }}>Back to Traders</button>
-        <button onClick={() => navigate('/dashboard/my-copy-trades')} style={{ padding: '10px 20px', background: '#6366f1', border: 'none', color: t.text, fontSize: '9px', fontWeight: '600', cursor: 'pointer', borderRadius: '8px' }}>My Copy Trades</button>
+        <button onClick={() => navigate('/dashboard/my-copy-trades')} style={{ padding: '10px 20px', background: '#6366f1', border: 'none', color: 'white', fontSize: '9px', fontWeight: '600', cursor: 'pointer', borderRadius: '8px' }}>My Copy Trades</button>
       </div>
     </div>
   );
@@ -224,7 +224,7 @@ export default function CopyTradingSetup() {
 
         {error && <div style={{ background: 'rgba(239,68,68,0.1)', border: '1px solid rgba(239,68,68,0.3)', borderRadius: '8px', padding: '10px 12px', fontSize: '9px', color: '#ef4444', marginBottom: '12px' }}>{error}</div>}
 
-        <button onClick={handleConfirm} disabled={loading} style={{ width: '100%', padding: '14px', background: loading ? 'rgba(99,102,241,0.5)' : 'linear-gradient(135deg, #6366f1, #4f46e5)', border: 'none', color: t.text, fontSize: '12px', fontWeight: '700', cursor: loading ? 'not-allowed' : 'pointer', borderRadius: '10px', marginBottom: '10px', boxShadow: '0 4px 12px rgba(99,102,241,0.4)' }}>
+        <button onClick={handleConfirm} disabled={loading} style={{ width: '100%', padding: '14px', background: loading ? 'rgba(99,102,241,0.5)' : 'linear-gradient(135deg, #6366f1, #4f46e5)', border: 'none', color: 'white', fontSize: '12px', fontWeight: '700', cursor: loading ? 'not-allowed' : 'pointer', borderRadius: '10px', marginBottom: '10px', boxShadow: '0 4px 12px rgba(99,102,241,0.4)' }}>
           {loading ? 'Processing...' : '🚀 Start Copying ' + trader.name}
         </button>
         <button onClick={() => navigate(-1)} style={{ width: '100%', padding: '10px', background: 'transparent', border: `1px solid ${t.border}`, color: t.subText, fontSize: '9px', cursor: 'pointer', borderRadius: '10px' }}>
