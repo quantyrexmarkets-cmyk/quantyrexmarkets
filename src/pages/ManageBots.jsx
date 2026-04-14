@@ -93,17 +93,17 @@ export default function ManageBots() {
 
         {/* Stats */}
         <div style={{ display: 'flex', gap: '8px', marginBottom: '14px' }}>
-          <div style={{ background: 'linear-gradient(135deg, rgba(15,23,42,0.9), rgba(30,41,59,0.8))', border: '1px solid rgba(99,102,241,0.3)', borderRadius: '12px', padding: '6px', flex: 1, textAlign: 'center', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '3px', boxShadow: '0 4px 24px rgba(99,102,241,0.1)' }}>
+          <div style={{ background: t.bg === '#f8fafc' ? t.cardBg : 'linear-gradient(135deg, rgba(15,23,42,0.9), rgba(30,41,59,0.8))', border: t.bg === '#f8fafc' ? `1px solid ${t.border}` : '1px solid rgba(99,102,241,0.3)', borderRadius: '12px', padding: '6px', flex: 1, textAlign: 'center', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '3px', boxShadow: '0 4px 24px rgba(99,102,241,0.1)' }}>
             <div style={{ width: '32px', height: '32px', borderRadius: '50%', background: 'rgba(34,197,94,0.15)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}><Bot size={14} color="#22c55e"/></div>
             <div style={{ color: t.subText, fontSize: '7px' }}>Active Bots</div>
             <div style={{ color: '#22c55e', fontSize: '10px', fontWeight: '700' }}>{activeCount}</div>
           </div>
-          <div style={{ background: 'linear-gradient(135deg, rgba(15,23,42,0.9), rgba(30,41,59,0.8))', border: '1px solid rgba(99,102,241,0.3)', borderRadius: '12px', padding: '6px', flex: 1, textAlign: 'center', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '3px', boxShadow: '0 4px 24px rgba(99,102,241,0.1)' }}>
+          <div style={{ background: t.bg === '#f8fafc' ? t.cardBg : 'linear-gradient(135deg, rgba(15,23,42,0.9), rgba(30,41,59,0.8))', border: t.bg === '#f8fafc' ? `1px solid ${t.border}` : '1px solid rgba(99,102,241,0.3)', borderRadius: '12px', padding: '6px', flex: 1, textAlign: 'center', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '3px', boxShadow: '0 4px 24px rgba(99,102,241,0.1)' }}>
             <div style={{ width: '32px', height: '32px', borderRadius: '50%', background: 'rgba(99,102,241,0.15)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}><Bot size={14} color="#6366f1"/></div>
             <div style={{ color: t.subText, fontSize: '7px' }}>Total Bots</div>
             <div style={{ color: '#6366f1', fontSize: '10px', fontWeight: '700' }}>{activeBots.length}</div>
           </div>
-          <div style={{ background: 'linear-gradient(135deg, rgba(15,23,42,0.9), rgba(30,41,59,0.8))', border: '1px solid rgba(99,102,241,0.3)', borderRadius: '12px', padding: '6px', flex: 1, textAlign: 'center', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '3px', boxShadow: '0 4px 24px rgba(99,102,241,0.1)' }}>
+          <div style={{ background: t.bg === '#f8fafc' ? t.cardBg : 'linear-gradient(135deg, rgba(15,23,42,0.9), rgba(30,41,59,0.8))', border: t.bg === '#f8fafc' ? `1px solid ${t.border}` : '1px solid rgba(99,102,241,0.3)', borderRadius: '12px', padding: '6px', flex: 1, textAlign: 'center', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '3px', boxShadow: '0 4px 24px rgba(99,102,241,0.1)' }}>
             <div style={{ width: '32px', height: '32px', borderRadius: '50%', background: 'rgba(245,158,11,0.15)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}><TrendingUp size={14} color="#f59e0b"/></div>
             <div style={{ color: t.subText, fontSize: '7px' }}>Total Earned</div>
             <div style={{ color: '#f59e0b', fontSize: '10px', fontWeight: '700' }}>{formatAmount(totalEarned, user?.currency)}</div>
@@ -173,7 +173,7 @@ export default function ManageBots() {
       {showPlans && (
         <>
           <div onClick={() => setShowPlans(false)} style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.75)', zIndex: 100 }}/>
-          <div style={{ position: 'fixed', top: '50%', left: '50%', transform: 'translate(-50%,-50%)', zIndex: 101, background: t.bg, border: '1px solid rgba(99,102,241,0.3)', padding: '16px', width: '340px', maxHeight: '90vh', overflowY: 'auto' }}>
+          <div style={{ position: 'fixed', top: '50%', left: '50%', transform: 'translate(-50%,-50%)', zIndex: 101, background: t.bg, border: t.bg === '#f8fafc' ? `1px solid ${t.border}` : '1px solid rgba(99,102,241,0.3)', padding: '16px', width: '340px', maxHeight: '90vh', overflowY: 'auto' }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '14px' }}>
               <span style={{ color: t.text, fontSize: '11px', fontWeight: '700' }}>Subscribe to a Bot</span>
               <button onClick={() => setShowPlans(false)} style={{ background: 'none', border: 'none', color: t.subText, cursor: 'pointer', fontSize: '16px' }}>×</button>
@@ -186,7 +186,7 @@ export default function ManageBots() {
                 const canAfford = (user?.balance || 0) >= bot.amount;
                 const isSubscribing = subscribing === bot.name;
                 return (
-                  <div key={i} style={{ background: t.cardBg, border: '1px solid rgba(99,102,241,0.3)', padding: '12px', position: 'relative' }}>
+                  <div key={i} style={{ background: t.cardBg, border: t.bg === '#f8fafc' ? `1px solid ${t.border}` : '1px solid rgba(99,102,241,0.3)', padding: '12px', position: 'relative' }}>
                     <div style={{ color: '#818cf8', fontSize: '9px', fontWeight: '800', marginBottom: '2px' }}>{bot.name}</div>
                     <div style={{ color: t.text, fontSize: '14px', fontWeight: '900', marginBottom: '8px' }}>${bot.amount.toLocaleString()}</div>
                     {[

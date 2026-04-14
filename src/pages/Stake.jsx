@@ -163,22 +163,22 @@ export default function Stake() {
 
         {/* Stats */}
         <div style={{ display: 'flex', gap: '8px', marginBottom: '14px', flexWrap: 'wrap' }}>
-          <div style={{ background: 'linear-gradient(135deg, rgba(15,23,42,0.9), rgba(30,41,59,0.8))', border: '1px solid rgba(99,102,241,0.3)', borderRadius: '12px', padding: '6px', flex: 1, textAlign: 'center', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '3px', boxShadow: '0 4px 24px rgba(99,102,241,0.1)' }}>
+          <div style={{ background: t.bg === '#f8fafc' ? t.cardBg : 'linear-gradient(135deg, rgba(15,23,42,0.9), rgba(30,41,59,0.8))', border: t.bg === '#f8fafc' ? `1px solid ${t.border}` : '1px solid rgba(99,102,241,0.3)', borderRadius: '12px', padding: '6px', flex: 1, textAlign: 'center', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '3px', boxShadow: '0 4px 24px rgba(99,102,241,0.1)' }}>
             <div style={{ width: '32px', height: '32px', borderRadius: '50%', background: 'rgba(99,102,241,0.15)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}><DollarSign size={14} color="#6366f1"/></div>
             <div style={{ color: t.subText, fontSize: '7px' }}>Total Staked</div>
             <div style={{ color: '#6366f1', fontSize: '10px', fontWeight: '700' }}>{formatAmount(totalStaked, user?.currency)}</div>
           </div>
-          <div style={{ background: 'linear-gradient(135deg, rgba(15,23,42,0.9), rgba(30,41,59,0.8))', border: '1px solid rgba(99,102,241,0.3)', borderRadius: '12px', padding: '6px', flex: 1, textAlign: 'center', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '3px', boxShadow: '0 4px 24px rgba(99,102,241,0.1)' }}>
+          <div style={{ background: t.bg === '#f8fafc' ? t.cardBg : 'linear-gradient(135deg, rgba(15,23,42,0.9), rgba(30,41,59,0.8))', border: t.bg === '#f8fafc' ? `1px solid ${t.border}` : '1px solid rgba(99,102,241,0.3)', borderRadius: '12px', padding: '6px', flex: 1, textAlign: 'center', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '3px', boxShadow: '0 4px 24px rgba(99,102,241,0.1)' }}>
             <div style={{ width: '32px', height: '32px', borderRadius: '50%', background: 'rgba(34,197,94,0.15)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}><TrendingUp size={14} color="#22c55e"/></div>
             <div style={{ color: t.subText, fontSize: '7px' }}>Total Earned</div>
             <div style={{ color: '#22c55e', fontSize: '10px', fontWeight: '700' }}>{formatAmount(totalEarned, user?.currency)}</div>
           </div>
-          <div style={{ background: 'linear-gradient(135deg, rgba(15,23,42,0.9), rgba(30,41,59,0.8))', border: '1px solid rgba(99,102,241,0.3)', borderRadius: '12px', padding: '6px', flex: 1, textAlign: 'center', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '3px', boxShadow: '0 4px 24px rgba(99,102,241,0.1)' }}>
+          <div style={{ background: t.bg === '#f8fafc' ? t.cardBg : 'linear-gradient(135deg, rgba(15,23,42,0.9), rgba(30,41,59,0.8))', border: t.bg === '#f8fafc' ? `1px solid ${t.border}` : '1px solid rgba(99,102,241,0.3)', borderRadius: '12px', padding: '6px', flex: 1, textAlign: 'center', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '3px', boxShadow: '0 4px 24px rgba(99,102,241,0.1)' }}>
             <div style={{ width: '32px', height: '32px', borderRadius: '50%', background: 'rgba(245,158,11,0.15)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}><Lock size={14} color="#f59e0b"/></div>
             <div style={{ color: t.subText, fontSize: '7px' }}>Active</div>
             <div style={{ color: '#f59e0b', fontSize: '10px', fontWeight: '700' }}>{stakes.filter(s=>s.status==='active').length}</div>
           </div>
-          <div style={{ background: 'linear-gradient(135deg, rgba(15,23,42,0.9), rgba(30,41,59,0.8))', border: '1px solid rgba(99,102,241,0.3)', borderRadius: '12px', padding: '6px', flex: 1, textAlign: 'center', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '3px', boxShadow: '0 4px 24px rgba(99,102,241,0.1)' }}>
+          <div style={{ background: t.bg === '#f8fafc' ? t.cardBg : 'linear-gradient(135deg, rgba(15,23,42,0.9), rgba(30,41,59,0.8))', border: t.bg === '#f8fafc' ? `1px solid ${t.border}` : '1px solid rgba(99,102,241,0.3)', borderRadius: '12px', padding: '6px', flex: 1, textAlign: 'center', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '3px', boxShadow: '0 4px 24px rgba(99,102,241,0.1)' }}>
             <div style={{ width: '32px', height: '32px', borderRadius: '50%', background: 'rgba(148,163,184,0.15)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}><Unlock size={14} color="#94a3b8"/></div>
             <div style={{ color: t.subText, fontSize: '7px' }}>Completed</div>
             <div style={{ color: '#94a3b8', fontSize: '10px', fontWeight: '700' }}>{stakes.filter(s=>s.status==='completed').length}</div>

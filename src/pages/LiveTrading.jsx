@@ -113,7 +113,7 @@ export default function LiveTrading() {
   const leverageNum = parseFloat(leverage) || 1;
   const potentialProfit = (pnlAmount * leverageNum * 0.8).toFixed(2);
   const potentialLoss = (pnlAmount * 0.9).toFixed(2);
-  const CS = { background: 'linear-gradient(135deg, rgba(15,23,42,0.9), rgba(30,41,59,0.8))', border: '1px solid rgba(99,102,241,0.3)', borderRadius: '12px', padding: '8px', flex: 1, textAlign: 'center', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '4px', boxShadow: '0 4px 24px rgba(99,102,241,0.1)', minWidth: '70px' };
+  const CS = { background: t.bg === '#f8fafc' ? t.cardBg : 'linear-gradient(135deg, rgba(15,23,42,0.9), rgba(30,41,59,0.8))', border: '1px solid rgba(99,102,241,0.3)', borderRadius: '12px', padding: '8px', flex: 1, textAlign: 'center', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '4px', boxShadow: '0 4px 24px rgba(99,102,241,0.1)', minWidth: '70px' };
 
   return (
     <div style={{ minHeight: '100vh', background: t.bg, fontFamily: "'Segoe UI', sans-serif", color: t.text }}>
@@ -323,7 +323,7 @@ export default function LiveTrading() {
           ].map((s, i) => (
             <div key={i} style={{ ...CS }}>
               <div style={{ width: '32px', height: '32px', borderRadius: '50%', background: s.iconBg, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>{s.icon}</div>
-              <div style={{ color: '#94a3b8', fontSize: '7px' }}>{s.label}</div>
+              <div style={{ color: t.subText, fontSize: '7px' }}>{s.label}</div>
               <div style={{ color: s.color, fontSize: '10px', fontWeight: '700' }}>{s.value}</div>
             </div>
           ))}
