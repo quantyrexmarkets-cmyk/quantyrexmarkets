@@ -85,7 +85,8 @@ export default function LiveTrading() {
   const totalPages = Math.max(1, Math.ceil(filtered.length / show));
   const paginated = filtered.slice((page-1)*show, page*show);
 
-  const tvSrc = `https://www.tradingview.com/widgetembed/?frameElementId=tv_${symbol.tv.replace(':','_')}&symbol=${symbol.tv}&interval=15&hidesidetoolbar=0&hidetoptoolbar=0&symboledit=0&saveimage=0&toolbarbg=${t.bg === '#f8fafc' ? 'ffffff' : '0f172a'}&studies=[]&theme=${t.bg === '#f8fafc' ? 'light' : 'dark'}&style=1&timezone=Etc%2FUTC&studies_overrides={}&overrides={}&enabled_features=[]&disabled_features=[]&locale=en&utm_source=quantyrexmarkets.vercel.app`;
+  const tvTheme = t.bg === '#f8fafc' ? 'light' : 'dark';
+  const tvSrc = `https://www.tradingview.com/chart/?symbol=${symbol.tv}&interval=15&theme=${tvTheme}`;
 
   return (
     <div style={{ minHeight: '100vh', background: t.bg, fontFamily: "'Segoe UI', sans-serif", color: t.text }}>
