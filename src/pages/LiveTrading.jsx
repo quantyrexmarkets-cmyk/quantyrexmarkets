@@ -19,74 +19,8 @@ const SYMBOLS = [
 const DURATIONS = ['30 seconds','1 minute','2 minutes','5 minutes','10 minutes','15 minutes','30 minutes','1 hour'];
 
 
-function LiveTradingChart({ symbol, theme, bg }) {
-  const containerRef = React.useRef(null);
-  
-  React.useEffect(() => {
-    if (!containerRef.current) return;
-    containerRef.current.innerHTML = '';
-    
-    const widget = document.createElement('div');
-    widget.className = 'tradingview-widget-container';
-    widget.style.height = '100%';
-    widget.style.width = '100%';
-
-    const widgetDiv = document.createElement('div');
-    widgetDiv.className = 'tradingview-widget-container__widget';
-    widgetDiv.style.height = '100%';
-    widgetDiv.style.width = '100%';
-    widget.appendChild(widgetDiv);
-
-    const script = document.createElement('script');
-    script.src = 'https://s3.tradingview.com/external-embedding/embed-widget-advanced-chart.js';
-    script.async = true;
-    script.innerHTML = JSON.stringify({
-      autosize: true,
-      symbol: symbol,
-      interval: '15',
-      timezone: 'Etc/UTC',
-      theme: theme,
-      style: '1',
-      locale: 'en',
-      backgroundColor: '#' + bg,
-      hide_top_toolbar: false,
-      hide_side_toolbar: false,
-      allow_symbol_change: false,
-      save_image: false,
-    });
-
-    widget.appendChild(script);
-    containerRef.current.appendChild(widget);
-
-    return () => {
-      if (containerRef.current) containerRef.current.innerHTML = '';
-    };
-  }, [symbol, theme]);
-
-  return <div ref={containerRef} style={{ width: '100%', height: '100%' }} />;
-}
 
 
-function TradingChart({ symbol, theme }) {
-  const isDark = theme === 'dark';
-  const src = `https://www.tradingview.com/widgetembed/?frameElementId=tv_live_${symbol.replace(':','_')}&symbol=${symbol}&interval=15&hidesidetoolbar=0&hidetoptoolbar=0&symboledit=0&saveimage=0&toolbarbg=${isDark ? '0f172a' : 'ffffff'}&studies=[]&theme=${theme}&style=1&timezone=Etc%2FUTC&studies_overrides={}&overrides={}&enabled_features=[]&disabled_features=[]&locale=en&utm_source=quantyrexmarkets.vercel.app`;
-
-  return (
-    <div style={{ flex: 1, minHeight: 0, display: 'flex', flexDirection: 'column', background: 'red' }}>
-      <div style={{ color: 'white', fontSize: '8px', padding: '4px', background: 'black', flexShrink: 0 }}>
-        DEBUG: symbol={symbol} theme={theme} src={src.slice(0,60)}...
-      </div>
-      <iframe
-        key={src}
-        src={src}
-        style={{ flex: 1, width: '100%', border: 'none', display: 'block', minHeight: 0 }}
-        allowFullScreen={true}
-        onLoad={() => console.log('iframe loaded')}
-        onError={() => console.log('iframe error')}
-      />
-    </div>
-  );
-}
 
 export default function LiveTrading() {
   const { user } = useAuth();
@@ -175,7 +109,14 @@ export default function LiveTrading() {
             <button onClick={() => setShowForm(false)} style={{ background: 'none', border: 'none', color: t.text, cursor: 'pointer', fontSize: '22px', flexShrink: 0 }}>×</button>
           </div>
           {/* Chart - using same approach as BTCChart */}
-          <TradingChart symbol={symbol.tv} theme={t.bg === '#f8fafc' ? 'light' : 'dark'} />
+          <div style={{ flex: 1, minHeight: '300px', position: 'relative' }}>
+                <iframe
+                  key={symbol.tv + t.bg}
+                  src={`https://www.tradingview.com/widgetembed/?frameElementId=tv_${symbol.tv.replace(':','_')}&symbol=${symbol.tv}&interval=15&hidesidetoolbar=0&hidetoptoolbar=0&symboledit=0&saveimage=0&toolbarbg=${t.bg === '#f8fafc' ? 'ffffff' : '0f172a'}&studies=[]&theme=${t.bg === '#f8fafc' ? 'light' : 'dark'}&style=1&timezone=Etc%2FUTC&studies_overrides={}&overrides={}&enabled_features=[]&disabled_features=[]&locale=en&utm_source=quantyrexmarkets.vercel.app`}
+                  style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', border: 'none' }}
+                  allowFullScreen={true}
+                />
+              </div>
           {/* Trade form */}
           <div style={{ flexShrink: 0, borderTop: `1px solid ${t.border}`, padding: '12px 14px', background: t.cardBg, maxHeight: '45vh', overflowY: 'auto' }}>
             <div style={{ display: 'flex', gap: '8px', marginBottom: '10px' }}>
