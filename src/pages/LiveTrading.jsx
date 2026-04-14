@@ -155,7 +155,18 @@ export default function LiveTrading() {
         </div>
       )}
 
-      <div style={{ padding: '16px', display: 'flex', flexDirection: 'column', gap: '16px' }}>
+      <div style={{ padding: '14px', display: 'flex', flexDirection: 'column', gap: '14px' }}>
+        {/* Title */}
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+            <div style={{ width: '4px', height: '16px', background: '#6366f1' }}/>
+            <span style={{ color: t.text, fontSize: '11px', fontWeight: '700' }}>Live Trading</span>
+          </div>
+          <button onClick={() => setShowForm(true)}
+            style={{ padding: '6px 14px', background: '#6366f1', border: 'none', color: 'white', fontSize: '10px', fontWeight: '700', cursor: 'pointer', borderRadius: '6px' }}>
+            + New Trade
+          </button>
+        </div>
         {/* Stats */}
         <div style={{ display: 'flex', gap: '8px' }}>
           {[
@@ -172,15 +183,10 @@ export default function LiveTrading() {
         </div>
 
         {/* New Trade Button */}
-        <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
-          <button onClick={() => setShowForm(true)}
-            style={{ padding: '8px 16px', background: '#6366f1', border: 'none', color: 'white', fontSize: '10px', fontWeight: '700', cursor: 'pointer', borderRadius: '8px', boxShadow: '0 2px 8px rgba(99,102,241,0.4)' }}>
-            + New Trade
-          </button>
-        </div>
+
 
         {/* Trades Table */}
-        <div style={{ background: t.cardBg, border: `1px solid ${t.tableOuterBorder}`, borderRadius: '10px', overflow: 'hidden' }}>
+        <div style={{ background: t.cardBg, border: `1px solid ${t.tableOuterBorder}` }}>
           {/* Tabs */}
           <div style={{ display: 'flex', borderBottom: `1px solid ${t.border}` }}>
             {[['open', 'Open Trades'], ['closed', 'Closed Trades']].map(([key, label]) => (
@@ -191,14 +197,19 @@ export default function LiveTrading() {
             ))}
           </div>
 
-          {/* Search */}
-          <div style={{ padding: '8px 10px', borderBottom: `1px solid ${t.border}`, display: 'flex', gap: '8px', alignItems: 'center' }}>
-            <input value={search} onChange={e => { setSearch(e.target.value); setPage(1); }} placeholder="Search..."
-              style={{ flex: 1, background: t.inputBg, border: `1px solid ${t.border}`, color: t.text, fontSize: '9px', padding: '5px 8px', outline: 'none', borderRadius: '4px' }} />
-            <select value={show} onChange={e => { setShow(Number(e.target.value)); setPage(1); }}
-              style={{ background: t.inputBg, border: `1px solid ${t.border}`, color: t.text, fontSize: '9px', padding: '5px', outline: 'none', borderRadius: '4px' }}>
-              {[10,25,50].map(n => <option key={n}>{n}</option>)}
-            </select>
+          {/* Search & Show */}
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '8px 10px', borderBottom: `1px solid ${t.border}` }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
+              <span style={{ color: t.subText, fontSize: '8px' }}>Show</span>
+              <select value={show} onChange={e => { setShow(Number(e.target.value)); setPage(1); }} style={{ background: t.border, border: `1px solid ${t.border}`, color: t.text, fontSize: '8px', padding: '2px 5px', outline: 'none' }}>
+                <option>10</option><option>25</option><option>50</option>
+              </select>
+              <span style={{ color: t.subText, fontSize: '8px' }}>entries</span>
+            </div>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
+              <span style={{ color: t.subText, fontSize: '8px' }}>Search:</span>
+              <input value={search} onChange={e => { setSearch(e.target.value); setPage(1); }} style={{ background: t.border, border: `1px solid ${t.border}`, color: t.text, fontSize: '8px', padding: '3px 8px', outline: 'none', width: '90px' }} />
+            </div>
           </div>
 
           {/* Table */}
@@ -209,7 +220,7 @@ export default function LiveTrading() {
                   ? ['Symbol','Type','Amount','Duration','Leverage','Status','Action']
                   : ['Symbol','Type','Amount','Result','%','Status']
                 ).map((h,i) => (
-                  <th key={i} style={{ color: t.subText, fontSize: '8px', fontWeight: '700', padding: '8px 6px', borderBottom: `1px solid ${t.tableOuterBorder}`, textAlign: 'left' }}>{h}</th>
+                  <th key={i} style={{ color: t.subText, fontSize: '7px', fontWeight: '700', borderRight: `1px solid ${t.tableOuterBorder}`, borderBottom: `1px solid ${t.tableOuterBorder}`, padding: '7px 8px', textAlign: 'left', display: 'table-cell' }}>{h}</th>
                 ))}
               </tr>
             </thead>
