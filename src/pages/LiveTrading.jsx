@@ -94,69 +94,56 @@ export default function LiveTrading() {
 
       {/* New Trade Modal */}
       {showForm && (
-        <>
-          <div onClick={() => setShowForm(false)} style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.75)', zIndex: 100 }}/>
-          <div style={{ position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, zIndex: 101, background: t.bg, display: 'flex', flexDirection: 'column' }}>
-              {/* Header */}
-              <div style={{ padding: '10px 14px', borderBottom: `1px solid ${t.border}`, display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexShrink: 0 }}>
-                <span style={{ color: t.text, fontSize: '12px', fontWeight: '700' }}>📈 {symbol.label}</span>
-                <button onClick={() => setShowForm(false)} style={{ background: 'none', border: 'none', color: t.text, cursor: 'pointer', fontSize: '22px', lineHeight: 1 }}>×</button>
-              </div>
-              {/* Chart */}
+        <div style={{ position: 'fixed', inset: 0, zIndex: 200, display: 'flex', flexDirection: 'column', background: t.bg }}>
+          {/* Top bar */}
+          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '10px 14px', borderBottom: `1px solid ${t.border}`, flexShrink: 0 }}>
+            <div style={{ display: 'flex', gap: '6px', overflowX: 'auto' }}>
+              {SYMBOLS.map(s => (
+                <button key={s.label} onClick={() => setSymbol(s)} style={{ padding: '4px 10px', background: symbol.label === s.label ? '#6366f1' : t.subtleBg, border: 'none', color: symbol.label === s.label ? 'white' : t.text, fontSize: '9px', fontWeight: '700', cursor: 'pointer', borderRadius: '4px', whiteSpace: 'nowrap' }}>{s.label}</button>
+              ))}
+            </div>
+            <button onClick={() => setShowForm(false)} style={{ background: 'none', border: 'none', color: t.text, cursor: 'pointer', fontSize: '22px', flexShrink: 0 }}>×</button>
+          </div>
+          {/* Chart */}
+          <div style={{ flex: 1, minHeight: 0, position: 'relative' }}>
             <iframe
-              key={symbol.tv + (t.bg === '#f8fafc' ? 'light' : 'dark')}
+              key={symbol.tv}
               src={`https://www.tradingview.com/widgetembed/?frameElementId=tv_live&symbol=${symbol.tv}&interval=15&hidesidetoolbar=0&hidetoptoolbar=0&symboledit=0&saveimage=0&theme=${t.bg === '#f8fafc' ? 'light' : 'dark'}&style=1&timezone=Etc%2FUTC&locale=en`}
-              style={{ width: '100%', flex: 1, border: 'none', display: 'block', minHeight: 0 }}
+              style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', border: 'none' }}
               allowFullScreen={true}
             />
-
-            <div style={{ padding: '14px' }}>
-              {/* Symbol selector */}
-              <div style={{ display: 'flex', gap: '4px', overflowX: 'auto', marginBottom: '12px' }}>
-                {SYMBOLS.map(s => (
-                  <button key={s.label} onClick={() => setSymbol(s)} style={{ background: symbol.label === s.label ? 'rgba(99,102,241,0.2)' : 'transparent', border: symbol.label === s.label ? '1px solid rgba(99,102,241,0.5)' : `1px solid ${t.subtleBorder}`, color: symbol.label === s.label ? '#818cf8' : t.mutedText, fontSize: '8px', fontWeight: '700', padding: '4px 8px', cursor: 'pointer', whiteSpace: 'nowrap' }}>{s.label}</button>
-                ))}
-              </div>
-
-              {/* BUY/SELL toggle */}
-              <div style={{ display: 'flex', gap: '8px', marginBottom: '12px' }}>
-                <button onClick={() => setSheetDir('buy')} style={{ flex: 1, padding: '8px', background: sheetDir === 'buy' ? '#16a34a' : t.subtleBg, border: 'none', color: t.text, fontSize: '11px', fontWeight: '800', cursor: 'pointer' }}>BUY</button>
-                <button onClick={() => setSheetDir('sell')} style={{ flex: 1, padding: '8px', background: sheetDir === 'sell' ? '#dc2626' : t.subtleBg, border: 'none', color: t.text, fontSize: '11px', fontWeight: '800', cursor: 'pointer' }}>SELL</button>
-              </div>
-
-              {/* Form fields */}
-              <div>
-                <div style={{ color: t.subText, fontSize: '7px', marginBottom: '3px' }}>Amount (USD)</div>
-                <input value={amount} onChange={e => setAmount(e.target.value)} placeholder='Min $10' style={{ width: '100%', background: t.inputBg, border: `1px solid ${sheetDir === 'buy' ? 'rgba(34,197,94,0.3)' : 'rgba(239,68,68,0.3)'}`, color: t.text, fontSize: '10px', padding: '6px 8px', outline: 'none', boxSizing: 'border-box', marginBottom: '4px' }} />
-                {amount && Number(amount) >= 10 && currency && currency !== 'USD' && (
-                  <div style={{ fontSize: '7px', color: '#22c55e', marginBottom: '8px' }}>≈ {formatAmount(Number(amount), currency)} in your local currency</div>
-                )}
-              </div>
-
-              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '8px', marginBottom: '12px' }}>
-                <div>
-                  <div style={{ color: t.subText, fontSize: '7px', marginBottom: '3px' }}>Duration</div>
-                  <select value={duration} onChange={e => setDuration(e.target.value)} style={{ width: '100%', background: t.inputBg, border: `1px solid ${t.border}`, color: t.text, fontSize: '8px', padding: '6px 4px', outline: 'none', boxSizing: 'border-box' }}>
-                    {DURATIONS.map(d => <option key={d} value={d}>{d}</option>)}
-                  </select>
-                </div>
-                <div>
-                  <div style={{ color: t.subText, fontSize: '7px', marginBottom: '3px' }}>Leverage</div>
-                  <select value={leverage} onChange={e => setLeverage(e.target.value)} style={{ width: '100%', background: t.inputBg, border: `1px solid ${t.border}`, color: t.text, fontSize: '8px', padding: '6px 4px', outline: 'none', boxSizing: 'border-box' }}>
-                    {['1x','2x','5x','10x','20x','50x','100x'].map(l => <option key={l} value={l}>{l}</option>)}
-                  </select>
-                </div>
-              </div>
-
-              {msg && <div style={{ color: '#22c55e', fontSize: '8px', marginBottom: '8px' }}>{msg}</div>}
-              {error && <div style={{ color: '#ef4444', fontSize: '8px', marginBottom: '8px' }}>{error}</div>}
-
-              <button onClick={handleTrade} disabled={submitting} style={{ width: '100%', padding: '10px', background: sheetDir === 'buy' ? '#16a34a' : '#dc2626', border: 'none', color: t.text, fontSize: '11px', fontWeight: '800', cursor: 'pointer' }}>
-                {submitting ? 'Placing...' : `Confirm ${sheetDir === 'buy' ? 'Buy' : 'Sell'}`}
-              </button>
-            </div>
           </div>
-        </>
+          {/* Trade form */}
+          <div style={{ flexShrink: 0, borderTop: `1px solid ${t.border}`, padding: '12px 14px', background: t.cardBg, maxHeight: '45vh', overflowY: 'auto' }}>
+            <div style={{ display: 'flex', gap: '8px', marginBottom: '10px' }}>
+              <button onClick={() => setSheetDir('buy')} style={{ flex: 1, padding: '8px', background: sheetDir === 'buy' ? '#16a34a' : t.subtleBg, border: 'none', color: sheetDir === 'buy' ? 'white' : t.text, fontSize: '11px', fontWeight: '800', cursor: 'pointer', borderRadius: '6px' }}>BUY</button>
+              <button onClick={() => setSheetDir('sell')} style={{ flex: 1, padding: '8px', background: sheetDir === 'sell' ? '#dc2626' : t.subtleBg, border: 'none', color: sheetDir === 'sell' ? 'white' : t.text, fontSize: '11px', fontWeight: '800', cursor: 'pointer', borderRadius: '6px' }}>SELL</button>
+            </div>
+            <div style={{ marginBottom: '8px' }}>
+              <div style={{ color: t.subText, fontSize: '9px', marginBottom: '4px' }}>Amount (USD)</div>
+              <input value={amount} onChange={e => setAmount(e.target.value)} placeholder='Min $10' style={{ width: '100%', background: t.inputBg, border: `1px solid ${sheetDir === 'buy' ? 'rgba(34,197,94,0.3)' : 'rgba(239,68,68,0.3)'}`, color: t.text, fontSize: '12px', padding: '8px 10px', outline: 'none', boxSizing: 'border-box', borderRadius: '6px' }} />
+            </div>
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '8px', marginBottom: '10px' }}>
+              <div>
+                <div style={{ color: t.subText, fontSize: '9px', marginBottom: '4px' }}>Duration</div>
+                <select value={duration} onChange={e => setDuration(e.target.value)} style={{ width: '100%', background: t.inputBg, border: `1px solid ${t.border}`, color: t.text, fontSize: '9px', padding: '6px', outline: 'none', borderRadius: '6px' }}>
+                  {DURATIONS.map(d => <option key={d} value={d}>{d}</option>)}
+                </select>
+              </div>
+              <div>
+                <div style={{ color: t.subText, fontSize: '9px', marginBottom: '4px' }}>Leverage</div>
+                <select value={leverage} onChange={e => setLeverage(e.target.value)} style={{ width: '100%', background: t.inputBg, border: `1px solid ${t.border}`, color: t.text, fontSize: '9px', padding: '6px', outline: 'none', borderRadius: '6px' }}>
+                  {['1x','2x','5x','10x','20x','50x','100x'].map(l => <option key={l} value={l}>{l}</option>)}
+                </select>
+              </div>
+            </div>
+            {msg && <div style={{ color: '#22c55e', fontSize: '9px', marginBottom: '8px' }}>{msg}</div>}
+            {error && <div style={{ color: '#ef4444', fontSize: '9px', marginBottom: '8px' }}>{error}</div>}
+            <button onClick={handleTrade} disabled={submitting} style={{ width: '100%', padding: '12px', background: sheetDir === 'buy' ? '#16a34a' : '#dc2626', border: 'none', color: 'white', fontSize: '13px', fontWeight: '800', cursor: 'pointer', borderRadius: '8px' }}>
+              {submitting ? 'Placing...' : `Confirm ${sheetDir === 'buy' ? 'Buy ▲' : 'Sell ▼'}`}
+            </button>
+          </div>
+        </div>
       )}
 
       <div style={{ padding: '16px', display: 'flex', flexDirection: 'column', gap: '20px' }}>
