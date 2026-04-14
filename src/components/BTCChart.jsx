@@ -24,7 +24,7 @@ export default function BTCChart() {
     script.innerHTML = JSON.stringify({
       autosize: true,
       symbol: symbol,
-      interval: 'D',
+      interval: 'W',
       timezone: 'Etc/UTC',
       theme: t.bg === '#f8fafc' ? 'light' : 'dark',
       style: '1',
@@ -35,6 +35,7 @@ export default function BTCChart() {
       hide_legend: false,
       save_image: false,
       calendar: false,
+      range: '12M',
       support_host: 'https://www.tradingview.com',
     });
 
@@ -50,7 +51,7 @@ export default function BTCChart() {
           </button>
         ))}
       </div>
-      <div ref={containerRef} style={{ height: '450px', width: '100%' }}>
+      <div ref={containerRef} style={{ height: '500px', width: '100%' }}>
         <div className="tradingview-widget-container__widget" style={{ height: '100%', width: '100%' }} />
       </div>
     </div>
