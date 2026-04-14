@@ -155,20 +155,14 @@ export default function LiveTrading() {
         </div>
       )}
 
-      <div style={{ padding: '14px', display: 'flex', flexDirection: 'column', gap: '8px' }}>
-        {/* Title */}
-        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-            <div style={{ width: '4px', height: '16px', background: '#6366f1' }}/>
-            <span style={{ color: t.text, fontSize: '11px', fontWeight: '700' }}>Live Trading</span>
-          </div>
-          <button onClick={() => setShowForm(true)}
-            style={{ padding: '6px 14px', background: '#6366f1', border: 'none', color: 'white', fontSize: '10px', fontWeight: '700', cursor: 'pointer', borderRadius: '6px' }}>
-            + New Trade
-          </button>
+      <div style={{ padding: '16px', display: 'flex', flexDirection: 'column', gap: '20px' }}>
+        {/* New Trade Button */}
+        <div style={{ display: 'flex', justifyContent: 'flex-end', marginBottom: '-12px' }}>
+          <button onClick={() => setShowForm(true)} style={{ background: '#6366f1', border: 'none', color: t.text, fontSize: '9px', fontWeight: '700', padding: '8px 14px', cursor: 'pointer' }}>+ New Trade</button>
         </div>
+
         {/* Stats */}
-        <div style={{ display: 'flex', gap: '8px' }}>
+        <div style={{ display: 'flex', gap: '8px', marginBottom: '14px', flexWrap: 'wrap' }}>
           {[
             { label: 'Balance', value: formatAmount(balance || 0, currency), icon: <DollarSign size={14} color="#6366f1"/>, color: '#6366f1', iconBg: 'rgba(99,102,241,0.15)' },
             { label: 'Open Trades', value: openTrades.length, icon: <BarChart2 size={14} color="#22c55e"/>, color: '#22c55e', iconBg: 'rgba(34,197,94,0.15)' },
