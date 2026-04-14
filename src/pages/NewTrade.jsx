@@ -62,7 +62,6 @@ export default function NewTrade() {
 
       {/* Chart */}
       <div style={{ height: '80vh', width: '100%', flexShrink: 0, position: 'relative' }}>
-        <div className='tradingview-widget-container' ref={chartRef} style={{ position: 'absolute', inset: 0 }} />
       </div>
 
       <div style={{ padding: '16px', display: 'flex', flexDirection: 'column', gap: '12px' }}>
