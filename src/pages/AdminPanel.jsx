@@ -622,14 +622,14 @@ export default function AdminPanel() {
                       <div style={{ color: t.mutedText, fontSize: '10px', marginTop: '2px' }}>KYC: <span style={{ color: u.kycStatus === 'approved' ? '#22c55e' : u.kycStatus === 'submitted' ? '#f59e0b' : '#ef4444', fontWeight: '600' }}>{u.kycStatus || 'none'}</span></div>
                     </div>
                     <div style={{ display: 'flex', flexDirection: 'column', gap: '4px', alignItems: 'flex-end' }}>
-                      <span style={{ padding: '3px 8px', borderRadius: '4px', fontSize: '10px', fontWeight: '700', background: u.isBlocked ? 'rgba(239,68,68,0.2)' : 'rgba(34,197,94,0.2)', color: u.isBlocked ? '#ef4444' : '#22c55e' }}>{u.isBlocked ? '🔴 Blocked' : '🟢 Active'}</span>
-                      <span style={{ padding: '3px 8px', borderRadius: '4px', fontSize: '10px', fontWeight: '700', background: u.accountUpgraded ? 'rgba(34,197,94,0.2)' : 'rgba(100,116,139,0.2)', color: u.accountUpgraded ? '#22c55e' : '#64748b' }}>{u.accountUpgraded ? '⬆ Upgraded' : '⬆ Standard'}</span>
+                      <span style={{ padding: '3px 8px', borderRadius: '4px', fontSize: '10px', fontWeight: '700', background: u.isBlocked ? 'rgba(239,68,68,0.2)' : 'rgba(34,197,94,0.2)', color: u.isBlocked ? '#ef4444' : '#22c55e' }}>{u.isBlocked ? <><Ban size={10}/> Blocked</> : <><CheckCircle size={10}/> Active</>}</span>
+                      <span style={{ padding: '3px 8px', borderRadius: '4px', fontSize: '10px', fontWeight: '700', background: u.accountUpgraded ? 'rgba(34,197,94,0.2)' : 'rgba(100,116,139,0.2)', color: u.accountUpgraded ? '#22c55e' : '#64748b' }}>{u.accountUpgraded ? <><ArrowUpCircle size={10}/> Upgraded</> : <><ArrowUpCircle size={10}/> Standard</>}</span>
                       <span style={{ padding: '3px 8px', borderRadius: '4px', fontSize: '10px', background: 'rgba(99,102,241,0.2)', color: '#6366f1' }}>Plan: {u.currentPlan && u.currentPlan !== 'none' ? u.currentPlan : 'None'}</span>
                     </div>
                   </div>
                   {/* Balance */}
                   <div style={{ background: t.cardBg2, borderRadius: '8px', padding: '10px', marginBottom: '10px' }}>
-                    <div style={{ color: t.subText, fontSize: '10px', marginBottom: '6px', fontWeight: '600' }}>💰 BALANCE</div>
+                    <div style={{ color: t.subText, fontSize: '10px', marginBottom: '6px', fontWeight: '600' }}><DollarSign size={12}/> BALANCE</div>
                     <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
                       <input value={editBalance[u._id] ?? u.balance?.toFixed(2) ?? '0'} onChange={e => setEditBalance(b => ({ ...b, [u._id]: e.target.value }))} style={{ flex: 1, background: t.inputBg, border: `1px solid ${t.border}`, color: t.text, fontSize: '13px', padding: '6px 10px', outline: 'none', borderRadius: '6px', fontWeight: '700' }} />
                       <button onClick={() => updateBalance(u._id)} style={{ ...btnStyle('#6366f1'), borderRadius: '6px' }}><CheckCircle size={12}/> Set</button>
@@ -637,7 +637,7 @@ export default function AdminPanel() {
                   </div>
                   {/* Stats */}
                   <div style={{ background: t.cardBg2, borderRadius: '8px', padding: '10px', marginBottom: '10px' }}>
-                    <div style={{ color: t.subText, fontSize: '10px', marginBottom: '6px', fontWeight: '600' }}>📊 STATS</div>
+                    <div style={{ color: t.subText, fontSize: '10px', marginBottom: '6px', fontWeight: '600' }}><TrendingUp size={12}/> STATS</div>
                     <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '6px' }}>
                       {[["totalDeposits","Deposits"],["totalWithdrawals","Withdrawals"],["totalProfit","Profit"],["totalReferrals","Referrals"],["totalPackages","Packages"]].map(([field, label]) => (
                         <div key={field}>
@@ -650,7 +650,7 @@ export default function AdminPanel() {
                   </div>
                   {/* Message */}
                   <div style={{ background: t.cardBg2, borderRadius: '8px', padding: '10px', marginBottom: '10px' }}>
-                    <div style={{ color: t.subText, fontSize: '10px', marginBottom: '6px', fontWeight: '600' }}>💬 MESSAGE</div>
+                    <div style={{ color: t.subText, fontSize: '10px', marginBottom: '6px', fontWeight: '600' }}><MessageSquare size={12}/> MESSAGE</div>
                     {u.adminMessage && <div style={{ color: '#f59e0b', fontSize: '10px', marginBottom: '6px', wordBreak: 'break-word' }}>Current: {u.adminMessage}</div>}
                     <div style={{ display: 'flex', gap: '6px' }}>
                       <input value={msgInput[u._id] || ''} onChange={e => setMsgInput(m => ({ ...m, [u._id]: e.target.value }))} placeholder="Type message..." style={{ flex: 1, background: t.inputBg, border: `1px solid ${t.border}`, color: t.text, fontSize: '11px', padding: '6px 10px', outline: 'none', borderRadius: '6px' }} />
@@ -1222,7 +1222,7 @@ export default function AdminPanel() {
                     fd.append('verified', !tr.verified);
                     await fetch(`${import.meta.env.VITE_API_URL || 'https://quantyrexmarkets-api.vercel.app/api'}/traders/${tr._id}`, { method: 'PUT', headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }, body: fd });
                     setTraders(prev => prev.map(t2 => t2._id === tr._id ? { ...t2, verified: !t2.verified } : t2));
-                  }} style={{ padding: '4px 10px', background: tr.verified ? '#22c55e' : t.hoverBg, border: 'none', color: 'white', fontSize: '7px', cursor: 'pointer' }}>{tr.verified ? '✓ Verified' : 'Unverified'}</button>
+                  }} style={{ padding: '4px 10px', background: tr.verified ? '#22c55e' : t.hoverBg, border: 'none', color: 'white', fontSize: '7px', cursor: 'pointer' }}>{tr.verified ? <><ShieldCheck size={11}/> Verified</> : <><ShieldOff size={11}/> Unverified</>}</button>
                   <button onClick={() => { setEditTrader(t); setTraderForm({ name: tr.name, location: tr.location, flag: tr.flag, followers: tr.followers, risk: tr.risk, favorite: tr.favorite, totalTrades: tr.totalTrades, totalLoss: tr.totalLoss, profitShare: tr.profitShare, winRate: tr.winRate, verified: tr.verified }); }} style={{ padding: '4px 10px', background: '#6366f1', border: 'none', color: 'white', fontSize: '7px', cursor: 'pointer' }}>Edit</button>
                   <button onClick={async () => { await fetch(`${import.meta.env.VITE_API_URL || 'https://quantyrexmarkets-api.vercel.app/api'}/traders/${tr._id}`, { method: 'DELETE', headers: { Authorization: `Bearer ${localStorage.getItem('token')}` } }); setTraders(prev => prev.filter(t2 => t2._id !== tr._id)); }} style={{ padding: '4px 10px', background: '#ef4444', border: 'none', color: 'white', fontSize: '7px', cursor: 'pointer' }}><Trash2 size={12}/> Delete</button>
                 </div>
@@ -1293,7 +1293,7 @@ export default function AdminPanel() {
               <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
                 {[
                   { value: 'custom', label: '✏️ Custom Message' },
-                  { value: 'upgradePromo', label: '⬆️ Send Upgrade Plans' },
+                  { value: 'upgradePromo', label: 'Send Upgrade Plans' },
                   { value: 'registrationFee', label: '💳 Registration Fee' },
                   { value: 'adminMessage', label: '📢 Admin Announcement' },
                 ].map(opt => (
@@ -1429,7 +1429,7 @@ export default function AdminPanel() {
                     {/* Withdrawal Code */}
                     <div style={{ background: 'rgba(167,139,250,0.08)', border: '1px solid rgba(167,139,250,0.2)', borderRadius: '6px', padding: '10px' }}>
                       <div style={{ color: t.dimText, fontSize: '8px', marginBottom: '6px' }}>
-                        Withdrawal Code: <strong style={{ color: selectedUser.withdrawalCodeRequired ? '#a78bfa' : '#64748b' }}>{selectedUser.withdrawalCodeRequired ? '🔑 Active' : '🔑 Not Set'}</strong>
+                        Withdrawal Code: <strong style={{ color: selectedUser.withdrawalCodeRequired ? '#a78bfa' : '#64748b' }}>{selectedUser.withdrawalCodeRequired ? 'Active' : 'Not Set'}</strong>
                       </div>
                       {selectedUser.withdrawalCode && (
                         <div style={{ background: 'rgba(0,0,0,0.3)', border: '1px solid rgba(167,139,250,0.3)', borderRadius: '4px', padding: '8px', marginBottom: '8px', textAlign: 'center' }}>
