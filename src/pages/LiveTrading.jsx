@@ -66,6 +66,21 @@ function LiveTradingChart({ symbol, theme, bg }) {
   return <div ref={containerRef} style={{ width: '100%', height: '100%' }} />;
 }
 
+
+function TradingChart({ symbol, theme }) {
+  const isDark = theme === 'dark';
+  const src = `https://www.tradingview.com/widgetembed/?frameElementId=tv_live_${symbol.replace(':','_')}&symbol=${symbol}&interval=15&hidesidetoolbar=0&hidetoptoolbar=0&symboledit=0&saveimage=0&toolbarbg=${isDark ? '0f172a' : 'ffffff'}&studies=[]&theme=${theme}&style=1&timezone=Etc%2FUTC&studies_overrides={}&overrides={}&enabled_features=[]&disabled_features=[]&locale=en&utm_source=quantyrexmarkets.vercel.app`;
+
+  return (
+    <iframe
+      key={src}
+      src={src}
+      style={{ flex: 1, width: '100%', border: 'none', display: 'block', minHeight: 0 }}
+      allowFullScreen={true}
+    />
+  );
+}
+
 export default function LiveTrading() {
   const { user } = useAuth();
   const { current: t } = useTheme();
@@ -152,15 +167,8 @@ export default function LiveTrading() {
             </div>
             <button onClick={() => setShowForm(false)} style={{ background: 'none', border: 'none', color: t.text, cursor: 'pointer', fontSize: '22px', flexShrink: 0 }}>×</button>
           </div>
-          {/* Chart */}
-          <div style={{ flex: 1, minHeight: 0, position: 'relative' }}>
-            <iframe
-              key={symbol.tv}
-              src={`https://www.tradingview.com/widgetembed/?frameElementId=tv_live&symbol=${symbol.tv}&interval=15&hidesidetoolbar=0&hidetoptoolbar=0&symboledit=0&saveimage=0&toolbarbg=${t.bg === '#f8fafc' ? 'ffffff' : '0f172a'}&studies=[]&theme=${t.bg === '#f8fafc' ? 'light' : 'dark'}&style=1&timezone=Etc%2FUTC&studies_overrides={}&overrides={}&enabled_features=[]&disabled_features=[]&locale=en&utm_source=quantyrexmarkets.vercel.app`}
-              style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', border: 'none' }}
-              allowFullScreen={true}
-            />
-          </div>
+          {/* Chart - using same approach as BTCChart */}
+          <TradingChart symbol={symbol.tv} theme={t.bg === '#f8fafc' ? 'light' : 'dark'} />
           {/* Trade form */}
           <div style={{ flexShrink: 0, borderTop: `1px solid ${t.border}`, padding: '12px 14px', background: t.cardBg, maxHeight: '45vh', overflowY: 'auto' }}>
             <div style={{ display: 'flex', gap: '8px', marginBottom: '10px' }}>
