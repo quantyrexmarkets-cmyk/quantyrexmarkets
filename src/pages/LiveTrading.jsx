@@ -155,7 +155,7 @@ export default function LiveTrading() {
         </div>
       )}
 
-      <div style={{ padding: '14px', display: 'flex', flexDirection: 'column', gap: '14px' }}>
+      <div style={{ padding: '14px', display: 'flex', flexDirection: 'column', gap: '8px' }}>
         {/* Title */}
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
