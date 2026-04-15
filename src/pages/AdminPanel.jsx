@@ -634,34 +634,34 @@ export default function AdminPanel() {
                     {paginated.length === 0 && <div style={{ gridColumn:'1/-1', padding:'40px', textAlign:'center', color:t.faintText, fontSize:'12px' }}>No users found</div>}
                     {paginated.map((u,i) => (
                       <div key={i}>
-                        <div style={{ background:t.cardBg, border:selectedUser?._id===u._id?'2px solid #6366f1':`1px solid ${t.border}`, borderRadius:'12px', padding:'14px', boxShadow:t.cardShadow, transition:'all 0.15s' }}>
+                        <div style={{ background:t.cardBg, border:selectedUser?._id===u._id?'1px solid #6366f1':`1px solid ${t.border}`, borderRadius:'12px', padding:'16px', boxShadow:selectedUser?._id===u._id?'0 0 0 1px #6366f1, 0 4px 16px rgba(99,102,241,0.15)':t.cardShadow, transition:'all 0.2s ease' }}>
                           <div style={{ display:'flex', alignItems:'center', gap:'10px', marginBottom:'10px' }}>
                             <div style={{ width:'40px', height:'40px', borderRadius:'50%', background:'linear-gradient(135deg,#6366f1,#4f46e5)', display:'flex', alignItems:'center', justifyContent:'center', fontSize:'13px', color:'white', fontWeight:'700', flexShrink:0, overflow:'hidden' }}>
                               {u.avatar&&u.avatar!==''?<img src={u.avatar} style={{ width:'100%', height:'100%', objectFit:'cover' }}/>:`${u.firstName?.[0]||''}${u.lastName?.[0]||''}`}
                             </div>
                             <div style={{ flex:1, minWidth:0 }}>
-                              <div style={{ color:t.text, fontSize:'13px', fontWeight:'700', overflow:'hidden', textOverflow:'ellipsis', whiteSpace:'nowrap' }}>{u.firstName} {u.lastName}</div>
-                              <div style={{ color:t.subText, fontSize:'10px', overflow:'hidden', textOverflow:'ellipsis', whiteSpace:'nowrap' }}>{u.email}</div>
+                              <div style={{ color:t.text, fontSize:'14px', fontWeight:'700', overflow:'hidden', textOverflow:'ellipsis', whiteSpace:'nowrap', letterSpacing:'-0.01em' }}>{u.firstName} {u.lastName}</div>
+                              <div style={{ color:t.subText, fontSize:'11px', overflow:'hidden', textOverflow:'ellipsis', whiteSpace:'nowrap', opacity:0.7 }}>{u.email}</div>
                             </div>
-                            <span style={{ padding:'3px 8px', borderRadius:'20px', fontSize:'8px', fontWeight:'700', background:u.isBlocked?'#fef2f2':'#f0fdf4', color:u.isBlocked?'#b91c1c':'#15803d', border:u.isBlocked?'1px solid #fecaca':'1px solid #bbf7d0', flexShrink:0 }}>{u.isBlocked?'Blocked':'Active'}</span>
+                            <span style={{ padding:'3px 8px', borderRadius:'20px', fontSize:'8px', fontWeight:'700', background:u.isBlocked?'#fef2f2':'#f0fdf4', color:u.isBlocked?'#991b1b':'#166534', border:u.isBlocked?'1px solid #fecaca':'1px solid #bbf7d0', flexShrink:0, letterSpacing:'0.02em' }}>{u.isBlocked?'● Blocked':'● Active'}</span>
                           </div>
                           <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr 1fr', gap:'6px', marginBottom:'10px' }}>
                             <div style={{ background:t.cardBg2, borderRadius:'6px', padding:'8px', textAlign:'center' }}>
-                              <div style={{ color:'#6366f1', fontSize:'12px', fontWeight:'800' }}>${parseFloat(u.balance||0).toLocaleString()}</div>
+                              <div style={{ color:t.text, fontSize:'14px', fontWeight:'800', letterSpacing:'-0.02em' }}>${parseFloat(u.balance||0).toLocaleString('en-US',{minimumFractionDigits:2})}</div>
                               <div style={{ color:t.subText, fontSize:'8px' }}>Balance</div>
                             </div>
                             <div style={{ background:t.cardBg2, borderRadius:'6px', padding:'8px', textAlign:'center' }}>
-                              <div style={{ color:u.kycStatus==='approved'?'#22c55e':u.kycStatus==='submitted'?'#f59e0b':'#ef4444', fontSize:'10px', fontWeight:'700' }}>{u.kycStatus==='approved'?'✓ Done':u.kycStatus==='submitted'?'Pending':'None'}</div>
+                              <div style={{ color:u.kycStatus==='approved'?'#15803d':u.kycStatus==='submitted'?'#92400e':'#64748b', fontSize:'9px', fontWeight:'600' }}><span style={{ display:'inline-block', padding:'2px 8px', borderRadius:'20px', background:u.kycStatus==='approved'?'#f0fdf4':u.kycStatus==='submitted'?'#fffbeb':'#f8fafc', border:u.kycStatus==='approved'?'1px solid #bbf7d0':u.kycStatus==='submitted'?'1px solid #fde68a':'1px solid #e2e8f0' }}>{u.kycStatus==='approved'?'✓ Verified':u.kycStatus==='submitted'?'⏳ Review':'—'}</span></div>
                               <div style={{ color:t.subText, fontSize:'8px' }}>KYC</div>
                             </div>
                             <div style={{ background:t.cardBg2, borderRadius:'6px', padding:'8px', textAlign:'center' }}>
-                              <div style={{ color:'#7c3aed', fontSize:'10px', fontWeight:'700' }}>{u.currentPlan&&u.currentPlan!=='none'?u.currentPlan:'—'}</div>
+                              <div style={{ fontSize:'9px', fontWeight:'600' }}><span style={{ display:'inline-block', padding:'2px 8px', borderRadius:'20px', background:u.currentPlan&&u.currentPlan!=='none'?'#f5f3ff':'#f8fafc', color:u.currentPlan&&u.currentPlan!=='none'?'#6d28d9':'#64748b', border:u.currentPlan&&u.currentPlan!=='none'?'1px solid #ddd6fe':'1px solid #e2e8f0' }}>{u.currentPlan&&u.currentPlan!=='none'?u.currentPlan:'None'}</span></div>
                               <div style={{ color:t.subText, fontSize:'8px' }}>Plan</div>
                             </div>
                           </div>
                           <div style={{ display:'flex', gap:'6px' }}>
-                            <button onClick={() => loadUserDetails(u)} style={{ flex:1, padding:'6px', background:'rgba(99,102,241,0.1)', border:'1px solid rgba(99,102,241,0.3)', color:'#6366f1', fontSize:'9px', fontWeight:'600', cursor:'pointer', borderRadius:'6px', display:'flex', alignItems:'center', justifyContent:'center', gap:'3px' }}><Eye size={10}/> View</button>
-                            <button onClick={() => setSelectedUser(selectedUser?._id===u._id?null:u)} style={{ flex:1, padding:'6px', background:selectedUser?._id===u._id?'#6366f1':'rgba(34,197,94,0.1)', border:'1px solid rgba(34,197,94,0.3)', color:selectedUser?._id===u._id?'white':'#22c55e', fontSize:'9px', fontWeight:'600', cursor:'pointer', borderRadius:'6px', display:'flex', alignItems:'center', justifyContent:'center', gap:'3px' }}><Settings size={10}/> {selectedUser?._id===u._id?'Close':'Edit'}</button>
+                            <button onClick={() => loadUserDetails(u)} style={{ flex:1, padding:'8px', background:'transparent', border:`1px solid ${t.border}`, color:t.text, fontSize:'10px', fontWeight:'600', cursor:'pointer', borderRadius:'6px', display:'flex', alignItems:'center', justifyContent:'center', gap:'4px' }}><Eye size={11}/> View</button>
+                            <button onClick={() => setSelectedUser(selectedUser?._id===u._id?null:u)} style={{ flex:1, padding:'8px', background:selectedUser?._id===u._id?'#6366f1':'#6366f1', border:'none', color:'white', fontSize:'10px', fontWeight:'600', cursor:'pointer', borderRadius:'6px', display:'flex', alignItems:'center', justifyContent:'center', gap:'4px' }}><Settings size={11}/> {selectedUser?._id===u._id?'Close':'Manage'}</button>
                           </div>
                         </div>
                         {selectedUser?._id===u._id && (
