@@ -627,16 +627,17 @@ export default function AdminPanel() {
             </div>
 
             {/* Table */}
-            <div style={{ border:`1px solid ${t.tableOuterBorder}` }}>
+            <div style={{ border:`1px solid ${t.tableOuterBorder}`, overflowX:'auto' }}>
+              <div style={{ minWidth:'700px' }}>
               {/* Sticky Header */}
-              <div style={{ display:'grid', gridTemplateColumns:'1.5fr 2fr 1fr 1fr 140px', background:t.tableHeaderBg, borderBottom:`1px solid ${t.tableOuterBorder}`, position:'sticky', top:0, zIndex:2 }}>
+              <div style={{ display:'grid', gridTemplateColumns:'160px 220px 110px 100px 140px', background:t.tableHeaderBg, borderBottom:`1px solid ${t.tableOuterBorder}`, position:'sticky', top:0, zIndex:2 }}>
                 {['Name','Email','Balance','Status','Actions'].map((h,i) => (
                   <div key={i} style={{ padding:'10px 12px', color:t.subText, fontSize:'9px', fontWeight:'700', textTransform:'uppercase', letterSpacing:'0.05em', borderRight:i<4?`1px solid ${t.tableOuterBorder}`:'none' }}>{h}</div>
                 ))}
               </div>
 
-              {/* Scrollable Body */}
-              <div style={{ overflowY:'auto', maxHeight:'60vh' }}>
+              {/* Body */}
+              <div>
                 {(() => {
                   const filtered = users.filter(u => (u.firstName+' '+u.lastName+' '+u.email).toLowerCase().includes(userSearch.toLowerCase()));
                   const paginated = filtered.slice((userPage-1)*PAGE_SIZE, userPage*PAGE_SIZE);
@@ -645,7 +646,7 @@ export default function AdminPanel() {
                     {paginated.length === 0 && <div style={{ padding:'40px', textAlign:'center', color:t.faintText, fontSize:'12px' }}>No users found</div>}
                     {paginated.map((u,i) => (
                       <div key={i}>
-                        <div style={{ display:'grid', gridTemplateColumns:'1.5fr 2fr 1fr 1fr 140px', borderBottom:`1px solid ${t.tableRowBorder}`, background:selectedUser?._id===u._id?'rgba(99,102,241,0.06)':i%2===0?'transparent':t.tableAltRow, alignItems:'center' }}>
+                        <div style={{ display:'grid', gridTemplateColumns:'160px 220px 110px 100px 140px', borderBottom:`1px solid ${t.tableRowBorder}`, background:selectedUser?._id===u._id?'rgba(99,102,241,0.06)':i%2===0?'transparent':t.tableAltRow, alignItems:'center' }}>
                           <div style={{ padding:'12px', borderRight:`1px solid ${t.tableRowBorder}`, display:'flex', alignItems:'center', gap:'8px' }}>
                             <div style={{ width:'32px', height:'32px', borderRadius:'50%', background:'linear-gradient(135deg,#6366f1,#4f46e5)', display:'flex', alignItems:'center', justifyContent:'center', fontSize:'11px', color:'white', fontWeight:'700', flexShrink:0, overflow:'hidden' }}>
                               {u.avatar&&u.avatar!==''?<img src={u.avatar} style={{ width:'100%', height:'100%', objectFit:'cover' }}/>:`${u.firstName?.[0]||''}${u.lastName?.[0]||''}`}
@@ -655,7 +656,7 @@ export default function AdminPanel() {
                               <div style={{ color:t.subText, fontSize:'9px' }}>{new Date(u.createdAt).toLocaleDateString()}</div>
                             </div>
                           </div>
-                          <div style={{ padding:'12px', borderRight:`1px solid ${t.tableRowBorder}`, color:t.subText, fontSize:'10px', overflow:'hidden', textOverflow:'ellipsis', whiteSpace:'nowrap' }}>{u.email}</div>
+                          <div style={{ padding:'12px', borderRight:`1px solid ${t.tableRowBorder}`, color:t.subText, fontSize:'10px' }}>{u.email}</div>
                           <div style={{ padding:'12px', borderRight:`1px solid ${t.tableRowBorder}`, color:'#6366f1', fontSize:'12px', fontWeight:'700' }}>${parseFloat(u.balance||0).toLocaleString('en-US',{minimumFractionDigits:2})}</div>
                           <div style={{ padding:'12px', borderRight:`1px solid ${t.tableRowBorder}` }}>
                             <span style={{ padding:'3px 8px', borderRadius:'20px', fontSize:'9px', fontWeight:'600', background:u.isBlocked?'#fef2f2':'#f0fdf4', color:u.isBlocked?'#b91c1c':'#15803d', border:u.isBlocked?'1px solid #fecaca':'1px solid #bbf7d0' }}>{u.isBlocked?'Blocked':'Active'}</span>
@@ -668,7 +669,7 @@ export default function AdminPanel() {
 
                         {/* Inline Edit Panel */}
                         {selectedUser?._id===u._id && (
-                          <div style={{ borderBottom:`2px solid #6366f1`, background:t.bg }}>
+                          <div style={{ borderBottom:`2px solid #6366f1`, background:t.bg, maxHeight:'400px', overflowY:'auto' }}>
                             <div style={{ padding:'8px 12px', background:t.cardBg2, borderBottom:`1px solid ${t.border}`, display:'flex', gap:'4px', flexWrap:'wrap', alignItems:'center' }}>
                               <button onClick={() => { setEmailTarget(selectedUser); setEmailModal(true); setEmailSuccess(''); }} style={{ ...btnStyle('#6366f1'), display:'flex', alignItems:'center', gap:'3px' }}><Mail size={10}/> Email</button>
                               <button onClick={() => toggleBlock(selectedUser._id)} style={{ ...btnStyle(selectedUser.isBlocked?'#22c55e':'#ef4444', selectedUser.isBlocked), display:'flex', alignItems:'center', gap:'3px' }}>{selectedUser.isBlocked?<><Unlock size={10}/> Unblock</>:<><Lock size={10}/> Block</>}</button>
@@ -695,6 +696,7 @@ export default function AdminPanel() {
                 })()}
               </div>
 
+              </div>{/* end minWidth */}
               {/* Pagination */}
               <div style={{ padding:'10px 12px', display:'flex', justifyContent:'space-between', alignItems:'center', borderTop:`1px solid ${t.border}`, background:t.tableHeaderBg }}>
                 {(() => {
