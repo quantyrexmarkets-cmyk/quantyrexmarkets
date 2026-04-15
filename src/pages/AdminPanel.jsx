@@ -626,8 +626,9 @@ export default function AdminPanel() {
               <button onClick={() => { setEmailTarget(null); setEmailModal(true); setEmailSuccess(''); }} style={{ ...btnStyle('#6366f1'), display:'flex', alignItems:'center', gap:'4px' }}><Mail size={12}/> Email All</button>
             </div>
 
-            {/* Table */}
-            <div style={{ border: `1px solid ${t.tableOuterBorder}`, borderRadius: '8px', overflow: 'hidden' }}>
+            {/* Table + Edit Panel horizontal layout */}
+            <div style={{ display: 'flex', gap: '12px', alignItems: 'flex-start' }}>
+            <div style={{ flex: selectedUser ? '0 0 55%' : '1', border: `1px solid ${t.tableOuterBorder}`, borderRadius: '8px', overflow: 'hidden', minWidth: 0 }}>
               {/* Header */}
               <div style={{ display: 'grid', gridTemplateColumns: '2fr 2.5fr 1.2fr 1fr 140px', background: t.tableHeaderBg, borderBottom: `1px solid ${t.tableOuterBorder}` }}>
                 {['Name', 'Email', 'Balance', 'Status', 'Actions'].map((h, i) => (
@@ -702,9 +703,11 @@ export default function AdminPanel() {
               })()}
             </div>
 
-            {/* Edit Panel - slides in below when Edit clicked */}
+            </div>{/* end table */}
+
+            {/* Edit Panel - side by side */}
             {selectedUser && (
-              <div style={{ marginTop: '16px', border: `1px solid ${t.border}`, borderRadius: '8px', overflow: 'hidden' }}>
+              <div style={{ flex: '1', border: `1px solid ${t.border}`, borderRadius: '8px', overflow: 'hidden', minWidth: '280px', maxHeight: '75vh', overflowY: 'auto' }}>
                 {/* Edit Header */}
                 <div style={{ padding: '12px 16px', background: t.cardBg, borderBottom: `1px solid ${t.border}`, display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
                   <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
@@ -741,6 +744,7 @@ export default function AdminPanel() {
                 </div>
               </div>
             )}
+            </div>{/* end horizontal flex */}
           </div>
         )}
 
@@ -960,6 +964,7 @@ export default function AdminPanel() {
                 </tbody>
               </table>
             )}
+            </div>{/* end horizontal flex */}
           </div>
         )}
 
@@ -1016,6 +1021,7 @@ export default function AdminPanel() {
                 </tbody>
               </table>
             )}
+            </div>{/* end horizontal flex */}
           </div>
         )}
 
