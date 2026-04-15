@@ -24,12 +24,11 @@ export default function AdminUserDetail() {
 
   useEffect(() => {
     Promise.all([
-      fetch(`${BASE_URL}/users`, { headers: headers() }).then(r => r.json()),
+      api(`/users/${id}`),
       api(`/users/${id}/bots`),
       api(`/users/${id}/investments`),
-    ]).then(([users, b, inv]) => {
-      const found = Array.isArray(users) ? users.find(u => u._id === id) : null;
-      setUser(found);
+    ]).then(([u, b, inv]) => {
+      setUser(u);
       setBots(Array.isArray(b) ? b : []);
       setInvestments(Array.isArray(inv) ? inv : []);
       setLoading(false);
