@@ -592,17 +592,21 @@ export default function AdminPanel() {
             </div>
 
             {/* Users overview */}
-            <div style={{ background: t.cardBg2, padding: '14px', display: 'flex', gap: '0' }}>
-              {[
-                ['Total Deposits', '$'+users.reduce((s,u)=>s+(u.totalDeposits||0),0).toLocaleString('en-US',{minimumFractionDigits:2}), '#22c55e'],
-                ['Total Withdrawals', '$'+users.reduce((s,u)=>s+(u.totalWithdrawals||0),0).toLocaleString('en-US',{minimumFractionDigits:2}), '#f59e0b'],
-                ['Total Profit', '$'+users.reduce((s,u)=>s+(u.totalProfit||0),0).toLocaleString('en-US',{minimumFractionDigits:2}), '#6366f1'],
-              ].map(([l,v,col], i) => (
-                <div key={l} style={{ flex: 1, textAlign: 'center', padding: '8px', borderRight: i<2?`1px solid ${t.border}`:'none' }}>
-                  <div style={{ color: col, fontSize: '13px', fontWeight: '800' }}>{v}</div>
-                  <div style={{ color: t.subText, fontSize: '9px', marginTop: '2px' }}>{l}</div>
-                </div>
-              ))}
+            <div style={{ background: t.cardBg2, padding: '14px' }}>
+              <div style={{ color: t.text, fontSize: '8px', fontWeight: '700', marginBottom: '12px' }}>Users Overview</div>
+              <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                {[
+                  ['Total', users.length, '#6366f1'],
+                  ['Active', users.filter(u => !u.isBlocked).length, '#22c55e'],
+                  ['Blocked', users.filter(u => u.isBlocked).length, '#ef4444'],
+                  ['KYC Done', users.filter(u => u.kycStatus === 'approved').length, '#f59e0b'],
+                ].map(([l,v,col]) => (
+                  <div key={l} style={{ textAlign: 'center' }}>
+                    <div style={{ color: col, fontSize: '9px', fontWeight: '700' }}>{v}</div>
+                    <div style={{ color: t.mutedText, fontSize: '8px' }}>{l}</div>
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
         )}
