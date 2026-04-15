@@ -49,6 +49,7 @@ import WithdrawVerifyCode from "./pages/WithdrawVerifyCode";
 import BotTransactionHistory from "./pages/BotTransactionHistory";
 import VerifyEmail from "./pages/VerifyEmail";
 import AdminPanel from "./pages/AdminPanel";
+import AdminUserDetail from "./pages/AdminUserDetail";
 import Notifications from "./pages/Notifications";
 import SettingsPage from "./pages/Settings";
 import ChangePassword from "./pages/ChangePassword";
@@ -146,6 +147,7 @@ function App() {
         <Route path="/signin" element={<SignIn />} />
         <Route path="/verify-email/:token" element={<VerifyEmail />} />
         <Route path="/admin" element={<AdminRoute><AdminPanel /></AdminRoute>} />
+                <Route path="/admin/users/:id" element={<AdminRoute><AdminUserDetail /></AdminRoute>} />
         <Route path="/dashboard/change-password" element={<PrivateRoute><ChangePassword /></PrivateRoute>} />
         <Route path="/dashboard/settings" element={<PrivateRoute><SettingsPage /></PrivateRoute>} />
         <Route path="/dashboard/notifications" element={<PrivateRoute><Notifications /></PrivateRoute>} />

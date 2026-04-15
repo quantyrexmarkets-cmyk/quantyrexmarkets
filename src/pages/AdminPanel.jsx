@@ -653,7 +653,7 @@ export default function AdminPanel() {
                             <span style={{ color:t.subText, fontSize:'9px' }}>Plan <span style={{ color:u.currentPlan&&u.currentPlan!=='none'?'#6366f1':'#64748b', fontWeight:'600' }}>{u.currentPlan&&u.currentPlan!=='none'?u.currentPlan:'None'}</span></span>
                           </div>
                           <div style={{ display:'flex', gap:'6px' }}>
-                            <button onClick={() => loadUserDetails(u)} style={{ flex:1, padding:'8px', background:'transparent', border:`1.5px solid ${t.tableDivider}`, color:t.text, fontSize:'10px', fontWeight:'600', cursor:'pointer', borderRadius:'6px', display:'flex', alignItems:'center', justifyContent:'center', gap:'4px' }}><Eye size={11}/> View</button>
+                            <button onClick={() => navigate(`/admin/users/${u._id}`)} style={{ flex:1, padding:'8px', background:'transparent', border:`1.5px solid ${t.tableDivider}`, color:t.text, fontSize:'10px', fontWeight:'600', cursor:'pointer', borderRadius:'6px', display:'flex', alignItems:'center', justifyContent:'center', gap:'4px' }}><Eye size={11}/> View</button>
                             <button onClick={() => setSelectedUser(selectedUser?._id===u._id?null:u)} style={{ flex:1, padding:'8px', background:'transparent', border:`1.5px solid ${t.tableDivider}`, color:t.text, fontSize:'10px', fontWeight:'600', cursor:'pointer', borderRadius:'6px', display:'flex', alignItems:'center', justifyContent:'center', gap:'4px' }}><Settings size={11}/> {selectedUser?._id===u._id?'Close':'Manage'}</button>
                           </div>
                         </div>
