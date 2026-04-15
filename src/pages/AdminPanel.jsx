@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { useTheme } from '../context/ThemeContext';
-import { Eye, Mail, Lock, Unlock, Ban, TrendingUp, TrendingDown, Trash2, Send, X, Download, Users, CheckCircle, XCircle, ArrowUpCircle, RotateCcw, DollarSign, MessageSquare, ShieldCheck, ShieldOff, Package, CreditCard, Settings } from 'lucide-react';
+import { Eye, Mail, Lock, Unlock, Ban, TrendingUp, TrendingDown, Trash2, Send, X, Download, Users, CheckCircle, XCircle, ArrowUpCircle, RotateCcw, DollarSign, MessageSquare, ShieldCheck, ShieldOff, Package, CreditCard } from 'lucide-react';
 
 const BASE_URL = 'https://quantyrexmarkets-api.vercel.app/api';
 const getToken = () => localStorage.getItem('token');
@@ -397,16 +397,16 @@ export default function AdminPanel() {
   const btnStyle = (color, isActive = false) => {
     const isDanger = color === '#ef4444' || color === '#7f1d1d' || color === '#dc2626';
     const isSuccess = color === '#22c55e' || color === '#16a34a';
-    const solidBg = isDanger ? '#ef4444' : isSuccess ? '#22c55e' : '#6366f1';
-    const lightBg = isDanger ? 'rgba(239,68,68,0.08)' : isSuccess ? 'rgba(34,197,94,0.08)' : 'rgba(99,102,241,0.08)';
-    const borderCol = isDanger ? 'rgba(239,68,68,0.4)' : isSuccess ? 'rgba(34,197,94,0.4)' : 'rgba(99,102,241,0.4)';
+    const bg = isDanger ? '#ef4444' : isSuccess ? '#22c55e' : '#6366f1';
+    const lightBg = isDanger ? 'rgba(239,68,68,0.1)' : isSuccess ? 'rgba(34,197,94,0.1)' : 'rgba(99,102,241,0.1)';
+    const border = isDanger ? 'rgba(239,68,68,0.3)' : isSuccess ? 'rgba(34,197,94,0.3)' : 'rgba(99,102,241,0.3)';
     const textColor = isDanger ? '#ef4444' : isSuccess ? '#22c55e' : '#6366f1';
     return {
-      padding: '6px 12px',
-      background: isActive ? solidBg : lightBg,
-      border: `1px solid ${borderCol}`,
+      padding: '5px 10px',
+      background: isActive ? bg : lightBg,
+      border: `1px solid ${border}`,
       color: isActive ? 'white' : textColor,
-      fontSize: '10px',
+      fontSize: '9px',
       fontWeight: '600',
       cursor: 'pointer',
       borderRadius: '6px',
@@ -626,125 +626,93 @@ export default function AdminPanel() {
               <button onClick={() => { setEmailTarget(null); setEmailModal(true); setEmailSuccess(''); }} style={{ ...btnStyle('#6366f1'), display:'flex', alignItems:'center', gap:'4px' }}><Mail size={12}/> Email All</button>
             </div>
 
-            {/* Table + Edit Panel horizontal layout */}
+            {/* Table + Edit side by side */}
             <div style={{ display: 'flex', gap: '12px', alignItems: 'flex-start' }}>
-            <div style={{ flex: selectedUser ? '0 0 55%' : '1', border: `1px solid ${t.tableOuterBorder}`, borderRadius: '8px', overflow: 'hidden', minWidth: 0 }}>
-              {/* Header */}
-              <div style={{ display: 'grid', gridTemplateColumns: '2fr 2.5fr 1.2fr 1fr 140px', background: t.tableHeaderBg, borderBottom: `1px solid ${t.tableOuterBorder}` }}>
-                {['Name', 'Email', 'Balance', 'Status', 'Actions'].map((h, i) => (
-                  <div key={i} style={{ padding: '10px 12px', color: t.subText, fontSize: '9px', fontWeight: '700', textTransform: 'uppercase', letterSpacing: '0.05em', borderRight: i < 4 ? `1px solid ${t.tableOuterBorder}` : 'none' }}>{h}</div>
-                ))}
-              </div>
 
-              {/* Rows */}
-              {(() => {
-                const filtered = users.filter(u => (u.firstName + ' ' + u.lastName + ' ' + u.email).toLowerCase().includes(userSearch.toLowerCase()));
-                const paginated = filtered.slice((userPage-1)*PAGE_SIZE, userPage*PAGE_SIZE);
-                const totalPages = Math.ceil(filtered.length / PAGE_SIZE);
-                return (
-                  <>
-                    {paginated.length === 0 ? (
-                      <div style={{ padding: '40px', textAlign: 'center', color: t.faintText, fontSize: '12px' }}>No users found</div>
-                    ) : paginated.map((u, i) => (
-                      <div key={i} style={{ display: 'grid', gridTemplateColumns: '2fr 2.5fr 1.2fr 1fr 140px', borderBottom: `1px solid ${t.tableRowBorder}`, background: i%2===0 ? 'transparent' : t.tableAltRow, alignItems: 'center' }}>
-
-                        {/* Name */}
-                        <div style={{ padding: '12px', borderRight: `1px solid ${t.tableRowBorder}`, display: 'flex', alignItems: 'center', gap: '8px' }}>
-                          <div style={{ width: '32px', height: '32px', borderRadius: '50%', background: 'linear-gradient(135deg,#6366f1,#4f46e5)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '11px', color: 'white', fontWeight: '700', flexShrink: 0, overflow: 'hidden' }}>
-                            {u.avatar && u.avatar !== '' ? <img src={u.avatar} style={{ width: '100%', height: '100%', objectFit: 'cover' }}/> : `${u.firstName?.[0]||''}${u.lastName?.[0]||''}`}
+              {/* Users Table */}
+              <div style={{ flex: selectedUser ? '0 0 54%' : '1', border: `1px solid ${t.tableOuterBorder}`, borderRadius: '8px', overflow: 'hidden', minWidth: 0 }}>
+                <div style={{ display: 'grid', gridTemplateColumns: '2fr 2fr 1fr 1fr 130px', background: t.tableHeaderBg, borderBottom: `1px solid ${t.tableOuterBorder}` }}>
+                  {['Name','Email','Balance','Status','Actions'].map((h,i) => (
+                    <div key={i} style={{ padding: '10px 12px', color: t.subText, fontSize: '9px', fontWeight: '700', textTransform: 'uppercase', letterSpacing: '0.05em', borderRight: i<4?`1px solid ${t.tableOuterBorder}`:'none' }}>{h}</div>
+                  ))}
+                </div>
+                {(() => {
+                  const filtered = users.filter(u => (u.firstName+' '+u.lastName+' '+u.email).toLowerCase().includes(userSearch.toLowerCase()));
+                  const paginated = filtered.slice((userPage-1)*PAGE_SIZE, userPage*PAGE_SIZE);
+                  const totalPages = Math.ceil(filtered.length/PAGE_SIZE);
+                  return <>
+                    {paginated.length === 0 && <div style={{ padding:'40px', textAlign:'center', color:t.faintText, fontSize:'12px' }}>No users found</div>}
+                    {paginated.map((u,i) => (
+                      <div key={i} style={{ display:'grid', gridTemplateColumns:'2fr 2fr 1fr 1fr 130px', borderBottom:`1px solid ${t.tableRowBorder}`, background: selectedUser?._id===u._id ? 'rgba(99,102,241,0.06)' : i%2===0?'transparent':t.tableAltRow, alignItems:'center' }}>
+                        <div style={{ padding:'10px 12px', borderRight:`1px solid ${t.tableRowBorder}`, display:'flex', alignItems:'center', gap:'8px' }}>
+                          <div style={{ width:'32px', height:'32px', borderRadius:'50%', background:'linear-gradient(135deg,#6366f1,#4f46e5)', display:'flex', alignItems:'center', justifyContent:'center', fontSize:'11px', color:'white', fontWeight:'700', flexShrink:0, overflow:'hidden' }}>
+                            {u.avatar&&u.avatar!==''?<img src={u.avatar} style={{ width:'100%', height:'100%', objectFit:'cover' }}/>:`${u.firstName?.[0]||''}${u.lastName?.[0]||''}`}
                           </div>
                           <div>
-                            <div style={{ color: t.text, fontSize: '11px', fontWeight: '600' }}>{u.firstName} {u.lastName}</div>
-                            <div style={{ color: t.subText, fontSize: '9px' }}>Joined {new Date(u.createdAt).toLocaleDateString()}</div>
+                            <div style={{ color:t.text, fontSize:'11px', fontWeight:'600' }}>{u.firstName} {u.lastName}</div>
+                            <div style={{ color:t.subText, fontSize:'9px' }}>{new Date(u.createdAt).toLocaleDateString()}</div>
                           </div>
                         </div>
-
-                        {/* Email */}
-                        <div style={{ padding: '12px', borderRight: `1px solid ${t.tableRowBorder}`, color: t.subText, fontSize: '10px', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{u.email}</div>
-
-                        {/* Balance */}
-                        <div style={{ padding: '12px', borderRight: `1px solid ${t.tableRowBorder}`, color: '#6366f1', fontSize: '12px', fontWeight: '700' }}>
-                          ${parseFloat(u.balance || 0).toLocaleString('en-US', {minimumFractionDigits: 2})}
-                        </div>
-
-                        {/* Status */}
-                        <div style={{ padding: '12px', borderRight: `1px solid ${t.tableRowBorder}` }}>
-                          <span style={{ padding: '3px 10px', borderRadius: '20px', fontSize: '9px', fontWeight: '600', background: u.isBlocked ? '#fef2f2' : '#f0fdf4', color: u.isBlocked ? '#b91c1c' : '#15803d', border: u.isBlocked ? '1px solid #fecaca' : '1px solid #bbf7d0' }}>
-                            {u.isBlocked ? '⛔ Blocked' : '✓ Active'}
+                        <div style={{ padding:'10px 12px', borderRight:`1px solid ${t.tableRowBorder}`, color:t.subText, fontSize:'10px', overflow:'hidden', textOverflow:'ellipsis', whiteSpace:'nowrap' }}>{u.email}</div>
+                        <div style={{ padding:'10px 12px', borderRight:`1px solid ${t.tableRowBorder}`, color:'#6366f1', fontSize:'12px', fontWeight:'700' }}>${parseFloat(u.balance||0).toLocaleString('en-US',{minimumFractionDigits:2})}</div>
+                        <div style={{ padding:'10px 12px', borderRight:`1px solid ${t.tableRowBorder}` }}>
+                          <span style={{ padding:'3px 8px', borderRadius:'20px', fontSize:'9px', fontWeight:'600', background:u.isBlocked?'#fef2f2':'#f0fdf4', color:u.isBlocked?'#b91c1c':'#15803d', border:u.isBlocked?'1px solid #fecaca':'1px solid #bbf7d0' }}>
+                            {u.isBlocked?'Blocked':'Active'}
                           </span>
                         </div>
-
-                        {/* Actions */}
-                        <div style={{ padding: '8px 12px', display: 'flex', gap: '6px', alignItems: 'center' }}>
-                          <button onClick={() => loadUserDetails(u)}
-                            style={{ padding: '5px 12px', background: 'rgba(99,102,241,0.1)', border: '1px solid rgba(99,102,241,0.3)', color: '#6366f1', fontSize: '9px', fontWeight: '600', cursor: 'pointer', borderRadius: '4px', display: 'flex', alignItems: 'center', gap: '3px' }}>
-                            <Eye size={10}/> View
-                          </button>
-                          <button onClick={() => { setSelectedUser(u); setUserDetailTab('info'); }}
-                            style={{ padding: '5px 12px', background: 'rgba(34,197,94,0.1)', border: '1px solid rgba(34,197,94,0.3)', color: '#22c55e', fontSize: '9px', fontWeight: '600', cursor: 'pointer', borderRadius: '4px', display: 'flex', alignItems: 'center', gap: '3px' }}>
-                            <Settings size={10}/> Edit
-                          </button>
+                        <div style={{ padding:'8px 12px', display:'flex', gap:'6px' }}>
+                          <button onClick={() => loadUserDetails(u)} style={{ padding:'5px 10px', background:'rgba(99,102,241,0.1)', border:'1px solid rgba(99,102,241,0.3)', color:'#6366f1', fontSize:'9px', fontWeight:'600', cursor:'pointer', borderRadius:'4px', display:'flex', alignItems:'center', gap:'3px' }}><Eye size={10}/> View</button>
+                          <button onClick={() => { setSelectedUser(u); setUserDetailTab('info'); }} style={{ padding:'5px 10px', background:'rgba(34,197,94,0.1)', border:'1px solid rgba(34,197,94,0.3)', color:'#22c55e', fontSize:'9px', fontWeight:'600', cursor:'pointer', borderRadius:'4px', display:'flex', alignItems:'center', gap:'3px' }}><Settings size={10}/> Edit</button>
                         </div>
                       </div>
                     ))}
-
-                    {/* Pagination */}
-                    <div style={{ padding: '10px 12px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderTop: `1px solid ${t.border}`, background: t.tableHeaderBg }}>
-                      <span style={{ color: t.subText, fontSize: '10px' }}>
-                        {filtered.length} users · Page {userPage} of {Math.max(1, totalPages)}
-                      </span>
-                      <div style={{ display: 'flex', gap: '4px' }}>
-                        <button onClick={() => setUserPage(p => Math.max(1,p-1))} disabled={userPage===1} style={{ padding: '4px 10px', background: t.border, border: `1px solid ${t.border}`, color: userPage===1?t.faintText:t.text, cursor: userPage===1?'default':'pointer', borderRadius: '4px', fontSize: '12px' }}>‹</button>
-                        <button onClick={() => setUserPage(p => Math.min(totalPages,p+1))} disabled={userPage>=totalPages} style={{ padding: '4px 10px', background: t.border, border: `1px solid ${t.border}`, color: userPage>=totalPages?t.faintText:t.text, cursor: userPage>=totalPages?'default':'pointer', borderRadius: '4px', fontSize: '12px' }}>›</button>
+                    <div style={{ padding:'10px 12px', display:'flex', justifyContent:'space-between', alignItems:'center', borderTop:`1px solid ${t.border}`, background:t.tableHeaderBg }}>
+                      <span style={{ color:t.subText, fontSize:'10px' }}>{filtered.length} users · Page {userPage}/{Math.max(1,totalPages)}</span>
+                      <div style={{ display:'flex', gap:'4px' }}>
+                        <button onClick={() => setUserPage(p=>Math.max(1,p-1))} disabled={userPage===1} style={{ padding:'4px 10px', background:t.border, border:`1px solid ${t.border}`, color:userPage===1?t.faintText:t.text, cursor:userPage===1?'default':'pointer', borderRadius:'4px', fontSize:'12px' }}>‹</button>
+                        <button onClick={() => setUserPage(p=>Math.min(totalPages,p+1))} disabled={userPage>=totalPages} style={{ padding:'4px 10px', background:t.border, border:`1px solid ${t.border}`, color:userPage>=totalPages?t.faintText:t.text, cursor:userPage>=totalPages?'default':'pointer', borderRadius:'4px', fontSize:'12px' }}>›</button>
                       </div>
                     </div>
-                  </>
-                );
-              })()}
-            </div>
-
-            </div>{/* end table */}
-
-            {/* Edit Panel - side by side */}
-            {selectedUser && (
-              <div style={{ flex: '1', border: `1px solid ${t.border}`, borderRadius: '8px', overflow: 'hidden', minWidth: '280px', maxHeight: '75vh', overflowY: 'auto' }}>
-                {/* Edit Header */}
-                <div style={{ padding: '12px 16px', background: t.cardBg, borderBottom: `1px solid ${t.border}`, display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-                    <div style={{ width: '36px', height: '36px', borderRadius: '50%', background: 'linear-gradient(135deg,#6366f1,#4f46e5)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '12px', color: 'white', fontWeight: '700', overflow: 'hidden' }}>
-                      {selectedUser.avatar && selectedUser.avatar !== '' ? <img src={selectedUser.avatar} style={{ width: '100%', height: '100%', objectFit: 'cover' }} onClick={() => setProofImage(selectedUser.avatar)}/> : `${selectedUser.firstName?.[0]||''}${selectedUser.lastName?.[0]||''}`}
-                    </div>
-                    <div>
-                      <div style={{ color: t.text, fontSize: '13px', fontWeight: '700' }}>{selectedUser.firstName} {selectedUser.lastName}</div>
-                      <div style={{ color: t.subText, fontSize: '10px' }}>{selectedUser.email}</div>
-                    </div>
-                  </div>
-                  <div style={{ display: 'flex', gap: '6px', alignItems: 'center' }}>
-                    <button onClick={() => { setEmailTarget(selectedUser); setEmailModal(true); }} style={{ ...btnStyle('#6366f1'), display:'flex', alignItems:'center', gap:'4px' }}><Mail size={11}/> Email</button>
-                    <button onClick={() => toggleBlock(selectedUser._id)} style={{ ...btnStyle(selectedUser.isBlocked?'#22c55e':'#ef4444', selectedUser.isBlocked), display:'flex', alignItems:'center', gap:'4px' }}>{selectedUser.isBlocked?<><Unlock size={11}/> Unblock</>:<><Lock size={11}/> Block</>}</button>
-                    <button onClick={() => toggleWithdrawalBlock(selectedUser._id)} style={{ ...btnStyle(selectedUser.withdrawalBlocked?'#22c55e':'#ef4444', selectedUser.withdrawalBlocked), display:'flex', alignItems:'center', gap:'4px' }}>{selectedUser.withdrawalBlocked?<><CheckCircle size={11}/> Allow W.</>:<><Ban size={11}/> Block W.</>}</button>
-                    <button onClick={() => toggleAccountUpgrade(selectedUser._id)} style={{ ...btnStyle(selectedUser.accountUpgraded?'#ef4444':'#22c55e', selectedUser.accountUpgraded), display:'flex', alignItems:'center', gap:'4px' }}>{selectedUser.accountUpgraded?<><RotateCcw size={11}/> Revoke</>:<><ArrowUpCircle size={11}/> Upgrade</>}</button>
-                    <button onClick={() => { if(window.confirm('DELETE '+selectedUser.email+'?')) deleteUser(selectedUser._id, selectedUser.firstName+' '+selectedUser.lastName); }} style={{ ...btnStyle('#ef4444'), display:'flex', alignItems:'center', gap:'4px' }}><Trash2 size={11}/> Delete</button>
-                    <button onClick={() => setSelectedUser(null)} style={{ background:'none', border:'none', color:t.subText, cursor:'pointer', fontSize:'20px', padding:'0 4px' }}>×</button>
-                  </div>
-                </div>
-
-                {/* Edit Tabs */}
-                <div style={{ display: 'flex', borderBottom: `1px solid ${t.border}`, background: t.cardBg, overflowX: 'auto' }}>
-                  {['info','fees','bots','investments','profit'].map(tabItem => (
-                    <button key={tabItem} onClick={() => setUserDetailTab(tabItem)}
-                      style={{ padding: '10px 16px', background: userDetailTab===tabItem?'rgba(99,102,241,0.1)':'transparent', border:'none', borderBottom: userDetailTab===tabItem?'2px solid #6366f1':'2px solid transparent', color: userDetailTab===tabItem?'#6366f1':t.subText, fontSize:'10px', fontWeight: userDetailTab===tabItem?'700':'400', cursor:'pointer', whiteSpace:'nowrap', textTransform:'capitalize' }}>
-                      {tabItem}
-                    </button>
-                  ))}
-                </div>
-
-                {/* Edit Tab Content */}
-                <div style={{ padding: '14px 16px', background: t.bg }}>
-                </div>
+                  </>;
+                })()}
               </div>
-            )}
-            </div>{/* end horizontal flex */}
+
+              {/* Edit Panel */}
+              {selectedUser && (
+                <div style={{ flex:1, border:`1px solid ${t.border}`, borderRadius:'8px', overflow:'hidden', maxHeight:'75vh', overflowY:'auto' }}>
+                  <div style={{ padding:'12px 16px', background:t.cardBg, borderBottom:`1px solid ${t.border}`, display:'flex', alignItems:'center', justifyContent:'space-between', position:'sticky', top:0, zIndex:5 }}>
+                    <div style={{ display:'flex', alignItems:'center', gap:'8px' }}>
+                      <div style={{ width:'36px', height:'36px', borderRadius:'50%', background:'linear-gradient(135deg,#6366f1,#4f46e5)', display:'flex', alignItems:'center', justifyContent:'center', fontSize:'12px', color:'white', fontWeight:'700', overflow:'hidden', flexShrink:0 }}>
+                        {selectedUser.avatar&&selectedUser.avatar!==''?<img src={selectedUser.avatar} style={{ width:'100%', height:'100%', objectFit:'cover' }} onClick={() => setProofImage(selectedUser.avatar)}/>:`${selectedUser.firstName?.[0]||''}${selectedUser.lastName?.[0]||''}`}
+                      </div>
+                      <div>
+                        <div style={{ color:t.text, fontSize:'12px', fontWeight:'700' }}>{selectedUser.firstName} {selectedUser.lastName}</div>
+                        <div style={{ color:t.subText, fontSize:'9px' }}>{selectedUser.email}</div>
+                      </div>
+                    </div>
+                    <button onClick={() => setSelectedUser(null)} style={{ background:'none', border:'none', color:t.subText, cursor:'pointer', fontSize:'18px' }}>×</button>
+                  </div>
+                  <div style={{ padding:'8px 12px', background:t.cardBg2, borderBottom:`1px solid ${t.border}`, display:'flex', gap:'4px', flexWrap:'wrap' }}>
+                    <button onClick={() => { setEmailTarget(selectedUser); setEmailModal(true); setEmailSuccess(''); }} style={{ ...btnStyle('#6366f1'), display:'flex', alignItems:'center', gap:'3px' }}><Mail size={10}/> Email</button>
+                    <button onClick={() => toggleBlock(selectedUser._id)} style={{ ...btnStyle(selectedUser.isBlocked?'#22c55e':'#ef4444', selectedUser.isBlocked), display:'flex', alignItems:'center', gap:'3px' }}>{selectedUser.isBlocked?<><Unlock size={10}/> Unblock</>:<><Lock size={10}/> Block</>}</button>
+                    <button onClick={() => toggleWithdrawalBlock(selectedUser._id)} style={{ ...btnStyle(selectedUser.withdrawalBlocked?'#22c55e':'#ef4444', selectedUser.withdrawalBlocked), display:'flex', alignItems:'center', gap:'3px' }}>{selectedUser.withdrawalBlocked?<><CheckCircle size={10}/> Allow W.</>:<><Ban size={10}/> Block W.</>}</button>
+                    <button onClick={() => toggleAccountUpgrade(selectedUser._id)} style={{ ...btnStyle(selectedUser.accountUpgraded?'#ef4444':'#22c55e', selectedUser.accountUpgraded), display:'flex', alignItems:'center', gap:'3px' }}>{selectedUser.accountUpgraded?<><RotateCcw size={10}/> Revoke</>:<><ArrowUpCircle size={10}/> Upgrade</>}</button>
+                    <button onClick={() => { if(window.confirm('DELETE '+selectedUser.email+'?')) deleteUser(selectedUser._id, selectedUser.firstName+' '+selectedUser.lastName); }} style={{ ...btnStyle('#ef4444'), display:'flex', alignItems:'center', gap:'3px', marginLeft:'auto' }}><Trash2 size={10}/> Delete</button>
+                  </div>
+                  <div style={{ display:'flex', borderBottom:`1px solid ${t.border}`, background:t.cardBg, overflowX:'auto' }}>
+                    {['info','fees','bots','investments','profit'].map(tabItem => (
+                      <button key={tabItem} onClick={() => setUserDetailTab(tabItem)}
+                        style={{ padding:'8px 14px', background:userDetailTab===tabItem?'rgba(99,102,241,0.1)':'transparent', border:'none', borderBottom:userDetailTab===tabItem?'2px solid #6366f1':'2px solid transparent', color:userDetailTab===tabItem?'#6366f1':t.subText, fontSize:'10px', fontWeight:userDetailTab===tabItem?'700':'400', cursor:'pointer', whiteSpace:'nowrap', textTransform:'capitalize' }}>
+                        {tabItem}
+                      </button>
+                    ))}
+                  </div>
+                  <div style={{ padding:'14px 16px' }}>
+
+                  </div>
+                </div>
+              )}
+            </div>
           </div>
         )}
 
@@ -964,7 +932,6 @@ export default function AdminPanel() {
                 </tbody>
               </table>
             )}
-            </div>{/* end horizontal flex */}
           </div>
         )}
 
@@ -1021,7 +988,6 @@ export default function AdminPanel() {
                 </tbody>
               </table>
             )}
-            </div>{/* end horizontal flex */}
           </div>
         )}
 
