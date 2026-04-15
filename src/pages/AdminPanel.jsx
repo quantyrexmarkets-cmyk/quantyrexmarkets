@@ -630,8 +630,9 @@ export default function AdminPanel() {
             <div style={{ display: 'flex', gap: '12px', alignItems: 'flex-start' }}>
 
               {/* Users Table */}
-              <div style={{ flex: selectedUser ? '0 0 54%' : '1', border: `1px solid ${t.tableOuterBorder}`, borderRadius: '8px', overflow: 'hidden', minWidth: 0 }}>
-                <div style={{ display: 'grid', gridTemplateColumns: '2fr 2fr 1fr 1fr 130px', background: t.tableHeaderBg, borderBottom: `1px solid ${t.tableOuterBorder}` }}>
+              <div style={{ flex: selectedUser ? '0 0 54%' : '1', border: `1px solid ${t.tableOuterBorder}`, borderRadius: '8px', overflow: 'auto', minWidth: 0 }}>
+              <div style={{ minWidth: '600px' }}>
+                <div style={{ display: 'grid', gridTemplateColumns: 'minmax(140px,2fr) minmax(180px,2fr) minmax(90px,1fr) minmax(80px,1fr) 130px', background: t.tableHeaderBg, borderBottom: `1px solid ${t.tableOuterBorder}` }}>
                   {['Name','Email','Balance','Status','Actions'].map((h,i) => (
                     <div key={i} style={{ padding: '10px 12px', color: t.subText, fontSize: '9px', fontWeight: '700', textTransform: 'uppercase', letterSpacing: '0.05em', borderRight: i<4?`1px solid ${t.tableOuterBorder}`:'none' }}>{h}</div>
                   ))}
@@ -643,7 +644,7 @@ export default function AdminPanel() {
                   return <>
                     {paginated.length === 0 && <div style={{ padding:'40px', textAlign:'center', color:t.faintText, fontSize:'12px' }}>No users found</div>}
                     {paginated.map((u,i) => (
-                      <div key={i} style={{ display:'grid', gridTemplateColumns:'2fr 2fr 1fr 1fr 130px', borderBottom:`1px solid ${t.tableRowBorder}`, background: selectedUser?._id===u._id ? 'rgba(99,102,241,0.06)' : i%2===0?'transparent':t.tableAltRow, alignItems:'center' }}>
+                      <div key={i} style={{ display:'grid', gridTemplateColumns:'minmax(140px,2fr) minmax(180px,2fr) minmax(90px,1fr) minmax(80px,1fr) 130px', borderBottom:`1px solid ${t.tableRowBorder}`, background: selectedUser?._id===u._id ? 'rgba(99,102,241,0.06)' : i%2===0?'transparent':t.tableAltRow, alignItems:'center' }}>
                         <div style={{ padding:'10px 12px', borderRight:`1px solid ${t.tableRowBorder}`, display:'flex', alignItems:'center', gap:'8px' }}>
                           <div style={{ width:'32px', height:'32px', borderRadius:'50%', background:'linear-gradient(135deg,#6366f1,#4f46e5)', display:'flex', alignItems:'center', justifyContent:'center', fontSize:'11px', color:'white', fontWeight:'700', flexShrink:0, overflow:'hidden' }}>
                             {u.avatar&&u.avatar!==''?<img src={u.avatar} style={{ width:'100%', height:'100%', objectFit:'cover' }}/>:`${u.firstName?.[0]||''}${u.lastName?.[0]||''}`}
@@ -666,6 +667,7 @@ export default function AdminPanel() {
                         </div>
                       </div>
                     ))}
+                    </div>
                     <div style={{ padding:'10px 12px', display:'flex', justifyContent:'space-between', alignItems:'center', borderTop:`1px solid ${t.border}`, background:t.tableHeaderBg }}>
                       <span style={{ color:t.subText, fontSize:'10px' }}>{filtered.length} users · Page {userPage}/{Math.max(1,totalPages)}</span>
                       <div style={{ display:'flex', gap:'4px' }}>
