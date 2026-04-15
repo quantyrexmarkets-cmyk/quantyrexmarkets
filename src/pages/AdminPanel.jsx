@@ -640,27 +640,27 @@ export default function AdminPanel() {
                               {u.avatar&&u.avatar!==''?<img src={u.avatar} style={{ width:'100%', height:'100%', objectFit:'cover' }}/>:`${u.firstName?.[0]||''}${u.lastName?.[0]||''}`}
                             </div>
                             <div style={{ flex:1, minWidth:0 }}>
-                              <div style={{ color:t.text, fontSize:'14px', fontWeight:'700', overflow:'hidden', textOverflow:'ellipsis', whiteSpace:'nowrap', letterSpacing:'-0.01em' }}>{u.firstName} {u.lastName}</div>
+                              <div style={{ color:t.text, fontSize:'13px', fontWeight:'700', overflow:'hidden', textOverflow:'ellipsis', whiteSpace:'nowrap', letterSpacing:'-0.01em' }}>{u.firstName} {u.lastName}</div>
                               <div style={{ color:t.subText, fontSize:'11px', overflow:'hidden', textOverflow:'ellipsis', whiteSpace:'nowrap', opacity:0.7 }}>{u.email}</div>
                             </div>
-                            <span style={{ padding:'3px 8px', borderRadius:'20px', fontSize:'8px', fontWeight:'700', background:'transparent', color:u.isBlocked?'#ef4444':'#22c55e', border:'none', flexShrink:0, fontSize:'10px', fontWeight:'700' }}>{u.isBlocked?'● Blocked':'● Active'}</span>
+                            <span style={{ padding:'3px 8px', borderRadius:'20px', fontSize:'8px', fontWeight:'700', background:'transparent', color:u.isBlocked?'#ef4444':'#6366f1', border:'none', flexShrink:0, fontSize:'10px', fontWeight:'600' }}>{u.isBlocked?'● Suspended':'● Active'}</span>
                           </div>
                           <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr 1fr', gap:'6px', marginBottom:'10px' }}>
                             <div style={{ background:t.cardBg2, borderRadius:'6px', padding:'8px', textAlign:'center' }}>
-                              <div style={{ color:'#6366f1', fontSize:'14px', fontWeight:'800' }}>${parseFloat(u.balance||0).toLocaleString('en-US',{minimumFractionDigits:2})}</div>
+                              <div style={{ color:t.text, fontSize:'14px', fontWeight:'800', letterSpacing:'-0.02em' }}>${parseFloat(u.balance||0).toLocaleString('en-US',{minimumFractionDigits:2})}</div>
                               <div style={{ color:t.subText, fontSize:'8px' }}>Balance</div>
                             </div>
                             <div style={{ background:t.cardBg2, borderRadius:'6px', padding:'8px', textAlign:'center' }}>
-                              <div style={{ color:u.kycStatus==='approved'?'#22c55e':u.kycStatus==='submitted'?'#f59e0b':'#64748b', fontSize:'10px', fontWeight:'700' }}>{u.kycStatus==='approved'?'✓ Verified':u.kycStatus==='submitted'?'⏳ Review':'—'}</div>
+                              <div style={{ color:u.kycStatus==='approved'?'#6366f1':u.kycStatus==='submitted'?'#94a3b8':'#64748b', fontSize:'10px', fontWeight:'600' }}>{u.kycStatus==='approved'?'✓ Verified':u.kycStatus==='submitted'?'⏳ Review':'—'}</div>
                               <div style={{ color:t.subText, fontSize:'8px' }}>KYC</div>
                             </div>
                             <div style={{ background:t.cardBg2, borderRadius:'6px', padding:'8px', textAlign:'center' }}>
-                              <div style={{ color:u.currentPlan&&u.currentPlan!=='none'?'#7c3aed':'#64748b', fontSize:'10px', fontWeight:'700' }}>{u.currentPlan&&u.currentPlan!=='none'?u.currentPlan:'—'}</div>
+                              <div style={{ color:u.currentPlan&&u.currentPlan!=='none'?'#6366f1':'#64748b', fontSize:'10px', fontWeight:'600' }}>{u.currentPlan&&u.currentPlan!=='none'?u.currentPlan:'—'}</div>
                               <div style={{ color:t.subText, fontSize:'8px' }}>Plan</div>
                             </div>
                           </div>
                           <div style={{ display:'flex', gap:'6px' }}>
-                            <button onClick={() => loadUserDetails(u)} style={{ flex:1, padding:'8px', background:'rgba(99,102,241,0.1)', border:'1px solid rgba(99,102,241,0.3)', color:'#6366f1', fontSize:'10px', fontWeight:'600', cursor:'pointer', borderRadius:'6px', display:'flex', alignItems:'center', justifyContent:'center', gap:'4px' }}><Eye size={11}/> View</button>
+                            <button onClick={() => loadUserDetails(u)} style={{ flex:1, padding:'8px', background:'transparent', border:`1px solid ${t.border}`, color:t.text, fontSize:'10px', fontWeight:'600', cursor:'pointer', borderRadius:'6px', display:'flex', alignItems:'center', justifyContent:'center', gap:'4px' }}><Eye size={11}/> View</button>
                             <button onClick={() => setSelectedUser(selectedUser?._id===u._id?null:u)} style={{ flex:1, padding:'8px', background:selectedUser?._id===u._id?'#6366f1':'#6366f1', border:'none', color:'white', fontSize:'10px', fontWeight:'600', cursor:'pointer', borderRadius:'6px', display:'flex', alignItems:'center', justifyContent:'center', gap:'4px' }}><Settings size={11}/> {selectedUser?._id===u._id?'Close':'Manage'}</button>
                           </div>
                         </div>
