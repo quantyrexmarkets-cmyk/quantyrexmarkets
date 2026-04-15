@@ -484,7 +484,7 @@ export default function AdminPanel() {
   return (
     <div style={{ minHeight: '100vh', background: t.bg, fontFamily: "'Segoe UI', sans-serif", color: t.text }}>
 
-      {/* Header */}
+      {/* Header }
       <div style={{ background: t.cardBg, padding: '10px 16px', display: 'flex', alignItems: 'center', gap: '10px', borderBottom: `1px solid ${t.border}` }}>
         <span style={{ color: 'white', fontSize: '8px', fontWeight: '800' }}>QUANTYREX <span style={{ color: '#6366f1' }}>MARKETS</span></span>
         <span style={{ color: t.faintText, fontSize: '8px' }}>/ Admin Panel</span>
@@ -496,7 +496,7 @@ export default function AdminPanel() {
 
       {msg && <div style={{ background: '#22c55e', color: 'white', padding: '8px 16px', fontSize: '8px', fontWeight: '600' }}>{msg}</div>}
 
-      {/* Tabs */}
+      {/* Tabs }
       <div style={{ background: t.cardBg, padding: '0 16px', display: 'flex', gap: '2px', borderBottom: `1px solid ${t.border}`, overflowX: 'auto' }}>
         {tabs.map(tabItem => (
           <button key={tabItem} onClick={() => setTab(tabItem)} style={{ padding: '8px 14px', border: 'none', color: tab === tabItem ? '#6366f1' : t.subText, fontSize: '9px', fontWeight: '700', cursor: 'pointer', borderBottom: tab === tabItem ? '2px solid #6366f1' : '2px solid transparent', background: tab === tabItem ? (t.bg === '#f8fafc' ? 'rgba(99,102,241,0.08)' : 'rgba(99,102,241,0.1)') : 'transparent', borderRadius: tab === tabItem ? '6px 6px 0 0' : '0', textTransform: 'uppercase', whiteSpace: 'nowrap' }}>{tabItem}</button>
@@ -505,7 +505,7 @@ export default function AdminPanel() {
 
       <div style={{ padding: '16px' }}>
 
-        {/* Stats */}
+        {/* Stats }
         {tab === 'stats' && (
           <div>
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '10px', marginBottom: '16px' }}>
@@ -517,7 +517,7 @@ export default function AdminPanel() {
               ))}
             </div>
 
-            {/* Deposits by status chart */}
+            {/* Deposits by status chart }
             <div style={{ background: t.cardBg2, padding: '14px', marginBottom: '12px' }}>
               <div style={{ color: t.text, fontSize: '8px', fontWeight: '700', marginBottom: '12px' }}>Deposits Overview</div>
               {(() => {
@@ -558,7 +558,7 @@ export default function AdminPanel() {
               })()}
             </div>
 
-            {/* Withdrawals by status chart */}
+            {/* Withdrawals by status chart }
             <div style={{ background: t.cardBg2, padding: '14px', marginBottom: '12px' }}>
               <div style={{ color: t.text, fontSize: '8px', fontWeight: '700', marginBottom: '12px' }}>Withdrawals Overview</div>
               {(() => {
@@ -591,7 +591,7 @@ export default function AdminPanel() {
               })()}
             </div>
 
-            {/* Users overview */}
+            {/* Users overview }
             <div style={{ background: t.cardBg2, padding: '14px' }}>
               <div style={{ color: t.text, fontSize: '8px', fontWeight: '700', marginBottom: '12px' }}>Users Overview</div>
               <div style={{ display: 'flex', justifyContent: 'space-between' }}>
@@ -625,14 +625,14 @@ export default function AdminPanel() {
               <button onClick={() => { setEmailTarget(null); setEmailModal(true); setEmailSuccess(''); }} style={{ ...btnStyle('#6366f1'), display:'flex', alignItems:'center', gap:'4px' }}><Mail size={12}/> Email All</button>
             </div>
 
-            {/* Table Header - fixed */}
+            {/* Table Header - fixed }
             <div style={{ display:'grid', gridTemplateColumns:'160px 1fr 120px 100px 150px', background:t.tableHeaderBg, border:`1px solid ${t.tableOuterBorder}`, borderBottom:'none' }}>
               {['Name','Email','Balance','Status','Actions'].map((h,i) => (
                 <div key={i} style={{ padding:'10px 12px', color:t.subText, fontSize:'9px', fontWeight:'700', textTransform:'uppercase', letterSpacing:'0.05em', borderRight:i<4?`1px solid ${t.tableOuterBorder}`:'none' }}>{h}</div>
               ))}
             </div>
 
-            {/* Each user row independently scrollable */}
+            {/* Each user row independently scrollable }
             <div style={{ border:`1px solid ${t.tableOuterBorder}`, borderTop:'none' }}>
               {(() => {
                 const filtered = users.filter(u => (u.firstName+' '+u.lastName+' '+u.email).toLowerCase().includes(userSearch.toLowerCase()));
@@ -642,7 +642,7 @@ export default function AdminPanel() {
                   {paginated.length === 0 && <div style={{ padding:'40px', textAlign:'center', color:t.faintText, fontSize:'12px' }}>No users found</div>}
                   {paginated.map((u,i) => (
                     <div key={i} style={{ borderBottom:`1px solid ${t.tableRowBorder}` }}>
-                      {/* Row - each one scrolls independently */}
+                      {/* Row - each one scrolls independently }
                       <div style={{ overflowX:'auto' }}>
                         <div style={{ display:'grid', gridTemplateColumns:'160px 1fr 120px 100px 150px', minWidth:'630px', background:selectedUser?._id===u._id?'rgba(99,102,241,0.06)':i%2===0?'transparent':t.tableAltRow, alignItems:'center' }}>
                           <div style={{ padding:'12px', borderRight:`1px solid ${t.tableRowBorder}`, display:'flex', alignItems:'center', gap:'8px' }}>
@@ -666,7 +666,7 @@ export default function AdminPanel() {
                         </div>
                       </div>
 
-                      {/* Inline Edit Panel */}
+                      {/* Inline Edit Panel }
                       {selectedUser?._id===u._id && (
                         <div style={{ borderTop:`2px solid #6366f1`, background:t.bg }}>
                           <div style={{ padding:'8px 12px', background:t.cardBg2, borderBottom:`1px solid ${t.border}`, display:'flex', gap:'4px', flexWrap:'wrap' }}>
@@ -692,7 +692,7 @@ export default function AdminPanel() {
                     </div>
                   ))}
 
-                  {/* Pagination */}
+                  {/* Pagination }
                   <div style={{ padding:'10px 12px', display:'flex', justifyContent:'space-between', alignItems:'center', borderTop:`1px solid ${t.border}`, background:t.tableHeaderBg }}>
                     <span style={{ color:t.subText, fontSize:'10px' }}>{filtered.length} users · Page {userPage}/{Math.max(1,totalPages)}</span>
                     <div style={{ display:'flex', gap:'4px' }}>
@@ -706,7 +706,7 @@ export default function AdminPanel() {
           </div>
         )}
 
-        osits */}
+        osits }
         {tab === 'deposits' && (
           <div>
             <div style={{ display: 'flex', gap: '8px', marginBottom: '12px', flexWrap: 'wrap' }}>
@@ -748,7 +748,7 @@ export default function AdminPanel() {
           </div>
         )}
 
-        {/* Withdrawals */}
+        {/* Withdrawals }
         {tab === 'withdrawals' && (
           <div>
             <div style={{ display: 'flex', gap: '8px', marginBottom: '12px', flexWrap: 'wrap' }}>
@@ -789,7 +789,7 @@ export default function AdminPanel() {
           </div>
         )}
 
-        {/* KYC */}
+        {/* KYC }
         {tab === 'kyc' && (
           <div style={{ overflowX: 'auto' }}>
             <table style={{ width: '100%', borderCollapse: 'collapse', border: `1px solid ${t.tableOuterBorder}` }}>
@@ -822,7 +822,7 @@ export default function AdminPanel() {
           </div>
         )}
 
-        {/* Trades */}
+        {/* Trades }
         {tab === 'trades' && (
           <div style={{ overflowX: 'auto' }}>
             <table style={{ width: '100%', borderCollapse: 'collapse', border: `1px solid ${t.tableOuterBorder}` }}>
@@ -870,7 +870,7 @@ export default function AdminPanel() {
           </div>
         )}
 
-        {/* Bots */}
+        {/* Bots }
         {tab === 'bots' && (
           <div style={{ padding: '12px' }}>
             <div style={{ display: 'flex', gap: '8px', marginBottom: '12px', alignItems: 'center' }}>
@@ -926,7 +926,7 @@ export default function AdminPanel() {
           </div>
         )}
 
-        {/* Stakes */}
+        {/* Stakes }
         {tab === 'stakes' && (
           <div style={{ padding: '12px' }}>
             <div style={{ display: 'flex', gap: '8px', marginBottom: '12px', alignItems: 'center' }}>
@@ -982,7 +982,7 @@ export default function AdminPanel() {
           </div>
         )}
 
-        {/* Contacts */}
+        {/* Contacts }
         {tab === 'contacts' && (
           <div style={{ padding: '0', display: 'flex', gap: '0', height: 'calc(100vh - 210px)', background: t.bg }}>
             <div style={{ width: chatFullscreen ? '0px' : '220px', flexShrink: 0, overflowY: 'auto', borderRight: chatFullscreen ? 'none' : `1px solid ${t.subtleBorder}`, paddingRight: '0', overflow: 'hidden', transition: 'width 0.2s', background: t.bg }}>
@@ -1011,7 +1011,7 @@ export default function AdminPanel() {
                 <div style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', color: t.faintText, fontSize: '9px' }}>Select a conversation</div>
               ) : (
                 <>
-                  {/* Smartsupp-style user info panel */}
+                  {/* Smartsupp-style user info panel }
                   <div style={{ background: t.bg, borderBottom: `1px solid ${t.border}` }}>
                     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '10px 14px', borderBottom: `1px solid ${t.subtleBorder}` }}>
                       <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
@@ -1183,7 +1183,7 @@ export default function AdminPanel() {
           </div>
         )}
 
-        {/* Activity Log */}
+        {/* Activity Log }
 
         {tab === 'activity' && (
           <div style={{ padding: '12px' }}>
@@ -1213,7 +1213,7 @@ export default function AdminPanel() {
         )}
       </div>
 
-      {/* Reset Link Modal */}
+      {/* Reset Link Modal }
       {resetLink && (
         <div onClick={() => setResetLink('')} style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.75)', zIndex: 1000, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '16px' }}>
           <div onClick={e => e.stopPropagation()} style={{ background: t.cardBg2, border: '1px solid #6366f1', width: '100%', maxWidth: '400px', padding: '20px', borderRadius: '0' }}>
@@ -1228,7 +1228,7 @@ export default function AdminPanel() {
         </div>
       )}
 
-      {/* Email Modal */}
+      {/* Email Modal }
       {emailModal && (
         <div onClick={() => setEmailModal(false)} style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.75)', zIndex: 1000, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '16px' }}>
           <div onClick={e => e.stopPropagation()} style={{ background: t.bg, border: `1px solid ${t.border}`, width: '100%', maxWidth: '380px', borderRadius: '0', padding: '20px' }}>
@@ -1240,7 +1240,7 @@ export default function AdminPanel() {
             </div>
             {emailTarget && <div style={{ color: t.mutedText, fontSize: '9px', marginBottom: '12px' }}>To: {emailTarget.email}</div>}
             {!emailTarget && <div style={{ background: 'rgba(99,102,241,0.1)', border: '1px solid #6366f1', padding: '8px', marginBottom: '12px', color: '#818cf8', fontSize: '9px' }}><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#818cf8" strokeWidth="2" style={{marginRight:"6px",verticalAlign:"middle"}}><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>This will send email to ALL {users.length} users</div>}
-            {/* Email Type Selector */}
+            {/* Email Type Selector }
             <div style={{ marginBottom: '14px' }}>
               <label style={{ color: t.overlayText, fontSize: '11px', display: 'block', marginBottom: '8px', fontWeight: '600' }}>Email Type</label>
               <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
@@ -1293,12 +1293,12 @@ export default function AdminPanel() {
         </div>
       )}
 
-      {/* User Details Modal */}
+      {/* User Details Modal }
       {selectedUser && (
         <div onClick={() => setSelectedUser(null)} style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.75)', zIndex: 1000, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '16px' }}>
           <div onClick={e => e.stopPropagation()} style={{ background: t.bg, border: `1px solid ${t.border}`, width: '100%', maxWidth: '420px', maxHeight: '90vh', overflowY: 'auto', borderRadius: '0' }}>
             
-            {/* Modal Header */}
+            {/* Modal Header }
             <div style={{ padding: '14px 16px', borderBottom: `1px solid ${t.border}`, display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
                 {selectedUser.avatar && selectedUser.avatar !== '' ? (
@@ -1316,7 +1316,7 @@ export default function AdminPanel() {
               <button onClick={() => setSelectedUser(null)} style={{ background: 'none', border: 'none', color: t.subText, fontSize: '20px', cursor: 'pointer' }}>×</button>
             </div>
 
-            {/* Tabs */}
+            {/* Tabs }
             <div style={{ display: 'flex', gap: '4px', padding: '10px 16px', borderBottom: `1px solid ${t.border}`, flexWrap: 'wrap' }}>
               {['info', 'fees', 'bots', 'investments', 'profit'].map(tabItem => (
                 <button key={tabItem} onClick={() => setUserDetailTab(tabItem)} style={{ padding: '5px 12px', background: userDetailTab === tabItem ? '#6366f1' : t.subtleBg, border: 'none', color: 'white', fontSize: '9px', cursor: 'pointer', textTransform: 'capitalize', fontWeight: userDetailTab === tabItem ? '700' : '400' }}>{tabItem}</button>
@@ -1324,7 +1324,7 @@ export default function AdminPanel() {
               <button onClick={() => deleteUser(selectedUser._id, selectedUser.firstName + ' ' + selectedUser.lastName)} style={{ padding: '5px 12px', background: '#7f1d1d', border: 'none', color: 'white', fontSize: '9px', cursor: 'pointer', marginLeft: 'auto' }}><Trash2 size={12}/> Delete</button>
             </div>
 
-            {/* Info Tab */}
+            {/* Info Tab }
             {userDetailTab === 'info' && (
               <div style={{ padding: '14px 16px' }}>
                 {selectedUser.adminMessage && (
@@ -1351,12 +1351,12 @@ export default function AdminPanel() {
                     </div>
                   ))}
                 </div>
-                {/* Advanced Controls */}
+                {/* Advanced Controls }
                 <div style={{ marginBottom: '14px' }}>
                   <div style={{ color: '#6366f1', fontSize: '9px', fontWeight: '700', marginBottom: '8px', textTransform: 'uppercase' }}>Advanced Controls</div>
                   <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
                     
-                    {/* Plan Upgrade */}
+                    {/* Plan Upgrade }
                     <div style={{ background: 'rgba(99,102,241,0.08)', border: '1px solid rgba(99,102,241,0.2)', borderRadius: '6px', padding: '10px' }}>
                       <div style={{ color: t.dimText, fontSize: '8px', marginBottom: '8px' }}>
                         Current Plan: <strong style={{ color: selectedUser.currentPlan && selectedUser.currentPlan !== 'none' ? '#22c55e' : '#64748b' }}>{selectedUser.currentPlan && selectedUser.currentPlan !== 'none' ? selectedUser.currentPlan : 'No Plan'}</strong>
@@ -1379,7 +1379,7 @@ export default function AdminPanel() {
                       </div>
                     </div>
 
-                    {/* Withdrawal Code */}
+                    {/* Withdrawal Code }
                     <div style={{ background: 'rgba(167,139,250,0.08)', border: '1px solid rgba(167,139,250,0.2)', borderRadius: '6px', padding: '10px' }}>
                       <div style={{ color: t.dimText, fontSize: '8px', marginBottom: '6px' }}>
                         Withdrawal Code: <strong style={{ color: selectedUser.withdrawalCodeRequired ? '#a78bfa' : '#64748b' }}>{selectedUser.withdrawalCodeRequired ? 'Active' : 'Not Set'}</strong>
@@ -1397,14 +1397,14 @@ export default function AdminPanel() {
                       <div style={{ color: t.faintText, fontSize: '7px', marginTop: '6px' }}>Code will be emailed to user when you click Send Code below</div>
                     </div>
 
-                    {/* Send Code Button */}
+                    {/* Send Code Button }
                     {selectedUser.withdrawalCodeRequired && (
                       <button onClick={() => { sendWithdrawalCode(selectedUser._id, selectedUser.email, selectedUser.firstName); setSelectedUser(null); }} style={{ ...btnStyle('#6366f1'), width: '100%', padding: '8px' }}>
                         📧 Send Code to {selectedUser.email}
                       </button>
                     )}
 
-                    {/* Min Withdrawal */}
+                    {/* Min Withdrawal }
                     <div style={{ background: 'rgba(14,165,233,0.08)', border: '1px solid rgba(14,165,233,0.2)', borderRadius: '6px', padding: '10px' }}>
                       <div style={{ color: t.dimText, fontSize: '8px', marginBottom: '6px' }}>
                         Min Withdrawal: <strong style={{ color: '#0ea5e9' }}>${selectedUser.minimumWithdrawal || 100}</strong>
@@ -1412,7 +1412,7 @@ export default function AdminPanel() {
                       <button onClick={() => { setMinWithdrawal(selectedUser._id); setSelectedUser(null); }} style={btnStyle('#0ea5e9')}>Change Min Withdrawal</button>
                     </div>
 
-                    {/* Delete */}
+                    {/* Delete }
                     <button onClick={() => deleteUser(selectedUser._id)} style={{ ...btnStyle('#ef4444'), width: '100%', padding: '8px' }}>
                       🗑 Delete User Account
                     </button>
@@ -1438,10 +1438,10 @@ export default function AdminPanel() {
               </div>
             )}
 
-            {/* Bots Tab */}
+            {/* Bots Tab }
             {userDetailTab === 'fees' && (
               <div>
-                {/* Registration Fee */}
+                {/* Registration Fee }
                 <div style={{ background: t.cardBg2, borderRadius: '8px', padding: '12px', marginBottom: '12px' }}>
                   <div style={{ color: t.text, fontSize: '10px', fontWeight: '700', marginBottom: '8px' }}>Registration Fee</div>
                   <div style={{ display: 'flex', gap: '8px', alignItems: 'center', marginBottom: '8px' }}>
@@ -1465,7 +1465,7 @@ export default function AdminPanel() {
                   </div>
                 </div>
 
-                {/* Add Other Fees */}
+                {/* Add Other Fees }
                 <div style={{ background: t.cardBg2, borderRadius: '8px', padding: '12px', marginBottom: '12px' }}>
                   <div style={{ color: t.text, fontSize: '10px', fontWeight: '700', marginBottom: '8px' }}>Add Fee</div>
                   <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '6px', marginBottom: '8px' }}>
@@ -1503,7 +1503,7 @@ export default function AdminPanel() {
                   </button>
                 </div>
 
-                {/* Pending Fees List */}
+                {/* Pending Fees List }
                 <div style={{ background: t.cardBg2, borderRadius: '8px', padding: '12px' }}>
                   <div style={{ color: t.text, fontSize: '10px', fontWeight: '700', marginBottom: '8px' }}>
                     Pending Fees ({(selectedUser.pendingFees || []).filter(f => !f.paid).length})
@@ -1559,7 +1559,7 @@ export default function AdminPanel() {
               </div>
             )}
 
-            {/* Investments Tab */}
+            {/* Investments Tab }
             {userDetailTab === 'investments' && (
               <div style={{ padding: '14px 16px' }}>
                 <div style={{ color: t.text, fontSize: '8px', fontWeight: '700', marginBottom: '10px' }}>Investment Packages ({userInvestments.length})</div>
@@ -1580,7 +1580,7 @@ export default function AdminPanel() {
               </div>
             )}
 
-            {/* Profit Tab */}
+            {/* Profit Tab }
             {userDetailTab === 'profit' && (
               <div style={{ padding: '14px 16px' }}>
                 <div style={{ color: t.text, fontSize: '8px', fontWeight: '700', marginBottom: '10px' }}>Manual Profit Credit</div>
