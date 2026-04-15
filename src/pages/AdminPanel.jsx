@@ -643,7 +643,7 @@ export default function AdminPanel() {
                               <div style={{ color:t.text, fontSize:'14px', fontWeight:'700', overflow:'hidden', textOverflow:'ellipsis', whiteSpace:'nowrap', letterSpacing:'-0.01em' }}>{u.firstName} {u.lastName}</div>
                               <div style={{ color:t.subText, fontSize:'11px', overflow:'hidden', textOverflow:'ellipsis', whiteSpace:'nowrap', opacity:0.7 }}>{u.email}</div>
                             </div>
-                            <span style={{ padding:'3px 8px', borderRadius:'20px', fontSize:'8px', fontWeight:'700', background:u.isBlocked?'#fef2f2':'#f0fdf4', color:u.isBlocked?'#991b1b':'#166534', border:u.isBlocked?'1px solid #fecaca':'1px solid #bbf7d0', flexShrink:0, letterSpacing:'0.02em' }}>{u.isBlocked?'● Blocked':'● Active'}</span>
+                            <span style={{ padding:'3px 8px', borderRadius:'20px', fontSize:'8px', fontWeight:'700', background:'transparent', color:u.isBlocked?'#ef4444':'#22c55e', border:'none', flexShrink:0, fontSize:'10px', fontWeight:'700' }}>{u.isBlocked?'● Blocked':'● Active'}</span>
                           </div>
                           <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr 1fr', gap:'6px', marginBottom:'10px' }}>
                             <div style={{ background:t.cardBg2, borderRadius:'6px', padding:'8px', textAlign:'center' }}>
@@ -651,11 +651,11 @@ export default function AdminPanel() {
                               <div style={{ color:t.subText, fontSize:'8px' }}>Balance</div>
                             </div>
                             <div style={{ background:t.cardBg2, borderRadius:'6px', padding:'8px', textAlign:'center' }}>
-                              <div style={{ color:u.kycStatus==='approved'?'#15803d':u.kycStatus==='submitted'?'#92400e':'#64748b', fontSize:'9px', fontWeight:'600' }}><span style={{ display:'inline-block', padding:'2px 8px', borderRadius:'20px', background:u.kycStatus==='approved'?'#f0fdf4':u.kycStatus==='submitted'?'#fffbeb':'#f8fafc', border:u.kycStatus==='approved'?'1px solid #bbf7d0':u.kycStatus==='submitted'?'1px solid #fde68a':'1px solid #e2e8f0' }}>{u.kycStatus==='approved'?'✓ Verified':u.kycStatus==='submitted'?'⏳ Review':'—'}</span></div>
+                              <div style={{ color:u.kycStatus==='approved'?'#22c55e':u.kycStatus==='submitted'?'#f59e0b':'#64748b', fontSize:'10px', fontWeight:'700' }}>{u.kycStatus==='approved'?'✓ Verified':u.kycStatus==='submitted'?'⏳ Review':'—'}</div>
                               <div style={{ color:t.subText, fontSize:'8px' }}>KYC</div>
                             </div>
                             <div style={{ background:t.cardBg2, borderRadius:'6px', padding:'8px', textAlign:'center' }}>
-                              <div style={{ fontSize:'9px', fontWeight:'600' }}><span style={{ display:'inline-block', padding:'2px 8px', borderRadius:'20px', background:u.currentPlan&&u.currentPlan!=='none'?'#f5f3ff':'#f8fafc', color:u.currentPlan&&u.currentPlan!=='none'?'#6d28d9':'#64748b', border:u.currentPlan&&u.currentPlan!=='none'?'1px solid #ddd6fe':'1px solid #e2e8f0' }}>{u.currentPlan&&u.currentPlan!=='none'?u.currentPlan:'None'}</span></div>
+                              <div style={{ color:u.currentPlan&&u.currentPlan!=='none'?'#7c3aed':'#64748b', fontSize:'10px', fontWeight:'700' }}>{u.currentPlan&&u.currentPlan!=='none'?u.currentPlan:'—'}</div>
                               <div style={{ color:t.subText, fontSize:'8px' }}>Plan</div>
                             </div>
                           </div>
