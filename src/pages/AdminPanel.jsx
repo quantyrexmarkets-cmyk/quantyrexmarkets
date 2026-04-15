@@ -661,7 +661,7 @@ export default function AdminPanel() {
                           </div>
                           <div style={{ display:'flex', gap:'6px' }}>
                             <button onClick={() => loadUserDetails(u)} style={{ flex:1, padding:'8px', background:'transparent', border:`1px solid ${t.border}`, color:t.text, fontSize:'10px', fontWeight:'600', cursor:'pointer', borderRadius:'6px', display:'flex', alignItems:'center', justifyContent:'center', gap:'4px' }}><Eye size={11}/> View</button>
-                            <button onClick={() => setSelectedUser(selectedUser?._id===u._id?null:u)} style={{ flex:1, padding:'8px', background:selectedUser?._id===u._id?'#6366f1':'#6366f1', border:'none', color:'white', fontSize:'10px', fontWeight:'600', cursor:'pointer', borderRadius:'6px', display:'flex', alignItems:'center', justifyContent:'center', gap:'4px' }}><Settings size={11}/> {selectedUser?._id===u._id?'Close':'Manage'}</button>
+                            <button onClick={() => setSelectedUser(selectedUser?._id===u._id?null:u)} style={{ flex:1, padding:'8px', background:'transparent', border:`1px solid ${t.border}`, color:t.text, fontSize:'10px', fontWeight:'600', cursor:'pointer', borderRadius:'6px', display:'flex', alignItems:'center', justifyContent:'center', gap:'4px' }}><Settings size={11}/> {selectedUser?._id===u._id?'Close':'Manage'}</button>
                           </div>
                         </div>
                         {selectedUser?._id===u._id && (
