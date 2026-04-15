@@ -108,13 +108,22 @@ export default function AdminUserDetail() {
   };
 
   const btnStyle = (color, isActive = false) => {
-    const isDanger = color === '#ef4444' || color === '#7f1d1d';
-    const isSuccess = color === '#22c55e' || color === '#16a34a';
-    const solidBg = isDanger ? '#ef4444' : isSuccess ? '#22c55e' : '#6366f1';
-    const lightBg = isDanger ? 'rgba(239,68,68,0.08)' : isSuccess ? 'rgba(34,197,94,0.08)' : 'rgba(99,102,241,0.08)';
-    const borderCol = isDanger ? 'rgba(239,68,68,0.4)' : isSuccess ? 'rgba(34,197,94,0.4)' : 'rgba(99,102,241,0.4)';
-    const textColor = isDanger ? '#ef4444' : isSuccess ? '#22c55e' : '#6366f1';
-    return { padding:'6px 12px', background: isActive ? solidBg : lightBg, border:`1px solid ${borderCol}`, color: isActive ? 'white' : textColor, fontSize:'10px', fontWeight:'600', cursor:'pointer', borderRadius:'6px', marginRight:'3px', marginBottom:'3px', display:'inline-flex', alignItems:'center', gap:'4px', whiteSpace:'nowrap' };
+    return {
+      padding:'6px 12px',
+      background: 'transparent',
+      border: `1.5px solid ${t.tableDivider}`,
+      color: t.text,
+      fontSize:'10px',
+      fontWeight:'600',
+      cursor:'pointer',
+      borderRadius:'6px',
+      marginRight:'3px',
+      marginBottom:'3px',
+      display:'inline-flex',
+      alignItems:'center',
+      gap:'4px',
+      whiteSpace:'nowrap',
+    };
   };
 
   useEffect(() => {
@@ -294,7 +303,7 @@ export default function AdminUserDetail() {
                     </div>
                   ))}
                 </div>
-                <button onClick={() => setSelectedUser(null)} style={{ width: '100%', padding: '8px', background: '#6366f1', border: 'none', color: 'white', fontSize: '8px', fontWeight: '700', cursor: 'pointer' }}>Close</button>
+                <button onClick={() => setSelectedUser(null)} style={{ width: '100%', padding: '8px', background: 'transparent', border: `1.5px solid ${t.tableDivider}`, color: t.text, fontSize: '8px', fontWeight: '700', cursor: 'pointer', borderRadius: '6px' }}>Close</button>
               </div>
             )}
 
