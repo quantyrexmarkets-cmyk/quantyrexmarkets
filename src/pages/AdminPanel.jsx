@@ -618,11 +618,11 @@ export default function AdminPanel() {
               <div style={{ position:'relative', flex:1, minWidth:'200px' }}>
                 <input value={userSearch} onChange={e => { setUserSearch(e.target.value); setUserPage(1); }}
                   placeholder='Search name or email...'
-                  style={{ width:'100%', background:t.inputBg, border:`1px solid ${t.border}`, color:t.text, fontSize:'11px', padding:'8px 12px 8px 30px', outline:'none', borderRadius:'6px', boxSizing:'border-box' }}/>
+                  style={{ width:'100%', background:'transparent', border:`1px solid ${t.border}`, color:t.text, fontSize:'11px', padding:'8px 12px 8px 30px', outline:'none', borderRadius:'6px', boxSizing:'border-box', height:'36px' }}/>
                 <svg style={{ position:'absolute', left:'9px', top:'50%', transform:'translateY(-50%)' }} width='12' height='12' fill='none' stroke={t.subText} viewBox='0 0 24 24' strokeWidth='2'><circle cx='11' cy='11' r='8'/><path d='m21 21-4.35-4.35'/></svg>
               </div>
-              <button onClick={() => exportCSV(users, 'users.csv')} style={{ ...btnStyle('#22c55e'), display:'flex', alignItems:'center', gap:'4px' }}><Download size={12}/> CSV</button>
-              <button onClick={() => { setEmailTarget(null); setEmailModal(true); setEmailSuccess(''); }} style={{ ...btnStyle('#6366f1'), display:'flex', alignItems:'center', gap:'4px' }}><Mail size={12}/> Email All</button>
+              <button onClick={() => exportCSV(users, 'users.csv')} style={{ height:'36px', padding:'0 14px', background:'transparent', border:`1px solid ${t.border}`, color:t.text, fontSize:'11px', fontWeight:'600', cursor:'pointer', borderRadius:'6px', display:'flex', alignItems:'center', gap:'6px', whiteSpace:'nowrap' }}><Download size={13}/> Export CSV</button>
+              <button onClick={() => { setEmailTarget(null); setEmailModal(true); setEmailSuccess(''); }} style={{ height:'36px', padding:'0 14px', background:'transparent', border:`1px solid ${t.border}`, color:t.text, fontSize:'11px', fontWeight:'600', cursor:'pointer', borderRadius:'6px', display:'flex', alignItems:'center', gap:'6px', whiteSpace:'nowrap' }}><Mail size={13}/> Email All</button>
             </div>
             {(() => {
               const filtered = users.filter(u => (u.firstName+' '+u.lastName+' '+u.email).toLowerCase().includes(userSearch.toLowerCase()));
