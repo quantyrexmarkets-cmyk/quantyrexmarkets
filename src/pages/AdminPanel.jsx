@@ -613,7 +613,7 @@ export default function AdminPanel() {
 
         {tab === 'users' && (
           <div>
-            {/* Toolbar }
+            {/* Toolbar */}
             <div style={{ display:'flex', gap:'8px', alignItems:'center', marginBottom:'12px', flexWrap:'wrap' }}>
               <div style={{ position:'relative', flex:1, minWidth:'200px' }}>
                 <input value={userSearch} onChange={e => { setUserSearch(e.target.value); setUserPage(1); }}
