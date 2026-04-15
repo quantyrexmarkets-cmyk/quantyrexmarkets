@@ -397,16 +397,16 @@ export default function AdminPanel() {
   const btnStyle = (color, isActive = false) => {
     const isDanger = color === '#ef4444' || color === '#7f1d1d' || color === '#dc2626';
     const isSuccess = color === '#22c55e' || color === '#16a34a';
-    const bg = isDanger ? '#ef4444' : isSuccess ? '#22c55e' : '#6366f1';
-    const lightBg = isDanger ? 'rgba(239,68,68,0.1)' : isSuccess ? 'rgba(34,197,94,0.1)' : 'rgba(99,102,241,0.1)';
-    const border = isDanger ? 'rgba(239,68,68,0.3)' : isSuccess ? 'rgba(34,197,94,0.3)' : 'rgba(99,102,241,0.3)';
+    const solidBg = isDanger ? '#ef4444' : isSuccess ? '#22c55e' : '#6366f1';
+    const lightBg = isDanger ? 'rgba(239,68,68,0.08)' : isSuccess ? 'rgba(34,197,94,0.08)' : 'rgba(99,102,241,0.08)';
+    const borderCol = isDanger ? 'rgba(239,68,68,0.4)' : isSuccess ? 'rgba(34,197,94,0.4)' : 'rgba(99,102,241,0.4)';
     const textColor = isDanger ? '#ef4444' : isSuccess ? '#22c55e' : '#6366f1';
     return {
-      padding: '5px 10px',
-      background: isActive ? bg : lightBg,
-      border: `1px solid ${border}`,
+      padding: '6px 12px',
+      background: isActive ? solidBg : lightBg,
+      border: `1px solid ${borderCol}`,
       color: isActive ? 'white' : textColor,
-      fontSize: '9px',
+      fontSize: '10px',
       fontWeight: '600',
       cursor: 'pointer',
       borderRadius: '6px',
@@ -592,21 +592,17 @@ export default function AdminPanel() {
             </div>
 
             {/* Users overview */}
-            <div style={{ background: t.cardBg2, padding: '14px' }}>
-              <div style={{ color: t.text, fontSize: '8px', fontWeight: '700', marginBottom: '12px' }}>Users Overview</div>
-              <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                {[
-                  ['Total', users.length, '#6366f1'],
-                  ['Active', users.filter(u => !u.isBlocked).length, '#22c55e'],
-                  ['Blocked', users.filter(u => u.isBlocked).length, '#ef4444'],
-                  ['KYC Done', users.filter(u => u.kycStatus === 'approved').length, '#f59e0b'],
-                ].map(([l,v,col]) => (
-                  <div key={l} style={{ textAlign: 'center' }}>
-                    <div style={{ color: col, fontSize: '9px', fontWeight: '700' }}>{v}</div>
-                    <div style={{ color: t.mutedText, fontSize: '8px' }}>{l}</div>
-                  </div>
-                ))}
-              </div>
+            <div style={{ background: t.cardBg2, padding: '14px', display: 'flex', gap: '0' }}>
+              {[
+                ['Total Deposits', '$'+users.reduce((s,u)=>s+(u.totalDeposits||0),0).toLocaleString('en-US',{minimumFractionDigits:2}), '#22c55e'],
+                ['Total Withdrawals', '$'+users.reduce((s,u)=>s+(u.totalWithdrawals||0),0).toLocaleString('en-US',{minimumFractionDigits:2}), '#f59e0b'],
+                ['Total Profit', '$'+users.reduce((s,u)=>s+(u.totalProfit||0),0).toLocaleString('en-US',{minimumFractionDigits:2}), '#6366f1'],
+              ].map(([l,v,col], i) => (
+                <div key={l} style={{ flex: 1, textAlign: 'center', padding: '8px', borderRight: i<2?`1px solid ${t.border}`:'none' }}>
+                  <div style={{ color: col, fontSize: '13px', fontWeight: '800' }}>{v}</div>
+                  <div style={{ color: t.subText, fontSize: '9px', marginTop: '2px' }}>{l}</div>
+                </div>
+              ))}
             </div>
           </div>
         )}
@@ -615,7 +611,7 @@ export default function AdminPanel() {
         {tab === 'users' && (
           <div style={{ overflowX: "auto", overflowY: "auto", maxHeight: "80vh" }}>
             <div style={{ padding: "8px 0", marginBottom: "8px", display: "flex", gap: "8px", alignItems: "center" }}>
-              <input value={userSearch} onChange={e => { setUserSearch(e.target.value); setUserPage(1); }} placeholder="Search by name or email..." style={{ flex: 1, background: "#374151", border: "none", color: "white", fontSize: "8px", padding: "6px 10px", outline: "none" }} />
+              <input value={userSearch} onChange={e => { setUserSearch(e.target.value); setUserPage(1); }} placeholder="Search by name or email..." style={{ flex: 1, background: t.inputBg, border: `1px solid ${t.border}`, color: t.text, fontSize: "10px", padding: "8px 12px", outline: "none", borderRadius: "6px" }} />
               <span style={{ color: t.mutedText, fontSize: "7px" }}>{users.filter(u => (u.firstName + " " + u.lastName + " " + u.email).toLowerCase().includes(userSearch.toLowerCase())).length} users</span>
               <button onClick={() => exportCSV(users, 'users.csv')} style={{ ...btnStyle('#22c55e'), whiteSpace: 'nowrap' }}><Download size={12}/> CSV</button>
               <button onClick={() => { setEmailTarget(null); setEmailModal(true); setEmailSuccess(''); }} style={{ ...btnStyle('#6366f1'), whiteSpace: 'nowrap' }}><Mail size={12}/> Email All</button>
@@ -626,7 +622,7 @@ export default function AdminPanel() {
                 const paginated = filtered.slice((userPage-1)*PAGE_SIZE, userPage*PAGE_SIZE);
                 return paginated;
               })().map((u, i) => (
-                <div key={i} style={{ background: t.cardBg, border: `1px solid ${t.border}`, borderRadius: '12px', padding: '16px' }}>
+                <div key={i} style={{ background: t.cardBg, border: `1px solid ${t.tableOuterBorder}`, borderRadius: '10px', padding: '16px', boxShadow: t.bg === '#f8fafc' ? '0 1px 4px rgba(0,0,0,0.08)' : '0 2px 8px rgba(0,0,0,0.2)' }}>
                   {/* Header */}
                   <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '12px' }}>
                     <div>
