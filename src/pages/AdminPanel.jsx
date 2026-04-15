@@ -646,7 +646,7 @@ export default function AdminPanel() {
                             <span style={{ padding:'3px 8px', borderRadius:'20px', fontSize:'8px', fontWeight:'700', background:'transparent', color:u.isBlocked?'#ef4444':'#6366f1', border:'none', flexShrink:0, fontSize:'10px', fontWeight:'600' }}>{u.isBlocked?'● Suspended':'● Active'}</span>
                           </div>
                           <div style={{ display:'flex', gap:'16px', marginBottom:'12px', paddingTop:'2px', flexWrap:'wrap' }}>
-                            <span style={{ color:t.subText, fontSize:'9px' }}>Balance <span style={{ color:t.text, fontSize:'12px', fontWeight:'700' }}>${parseFloat(u.balance||0).toLocaleString('en-US',{minimumFractionDigits:2})}</span></span>
+                            <span style={{ color:t.subText, fontSize:'9px' }}>Balance <span style={{ color:t.text, fontSize:'11px', fontWeight:'700' }}>${parseFloat(u.balance||0).toLocaleString('en-US',{minimumFractionDigits:2})}</span></span>
                             <span style={{ color:t.border }}>|</span>
                             <span style={{ color:t.subText, fontSize:'9px' }}>KYC <span style={{ color:u.kycStatus==='approved'?'#6366f1':u.kycStatus==='submitted'?'#94a3b8':'#64748b', fontWeight:'600' }}>{u.kycStatus==='approved'?'Verified':u.kycStatus==='submitted'?'Review':'None'}</span></span>
                             <span style={{ color:t.border }}>|</span>
