@@ -640,8 +640,7 @@ export default function AdminPanel() {
                               {u.avatar&&u.avatar!==''?<img src={u.avatar} style={{ width:'100%', height:'100%', objectFit:'cover' }}/>:`${u.firstName?.[0]||''}${u.lastName?.[0]||''}`}
                             </div>
                             <div style={{ color:t.text, fontSize:'12px', fontWeight:'700' }}>{u.firstName} {u.lastName}</div>
-                            <span style={{ padding:'2px 8px', borderRadius:'20px', fontSize:'8px', fontWeight:'600', background:u.isBlocked?'#fef2f2':'#f0fdf4', color:u.isBlocked?'#b91c1c':'#15803d', border:u.isBlocked?'1px solid #fecaca':'1px solid #bbf7d0' }}>{u.isBlocked?'Blocked':'Active'}</span>
-                            <div style={{ marginLeft:'auto', display:'flex', gap:'6px' }}>
+                                            <div style={{ marginLeft:'auto', display:'flex', gap:'6px' }}>
                               <button onClick={() => loadUserDetails(u)} style={{ padding:'4px 10px', background:'rgba(99,102,241,0.1)', border:'1px solid rgba(99,102,241,0.3)', color:'#6366f1', fontSize:'9px', fontWeight:'600', cursor:'pointer', borderRadius:'4px', display:'flex', alignItems:'center', gap:'3px' }}><Eye size={10}/> View</button>
                               <button onClick={() => setSelectedUser(selectedUser?._id===u._id?null:u)} style={{ padding:'4px 10px', background:selectedUser?._id===u._id?'#22c55e':'rgba(34,197,94,0.1)', border:'1px solid rgba(34,197,94,0.3)', color:selectedUser?._id===u._id?'white':'#22c55e', fontSize:'9px', fontWeight:'600', cursor:'pointer', borderRadius:'4px', display:'flex', alignItems:'center', gap:'3px' }}><Settings size={10}/> {selectedUser?._id===u._id?'Close':'Edit'}</button>
                             </div>
