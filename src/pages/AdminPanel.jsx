@@ -645,19 +645,12 @@ export default function AdminPanel() {
                             </div>
                             <span style={{ padding:'3px 8px', borderRadius:'20px', fontSize:'8px', fontWeight:'700', background:'transparent', color:u.isBlocked?'#ef4444':'#6366f1', border:'none', flexShrink:0, fontSize:'10px', fontWeight:'600' }}>{u.isBlocked?'● Suspended':'● Active'}</span>
                           </div>
-                          <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr 1fr', gap:'6px', marginBottom:'10px' }}>
-                            <div style={{ background:t.cardBg2, borderRadius:'6px', padding:'8px', textAlign:'center' }}>
-                              <div style={{ color:t.text, fontSize:'14px', fontWeight:'800', letterSpacing:'-0.02em' }}>${parseFloat(u.balance||0).toLocaleString('en-US',{minimumFractionDigits:2})}</div>
-                              <div style={{ color:t.subText, fontSize:'8px' }}>Balance</div>
-                            </div>
-                            <div style={{ background:t.cardBg2, borderRadius:'6px', padding:'8px', textAlign:'center' }}>
-                              <div style={{ color:u.kycStatus==='approved'?'#6366f1':u.kycStatus==='submitted'?'#94a3b8':'#64748b', fontSize:'10px', fontWeight:'600' }}>{u.kycStatus==='approved'?'✓ Verified':u.kycStatus==='submitted'?'⏳ Review':'—'}</div>
-                              <div style={{ color:t.subText, fontSize:'8px' }}>KYC</div>
-                            </div>
-                            <div style={{ background:t.cardBg2, borderRadius:'6px', padding:'8px', textAlign:'center' }}>
-                              <div style={{ color:u.currentPlan&&u.currentPlan!=='none'?'#6366f1':'#64748b', fontSize:'10px', fontWeight:'600' }}>{u.currentPlan&&u.currentPlan!=='none'?u.currentPlan:'—'}</div>
-                              <div style={{ color:t.subText, fontSize:'8px' }}>Plan</div>
-                            </div>
+                          <div style={{ display:'flex', gap:'16px', marginBottom:'12px', paddingTop:'2px', flexWrap:'wrap' }}>
+                            <span style={{ color:t.subText, fontSize:'9px' }}>Balance <span style={{ color:t.text, fontSize:'12px', fontWeight:'700' }}>${parseFloat(u.balance||0).toLocaleString('en-US',{minimumFractionDigits:2})}</span></span>
+                            <span style={{ color:t.border }}>|</span>
+                            <span style={{ color:t.subText, fontSize:'9px' }}>KYC <span style={{ color:u.kycStatus==='approved'?'#6366f1':u.kycStatus==='submitted'?'#94a3b8':'#64748b', fontWeight:'600' }}>{u.kycStatus==='approved'?'Verified':u.kycStatus==='submitted'?'Review':'None'}</span></span>
+                            <span style={{ color:t.border }}>|</span>
+                            <span style={{ color:t.subText, fontSize:'9px' }}>Plan <span style={{ color:u.currentPlan&&u.currentPlan!=='none'?'#6366f1':'#64748b', fontWeight:'600' }}>{u.currentPlan&&u.currentPlan!=='none'?u.currentPlan:'None'}</span></span>
                           </div>
                           <div style={{ display:'flex', gap:'6px' }}>
                             <button onClick={() => loadUserDetails(u)} style={{ flex:1, padding:'8px', background:'transparent', border:`1px solid ${t.border}`, color:t.text, fontSize:'10px', fontWeight:'600', cursor:'pointer', borderRadius:'6px', display:'flex', alignItems:'center', justifyContent:'center', gap:'4px' }}><Eye size={11}/> View</button>
