@@ -625,8 +625,8 @@ export default function AdminPanel() {
               <button onClick={() => { setEmailTarget(null); setEmailModal(true); setEmailSuccess(''); }} style={{ ...btnStyle('#6366f1'), display:'flex', alignItems:'center', gap:'4px' }}><Mail size={12}/> Email All</button>
             </div>
             <div style={{ display: 'flex', gap: '12px', alignItems: 'flex-start' }}>
-              <div style={{ flex: selectedUser ? '0 0 55%' : '1', border: `1px solid ${t.tableOuterBorder}`, borderRadius: '8px', overflowX: 'auto' }}>
-                <div style={{ minWidth: '620px' }}>
+              <div style={{ flex: selectedUser ? '0 0 55%' : '1', border: `1px solid ${t.tableOuterBorder}`, borderRadius: '0' }}>
+                <div>
                   <div style={{ display: 'grid', gridTemplateColumns: '2fr 2.5fr 1fr 1fr 130px', background: t.tableHeaderBg, borderBottom: `1px solid ${t.tableOuterBorder}` }}>
                     {['Name','Email','Balance','Status','Actions'].map((h,i) => (
                       <div key={i} style={{ padding: '10px 12px', color: t.subText, fontSize: '9px', fontWeight: '700', textTransform: 'uppercase', letterSpacing: '0.05em', borderRight: i<4?`1px solid ${t.tableOuterBorder}`:'none' }}>{h}</div>
