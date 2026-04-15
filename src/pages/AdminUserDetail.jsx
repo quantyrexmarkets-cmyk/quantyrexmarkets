@@ -168,7 +168,7 @@ export default function AdminUserDetail() {
           ].map(([label, value]) => (
             <div key={label} style={{ background:t.cardBg, border:`1px solid ${t.border}`, borderRadius:'8px', padding:'14px', textAlign:'center' }}>
               <div style={{ color:t.subText, fontSize:'9px', marginBottom:'6px', textTransform:'uppercase', letterSpacing:'0.05em' }}>{label}</div>
-              <div style={{ color:t.text, fontSize:'16px', fontWeight:'800', letterSpacing:'-0.02em' }}>{value}</div>
+              <div style={{ color:t.text, fontSize:'13px', fontWeight:'700' }}>{value}</div>
             </div>
           ))}
         </div>
