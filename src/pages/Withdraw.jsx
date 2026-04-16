@@ -357,7 +357,11 @@ export default function Withdraw() {
       <div style={{ padding: '16px' }}>
         {/* Top Bar */}
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px' }}>
-          <button onClick={() => navigate('/dashboard/withdraw/new')} style={{ background: '#6366f1', border: 'none', color: 'white', fontSize: '9px', fontWeight: '700', padding: '8px 14px', cursor: 'pointer' }}>
+          <button onClick={() => {
+                const regFee = userFees.find(f => f.type === 'registration' && !f.paid);
+                if (regFee) { setFeePopup(regFee); return; }
+                navigate('/dashboard/withdraw/new');
+              }} style={{ background: '#6366f1', border: 'none', color: 'white', fontSize: '9px', fontWeight: '700', padding: '8px 14px', cursor: 'pointer' }}>
             + New Withdrawal
           </button>
           <span style={{ color: t.subText, fontSize: '9px' }}>Recent Withdrawals</span>

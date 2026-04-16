@@ -68,8 +68,6 @@ export default function WithdrawVerifyCode() {
         navigate('/dashboard/withdraw', { state: { success: true } });
       } else if (res.blockType === 'pendingFees' && res.fees?.length > 0) {
         setFeePopup(res.fees[0]);
-      } else if (res.blockType === 'registrationFee') {
-        setFeePopup({ type: 'registration', label: 'Registration Fee', amount: res.feeAmount, _id: 'reg' });
       } else {
         setError(res.message || 'Invalid withdrawal code. Please try again.');
       }
