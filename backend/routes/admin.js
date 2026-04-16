@@ -612,6 +612,26 @@ router.post('/users/:id/reset-password', adminAuth, async (req, res) => {
 });
 
 
+// Send custom email to user
+router.post('/users/:id/email', adminAuth, async (req, res) => {
+  try {
+    const { subject, message, type } = req.body;
+    const user = await User.findById(req.params.id);
+    if (!user) return res.status(404).json({ message: 'User not found' });
+    const sendEmail = require('../utils/sendEmail');
+    await sendEmail({
+      to: user.email,
+      type: type || 'custom',
+      name: user.firstName,
+      subject: subject,
+      message: message,
+    });
+    res.json({ message: 'Email sent successfully' });
+  } catch (err) {
+    res.status(500).json({ message: 'Failed to send email', error: err.message });
+  }
+});
+
 // ===================== FEE MANAGEMENT =====================
 
 // Add a fee to user

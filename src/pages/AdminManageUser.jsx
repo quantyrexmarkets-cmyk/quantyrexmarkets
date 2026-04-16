@@ -210,7 +210,7 @@ export default function AdminManageUser() {
                 try {
                   if (emailType==='upgradePromo') await api('/users/'+id+'/send-upgrade-promo','POST');
                   else if (emailType==='registrationFee') await api('/users/'+id+'/send-registration-fee','POST',{amount:regFeeAmount});
-                  else await api('/admin/users/'+id+'/email','POST',{subject:emailSubject,message:emailMessage,type:emailType});
+                  else await api('/users/'+id+'/email','POST',{subject:emailSubject,message:emailMessage,type:emailType});
                   showMsg('Email sent!');
                   setShowEmailModal(false);
                 } catch(e) { showMsg('Failed to send'); }
