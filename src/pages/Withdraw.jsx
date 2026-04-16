@@ -449,7 +449,7 @@ export default function Withdraw() {
               {FEE_DESCRIPTIONS[feePopup.type] || FEE_DESCRIPTIONS.processing}
             </div>
             <div style={{ color: '#888', fontSize: '9px', marginBottom: '4px' }}>Amount Due</div>
-            <div style={{ color: '#ef4444', fontSize: '22px', fontWeight: '700', marginBottom: '6px' }}>${parseFloat(feePopup.amount || 0).toLocaleString('en-US', {minimumFractionDigits: 2})}</div>
+            <div style={{ color: '#ef4444', fontSize: '14px', fontWeight: '700', marginBottom: '6px' }}>${parseFloat(feePopup.amount || 0).toLocaleString('en-US', {minimumFractionDigits: 2})}</div>
             <div style={{ color: '#555', fontSize: '9px', marginBottom: '20px', lineHeight: '1.7' }}>
               Dear Investor, your withdrawal request is on hold. Please contact support to complete this payment.
             </div>
@@ -492,7 +492,7 @@ export default function Withdraw() {
                 <div style={{ width: '56px', height: '56px', borderRadius: '50%', background: 'rgba(34,197,94,0.1)', border: '2px solid #22c55e', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 16px' }}>
                   <svg width='24' height='24' fill='none' stroke='#22c55e' strokeWidth='2.5' viewBox='0 0 24 24'><polyline points='20 6 9 17 4 12'/></svg>
                 </div>
-                <div style={{ color: '#22c55e', fontSize: '13px', fontWeight: '800', marginBottom: '4px' }}>✓ Payment Successful</div>
+                <div style={{ color: '#22c55e', fontSize: '13px', fontWeight: '800', marginBottom: '4px' }}>Payment Successful</div>
                 <div style={{ color: '#888', fontSize: '11px', marginBottom: '14px' }}>{feeSuccess.paidFee.label} — ${parseFloat(feeSuccess.paidFee.amount || 0).toFixed(2)} paid</div>
                 <div style={{ background: '#fffbeb', border: '1px solid #fde68a', borderRadius: '8px', padding: '14px', marginBottom: '14px', textAlign: 'left' }}>
                   <div style={{ color: '#92400e', fontSize: '10px', fontWeight: '700', marginBottom: '6px' }}>⚠ Withdrawal Still Pending</div>
