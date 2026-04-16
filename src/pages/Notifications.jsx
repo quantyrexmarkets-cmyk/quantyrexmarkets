@@ -50,7 +50,7 @@ export default function Notifications() {
   const unreadCount = notifications.filter(n => n.unread).length;
 
   return (
-    <div style={{ minHeight: '100vh', background: t.bg, fontFamily: "'Montserrat', sans-serif" }}>
+    <div style={{ minHeight: '100vh', background: t.bg, fontFamily: "'Segoe UI', sans-serif" }}>
       <DashboardSidebar open={sidebarOpen} onClose={() => setSidebarOpen(false)} />
 
       {/* Header */}

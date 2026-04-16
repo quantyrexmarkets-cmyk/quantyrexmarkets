@@ -66,7 +66,7 @@ export default function MyCopyTrades() {
   const totalReturns = copyTrades.reduce((s, t) => s + (t.totalEarned || 0), 0);
 
   return (
-    <div style={{ minHeight: '100vh', background: t.bg, fontFamily: "'Montserrat', sans-serif", color: t.text }}>
+    <div style={{ minHeight: '100vh', background: t.bg, fontFamily: "'Segoe UI', sans-serif", color: t.text }}>
       <PageHeader title="My Copy Trades" />
 
       {/* Stop Confirmation Modal */}

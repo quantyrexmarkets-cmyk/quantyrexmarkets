@@ -57,7 +57,7 @@ export default function NewTrade() {
   };
 
   return (
-    <div style={{ minHeight: '100vh', background: t.bg, fontFamily: "'Montserrat', sans-serif", color: t.text, display: 'flex', flexDirection: 'column' }}>
+    <div style={{ minHeight: '100vh', background: t.bg, fontFamily: "'Segoe UI', sans-serif", color: t.text, display: 'flex', flexDirection: 'column' }}>
       <PageHeader title="New Trade" />
 
       {/* Chart */}

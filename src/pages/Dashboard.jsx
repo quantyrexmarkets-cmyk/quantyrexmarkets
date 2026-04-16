@@ -149,7 +149,7 @@ export default function Dashboard() {
   }
 
   return (
-    <div style={{ minHeight: '100vh', background: t.bg, display: 'flex', fontFamily: "'Montserrat', sans-serif", overflow: 'hidden' }}>
+    <div style={{ minHeight: '100vh', background: t.bg, display: 'flex', fontFamily: "'Segoe UI', sans-serif", overflow: 'hidden' }}>
       <DashboardSidebar open={sidebarOpen} onClose={() => setSidebarOpen(false)} />
 
       {tradeSuccess && (

@@ -12,7 +12,7 @@ export default function InvestingInfo() {
     { name: 'ELITE', roi: '40% Daily', min: '$100,000', duration: '60 Days', color: '#ec4899' },
   ];
   return (
-    <div style={{ minHeight: '100vh', background: '#0e1628', color: 'white', fontFamily: "'Montserrat', sans-serif" }}>
+    <div style={{ minHeight: '100vh', background: '#0e1628', color: 'white', fontFamily: "'Segoe UI', sans-serif" }}>
       <div style={{ background: '#1a2e4a', padding: '14px 20px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', borderBottom: `1px solid ${'rgba(255,255,255,0.08)'}` }}>
         <span style={{ fontWeight: '800', fontSize: '13px' }}>QUANTYREX <span style={{ color: '#6366f1' }}>MARKETS</span></span>
         <div style={{ display: 'flex', gap: '12px' }}>

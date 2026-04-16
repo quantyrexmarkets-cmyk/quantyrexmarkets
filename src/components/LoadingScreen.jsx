@@ -7,7 +7,7 @@ export default function LoadingScreen() {
       flexDirection: 'column',
       alignItems: 'center',
       justifyContent: 'center',
-      fontFamily: "'Montserrat', sans-serif"
+      fontFamily: "'Segoe UI', sans-serif"
     }}>
       {/* Animated Logo */}
       <div style={{ position: 'relative', width: '40px', height: '40px', marginBottom: '16px' }}>

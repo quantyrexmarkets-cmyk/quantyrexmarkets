@@ -78,7 +78,7 @@ export default function ManageBots() {
   const paginated = filtered.slice((page-1)*show, page*show);
 
   return (
-    <div style={{ minHeight: '100vh', background: t.bg, fontFamily: "'Montserrat', sans-serif", color: t.text }}>
+    <div style={{ minHeight: '100vh', background: t.bg, fontFamily: "'Segoe UI', sans-serif", color: t.text }}>
       <PageHeader title="Trading Bots" />
 
       {msg && <div style={{ background: '#22c55e', color: t.text, padding: '8px 16px', fontSize: '9px', fontWeight: '600' }}>{msg}</div>}

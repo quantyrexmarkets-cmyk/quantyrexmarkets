@@ -18,7 +18,7 @@ export default function Terms() {
   ];
 
   return (
-    <div style={{ minHeight: '100vh', background: '#0e1628', color: 'white', fontFamily: "'Montserrat', sans-serif" }}>
+    <div style={{ minHeight: '100vh', background: '#0e1628', color: 'white', fontFamily: "'Segoe UI', sans-serif" }}>
       {/* Header */}
       <div style={{ background: '#1a2e4a', padding: '14px 20px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', borderBottom: `1px solid ${'rgba(255,255,255,0.08)'}`, position: 'sticky', top: 0, zIndex: 100 }}>
         <span style={{ fontWeight: '800', fontSize: '13px', cursor: 'pointer' }} onClick={() => navigate('/')}>QUANTYREX <span style={{ color: '#6366f1' }}>MARKETS</span></span>

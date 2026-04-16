@@ -102,7 +102,7 @@ export default function Deposit() {
   const labelStyle = { color: t.subText, fontSize: '8px', display: 'block', marginBottom: '6px' };
 
   return (
-    <div style={{ minHeight: '100vh', background: t.bg, fontFamily: "'Montserrat', sans-serif", color: t.text }}>
+    <div style={{ minHeight: '100vh', background: t.bg, fontFamily: "'Segoe UI', sans-serif", color: t.text }}>
 
       {/* Header */}
       <PageHeader title="Deposit" />
