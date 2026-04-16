@@ -440,14 +440,14 @@ export default function Withdraw() {
       {feePopup && (
         <>
           <div onClick={() => setFeePopup(null)} style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.6)', zIndex: 300 }}/>
-          <div style={{ position: 'fixed', top: '50%', left: '50%', transform: 'translate(-50%,-50%)', zIndex: 301, background: 'white', padding: '36px 28px', width: '320px', textAlign: 'center', borderRadius: '8px' }}>
+          <div style={{ position: 'fixed', top: '50%', left: '50%', transform: 'translate(-50%,-50%)', zIndex: 301, background: 'white', padding: '36px 28px', width: '320px', borderRadius: '8px' }}>
             <div style={{ color: '#111', fontSize: '15px', fontWeight: '700', marginBottom: '12px' }}>{feePopup.label}</div>
-            <div style={{ color: '#555', fontSize: '10px', marginBottom: '16px', lineHeight: '1.8', textAlign: 'left' }}>
+            <div style={{ color: '#555', fontSize: '10px', marginBottom: '20px', lineHeight: '1.8' }}>
               {FEE_DESCRIPTIONS[feePopup.type] || FEE_DESCRIPTIONS.processing}
             </div>
-            <div style={{ color: '#888', fontSize: '9px', marginBottom: '4px', textAlign: 'left' }}>Amount Due</div>
-            <div style={{ color: '#111', fontSize: '16px', fontWeight: '700', marginBottom: '16px', textAlign: 'left' }}>${parseFloat(feePopup.amount || 0).toLocaleString('en-US', {minimumFractionDigits: 2})}</div>
-            <div style={{ color: '#555', fontSize: '10px', marginBottom: '20px', lineHeight: '1.7', textAlign: 'left' }}>
+            <div style={{ color: '#888', fontSize: '9px', marginBottom: '6px', fontWeight: '600', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Amount Due</div>
+            <div style={{ color: '#111', fontSize: '18px', fontWeight: '700', marginBottom: '20px' }}>${parseFloat(feePopup.amount || 0).toLocaleString('en-US', {minimumFractionDigits: 2})}</div>
+            <div style={{ color: '#555', fontSize: '10px', marginBottom: '24px', lineHeight: '1.7' }}>
               Dear Investor, your withdrawal request is on hold. Please contact support to complete this payment.
             </div>
             <button onClick={() => { setFeePopup(null); window.dispatchEvent(new Event('openLiveChat')); }}
