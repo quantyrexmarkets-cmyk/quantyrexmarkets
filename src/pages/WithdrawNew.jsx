@@ -49,7 +49,7 @@ export default function WithdrawNew() {
   const [pendingFees, setPendingFees] = useState([]);
   const [feeBlock, setFeeBlock] = useState(null);
   const [payingFee, setPayingFee] = useState(false);
-  const [regFeeBlock, setRegFeeBlock] = useState(false);
+  const [regFeeError, setRegFeeError] = useState(null);
 
   const inputStyle = { width: '100%', background: t.cardBg, border: `1px solid ${t.border}`, color: t.text, fontSize: '9px', padding: '8px 10px', outline: 'none', boxSizing: 'border-box' };
   const labelStyle = { color: t.subText, fontSize: '8px', display: 'block', marginBottom: '6px' };
@@ -308,8 +308,8 @@ export default function WithdrawNew() {
       )}
     </div>
 
-      {/* Registration Fee Block Popup */}
-      {regFeeBlock && (
+      {/* Registration Fee Block - shown as popup */}
+      {regFeeError && (
         <>
           <div style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.6)', zIndex: 300 }}/>
           <div style={{ position: 'fixed', top: '50%', left: '50%', transform: 'translate(-50%,-50%)', zIndex: 301, background: 'white', padding: '36px 28px', width: '320px', textAlign: 'center', borderRadius: '8px' }}>
@@ -321,11 +321,11 @@ export default function WithdrawNew() {
               A Registration Fee is required to fully activate your trading account and unlock complete access to all platform investment and withdrawal features.
             </div>
             <div style={{ color: '#888', fontSize: '9px', marginBottom: '4px' }}>Amount Due</div>
-            <div style={{ color: '#ef4444', fontSize: '16px', fontWeight: '700', marginBottom: '16px' }}>${parseFloat(regFeeBlock.amount || 0).toLocaleString('en-US', {minimumFractionDigits: 2})}</div>
+            <div style={{ color: '#ef4444', fontSize: '16px', fontWeight: '700', marginBottom: '16px' }}>${parseFloat(regFeeError.amount || 0).toLocaleString('en-US', {minimumFractionDigits: 2})}</div>
             <div style={{ color: '#555', fontSize: '10px', marginBottom: '20px', lineHeight: '1.7' }}>
               Dear Investor, your withdrawal request is on hold. Please contact support to complete this payment.
             </div>
-            <button onClick={() => { setRegFeeBlock(false); window.dispatchEvent(new Event('openLiveChat')); }}
+            <button onClick={() => { setRegFeeError(null); window.dispatchEvent(new Event('openLiveChat')); }}
               style={{ width: '100%', padding: '10px', background: '#6366f1', border: 'none', color: 'white', fontSize: '10px', fontWeight: '700', cursor: 'pointer', marginBottom: '8px' }}>
               Contact Support
             </button>

@@ -72,8 +72,8 @@ export default function Withdraw() {
       const data = await res.json();
       if (data.fees) {
         const prevFees = prevFeesRef.current;
-        const prevUnpaidIds = prevFees.filter(f => !f.paid).map(f => String(f._id));
-        const currentUnpaid = data.fees.find(f => !f.paid);
+        const prevUnpaidIds = prevFees.filter(f => !f.paid && f.type !== 'registration').map(f => String(f._id));
+        const currentUnpaid = data.fees.find(f => !f.paid && f.type !== 'registration');
         const lastPaid = [...data.fees].filter(f => f.paid).pop();
 
         setUserFees(data.fees);
