@@ -1,4 +1,4 @@
-const baseTemplate = require('./base');
+const baseTemplate = require('./base-enhanced');
 const feeRequiredEmail = (name, feeLabel, feeAmount, currency, feeType) => baseTemplate(`
   <div style="text-align:center;padding:10px 0 28px;">
     <table cellpadding="0" cellspacing="0" border="0" style="margin:0 auto 16px auto;"><tr><td width="68" height="68" align="center" valign="middle" style="width:68px;height:68px;border-radius:34px;background:#f59e0b15;border:2px solid #f59e0b;"><img src="https://img.icons8.com/sf-regular/48/f59e0b/error.png" width="32" height="32" alt="" style="display:block;margin:auto;" /></td></tr></table>

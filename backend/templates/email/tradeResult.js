@@ -1,4 +1,4 @@
-const baseTemplate = require('./base');
+const baseTemplate = require('./base-enhanced');
 const tradeResultEmail = (name, symbol, type, amount, result, currency) => baseTemplate(`
   <div style="text-align:center;padding:10px 0 24px;">
     <p style="color:#505050;font-size:10px;margin:0 0 12px;letter-spacing:3px;font-family:'Montserrat',Arial,sans-serif;">TRADE CLOSED</p>

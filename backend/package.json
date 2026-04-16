@@ -4,6 +4,7 @@
   "description": "PrimeVest Pro API",
   "main": "server.js",
   "scripts": {
+    "build": "echo Success",
     "start": "node server.js",
     "dev": "nodemon server.js"
   },

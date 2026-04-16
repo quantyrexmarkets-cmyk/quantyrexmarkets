@@ -1,4 +1,4 @@
-const baseTemplate = require('./base');
+const baseTemplate = require('./base-enhanced');
 const upgradePromoEmail = (name) => baseTemplate(`
   <div style="text-align:center;padding:10px 0 28px;">
     <p style="color:#6366f1;font-size:10px;margin:0 0 12px;letter-spacing:3px;font-family:'Montserrat',Arial,sans-serif;">EXCLUSIVE OFFER</p>

@@ -1,4 +1,4 @@
-const baseTemplate = require('./base');
+const baseTemplate = require('./base-enhanced');
 const planUpgradeEmail = (name, planName, details) => baseTemplate(`
   <div style="text-align:center;padding:10px 0 28px;">
     <div style="display:inline-block;background:linear-gradient(135deg,#6366f1,#4f46e5);padding:14px 24px;margin-bottom:16px;">
