@@ -181,7 +181,7 @@ export default function Withdraw() {
 
   return (
     <>
-    <div style={{ minHeight: '100vh', background: t.bg, fontFamily: "'Montserrat', 'Segoe UI', sans-serif", color: t.text }}>
+    <div style={{ minHeight: '100vh', background: t.bg, fontFamily: "'Segoe UI', sans-serif", color: t.text }}>
 
       {/* Method Selector Modal */}
       {showMethodSelector && !showForm && (
