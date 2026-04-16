@@ -53,13 +53,7 @@ export default function AdminManageUser() {
     <div style={{ minHeight:'100vh', background:t.bg, fontFamily:"'Segoe UI',sans-serif", color:t.text }}>
       <div style={{ background:t.cardBg, borderBottom:`1px solid ${t.border}`, padding:'12px 20px', display:'flex', alignItems:'center', gap:'12px', position:'sticky', top:0, zIndex:50 }}>
         <button onClick={() => navigate('/admin')} style={{ background:'none', border:'none', color:t.text, cursor:'pointer', display:'flex', alignItems:'center', gap:'6px', fontSize:'12px', fontWeight:'600' }}><ArrowLeft size={16}/> Back</button>
-        <div style={{ width:'1px', height:'20px', background:t.border }}/>
-        <div style={{ display:'flex', alignItems:'center', gap:'10px' }}>
-          <div style={{ width:'36px', height:'36px', borderRadius:'50%', background:'linear-gradient(135deg,#6366f1,#4f46e5)', display:'flex', alignItems:'center', justifyContent:'center', fontSize:'13px', color:'white', fontWeight:'700', overflow:'hidden' }}>
-            {user.avatar?<img src={user.avatar} style={{ width:'100%', height:'100%', objectFit:'cover' }}/>:(user.firstName?.[0]||'')+(user.lastName?.[0]||'')}
-          </div>
-          <div><div style={{ fontSize:'14px', fontWeight:'700' }}>{user.firstName} {user.lastName}</div><div style={{ fontSize:'10px', color:t.subText }}>{user.email}</div></div>
-        </div>
+        <div style={{ color:t.subText, fontSize:'11px' }}>Manage User</div>
         <div style={{ marginLeft:'auto', display:'flex', gap:'8px', alignItems:'center' }}>
           {msg && <span style={{ color:'#22c55e', fontSize:'10px', fontWeight:'600' }}>{msg}</span>}
 
