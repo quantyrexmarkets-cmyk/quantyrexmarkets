@@ -235,7 +235,7 @@ export default function Profile() {
   const selectedCountry = getSelectedCountry();
 
   return (
-    <div style={{ minHeight: '100vh', background: t.bg, fontFamily: "'Segoe UI', sans-serif", color: t.text }}>
+    <div style={{ minHeight: '100vh', background: t.bg, fontFamily: "'Montserrat', sans-serif", color: t.text }}>
 
       {/* Top Nav */}
       <PageHeader title="Profile" />

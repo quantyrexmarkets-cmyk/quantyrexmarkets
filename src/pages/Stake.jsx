@@ -82,7 +82,7 @@ export default function Stake() {
   const paginated = filtered.slice((page-1)*perPage, page*perPage);
 
   return (
-    <div style={{ minHeight: '100vh', background: t.bg, fontFamily: "'Segoe UI', sans-serif", color: t.text }}>
+    <div style={{ minHeight: '100vh', background: t.bg, fontFamily: "'Montserrat', sans-serif", color: t.text }}>
 
       {/* Header */}
       <PageHeader title="Stake" />

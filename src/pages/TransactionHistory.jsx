@@ -65,7 +65,7 @@ export default function TransactionHistory() {
   const pendingCount = transactions.filter(txn => txn.status === 'pending').length;
 
   return (
-    <div style={{ minHeight: '100vh', background: t.bg, fontFamily: "'Segoe UI', sans-serif", color: t.text }}>
+    <div style={{ minHeight: '100vh', background: t.bg, fontFamily: "'Montserrat', sans-serif", color: t.text }}>
       <PageHeader title="Transaction History" />
       <div style={{ padding: '14px' }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '6px', marginBottom: '14px' }}>

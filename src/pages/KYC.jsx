@@ -105,7 +105,7 @@ export default function KYC() {
   const isLocked = kycStatus === 'submitted' || kycStatus === 'approved';
 
   return (
-    <div style={{ minHeight: '100vh', background: t.bg, fontFamily: "'Segoe UI', sans-serif", color: t.text }}>
+    <div style={{ minHeight: '100vh', background: t.bg, fontFamily: "'Montserrat', sans-serif", color: t.text }}>
 
       {/* Header */}
       <PageHeader title="KYC" />

@@ -46,7 +46,7 @@ export default function DepositFunds() {
   };
 
   return (
-    <div style={{ minHeight: '100vh', background: t.bg, fontFamily: "'Segoe UI', sans-serif", color: 'white' }}>
+    <div style={{ minHeight: '100vh', background: t.bg, fontFamily: "'Montserrat', sans-serif", color: 'white' }}>
       <PageHeader title="Deposit Funds" />
 
       <div style={{ padding: '16px' }}>

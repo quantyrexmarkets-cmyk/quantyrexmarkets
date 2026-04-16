@@ -87,7 +87,7 @@ export default function TraderProfile() {
   const trades = showAllTrades ? MOCK_TRADES : MOCK_TRADES.slice(0, 3);
 
   return (
-    <div style={{minHeight:'100vh',background:t.bg,fontFamily:"'Segoe UI', sans-serif",color:t.text,paddingBottom:'40px'}}>
+    <div style={{minHeight:'100vh',background:t.bg,fontFamily:"'Montserrat', sans-serif",color:t.text,paddingBottom:'40px'}}>
       <PageHeader title="Trader Profile" />
       <div style={{padding:'12px 14px 0'}}>
         <button onClick={() => navigate('/dashboard/copy-trading')} style={{display:'flex',alignItems:'center',gap:'5px',background:'none',border:'none',color:t.subText,cursor:'pointer',fontSize:'9px',padding:'0'}}>

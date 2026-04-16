@@ -43,7 +43,7 @@ export default function BotPlans() {
   };
 
   return (
-    <div style={{ minHeight: '100vh', background: t.bg, fontFamily: "'Segoe UI', sans-serif", color: t.text }}>
+    <div style={{ minHeight: '100vh', background: t.bg, fontFamily: "'Montserrat', sans-serif", color: t.text }}>
       <PageHeader title="Bot Plans" />
 
       {error && <div style={{ background: '#ef4444', color: 'white', padding: '8px 16px', fontSize: '9px' }}>{error}</div>}
