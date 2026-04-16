@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import LoadingSpinner from '../components/LoadingSpinner';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useTheme } from '../context/ThemeContext';
-import { ArrowLeft, Mail, Lock, Unlock, Ban, CheckCircle, ArrowUpCircle, RotateCcw, Trash2, DollarSign, Send, X, Eye, Shield } from 'lucide-react';
+import { ArrowLeft, Mail, Lock, Unlock, Ban, CheckCircle, ArrowUpCircle, RotateCcw, Trash2, DollarSign, Send, X, Shield } from 'lucide-react';
 const BASE_URL = 'https://quantyrexmarkets-api.vercel.app/api';
 const getToken = () => localStorage.getItem('token');
 const headers = () => ({ 'Content-Type': 'application/json', 'Authorization': `Bearer ${getToken()}` });
@@ -23,6 +23,12 @@ export default function AdminManageUser() {
   const [feeAmount, setFeeAmount] = useState('');
   const [feeDesc, setFeeDesc] = useState('');
   const showMsg = (m) => { setMsg(m); setTimeout(() => setMsg(''), 3000); };
+  const [clicked, setClicked] = useState('');
+  const click = async (key, fn) => {
+    setClicked(key);
+    await fn();
+    setTimeout(() => setClicked(''), 500);
+  };
   useEffect(() => {
     api('/users/' + id).then(u => {
       setUser(u); setBalance(u.balance?.toFixed(2) || '0');
@@ -56,7 +62,7 @@ export default function AdminManageUser() {
         </div>
         <div style={{ marginLeft:'auto', display:'flex', gap:'8px', alignItems:'center' }}>
           {msg && <span style={{ color:'#22c55e', fontSize:'10px', fontWeight:'600' }}>{msg}</span>}
-          <button onClick={() => navigate('/admin/users/'+id)} style={{ padding:'6px 12px', background:'transparent', border:'1.5px solid '+t.tableDivider, color:t.text, fontSize:'10px', fontWeight:'600', cursor:'pointer', borderRadius:'6px', display:'flex', alignItems:'center', gap:'4px' }}><Eye size={12}/> View Profile</button>
+
         </div>
       </div>
       <div style={{ maxWidth:'600px', margin:'0 auto', padding:'16px' }}>
@@ -87,7 +93,7 @@ export default function AdminManageUser() {
             <button onClick={()=>api('/users/'+id+'/block','PUT').then(()=>{setUser(p=>({...p,isBlocked:!p.isBlocked}));showMsg('Updated');})} style={{ padding:'9px', background:'transparent', border:'1.5px solid '+t.tableDivider, color:t.text, fontSize:'10px', fontWeight:'600', cursor:'pointer', borderRadius:'6px', display:'flex', alignItems:'center', justifyContent:'center', gap:'6px' }}>{user.isBlocked?<><Unlock size={12}/> Unblock</>:<><Lock size={12}/> Block</>}</button>
             <button onClick={()=>api('/users/'+id+'/withdrawal-block','PUT').then(()=>{setUser(p=>({...p,withdrawalBlocked:!p.withdrawalBlocked}));showMsg('Updated');})} style={{ padding:'9px', background:'transparent', border:'1.5px solid '+t.tableDivider, color:t.text, fontSize:'10px', fontWeight:'600', cursor:'pointer', borderRadius:'6px', display:'flex', alignItems:'center', justifyContent:'center', gap:'6px' }}>{user.withdrawalBlocked?<><CheckCircle size={12}/> Allow W.</>:<><Ban size={12}/> Block W.</>}</button>
             <button onClick={()=>api('/users/'+id+'/upgrade','PUT').then(()=>{setUser(p=>({...p,accountUpgraded:!p.accountUpgraded}));showMsg('Updated');})} style={{ padding:'9px', background:'transparent', border:'1.5px solid '+t.tableDivider, color:t.text, fontSize:'10px', fontWeight:'600', cursor:'pointer', borderRadius:'6px', display:'flex', alignItems:'center', justifyContent:'center', gap:'6px' }}>{user.accountUpgraded?<><RotateCcw size={12}/> Revoke</>:<><ArrowUpCircle size={12}/> Upgrade</>}</button>
-            <button onClick={()=>api('/users/'+id+'/email','POST',{type:'registrationFee'}).then(()=>showMsg('Email sent'))} style={{ padding:'9px', background:'transparent', border:'1.5px solid '+t.tableDivider, color:t.text, fontSize:'10px', fontWeight:'600', cursor:'pointer', borderRadius:'6px', display:'flex', alignItems:'center', justifyContent:'center', gap:'6px' }}><Mail size={12}/> Send Email</button>
+            <button onClick={()=>{window.open('mailto:'+user.email,'_blank');}} style={{ padding:'9px', background:'transparent', border:'1.5px solid '+t.tableDivider, color:t.text, fontSize:'10px', fontWeight:'600', cursor:'pointer', borderRadius:'6px', display:'flex', alignItems:'center', justifyContent:'center', gap:'6px' }}><Mail size={12}/> Email User</button>
           </div>
         </S>
         <S title="Account Plan">
