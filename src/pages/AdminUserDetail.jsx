@@ -143,7 +143,7 @@ export default function AdminUserDetail() {
   if (!selectedUser) return <div style={{ minHeight:'100vh', background:t.bg, display:'flex', alignItems:'center', justifyContent:'center', color:t.subText }}>User not found</div>;
 
   return (
-    <div style={{ minHeight:'100vh', background:t.bg, fontFamily:"'Montserrat','Segoe UI',sans-serif", color:t.text }}>
+    <div style={{ minHeight:'100vh', background:t.bg, fontFamily:"'Montserrat', sans-serif", color:t.text }}>
       {/* Header */}
       <div style={{ background:t.cardBg, borderBottom:`1px solid ${t.border}`, padding:'12px 20px', display:'flex', alignItems:'center', gap:'12px', position:'sticky', top:0, zIndex:50 }}>
         <button onClick={() => navigate('/admin')} style={{ background:'none', border:'none', color:t.text, cursor:'pointer', display:'flex', alignItems:'center', gap:'6px', fontSize:'12px', fontWeight:'600' }}>
@@ -152,7 +152,6 @@ export default function AdminUserDetail() {
 
         <div style={{ marginLeft:'auto', display:'flex', gap:'8px', alignItems:'center' }}>
           {msg && <span style={{ color:'#22c55e', fontSize:'10px', fontWeight:'600' }}>{msg}</span>}
-          <span style={{ color:selectedUser.isBlocked?'#ef4444':'#22c55e', fontSize:'10px', fontWeight:'700' }}>{selectedUser.isBlocked?'● Suspended':'● Active'}</span>
         </div>
       </div>
 
