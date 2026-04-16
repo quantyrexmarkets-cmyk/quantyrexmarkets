@@ -420,11 +420,11 @@ export default function Withdraw() {
               ) : filtered.map((w, i) => (
                 <tr key={i} style={{ borderBottom: `1px solid ${t.tableRowBorder}`, background: i % 2 === 0 ? 'transparent' : t.subtleBg }}>
                   <td style={{ padding: '8px 10px', color: t.text, fontSize: '8px', fontWeight: '700', borderRight: `1px solid ${t.subtleBorder}` }}>-${w.amount?.toFixed(2)}</td>
-                  <td style={{ padding: '8px 10px', color: t.text, fontSize: '8px', borderRight: `1px solid ${t.subtleBorder}` }}>{w.method}</td>
+                  <td style={{ padding: '8px 10px', color: t.subText, fontSize: '8px', borderRight: `1px solid ${t.subtleBorder}` }}>{w.method}</td>
                   <td style={{ padding: '8px 10px', borderRight: `1px solid ${t.subtleBorder}` }}>
                     <span style={{ background: statusColor(w.status) + '20', color: statusColor(w.status), fontSize: '7px', padding: '2px 6px', display: 'inline-block', textTransform: 'capitalize' }}>{w.status}</span>
                   </td>
-                  <td style={{ padding: '8px 10px', color: t.text, fontSize: '8px' }}>{new Date(w.createdAt).toLocaleDateString()}</td>
+                  <td style={{ padding: '8px 10px', color: t.subText, fontSize: '8px' }}>{new Date(w.createdAt).toLocaleDateString()}</td>
                 </tr>
               ))}
             </tbody>
