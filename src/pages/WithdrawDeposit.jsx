@@ -259,7 +259,7 @@ const handleWithdraw = async () => {
                 ))}
               </div>
               {loadingDeposits ? (
-                <div style={{ padding: '20px', textAlign: 'center', color: t.faintText, fontSize: '8px' }}>Loading...</div>
+                <div style={{ padding: '20px', textAlign: 'center', color: '#6366f1', fontSize: '8px' }}>Loading...</div>
               ) : deposits.length === 0 ? (
                 <div style={{ padding: '24px', textAlign: 'center', color: t.faintText, fontSize: '8px' }}>No data available in table</div>
               ) : (

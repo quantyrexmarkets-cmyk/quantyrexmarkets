@@ -214,7 +214,7 @@ export default function Deposit() {
             </thead>
             <tbody>
               {loading ? (
-                <tr><td colSpan={4} style={{ padding: '24px', textAlign: 'center', color: t.faintText, fontSize: '8px' }}>Loading...</td></tr>
+                <tr><td colSpan={4} style={{ padding: '24px', textAlign: 'center', color: '#6366f1', fontSize: '8px' }}>Loading...</td></tr>
               ) : filtered.length === 0 ? (
                 <tr><td colSpan={4} style={{ padding: '24px', textAlign: 'center', color: t.faintText, fontSize: '8px' }}>No deposits found</td></tr>
               ) : filtered.map((d, i) => (

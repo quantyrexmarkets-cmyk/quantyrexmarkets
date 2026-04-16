@@ -114,7 +114,7 @@ export default function TransactionHistory() {
             ))}
           </div>
           {loading ? (
-            <div style={{ padding: '24px', textAlign: 'center', color: t.faintText, fontSize: '8px' }}>Loading...</div>
+            <div style={{ padding: '24px', textAlign: 'center', color: '#6366f1', fontSize: '8px' }}>Loading...</div>
           ) : paginated.length === 0 ? (
             <div style={{ padding: '24px', textAlign: 'center', color: t.faintText, fontSize: '8px' }}>No transactions found</div>
           ) : paginated.map((txn, i) => (

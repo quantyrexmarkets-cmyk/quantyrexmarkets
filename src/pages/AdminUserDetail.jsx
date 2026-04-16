@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import LoadingSpinner from '../components/LoadingSpinner';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useTheme } from '../context/ThemeContext';
 import { ArrowLeft, Mail, Lock, Unlock, Ban, CheckCircle, ArrowUpCircle, RotateCcw, Trash2, DollarSign, TrendingUp, Package } from 'lucide-react';
@@ -139,7 +140,7 @@ export default function AdminUserDetail() {
     }).catch(() => setLoading(false));
   }, [id]);
 
-  if (loading) return <div style={{ minHeight:'100vh', background:t.bg, display:'flex', alignItems:'center', justifyContent:'center', color:t.subText }}>Loading...</div>;
+  if (loading) return <LoadingSpinner fullPage />;
   if (!selectedUser) return <div style={{ minHeight:'100vh', background:t.bg, display:'flex', alignItems:'center', justifyContent:'center', color:t.subText }}>User not found</div>;
 
   return (

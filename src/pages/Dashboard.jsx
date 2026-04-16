@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
+import LoadingSpinner from '../components/LoadingSpinner';
 import { useAuth } from '../context/AuthContext';
 import { useTheme } from '../context/ThemeContext';
 import { formatAmount, getCurrencySymbol, formatAmountWithCode } from '../utils/currency';
@@ -145,7 +146,7 @@ export default function Dashboard() {
   ];
 
   if (!user) {
-    return <div style={{ minHeight: '100vh', background: t.bg, display: 'flex', alignItems: 'center', justifyContent: 'center', color: t.text, fontSize: '14px' }}>Loading...</div>;
+    return <LoadingSpinner fullPage />;
   }
 
   return (

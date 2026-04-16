@@ -135,7 +135,7 @@ export default function ManageBots() {
             </thead>
             <tbody>
               {loading ? (
-                <tr><td colSpan={7} style={{ padding: '24px', textAlign: 'center', color: t.faintText, fontSize: '8px' }}>Loading...</td></tr>
+                <tr><td colSpan={7} style={{ padding: '24px', textAlign: 'center', color: '#6366f1', fontSize: '8px' }}>Loading...</td></tr>
               ) : paginated.length === 0 ? (
                 <tr><td colSpan={7} style={{ padding: '24px', textAlign: 'center', color: t.faintText, fontSize: '8px' }}>No bots found</td></tr>
               ) : paginated.map((b, i) => {

@@ -141,7 +141,7 @@ export default function BotTransactionHistory() {
           </div>
 
           {loading ? (
-            <div style={{ padding: '28px', textAlign: 'center', color: t.faintText, fontSize: '8px' }}>Loading...</div>
+            <div style={{ padding: '28px', textAlign: 'center', color: '#6366f1', fontSize: '8px' }}>Loading...</div>
           ) : filtered.length === 0 ? (
             <div style={{ padding: '28px', textAlign: 'center', color: t.faintText, fontSize: '8px' }}>No completed or cancelled bots yet</div>
           ) : filtered.slice(0, show).map((b, i) => (
