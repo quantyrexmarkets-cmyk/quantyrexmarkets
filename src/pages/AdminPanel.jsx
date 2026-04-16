@@ -675,6 +675,262 @@ export default function AdminPanel() {
                               ))}
                             </div>
                             <div style={{ padding:'14px 16px', maxHeight:'400px', overflowY:'auto' }}>
+            {userDetailTab === 'info' && (
+              <div style={{ padding: '14px 16px' }}>
+                {selectedUser.adminMessage && (
+                  <div style={{ background: 'rgba(245,158,11,0.1)', border: '1px solid #f59e0b', padding: '8px', marginBottom: '14px' }}>
+                    <div style={{ color: '#f59e0b', fontSize: '8px', fontWeight: '700', marginBottom: '4px' }}>Admin Message</div>
+                    <div style={{ color: t.text, fontSize: '9px' }}>{selectedUser.adminMessage}</div>
+                  </div>
+                )}
+                <div style={{ marginBottom: '14px' }}>
+                  <div style={{ color: '#6366f1', fontSize: '9px', fontWeight: '700', marginBottom: '8px', textTransform: 'uppercase' }}>Profile</div>
+                  {[
+                    ['Email', selectedUser.email],
+                    ['Phone', selectedUser.phone || '---'],
+                    ['Country', selectedUser.country || '---'],
+                    ['KYC Status', selectedUser.kycStatus],
+                    ['Account Type', selectedUser.accountType],
+                    ['Referral Code', selectedUser.referralCode],
+                    ['Status', selectedUser.isBlocked ? 'Blocked' : 'Active'],
+                    ['Joined', new Date(selectedUser.createdAt).toLocaleDateString()],
+                  ].map(([k,v]) => (
+                    <div key={k} style={{ display: 'flex', justifyContent: 'space-between', padding: '5px 0', borderBottom: `1px solid ${t.tableRowBorder}` }}>
+                      <span style={{ color: t.subText, fontSize: '9px' }}>{k}</span>
+                      <span style={{ color: 'white', fontSize: '9px', fontWeight: '600' }}>{v}</span>
+                    </div>
+                  ))}
+                </div>
+                {/* Advanced Controls */}
+                <div style={{ marginBottom: '14px' }}>
+                  <div style={{ color: '#6366f1', fontSize: '9px', fontWeight: '700', marginBottom: '8px', textTransform: 'uppercase' }}>Advanced Controls</div>
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+                    
+                    {/* Plan Upgrade */}
+                    <div style={{ background: 'rgba(99,102,241,0.08)', border: '1px solid rgba(99,102,241,0.2)', borderRadius: '6px', padding: '10px' }}>
+                      <div style={{ color: t.dimText, fontSize: '8px', marginBottom: '8px' }}>
+                        Current Plan: <strong style={{ color: selectedUser.currentPlan && selectedUser.currentPlan !== 'none' ? '#22c55e' : '#64748b' }}>{selectedUser.currentPlan && selectedUser.currentPlan !== 'none' ? selectedUser.currentPlan : 'No Plan'}</strong>
+                      </div>
+                      <div style={{ display: 'flex', flexWrap: 'wrap', gap: '4px' }}>
+                        {['BRONZE', 'SILVER', 'GOLD', 'PLATINUM', 'DIAMOND', 'ELITE'].map(plan => (
+                          <button key={plan} onClick={async () => {
+                            await api(`/users/${selectedUser._id}/plan`, 'PUT', { plan });
+                            setSelectedUser({ ...selectedUser, currentPlan: plan });
+                            showMsg(`User upgraded to ${plan} — email sent!`);
+                          }} style={{ ...btnStyle(selectedUser.currentPlan === plan ? '#22c55e' : '#4b5563'), fontSize: '7px', opacity: selectedUser.currentPlan === plan ? 1 : 0.7 }}>
+                            {selectedUser.currentPlan === plan ? '✓ ' : ''}{plan}
+                          </button>
+                        ))}
+                        <button onClick={async () => {
+                          await api(`/users/${selectedUser._id}/plan`, 'PUT', { plan: 'none' });
+                          setSelectedUser({ ...selectedUser, currentPlan: 'none' });
+                          showMsg('Plan removed');
+                        }} style={{ ...btnStyle('#64748b'), fontSize: '7px' }}>Remove Plan</button>
+                      </div>
+                    </div>
+
+                    {/* Withdrawal Code */}
+                    <div style={{ background: 'rgba(167,139,250,0.08)', border: '1px solid rgba(167,139,250,0.2)', borderRadius: '6px', padding: '10px' }}>
+                      <div style={{ color: t.dimText, fontSize: '8px', marginBottom: '6px' }}>
+                        Withdrawal Code: <strong style={{ color: selectedUser.withdrawalCodeRequired ? '#a78bfa' : '#64748b' }}>{selectedUser.withdrawalCodeRequired ? 'Active' : 'Not Set'}</strong>
+                      </div>
+                      {selectedUser.withdrawalCode && (
+                        <div style={{ background: 'rgba(0,0,0,0.3)', border: '1px solid rgba(167,139,250,0.3)', borderRadius: '4px', padding: '8px', marginBottom: '8px', textAlign: 'center' }}>
+                          <div style={{ color: t.mutedText, fontSize: '7px', marginBottom: '4px', letterSpacing: '1px', textTransform: 'uppercase' }}>Current Code</div>
+                          <div style={{ color: '#a78bfa', fontSize: '16px', fontWeight: '800', letterSpacing: '4px' }}>{selectedUser.withdrawalCode}</div>
+                        </div>
+                      )}
+                      <div style={{ display: 'flex', gap: '6px', flexWrap: 'wrap' }}>
+                        <button onClick={() => { setWithdrawalCode(selectedUser._id); setSelectedUser(null); }} style={btnStyle('#a78bfa')}>{selectedUser.withdrawalCodeRequired ? 'Generate New Code' : 'Generate Code'}</button>
+                        {selectedUser.withdrawalCodeRequired && <button onClick={() => { setWithdrawalCode(selectedUser._id, true); setSelectedUser(null); }} style={btnStyle('#64748b')}>Remove Code</button>}
+                      </div>
+                      <div style={{ color: t.faintText, fontSize: '7px', marginTop: '6px' }}>Code will be emailed to user when you click Send Code below</div>
+                    </div>
+
+                    {/* Send Code Button */}
+                    {selectedUser.withdrawalCodeRequired && (
+                      <button onClick={() => { sendWithdrawalCode(selectedUser._id, selectedUser.email, selectedUser.firstName); setSelectedUser(null); }} style={{ ...btnStyle('#6366f1'), width: '100%', padding: '8px' }}>
+                        📧 Send Code to {selectedUser.email}
+                      </button>
+                    )}
+
+                    {/* Min Withdrawal */}
+                    <div style={{ background: 'rgba(14,165,233,0.08)', border: '1px solid rgba(14,165,233,0.2)', borderRadius: '6px', padding: '10px' }}>
+                      <div style={{ color: t.dimText, fontSize: '8px', marginBottom: '6px' }}>
+                        Min Withdrawal: <strong style={{ color: '#0ea5e9' }}>${selectedUser.minimumWithdrawal || 100}</strong>
+                      </div>
+                      <button onClick={() => { setMinWithdrawal(selectedUser._id); setSelectedUser(null); }} style={btnStyle('#0ea5e9')}>Change Min Withdrawal</button>
+                    </div>
+
+                    {/* Delete */}
+                    <button onClick={() => deleteUser(selectedUser._id)} style={{ ...btnStyle('#ef4444'), width: '100%', padding: '8px' }}>
+                      🗑 Delete User Account
+                    </button>
+                  </div>
+                </div>
+
+                <div style={{ marginBottom: '14px' }}>
+                  <div style={{ color: '#6366f1', fontSize: '9px', fontWeight: '700', marginBottom: '8px', textTransform: 'uppercase' }}>Financials</div>
+                  {[
+                    ['Balance', '$' + (selectedUser.balance?.toFixed(2) || '0.00')],
+                    ['Total Deposits', '$' + (selectedUser.totalDeposits?.toFixed(2) || '0.00')],
+                    ['Total Withdrawals', '$' + (selectedUser.totalWithdrawals?.toFixed(2) || '0.00')],
+                    ['Total Profit', '$' + (selectedUser.totalProfit?.toFixed(2) || '0.00')],
+                    ['Total Referrals', selectedUser.totalReferrals || 0],
+                  ].map(([k,v]) => (
+                    <div key={k} style={{ display: 'flex', justifyContent: 'space-between', padding: '5px 0', borderBottom: `1px solid ${t.tableRowBorder}` }}>
+                      <span style={{ color: t.subText, fontSize: '9px' }}>{k}</span>
+                      <span style={{ color: '#22c55e', fontSize: '9px', fontWeight: '700' }}>{v}</span>
+                    </div>
+                  ))}
+                </div>
+                <button onClick={() => setSelectedUser(null)} style={{ width: '100%', padding: '8px', background: '#6366f1', border: 'none', color: 'white', fontSize: '8px', fontWeight: '700', cursor: 'pointer' }}>Close</button>
+              </div>
+            )}
+
+            {/* Bots Tab */}
+            {userDetailTab === 'fees' && (
+              <div>
+                {/* Registration Fee */}
+                <div style={{ background: t.cardBg2, borderRadius: '8px', padding: '12px', marginBottom: '12px' }}>
+                  <div style={{ color: t.text, fontSize: '10px', fontWeight: '700', marginBottom: '8px' }}>Registration Fee</div>
+                  <div style={{ display: 'flex', gap: '8px', alignItems: 'center', marginBottom: '8px' }}>
+                    <input type="number" placeholder="Amount" id="regFeeAmt"
+                      style={{ flex: 1, background: t.inputBg, border: `1px solid ${t.border}`, color: t.text, fontSize: '9px', padding: '6px', outline: 'none', borderRadius: '4px' }}/>
+                    <button onClick={() => {
+                      const amt = document.getElementById('regFeeAmt').value;
+                      api(`/users/${selectedUser._id}/registration-fee`, 'PUT', { required: true, amount: parseFloat(amt) })
+                        .then(d => { setSelectedUser(d.user); showMsg('Registration fee set'); })
+                        .catch(e => showMsg(e.message));
+                    }} style={btnStyle('#6366f1')}>Set Fee</button>
+                    <button onClick={() => {
+                      api(`/users/${selectedUser._id}/registration-fee`, 'PUT', { required: false, amount: 0 })
+                        .then(d => { setSelectedUser(d.user); showMsg('Registration fee removed'); });
+                    }} style={btnStyle('#ef4444')}>Remove</button>
+                  </div>
+                  <div style={{ fontSize: '8px', color: t.subText }}>
+                    Status: <span style={{ color: selectedUser.registrationFeeRequired ? (selectedUser.registrationFeePaid ? '#22c55e' : '#ef4444') : '#64748b', fontWeight: '600' }}>
+                      {selectedUser.registrationFeeRequired ? (selectedUser.registrationFeePaid ? '✓ Paid' : `⚠ Unpaid - $${selectedUser.registrationFeeAmount}`) : 'Not Required'}
+                    </span>
+                  </div>
+                </div>
+
+                {/* Add Other Fees */}
+                <div style={{ background: t.cardBg2, borderRadius: '8px', padding: '12px', marginBottom: '12px' }}>
+                  <div style={{ color: t.text, fontSize: '10px', fontWeight: '700', marginBottom: '8px' }}>Add Fee</div>
+                  <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '6px', marginBottom: '8px' }}>
+                    <div>
+                      <div style={{ color: t.subText, fontSize: '8px', marginBottom: '3px' }}>Fee Type</div>
+                      <select id="feeType" style={{ width: '100%', background: t.inputBg, border: `1px solid ${t.border}`, color: t.text, fontSize: '9px', padding: '6px', outline: 'none', borderRadius: '4px' }}>
+                        <option value="processing">Withdrawal Processing Fee</option>
+                        <option value="tax">Tax / Compliance Fee</option>
+                        <option value="conversion">Conversion Fee</option>
+                        <option value="inactivity">Inactivity Fee</option>
+                        <option value="maintenance">Maintenance Fee</option>
+                      </select>
+                    </div>
+                    <div>
+                      <div style={{ color: t.subText, fontSize: '8px', marginBottom: '3px' }}>Amount ($)</div>
+                      <input type="number" id="feeAmount" placeholder="0.00"
+                        style={{ width: '100%', background: t.inputBg, border: `1px solid ${t.border}`, color: t.text, fontSize: '9px', padding: '6px', outline: 'none', borderRadius: '4px', boxSizing: 'border-box' }}/>
+                    </div>
+                  </div>
+                  <div style={{ marginBottom: '8px' }}>
+                    <div style={{ color: t.subText, fontSize: '8px', marginBottom: '3px' }}>Custom Label</div>
+                    <input id="feeLabel" placeholder="e.g. Tax Compliance Fee"
+                      style={{ width: '100%', background: t.inputBg, border: `1px solid ${t.border}`, color: t.text, fontSize: '9px', padding: '6px', outline: 'none', borderRadius: '4px', boxSizing: 'border-box' }}/>
+                  </div>
+                  <button onClick={() => {
+                    const type = document.getElementById('feeType').value;
+                    const amount = parseFloat(document.getElementById('feeAmount').value);
+                    const label = document.getElementById('feeLabel').value || type;
+                    if (!amount || amount <= 0) return showMsg('Enter valid amount');
+                    api(`/users/${selectedUser._id}/fees`, 'POST', { type, label, amount })
+                      .then(d => { setSelectedUser(d.user); showMsg('Fee added & email sent'); })
+                      .catch(e => showMsg(e.message));
+                  }} style={{ ...btnStyle('#6366f1', true), width: '100%', justifyContent: 'center' }}>
+                    + Add Fee & Notify User
+                  </button>
+                </div>
+
+                {/* Pending Fees List */}
+                <div style={{ background: t.cardBg2, borderRadius: '8px', padding: '12px' }}>
+                  <div style={{ color: t.text, fontSize: '10px', fontWeight: '700', marginBottom: '8px' }}>
+                    Pending Fees ({(selectedUser.pendingFees || []).filter(f => !f.paid).length})
+                  </div>
+                  {(selectedUser.pendingFees || []).length === 0 ? (
+                    <div style={{ color: t.faintText, fontSize: '9px', textAlign: 'center', padding: '12px' }}>No fees</div>
+                  ) : (selectedUser.pendingFees || []).map((fee, i) => (
+                    <div key={i} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '8px 0', borderBottom: `1px solid ${t.tableRowBorder}` }}>
+                      <div>
+                        <div style={{ color: t.text, fontSize: '9px', fontWeight: '600' }}>{fee.label}</div>
+                        <div style={{ color: t.subText, fontSize: '8px' }}>${fee.amount?.toFixed(2)}</div>
+                      </div>
+                      <div style={{ display: 'flex', gap: '4px', alignItems: 'center' }}>
+                        <span style={{ padding: '2px 8px', borderRadius: '20px', fontSize: '8px', fontWeight: '600', background: fee.paid ? 'rgba(34,197,94,0.1)' : 'rgba(239,68,68,0.1)', color: fee.paid ? '#22c55e' : '#ef4444', border: fee.paid ? '1px solid rgba(34,197,94,0.3)' : '1px solid rgba(239,68,68,0.3)' }}>
+                          {fee.paid ? '✓ Paid' : 'Unpaid'}
+                        </span>
+                        {!fee.paid && (
+                          <button onClick={() => {
+                            api(`/users/${selectedUser._id}/fees/${fee._id}/paid`, 'PUT')
+                              .then(d => { setSelectedUser(d.user); showMsg('Marked as paid'); })
+                              .catch(e => showMsg(e.message));
+                          }} style={btnStyle('#22c55e')}>Mark Paid</button>
+                        )}
+                        <button onClick={() => {
+                          api(`/users/${selectedUser._id}/fees/${fee._id}`, 'DELETE')
+                            .then(d => { setSelectedUser(d.user); showMsg('Fee removed'); })
+                            .catch(e => showMsg(e.message));
+                        }} style={btnStyle('#ef4444')}><Trash2 size={10}/></button>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+            {userDetailTab === 'bots' && (
+              <div style={{ padding: '14px 16px' }}>
+                <div style={{ color: t.text, fontSize: '8px', fontWeight: '700', marginBottom: '10px' }}>Bot Subscriptions ({userBots.length})</div>
+                {userBots.length === 0 ? (
+                  <div style={{ color: t.faintText, fontSize: '9px', padding: '20px', textAlign: 'center' }}>No bots subscribed</div>
+                ) : userBots.map((b, i) => (
+                  <div key={i} style={{ background: t.tableHeaderBg, padding: '10px', marginBottom: '6px', borderLeft: '2px solid #6366f1' }}>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '4px' }}>
+                      <span style={{ color: '#6366f1', fontSize: '8px', fontWeight: '700' }}>{b.botName}</span>
+                      <span style={{ color: b.status === 'active' ? '#22c55e' : '#9ca3af', fontSize: '8px' }}>{b.status}</span>
+                    </div>
+                    <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                      <span style={{ color: t.mutedText, fontSize: '8px' }}>Invested: <span style={{ color: t.text }}>${b.amount?.toLocaleString()}</span></span>
+                      <span style={{ color: t.mutedText, fontSize: '8px' }}>Earned: <span style={{ color: '#f59e0b' }}>${(b.earned||0).toFixed(2)}</span></span>
+                      <span style={{ color: t.mutedText, fontSize: '8px' }}>Rate: <span style={{ color: '#22c55e' }}>{b.dailyRate}</span></span>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
+
+            {/* Investments Tab */}
+            {userDetailTab === 'investments' && (
+              <div style={{ padding: '14px 16px' }}>
+                <div style={{ color: t.text, fontSize: '8px', fontWeight: '700', marginBottom: '10px' }}>Investment Packages ({userInvestments.length})</div>
+                {userInvestments.length === 0 ? (
+                  <div style={{ color: t.faintText, fontSize: '9px', padding: '20px', textAlign: 'center' }}>No investments</div>
+                ) : userInvestments.map((inv, i) => (
+                  <div key={i} style={{ background: t.tableHeaderBg, padding: '10px', marginBottom: '6px', borderLeft: '2px solid #f59e0b' }}>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '4px' }}>
+                      <span style={{ color: '#f59e0b', fontSize: '8px', fontWeight: '700' }}>{inv.plan}</span>
+                      <span style={{ color: '#22c55e', fontSize: '8px' }}>{inv.roi}</span>
+                    </div>
+                    <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                      <span style={{ color: t.mutedText, fontSize: '8px' }}>Amount: <span style={{ color: t.text }}>${inv.amount?.toLocaleString()}</span></span>
+                      <span style={{ color: t.mutedText, fontSize: '8px' }}>{new Date(inv.createdAt).toLocaleDateString()}</span>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
+
+            {/* Profit Tab */}
 
                             </div>
                           </div>

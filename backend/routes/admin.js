@@ -672,11 +672,13 @@ router.put('/users/:id/fees/:feeId/paid', adminAuth, async (req, res) => {
 router.put('/users/:id/registration-fee', adminAuth, async (req, res) => {
   try {
     const { required, amount } = req.body;
-    const user = await User.findByIdAndUpdate(
-      req.params.id,
-      { registrationFeeRequired: required, registrationFeeAmount: amount || 0, registrationFeePaid: false },
-      { new: true }
-    );
+    const updateData = { registrationFeeRequired: required, registrationFeeAmount: amount || 0, registrationFeePaid: false };
+    if (required) {
+      updateData.adminMessage = 'Thank you for registering with us. To fully activate your account and gain access to all features, a one-time registration fee is required. This fee helps us maintain platform security and provide you with a seamless experience. Kindly complete your payment at your earliest convenience to proceed.';
+    } else {
+      updateData.adminMessage = '';
+    }
+    const user = await User.findByIdAndUpdate(req.params.id, updateData, { new: true });
     res.json({ message: 'Registration fee updated', user });
   } catch (err) {
     res.status(500).json({ message: err.message });
