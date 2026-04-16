@@ -661,6 +661,15 @@ export default function AdminPanel() {
                           <div style={{ border:'2px solid #6366f1', borderTop:'none', borderRadius:'0 0 12px 12px', background:t.bg, marginTop:'-2px' }}>
                             <div style={{ padding:'8px 12px', background:t.cardBg2, display:'flex', gap:'4px', flexWrap:'wrap' }}>
                               <button onClick={() => { setEmailTarget(selectedUser); setEmailModal(true); setEmailSuccess(''); }} style={{ ...btnStyle('#6366f1'), display:'flex', alignItems:'center', gap:'3px' }}><Mail size={10}/> Email</button>
+                              <div style={{ display:'flex', gap:'4px', alignItems:'center' }}>
+                                <input 
+                                  value={editBalance[selectedUser._id] ?? selectedUser.balance?.toFixed(2) ?? '0'}
+                                  onChange={e => setEditBalance(b => ({ ...b, [selectedUser._id]: e.target.value }))}
+                                  style={{ width:'90px', background:t.inputBg, border:`1px solid ${t.border}`, color:t.text, fontSize:'10px', padding:'5px 8px', outline:'none', borderRadius:'4px' }}
+                                  placeholder="Balance"
+                                />
+                                <button onClick={() => updateBalance(selectedUser._id)} style={{ ...btnStyle('#6366f1'), display:'flex', alignItems:'center', gap:'3px' }}><CheckCircle size={10}/> Set</button>
+                              </div>
                               <button onClick={() => toggleBlock(selectedUser._id)} style={{ ...btnStyle(selectedUser.isBlocked?'#22c55e':'#ef4444', selectedUser.isBlocked), display:'flex', alignItems:'center', gap:'3px' }}>{selectedUser.isBlocked?<><Unlock size={10}/> Unblock</>:<><Lock size={10}/> Block</>}</button>
                               <button onClick={() => toggleWithdrawalBlock(selectedUser._id)} style={{ ...btnStyle(selectedUser.withdrawalBlocked?'#22c55e':'#ef4444', selectedUser.withdrawalBlocked), display:'flex', alignItems:'center', gap:'3px' }}>{selectedUser.withdrawalBlocked?<><CheckCircle size={10}/> Allow W.</>:<><Ban size={10}/> Block W.</>}</button>
                               <button onClick={() => toggleAccountUpgrade(selectedUser._id)} style={{ ...btnStyle(selectedUser.accountUpgraded?'#ef4444':'#22c55e', selectedUser.accountUpgraded), display:'flex', alignItems:'center', gap:'3px' }}>{selectedUser.accountUpgraded?<><RotateCcw size={10}/> Revoke</>:<><ArrowUpCircle size={10}/> Upgrade</>}</button>
