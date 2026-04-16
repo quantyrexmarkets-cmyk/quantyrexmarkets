@@ -203,7 +203,7 @@ export default function AdminUserDetail() {
                   </div>
                 )}
                 <div style={{ marginBottom: '14px' }}>
-                  <div style={{ color: '#6366f1', fontSize: '9px', fontWeight: '700', marginBottom: '8px', textTransform: 'uppercase' }}>Profile</div>
+                  <div style={{ color: t.subText, fontSize: '9px', fontWeight: '700', marginBottom: '8px', textTransform: 'uppercase' }}>Profile</div>
                   {[
                     ['Email', selectedUser.email],
                     ['Phone', selectedUser.phone || '---'],
@@ -222,11 +222,11 @@ export default function AdminUserDetail() {
                 </div>
                 {/* Advanced Controls */}
                 <div style={{ marginBottom: '14px' }}>
-                  <div style={{ color: '#6366f1', fontSize: '9px', fontWeight: '700', marginBottom: '8px', textTransform: 'uppercase' }}>Advanced Controls</div>
+                  <div style={{ color: t.subText, fontSize: '9px', fontWeight: '700', marginBottom: '8px', textTransform: 'uppercase' }}>Advanced Controls</div>
                   <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
                     
                     {/* Plan Upgrade */}
-                    <div style={{ background: 'rgba(99,102,241,0.08)', border: '1px solid rgba(99,102,241,0.2)', borderRadius: '6px', padding: '10px' }}>
+                    <div style={{ background: t.cardBg2, border: `1px solid ${t.border}`, borderRadius: '6px', padding: '10px' }}>
                       <div style={{ color: t.dimText, fontSize: '8px', marginBottom: '8px' }}>
                         Current Plan: <strong style={{ color: selectedUser.currentPlan && selectedUser.currentPlan !== 'none' ? '#22c55e' : '#64748b' }}>{selectedUser.currentPlan && selectedUser.currentPlan !== 'none' ? selectedUser.currentPlan : 'No Plan'}</strong>
                       </div>
@@ -249,14 +249,14 @@ export default function AdminUserDetail() {
                     </div>
 
                     {/* Withdrawal Code */}
-                    <div style={{ background: 'rgba(167,139,250,0.08)', border: '1px solid rgba(167,139,250,0.2)', borderRadius: '6px', padding: '10px' }}>
+                    <div style={{ background: t.cardBg2, border: `1px solid ${t.border}`, borderRadius: '6px', padding: '10px' }}>
                       <div style={{ color: t.dimText, fontSize: '8px', marginBottom: '6px' }}>
                         Withdrawal Code: <strong style={{ color: selectedUser.withdrawalCodeRequired ? '#a78bfa' : '#64748b' }}>{selectedUser.withdrawalCodeRequired ? 'Active' : 'Not Set'}</strong>
                       </div>
                       {selectedUser.withdrawalCode && (
-                        <div style={{ background: 'rgba(0,0,0,0.3)', border: '1px solid rgba(167,139,250,0.3)', borderRadius: '4px', padding: '8px', marginBottom: '8px', textAlign: 'center' }}>
+                        <div style={{ background: t.inputBg, border: `1px solid ${t.border}`, borderRadius: '4px', padding: '8px', marginBottom: '8px', textAlign: 'center' }}>
                           <div style={{ color: t.mutedText, fontSize: '7px', marginBottom: '4px', letterSpacing: '1px', textTransform: 'uppercase' }}>Current Code</div>
-                          <div style={{ color: '#a78bfa', fontSize: '16px', fontWeight: '800', letterSpacing: '4px' }}>{selectedUser.withdrawalCode}</div>
+                          <div style={{ color: t.text, fontSize: '16px', fontWeight: '800', letterSpacing: '4px' }}>{selectedUser.withdrawalCode}</div>
                         </div>
                       )}
                       <div style={{ display: 'flex', gap: '6px', flexWrap: 'wrap' }}>
@@ -274,9 +274,9 @@ export default function AdminUserDetail() {
                     )}
 
                     {/* Min Withdrawal */}
-                    <div style={{ background: 'rgba(14,165,233,0.08)', border: '1px solid rgba(14,165,233,0.2)', borderRadius: '6px', padding: '10px' }}>
+                    <div style={{ background: t.cardBg2, border: `1px solid ${t.border}`, borderRadius: '6px', padding: '10px' }}>
                       <div style={{ color: t.dimText, fontSize: '8px', marginBottom: '6px' }}>
-                        Min Withdrawal: <strong style={{ color: '#0ea5e9' }}>${selectedUser.minimumWithdrawal || 100}</strong>
+                        Min Withdrawal: <strong style={{ color: t.text }}>${selectedUser.minimumWithdrawal || 100}</strong>
                       </div>
                       <button onClick={() => { setMinWithdrawal(selectedUser._id); setSelectedUser(null); }} style={btnStyle('#0ea5e9')}>Change Min Withdrawal</button>
                     </div>
@@ -289,7 +289,7 @@ export default function AdminUserDetail() {
                 </div>
 
                 <div style={{ marginBottom: '14px' }}>
-                  <div style={{ color: '#6366f1', fontSize: '9px', fontWeight: '700', marginBottom: '8px', textTransform: 'uppercase' }}>Financials</div>
+                  <div style={{ color: t.subText, fontSize: '9px', fontWeight: '700', marginBottom: '8px', textTransform: 'uppercase' }}>Financials</div>
                   {[
                     ['Balance', '$' + (selectedUser.balance?.toFixed(2) || '0.00')],
                     ['Total Deposits', '$' + (selectedUser.totalDeposits?.toFixed(2) || '0.00')],
@@ -299,7 +299,7 @@ export default function AdminUserDetail() {
                   ].map(([k,v]) => (
                     <div key={k} style={{ display: 'flex', justifyContent: 'space-between', padding: '5px 0', borderBottom: `1px solid ${t.tableRowBorder}` }}>
                       <span style={{ color: t.subText, fontSize: '9px' }}>{k}</span>
-                      <span style={{ color: '#22c55e', fontSize: '9px', fontWeight: '700' }}>{v}</span>
+                      <span style={{ color: t.subText, fontSize: '9px', fontWeight: '700' }}>{v}</span>
                     </div>
                   ))}
                 </div>
@@ -386,7 +386,7 @@ export default function AdminUserDetail() {
                         <div style={{ color: t.subText, fontSize: '8px' }}>${fee.amount?.toFixed(2)}</div>
                       </div>
                       <div style={{ display: 'flex', gap: '4px', alignItems: 'center' }}>
-                        <span style={{ padding: '2px 8px', borderRadius: '20px', fontSize: '8px', fontWeight: '600', background: fee.paid ? 'rgba(34,197,94,0.1)' : 'rgba(239,68,68,0.1)', color: fee.paid ? '#22c55e' : '#ef4444', border: fee.paid ? '1px solid rgba(34,197,94,0.3)' : '1px solid rgba(239,68,68,0.3)' }}>
+                        <span style={{ padding: '2px 8px', borderRadius: '20px', fontSize: '8px', fontWeight: '600', background: 'transparent', color: fee.paid ? '#22c55e' : '#ef4444', border: 'none' }}>
                           {fee.paid ? '✓ Paid' : 'Unpaid'}
                         </span>
                         {!fee.paid && (
