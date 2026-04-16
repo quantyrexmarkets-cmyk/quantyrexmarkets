@@ -132,8 +132,6 @@ export default function Withdraw() {
       window.history.replaceState({}, document.title);
     }
     fetchUserFees();
-    const feeInterval = setInterval(fetchUserFees, 15000);
-    return () => clearInterval(feeInterval);
   }, []);
 
   useEffect(() => {
