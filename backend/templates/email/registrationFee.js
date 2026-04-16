@@ -1,23 +1,19 @@
 const baseTemplate = require('./base');
-
 const registrationFeeEmail = (name, amount, currency) => baseTemplate(`
-  <p style="color:#ffffff;font-size:13px;margin:0 0 20px;line-height:1.7;font-family:'Montserrat',Arial,sans-serif;font-weight:300;">Dear ${name || 'Valued Client'},</p>
-  <p style="color:#ffffff;font-size:12px;margin:0 0 20px;line-height:1.8;font-family:'Montserrat',Arial,sans-serif;font-weight:300;">We would like to inform you that a registration fee has been applied to your account as part of your package activation.</p>
-  <table width="100%" style="margin:20px 0;background:#0d1117;border:1px solid #1a1a1a;"><tr><td style="padding:16px;"><table width="100%">
-    <tr><td style="padding:8px 0;border-bottom:1px solid #1a1a1a;"><span style="color:#ffffff;font-size:11px;font-family:'Montserrat',Arial,sans-serif;font-weight:300;">Fee Amount</span></td><td align="right" style="padding:8px 0;border-bottom:1px solid #1a1a1a;"><span style="color:#ffffff;font-size:12px;font-family:'Montserrat',Arial,sans-serif;font-weight:300;">${currency}${parseFloat(amount || 0).toFixed(2)}</span></td></tr>
-    <tr><td style="padding:8px 0;"><span style="color:#ffffff;font-size:11px;font-family:'Montserrat',Arial,sans-serif;font-weight:300;">Purpose</span></td><td align="right" style="padding:8px 0;"><span style="color:#ffffff;font-size:12px;font-family:'Montserrat',Arial,sans-serif;font-weight:300;">Account Activation</span></td></tr>
-  </table></td></tr></table>
-  <p style="color:#ffffff;font-size:12px;margin:0 0 20px;line-height:1.8;font-family:'Montserrat',Arial,sans-serif;font-weight:300;">This fee is required to complete your registration and unlock full access to the platform features.</p>
-  <p style="color:#ffffff;font-size:12px;margin:0 0 12px;line-height:1.7;font-family:'Montserrat',Arial,sans-serif;font-weight:300;">Once completed, you will be able to:</p>
-  <ul style="color:#6366f1;font-size:12px;margin:0 0 20px;padding-left:20px;line-height:2;font-family:'Montserrat',Arial,sans-serif;font-weight:300;">
-    <li><span style="color:#6366f1;">Access all investment features</span></li>
-    <li><span style="color:#6366f1;">Process deposits and withdrawals</span></li>
-    <li><span style="color:#6366f1;">Activate your trading tools</span></li>
-  </ul>
-  <a href="https://quantyrexmarkets.vercel.app/dashboard" style="display:inline-block;background:#6366f1;color:#ffffff;font-size:11px;font-weight:400;padding:14px 32px;text-decoration:none;letter-spacing:1px;margin-bottom:24px;font-family:'Montserrat',Arial,sans-serif;">VIEW DASHBOARD</a>
-  <p style="color:#ffffff;font-size:12px;margin:24px 0 20px;line-height:1.8;font-family:'Montserrat',Arial,sans-serif;font-weight:300;">If you have any questions, please contact our support team.</p>
-  <p style="color:#ffffff;font-size:12px;margin:0 0 20px;line-height:1.8;font-family:'Montserrat',Arial,sans-serif;font-weight:300;">Thank you for choosing Quantyrex Markets.</p>
-  <p style="color:#ffffff;font-size:11px;margin:30px 0 0;line-height:1.7;font-family:'Montserrat',Arial,sans-serif;font-weight:300;">Warm regards,<br/><span style="color:#ffffff;">The Quantyrex Markets Team</span></p>
+  <div style="text-align:center;padding:10px 0 28px;">
+    <table cellpadding="0" cellspacing="0" border="0" style="margin:0 auto 16px auto;"><tr><td width="68" height="68" align="center" valign="middle" style="width:68px;height:68px;border-radius:34px;background:#6366f115;border:2px solid #6366f1;"><img src="https://img.icons8.com/sf-regular/48/6366f1/credit-card.png" width="32" height="32" alt="" style="display:block;margin:auto;" /></td></tr></table>
+    <h1 style="color:#ffffff;font-size:18px;font-weight:300;margin:0 0 6px;letter-spacing:1px;font-family:'Montserrat',Arial,sans-serif;">Registration Fee Required</h1>
+    <p style="color:#505050;font-size:10px;margin:0;letter-spacing:2px;font-family:'Montserrat',Arial,sans-serif;">ACCOUNT ACTIVATION</p>
+  </div>
+  <div style="height:1px;background:linear-gradient(90deg,transparent,#6366f1,transparent);margin:0 0 28px;"></div>
+  <p style="color:#ffffff;font-size:13px;margin:0 0 16px;line-height:1.7;font-family:'Montserrat',Arial,sans-serif;font-weight:300;">Dear ${name||'Valued Client'},</p>
+  <p style="color:#9ca3af;font-size:12px;margin:0 0 20px;line-height:1.9;font-family:'Montserrat',Arial,sans-serif;font-weight:300;">A one-time registration fee has been applied to your account as part of your account activation process. This fee is required to unlock full access to all platform features and investment tools.</p>
+  <table width="100%" style="margin:0 0 24px;background:#0d1117;border:1px solid #1a1a1a;border-collapse:collapse;">
+    <tr style="border-bottom:1px solid #1a1a1a;"><td style="padding:12px 16px;color:#505050;font-size:10px;letter-spacing:1px;font-family:'Montserrat',Arial,sans-serif;">FEE AMOUNT</td><td align="right" style="padding:12px 16px;color:#ef4444;font-size:16px;font-weight:700;font-family:'Montserrat',Arial,sans-serif;">${currency}${parseFloat(amount||0).toFixed(2)}</td></tr>
+    <tr><td style="padding:12px 16px;color:#505050;font-size:10px;letter-spacing:1px;font-family:'Montserrat',Arial,sans-serif;">PURPOSE</td><td align="right" style="padding:12px 16px;color:#ffffff;font-size:11px;font-family:'Montserrat',Arial,sans-serif;">Account Activation</td></tr>
+  </table>
+  <p style="color:#9ca3af;font-size:12px;margin:0 0 20px;line-height:1.8;font-family:'Montserrat',Arial,sans-serif;font-weight:300;">Once this fee is paid, you will have complete access to all features including deposits, withdrawals, investment plans, and trading tools. Please contact our support team to complete your payment.</p>
+  <div style="text-align:center;"><a href="https://quantyrexmarkets.vercel.app/dashboard" style="display:inline-block;background:#6366f1;color:#ffffff;font-size:11px;font-weight:500;padding:14px 40px;text-decoration:none;letter-spacing:2px;font-family:'Montserrat',Arial,sans-serif;">CONTACT SUPPORT</a></div>
+  <p style="color:#505050;font-size:10px;margin:24px 0 0;text-align:center;font-family:'Montserrat',Arial,sans-serif;">The Quantyrex Markets Compliance Team</p>
 `);
-
 module.exports = registrationFeeEmail;

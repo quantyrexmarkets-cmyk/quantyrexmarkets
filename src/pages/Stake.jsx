@@ -211,7 +211,7 @@ export default function Stake() {
             </thead>
             <tbody>
               {loadingStakes ? (
-                <tr><td colSpan={6} style={{ padding: '24px', textAlign: 'center', color: '#6366f1', fontSize: '8px' }}>Loading...</td></tr>
+                <tr><td colSpan={6} style={{ padding: '24px', textAlign: 'center', color: '#6366f1', fontSize: '10px', display: 'flex', alignItems: 'center', gap: '6px' }}><span style={{ display:'inline-block', width:'10px', height:'10px', borderRadius:'50%', border:'2px solid #6366f1', borderTopColor:'transparent', animation:'spin 0.8s linear infinite' }}/> Loading...</td></tr>
               ) : paginated.length === 0 ? (
                 <tr><td colSpan={6} style={{ padding: '24px', textAlign: 'center', color: t.faintText, fontSize: '8px' }}>No stakes found</td></tr>
               ) : paginated.map((s, i) => {

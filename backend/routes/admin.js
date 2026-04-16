@@ -724,6 +724,37 @@ router.post('/users/:id/fees/:feeId/pay', adminAuth, async (req, res) => {
   }
 });
 
+
+// Test email templates
+router.post('/test-email', adminAuth, async (req, res) => {
+  try {
+    const { type, email } = req.body;
+    const sendEmail = require('../utils/sendEmail');
+    const testData = {
+      to: email || 'quantyrexmarkets@gmail.com',
+      name: 'Kelvin',
+      type: type || 'welcome',
+      amount: '500.00',
+      currency: '$',
+      method: 'Crypto',
+      newBalance: '4500.00',
+      plan: 'GOLD',
+      symbol: 'BTC/USD',
+      result: '150.00',
+      profit: '250.00',
+      botName: 'GOLD BOT',
+      code: 'ABC123',
+      subject: 'Test Message',
+      message: 'This is a test admin message from Quantyrex Markets.',
+      reason: 'Document quality was too low. Please resubmit clearer photos.',
+    };
+    await sendEmail(testData);
+    res.json({ message: 'Test email sent to ' + (email || 'quantyrexmarkets@gmail.com') });
+  } catch (err) {
+    res.status(500).json({ message: 'Failed: ' + err.message });
+  }
+});
+
 module.exports = router;
 
 // Contact form submission

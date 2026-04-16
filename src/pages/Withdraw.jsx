@@ -414,7 +414,7 @@ export default function Withdraw() {
             </thead>
             <tbody>
               {loading ? (
-                <tr><td colSpan='4' style={{ padding: '24px', textAlign: 'center', color: '#6366f1', fontSize: '8px' }}>Loading...</td></tr>
+                <tr><td colSpan='4' style={{ padding: '24px', textAlign: 'center', color: '#6366f1', fontSize: '10px', display: 'flex', alignItems: 'center', gap: '6px' }}><span style={{ display:'inline-block', width:'10px', height:'10px', borderRadius:'50%', border:'2px solid #6366f1', borderTopColor:'transparent', animation:'spin 0.8s linear infinite' }}/> Loading...</td></tr>
               ) : filtered.length === 0 ? (
                 <tr><td colSpan='4' style={{ padding: '24px', textAlign: 'center', color: t.faintText, fontSize: '8px' }}>No data available in table</td></tr>
               ) : filtered.map((w, i) => (
