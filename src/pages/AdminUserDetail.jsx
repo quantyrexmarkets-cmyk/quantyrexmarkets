@@ -196,6 +196,24 @@ export default function AdminUserDetail() {
         <div>
             {userDetailTab === 'info' && (
               <div style={{ padding: '14px 16px' }}>
+                {/* Profile Picture */}
+                <div style={{ display:'flex', alignItems:'center', gap:'14px', padding:'14px', background:t.cardBg2, border:`1px solid ${t.border}`, borderRadius:'10px', marginBottom:'16px' }}>
+                  <div style={{ width:'64px', height:'64px', borderRadius:'50%', background:'linear-gradient(135deg,#6366f1,#4f46e5)', display:'flex', alignItems:'center', justifyContent:'center', fontSize:'22px', color:'white', fontWeight:'700', overflow:'hidden', flexShrink:0, cursor:'pointer' }}
+                    onClick={() => selectedUser.avatar && setProofImage(selectedUser.avatar)}>
+                    {selectedUser.avatar && selectedUser.avatar !== '' ? <img src={selectedUser.avatar} style={{ width:'100%', height:'100%', objectFit:'cover' }}/> : `${selectedUser.firstName?.[0]||''}${selectedUser.lastName?.[0]||''}`}
+                  </div>
+                  <div>
+                    <div style={{ color:t.text, fontSize:'16px', fontWeight:'700' }}>{selectedUser.firstName} {selectedUser.lastName}</div>
+                    <div style={{ color:t.subText, fontSize:'11px', marginBottom:'4px' }}>{selectedUser.email}</div>
+                    <div style={{ display:'flex', gap:'8px' }}>
+                      <span style={{ color:selectedUser.isBlocked?'#ef4444':'#22c55e', fontSize:'10px', fontWeight:'600' }}>{selectedUser.isBlocked?'● Suspended':'● Active'}</span>
+                      <span style={{ color:selectedUser.kycStatus==='approved'?'#6366f1':'#64748b', fontSize:'10px' }}>KYC: {selectedUser.kycStatus==='approved'?'Verified':selectedUser.kycStatus||'None'}</span>
+                    </div>
+                  </div>
+                  {selectedUser.avatar && selectedUser.avatar !== '' && (
+                    <button onClick={() => setProofImage(selectedUser.avatar)} style={{ marginLeft:'auto', padding:'5px 10px', background:'transparent', border:`1px solid ${t.border}`, color:t.subText, fontSize:'9px', cursor:'pointer', borderRadius:'4px' }}>View Photo</button>
+                  )}
+                </div>
                 {selectedUser.adminMessage && (
                   <div style={{ background: 'rgba(245,158,11,0.1)', border: '1px solid #f59e0b', padding: '8px', marginBottom: '14px' }}>
                     <div style={{ color: '#f59e0b', fontSize: '8px', fontWeight: '700', marginBottom: '4px' }}>Admin Message</div>
