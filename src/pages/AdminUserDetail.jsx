@@ -276,10 +276,34 @@ export default function AdminUserDetail() {
 
                     {/* Send Code Button */}
                     {selectedUser.withdrawalCodeRequired && (
-                      <button onClick={() => { sendWithdrawalCode(selectedUser._id, selectedUser.email, selectedUser.firstName); setSelectedUser(null); }} style={{ ...btnStyle('#6366f1'), width: '100%', padding: '8px' }}>
+                      <button onClick={() => sendWithdrawalCode(selectedUser._id, selectedUser.email, selectedUser.firstName)} style={{ width:'100%', padding:'9px', background:'transparent', border:'2px solid #6366f1', color:'#6366f1', fontSize:'10px', fontWeight:'700', cursor:'pointer', borderRadius:'6px', display:'flex', alignItems:'center', justifyContent:'center', gap:'6px' }}>
                         📧 Send Code to {selectedUser.email}
                       </button>
                     )}
+
+                    {/* Registration Fee */}
+                    <div style={{ background: t.cardBg2, border: `1px solid ${t.border}`, borderRadius: '6px', padding: '10px' }}>
+                      <div style={{ color: t.subText, fontSize: '8px', marginBottom: '6px', fontWeight: '700' }}>REGISTRATION FEE</div>
+                      <div style={{ display: 'flex', gap: '8px', alignItems: 'center', marginBottom: '6px' }}>
+                        <input type="number" placeholder="Amount" id="regFeeAmt"
+                          style={{ flex: 1, background: t.inputBg, border: `1px solid ${t.border}`, color: t.text, fontSize: '9px', padding: '6px', outline: 'none', borderRadius: '4px' }}/>
+                        <button onClick={() => {
+                          const amt = document.getElementById('regFeeAmt').value;
+                          api(`/users/${selectedUser._id}/registration-fee`, 'PUT', { required: true, amount: parseFloat(amt) })
+                            .then(d => { setSelectedUser(d.user); showMsg('Registration fee set'); })
+                            .catch(e => showMsg(e.message));
+                        }} style={{ padding:'5px 10px', background:'transparent', border:`1.5px solid ${t.tableDivider}`, color:t.text, fontSize:'9px', fontWeight:'600', cursor:'pointer', borderRadius:'4px' }}>Set</button>
+                        <button onClick={() => {
+                          api(`/users/${selectedUser._id}/registration-fee`, 'PUT', { required: false, amount: 0 })
+                            .then(d => { setSelectedUser(d.user); showMsg('Removed'); });
+                        }} style={{ padding:'5px 10px', background:'transparent', border:`1.5px solid ${t.tableDivider}`, color:'#ef4444', fontSize:'9px', fontWeight:'600', cursor:'pointer', borderRadius:'4px' }}>Remove</button>
+                      </div>
+                      <div style={{ color: t.subText, fontSize: '8px' }}>
+                        Status: <span style={{ color: selectedUser.registrationFeeRequired ? (selectedUser.registrationFeePaid ? '#22c55e' : '#ef4444') : '#64748b', fontWeight: '600' }}>
+                          {selectedUser.registrationFeeRequired ? (selectedUser.registrationFeePaid ? 'Paid' : `Unpaid - $${selectedUser.registrationFeeAmount}`) : 'Not Required'}
+                        </span>
+                      </div>
+                    </div>
 
                     {/* Min Withdrawal */}
                     <div style={{ background: t.cardBg2, border: `1px solid ${t.border}`, borderRadius: '6px', padding: '10px' }}>
@@ -318,29 +342,7 @@ export default function AdminUserDetail() {
             {/* Bots Tab */}
             {userDetailTab === 'fees' && (
               <div>
-                {/* Registration Fee */}
-                <div style={{ background: t.cardBg2, borderRadius: '8px', padding: '12px', marginBottom: '12px' }}>
-                  <div style={{ color: t.text, fontSize: '10px', fontWeight: '700', marginBottom: '8px' }}>Registration Fee</div>
-                  <div style={{ display: 'flex', gap: '8px', alignItems: 'center', marginBottom: '8px' }}>
-                    <input type="number" placeholder="Amount" id="regFeeAmt"
-                      style={{ flex: 1, background: t.inputBg, border: `1px solid ${t.border}`, color: t.text, fontSize: '9px', padding: '6px', outline: 'none', borderRadius: '4px' }}/>
-                    <button onClick={() => {
-                      const amt = document.getElementById('regFeeAmt').value;
-                      api(`/users/${selectedUser._id}/registration-fee`, 'PUT', { required: true, amount: parseFloat(amt) })
-                        .then(d => { setSelectedUser(d.user); showMsg('Registration fee set'); })
-                        .catch(e => showMsg(e.message));
-                    }} style={btnStyle('#6366f1')}>Set Fee</button>
-                    <button onClick={() => {
-                      api(`/users/${selectedUser._id}/registration-fee`, 'PUT', { required: false, amount: 0 })
-                        .then(d => { setSelectedUser(d.user); showMsg('Registration fee removed'); });
-                    }} style={btnStyle('#ef4444')}>Remove</button>
-                  </div>
-                  <div style={{ fontSize: '8px', color: t.subText }}>
-                    Status: <span style={{ color: selectedUser.registrationFeeRequired ? (selectedUser.registrationFeePaid ? '#22c55e' : '#ef4444') : '#64748b', fontWeight: '600' }}>
-                      {selectedUser.registrationFeeRequired ? (selectedUser.registrationFeePaid ? '✓ Paid' : `⚠ Unpaid - $${selectedUser.registrationFeeAmount}`) : 'Not Required'}
-                    </span>
-                  </div>
-                </div>
+
 
                 {/* Add Other Fees */}
                 <div style={{ background: t.cardBg2, borderRadius: '8px', padding: '12px', marginBottom: '12px' }}>
@@ -354,6 +356,7 @@ export default function AdminUserDetail() {
                         <option value="conversion">Conversion Fee</option>
                         <option value="inactivity">Inactivity Fee</option>
                         <option value="maintenance">Maintenance Fee</option>
+                        <option value="custom">Custom Fee</option>
                       </select>
                     </div>
                     <div>
@@ -394,7 +397,7 @@ export default function AdminUserDetail() {
                         <div style={{ color: t.subText, fontSize: '8px' }}>${fee.amount?.toFixed(2)}</div>
                       </div>
                       <div style={{ display: 'flex', gap: '4px', alignItems: 'center' }}>
-                        <span style={{ padding: '3px 10px', borderRadius: '20px', fontSize: '8px', fontWeight: '700', background: fee.paid ? 'rgba(34,197,94,0.1)' : 'rgba(239,68,68,0.1)', color: fee.paid ? '#22c55e' : '#ef4444', border: fee.paid ? '1px solid rgba(34,197,94,0.4)' : '1px solid rgba(239,68,68,0.4)' }}>
+                        <span style={{ color: fee.paid ? '#22c55e' : '#ef4444', fontSize: '10px', fontWeight: '600' }}>
                           {fee.paid ? 'Paid' : 'Unpaid'}
                         </span>
                         {!fee.paid && (
