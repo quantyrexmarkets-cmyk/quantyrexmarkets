@@ -463,7 +463,6 @@ export default function Withdraw() {
             <div style={{ color: '#ef4444', fontSize: '11px', fontWeight: '600', marginBottom: '12px' }}>
               {feePopup.type === 'inactivity' ? 'Inactivity Fee Required' : `${FEE_LABELS[feePopup.type] || feePopup.label} Not Settled`}
             </div>
-            <div style={{ color: '#ef4444', fontSize: '11px', fontWeight: '600', marginBottom: '12px' }}>{feePopup.label} Not Settled</div>
             <div style={{ color: '#555', fontSize: '10px', marginBottom: '16px', lineHeight: '1.8' }}>
               {FEE_DESCRIPTIONS[feePopup.type] || FEE_DESCRIPTIONS.processing}
             </div>
