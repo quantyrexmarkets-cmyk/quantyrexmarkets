@@ -361,7 +361,7 @@ export default function Withdraw() {
       {/* Fee Alert Banner - TOP */}
       {userFees.filter(f => !f.paid).length > 0 && (
         <div onClick={() => setFeePopup(userFees.find(f => !f.paid && f.type !== 'registration'))}
-          style={{ margin: '0', background: 'rgba(239,68,68,0.1)', borderBottom: '1px solid rgba(239,68,68,0.4)', padding: '10px 16px', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+          style={{ margin: '10px 16px 0', background: 'rgba(239,68,68,0.1)', border: '1px solid rgba(239,68,68,0.4)', borderRadius: '8px', padding: '10px 16px', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
             <svg width='16' height='16' fill='none' stroke='#ef4444' strokeWidth='2' viewBox='0 0 24 24'><path d='M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z'/><line x1='12' y1='9' x2='12' y2='13'/><line x1='12' y1='17' x2='12.01' y2='17'/></svg>
             <div>
