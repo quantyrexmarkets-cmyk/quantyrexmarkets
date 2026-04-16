@@ -149,16 +149,7 @@ export default function AdminUserDetail() {
         <button onClick={() => navigate('/admin')} style={{ background:'none', border:'none', color:t.text, cursor:'pointer', display:'flex', alignItems:'center', gap:'6px', fontSize:'12px', fontWeight:'600' }}>
           <ArrowLeft size={16}/> Back
         </button>
-        <div style={{ width:'1px', height:'20px', background:t.border }}/>
-        <div style={{ display:'flex', alignItems:'center', gap:'10px' }}>
-          <div style={{ width:'36px', height:'36px', borderRadius:'50%', background:'linear-gradient(135deg,#6366f1,#4f46e5)', display:'flex', alignItems:'center', justifyContent:'center', fontSize:'13px', color:'white', fontWeight:'700', overflow:'hidden' }}>
-            {selectedUser.avatar ? <img src={selectedUser.avatar} style={{ width:'100%', height:'100%', objectFit:'cover' }}/> : `${selectedUser.firstName?.[0]||''}${selectedUser.lastName?.[0]||''}`}
-          </div>
-          <div>
-            <div style={{ fontSize:'14px', fontWeight:'700' }}>{selectedUser.firstName} {selectedUser.lastName}</div>
-            <div style={{ fontSize:'10px', color:t.subText }}>{selectedUser.email}</div>
-          </div>
-        </div>
+
         <div style={{ marginLeft:'auto', display:'flex', gap:'8px', alignItems:'center' }}>
           {msg && <span style={{ color:'#22c55e', fontSize:'10px', fontWeight:'600' }}>{msg}</span>}
           <span style={{ color:selectedUser.isBlocked?'#ef4444':'#22c55e', fontSize:'10px', fontWeight:'700' }}>{selectedUser.isBlocked?'● Suspended':'● Active'}</span>
@@ -176,8 +167,8 @@ export default function AdminUserDetail() {
             ['Profit', `$${parseFloat(selectedUser.totalProfit||0).toLocaleString('en-US',{minimumFractionDigits:2})}`],
           ].map(([label, value]) => (
             <div key={label} style={{ background:t.cardBg, border:`1px solid ${t.border}`, borderRadius:'8px', padding:'14px', textAlign:'center' }}>
-              <div style={{ color:t.subText, fontSize:'9px', marginBottom:'6px', textTransform:'uppercase', letterSpacing:'0.05em' }}>{label}</div>
-              <div style={{ color:t.text, fontSize:'13px', fontWeight:'700' }}>{value}</div>
+              <div style={{ color:t.subText, fontSize:'8px', marginBottom:'4px', textTransform:'uppercase', letterSpacing:'0.05em' }}>{label}</div>
+              <div style={{ color:'#22c55e', fontSize:'12px', fontWeight:'700' }}>{value}</div>
             </div>
           ))}
         </div>
@@ -198,13 +189,13 @@ export default function AdminUserDetail() {
               <div style={{ padding: '14px 16px' }}>
                 {/* Profile Picture */}
                 <div style={{ display:'flex', alignItems:'center', gap:'14px', padding:'14px', background:t.cardBg2, border:`1px solid ${t.border}`, borderRadius:'10px', marginBottom:'16px' }}>
-                  <div style={{ width:'64px', height:'64px', borderRadius:'50%', background:'linear-gradient(135deg,#6366f1,#4f46e5)', display:'flex', alignItems:'center', justifyContent:'center', fontSize:'22px', color:'white', fontWeight:'700', overflow:'hidden', flexShrink:0, cursor:'pointer' }}
+                  <div style={{ width:'44px', height:'44px', borderRadius:'50%', background:'linear-gradient(135deg,#6366f1,#4f46e5)', display:'flex', alignItems:'center', justifyContent:'center', fontSize:'15px', color:'white', fontWeight:'700', overflow:'hidden', flexShrink:0, cursor:'pointer' }}
                     onClick={() => selectedUser.avatar && setProofImage(selectedUser.avatar)}>
                     {selectedUser.avatar && selectedUser.avatar !== '' ? <img src={selectedUser.avatar} style={{ width:'100%', height:'100%', objectFit:'cover' }}/> : `${selectedUser.firstName?.[0]||''}${selectedUser.lastName?.[0]||''}`}
                   </div>
                   <div>
-                    <div style={{ color:t.text, fontSize:'16px', fontWeight:'700' }}>{selectedUser.firstName} {selectedUser.lastName}</div>
-                    <div style={{ color:t.subText, fontSize:'11px', marginBottom:'4px' }}>{selectedUser.email}</div>
+                    <div style={{ color:t.text, fontSize:'13px', fontWeight:'700' }}>{selectedUser.firstName} {selectedUser.lastName}</div>
+                    <div style={{ color:t.subText, fontSize:'10px', marginBottom:'3px' }}>{selectedUser.email}</div>
                     <div style={{ display:'flex', gap:'8px' }}>
                       <span style={{ color:selectedUser.isBlocked?'#ef4444':'#22c55e', fontSize:'10px', fontWeight:'600' }}>{selectedUser.isBlocked?'● Suspended':'● Active'}</span>
                       <span style={{ color:selectedUser.kycStatus==='approved'?'#6366f1':'#64748b', fontSize:'10px' }}>KYC: {selectedUser.kycStatus==='approved'?'Verified':selectedUser.kycStatus||'None'}</span>
@@ -404,7 +395,7 @@ export default function AdminUserDetail() {
                         <div style={{ color: t.subText, fontSize: '8px' }}>${fee.amount?.toFixed(2)}</div>
                       </div>
                       <div style={{ display: 'flex', gap: '4px', alignItems: 'center' }}>
-                        <span style={{ padding: '2px 8px', borderRadius: '20px', fontSize: '8px', fontWeight: '600', background: 'transparent', color: fee.paid ? '#22c55e' : '#ef4444', border: 'none' }}>
+                        <span style={{ padding: '3px 10px', borderRadius: '20px', fontSize: '8px', fontWeight: '700', background: fee.paid ? 'rgba(34,197,94,0.1)' : 'rgba(239,68,68,0.1)', color: fee.paid ? '#22c55e' : '#ef4444', border: fee.paid ? '1px solid rgba(34,197,94,0.4)' : '1px solid rgba(239,68,68,0.4)' }}>
                           {fee.paid ? '✓ Paid' : 'Unpaid'}
                         </span>
                         {!fee.paid && (
