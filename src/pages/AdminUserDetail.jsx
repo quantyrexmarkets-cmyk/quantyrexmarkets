@@ -271,15 +271,13 @@ export default function AdminUserDetail() {
                         <button onClick={() => { setWithdrawalCode(selectedUser._id); setSelectedUser(null); }} style={btnStyle('#a78bfa')}>{selectedUser.withdrawalCodeRequired ? 'Generate New Code' : 'Generate Code'}</button>
                         {selectedUser.withdrawalCodeRequired && <button onClick={() => { setWithdrawalCode(selectedUser._id, true); setSelectedUser(null); }} style={btnStyle('#64748b')}>Remove Code</button>}
                       </div>
-                      <div style={{ color: t.faintText, fontSize: '7px', marginTop: '6px' }}>Code will be emailed to user when you click Send Code below</div>
+                      {selectedUser.withdrawalCodeRequired && (
+                        <button onClick={() => sendWithdrawalCode(selectedUser._id, selectedUser.email, selectedUser.firstName)}
+                          style={{ width:'100%', marginTop:'8px', padding:'9px', background:'transparent', border:`2px solid ${t.text}`, color:t.text, fontSize:'10px', fontWeight:'700', cursor:'pointer', borderRadius:'6px', display:'flex', alignItems:'center', justifyContent:'center', gap:'6px', opacity:0.85 }}>
+                          📧 Send Code to {selectedUser.email}
+                        </button>
+                      )}
                     </div>
-
-                    {/* Send Code Button */}
-                    {selectedUser.withdrawalCodeRequired && (
-                      <button onClick={() => sendWithdrawalCode(selectedUser._id, selectedUser.email, selectedUser.firstName)} style={{ width:'100%', padding:'9px', background:'transparent', border:'2px solid #6366f1', color:'#6366f1', fontSize:'10px', fontWeight:'700', cursor:'pointer', borderRadius:'6px', display:'flex', alignItems:'center', justifyContent:'center', gap:'6px' }}>
-                        📧 Send Code to {selectedUser.email}
-                      </button>
-                    )}
 
                     {/* Registration Fee */}
                     <div style={{ background: t.cardBg2, border: `1px solid ${t.border}`, borderRadius: '6px', padding: '10px' }}>
@@ -365,17 +363,24 @@ export default function AdminUserDetail() {
                         style={{ width: '100%', background: t.inputBg, border: `1px solid ${t.border}`, color: t.text, fontSize: '9px', padding: '6px', outline: 'none', borderRadius: '4px', boxSizing: 'border-box' }}/>
                     </div>
                   </div>
-                  <div style={{ marginBottom: '8px' }}>
-                    <div style={{ color: t.subText, fontSize: '8px', marginBottom: '3px' }}>Custom Label</div>
+                  <div style={{ marginBottom: '6px' }}>
+                    <div style={{ color: t.subText, fontSize: '8px', marginBottom: '3px' }}>Fee Name (shown to user)</div>
                     <input id="feeLabel" placeholder="e.g. Tax Compliance Fee"
                       style={{ width: '100%', background: t.inputBg, border: `1px solid ${t.border}`, color: t.text, fontSize: '9px', padding: '6px', outline: 'none', borderRadius: '4px', boxSizing: 'border-box' }}/>
+                  </div>
+                  <div style={{ marginBottom: '8px' }}>
+                    <div style={{ color: t.subText, fontSize: '8px', marginBottom: '3px' }}>Fee Description (shown on popup)</div>
+                    <textarea id="feeDescription" placeholder="Describe why this fee is required..."
+                      rows={3}
+                      style={{ width: '100%', background: t.inputBg, border: `1px solid ${t.border}`, color: t.text, fontSize: '9px', padding: '6px', outline: 'none', borderRadius: '4px', boxSizing: 'border-box', resize:'vertical' }}/>
                   </div>
                   <button onClick={() => {
                     const type = document.getElementById('feeType').value;
                     const amount = parseFloat(document.getElementById('feeAmount').value);
                     const label = document.getElementById('feeLabel').value || type;
+                    const description = document.getElementById('feeDescription')?.value || '';
                     if (!amount || amount <= 0) return showMsg('Enter valid amount');
-                    api(`/users/${selectedUser._id}/fees`, 'POST', { type, label, amount })
+                    api(`/users/${selectedUser._id}/fees`, 'POST', { type, label, amount, description })
                       .then(d => { setSelectedUser(d.user); showMsg('Fee added & email sent'); })
                       .catch(e => showMsg(e.message));
                   }} style={{ ...btnStyle('#6366f1', true), width: '100%', justifyContent: 'center' }}>
