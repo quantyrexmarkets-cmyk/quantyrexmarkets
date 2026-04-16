@@ -315,7 +315,7 @@ export default function Withdraw() {
       {showConfirm && (
         <>
           <div onClick={() => setShowConfirm(false)} style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.6)', zIndex: 200 }} />
-          <div style={{ position: 'fixed', top: '50%', left: '50%', transform: 'translate(-50%,-50%)', zIndex: 201, background: 'white', padding: '36px 28px', width: '320px', textAlign: 'center', borderRadius: '8px' }}>
+          <div style={{ position: 'fixed', top: '50%', left: '50%', transform: 'translate(-50%,-50%)', zIndex: 201, background: 'white', padding: '36px 28px', width: '320px', textAlign: 'center', borderRadius: '8px', fontFamily: "'Segoe UI', sans-serif" }}>
             <div style={{ width: '52px', height: '52px', borderRadius: '50%', border: '2px solid #6366f1', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 14px' }}>
               <svg width='22' height='22' fill='none' stroke='#6366f1' viewBox='0 0 24 24' strokeWidth='2'><path strokeLinecap='round' strokeLinejoin='round' d='M5 10l7-7m0 0l7 7m-7-7v18'/></svg>
             </div>
@@ -366,7 +366,7 @@ export default function Withdraw() {
             <svg width='16' height='16' fill='none' stroke='#ef4444' strokeWidth='2' viewBox='0 0 24 24'><path d='M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z'/><line x1='12' y1='9' x2='12' y2='13'/><line x1='12' y1='17' x2='12.01' y2='17'/></svg>
             <div>
               <div style={{ color: '#ef4444', fontSize: '10px', fontWeight: '700' }}>{userFees.find(f=>!f.paid&&f.type==='registration') ? 'Withdrawal Not Available' : "We're unable to process your withdrawal"}</div>
-              <div style={{ color: '#ef4444', fontSize: '8px', opacity: 0.8 }}>{userFees.find(f=>!f.paid&&f.type==='registration') ? 'Pending Registration Fee — Click to view and pay' : userFees.filter(f=>!f.paid&&f.type!=='registration').map(f=>f.label).join(', ')+' not settled — Click to view and pay'}</div>
+              <div style={{ color: '#ef4444', fontSize: '8px', opacity: 0.8 }}>{userFees.find(f=>!f.paid&&f.type==='registration') ? 'Pending Registration Fee — Click to view and pay' : userFees.filter(f=>!f.paid&&f.type!=='registration').map(f=>`${FEE_LABELS[f.type]||f.label} not settled`).join(', ')+' — Click to view and pay'}</div>
             </div>
           </div>
           <span style={{ color: '#ef4444', fontSize: '11px', fontWeight: '700' }}>→</span>
@@ -461,20 +461,20 @@ export default function Withdraw() {
             <div style={{ color: '#ef4444', fontSize: '11px', fontWeight: '600', marginBottom: '12px' }}>
               {feePopup.type === 'inactivity' ? 'Inactivity Fee Required' : `${FEE_LABELS[feePopup.type] || feePopup.label} Not Settled`}
             </div>
-            <div style={{ color: '#555', fontSize: '10px', marginBottom: '16px', lineHeight: '1.8' }}>
+            <div style={{ color: '#555', fontSize: '11px', marginBottom: '14px', lineHeight: '1.7' }}>
               {FEE_DESCRIPTIONS[feePopup.type] || FEE_DESCRIPTIONS.processing}
             </div>
-            <div style={{ color: '#888', fontSize: '9px', marginBottom: '4px' }}>Amount Due</div>
+            <div style={{ color: '#888', fontSize: '10px', fontWeight: '600', marginBottom: '4px', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Amount Due</div>
             <div style={{ color: '#ef4444', fontSize: '16px', fontWeight: '700', marginBottom: '16px' }}>${parseFloat(feePopup.amount || 0).toLocaleString('en-US', {minimumFractionDigits: 2})}</div>
             <div style={{ color: '#555', fontSize: '10px', marginBottom: '20px', lineHeight: '1.7' }}>
               Dear Investor, your withdrawal request is on hold. Please contact support to complete this payment.
             </div>
             <button onClick={() => { setFeePopup(null); window.dispatchEvent(new Event('openLiveChat')); }}
-              style={{ width: '100%', padding: '10px', background: '#6366f1', border: 'none', color: 'white', fontSize: '10px', fontWeight: '700', cursor: 'pointer', marginBottom: '8px' }}>
+              style={{ width: '100%', padding: '11px', background: '#6366f1', border: 'none', color: 'white', fontSize: '11px', fontWeight: '600', cursor: 'pointer', marginBottom: '8px' }}>
               Contact Support
             </button>
             <button onClick={() => setFeePopup(null)}
-              style={{ width: '100%', padding: '10px', background: 'transparent', border: '1px solid #e2e8f0', color: '#888', fontSize: '10px', cursor: 'pointer' }}>
+              style={{ width: '100%', padding: '11px', background: 'transparent', border: '1px solid #e2e8f0', color: '#888', fontSize: '11px', cursor: 'pointer' }}>
               Close
             </button>
           </div>
@@ -497,7 +497,7 @@ export default function Withdraw() {
                   All outstanding fees have been settled. Our team is now processing your withdrawal and funds will be released to your account shortly.
                 </div>
                 <button onClick={() => setFeeSuccess(null)}
-                  style={{ width: '100%', padding: '10px', background: '#6366f1', border: 'none', color: 'white', fontSize: '10px', fontWeight: '700', cursor: 'pointer', marginBottom: '8px' }}>
+                  style={{ width: '100%', padding: '11px', background: '#6366f1', border: 'none', color: 'white', fontSize: '11px', fontWeight: '600', cursor: 'pointer', marginBottom: '8px' }}>
                   Done
                 </button>
               </>
@@ -513,11 +513,11 @@ export default function Withdraw() {
                   Dear Investor, your {FEE_LABELS[feeSuccess.paidFee.type] || feeSuccess.paidFee.label} has been successfully processed and we are currently working on processing your withdrawal. However, a {FEE_LABELS[feeSuccess.nextFee.type] || feeSuccess.nextFee.label} has not yet been paid. This fee is required to complete and release your funds.
                 </div>
                 <button onClick={() => { setFeePopup(feeSuccess.nextFee); setFeeSuccess(null); }}
-                  style={{ width: '100%', padding: '10px', background: '#6366f1', border: 'none', color: 'white', fontSize: '10px', fontWeight: '700', cursor: 'pointer', marginBottom: '8px' }}>
+                  style={{ width: '100%', padding: '11px', background: '#6366f1', border: 'none', color: 'white', fontSize: '11px', fontWeight: '600', cursor: 'pointer', marginBottom: '8px' }}>
                   Why this happened →
                 </button>
                 <button onClick={() => setFeeSuccess(null)}
-                  style={{ width: '100%', padding: '10px', background: 'transparent', border: '1px solid #e2e8f0', color: '#888', fontSize: '10px', cursor: 'pointer' }}>
+                  style={{ width: '100%', padding: '11px', background: 'transparent', border: '1px solid #e2e8f0', color: '#888', fontSize: '11px', cursor: 'pointer' }}>
                   Close
                 </button>
               </>
