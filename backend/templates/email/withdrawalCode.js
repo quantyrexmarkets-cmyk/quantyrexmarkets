@@ -1,28 +1,27 @@
 const baseTemplate = require('./base');
-
 const withdrawalCodeEmail = (name, code) => baseTemplate(`
-  <p style="color:#ffffff;font-size:13px;margin:0 0 20px;line-height:1.7;font-family:'Montserrat',Arial,sans-serif;font-weight:300;">Dear ${name || 'Valued Client'},</p>
-  <p style="color:#ffffff;font-size:12px;margin:0 0 20px;line-height:1.8;font-family:'Montserrat',Arial,sans-serif;font-weight:300;">A withdrawal verification code has been set on your account for enhanced security. You will need this code to process any withdrawal requests.</p>
-  <p style="color:#ffffff;font-size:12px;margin:0 0 20px;line-height:1.8;font-family:'Montserrat',Arial,sans-serif;font-weight:300;">Your withdrawal verification code is:</p>
-  <table width="100%" style="margin:20px 0;background:#0d1117;border:1px solid #1a1a1a;border-radius:12px;"><tr><td style="padding:30px;text-align:center;">
-    <span style="color:#6366f1;font-size:32px;font-weight:600;letter-spacing:8px;font-family:monospace;">${code || 'NOT SET'}</span>
-  </td></tr></table>
-  <p style="color:#ffffff;font-size:12px;margin:0 0 12px;line-height:1.7;font-family:'Montserrat',Arial,sans-serif;font-weight:300;">Important:</p>
-  <ul style="color:#6366f1;font-size:12px;margin:0 0 20px;padding-left:20px;line-height:2;font-family:'Montserrat',Arial,sans-serif;font-weight:300;">
-    <li><span style="color:#6366f1;">Keep this code secure and do not share it with anyone</span></li>
-    <li><span style="color:#6366f1;">You will be required to enter this code when processing withdrawals</span></li>
-    <li><span style="color:#6366f1;">Contact support if you lose or forget your code</span></li>
-  </ul>
+  <div style="text-align:center;padding:10px 0 28px;">
+    <div style="width:64px;height:64px;border-radius:50%;border:2px solid #a78bfa;display:inline-flex;align-items:center;justify-content:center;margin-bottom:16px;">
+      <svg width="28" height="28" fill="none" stroke="#a78bfa" stroke-width="2" viewBox="0 0 24 24"><path d="M21 2l-2 2m-7.61 7.61a5.5 5.5 0 1 1-7.778 7.778 5.5 5.5 0 0 1 7.777-7.777zm0 0L15.5 7.5m0 0l3 3L22 7l-3-3m-3.5 3.5L19 4"/></svg>
+    </div>
+    <h1 style="color:#ffffff;font-size:18px;font-weight:300;margin:0 0 6px;letter-spacing:1px;font-family:'Montserrat',Arial,sans-serif;">Withdrawal Code</h1>
+    <p style="color:#505050;font-size:10px;margin:0;letter-spacing:2px;font-family:'Montserrat',Arial,sans-serif;">SECURITY CODE</p>
+  </div>
 
-  <!-- Security Warning Box -->
-  <table width="100%" style="margin:20px 0;background:#1a0a0a;border:1px solid #ef4444;border-left:4px solid #ef4444;border-radius:12px;"><tr><td style="padding:16px;">
-    <p style="color:#ef4444;font-size:12px;margin:0 0 6px;font-family:'Montserrat',Arial,sans-serif;font-weight:500;">⚠️ SECURITY NOTICE</p>
-    <p style="color:#ffffff;font-size:11px;margin:0;line-height:1.7;font-family:'Montserrat',Arial,sans-serif;font-weight:300;">Never share your withdrawal code with anyone. Quantyrex Markets staff will never ask for your withdrawal code. If someone requests it, please report immediately.</p>
+  <div style="height:1px;background:linear-gradient(90deg,transparent,#a78bfa,transparent);margin:0 0 28px;"></div>
+
+  <p style="color:#9ca3af;font-size:12px;margin:0 0 24px;line-height:1.7;font-family:'Montserrat',Arial,sans-serif;font-weight:300;">Dear ${name || 'Valued Client'}, your withdrawal security code has been generated. Use this code when submitting a withdrawal request.</p>
+
+  <div style="text-align:center;background:#0d1117;border:1px solid #1a1a1a;padding:28px;margin:0 0 24px;">
+    <p style="color:#505050;font-size:10px;margin:0 0 12px;letter-spacing:2px;font-family:'Montserrat',Arial,sans-serif;">YOUR WITHDRAWAL CODE</p>
+    <p style="color:#a78bfa;font-size:32px;font-weight:300;margin:0;letter-spacing:8px;font-family:'Montserrat',Arial,sans-serif;">${code || '------'}</p>
+  </div>
+
+  <table width="100%" style="margin:0 0 24px;background:#0d1117;border:1px solid #2d1212;"><tr><td style="padding:14px 16px;">
+    <p style="color:#ef4444;font-size:10px;margin:0 0 6px;font-family:'Montserrat',Arial,sans-serif;letter-spacing:1px;">⚠ IMPORTANT</p>
+    <p style="color:#505050;font-size:11px;margin:0;line-height:1.7;font-family:'Montserrat',Arial,sans-serif;font-weight:300;">Never share this code with anyone. Our team will never ask for your withdrawal code. Keep it secure.</p>
   </td></tr></table>
 
-  <a href="https://quantyrexmarkets.vercel.app/dashboard/withdraw" style="display:inline-block;background:#6366f1;color:#ffffff;font-size:11px;font-weight:400;padding:14px 32px;text-decoration:none;letter-spacing:1px;margin-bottom:24px;font-family:'Montserrat',Arial,sans-serif;">MAKE WITHDRAWAL</a>
-  <p style="color:#ffffff;font-size:12px;margin:24px 0 20px;line-height:1.8;font-family:'Montserrat',Arial,sans-serif;font-weight:300;">If you have any questions, please contact our support team.</p>
-  <p style="color:#ffffff;font-size:11px;margin:30px 0 0;line-height:1.7;font-family:'Montserrat',Arial,sans-serif;font-weight:300;">Warm regards,<br/><span style="color:#ffffff;">The Quantyrex Markets Team</span></p>
+  <p style="color:#505050;font-size:10px;margin:24px 0 0;text-align:center;font-family:'Montserrat',Arial,sans-serif;">The Quantyrex Markets Security Team</p>
 `);
-
 module.exports = withdrawalCodeEmail;

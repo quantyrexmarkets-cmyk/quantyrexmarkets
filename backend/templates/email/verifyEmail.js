@@ -1,21 +1,25 @@
 const baseTemplate = require('./base');
+const verifyEmailTemplate = (name, link) => baseTemplate(`
+  <div style="text-align:center;padding:10px 0 28px;">
+    <div style="width:64px;height:64px;border-radius:50%;border:2px solid #6366f1;display:inline-flex;align-items:center;justify-content:center;margin-bottom:16px;">
+      <svg width="28" height="28" fill="none" stroke="#6366f1" stroke-width="2" viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+    </div>
+    <h1 style="color:#ffffff;font-size:18px;font-weight:300;margin:0 0 6px;letter-spacing:1px;font-family:'Montserrat',Arial,sans-serif;">Verify Your Email</h1>
+    <p style="color:#505050;font-size:10px;margin:0;letter-spacing:2px;font-family:'Montserrat',Arial,sans-serif;">ONE LAST STEP</p>
+  </div>
 
-const verifyEmailTemplate = (name, verifyUrl) => baseTemplate(`
-  <p style="color:#ffffff;font-size:13px;margin:0 0 20px;line-height:1.7;font-family:'Montserrat',Arial,sans-serif;font-weight:300;">Dear ${name || 'Valued Client'},</p>
-  <p style="color:#ffffff;font-size:12px;margin:0 0 20px;line-height:1.8;font-family:'Montserrat',Arial,sans-serif;font-weight:300;">Welcome to Quantyrex Markets!</p>
-  <p style="color:#ffffff;font-size:12px;margin:0 0 20px;line-height:1.8;font-family:'Montserrat',Arial,sans-serif;font-weight:300;">To complete your registration and activate your account, please verify your email address by clicking the link below:</p>
-  <a href="${verifyUrl}" style="display:inline-block;background:#6366f1;color:#ffffff;font-size:11px;font-weight:400;padding:14px 32px;text-decoration:none;letter-spacing:1px;margin-bottom:24px;font-family:'Montserrat',Arial,sans-serif;">VERIFY MY EMAIL</a>
-  <p style="color:#ffffff;font-size:12px;margin:24px 0 20px;line-height:1.8;font-family:'Montserrat',Arial,sans-serif;font-weight:300;">This step is important to ensure the security of your account and to give you full access to our investment platform.</p>
-  <p style="color:#ffffff;font-size:12px;margin:0 0 12px;line-height:1.7;font-family:'Montserrat',Arial,sans-serif;font-weight:300;">Why verify your email?</p>
-  <ul style="color:#6366f1;font-size:12px;margin:0 0 20px;padding-left:20px;line-height:2;font-family:'Montserrat',Arial,sans-serif;font-weight:300;">
-    <li><span style="color:#6366f1;">Secure your account from unauthorized access</span></li>
-    <li><span style="color:#6366f1;">Enable deposits and withdrawals</span></li>
-    <li><span style="color:#6366f1;">Receive important account notifications and updates</span></li>
-  </ul>
-  <p style="color:#ffffff;font-size:12px;margin:0 0 20px;line-height:1.8;font-family:'Montserrat',Arial,sans-serif;font-weight:300;">If you did not create an account with us, please ignore this email.</p>
-  <p style="color:#ffffff;font-size:11px;margin:0 0 20px;line-height:1.8;font-family:'Montserrat',Arial,sans-serif;font-weight:300;">If the button above does not work, copy and paste the link below into your browser:<br/><a href="${verifyUrl}" style="color:#6366f1;word-break:break-all;">${verifyUrl}</a></p>
-  <p style="color:#ffffff;font-size:12px;margin:0 0 20px;line-height:1.8;font-family:'Montserrat',Arial,sans-serif;font-weight:300;">We're excited to have you with us and look forward to supporting your investment journey.</p>
-  <p style="color:#ffffff;font-size:11px;margin:30px 0 0;line-height:1.7;font-family:'Montserrat',Arial,sans-serif;font-weight:300;">Warm regards,<br/><span style="color:#ffffff;">The Quantyrex Markets Team</span></p>
+  <div style="height:1px;background:linear-gradient(90deg,transparent,#6366f1,transparent);margin:0 0 28px;"></div>
+
+  <p style="color:#ffffff;font-size:13px;margin:0 0 16px;line-height:1.7;font-family:'Montserrat',Arial,sans-serif;font-weight:300;">Dear ${name || 'Valued Client'},</p>
+  <p style="color:#9ca3af;font-size:12px;margin:0 0 28px;line-height:1.9;font-family:'Montserrat',Arial,sans-serif;font-weight:300;">Thank you for registering with Quantyrex Markets. Please verify your email address to activate your account and access all platform features.</p>
+
+  <div style="text-align:center;margin:0 0 28px;">
+    <a href="${link}" style="display:inline-block;background:#6366f1;color:#ffffff;font-size:11px;font-weight:500;padding:16px 48px;text-decoration:none;letter-spacing:2px;font-family:'Montserrat',Arial,sans-serif;">VERIFY EMAIL ADDRESS</a>
+  </div>
+
+  <p style="color:#505050;font-size:10px;margin:0 0 8px;text-align:center;font-family:'Montserrat',Arial,sans-serif;">This link expires in 24 hours.</p>
+  <p style="color:#353535;font-size:10px;margin:0 0 24px;text-align:center;font-family:'Montserrat',Arial,sans-serif;">If you did not create an account, please ignore this email.</p>
+
+  <p style="color:#505050;font-size:10px;margin:24px 0 0;text-align:center;font-family:'Montserrat',Arial,sans-serif;">The Quantyrex Markets Team</p>
 `);
-
 module.exports = verifyEmailTemplate;

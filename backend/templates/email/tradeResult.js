@@ -1,29 +1,38 @@
 const baseTemplate = require('./base');
+const tradeResultEmail = (name, symbol, type, amount, result, currency) => baseTemplate(`
+  <div style="text-align:center;padding:10px 0 24px;">
+    <p style="color:#505050;font-size:10px;margin:0 0 12px;letter-spacing:3px;font-family:'Montserrat',Arial,sans-serif;">TRADE CLOSED</p>
+    <h1 style="color:${parseFloat(result)>=0?'#22c55e':'#ef4444'};font-size:28px;font-weight:300;margin:0 0 4px;font-family:'Montserrat',Arial,sans-serif;">${parseFloat(result)>=0?'+':''}${currency} ${parseFloat(result || 0).toFixed(2)}</h1>
+    <p style="color:#505050;font-size:11px;margin:0;letter-spacing:1px;font-family:'Montserrat',Arial,sans-serif;">${symbol} · ${type?.toUpperCase()}</p>
+  </div>
 
-const tradeResultEmail = (name, symbol, type, amount, result, profit, newBalance, currency) => {
-  const isWin = result === 'win';
-  const resultColor = isWin ? '#22c55e' : '#ef4444';
-  const resultText = isWin ? 'PROFIT' : 'LOSS';
+  <div style="height:1px;background:linear-gradient(90deg,transparent,${parseFloat(result)>=0?'#22c55e':'#ef4444'},transparent);margin:0 0 24px;"></div>
 
-  return baseTemplate(`
-    <p style="color:#ffffff;font-size:13px;margin:0 0 20px;line-height:1.7;font-family:'Montserrat',Arial,sans-serif;font-weight:300;">Dear ${name || 'Valued Client'},</p>
-    <p style="color:#ffffff;font-size:12px;margin:0 0 20px;line-height:1.8;font-family:'Montserrat',Arial,sans-serif;font-weight:300;">We would like to inform you that your recent trade has been successfully completed.</p>
-    <p style="color:#ffffff;font-size:12px;margin:0 0 12px;line-height:1.7;font-family:'Montserrat',Arial,sans-serif;font-weight:300;">Trade Summary:</p>
-    <table width="100%" style="margin:20px 0;background:#0d1117;border:1px solid #1a1a1a;"><tr><td style="padding:16px;"><table width="100%">
-      <tr><td style="padding:8px 0;border-bottom:1px solid #1a1a1a;"><span style="color:#ffffff;font-size:11px;font-family:'Montserrat',Arial,sans-serif;font-weight:300;">Symbol</span></td><td align="right" style="padding:8px 0;border-bottom:1px solid #1a1a1a;"><span style="color:#ffffff;font-size:12px;font-family:'Montserrat',Arial,sans-serif;font-weight:300;">${symbol || 'N/A'}</span></td></tr>
-      <tr><td style="padding:8px 0;border-bottom:1px solid #1a1a1a;"><span style="color:#ffffff;font-size:11px;font-family:'Montserrat',Arial,sans-serif;font-weight:300;">Trade Type</span></td><td align="right" style="padding:8px 0;border-bottom:1px solid #1a1a1a;"><span style="color:#ffffff;font-size:12px;font-family:'Montserrat',Arial,sans-serif;font-weight:300;">${type?.toUpperCase() || 'TRADE'}</span></td></tr>
-      <tr><td style="padding:8px 0;border-bottom:1px solid #1a1a1a;"><span style="color:#ffffff;font-size:11px;font-family:'Montserrat',Arial,sans-serif;font-weight:300;">Amount</span></td><td align="right" style="padding:8px 0;border-bottom:1px solid #1a1a1a;"><span style="color:#ffffff;font-size:12px;font-family:'Montserrat',Arial,sans-serif;font-weight:300;">${currency} ${parseFloat(amount || 0).toLocaleString('en-US', { minimumFractionDigits: 2 })}</span></td></tr>
-      <tr><td style="padding:8px 0;border-bottom:1px solid #1a1a1a;"><span style="color:#ffffff;font-size:11px;font-family:'Montserrat',Arial,sans-serif;font-weight:300;">Result</span></td><td align="right" style="padding:8px 0;border-bottom:1px solid #1a1a1a;"><span style="color:${resultColor};font-size:12px;font-family:'Montserrat',Arial,sans-serif;font-weight:300;">${isWin ? '+' : '-'}${currency} ${parseFloat(Math.abs(profit || 0)).toLocaleString('en-US', { minimumFractionDigits: 2 })}</span></td></tr>
-      <tr><td style="padding:8px 0;border-bottom:1px solid #1a1a1a;"><span style="color:#ffffff;font-size:11px;font-family:'Montserrat',Arial,sans-serif;font-weight:300;">New Balance</span></td><td align="right" style="padding:8px 0;border-bottom:1px solid #1a1a1a;"><span style="color:#ffffff;font-size:12px;font-family:'Montserrat',Arial,sans-serif;font-weight:300;">${currency} ${parseFloat(newBalance || 0).toLocaleString('en-US', { minimumFractionDigits: 2 })}</span></td></tr>
-      <tr><td style="padding:8px 0;"><span style="color:#ffffff;font-size:11px;font-family:'Montserrat',Arial,sans-serif;font-weight:300;">Trade Status</span></td><td align="right" style="padding:8px 0;"><span style="color:${resultColor};font-size:11px;font-family:'Montserrat',Arial,sans-serif;font-weight:400;">${resultText}</span></td></tr>
-    </table></td></tr></table>
-    <p style="color:#ffffff;font-size:12px;margin:0 0 20px;line-height:1.8;font-family:'Montserrat',Arial,sans-serif;font-weight:300;">The outcome has been reflected in your account dashboard.</p>
-    <p style="color:#ffffff;font-size:12px;margin:0 0 24px;line-height:1.8;font-family:'Montserrat',Arial,sans-serif;font-weight:300;">You can log in anytime to review your full trading history and portfolio performance.</p>
-    <a href="https://quantyrexmarkets.vercel.app/dashboard/live-trading" style="display:inline-block;background:#6366f1;color:#ffffff;font-size:11px;font-weight:400;padding:14px 32px;text-decoration:none;letter-spacing:1px;margin-bottom:24px;font-family:'Montserrat',Arial,sans-serif;">VIEW TRADING HISTORY</a>
-    <p style="color:#ffffff;font-size:12px;margin:24px 0 20px;line-height:1.8;font-family:'Montserrat',Arial,sans-serif;font-weight:300;">If you have any questions regarding this trade, feel free to contact our support team.</p>
-    <p style="color:#ffffff;font-size:12px;margin:0 0 20px;line-height:1.8;font-family:'Montserrat',Arial,sans-serif;font-weight:300;">Thank you for trading with Quantyrex Markets.</p>
-    <p style="color:#ffffff;font-size:11px;margin:30px 0 0;line-height:1.7;font-family:'Montserrat',Arial,sans-serif;font-weight:300;">Warm regards,<br/><span style="color:#ffffff;">The Quantyrex Markets Team</span></p>
-  `);
-};
+  <p style="color:#9ca3af;font-size:12px;margin:0 0 20px;line-height:1.7;font-family:'Montserrat',Arial,sans-serif;font-weight:300;">Dear ${name || 'Valued Client'}, your trade has been closed and the result has been applied to your account.</p>
 
+  <table width="100%" style="margin:0 0 24px;background:#0d1117;border:1px solid #1a1a1a;border-collapse:collapse;">
+    <tr style="border-bottom:1px solid #1a1a1a;">
+      <td style="padding:12px 16px;color:#505050;font-size:10px;font-family:'Montserrat',Arial,sans-serif;letter-spacing:1px;">SYMBOL</td>
+      <td align="right" style="padding:12px 16px;color:#6366f1;font-size:11px;font-weight:500;font-family:'Montserrat',Arial,sans-serif;">${symbol}</td>
+    </tr>
+    <tr style="border-bottom:1px solid #1a1a1a;">
+      <td style="padding:12px 16px;color:#505050;font-size:10px;font-family:'Montserrat',Arial,sans-serif;letter-spacing:1px;">DIRECTION</td>
+      <td align="right" style="padding:12px 16px;color:#ffffff;font-size:11px;font-family:'Montserrat',Arial,sans-serif;">${type?.toUpperCase()}</td>
+    </tr>
+    <tr style="border-bottom:1px solid #1a1a1a;">
+      <td style="padding:12px 16px;color:#505050;font-size:10px;font-family:'Montserrat',Arial,sans-serif;letter-spacing:1px;">AMOUNT</td>
+      <td align="right" style="padding:12px 16px;color:#ffffff;font-size:11px;font-family:'Montserrat',Arial,sans-serif;">${currency} ${parseFloat(amount || 0).toFixed(2)}</td>
+    </tr>
+    <tr>
+      <td style="padding:12px 16px;color:#505050;font-size:10px;font-family:'Montserrat',Arial,sans-serif;letter-spacing:1px;">RESULT</td>
+      <td align="right" style="padding:12px 16px;color:${parseFloat(result)>=0?'#22c55e':'#ef4444'};font-size:14px;font-weight:500;font-family:'Montserrat',Arial,sans-serif;">${parseFloat(result)>=0?'+':''}${currency} ${parseFloat(result || 0).toFixed(2)}</td>
+    </tr>
+  </table>
+
+  <div style="text-align:center;margin:0 0 24px;">
+    <a href="https://quantyrexmarkets.vercel.app/dashboard/live-trading" style="display:inline-block;background:transparent;color:#6366f1;font-size:10px;font-weight:500;padding:12px 32px;text-decoration:none;letter-spacing:2px;font-family:'Montserrat',Arial,sans-serif;border:1px solid #6366f1;">VIEW TRADES →</a>
+  </div>
+
+  <p style="color:#505050;font-size:10px;margin:24px 0 0;text-align:center;font-family:'Montserrat',Arial,sans-serif;">The Quantyrex Markets Trading Team</p>
+`);
 module.exports = tradeResultEmail;

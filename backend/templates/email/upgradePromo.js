@@ -1,21 +1,34 @@
 const baseTemplate = require('./base');
-
 const upgradePromoEmail = (name) => baseTemplate(`
-  <p style="color:#ffffff;font-size:13px;margin:0 0 20px;line-height:1.7;font-family:'Montserrat',Arial,sans-serif;font-weight:300;">Dear ${name || 'Valued Client'},</p>
-  <p style="color:#ffffff;font-size:12px;margin:0 0 20px;line-height:1.8;font-family:'Montserrat',Arial,sans-serif;font-weight:300;">We hope you are doing well.</p>
-  <p style="color:#ffffff;font-size:12px;margin:0 0 20px;line-height:1.8;font-family:'Montserrat',Arial,sans-serif;font-weight:300;">We would like to inform you that your current account level requires an upgrade to continue enjoying uninterrupted access to our investment services and full platform features.</p>
-  <p style="color:#ffffff;font-size:12px;margin:0 0 12px;line-height:1.7;font-family:'Montserrat',Arial,sans-serif;font-weight:300;">Why this upgrade is important:</p>
-  <ul style="color:#6366f1;font-size:12px;margin:0 0 20px;padding-left:20px;line-height:2;font-family:'Montserrat',Arial,sans-serif;font-weight:300;">
-    <li><span style="color:#6366f1;">Maintain full access to your investment dashboard</span></li>
-    <li><span style="color:#6366f1;">Enable withdrawals and advanced trading features</span></li>
-    <li><span style="color:#6366f1;">Improve account security and performance</span></li>
-    <li><span style="color:#6366f1;">Unlock higher earning opportunities</span></li>
-  </ul>
-  <p style="color:#ffffff;font-size:12px;margin:0 0 24px;line-height:1.8;font-family:'Montserrat',Arial,sans-serif;font-weight:300;">To proceed, please upgrade your account at your earliest convenience by following the instructions on your dashboard or contacting your account manager.</p>
-  <a href="https://quantyrexmarkets.vercel.app/dashboard/packages" style="display:inline-block;background:#6366f1;color:#ffffff;font-size:11px;font-weight:400;padding:14px 32px;text-decoration:none;letter-spacing:1px;margin-bottom:24px;font-family:'Montserrat',Arial,sans-serif;">UPGRADE ACCOUNT</a>
-  <p style="color:#ffffff;font-size:12px;margin:24px 0 20px;line-height:1.8;font-family:'Montserrat',Arial,sans-serif;font-weight:300;">Kindly note that failure to complete this upgrade may result in temporary limitations on your account functionality.</p>
-  <p style="color:#ffffff;font-size:12px;margin:0 0 20px;line-height:1.8;font-family:'Montserrat',Arial,sans-serif;font-weight:300;">Thank you for choosing Quantyrex Markets. We look forward to helping you achieve your financial goals.</p>
-  <p style="color:#ffffff;font-size:11px;margin:30px 0 0;line-height:1.7;font-family:'Montserrat',Arial,sans-serif;font-weight:300;">Warm regards,<br/><span style="color:#ffffff;">The Quantyrex Markets Team</span></p>
-`);
+  <div style="text-align:center;padding:10px 0 28px;">
+    <p style="color:#6366f1;font-size:10px;margin:0 0 12px;letter-spacing:3px;font-family:'Montserrat',Arial,sans-serif;">EXCLUSIVE OFFER</p>
+    <h1 style="color:#ffffff;font-size:22px;font-weight:300;margin:0 0 8px;letter-spacing:1px;font-family:'Montserrat',Arial,sans-serif;">Unlock Your Full Potential</h1>
+    <p style="color:#9ca3af;font-size:12px;margin:0;font-family:'Montserrat',Arial,sans-serif;font-weight:300;">Upgrade your account for higher returns</p>
+  </div>
 
+  <div style="height:1px;background:linear-gradient(90deg,transparent,#6366f1,transparent);margin:0 0 28px;"></div>
+
+  <p style="color:#ffffff;font-size:13px;margin:0 0 16px;line-height:1.7;font-family:'Montserrat',Arial,sans-serif;font-weight:300;">Dear <span style="color:#6366f1;">${name || 'Valued Client'}</span>,</p>
+  <p style="color:#9ca3af;font-size:12px;margin:0 0 24px;line-height:1.9;font-family:'Montserrat',Arial,sans-serif;font-weight:300;">Take your investments to the next level with our premium account plans. Each plan unlocks higher returns, lower fees, and exclusive features.</p>
+
+  <table width="100%" style="margin:0 0 8px;border-collapse:collapse;">
+    ${['BRONZE','SILVER','GOLD','PLATINUM','DIAMOND','ELITE'].map((plan,i)=>{
+      const colors=['#CD7F32','#C0C0C0','#FFD700','#E5E4E2','#00BFFF','#8B0000'];
+      const apys=['10%','15%','20%','25%','30%','40%'];
+      return `<tr><td style="padding:10px 16px;border:1px solid #1a1a1a;background:#0d1117;border-bottom:none;">
+        <table width="100%"><tr>
+          <td><span style="color:${colors[i]||'#6366f1'};font-size:11px;font-weight:500;letter-spacing:1px;font-family:'Montserrat',Arial,sans-serif;">${plan}</span></td>
+          <td align="right"><span style="color:#22c55e;font-size:11px;font-weight:500;font-family:'Montserrat',Arial,sans-serif;">${apys[i]} APY</span></td>
+        </tr></table>
+      </td></tr>`;
+    }).join('')}
+    <tr><td style="padding:0;border:1px solid #1a1a1a;background:#0d1117;height:1px;"></td></tr>
+  </table>
+
+  <div style="text-align:center;margin:24px 0;">
+    <a href="https://quantyrexmarkets.vercel.app/dashboard/packages" style="display:inline-block;background:#6366f1;color:#ffffff;font-size:11px;font-weight:500;padding:14px 40px;text-decoration:none;letter-spacing:2px;font-family:'Montserrat',Arial,sans-serif;">VIEW ALL PLANS →</a>
+  </div>
+
+  <p style="color:#505050;font-size:10px;margin:24px 0 0;text-align:center;font-family:'Montserrat',Arial,sans-serif;">The Quantyrex Markets Team</p>
+`);
 module.exports = upgradePromoEmail;
