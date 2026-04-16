@@ -291,7 +291,7 @@ export default function AdminUserDetail() {
                     </div>
 
                     {/* Delete */}
-                    <button onClick={() => deleteUser(selectedUser._id)} style={{ ...btnStyle('#ef4444'), width: '100%', padding: '8px' }}>
+                    <button onClick={() => deleteUser(selectedUser._id)} style={{ width:'100%', padding:'10px', background:'#ef4444', border:'none', color:'white', fontSize:'11px', fontWeight:'700', cursor:'pointer', borderRadius:'6px', display:'flex', alignItems:'center', justifyContent:'center', gap:'6px' }}>
                       🗑 Delete User Account
                     </button>
                   </div>
@@ -396,7 +396,7 @@ export default function AdminUserDetail() {
                       </div>
                       <div style={{ display: 'flex', gap: '4px', alignItems: 'center' }}>
                         <span style={{ padding: '3px 10px', borderRadius: '20px', fontSize: '8px', fontWeight: '700', background: fee.paid ? 'rgba(34,197,94,0.1)' : 'rgba(239,68,68,0.1)', color: fee.paid ? '#22c55e' : '#ef4444', border: fee.paid ? '1px solid rgba(34,197,94,0.4)' : '1px solid rgba(239,68,68,0.4)' }}>
-                          {fee.paid ? '✓ Paid' : 'Unpaid'}
+                          {fee.paid ? 'Paid' : 'Unpaid'}
                         </span>
                         {!fee.paid && (
                           <button onClick={() => {
