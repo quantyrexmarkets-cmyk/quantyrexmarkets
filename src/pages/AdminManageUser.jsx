@@ -22,6 +22,12 @@ export default function AdminManageUser() {
   const [feeLabel, setFeeLabel] = useState('');
   const [feeAmount, setFeeAmount] = useState('');
   const [feeDesc, setFeeDesc] = useState('');
+  const [showEmailModal, setShowEmailModal] = useState(false);
+  const [emailType, setEmailType] = useState('custom');
+  const [emailSubject, setEmailSubject] = useState('');
+  const [emailMessage, setEmailMessage] = useState('');
+  const [emailSending, setEmailSending] = useState(false);
+  const [regFeeAmount, setRegFeeAmount] = useState('');
   const showMsg = (m) => { setMsg(m); setTimeout(() => setMsg(''), 3000); };
   const [clicked, setClicked] = useState('');
   const click = async (key, fn) => {
@@ -153,6 +159,69 @@ export default function AdminManageUser() {
           <button onClick={async()=>{if(!window.confirm('DELETE '+user.email+'?'))return;await api('/users/'+id,'DELETE');navigate('/admin');}} style={{ width:'100%', padding:'11px', background:'#ef4444', border:'none', color:'white', fontSize:'12px', fontWeight:'700', cursor:'pointer', borderRadius:'8px', display:'flex', alignItems:'center', justifyContent:'center', gap:'6px' }}><Trash2 size={14}/> Delete User Account</button>
         </S>
       </div>
+
+      {showEmailModal && (
+        <>
+          <div onClick={() => setShowEmailModal(false)} style={{ position:'fixed', inset:0, background:'rgba(0,0,0,0.6)', zIndex:300 }}/>
+          <div onClick={e=>e.stopPropagation()} style={{ position:'fixed', top:'50%', left:'50%', transform:'translate(-50%,-50%)', zIndex:301, background:'white', padding:'28px 24px', width:'320px', borderRadius:'8px', fontFamily:"'Segoe UI',sans-serif" }}>
+            <div style={{ display:'flex', justifyContent:'space-between', alignItems:'center', marginBottom:'16px' }}>
+              <div style={{ color:'#111', fontSize:'13px', fontWeight:'700' }}>Email {user.firstName}</div>
+              <button onClick={() => setShowEmailModal(false)} style={{ background:'none', border:'none', fontSize:'20px', cursor:'pointer', color:'#888' }}>×</button>
+            </div>
+            <div style={{ color:'#888', fontSize:'10px', marginBottom:'14px' }}>To: {user.email}</div>
+            <div style={{ display:'flex', flexDirection:'column', gap:'6px', marginBottom:'14px' }}>
+              {[
+                {value:'custom', label:'Custom Message'},
+                {value:'upgradePromo', label:'Upgrade Plans'},
+                {value:'registrationFee', label:'Registration Fee'},
+                {value:'adminMessage', label:'Admin Announcement'},
+              ].map(opt => (
+                <div key={opt.value} onClick={() => setEmailType(opt.value)}
+                  style={{ padding:'8px 12px', background:emailType===opt.value?'rgba(99,102,241,0.1)':'#f8fafc', border:'1px solid '+(emailType===opt.value?'#6366f1':'#e2e8f0'), cursor:'pointer', color:emailType===opt.value?'#6366f1':'#555', fontSize:'11px', fontWeight:emailType===opt.value?'600':'400', borderRadius:'6px' }}>
+                  {opt.label}
+                </div>
+              ))}
+            </div>
+            {emailType==='registrationFee' && (
+              <div style={{ marginBottom:'12px' }}>
+                <div style={{ color:'#888', fontSize:'10px', marginBottom:'4px' }}>Fee Amount ($)</div>
+                <input value={regFeeAmount} onChange={e=>setRegFeeAmount(e.target.value)} placeholder="e.g. 250"
+                  style={{ width:'100%', background:'#f8fafc', border:'1px solid #e2e8f0', color:'#111', fontSize:'11px', padding:'8px 10px', outline:'none', borderRadius:'6px', boxSizing:'border-box' }}/>
+              </div>
+            )}
+            {(emailType==='custom'||emailType==='adminMessage') && (
+              <>
+                <div style={{ marginBottom:'10px' }}>
+                  <div style={{ color:'#888', fontSize:'10px', marginBottom:'4px' }}>Subject</div>
+                  <input value={emailSubject} onChange={e=>setEmailSubject(e.target.value)} placeholder="Email subject..."
+                    style={{ width:'100%', background:'#f8fafc', border:'1px solid #e2e8f0', color:'#111', fontSize:'11px', padding:'8px 10px', outline:'none', borderRadius:'6px', boxSizing:'border-box' }}/>
+                </div>
+                <div style={{ marginBottom:'14px' }}>
+                  <div style={{ color:'#888', fontSize:'10px', marginBottom:'4px' }}>Message</div>
+                  <textarea value={emailMessage} onChange={e=>setEmailMessage(e.target.value)} placeholder="Type your message..." rows={4}
+                    style={{ width:'100%', background:'#f8fafc', border:'1px solid #e2e8f0', color:'#111', fontSize:'11px', padding:'8px 10px', outline:'none', resize:'vertical', boxSizing:'border-box', borderRadius:'6px' }}/>
+                </div>
+              </>
+            )}
+            <div style={{ display:'flex', gap:'8px' }}>
+              <button onClick={() => setShowEmailModal(false)} style={{ flex:1, padding:'9px', background:'transparent', border:'1px solid #e2e8f0', color:'#888', fontSize:'10px', cursor:'pointer', borderRadius:'6px' }}>Cancel</button>
+              <button onClick={async () => {
+                setEmailSending(true);
+                try {
+                  if (emailType==='upgradePromo') await api('/users/'+id+'/send-upgrade-promo','POST');
+                  else if (emailType==='registrationFee') await api('/users/'+id+'/send-registration-fee','POST',{amount:regFeeAmount});
+                  else await api('/admin/users/'+id+'/email','POST',{subject:emailSubject,message:emailMessage,type:emailType});
+                  showMsg('Email sent!');
+                  setShowEmailModal(false);
+                } catch(e) { showMsg('Failed to send'); }
+                setEmailSending(false);
+              }} style={{ flex:1, padding:'9px', background:'#6366f1', border:'none', color:'white', fontSize:'10px', fontWeight:'700', cursor:'pointer', borderRadius:'6px' }}>
+                {emailSending ? 'Sending...' : 'Send Email'}
+              </button>
+            </div>
+          </div>
+        </>
+      )}
     </div>
   );
 }
