@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import LoadingSpinner from '../components/LoadingSpinner';
+;
 import { useAuth } from '../context/AuthContext';
 import { useTheme } from '../context/ThemeContext';
 import { formatAmount, getCurrencySymbol, formatAmountWithCode } from '../utils/currency';
@@ -146,7 +146,10 @@ export default function Dashboard() {
   ];
 
   if (!user) {
-    return <LoadingSpinner fullPage />;
+    return (<div style={{minHeight:'60vh',display:'flex',alignItems:'center',justifyContent:'center',flexDirection:'column',gap:'12px'}}>
+  <div style={{width:'32px',height:'32px',borderRadius:'50%',border:'2px solid #6366f1',borderTopColor:'transparent',animation:'spin 0.8s linear infinite'}}/>
+  <style>{'@keyframes spin{to{transform:rotate(360deg)}}'}</style>
+</div>);
   }
 
   return (
