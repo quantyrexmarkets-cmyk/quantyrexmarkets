@@ -29,8 +29,8 @@ const SignIn = () => {
 
   const validate = () => {
     const newErrors = {};
-    if (!form.username.trim()) newErrors.username = 'Username or email is required';
-    else if (form.username.trim().length < 3) newErrors.username = 'At least 3 characters required';
+    if (!form.username.trim()) newErrors.username = 'Email is required';
+    else if (form.username.trim().length < 3) newErrors.username = 'Enter a valid email';
     if (!form.password) newErrors.password = 'Password is required';
     else if (form.password.length < 6) newErrors.password = 'Password must be at least 6 characters';
     return newErrors;
@@ -92,7 +92,7 @@ const SignIn = () => {
               <path d="M20 14L12 18V23L20 30L28 23V18L20 14Z" fill="#6366F1" stroke="#6366F1" strokeWidth="1"/>
             </svg>
             <h2 style={{ color: 'white', fontSize: 'clamp(13px, 3.5vw, 17px)', fontWeight: '700', margin: '0 0 4px' }}>Welcome Back</h2>
-            <p style={{ color: '#94a3b8', fontSize: 'clamp(7px, 1.8vw, 15px)' }}>Enter your email or username and password to access your dashboard.</p>
+            <p style={{ color: '#94a3b8', fontSize: 'clamp(7px, 1.8vw, 15px)' }}>Enter your email and password to access your dashboard.</p>
           </div>
 
           {success && (
@@ -109,8 +109,8 @@ const SignIn = () => {
           )}
 
           <div style={{ marginBottom: '12px' }}>
-            <label style={{ color: '#94a3b8', fontSize: 'clamp(7px, 1.8vw, 15px)', display: 'block', marginBottom: '4px' }}>Email or Username</label>
-            <input name='username' value={form.username} onChange={handleChange} placeholder='Enter email or username' style={inputStyle('username')} />
+            <label style={{ color: '#94a3b8', fontSize: 'clamp(7px, 1.8vw, 15px)', display: 'block', marginBottom: '4px' }}>Email</label>
+            <input name='username' value={form.username} onChange={handleChange} placeholder='Enter your email' style={inputStyle('username')} />
             {errors.username && <div style={errStyle}>{errors.username}</div>}
           </div>
 
