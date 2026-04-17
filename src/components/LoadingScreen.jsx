@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react';
 
-export default function LoadingScreen({ label = 'Loading', minDuration = 1200 }) {
-  const [visible, setVisible] = useState(false);
+export default function LoadingScreen({ label = '' }) {
+  const [show, setShow] = useState(true);
 
   useEffect(() => {
-    const t = setTimeout(() => setVisible(true), 30);
+    const t = setTimeout(() => setShow(true), 100);
     return () => clearTimeout(t);
   }, []);
 
@@ -17,13 +17,10 @@ export default function LoadingScreen({ label = 'Loading', minDuration = 1200 })
       alignItems: 'center',
       justifyContent: 'center',
       fontFamily: "'Segoe UI', sans-serif",
-      opacity: visible ? 1 : 0,
-      transition: 'opacity 0.25s ease'
     }}>
       <div style={{ position: 'relative', width: '40px', height: '40px', marginBottom: '16px' }}>
         <div style={{
-          position: 'absolute',
-          inset: 0,
+          position: 'absolute', inset: 0,
           borderRadius: '50%',
           border: '2px solid transparent',
           borderTopColor: '#6366f1',
@@ -43,15 +40,24 @@ export default function LoadingScreen({ label = 'Loading', minDuration = 1200 })
         QUANTYREX <span style={{ color: '#6366f1' }}>MARKETS</span>
       </div>
 
-      <div style={{ color: '#94a3b8', fontSize: '10px', marginBottom: '10px' }}>
-        {label}
-      </div>
+      {label ? (
+        <div style={{
+          color: '#6366f1',
+          fontSize: '9px',
+          letterSpacing: '2px',
+          marginBottom: '10px',
+          padding: '3px 10px',
+          border: '1px solid #6366f1',
+          borderRadius: '4px'
+        }}>
+          {label}
+        </div>
+      ) : null}
 
       <div style={{ display: 'flex', gap: '4px', marginTop: '4px' }}>
         {[0, 1, 2].map(i => (
           <div key={i} style={{
-            width: '5px',
-            height: '5px',
+            width: '5px', height: '5px',
             borderRadius: '50%',
             background: '#6366f1',
             animation: `bounce 1.2s ease-in-out ${i * 0.2}s infinite`

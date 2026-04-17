@@ -19,6 +19,11 @@ export const AuthProvider = ({ children }) => {
     return savedUser ? JSON.parse(savedUser) : null;
   });
   const [loading, setLoading] = useState(true);
+  const [minLoadDone, setMinLoadDone] = useState(false);
+  useEffect(() => {
+    const t = setTimeout(() => setMinLoadDone(true), 2000);
+    return () => clearTimeout(t);
+  }, []);
 
   const logout = useCallback(() => {
     localStorage.removeItem('token');
@@ -76,7 +81,7 @@ export const AuthProvider = ({ children }) => {
   };
 
   return (
-    <AuthContext.Provider value={{ user, loading, login, logout, updateUser }}>
+    <AuthContext.Provider value={{ user, loading: loading || !minLoadDone, login, logout, updateUser }}>
       {children}
     </AuthContext.Provider>
   );
