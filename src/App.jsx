@@ -68,39 +68,23 @@ import LiveChat from "./components/LiveChat";
 
 const AdminRoute = ({ children }) => {
   const { user, loading } = useAuth();
-  if (loading) return <LoadingScreen />;
-  if (!user || !user.isAdmin) return <Navigate to="/dashboard" replace />;
+    return <LoadingScreen />;
   return children;
 };
 
 const PrivateRoute = ({ children }) => {
   const { user, loading } = useAuth();
-  
-  if (loading) {
-    return (
-      <div style={{color:'white',background:'#0e1628',minHeight:'100vh',display:'flex',alignItems:'center',justifyContent:'center'}}>
-        <div style={{textAlign:'center'}}>
-          <div style={{width:'40px',height:'40px',border:'3px solid #6366f1',borderTop:'3px solid transparent',borderRadius:'50%',animation:'spin 1s linear infinite',margin:'0 auto 15px'}}></div>
-          <style>{`@keyframes spin { to { transform: rotate(360deg); } }`}</style>
-          <p>Loading...</p>
-        </div>
-      </div>
-    );
-  }
-  
+
+  if (loading) { return <LoadingScreen />; }
+
   if (!user) {
     const token = localStorage.getItem('token');
     if (!token) {
       return <Navigate to="/signin" replace />;
     }
-    // Token exists but user not loaded yet - show loading
-    return (
-      <div style={{color:'white',background:'#0e1628',minHeight:'100vh',display:'flex',alignItems:'center',justifyContent:'center'}}>
-        <p>Verifying session...</p>
-      </div>
-    );
+    return <LoadingScreen />;
   }
-  
+
   return children;
 };
 

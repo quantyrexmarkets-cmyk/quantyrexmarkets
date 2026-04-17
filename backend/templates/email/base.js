@@ -72,6 +72,6 @@ const baseTemplate = (content) => `
   </table>
 </body>
 </html>
-\`;
+`;
 
 module.exports = baseTemplate;
