@@ -643,7 +643,7 @@ export default function AdminPanel() {
                               <div style={{ color:t.text, fontSize:'13px', fontWeight:'700', overflow:'hidden', textOverflow:'ellipsis', whiteSpace:'nowrap', letterSpacing:'-0.01em' }}>{u.firstName} {u.lastName}</div>
                               <div style={{ color:t.subText, fontSize:'11px', overflow:'hidden', textOverflow:'ellipsis', whiteSpace:'nowrap', opacity:0.7 }}>{u.email}</div>
                             </div>
-                            <span style={{ padding:'3px 8px', borderRadius:'20px', fontSize:'8px', fontWeight:'700', background:'transparent', color:u.isBlocked?'#ef4444':'#6366f1', border:'none', flexShrink:0, fontSize:'10px', fontWeight:'600' }}>{u.isBlocked?'● Suspended':'● Active'}</span>
+                            <span style={{ padding:'3px 8px', borderRadius:'20px', background:'transparent', color:u.isBlocked?'#ef4444':'#6366f1', border:'none', flexShrink:0, fontSize:'10px', fontWeight:'600' }}>{u.isBlocked?'● Suspended':'● Active'}</span>
                           </div>
                           <div style={{ display:'flex', gap:'16px', marginBottom:'12px', paddingTop:'2px', flexWrap:'wrap' }}>
                             <span style={{ color:t.subText, fontSize:'9px' }}>Balance &nbsp;<span style={{ color:t.subText, fontSize:'9px', fontWeight:'700' }}>${parseFloat(u.balance||0).toLocaleString('en-US',{minimumFractionDigits:2})}</span></span>
