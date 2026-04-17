@@ -1,13 +1,73 @@
 const baseTemplate = require('./base-enhanced');
+
 const kycRejectedEmail = (name, reason) => baseTemplate(`
-  <div style="text-align:center;padding:10px 0 28px;">
-    <table cellpadding="0" cellspacing="0" border="0" style="margin:0 auto 16px auto;"><tr><td width="68" height="68" align="center" valign="middle" style="width:68px;height:68px;border-radius:34px;background:#ef444415;border:2px solid #ef4444;"><img src="https://img.icons8.com/sf-regular/48/ef4444/multiply.png" width="32" height="32" alt="" style="display:block;margin:auto;" /></td></tr></table>
-    <h1 style="color:#ef4444;font-size:20px;font-weight:300;margin:0 0 8px;letter-spacing:1px;">Verification Unsuccessful</h1>
-    <p style="color:#505050;font-size:10px;margin:0;letter-spacing:2px;">KYC REJECTED</p>
-  </div>
-  <div style="height:1px;background:linear-gradient(90deg,transparent,#ef4444,transparent);margin:0 0 28px;"></div>
-  <p style="color:#9ca3af;font-size:12px;margin:0 0 20px;line-height:1.9;font-weight:300;">Dear ${name||'Valued Client'}, your KYC could not be approved. Please review and resubmit.</p>
-  ${reason ? '<div style="background:#0d1117;border-left:3px solid #ef4444;padding:12px 16px;margin:0 0 24px;"><p style="color:#ef4444;font-size:11px;margin:0;line-height:1.7;">'+reason+'</p></div>' : ''}
-  <div style="text-align:center;margin:24px 0;"><a href="https://quantyrexmarkets.vercel.app/dashboard/kyc" style="display:inline-block;background:#ef4444;color:#ffffff;font-size:11px;font-weight:500;padding:14px 40px;text-decoration:none;letter-spacing:2px;">RESUBMIT KYC →</a></div>
+
+  <!-- ICON -->
+  <table cellpadding="0" cellspacing="0" border="0" style="margin:0 auto 24px auto;">
+    <tr>
+      <td width="80" height="80" align="center" valign="middle" style="width:80px;height:80px;background:linear-gradient(135deg,#7f1d1d,#ef4444);border-radius:50%;">
+        <img src="https://img.icons8.com/sf-regular/48/ffffff/multiply.png" width="36" height="36" alt="" style="display:block;margin:auto;" />
+      </td>
+    </tr>
+  </table>
+
+  <!-- HEADLINE -->
+  <table width="100%" cellpadding="0" cellspacing="0" border="0" style="margin:0 0 32px;">
+    <tr>
+      <td style="text-align:center;">
+        <p style="margin:0 0 6px;color:#ef4444;font-size:10px;letter-spacing:3px;font-family:'Helvetica Neue',Arial,sans-serif;">KYC REJECTED</p>
+        <h1 style="margin:0 0 10px;color:#ffffff;font-size:24px;font-weight:300;font-family:'Helvetica Neue',Arial,sans-serif;">Verification Unsuccessful</h1>
+        <p style="margin:0;color:#475569;font-size:12px;font-family:'Helvetica Neue',Arial,sans-serif;font-weight:300;">Please review and resubmit your documents</p>
+      </td>
+    </tr>
+  </table>
+
+  <!-- DIVIDER -->
+  <table width="100%" cellpadding="0" cellspacing="0" border="0" style="margin:0 0 28px;">
+    <tr><td style="height:1px;background:linear-gradient(90deg,transparent,#ef4444,transparent);font-size:0;">&nbsp;</td></tr>
+  </table>
+
+  <p style="color:#94a3b8;font-size:13px;margin:0 0 20px;line-height:1.9;font-family:'Helvetica Neue',Arial,sans-serif;font-weight:300;">
+    Dear <span style="color:#ffffff;">${name || 'Valued Client'}</span>, unfortunately your KYC verification could not be approved at this time. Please review the reason below and resubmit with the correct documents.
+  </p>
+
+  ${reason ? `
+  <table width="100%" cellpadding="0" cellspacing="0" border="0" style="margin:0 0 24px;background:#111827;border-left:3px solid #ef4444;">
+    <tr>
+      <td style="padding:16px 20px;">
+        <p style="color:#475569;font-size:9px;letter-spacing:1px;margin:0 0 8px;font-family:'Helvetica Neue',Arial,sans-serif;">REASON FOR REJECTION</p>
+        <p style="color:#fca5a5;font-size:12px;margin:0;line-height:1.7;font-family:'Helvetica Neue',Arial,sans-serif;font-weight:300;">${reason}</p>
+      </td>
+    </tr>
+  </table>
+  ` : ''}
+
+  <!-- TIPS -->
+  <table width="100%" cellpadding="0" cellspacing="0" border="0" style="margin:0 0 28px;background:#111827;border:1px solid #1e293b;">
+    <tr>
+      <td style="padding:20px;">
+        <p style="color:#ef4444;font-size:9px;letter-spacing:2px;margin:0 0 14px;font-family:'Helvetica Neue',Arial,sans-serif;">TIPS FOR RESUBMISSION</p>
+        <table width="100%" cellpadding="0" cellspacing="0" border="0">
+          <tr><td style="padding:6px 0;border-bottom:1px solid #1e293b;color:#94a3b8;font-size:11px;font-family:'Helvetica Neue',Arial,sans-serif;"><span style="color:#f59e0b;">&#8250;</span>&nbsp; Ensure documents are clear and not blurry</td></tr>
+          <tr><td style="padding:6px 0;border-bottom:1px solid #1e293b;color:#94a3b8;font-size:11px;font-family:'Helvetica Neue',Arial,sans-serif;"><span style="color:#f59e0b;">&#8250;</span>&nbsp; All four corners of the document must be visible</td></tr>
+          <tr><td style="padding:6px 0;border-bottom:1px solid #1e293b;color:#94a3b8;font-size:11px;font-family:'Helvetica Neue',Arial,sans-serif;"><span style="color:#f59e0b;">&#8250;</span>&nbsp; Document must not be expired</td></tr>
+          <tr><td style="padding:6px 0;color:#94a3b8;font-size:11px;font-family:'Helvetica Neue',Arial,sans-serif;"><span style="color:#f59e0b;">&#8250;</span>&nbsp; Name must match your account details</td></tr>
+        </table>
+      </td>
+    </tr>
+  </table>
+
+  <!-- CTA -->
+  <table width="100%" cellpadding="0" cellspacing="0" border="0" style="margin:0 0 28px;">
+    <tr>
+      <td align="center">
+        <a href="https://quantyrexmarkets.vercel.app/dashboard/kyc" style="display:inline-block;background:linear-gradient(135deg,#7f1d1d,#ef4444);color:#ffffff;font-size:12px;font-weight:500;padding:16px 48px;text-decoration:none;letter-spacing:2px;font-family:'Helvetica Neue',Arial,sans-serif;">RESUBMIT KYC &rarr;</a>
+      </td>
+    </tr>
+  </table>
+
+  <p style="color:#334155;font-size:10px;margin:0;text-align:center;font-family:'Helvetica Neue',Arial,sans-serif;">The Quantyrex Markets Compliance Team</p>
+
 `);
+
 module.exports = kycRejectedEmail;
