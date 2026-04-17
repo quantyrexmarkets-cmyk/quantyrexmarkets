@@ -68,14 +68,14 @@ import LiveChat from "./components/LiveChat";
 
 const AdminRoute = ({ children }) => {
   const { user, loading } = useAuth();
-  if (loading) return <LoadingScreen label="Route Loading" />;
+  if (loading && !user) return <LoadingScreen />;
   if (!user || !user.isAdmin) return <Navigate to="/dashboard" replace />;
   return children;
 };
 
 const PrivateRoute = ({ children }) => {
   const { user, loading } = useAuth();
-  if (loading) return <LoadingScreen label="Route Loading" />;
+  if (loading && !user) return <LoadingScreen />;
   if (!user) return <Navigate to="/signin" replace />;
   return children;
 };
