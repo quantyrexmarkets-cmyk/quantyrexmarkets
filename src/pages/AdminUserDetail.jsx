@@ -141,7 +141,7 @@ export default function AdminUserDetail() {
     }).catch(() => setLoading(false));
   }, [id]);
 
-  if (loading) return <InlineLoader text="Loading user..." />;
+  if (loading && !selectedUser) return <InlineLoader text="Loading user..." />;
   if (!selectedUser) return <div style={{ minHeight:'100vh', background:t.bg, display:'flex', alignItems:'center', justifyContent:'center', color:t.subText }}>User not found</div>;
 
   return (

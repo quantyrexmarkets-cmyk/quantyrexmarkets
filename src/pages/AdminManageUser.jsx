@@ -49,7 +49,7 @@ export default function AdminManageUser() {
       setMsgText(u.adminMessage || ''); setLoading(false);
     }).catch(() => setLoading(false));
   }, [id]);
-  if (loading) return <InlineLoader text="Loading user..." />;
+  if (loading && !user) return <InlineLoader text="Loading user..." />;
   if (!user) return <div style={{ minHeight:'100vh', background:t.bg, display:'flex', alignItems:'center', justifyContent:'center' }}>Not found</div>;
   const inp = { width:'100%', background:t.inputBg, border:`1px solid ${t.border}`, color:t.text, fontSize:'11px', padding:'8px 10px', outline:'none', borderRadius:'6px', boxSizing:'border-box', marginBottom:'6px' };
   const btn = (onClick, label, icon) => (
