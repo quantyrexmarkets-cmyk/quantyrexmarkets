@@ -13,23 +13,32 @@ const getTokenExpiry = (token) => {
 };
 
 export const AuthProvider = ({ children }) => {
-  const savedUserRaw = sessionStorage.getItem('user');
-  const savedUser = savedUserRaw ? JSON.parse(savedUserRaw) : null;
-  const token = localStorage.getItem('token');
+  const getSavedUser = () => {
+    try {
+      const raw = sessionStorage.getItem('user');
+      return raw ? JSON.parse(raw) : null;
+    } catch { return null; }
+  };
 
-  const [user, setUser] = useState(savedUser);
-  const [loading, setLoading] = useState(() => !!token && !savedUser);
+  const getSavedToken = () => localStorage.getItem('token');
+
+  const [user, setUser] = useState(getSavedUser);
+  const [loading, setLoading] = useState(() => {
+    const hasUser = !!getSavedUser();
+    const hasToken = !!getSavedToken();
+    return hasToken && !hasUser;
+  });
 
   const logout = useCallback(() => {
     localStorage.removeItem('token');
     sessionStorage.removeItem('user');
     setUser(null);
+    setLoading(false);
   }, []);
 
   useEffect(() => {
-    const token = localStorage.getItem('token');
-    const savedUserRaw = sessionStorage.getItem('user');
-    const savedUser = savedUserRaw ? JSON.parse(savedUserRaw) : null;
+    const token = getSavedToken();
+    const savedUser = getSavedUser();
 
     if (savedUser) {
       setUser(savedUser);
@@ -45,12 +54,10 @@ export const AuthProvider = ({ children }) => {
     const expiry = getTokenExpiry(token);
     if (expiry && Date.now() >= expiry) {
       logout();
-      setLoading(false);
       return;
     }
 
     setLoading(true);
-
     getMe()
       .then((data) => {
         if (data && data._id) {
@@ -60,10 +67,7 @@ export const AuthProvider = ({ children }) => {
           logout();
         }
       })
-      .catch((err) => {
-        console.error('getMe failed:', err);
-        logout();
-      })
+      .catch(() => logout())
       .finally(() => setLoading(false));
   }, [logout]);
 
