@@ -6,6 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import { Copy, Users, DollarSign, Gift } from 'lucide-react';
 import PageHeader from '../components/PageHeader';
 import { getReferrals } from '../services/api';
+import InlineLoader from '../components/InlineLoader';
 
 export default function ReferUsers() {
   const { user } = useAuth();
@@ -103,7 +104,7 @@ export default function ReferUsers() {
               ))}
             </div>
             {loading ? (
-              <div style={{ padding: '20px', textAlign: 'center', fontSize: '8px', color: t.subText }}>Loading...</div>
+              <InlineLoader text="Loading data..." compact />
             ) : data.referredUsers.length === 0 ? (
               <div style={{ padding: '20px', textAlign: 'center', fontSize: '8px', color: t.subText }}>No referrals yet</div>
             ) : data.referredUsers.slice(0, show).map((u, i) => (

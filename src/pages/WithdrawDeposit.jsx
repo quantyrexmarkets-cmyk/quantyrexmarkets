@@ -6,6 +6,7 @@ import DashboardSidebar from '../components/DashboardSidebar';
 import { createDeposit, getDeposits, createWithdrawal, getWithdrawals } from '../services/api';
 import { useAuth } from '../context/AuthContext';
 import { formatAmountWithCode, formatAmount, getCurrencySymbol } from '../utils/currency';
+import InlineLoader from '../components/InlineLoader';
 
 export default function WithdrawDeposit() {
   const navigate = useNavigate();
@@ -259,7 +260,7 @@ const handleWithdraw = async () => {
                 ))}
               </div>
               {loadingDeposits ? (
-                <div style={{ padding: '20px', textAlign: 'center', color: '#6366f1', fontSize: '10px', display: 'flex', alignItems: 'center', gap: '6px' }}><span style={{ display:'inline-block', width:'10px', height:'10px', borderRadius:'50%', border:'2px solid #6366f1', borderTopColor:'transparent', animation:'spin 0.8s linear infinite' }}/> Loading...</div>
+                <InlineLoader text="Loading data..." compact />
               ) : deposits.length === 0 ? (
                 <div style={{ padding: '24px', textAlign: 'center', color: t.faintText, fontSize: '8px' }}>No data available in table</div>
               ) : (

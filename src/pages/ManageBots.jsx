@@ -5,6 +5,7 @@ import { useAuth } from '../context/AuthContext';
 import { formatAmount } from '../utils/currency';
 import PageHeader from '../components/PageHeader';
 import { Bot, TrendingUp } from 'lucide-react';
+import InlineLoader from '../components/InlineLoader';
 
 const bots = [
   { name: 'STARTER BOT',  amount: 500,   dailyRate: '10%', duration: '7 days',   days: 7,   color: '#818cf8' },
@@ -135,7 +136,7 @@ export default function ManageBots() {
             </thead>
             <tbody>
               {loading ? (
-                <tr><td colSpan={7} style={{ padding: '24px', textAlign: 'center', color: '#6366f1', fontSize: '10px', display: 'flex', alignItems: 'center', gap: '6px' }}><span style={{ display:'inline-block', width:'10px', height:'10px', borderRadius:'50%', border:'2px solid #6366f1', borderTopColor:'transparent', animation:'spin 0.8s linear infinite' }}/> Loading...</td></tr>
+                <tr><td colSpan={99}><InlineLoader text="Loading data..." compact /></td></tr>
               ) : paginated.length === 0 ? (
                 <tr><td colSpan={7} style={{ padding: '24px', textAlign: 'center', color: t.faintText, fontSize: '8px' }}>No bots found</td></tr>
               ) : paginated.map((b, i) => {

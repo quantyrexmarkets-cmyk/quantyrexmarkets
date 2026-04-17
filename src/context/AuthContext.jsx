@@ -14,16 +14,10 @@ const getTokenExpiry = (token) => {
 
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(() => {
-    // Try to get user from sessionStorage on initial load
     const savedUser = sessionStorage.getItem('user');
     return savedUser ? JSON.parse(savedUser) : null;
   });
   const [loading, setLoading] = useState(true);
-  const [minLoadDone, setMinLoadDone] = useState(false);
-  useEffect(() => {
-    const t = setTimeout(() => setMinLoadDone(true), 2000);
-    return () => clearTimeout(t);
-  }, []);
 
   const logout = useCallback(() => {
     localStorage.removeItem('token');
@@ -34,14 +28,13 @@ export const AuthProvider = ({ children }) => {
   useEffect(() => {
     const token = localStorage.getItem('token');
     const savedUser = sessionStorage.getItem('user');
-    
-    // If we have saved user from login, use it
+
     if (savedUser) {
       setUser(JSON.parse(savedUser));
       setLoading(false);
       return;
     }
-    
+
     if (token) {
       const expiry = getTokenExpiry(token);
       if (expiry && Date.now() >= expiry) {
@@ -81,7 +74,7 @@ export const AuthProvider = ({ children }) => {
   };
 
   return (
-    <AuthContext.Provider value={{ user, loading: loading || !minLoadDone, login, logout, updateUser }}>
+    <AuthContext.Provider value={{ user, loading, login, logout, updateUser }}>
       {children}
     </AuthContext.Provider>
   );

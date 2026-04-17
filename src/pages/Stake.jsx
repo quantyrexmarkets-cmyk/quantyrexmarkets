@@ -6,6 +6,7 @@ import { getStakes } from '../services/api';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { TrendingUp, DollarSign, Lock, Unlock } from 'lucide-react';
 import PageHeader from '../components/PageHeader';
+import InlineLoader from '../components/InlineLoader';
 
 const stakePlans = [
   { name: 'STARTER',  apy: '5%',  min: 500,   max: 999,   duration: '7',   color: '#22c55e', bg: '#22c55e20' },
@@ -211,7 +212,7 @@ export default function Stake() {
             </thead>
             <tbody>
               {loadingStakes ? (
-                <tr><td colSpan={6} style={{ padding: '24px', textAlign: 'center', color: '#6366f1', fontSize: '10px', display: 'flex', alignItems: 'center', gap: '6px' }}><span style={{ display:'inline-block', width:'10px', height:'10px', borderRadius:'50%', border:'2px solid #6366f1', borderTopColor:'transparent', animation:'spin 0.8s linear infinite' }}/> Loading...</td></tr>
+                <tr><td colSpan={99}><InlineLoader text="Loading data..." compact /></td></tr>
               ) : paginated.length === 0 ? (
                 <tr><td colSpan={6} style={{ padding: '24px', textAlign: 'center', color: t.faintText, fontSize: '8px' }}>No stakes found</td></tr>
               ) : paginated.map((s, i) => {

@@ -1,5 +1,6 @@
 import LoadingScreen from '../components/LoadingScreen';
 import { useState, useEffect } from 'react';
+import InlineLoader from '../components/InlineLoader';
 ;
 import { useParams, useNavigate } from 'react-router-dom';
 import { useTheme } from '../context/ThemeContext';
@@ -141,7 +142,7 @@ export default function AdminUserDetail() {
     }).catch(() => setLoading(false));
   }, [id]);
 
-  if (loading) return <LoadingScreen label="Admin User Loading" />;
+  if (loading) return <InlineLoader text="Loading user..." />;
   if (!selectedUser) return <div style={{ minHeight:'100vh', background:t.bg, display:'flex', alignItems:'center', justifyContent:'center', color:t.subText }}>User not found</div>;
 
   return (

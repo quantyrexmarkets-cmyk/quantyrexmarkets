@@ -6,6 +6,7 @@ import { formatAmount } from '../utils/currency';
 import PageHeader from '../components/PageHeader';
 import { getDeposits, getWithdrawals } from '../services/api';
 import { DollarSign, ArrowUpDown, Clock } from 'lucide-react';
+import InlineLoader from '../components/InlineLoader';
 
 export default function TransactionHistory() {
   const { user } = useAuth();
@@ -114,7 +115,7 @@ export default function TransactionHistory() {
             ))}
           </div>
           {loading ? (
-            <div style={{ padding: '24px', textAlign: 'center', color: '#6366f1', fontSize: '10px', display: 'flex', alignItems: 'center', gap: '6px' }}><span style={{ display:'inline-block', width:'10px', height:'10px', borderRadius:'50%', border:'2px solid #6366f1', borderTopColor:'transparent', animation:'spin 0.8s linear infinite' }}/> Loading...</div>
+            <InlineLoader text="Loading data..." compact />
           ) : paginated.length === 0 ? (
             <div style={{ padding: '24px', textAlign: 'center', color: t.faintText, fontSize: '8px' }}>No transactions found</div>
           ) : paginated.map((txn, i) => (

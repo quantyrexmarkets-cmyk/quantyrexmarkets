@@ -5,6 +5,7 @@ import { useAuth } from '../context/AuthContext';
 import { ArrowLeft, TrendingUp, TrendingDown, Users, Calendar, DollarSign, AlertCircle, CheckCircle } from 'lucide-react';
 import PageHeader from '../components/PageHeader';
 import { useTheme } from '../context/ThemeContext';
+import InlineLoader from '../components/InlineLoader';
 
 export default function TraderDetails() {
   const { id } = useParams();

@@ -3,6 +3,7 @@ import { useTheme } from '../context/ThemeContext';
 import { useNavigate } from 'react-router-dom';
 import PageHeader from '../components/PageHeader';
 import { submitKyc, getKycStatus } from '../services/api';
+import InlineLoader from '../components/InlineLoader';
 
 export default function KYC() {
   const navigate = useNavigate();
@@ -119,7 +120,7 @@ export default function KYC() {
 
         {/* Status Banner */}
         {loading ? (
-          <div style={{ background: t.cardBg, padding: '12px 16px', marginBottom: '16px', color: t.faintText, fontSize: '8px' }}>Loading status...</div>
+          <InlineLoader text="Loading status..." compact />
         ) : kycStatus && (
           <div style={{ background: t.cardBg, border: `1px solid ${statusColor[kycStatus]}40`, padding: '12px 16px', marginBottom: '16px', display: 'flex', alignItems: 'center', gap: '10px' }}>
             <div style={{ width: '36px', height: '36px', borderRadius: '50%', border: `2px solid ${statusColor[kycStatus]}`, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>

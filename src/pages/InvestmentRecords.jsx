@@ -6,6 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import { TrendingUp, DollarSign, Clock, CheckCircle } from 'lucide-react';
 import PageHeader from '../components/PageHeader';
 import { getInvestments } from '../services/api';
+import InlineLoader from '../components/InlineLoader';
 
 export default function InvestmentRecords() {
   const { user } = useAuth();
@@ -95,7 +96,7 @@ export default function InvestmentRecords() {
           </div>
 
           {loading ? (
-            <div style={{ padding: '24px', textAlign: 'center', color: '#6366f1', fontSize: '10px', display: 'flex', alignItems: 'center', gap: '6px' }}><span style={{ display:'inline-block', width:'10px', height:'10px', borderRadius:'50%', border:'2px solid #6366f1', borderTopColor:'transparent', animation:'spin 0.8s linear infinite' }}/> Loading...</div>
+            <InlineLoader text="Loading data..." compact />
           ) : filtered.length === 0 ? (
             <div style={{ padding: '24px', textAlign: 'center', color: t.faintText, fontSize: '8px' }}>No investment records found</div>
           ) : filtered.slice(0, show).map((inv, i) => (

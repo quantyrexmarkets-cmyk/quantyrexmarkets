@@ -5,6 +5,7 @@ import { getBots } from '../services/api';
 import { useAuth } from '../context/AuthContext';
 import { formatAmount, getCurrencySymbol } from '../utils/currency';
 import PageHeader from '../components/PageHeader';
+import InlineLoader from '../components/InlineLoader';
 
 const botColors = {
   'STARTER BOT': '#6366f1', 'SILVER BOT': '#6366f1', 'GOLD BOT': '#6366f1',
@@ -141,7 +142,7 @@ export default function BotTransactionHistory() {
           </div>
 
           {loading ? (
-            <div style={{ padding: '28px', textAlign: 'center', color: '#6366f1', fontSize: '10px', display: 'flex', alignItems: 'center', gap: '6px' }}><span style={{ display:'inline-block', width:'10px', height:'10px', borderRadius:'50%', border:'2px solid #6366f1', borderTopColor:'transparent', animation:'spin 0.8s linear infinite' }}/> Loading...</div>
+            <InlineLoader text="Loading data..." compact />
           ) : filtered.length === 0 ? (
             <div style={{ padding: '28px', textAlign: 'center', color: t.faintText, fontSize: '8px' }}>No completed or cancelled bots yet</div>
           ) : filtered.slice(0, show).map((b, i) => (

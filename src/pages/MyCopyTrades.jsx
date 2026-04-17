@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import { TrendingUp, DollarSign, Clock, CheckCircle } from 'lucide-react';
 import PageHeader from '../components/PageHeader';
 import { formatAmountWithCode } from '../utils/currency';
+import InlineLoader from '../components/InlineLoader';
 
 export default function MyCopyTrades() {
   const { token } = useAuth();
@@ -108,7 +109,7 @@ export default function MyCopyTrades() {
 
         {/* Active Trades */}
         {loading ? (
-          <div style={{ padding: '40px', textAlign: 'center', color: t.faintText, fontSize: '10px' }}>Loading...</div>
+          <InlineLoader text="Loading data..." compact />
         ) : copyTrades.length === 0 ? (
           <div style={{ padding: '40px', textAlign: 'center' }}>
             <div style={{ fontSize: '12px', color: t.faintText, marginBottom: '10px' }}>No active copy trades</div>
