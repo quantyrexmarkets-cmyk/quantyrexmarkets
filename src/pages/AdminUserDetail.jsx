@@ -1,8 +1,6 @@
-import LoadingScreen from '../components/LoadingScreen';
 import { useState, useEffect } from 'react';
 import InlineLoader from '../components/InlineLoader';
-;
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams, useNavigate, useLocation } from 'react-router-dom';
 import { useTheme } from '../context/ThemeContext';
 import { ArrowLeft, Mail, Lock, Unlock, Ban, CheckCircle, ArrowUpCircle, RotateCcw, Trash2, DollarSign, TrendingUp, Package } from 'lucide-react';
 
@@ -14,9 +12,10 @@ const api = (path, method = 'GET', body) => fetch(`${BASE_URL}/admin${path}`, { 
 export default function AdminUserDetail() {
   const { id } = useParams();
   const navigate = useNavigate();
+  const location = useLocation();
   const { current: t } = useTheme();
-  const [selectedUser, setSelectedUser] = useState(null);
-  const [loading, setLoading] = useState(true);
+  const [selectedUser, setSelectedUser] = useState(location.state?.user || null);
+  const [loading, setLoading] = useState(!location.state?.user);
   const [userBots, setUserBots] = useState([]);
   const [userInvestments, setUserInvestments] = useState([]);
   const [userDetailTab, setUserDetailTab] = useState('info');

@@ -1,8 +1,6 @@
-import LoadingScreen from '../components/LoadingScreen';
 import { useState, useEffect } from 'react';
 import InlineLoader from '../components/InlineLoader';
-;
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams, useNavigate, useLocation } from 'react-router-dom';
 import { useTheme } from '../context/ThemeContext';
 import { ArrowLeft, Mail, Lock, Unlock, Ban, CheckCircle, ArrowUpCircle, RotateCcw, Trash2, DollarSign, Send, X, Shield } from 'lucide-react';
 const BASE_URL = 'https://quantyrexmarkets-api.vercel.app/api';
@@ -12,9 +10,10 @@ const api = (path, method = 'GET', body) => fetch(`${BASE_URL}/admin${path}`, { 
 export default function AdminManageUser() {
   const { id } = useParams();
   const navigate = useNavigate();
+  const location = useLocation();
   const { current: t } = useTheme();
-  const [user, setUser] = useState(null);
-  const [loading, setLoading] = useState(true);
+  const [user, setUser] = useState(location.state?.user || null);
+  const [loading, setLoading] = useState(!location.state?.user);
   const [msg, setMsg] = useState('');
   const [balance, setBalance] = useState('');
   const [msgText, setMsgText] = useState('');
@@ -38,6 +37,13 @@ export default function AdminManageUser() {
     setTimeout(() => setClicked(''), 500);
   };
   useEffect(() => {
+    if (location.state?.user) {
+      const u = location.state.user;
+      setUser(u);
+      setBalance(u.balance?.toFixed(2) || '0');
+      setMsgText(u.adminMessage || '');
+      setLoading(false);
+    }
     api('/users/' + id).then(u => {
       setUser(u); setBalance(u.balance?.toFixed(2) || '0');
       setMsgText(u.adminMessage || ''); setLoading(false);
