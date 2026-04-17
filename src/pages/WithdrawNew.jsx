@@ -227,7 +227,7 @@ export default function WithdrawNew() {
       <div style={{ padding: '16px' }}>
         <div style={{ marginBottom: '16px' }}>
           <span style={{ color: t.text, fontSize: '11px', fontWeight: '700' }}>New Withdrawal</span>
-          <div style={{ color: t.subText, fontSize: '8px', marginTop: '3px' }}>Transfer Limit: <span style={{ color: '#ef4444', fontWeight: '700' }}>$100</span></div>
+          <div style={{ color: t.subText, fontSize: '8px', marginTop: '3px' }}>Withdrawal Limit: <span style={{ color: '#ef4444', fontWeight: '700' }}>$100</span></div>
         </div>
 
         {step === 1 && <>
