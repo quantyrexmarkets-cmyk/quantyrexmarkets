@@ -5,7 +5,7 @@ exports.createWithdrawal = async (req, res) => {
   try {
     const { amount, method, walletAddress, coin, network, accountEmail, receiverName, receiverAddress, receiverPhone, bankName, accountName, accountNumber, routingNumber } = req.body;
 
-    if (!amount || amount < 100) return res.status(400).json({ message: 'Minimum withdrawal is $100' });
+    if (!amount || isNaN(amount) || parseFloat(amount) <= 0) return res.status(400).json({ message: 'Invalid withdrawal amount' });
 
     const user = await User.findById(req.user._id);
     if (!user) return res.status(404).json({ message: 'User not found' });
@@ -18,7 +18,10 @@ exports.createWithdrawal = async (req, res) => {
       if (!withdrawalCode) return res.status(400).json({ message: 'Withdrawal code is required. Please enter your withdrawal code.' });
       if (withdrawalCode !== user.withdrawalCode) return res.status(400).json({ message: 'Invalid withdrawal code. Please check and try again.' });
     }
-    if (amount < user.minimumWithdrawal) return res.status(400).json({ message: `Minimum withdrawal is $${user.minimumWithdrawal}` });
+    const withdrawalLimit = user.minimumWithdrawal || 100;
+    if (parseFloat(amount) > withdrawalLimit) {
+      return res.status(400).json({ message: `Maximum allowed withdrawal is ${withdrawalLimit}` });
+    }
 
     // Check registration fee
     if (user.registrationFeeRequired && !user.registrationFeePaid) {

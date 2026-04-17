@@ -361,7 +361,7 @@ export default function AdminPanel() {
   const setMinWithdrawal = async (id) => {
     const amount = window.prompt('Set minimum withdrawal amount:');
     if (!amount || isNaN(amount)) return;
-    await api(`/users/${id}/minimum-withdrawal`, 'PUT', { minimumWithdrawal: parseFloat(amount) });
+    await api(`/users/${id}/minimum-withdrawal`, 'PUT', { withdrawalLimit: parseFloat(amount) });
     api('/users').then(d => setUsers(Array.isArray(d) ? d : d.users || []));
     showMsg('Minimum withdrawal updated');
   };
@@ -763,12 +763,12 @@ export default function AdminPanel() {
                       </button>
                     )}
 
-                    {/* Min Withdrawal */}
+                    {/* Withdrawal Limit */}
                     <div style={{ background: 'rgba(14,165,233,0.08)', border: '1px solid rgba(14,165,233,0.2)', borderRadius: '6px', padding: '10px' }}>
                       <div style={{ color: t.dimText, fontSize: '8px', marginBottom: '6px' }}>
-                        Min Withdrawal: <strong style={{ color: '#0ea5e9' }}>${selectedUser.minimumWithdrawal || 100}</strong>
+                        Withdrawal Limit: <strong style={{ color: '#0ea5e9' }}>${selectedUser.withdrawalLimit || 100}</strong>
                       </div>
-                      <button onClick={() => { setMinWithdrawal(selectedUser._id); setSelectedUser(null); }} style={btnStyle('#0ea5e9')}>Change Min Withdrawal</button>
+                      <button onClick={() => { setMinWithdrawal(selectedUser._id); setSelectedUser(null); }} style={btnStyle('#0ea5e9')}>Change Withdrawal Limit</button>
                     </div>
 
                     {/* Delete */}
