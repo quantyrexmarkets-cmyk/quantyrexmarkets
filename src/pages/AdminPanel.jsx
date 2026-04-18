@@ -394,6 +394,13 @@ export default function AdminPanel() {
   const thStyle = { padding: '10px 12px', fontSize: '11px', color: t.subText, fontWeight: '700', textAlign: 'left', border: `1px solid ${t.border}`, whiteSpace: 'nowrap', background: t.cardBg };
   const tdStyle = { padding: '10px 12px', fontSize: '11px', color: t.text, border: `1px solid ${t.border}`, whiteSpace: 'nowrap', verticalAlign: 'top' };
   // Button styles
+  const [clickedBtn, setClickedBtn] = useState('');
+  const clickBtn = async (key, fn) => {
+    setClickedBtn(key);
+    try { await fn(); } catch(e) {}
+    setTimeout(() => setClickedBtn(''), 800);
+  };
+
   const btnStyle = (color, isActive = false) => {
     const isDanger = color === '#ef4444' || color === '#7f1d1d' || color === '#dc2626';
     const isSuccess = color === '#22c55e' || color === '#16a34a';
@@ -413,6 +420,7 @@ export default function AdminPanel() {
       marginRight: '3px',
       marginBottom: '3px',
       display: 'inline-flex',
+      transition: 'all 0.15s ease',
       alignItems: 'center',
       gap: '4px',
       whiteSpace: 'nowrap',

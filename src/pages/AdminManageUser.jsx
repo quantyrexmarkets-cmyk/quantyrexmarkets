@@ -52,11 +52,34 @@ export default function AdminManageUser() {
   if (loading && !user) return <InlineLoader text="Loading user..." />;
   if (!user) return <div style={{ minHeight:'100vh', background:t.bg, display:'flex', alignItems:'center', justifyContent:'center' }}>Not found</div>;
   const inp = { width:'100%', background:t.inputBg, border:`1px solid ${t.border}`, color:t.text, fontSize:'11px', padding:'8px 10px', outline:'none', borderRadius:'6px', boxSizing:'border-box', marginBottom:'6px' };
-  const btn = (onClick, label, icon) => (
-    <button onClick={onClick} style={{ padding:'8px 14px', background:'transparent', border:'1.5px solid '+t.tableDivider, color:t.text, fontSize:'10px', fontWeight:'600', cursor:'pointer', borderRadius:'6px', display:'inline-flex', alignItems:'center', gap:'4px', marginBottom:'6px', marginRight:'6px' }}>
-      {icon} {label}
-    </button>
-  );
+  const btn = (onClick, label, icon, key) => {
+    const isClicked = clicked === (key || label);
+    return (
+      <button onClick={async () => {
+        setClicked(key || label);
+        try { await onClick(); } catch(e) {}
+        setTimeout(() => setClicked(''), 800);
+      }} style={{
+        padding:'8px 14px',
+        background: isClicked ? 'rgba(99,102,241,0.15)' : 'transparent',
+        border: isClicked ? '1.5px solid #6366f1' : '1.5px solid '+t.tableDivider,
+        color: isClicked ? '#6366f1' : t.text,
+        fontSize:'10px',
+        fontWeight:'600',
+        cursor:'pointer',
+        borderRadius:'6px',
+        display:'inline-flex',
+        alignItems:'center',
+        gap:'4px',
+        marginBottom:'6px',
+        marginRight:'6px',
+        transition: 'all 0.15s ease',
+        transform: isClicked ? 'scale(0.95)' : 'scale(1)',
+      }}>
+        {isClicked ? '✓' : icon} {isClicked ? 'Done' : label}
+      </button>
+    );
+  };
   const S = ({ title, children }) => (
     <div style={{ background:t.cardBg, border:`1px solid ${t.border}`, borderRadius:'10px', padding:'16px', marginBottom:'12px' }}>
       <div style={{ color:t.subText, fontSize:'9px', fontWeight:'700', textTransform:'uppercase', letterSpacing:'0.08em', marginBottom:'12px' }}>{title}</div>

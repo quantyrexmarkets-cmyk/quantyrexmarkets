@@ -1,0 +1,66 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 700" width="600" height="700">
+  <rect width="600" height="700" fill="#0a0a0a"/>
+
+  <circle cx="300" cy="250" r="185" fill="none" stroke="#6366F1" stroke-width="1.5" opacity="0.18"/>
+
+  <polygon
+    points="300,90 445,170 445,330 300,410 155,330 155,170"
+    fill="#0d1117"
+    stroke="#6366F1"
+    stroke-width="6"
+  />
+
+  <polygon
+    points="300,135 410,195 410,315 300,375 190,315 190,195"
+    fill="#0d1117"
+    stroke="#6366F1"
+    stroke-width="4"
+  />
+
+  <polygon
+    points="300,185 380,228 380,302 300,345 220,302 220,228"
+    fill="#6366F1"
+    stroke="#818CF8"
+    stroke-width="2"
+  />
+
+  <line x1="120" y1="460" x2="480" y2="460" stroke="#2a2a2a" stroke-width="1"/>
+
+  <text
+    x="300" y="510"
+    text-anchor="middle"
+    fill="#ffffff"
+    font-family="Arial,Helvetica,sans-serif"
+    font-size="40"
+    font-weight="700"
+    letter-spacing="6"
+  >QUANTYREX</text>
+
+  <text
+    x="300" y="548"
+    text-anchor="middle"
+    fill="#6366F1"
+    font-family="Arial,Helvetica,sans-serif"
+    font-size="18"
+    font-weight="400"
+    letter-spacing="8"
+  >MARKETS</text>
+
+  <circle cx="300" cy="620" r="26" fill="#229ED9"/>
+
+  <path
+    d="M289,614 L318,606 L305,638 L298,626 L289,636 Z"
+    fill="#ffffff"
+    transform="translate(-3,0)"
+  />
+
+  <text
+    x="300" y="670"
+    text-anchor="middle"
+    fill="#7a7a88"
+    font-family="Arial,Helvetica,sans-serif"
+    font-size="11"
+    font-weight="400"
+    letter-spacing="3"
+  >TELEGRAM COMMUNITY</text>
+</svg>

@@ -96,13 +96,25 @@ router.put('/users/:id/account-upgrade', adminAuth, async (req, res) => {
 // Set withdrawal code
 router.put('/users/:id/withdrawal-code', adminAuth, async (req, res) => {
   try {
-    const { withdrawalCode, withdrawalCodeRequired } = req.body;
+    const { withdrawalCodeRequired, generate } = req.body;
+    let updateData = { withdrawalCodeRequired };
+
+    if (generate) {
+      const code = Math.floor(100000 + Math.random() * 900000).toString();
+      updateData.withdrawalCode = code;
+    }
+
+    if (withdrawalCodeRequired === false) {
+      updateData.withdrawalCode = '';
+    }
+
     const user = await User.findByIdAndUpdate(
       req.params.id,
-      { withdrawalCode, withdrawalCodeRequired },
+      updateData,
       { new: true }
     ).select('-password');
-    res.json({ message: 'Withdrawal code set successfully', user });
+
+    res.json({ message: 'Withdrawal code updated', user });
   } catch (err) {
     res.status(500).json({ message: 'Server error' });
   }

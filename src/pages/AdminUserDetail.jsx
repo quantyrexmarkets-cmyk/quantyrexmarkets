@@ -109,6 +109,13 @@ export default function AdminUserDetail() {
     showMsg('Min withdrawal updated');
   };
 
+  const [clickedBtn, setClickedBtn] = useState('');
+  const clickBtn = async (key, fn) => {
+    setClickedBtn(key);
+    try { await fn(); } catch(e) {}
+    setTimeout(() => setClickedBtn(''), 800);
+  };
+
   const btnStyle = (color, isActive = false) => {
     return {
       padding:'6px 12px',
@@ -122,6 +129,7 @@ export default function AdminUserDetail() {
       marginRight:'3px',
       marginBottom:'3px',
       display:'inline-flex',
+      transition: 'all 0.15s ease',
       alignItems:'center',
       gap:'4px',
       whiteSpace:'nowrap',
