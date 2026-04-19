@@ -92,7 +92,20 @@ export default function AdminManageUser() {
         <button onClick={() => navigate('/admin')} style={{ background:'none', border:'none', color:t.text, cursor:'pointer', display:'flex', alignItems:'center', gap:'6px', fontSize:'12px', fontWeight:'600' }}><ArrowLeft size={16}/> Back</button>
         <div style={{ color:t.subText, fontSize:'11px' }}>Manage User</div>
         <div style={{ marginLeft:'auto', display:'flex', gap:'8px', alignItems:'center' }}>
-          {msg && <span style={{ color:'#22c55e', fontSize:'10px', fontWeight:'600' }}>{msg}</span>}
+          {msg && (
+            <>
+              <div style={{ position:'fixed', inset:0, background:'rgba(0,0,0,0.6)', zIndex:100 }} />
+              <div style={{ position:'fixed', top:'50%', left:'50%', transform:'translate(-50%,-50%)', zIndex:151, background:'white', padding:'28px 20px', width:'260px', textAlign:'center', borderRadius:'4px' }}>
+                <div style={{ width:'52px', height:'52px', borderRadius:'50%', border:'2px solid #22c55e', display:'flex', alignItems:'center', justifyContent:'center', margin:'0 auto 14px' }}>
+                  <svg width='22' height='22' fill='none' stroke='#22c55e' viewBox='0 0 24 24' strokeWidth='2'>
+                    <path strokeLinecap='round' strokeLinejoin='round' d='M5 13l4 4L19 7'/>
+                  </svg>
+                </div>
+                <div style={{ color:'#111', fontSize:'14px', fontWeight:'700', marginBottom:'8px' }}>Success!</div>
+                <div style={{ color:'#555', fontSize:'10px', lineHeight:'1.6' }}>{msg}</div>
+              </div>
+            </>
+          )}
 
         </div>
       </div>
@@ -123,7 +136,7 @@ export default function AdminManageUser() {
           <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:'8px' }}>
             <button onClick={()=>api('/users/'+id+'/block','PUT').then(()=>{setUser(p=>({...p,isBlocked:!p.isBlocked}));showMsg('Updated');})} style={{ padding:'9px', background:'transparent', border:'1.5px solid '+t.tableDivider, color:t.text, fontSize:'10px', fontWeight:'600', cursor:'pointer', borderRadius:'6px', display:'flex', alignItems:'center', justifyContent:'center', gap:'6px' }}>{user.isBlocked?<><Unlock size={12}/> Unblock</>:<><Lock size={12}/> Block</>}</button>
             <button onClick={()=>api('/users/'+id+'/withdrawal-block','PUT').then(()=>{setUser(p=>({...p,withdrawalBlocked:!p.withdrawalBlocked}));showMsg('Updated');})} style={{ padding:'9px', background:'transparent', border:'1.5px solid '+t.tableDivider, color:t.text, fontSize:'10px', fontWeight:'600', cursor:'pointer', borderRadius:'6px', display:'flex', alignItems:'center', justifyContent:'center', gap:'6px' }}>{user.withdrawalBlocked?<><CheckCircle size={12}/> Allow W.</>:<><Ban size={12}/> Block W.</>}</button>
-            <button onClick={()=>api('/users/'+id+'/upgrade','PUT').then(()=>{setUser(p=>({...p,accountUpgraded:!p.accountUpgraded}));showMsg('Updated');})} style={{ padding:'9px', background:'transparent', border:'1.5px solid '+t.tableDivider, color:t.text, fontSize:'10px', fontWeight:'600', cursor:'pointer', borderRadius:'6px', display:'flex', alignItems:'center', justifyContent:'center', gap:'6px' }}>{user.accountUpgraded?<><RotateCcw size={12}/> Revoke</>:<><ArrowUpCircle size={12}/> Upgrade</>}</button>
+            <button onClick={async()=>{const r=await api('/users/'+id+'/account-upgrade','PUT');if(r.user)setUser(r.user);showMsg(r.message||'Updated');}} style={{ padding:'9px', background:'transparent', border:'1.5px solid '+t.tableDivider, color:t.text, fontSize:'10px', fontWeight:'600', cursor:'pointer', borderRadius:'6px', display:'flex', alignItems:'center', justifyContent:'center', gap:'6px' }}>{user.accountUpgraded?<><RotateCcw size={12}/> Revoke</>:<><ArrowUpCircle size={12}/> Upgrade</>}</button>
             <button onClick={()=>setShowEmailModal(true)} style={{ padding:'9px', background:'transparent', border:'1.5px solid '+t.tableDivider, color:t.text, fontSize:'10px', fontWeight:'600', cursor:'pointer', borderRadius:'6px', display:'flex', alignItems:'center', justifyContent:'center', gap:'6px' }}><Mail size={12}/> Email User</button>
           </div>
         </S>
