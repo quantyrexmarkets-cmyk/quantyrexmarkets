@@ -65,7 +65,7 @@ export default function AdminUserDetail() {
   };
 
   const toggleAccountUpgrade = async (id) => {
-    const res = await api(`/users/${id}/upgrade`, 'PUT');
+    const res = await api(`/users/${id}/account-upgrade`, 'PUT');
     setSelectedUser(prev => ({ ...prev, accountUpgraded: !prev.accountUpgraded }));
     showMsg('Upgrade toggled');
   };
