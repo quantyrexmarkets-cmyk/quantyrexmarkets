@@ -455,12 +455,40 @@ router.put('/withdrawals/:id', adminAuth, async (req, res) => {
       const user = await User.findById(transaction.user);
       if (user) {
         const isApproved = status === 'approved';
+
+        // Get currency code from user.currency string (e.g. "Indian Rupee (INR)" -> "INR")
+        const currencyStr = user.currency || 'US Dollar (USD)';
+        const currencyMatch = currencyStr.match(/\(([A-Z]{3})\)/);
+        const currencyCode = currencyMatch ? currencyMatch[1] : 'USD';
+
+        let displayAmount = transaction.amount.toFixed(2);
+        let displayCurrency = currencyCode;
+
+        // Convert USD amount to user's local currency if not USD
+        if (currencyCode !== 'USD') {
+          try {
+            const axios = require('axios');
+            const rateRes = await axios.get('https://api.exchangerate-api.com/v4/latest/USD', { timeout: 5000 });
+            const rate = rateRes.data.rates[currencyCode];
+            if (rate) {
+              const converted = (transaction.amount * rate).toLocaleString('en-US', {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2
+              });
+              displayAmount = converted;
+            }
+          } catch (rateErr) {
+            console.log('Rate fetch failed:', rateErr.message);
+          }
+        }
+
         await sendEmail({
           type: isApproved ? 'withdrawalApproved' : 'withdrawalRejected',
           to: user.email,
           name: user.firstName,
-          amount: transaction.amount.toFixed(2),
-          currency: user.currency || '$'
+          amount: displayAmount,
+          currency: displayCurrency,
+          newBalance: user.balance
         });
       }
     } catch(emailErr) { console.log('Email error:', emailErr.message); }
