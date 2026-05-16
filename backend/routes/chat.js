@@ -84,6 +84,42 @@ router.get('/all', adminAuth, async (req, res) => {
   }
 });
 
+// User: upload image in chat
+const multerUser = require('multer');
+const { uploadToCloudinary: uploadUserImg } = require('../utils/cloudinary');
+const uploadUserMem = multerUser({ storage: multerUser.memoryStorage(), limits: { fileSize: 5 * 1024 * 1024 } });
+
+router.post('/send-image', auth, uploadUserMem.single('image'), async (req, res) => {
+  try {
+    if (!req.file) return res.status(400).json({ message: 'No image provided' });
+
+    const result = await uploadUserImg(req.file);
+    const url = result.secure_url || result.url;
+
+    let chat = await Contact.findOne({ userId: req.user.id, status: 'open' });
+    if (!chat) {
+      chat = new Contact({
+        userId: req.user.id,
+        name: req.user.firstName,
+        email: req.user.email,
+        messages: [],
+        unreadAdmin: 0,
+        unreadUser: 0,
+      });
+    }
+
+    chat.messages.push({ sender: 'user', text: '', image: url });
+    chat.unreadAdmin += 1;
+    chat.updatedAt = Date.now();
+    await chat.save();
+
+    res.json({ message: 'Image sent', chat });
+  } catch (e) {
+    console.error('User image upload error:', e.message);
+    res.status(500).json({ message: 'Upload failed' });
+  }
+});
+
 // Admin: reply to chat
 router.post('/reply/:chatId', adminAuth, async (req, res) => {
   try {

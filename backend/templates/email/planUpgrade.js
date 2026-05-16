@@ -1,6 +1,18 @@
-const baseTemplate = require('./base-enhanced');
+const formatMoney = (v) => typeof v === 'number' ? '$' + v.toLocaleString('en-US') : v;
 
-const planUpgradeEmail = (name, planName, details) => baseTemplate(`
+const planUpgradeEmail = (name, planName, details) => {
+  const d = details || {};
+  const rows = [
+    ['Minimum Investment', formatMoney(d.minInvestment)],
+    ['Maximum Investment', formatMoney(d.maxInvestment)],
+    ['Maximum Withdrawal', formatMoney(d.maxWithdrawal)],
+    ['Upgrade Fee', formatMoney(d.upgradeFee)],
+    ['Daily ROI', d.roi],
+    ['Duration', d.duration],
+    ['Features', Array.isArray(d.features) ? d.features.join(', ') : d.features],
+  ].filter(([k, v]) => v !== undefined && v !== null);
+
+  return baseTemplate(`
 
   <table cellpadding="0" cellspacing="0" border="0" style="margin:0 auto 20px auto;">
     <tr>
@@ -14,24 +26,22 @@ const planUpgradeEmail = (name, planName, details) => baseTemplate(`
   <p style="color:#22c55e;font-size:11px;letter-spacing:2px;font-weight:500;margin:0 0 32px;text-align:center;font-family:'Helvetica Neue',Arial,sans-serif;">ACTIVE</p>
 
   <p style="color:#a1a1aa;font-size:13px;margin:0 0 24px;line-height:1.8;font-family:'Helvetica Neue',Arial,sans-serif;">
-    Dear <span style="color:#ffffff;">${name || 'Valued Client'}</span>, your account has been upgraded to the <span style="color:#818cf8;font-weight:500;">${planName}</span> plan with enhanced features and higher returns.
+    Dear <span style="color:#ffffff;">${name || 'Valued Client'}</span>, your account has been upgraded to the <span style="color:#818cf8;font-weight:500;">${planName}</span> plan. Below are your plan details and limits.
   </p>
 
-  ${details ? `
   <table width="100%" cellpadding="0" cellspacing="0" border="0" style="margin:0 0 28px;background-color:#121212;">
     <tr>
       <td colspan="2" style="padding:10px 16px;border-bottom:1px solid #1a1a1a;">
         <p style="color:#a0a0a0;font-size:9px;letter-spacing:2px;margin:0;font-family:'Helvetica Neue',Arial,sans-serif;">PLAN DETAILS</p>
       </td>
     </tr>
-    ${Object.entries(details || {}).map(([k, v]) => `
+    ${rows.map(([label, value]) => `
     <tr>
-      <td style="padding:10px 16px;border-bottom:1px solid #1a1a1a;color:#a0a0a0;font-size:10px;font-family:'Helvetica Neue',Arial,sans-serif;">${k}</td>
-      <td align="right" style="padding:10px 16px;border-bottom:1px solid #1a1a1a;color:#818cf8;font-size:11px;font-weight:500;font-family:'Helvetica Neue',Arial,sans-serif;">${v}</td>
+      <td style="padding:10px 16px;border-bottom:1px solid #1a1a1a;color:#a0a0a0;font-size:10px;font-family:'Helvetica Neue',Arial,sans-serif;">${label}</td>
+      <td align="right" style="padding:10px 16px;border-bottom:1px solid #1a1a1a;color:#818cf8;font-size:11px;font-weight:500;font-family:'Helvetica Neue',Arial,sans-serif;">${value}</td>
     </tr>
     `).join('')}
   </table>
-  ` : ''}
 
   <table width="100%" cellpadding="0" cellspacing="0" border="0" style="margin:0 0 28px;">
     <tr>
@@ -44,5 +54,6 @@ const planUpgradeEmail = (name, planName, details) => baseTemplate(`
   <p style="color:#71717a;font-size:10px;margin:0;text-align:center;font-family:'Helvetica Neue',Arial,sans-serif;">The Quantyrex Markets Team</p>
 
 `);
+};
 
 module.exports = planUpgradeEmail;

@@ -125,16 +125,16 @@ router.put('/users/:id/plan', adminAuth, async (req, res) => {
   try {
     const { plan } = req.body;
     const planDetails = {
-      BRONZE:   { minWithdrawal: 500,   upgradeFee: 1000,   minDeposit: 500,    roi: '10%', duration: '7 days',  maxReturn: '$4,999',    features: ['Basic trading access', 'Standard support'] },
-      SILVER:   { minWithdrawal: 1000,  upgradeFee: 5000,   minDeposit: 5000,   roi: '15%', duration: '14 days', maxReturn: '$9,999',    features: ['Advanced trading tools', 'Priority support', 'Referral bonuses'] },
-      GOLD:     { minWithdrawal: 2000,  upgradeFee: 10000,  minDeposit: 10000,  roi: '20%', duration: '21 days', maxReturn: '$24,999',   features: ['Premium trading tools', 'Dedicated account manager', 'Higher referral bonuses'] },
-      PLATINUM: { minWithdrawal: 5000,  upgradeFee: 25000,  minDeposit: 25000,  roi: '25%', duration: '30 days', maxReturn: '$49,999',   features: ['VIP trading suite', 'Personal account manager', 'Weekly profit reports'] },
-      DIAMOND:  { minWithdrawal: 10000, upgradeFee: 50000,  minDeposit: 50000,  roi: '30%', duration: '45 days', maxReturn: '$99,999',   features: ['Exclusive trading signals', '24/7 VIP support', 'Automated profit reinvestment'] },
-      ELITE:    { minWithdrawal: 20000, upgradeFee: 100000, minDeposit: 100000, roi: '40%', duration: '60 days', maxReturn: 'Unlimited', features: ['Full platform access', 'Private trading desk', 'Custom investment strategies', 'Direct CEO line'] },
+      BRONZE:   { maxWithdrawal: 500,   upgradeFee: 1000,   minInvestment: 500,    maxInvestment: 4999,    roi: '10% Daily', duration: '7 days',  features: ['Basic trading access', 'Standard support'] },
+      SILVER:   { maxWithdrawal: 1000,  upgradeFee: 5000,   minInvestment: 5000,   maxInvestment: 9999,    roi: '15% Daily', duration: '14 days', features: ['Advanced trading tools', 'Priority support', 'Referral bonuses'] },
+      GOLD:     { maxWithdrawal: 2000,  upgradeFee: 10000,  minInvestment: 10000,  maxInvestment: 24999,   roi: '20% Daily', duration: '21 days', features: ['Premium trading tools', 'Dedicated account manager', 'Higher referral bonuses'] },
+      PLATINUM: { maxWithdrawal: 5000,  upgradeFee: 25000,  minInvestment: 25000,  maxInvestment: 49999,   roi: '25% Daily', duration: '30 days', features: ['VIP trading suite', 'Personal account manager', 'Weekly profit reports'] },
+      DIAMOND:  { maxWithdrawal: 10000, upgradeFee: 50000,  minInvestment: 50000,  maxInvestment: 99999,   roi: '30% Daily', duration: '45 days', features: ['Exclusive trading signals', '24/7 VIP support', 'Automated profit reinvestment'] },
+      ELITE:    { maxWithdrawal: 20000, upgradeFee: 100000, minInvestment: 100000, maxInvestment: 1000000, roi: '40% Daily', duration: '60 days', features: ['Full platform access', 'Private trading desk', 'Custom investment strategies', 'Direct CEO line'] },
     };
     const details = planDetails[plan] || {};
     const updateData = { currentPlan: plan };
-    if (details.minWithdrawal) updateData.minimumWithdrawal = details.minWithdrawal;
+    if (details.maxWithdrawal) updateData.minimumWithdrawal = details.maxWithdrawal;
     const user = await User.findByIdAndUpdate(req.params.id, updateData, { new: true }).select('-password');
     if (plan !== 'none') {
       await sendEmail({ to: user.email, type: 'planUpgrade', name: user.firstName, package: plan, planDetails: details });
@@ -378,21 +378,249 @@ router.put('/deposits/:id', adminAuth, async (req, res) => {
       const user = await User.findById(transaction.user);
       if (user) {
         const isApproved = status === 'approved';
+
+        // Extract currency code
+        const rawCurrency = user.currency || 'USD';
+        let currencyCode = 'USD';
+        const currMatch = rawCurrency.match(/\(([A-Z]{3})\)/);
+        if (currMatch) currencyCode = currMatch[1];
+        else if (rawCurrency.length === 3) currencyCode = rawCurrency.toUpperCase();
+
+        // Amounts
+        const usdAmount = parseFloat(transaction.amount) || 0;
+        let displayAmount = usdAmount.toLocaleString('en-US', { minimumFractionDigits: 2 });
+
+        // Get updated balance
+        const updatedUser = await User.findById(transaction.user);
+        const rawBalance = updatedUser ? updatedUser.balance : 0;
+        let displayBalance = rawBalance.toLocaleString('en-US', { minimumFractionDigits: 2 });
+
+        try {
+          const ratesRes = await fetch('https://api.exchangerate-api.com/v4/latest/USD');
+          const ratesData = await ratesRes.json();
+          const rate = ratesData.rates[currencyCode];
+
+          if (rate && currencyCode !== 'USD') {
+            const convertedAmount = usdAmount * rate;
+            displayAmount = new Intl.NumberFormat('en-IN', {
+              minimumFractionDigits: 2,
+              maximumFractionDigits: 2
+            }).format(convertedAmount);
+
+            const convertedBalance = rawBalance * rate;
+            displayBalance = new Intl.NumberFormat('en-IN', {
+              minimumFractionDigits: 2,
+              maximumFractionDigits: 2
+            }).format(convertedBalance);
+
+            console.log(`DEPOSIT CONVERSION: ${usdAmount} USD * ${rate} = ${displayAmount} ${currencyCode}`);
+            console.log(`DEPOSIT BALANCE: ${rawBalance} USD * ${rate} = ${displayBalance} ${currencyCode}`);
+          }
+        } catch (err) {
+          console.log('Deposit rate conversion failed, using USD fallback');
+        }
+
         await sendEmail({
-          type: isApproved ? 'depositConfirmed' : 'depositRejected',
+          type: isApproved ? 'depositApproved' : 'depositRejected',
           to: user.email,
           name: user.firstName,
-          amount: transaction.amount.toFixed(2),
-          currency: user.currency || '$'
-        });
-        await Notification.create({
-          user: user._id,
-          title: isApproved ? 'Deposit Approved' : 'Deposit Rejected',
-          message: isApproved ? `Your deposit of $${transaction.amount.toFixed(2)} has been approved and credited to your account.` : `Your deposit of $${transaction.amount.toFixed(2)} was rejected. Please contact support.`,
-          type: isApproved ? 'success' : 'error'
+          amount: displayAmount,
+          currency: currencyCode,
+          newBalance: displayBalance
         });
       }
-    } catch(emailErr) { console.log('Email error:', emailErr.message); }
+    } catch(emailErr) { console.log('Deposit email error:', emailErr.message); }
+
+    res.json({ message: 'Deposit ' + status, transaction });
+  } catch (err) {
+    res.status(500).json({ message: 'Server error', error: err.message });
+  }
+});
+
+// Delete deposit
+router.delete('/deposits/:id', adminAuth, async (req, res) => {
+  try {
+    await Transaction.findByIdAndDelete(req.params.id);
+    res.json({ message: 'Deposit deleted' });
+  } catch (err) {
+    res.status(500).json({ message: 'Server error' });
+  }
+});
+
+// Get all withdrawals
+router.get('/withdrawals', adminAuth, async (req, res) => {
+  try {
+    const withdrawals = await Transaction.find({ type: 'withdrawal' }).populate('user', 'firstName lastName email').sort({ createdAt: -1 });
+    res.json(withdrawals);
+  } catch (err) {
+    res.status(500).json({ message: 'Server error' });
+  }
+});
+
+// Approve/reject withdrawal
+
+
+// Get all KYC
+
+
+// Delete user
+router.delete('/users/:id', adminAuth, async (req, res) => {
+  try {
+    const userId = req.params.id;
+    // Delete all related data
+    await Transaction.deleteMany({ user: userId });
+    await Notification.deleteMany({ user: userId });
+    await User.findByIdAndDelete(userId);
+    res.json({ message: 'User and all related data deleted' });
+  } catch (err) {
+    res.status(500).json({ message: 'Server error' });
+  }
+});
+
+// Send message to user
+router.post('/users/:id/message', adminAuth, async (req, res) => {
+  try {
+    const { message } = req.body;
+    await User.findByIdAndUpdate(req.params.id, { adminMessage: message });
+    res.json({ message: 'Message sent' });
+  } catch (err) {
+    res.status(500).json({ message: 'Server error' });
+  }
+});
+
+router.delete('/users/:id/message', adminAuth, async (req, res) => {
+  try {
+    await User.findByIdAndUpdate(req.params.id, { adminMessage: '' });
+    res.json({ message: 'Message deleted' });
+  } catch (err) {
+    res.status(500).json({ message: 'Server error' });
+  }
+});
+// Get all trades
+router.get('/trades', adminAuth, async (req, res) => {
+  try {
+    const Trade = require('../models/Trade');
+    const trades = await Trade.find().populate('user', 'firstName lastName email').sort({ createdAt: -1 });
+    res.json(trades);
+  } catch (err) {
+    res.status(500).json({ message: 'Server error' });
+  }
+});
+
+// Update trade result and status
+router.put('/trades/:id', adminAuth, async (req, res) => {
+  try {
+    const Trade = require('../models/Trade');
+    const { result, status } = req.body;
+    const trade = await Trade.findById(req.params.id);
+    if (!trade) return res.status(404).json({ message: 'Trade not found' });
+
+    trade.result = parseFloat(result);
+    trade.status = status;
+    if (status === 'closed') trade.closedAt = new Date();
+    await trade.save();
+
+    // Update user balance and profit if closed
+    if (status === 'closed') {
+      await User.findByIdAndUpdate(trade.user, {
+        $inc: {
+          balance: parseFloat(result),
+          totalProfit: parseFloat(result) > 0 ? parseFloat(result) : 0,
+        }
+      });
+
+    // Refund balance if cancelled and trade was real account
+    if (status === 'cancelled' && trade.account === 'real') {
+      await User.findByIdAndUpdate(trade.user, { $inc: { balance: trade.amount } });
+    }
+    }
+
+    res.json({ message: 'Trade updated', trade });
+  } catch (err) {
+    res.status(500).json({ message: 'Server error', error: err.message });
+  }
+});
+
+// Delete withdrawal
+router.delete('/withdrawals/:id', adminAuth, async (req, res) => {
+  try {
+    await Transaction.findByIdAndDelete(req.params.id);
+    res.json({ message: 'Withdrawal deleted' });
+  } catch (err) {
+    res.status(500).json({ message: 'Server error' });
+  }
+});
+
+// Get all deposits
+router.get('/deposits', adminAuth, async (req, res) => {
+  try {
+    const deposits = await Transaction.find({ type: 'deposit' }).populate('user', 'firstName lastName email').sort({ createdAt: -1 });
+    res.json(deposits);
+  } catch (err) {
+    res.status(500).json({ message: 'Server error' });
+  }
+});
+
+// Approve/Reject deposit
+router.put('/deposits/:id', adminAuth, async (req, res) => {
+  try {
+    const { status } = req.body;
+    const transaction = await Transaction.findById(req.params.id);
+    if (!transaction) return res.status(404).json({ message: 'Transaction not found' });
+
+    transaction.status = status;
+    await transaction.save();
+
+    if (status === 'approved') {
+      await User.findByIdAndUpdate(transaction.user, {
+        $inc: { balance: transaction.amount, totalDeposits: transaction.amount }
+      });
+    }
+
+            // Send email notification
+    try {
+      const user = await User.findById(transaction.user);
+      if (user) {
+        const isApproved = status === 'approved';
+
+        // Extract currency code
+        const rawCurrency = user.currency || 'USD';
+        let currencyCode = 'USD';
+        if (rawCurrency.includes('(')) {
+          const match = rawCurrency.match(/\(([A-Z]{3})\)/);
+          if (match) currencyCode = match[1];
+        } else if (rawCurrency.length === 3) {
+          currencyCode = rawCurrency.toUpperCase();
+        }
+
+        // Convert deposit amount to user local currency
+        const baseAmount = transaction.amount || 0;
+        let displayAmount = baseAmount.toFixed(2);
+
+        try {
+          const ratesRes = await fetch('https://api.exchangerate-api.com/v4/latest/USD');
+          const ratesData = await ratesRes.json();
+          const rate = ratesData.rates[currencyCode] || 1;
+          const converted = baseAmount * rate;
+          displayAmount = new Intl.NumberFormat('en-IN', {
+            minimumFractionDigits: 2,
+            maximumFractionDigits: 2
+          }).format(converted);
+          console.log('DEPOSIT email - baseAmount:', baseAmount, 'rate:', rate, 'converted:', converted, 'currency:', currencyCode);
+        } catch (rateErr) {
+          console.error('Deposit rate fetch error:', rateErr.message);
+        }
+
+        await sendEmail({
+          type: isApproved ? 'depositApproved' : 'depositRejected',
+          to: user.email,
+          name: user.firstName,
+          amount: displayAmount,
+          currency: currencyCode,
+          newBalance: user.balance
+        });
+      }
+    } catch(emailErr) { console.log('Deposit email error:', emailErr.message); }
 
     res.json({ message: 'Deposit ' + status, transaction });
   } catch (err) {
@@ -441,57 +669,71 @@ router.put('/withdrawals/:id', adminAuth, async (req, res) => {
       });
     }
 
-        // Send notification
-    try {
+    const isApproved = status === 'approved';
+    const user = await User.findById(transaction.user);
+
+    if (user) {
+      // 1. Extract Currency
+      const rawCurrency = user.currency || 'USD';
+      let currencyCode = 'USD';
+      const currMatch = rawCurrency.match(/\(([A-Z]{3})\)/);
+      if (currMatch) currencyCode = currMatch[1];
+      else if (rawCurrency.length === 3) currencyCode = rawCurrency.toUpperCase();
+
+      // 2. Fetch exchange rate once
+      const usdAmount = parseFloat(transaction.amount) || 0;
+      let displayAmount = usdAmount.toLocaleString('en-US', { minimumFractionDigits: 2 });
+      
+      // Get updated balance after approval/rejection
+      const updatedUser = await User.findById(transaction.user);
+      const rawBalance = updatedUser ? updatedUser.balance : 0;
+      let displayBalance = rawBalance.toLocaleString('en-US', { minimumFractionDigits: 2 });
+
+      try {
+        const ratesRes = await fetch('https://api.exchangerate-api.com/v4/latest/USD');
+        const ratesData = await ratesRes.json();
+        const rate = ratesData.rates[currencyCode];
+
+        if (rate && currencyCode !== 'USD') {
+          // Convert amount
+          const convertedAmount = usdAmount * rate;
+          displayAmount = new Intl.NumberFormat('en-IN', {
+            minimumFractionDigits: 2,
+            maximumFractionDigits: 2
+          }).format(convertedAmount);
+
+          // Convert balance
+          const convertedBalance = rawBalance * rate;
+          displayBalance = new Intl.NumberFormat('en-IN', {
+            minimumFractionDigits: 2,
+            maximumFractionDigits: 2
+          }).format(convertedBalance);
+
+          console.log(`CONVERSION: ${usdAmount} USD * ${rate} = ${displayAmount} ${currencyCode}`);
+          console.log(`BALANCE: ${rawBalance} USD * ${rate} = ${displayBalance} ${currencyCode}`);
+        }
+      } catch (err) {
+        console.log('Rate conversion failed, using USD fallback');
+      }
+
+      // 3. Send Email
+      await sendEmail({
+        type: isApproved ? 'withdrawalApproved' : 'withdrawalRejected',
+        to: user.email,
+        name: user.firstName,
+        amount: displayAmount,
+        currency: currencyCode,
+        newBalance: displayBalance
+      });
+
+      // 4. Send Notification
       await Notification.create({
-        user: withdrawal.user,
+        user: transaction.user,
         title: isApproved ? 'Withdrawal Approved ✅' : 'Withdrawal Rejected ❌',
-        message: isApproved ? `Your withdrawal of $${withdrawal.amount} has been approved and is being processed.` : `Your withdrawal of $${withdrawal.amount} was rejected. Funds returned to balance.`,
+        message: `Your withdrawal of ${displayAmount} ${currencyCode} ${isApproved ? 'has been approved' : 'was rejected'}.`,
         type: 'withdrawal'
       });
-    } catch(e) {}
-    // Send email notification
-    try {
-      const user = await User.findById(transaction.user);
-      if (user) {
-        const isApproved = status === 'approved';
-
-        // Get currency code from user.currency string (e.g. "Indian Rupee (INR)" -> "INR")
-        const currencyStr = user.currency || 'US Dollar (USD)';
-        const currencyMatch = currencyStr.match(/\(([A-Z]{3})\)/);
-        const currencyCode = currencyMatch ? currencyMatch[1] : 'USD';
-
-        let displayAmount = transaction.amount.toFixed(2);
-        let displayCurrency = currencyCode;
-
-        // Convert USD amount to user's local currency if not USD
-        if (currencyCode !== 'USD') {
-          try {
-            const axios = require('axios');
-            const rateRes = await axios.get('https://api.exchangerate-api.com/v4/latest/USD', { timeout: 5000 });
-            const rate = rateRes.data.rates[currencyCode];
-            if (rate) {
-              const converted = (transaction.amount * rate).toLocaleString('en-US', {
-                minimumFractionDigits: 2,
-                maximumFractionDigits: 2
-              });
-              displayAmount = converted;
-            }
-          } catch (rateErr) {
-            console.log('Rate fetch failed:', rateErr.message);
-          }
-        }
-
-        await sendEmail({
-          type: isApproved ? 'withdrawalApproved' : 'withdrawalRejected',
-          to: user.email,
-          name: user.firstName,
-          amount: displayAmount,
-          currency: displayCurrency,
-          newBalance: user.balance
-        });
-      }
-    } catch(emailErr) { console.log('Email error:', emailErr.message); }
+    }
 
     res.json({ message: 'Withdrawal ' + status, transaction });
   } catch (err) {
@@ -607,6 +849,27 @@ router.get('/users/:id/investments', adminAuth, async (req, res) => {
   }
 });
 
+// Delete a user investment
+router.delete('/users/:id/investments/:investmentId', adminAuth, async (req, res) => {
+  try {
+    const Investment = require('../models/Investment');
+    const inv = await Investment.findById(req.params.investmentId);
+    if (!inv) return res.status(404).json({ message: 'Investment not found' });
+
+    // If active, return the invested amount to user balance
+    if (inv.status === 'active') {
+      await User.findByIdAndUpdate(req.params.id, {
+        $inc: { balance: inv.amount }
+      });
+    }
+
+    await Investment.findByIdAndDelete(req.params.investmentId);
+    res.json({ message: 'Investment deleted' });
+  } catch (err) {
+    res.status(500).json({ message: 'Server error' });
+  }
+});
+
 // Add manual profit to user
 router.post('/users/:id/profit', adminAuth, async (req, res) => {
   try {
@@ -691,7 +954,6 @@ router.post('/users/:id/fees', adminAuth, async (req, res) => {
       name: user.firstName,
       feeLabel: label,
       feeAmount: amount,
-      currency: user.currency || 'USD',
       feeType: type,
     }).catch(() => {});
     res.json({ message: 'Fee added', user });

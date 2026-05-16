@@ -8,6 +8,8 @@ const depositPendingEmail = require('../templates/email/depositPending');
 const depositConfirmedEmail = require('../templates/email/depositConfirmed');
 const depositRejectedEmail = require('../templates/email/depositRejected');
 const withdrawalPendingEmail = require('../templates/email/withdrawalPending');
+const investmentConfirmedEmail = require('../templates/email/investmentConfirmed');
+const investmentMaturedEmail = require('../templates/email/investmentMatured');
 const withdrawalApprovedEmail = require('../templates/email/withdrawalApproved');
 const withdrawalRejectedEmail = require('../templates/email/withdrawalRejected');
 const kycApprovedEmail = require('../templates/email/kycApproved');
@@ -140,6 +142,16 @@ const sendEmail = async (options) => {
       subject = 'Action Required: Upgrade Your Account to Continue';
       html = upgradePromoEmail(name);
       break;
+    case 'investmentConfirmed':
+      html = investmentConfirmedEmail(name, options.plan, options.amount, options.dailyProfit, options.totalProfit, options.maturityAmount, options.roiRate, options.duration, options.startDate, options.maturityDate);
+      subject = subject || `Your ${options.plan} Investment is Now Active`;
+      break;
+
+    case 'investmentMatured':
+      html = investmentMaturedEmail(name, options.plan, options.amount, options.totalProfit, options.maturityAmount, options.roiRate, options.duration);
+      subject = subject || `🎉 Your ${options.plan} Investment Has Matured!`;
+      break;
+
     case 'withdrawalCode':
       subject = 'Your Withdrawal Code 🔐 — Quantyrex Markets';
       html = withdrawalCodeEmail(name, code);
