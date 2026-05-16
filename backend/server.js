@@ -17,15 +17,22 @@ const processTrades = require('./utils/tradeCron');
 const processInvestments = require('./utils/investmentCron');
 
 const BOT_CRON_INTERVAL = 30 * 60 * 1000;
-setInterval(processBotProfits, BOT_CRON_INTERVAL);
-setInterval(processCopyTradeProfits, 4 * 60 * 60 * 1000);
-setInterval(processStakeProfits, BOT_CRON_INTERVAL);
-setInterval(processInvestments, 24 * 60 * 60 * 1000);
-setTimeout(processInvestments, 10 * 1000);
-setTimeout(processBotProfits, 60 * 1000);
-setTimeout(processStakeProfits, 90 * 1000);
-setInterval(processTrades, 15 * 1000);
-setTimeout(processTrades, 5 * 1000);
+
+// Cron jobs ONLY run on long-running servers, NOT on Vercel serverless
+if (!process.env.VERCEL && !process.env.VERCEL_ENV) {
+  setInterval(processBotProfits, BOT_CRON_INTERVAL);
+  setInterval(processCopyTradeProfits, 4 * 60 * 60 * 1000);
+  setInterval(processStakeProfits, BOT_CRON_INTERVAL);
+  setInterval(processInvestments, 24 * 60 * 60 * 1000);
+  setTimeout(processInvestments, 10 * 1000);
+  setTimeout(processBotProfits, 60 * 1000);
+  setTimeout(processStakeProfits, 90 * 1000);
+  setInterval(processTrades, 15 * 1000);
+  setTimeout(processTrades, 5 * 1000);
+  console.log('Cron jobs enabled');
+} else {
+  console.log('Serverless mode - cron disabled');
+}
 
 const app = express();
 app.set('trust proxy', 1);
@@ -105,10 +112,12 @@ app.get('/', (req, res) => res.json({ name: 'QuantyRex Markets API', status: 'ru
 
 connectDB();
 
-setInterval(() => {
-  const https = require('https');
-  https.get('https://quantyrexmarkets-backend.onrender.com/api/health', () => {}).on('error', () => {});
-}, 5 * 60 * 1000);
+if (!process.env.VERCEL && !process.env.VERCEL_ENV) {
+  setInterval(() => {
+    const https = require('https');
+    https.get('https://quantyrexmarkets-backend.onrender.com/api/health', () => {}).on('error', () => {});
+  }, 5 * 60 * 1000);
+}
 
 module.exports = app;
 
