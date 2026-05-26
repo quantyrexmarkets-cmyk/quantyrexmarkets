@@ -89,7 +89,13 @@ export default function AdminManageUser() {
         transition: 'all 0.15s ease',
         transform: isClicked ? 'scale(0.95)' : 'scale(1)',
       }}>
-        {isClicked ? '✓' : icon} {isClicked ? 'Done' : label}
+        {isClicked ? (
+          <span style={{ display:'inline-flex', gap:'2px', alignItems:'center' }}>
+            <span style={{ animation:'dotPulse 1.4s infinite', animationDelay:'0s' }}>.</span>
+            <span style={{ animation:'dotPulse 1.4s infinite', animationDelay:'0.2s' }}>.</span>
+            <span style={{ animation:'dotPulse 1.4s infinite', animationDelay:'0.4s' }}>.</span>
+          </span>
+        ) : (<>{icon} {label}</>)}
       </button>
     );
   };
@@ -277,6 +283,13 @@ export default function AdminManageUser() {
           </div>
         </>
       )}
-    </div>
+    
+      <style>{`
+        @keyframes dotPulse {
+          0%, 60%, 100% { opacity: 0.2; transform: translateY(0); }
+          30% { opacity: 1; transform: translateY(-2px); }
+        }
+      `}</style>
+      </div>
   );
 }
