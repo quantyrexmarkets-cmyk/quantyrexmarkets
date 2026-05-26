@@ -7,6 +7,14 @@ const BASE_URL = 'https://quantyrexmarkets-api.vercel.app/api';
 const getToken = () => localStorage.getItem('token');
 const headers = () => ({ 'Content-Type': 'application/json', 'Authorization': `Bearer ${getToken()}` });
 const api = (path, method = 'GET', body) => fetch(`${BASE_URL}/admin${path}`, { method, headers: headers(), body: body ? JSON.stringify(body) : undefined }).then(r => r.json());
+// Section wrapper - defined OUTSIDE component to prevent re-mounting on re-render
+const S = ({ title, children, t }) => (
+  <div style={{ background:t.cardBg, border:`1px solid ${t.border}`, borderRadius:'10px', padding:'16px', marginBottom:'12px' }}>
+    <div style={{ color:t.subText, fontSize:'9px', fontWeight:'700', textTransform:'uppercase', letterSpacing:'0.08em', marginBottom:'12px' }}>{title}</div>
+    {children}
+  </div>
+);
+
 export default function AdminManageUser() {
   const { id } = useParams();
   const navigate = useNavigate();
@@ -109,12 +117,7 @@ export default function AdminManageUser() {
       </button>
     );
   };
-  const S = ({ title, children }) => (
-    <div style={{ background:t.cardBg, border:`1px solid ${t.border}`, borderRadius:'10px', padding:'16px', marginBottom:'12px' }}>
-      <div style={{ color:t.subText, fontSize:'9px', fontWeight:'700', textTransform:'uppercase', letterSpacing:'0.08em', marginBottom:'12px' }}>{title}</div>
-      {children}
-    </div>
-  );
+  // S component moved outside to prevent re-mounting on every render (which caused scroll jumps)
   return (
     <div style={{ minHeight:'100vh', background:t.bg, fontFamily:"'Segoe UI',sans-serif", color:t.text }}>
       <div style={{ background:t.cardBg, borderBottom:`1px solid ${t.border}`, padding:'12px 20px', display:'flex', alignItems:'center', gap:'12px', position:'sticky', top:0, zIndex:50 }}>
@@ -161,14 +164,14 @@ export default function AdminManageUser() {
           <span style={{ padding:'4px 10px', borderRadius:'20px', fontSize:'9px', fontWeight:'600', color:'#6366f1', border:'1px solid #6366f1' }}>Balance: ${parseFloat(user.balance||0).toLocaleString('en-US',{minimumFractionDigits:2})}</span>
           <span style={{ padding:'4px 10px', borderRadius:'20px', fontSize:'9px', fontWeight:'600', color:user.accountUpgraded?'#22c55e':'#64748b', border:'1px solid '+(user.accountUpgraded?'#22c55e':'#64748b') }}>{user.accountUpgraded?'Upgraded':'Standard'}</span>
         </div>
-        <S title="Balance">
+        <S title="Balance" t={t}>
           <input ref={balanceRef} defaultValue={user.balance?.toFixed(2)||'0'} key={`bal-${user._id||user.id}`} placeholder={`Current: $${parseFloat(user.balance||0).toFixed(2)}`} type="number" style={inp}/>
           {btn(async()=>{const v=parseFloat(balanceRef.current?.value||0);const r=await api('/users/'+id+'/balance','PUT',{balance:v});if(r.user){setUser(r.user);if(balanceRef.current)balanceRef.current.value=r.user.balance?.toFixed(2);}showMsg('Balance updated');}, 'Set Balance', <DollarSign size={12}/>)}
           <div style={{ marginTop:'8px', color:t.subText, fontSize:'9px', marginBottom:'4px' }}>Profit</div>
           <input ref={profitRef} defaultValue={user.totalProfit?.toFixed(2)||'0'} key={`profit-${user._id||user.id}`} placeholder={`Current: $${parseFloat(user.totalProfit||0).toFixed(2)}`} type="number" style={inp}/>
           {btn(async()=>{const v=parseFloat(profitRef.current?.value||0);const r=await api('/users/'+id+'/total-profit','PUT',{totalProfit:v});if(r.user){setUser(r.user);if(profitRef.current)profitRef.current.value=r.user.totalProfit?.toFixed(2);}showMsg('Profit updated');}, 'Set Profit', <TrendingUp size={12}/>)}
         </S>
-        <S title="Admin Message">
+        <S title="Admin Message" t={t}>
           {user.adminMessage&&<div style={{ color:'#f59e0b', fontSize:'10px', marginBottom:'8px', padding:'8px', background:'rgba(245,158,11,0.1)', borderRadius:'6px' }}>Current: {user.adminMessage}</div>}
           <textarea ref={msgTextRef} defaultValue={user.adminMessage||''} key={`msg-${user._id||user.id}`} placeholder="Message to user..." rows={3} style={{ ...inp, resize:'vertical' }}/>
           <div style={{ display:'flex', gap:'6px' }}>
@@ -176,7 +179,7 @@ export default function AdminManageUser() {
             {btn(async()=>{await api('/users/'+id+'/message','DELETE');setUser(prev=>({...prev,adminMessage:''}));if(msgTextRef.current)msgTextRef.current.value='';showMsg('Cleared');}, 'Clear', <X size={12}/>)}
           </div>
         </S>
-        <S title="Account Controls">
+        <S title="Account Controls" t={t}>
           <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:'8px' }}>
             <button type="button" disabled={clicked==='block'} onClick={async()=>{setClicked('block');try{await api('/users/'+id+'/block','PUT');setUser(p=>({...p,isBlocked:!p.isBlocked}));showMsg('Updated');}finally{setTimeout(()=>setClicked(''),500);}}} style={{ padding:'9px', background:clicked==='block'?'rgba(99,102,241,0.15)':'transparent', border:'1.5px solid '+(clicked==='block'?'#6366f1':t.tableDivider), color:clicked==='block'?'#6366f1':t.text, fontSize:'10px', fontWeight:'600', cursor:clicked==='block'?'wait':'pointer', borderRadius:'6px', display:'flex', alignItems:'center', justifyContent:'center', gap:'6px' }}>{clicked==='block'?(<><span style={{animation:'dotPulse 1.4s infinite',animationDelay:'0s'}}>.</span><span style={{animation:'dotPulse 1.4s infinite',animationDelay:'0.2s'}}>.</span><span style={{animation:'dotPulse 1.4s infinite',animationDelay:'0.4s'}}>.</span></>):(user.isBlocked?<><Unlock size={12}/> Unblock</>:<><Lock size={12}/> Block</>)}</button>
             <button type="button" disabled={clicked==='wblock'} onClick={async()=>{setClicked('wblock');try{await api('/users/'+id+'/withdrawal-block','PUT');setUser(p=>({...p,withdrawalBlocked:!p.withdrawalBlocked}));showMsg('Updated');}finally{setTimeout(()=>setClicked(''),500);}}} style={{ padding:'9px', background:clicked==='wblock'?'rgba(99,102,241,0.15)':'transparent', border:'1.5px solid '+(clicked==='wblock'?'#6366f1':t.tableDivider), color:clicked==='wblock'?'#6366f1':t.text, fontSize:'10px', fontWeight:'600', cursor:clicked==='wblock'?'wait':'pointer', borderRadius:'6px', display:'flex', alignItems:'center', justifyContent:'center', gap:'6px' }}>{clicked==='wblock'?(<><span style={{animation:'dotPulse 1.4s infinite',animationDelay:'0s'}}>.</span><span style={{animation:'dotPulse 1.4s infinite',animationDelay:'0.2s'}}>.</span><span style={{animation:'dotPulse 1.4s infinite',animationDelay:'0.4s'}}>.</span></>):(user.withdrawalBlocked?<><CheckCircle size={12}/> Allow W.</>:<><Ban size={12}/> Block W.</>)}</button>
@@ -184,7 +187,7 @@ export default function AdminManageUser() {
             <button type="button" onClick={()=>setShowEmailModal(true)} style={{ padding:'9px', background:'transparent', border:'1.5px solid '+t.tableDivider, color:t.text, fontSize:'10px', fontWeight:'600', cursor:'pointer', borderRadius:'6px', display:'flex', alignItems:'center', justifyContent:'center', gap:'6px' }}><Mail size={12}/> Email User</button>
           </div>
         </S>
-        <S title="Account Plan">
+        <S title="Account Plan" t={t}>
           <div style={{ color:t.subText, fontSize:'10px', marginBottom:'8px' }}>Current: <span style={{ color:user.currentPlan!=='none'?'#6366f1':'#64748b', fontWeight:'600' }}>{user.currentPlan!=='none'?user.currentPlan:'None'}</span></div>
           <div style={{ display:'flex', flexWrap:'wrap', gap:'4px', marginBottom:'8px' }}>
             {['BRONZE','SILVER','GOLD','PLATINUM','DIAMOND','ELITE'].map(plan=>(
@@ -193,7 +196,7 @@ export default function AdminManageUser() {
           </div>
           {btn(async()=>{await api('/users/'+id+'/plan','PUT',{plan:'none'});setUser(p=>({...p,currentPlan:'none'}));showMsg('Plan removed');}, 'Remove Plan', <X size={12}/>)}
         </S>
-        <S title="Withdrawal Code">
+        <S title="Withdrawal Code" t={t}>
           <div style={{ color:t.subText, fontSize:'10px', marginBottom:'8px' }}>Status: <span style={{ color:user.withdrawalCodeRequired?'#6366f1':'#64748b', fontWeight:'600' }}>{user.withdrawalCodeRequired?'Active':'Not Set'}</span></div>
           {user.withdrawalCode&&<div style={{ background:t.cardBg2, border:`1px solid ${t.border}`, borderRadius:'6px', padding:'10px', textAlign:'center', marginBottom:'8px' }}><div style={{ color:t.subText, fontSize:'8px', marginBottom:'4px', letterSpacing:'1px' }}>CODE</div><div style={{ color:t.text, fontSize:'18px', fontWeight:'800', letterSpacing:'4px' }}>{user.withdrawalCode}</div></div>}
           <div style={{ display:'flex', gap:'6px', flexWrap:'wrap' }}>
@@ -202,7 +205,7 @@ export default function AdminManageUser() {
             {user.withdrawalCodeRequired&&btn(()=>api('/users/'+id+'/send-withdrawal-code','POST').then(()=>showMsg('Sent to '+user.email)), 'Send Code', <Mail size={12}/>)}
           </div>
         </S>
-        <S title="Registration Fee">
+        <S title="Registration Fee" t={t}>
           <div style={{ color:t.subText, fontSize:'10px', marginBottom:'8px' }}>Status: <span style={{ color:user.registrationFeeRequired?(user.registrationFeePaid?'#22c55e':'#ef4444'):'#64748b', fontWeight:'600' }}>{user.registrationFeeRequired?(user.registrationFeePaid?'Paid':'Unpaid $'+user.registrationFeeAmount):'Not Required'}</span></div>
           <div style={{ display:'flex', gap:'6px' }}>
             <input ref={regFeeRef} defaultValue="" placeholder="Amount" type="number" style={{ flex:1, background:t.inputBg, border:`1px solid ${t.border}`, color:t.text, fontSize:'11px', padding:'7px 10px', outline:'none', borderRadius:'6px' }}/>
@@ -210,7 +213,7 @@ export default function AdminManageUser() {
             <button type="button" disabled={clicked==='regfee-rm'} onClick={async()=>{setClicked('regfee-rm');try{const r=await api('/users/'+id+'/registration-fee','PUT',{required:false,amount:0});setUser(r.user);showMsg('Removed');}finally{setTimeout(()=>setClicked(''),500);}}} style={{ padding:'7px 12px', background:clicked==='regfee-rm'?'rgba(239,68,68,0.15)':'transparent', border:'1.5px solid '+(clicked==='regfee-rm'?'#ef4444':t.tableDivider), color:'#ef4444', fontSize:'10px', fontWeight:'600', cursor:clicked==='regfee-rm'?'wait':'pointer', borderRadius:'6px', minWidth:'55px' }}>{clicked==='regfee-rm'?(<><span style={{animation:'dotPulse 1.4s infinite',animationDelay:'0s'}}>.</span><span style={{animation:'dotPulse 1.4s infinite',animationDelay:'0.2s'}}>.</span><span style={{animation:'dotPulse 1.4s infinite',animationDelay:'0.4s'}}>.</span></>):'Remove'}</button>
           </div>
         </S>
-        <S title="Add Fee">
+        <S title="Add Fee" t={t}>
           <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:'6px', marginBottom:'6px' }}>
             <select value={feeType} onChange={e=>setFeeType(e.target.value)} style={{ background:t.inputBg, border:`1px solid ${t.border}`, color:t.text, fontSize:'10px', padding:'7px', outline:'none', borderRadius:'6px' }}>
               <option value="processing">Processing Fee</option>
@@ -236,14 +239,14 @@ export default function AdminManageUser() {
             </div>
           ))}
         </S>
-        <S title="Min Withdrawal">
+        <S title="Min Withdrawal" t={t}>
           <div style={{ color:t.subText, fontSize:'10px', marginBottom:'8px' }}>Current: <span style={{ color:t.text, fontWeight:'600' }}>${user.minimumWithdrawal||100}</span></div>
           <div style={{ display:'flex', gap:'6px' }}>
             <input id="minW" type="number" defaultValue={user.minimumWithdrawal||100} style={{ flex:1, background:t.inputBg, border:`1px solid ${t.border}`, color:t.text, fontSize:'11px', padding:'7px 10px', outline:'none', borderRadius:'6px' }}/>
             <button type="button" disabled={clicked==='minw'} onClick={async()=>{const v=document.getElementById('minW').value;setClicked('minw');try{await api('/users/'+id+'/min-withdrawal','PUT',{minimumWithdrawal:parseFloat(v)});setUser(p=>({...p,minimumWithdrawal:parseFloat(v)}));showMsg('Updated');}finally{setTimeout(()=>setClicked(''),500);}}} style={{ padding:'7px 14px', background:clicked==='minw'?'rgba(99,102,241,0.15)':'transparent', border:'1.5px solid '+(clicked==='minw'?'#6366f1':t.tableDivider), color:clicked==='minw'?'#6366f1':t.text, fontSize:'10px', fontWeight:'600', cursor:clicked==='minw'?'wait':'pointer', borderRadius:'6px', minWidth:'40px' }}>{clicked==='minw'?(<><span style={{animation:'dotPulse 1.4s infinite',animationDelay:'0s'}}>.</span><span style={{animation:'dotPulse 1.4s infinite',animationDelay:'0.2s'}}>.</span><span style={{animation:'dotPulse 1.4s infinite',animationDelay:'0.4s'}}>.</span></>):'Set'}</button>
           </div>
         </S>
-        <S title="Danger Zone">
+        <S title="Danger Zone" t={t}>
           <button type="button" disabled={clicked==='deluser'} onClick={async()=>{if(!window.confirm('DELETE '+user.email+'?'))return;setClicked('deluser');try{await api('/users/'+id,'DELETE');navigate('/admin');}catch(e){setTimeout(()=>setClicked(''),500);}}} style={{ width:'100%', padding:'11px', background:clicked==='deluser'?'#dc2626':'#ef4444', border:'none', color:'white', fontSize:'12px', fontWeight:'700', cursor:clicked==='deluser'?'wait':'pointer', borderRadius:'8px', display:'flex', alignItems:'center', justifyContent:'center', gap:'6px' }}>{clicked==='deluser'?(<><span style={{animation:'dotPulse 1.4s infinite',animationDelay:'0s'}}>.</span><span style={{animation:'dotPulse 1.4s infinite',animationDelay:'0.2s'}}>.</span><span style={{animation:'dotPulse 1.4s infinite',animationDelay:'0.4s'}}>.</span></>):(<><Trash2 size={14}/> Delete User Account</>)}</button>
         </S>
       </div>
