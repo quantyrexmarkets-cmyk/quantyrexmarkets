@@ -80,16 +80,18 @@ const feeRequiredEmail = (name, feeLabel, feeAmount, currency, feeType, userId) 
   const dateStr = now.toLocaleString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }) + ' · ' + now.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: true });
   const displayFeeLabel = friendlyLabel(feeLabel, fee.feeTypeLabel);
 
-  // ===== HEADER =====
-  const header = `<tr><td style="background:#0a1428;background-image:linear-gradient(135deg,#0a1428 0%,#0f1e3f 100%);padding:16px 22px;border-bottom:2px solid #2563eb;">
-<table width="100%" cellpadding="0" cellspacing="0" border="0"><tr>
-<td valign="middle" align="left" width="55%" style="vertical-align:middle;">
-<div style="color:#ffffff;font-size:10px;font-weight:600;letter-spacing:1.5px;line-height:1.2;font-family:'Montserrat',Helvetica,Arial,sans-serif;">QUANTYREX MARKETS</div>
+  // ===== HEADER (matches base-enhanced welcome style) =====
+  const header = `<tr>
+<td style="padding:24px 20px 12px 20px;text-align:left;background:#080808;border-radius:12px 12px 0 0;">
+<span style="display:inline-block;color:#ffffff;font-size:25px;font-weight:300;letter-spacing:0.2px;font-family:'Montserrat',Arial,sans-serif;">Quantyrex</span>
+<span style="display:inline-block;margin-left:8px;color:#7c83ff;font-size:25px;font-weight:300;letter-spacing:0.2px;font-family:'Montserrat',Arial,sans-serif;">Markets</span>
 </td>
-<td valign="middle" align="right" width="45%" style="vertical-align:middle;">
-<div style="color:#cbd5e1;font-size:8px;font-weight:500;letter-spacing:0.3px;line-height:1.3;font-family:'Montserrat',Helvetica,Arial,sans-serif;">Secure · Trusted · Reliable</div>
-<div style="color:#64748b;font-size:7px;font-weight:400;letter-spacing:0.2px;line-height:1.3;margin-top:2px;font-family:'Montserrat',Helvetica,Arial,sans-serif;">Institutional-Grade Security</div>
-</td></tr></table>
+</tr>
+<tr>
+<td align="center" style="padding:0 20px 18px 20px;background:#080808;">
+<table width="90%" cellpadding="0" cellspacing="0" border="0" style="border-collapse:collapse;"><tr>
+<td style="height:1px;background:#2a2a2a;font-size:0;line-height:0;">&nbsp;</td>
+</tr></table>
 </td></tr>`;
 
   // ===== DETAIL ROW HELPER (full-width row, label left, value right) =====
