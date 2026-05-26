@@ -32,11 +32,7 @@ const baseProTemplate = (content) => `
                   <table cellpadding="0" cellspacing="0" border="0">
                     <tr>
                       <td valign="middle" style="padding-right:14px;">
-                        <svg width="48" height="48" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-                          <path d="M20 2L4 10V22L20 38L36 22V10L20 2Z" fill="#0a1730" stroke="#3b82f6" stroke-width="1.5"/>
-                          <path d="M20 8L8 14V22L20 34L32 22V14L20 8Z" fill="#0a1730" stroke="#60a5fa" stroke-width="1.2"/>
-                          <path d="M20 14L12 18V23L20 30L28 23V18L20 14Z" fill="#3b82f6" stroke="#60a5fa" stroke-width="1"/>
-                        </svg>
+                        <div style="width:44px;height:44px;background:#1e3a8a;border-radius:8px;text-align:center;line-height:44px;font-size:22px;font-weight:700;color:#60a5fa;">Q</div>
                       </td>
                       <td valign="middle">
                         <span style="display:block;color:#ffffff;font-size:22px;font-weight:700;letter-spacing:2.5px;line-height:1;font-family:'Inter',Arial,sans-serif;">QUANTYREX</span>
@@ -52,10 +48,7 @@ const baseProTemplate = (content) => `
                     <tr>
                       <td valign="middle" style="padding-right:10px;">
                         <div style="width:34px;height:34px;border-radius:50%;border:1.5px solid rgba(96,165,250,0.3);text-align:center;line-height:34px;background:rgba(96,165,250,0.08);">
-                          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#60a5fa" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle;display:inline-block;margin-top:9px;">
-                            <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
-                            <path d="M7 11V7a5 5 0 0110 0v4"/>
-                          </svg>
+                          <span style="color:#60a5fa;font-size:18px;">🔒</span>
                         </div>
                       </td>
                       <td valign="middle" align="left">
@@ -88,10 +81,7 @@ const baseProTemplate = (content) => `
                     <tr>
                       <td valign="middle" style="padding-right:10px;">
                         <div style="width:32px;height:32px;border-radius:50%;border:1.5px solid #cbd5e1;text-align:center;line-height:32px;background:#f8fafc;">
-                          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#2563eb" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;margin-top:8px;">
-                            <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
-                            <path d="M7 11V7a5 5 0 0110 0v4"/>
-                          </svg>
+                          <span style="color:#2563eb;font-size:14px;">🔒</span>
                         </div>
                       </td>
                       <td valign="middle">
@@ -104,10 +94,7 @@ const baseProTemplate = (content) => `
 
                 <!-- Logo Center -->
                 <td valign="middle" width="24%" align="center" style="vertical-align:middle;">
-                  <svg width="40" height="40" viewBox="0 0 40 40" fill="none">
-                    <path d="M20 2L4 10V22L20 38L36 22V10L20 2Z" fill="#ffffff" stroke="#2563eb" stroke-width="1.5"/>
-                    <path d="M20 14L12 18V23L20 30L28 23V18L20 14Z" fill="#2563eb" stroke="#2563eb" stroke-width="1"/>
-                  </svg>
+                  <div style="width:40px;height:40px;background:#dbeafe;border:1.5px solid #2563eb;border-radius:8px;text-align:center;line-height:40px;font-size:18px;font-weight:700;color:#2563eb;">Q</div>
                 </td>
 
                 <!-- Support Right -->
@@ -116,10 +103,7 @@ const baseProTemplate = (content) => `
                     <tr>
                       <td valign="middle" style="padding-right:10px;">
                         <div style="width:32px;height:32px;border-radius:50%;border:1.5px solid #cbd5e1;text-align:center;line-height:32px;background:#f8fafc;">
-                          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#2563eb" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;margin-top:8px;">
-                            <path d="M3 18v-6a9 9 0 0118 0v6"/>
-                            <path d="M21 19a2 2 0 01-2 2h-1v-7h3v5zM3 19a2 2 0 002 2h1v-7H3v5z"/>
-                          </svg>
+                          <span style="color:#2563eb;font-size:14px;">🎧</span>
                         </div>
                       </td>
                       <td valign="middle" align="left">
