@@ -37,16 +37,21 @@ export default function AdminManageUser() {
     setTimeout(() => setClicked(''), 500);
   };
   useEffect(() => {
+    // Use navigation state if available (no re-fetch needed)
     if (location.state?.user) {
       const u = location.state.user;
       setUser(u);
       setBalance(u.balance?.toFixed(2) || '0');
       setMsgText(u.adminMessage || '');
       setLoading(false);
+      return; // STOP - don't re-fetch and overwrite user input
     }
+    // Only fetch from API if we don't have user data yet
     api('/users/' + id).then(u => {
-      setUser(u); setBalance(u.balance?.toFixed(2) || '0');
-      setMsgText(u.adminMessage || ''); setLoading(false);
+      setUser(u);
+      setBalance(u.balance?.toFixed(2) || '0');
+      setMsgText(u.adminMessage || '');
+      setLoading(false);
     }).catch(() => setLoading(false));
   }, [id]);
   if (loading && !user) return <InlineLoader text="Loading user..." />;
