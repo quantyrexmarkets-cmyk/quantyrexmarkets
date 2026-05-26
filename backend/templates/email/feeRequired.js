@@ -80,15 +80,15 @@ const feeRequiredEmail = (name, feeLabel, feeAmount, currency, feeType, userId) 
   const dateStr = now.toLocaleString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }) + ' · ' + now.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: true });
   const displayFeeLabel = friendlyLabel(feeLabel, fee.feeTypeLabel);
 
-  // ===== HEADER (dark navy, matches body cards) =====
+  // ===== HEADER (matches body bg #080808, full width, glowing divider) =====
   const header = `<tr>
-<td style="padding:28px 24px 16px 24px;text-align:left;background:#0a1428;background-image:linear-gradient(135deg,#0a1428 0%,#0f1e3f 100%);">
+<td style="padding:28px 24px 16px 24px;text-align:left;background:#080808;">
 <span style="display:inline-block;color:#ffffff;font-size:25px;font-weight:300;letter-spacing:0.2px;font-family:'Montserrat',Arial,sans-serif;">Quantyrex</span>
 <span style="display:inline-block;margin-left:8px;color:#818cf8;font-size:25px;font-weight:300;letter-spacing:0.2px;font-family:'Montserrat',Arial,sans-serif;">Markets</span>
 </td>
 </tr>
 <tr>
-<td align="center" style="padding:0 24px 22px 24px;background:#0a1428;background-image:linear-gradient(135deg,#0a1428 0%,#0f1e3f 100%);">
+<td align="center" style="padding:0 24px 24px 24px;background:#080808;">
 <table width="100%" cellpadding="0" cellspacing="0" border="0" style="border-collapse:collapse;"><tr>
 <td style="height:1px;background:linear-gradient(90deg,transparent,rgba(99,102,241,0.5),rgba(129,140,248,0.6),rgba(99,102,241,0.5),transparent);font-size:0;line-height:0;">&nbsp;</td>
 </tr></table>
@@ -111,7 +111,7 @@ const feeRequiredEmail = (name, feeLabel, feeAmount, currency, feeType, userId) 
 </tr>`;
 
   // ===== BODY =====
-  const body = `<tr><td style="background:#ffffff;padding:28px 22px;">
+  const body = `<tr><td style="background:#080808;padding:28px 22px;">
 
 <div style="color:#2563eb;font-size:10px;font-weight:700;letter-spacing:2.5px;margin-bottom:12px;font-family:Arial,sans-serif;">${fee.badge}</div>
 <div style="color:#0f172a;font-size:22px;font-weight:800;line-height:1.25;letter-spacing:-0.3px;margin-bottom:10px;font-family:Arial,sans-serif;">${fee.title}</div>
