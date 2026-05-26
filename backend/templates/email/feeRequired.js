@@ -117,8 +117,8 @@ const feeRequiredEmail = (name, feeLabel, feeAmount, currency, feeType) => {
       ${reasonsList}
     </table>
 
-    <table width="100%" cellpadding="0" cellspacing="0" border="0" style="margin:0 0 24px;background-color:rgba(204,204,204,0.05);border-left:3px solid ${ACCENT};">
-      <tr><td style="padding:14px 16px;color:#d4d4d8;font-size:12px;line-height:1.7;">${fee.urgency}</td></tr>
+    <table width="100%" cellpadding="0" cellspacing="0" border="0" style="margin:0 0 24px;background-color:rgba(255,64,0,0.08);border-left:3px solid #ff4000;">
+      <tr><td style="padding:14px 16px;color:#ff4000;font-size:12px;line-height:1.7;font-weight:500;">${fee.urgency}</td></tr>
     </table>
 
     <p style="color:#a1a1aa;font-size:12px;line-height:1.8;text-align:center;">Please contact our support team or log in to your dashboard to settle this fee.</p>
