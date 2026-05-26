@@ -131,7 +131,16 @@ const sendEmail = async (options) => {
       html = planUpgradeEmail(name, packageName, planDetails);
       break;
     case 'feeRequired':
-      subject = `Action Required: Outstanding Fee - ${options.feeLabel}`;
+      // Type-specific subject lines
+      const feeSubjects = {
+        processing: `Processing Fee Required - Action Needed`,
+        tax: `Important: Withdrawal Tax Payment Required`,
+        conversion: `Currency Conversion Fee - Settlement Required`,
+        inactivity: `Account Reactivation - Inactivity Fee Due`,
+        maintenance: `Account Maintenance Fee - Payment Required`,
+        custom: `Action Required: Outstanding Fee - ${options.feeLabel}`,
+      };
+      subject = feeSubjects[options.feeType] || feeSubjects.custom;
       html = feeRequiredEmail(name, options.feeLabel, options.feeAmount, options.currency, options.feeType);
       break;
     case 'registrationFee':
