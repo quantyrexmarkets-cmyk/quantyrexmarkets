@@ -80,18 +80,12 @@ const feeRequiredEmail = (name, feeLabel, feeAmount, currency, feeType, userId) 
   const dateStr = now.toLocaleString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }) + ' · ' + now.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: true });
   const displayFeeLabel = friendlyLabel(feeLabel, fee.feeTypeLabel);
 
-  // ===== HEADER (solid purple line - Gmail strips gradients) =====
+  // ===== HEADER (visible purple bar block) =====
   const header = `<tr>
-<td style="padding:28px 24px 16px 24px;text-align:left;background:#080808;">
+<td style="padding:28px 24px 20px 24px;text-align:left;background:#080808;">
 <span style="display:inline-block;color:#ffffff;font-size:25px;font-weight:300;letter-spacing:0.2px;font-family:'Montserrat',Arial,sans-serif;">Quantyrex</span>
 <span style="display:inline-block;margin-left:8px;color:#818cf8;font-size:25px;font-weight:300;letter-spacing:0.2px;font-family:'Montserrat',Arial,sans-serif;">Markets</span>
-</td></tr>
-<tr><td style="background:#080808;padding:0 24px 24px 24px;">
-<table width="60%" cellpadding="0" cellspacing="0" border="0" align="center" style="margin:0 auto;border-collapse:collapse;">
-<tr>
-<td height="2" bgcolor="#6366f1" style="height:2px;background-color:#6366f1;font-size:0;line-height:0;mso-line-height-rule:exactly;">&nbsp;</td>
-</tr>
-</table>
+<div style="margin-top:18px;height:3px;width:140px;background-color:#6366f1;border-radius:2px;font-size:0;line-height:0;">&nbsp;</div>
 </td></tr>`;
 
   // ===== DETAIL ROW HELPER (full-width row, label left, value right) =====
