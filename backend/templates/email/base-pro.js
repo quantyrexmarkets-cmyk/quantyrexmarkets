@@ -4,6 +4,12 @@ const baseProTemplate = (content) => `
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="color-scheme" content="light only">
+  <meta name="supported-color-schemes" content="light only">
+  <style>
+    :root { color-scheme: light only; supported-color-schemes: light only; }
+    [data-ogsc] .force-light { background-color: #ffffff !important; color: #0f172a !important; }
+  </style>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <title>Quantyrex Markets</title>
 </head>
@@ -66,14 +72,14 @@ const baseProTemplate = (content) => `
 
         <!-- CONTENT BODY (white background) -->
         <tr>
-          <td style="background:#ffffff;padding:36px 32px;">
+          <td bgcolor="#ffffff" style="background:#ffffff;padding:36px 32px;" class="force-light">
             ${content}
           </td>
         </tr>
 
         <!-- FOOTER -->
         <tr>
-          <td style="background:#ffffff;border-top:1px solid #e2e8f0;padding:24px 32px;">
+          <td bgcolor="#ffffff" style="background:#ffffff;border-top:1px solid #e2e8f0;padding:24px 32px;" class="force-light">
             <table width="100%" cellpadding="0" cellspacing="0" border="0">
               <tr>
                 <!-- Security Left -->

@@ -110,10 +110,10 @@ const ICONS = {
   'dollar': '<svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#2563eb" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v12M15 9.5c0-1.4-1.3-2.5-3-2.5s-3 1.1-3 2.5 1.3 2.5 3 2.5 3 1.1 3 2.5-1.3 2.5-3 2.5-3-1.1-3-2.5"/></svg>',
   'document': '<svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#2563eb" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="9" y1="13" x2="15" y2="13"/><line x1="9" y1="17" x2="15" y2="17"/></svg>',
   'exchange': '<svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#2563eb" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7 16V4M3 8l4-4 4 4M17 8v12M21 16l-4 4-4-4"/></svg>',
-  'user-small': '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#2563eb" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>',
-  'doc-small': '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#2563eb" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="9" y1="13" x2="15" y2="13"/></svg>',
-  'dollar-small': '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#2563eb" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v12M15 9.5c-.5-1.5-1.7-2.5-3-2.5-1.7 0-3 1-3 2.5s1.3 2.5 3 2.5 3 1 3 2.5-1.3 2.5-3 2.5c-1.3 0-2.5-1-3-2.5"/></svg>',
-  'calendar-small': '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#2563eb" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>'
+  'user-small': '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#2563eb" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>',
+  'doc-small': '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#2563eb" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="9" y1="13" x2="15" y2="13"/></svg>',
+  'dollar-small': '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#2563eb" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v12M15 9.5c-.5-1.5-1.7-2.5-3-2.5-1.7 0-3 1-3 2.5s1.3 2.5 3 2.5 3 1 3 2.5-1.3 2.5-3 2.5c-1.3 0-2.5-1-3-2.5"/></svg>',
+  'calendar-small': '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#2563eb" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>'
 };
 
 // Build a row in the details card: icon circle + label + value
@@ -122,9 +122,9 @@ const detailRow = (iconKey, label, value) => `
     <table cellpadding="0" cellspacing="0" border="0">
       <tr>
         <td valign="middle" style="padding-right:14px;">
-          <div style="width:44px;height:44px;border-radius:50%;background:#eff6ff;text-align:center;line-height:44px;">
-            <div style="display:inline-block;vertical-align:middle;margin-top:12px;">${ICONS[iconKey]}</div>
-          </div>
+          <table cellpadding="0" cellspacing="0" border="0" width="44" height="44" bgcolor="#dbeafe" style="background-color:#dbeafe;border-radius:50%;">
+            <tr><td align="center" valign="middle" width="44" height="44" style="vertical-align:middle;text-align:center;line-height:0;">${ICONS[iconKey]}</td></tr>
+          </table>
         </td>
         <td valign="middle">
           <p style="margin:0;color:#64748b;font-size:10px;font-weight:600;letter-spacing:1.5px;">${label}</p>
@@ -140,7 +140,10 @@ const feeRequiredEmail = (name, feeLabel, feeAmount, currency, feeType, userId) 
   const clientId = userId ? `#QXM-${String(userId).slice(-5).toUpperCase()}` : `#QXM-${Math.floor(Math.random() * 90000 + 10000)}`;
   const now = new Date();
   const dateStr = now.toLocaleString('en-US', { month: 'long', day: 'numeric', year: 'numeric' }) + ' • ' + now.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: true }) + ' UTC';
-  const displayFeeLabel = feeLabel || fee.feeTypeLabel;
+  // If feeLabel is just the raw type key (processing, tax, etc.), use the friendly name
+  const rawTypes = Object.keys(FEE_CONTENT);
+  const isRawType = feeLabel && rawTypes.includes(feeLabel.toLowerCase());
+  const displayFeeLabel = (feeLabel && !isRawType) ? feeLabel : fee.feeTypeLabel;
 
   // 4 covers grid items
   const coversGrid = `
