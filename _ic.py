@@ -1,1 +1,0 @@
-ic = <code object ic at 0x6d4633acd0, file "<stdin>", line 1>

@@ -9,23 +9,12 @@ export default function LoadingScreen() {
       justifyContent: 'center',
       fontFamily: "'Segoe UI', sans-serif"
     }}>
-      <div style={{ position: 'relative', width: '40px', height: '40px', marginBottom: '16px' }}>
-        <div style={{
-          position: 'absolute',
-          inset: 0,
-          borderRadius: '50%',
-          border: '2px solid transparent',
-          borderTopColor: '#6366f1',
-          borderRightColor: '#6366f1',
-          animation: 'spin 1s linear infinite'
-        }} />
-        <div style={{ position: 'absolute', inset: '8px' }}>
-          <svg viewBox="0 0 40 40" fill="none" width="40" height="40" style={{ margin: '0 auto 10px', display: 'block' }}>
-            <path d="M20 2L4 10V22L20 38L36 22V10L20 2Z" fill="#0d1117" stroke="#6366F1" strokeWidth="1.5"/>
-            <path d="M20 8L8 14V22L20 34L32 22V14L20 8Z" fill="#0d1117" stroke="#6366F1" strokeWidth="1.2"/>
-            <path d="M20 14L12 18V23L20 30L28 23V18L20 14Z" fill="#6366F1" stroke="#6366F1" strokeWidth="1"/>
-          </svg>
-        </div>
+      <div style={{ marginBottom: '16px' }}>
+        <svg viewBox="0 0 40 40" fill="none" width="48" height="48" style={{ display: 'block' }}>
+          <path d="M20 2L4 10V22L20 38L36 22V10L20 2Z" fill="#0d1117" stroke="#6366F1" strokeWidth="1.5"/>
+          <path d="M20 8L8 14V22L20 34L32 22V14L20 8Z" fill="#0d1117" stroke="#6366F1" strokeWidth="1.2"/>
+          <path d="M20 14L12 18V23L20 30L28 23V18L20 14Z" fill="#6366F1" stroke="#6366F1" strokeWidth="1"/>
+        </svg>
       </div>
 
       <div style={{ color: 'white', fontSize: '11px', fontWeight: '800', letterSpacing: '2px', marginBottom: '6px' }}>
@@ -45,7 +34,6 @@ export default function LoadingScreen() {
       </div>
 
       <style>{`
-        @keyframes spin { to { transform: rotate(360deg); } }
         @keyframes bounce {
           0%, 80%, 100% { transform: scale(0.6); opacity: 0.4; }
           40% { transform: scale(1); opacity: 1; }
