@@ -80,12 +80,18 @@ const feeRequiredEmail = (name, feeLabel, feeAmount, currency, feeType, userId) 
   const dateStr = now.toLocaleString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }) + ' · ' + now.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: true });
   const displayFeeLabel = friendlyLabel(feeLabel, fee.feeTypeLabel);
 
-  // ===== HEADER (visible purple bar block) =====
+  // ===== HEADER (thin subtle gray line like welcome.js) =====
   const header = `<tr>
-<td style="padding:28px 24px 20px 24px;text-align:left;background:#080808;">
+<td style="padding:24px 20px 12px 20px;text-align:left;background:#080808;">
 <span style="display:inline-block;color:#ffffff;font-size:25px;font-weight:300;letter-spacing:0.2px;font-family:'Montserrat',Arial,sans-serif;">Quantyrex</span>
 <span style="display:inline-block;margin-left:8px;color:#818cf8;font-size:25px;font-weight:300;letter-spacing:0.2px;font-family:'Montserrat',Arial,sans-serif;">Markets</span>
-<div style="margin-top:18px;height:3px;width:140px;background-color:#6366f1;border-radius:2px;font-size:0;line-height:0;">&nbsp;</div>
+</td></tr>
+<tr><td align="center" style="padding:0 20px 18px 20px;background:#080808;">
+<table width="90%" cellpadding="0" cellspacing="0" border="0" align="center" style="border-collapse:collapse;">
+<tr>
+<td height="1" bgcolor="#2a2a2a" style="height:1px;background-color:#2a2a2a;font-size:0;line-height:0;mso-line-height-rule:exactly;">&nbsp;</td>
+</tr>
+</table>
 </td></tr>`;
 
   // ===== DETAIL ROW HELPER (full-width row, label left, value right) =====
