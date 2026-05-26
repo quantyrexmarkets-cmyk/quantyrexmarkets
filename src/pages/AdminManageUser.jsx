@@ -139,10 +139,10 @@ export default function AdminManageUser() {
         </S>
         <S title="Admin Message">
           {user.adminMessage&&<div style={{ color:'#f59e0b', fontSize:'10px', marginBottom:'8px', padding:'8px', background:'rgba(245,158,11,0.1)', borderRadius:'6px' }}>Current: {user.adminMessage}</div>}
-          <textarea value={msgText} onChange={e=>setMsgText(e.target.value)} placeholder="Message to user..." rows={3} style={{ ...inp, resize:'vertical' }}/>
+          <textarea ref={msgTextRef} defaultValue={user.adminMessage||''} key={`msg-${user._id||user.id}`} placeholder="Message to user..." rows={3} style={{ ...inp, resize:'vertical' }}/>
           <div style={{ display:'flex', gap:'6px' }}>
-            {btn(async()=>{await api('/users/'+id+'/message','POST',{message:msgText});setUser(prev=>({...prev,adminMessage:msgText}));showMsg('Sent');}, 'Send', <Send size={12}/>)}
-            {btn(async()=>{await api('/users/'+id+'/message','DELETE');setUser(prev=>({...prev,adminMessage:''}));setMsgText('');showMsg('Cleared');}, 'Clear', <X size={12}/>)}
+            {btn(async()=>{const v=msgTextRef.current?.value||'';await api('/users/'+id+'/message','POST',{message:v});setUser(prev=>({...prev,adminMessage:v}));showMsg('Sent');}, 'Send', <Send size={12}/>)}
+            {btn(async()=>{await api('/users/'+id+'/message','DELETE');setUser(prev=>({...prev,adminMessage:''}));if(msgTextRef.current)msgTextRef.current.value='';showMsg('Cleared');}, 'Clear', <X size={12}/>)}
           </div>
         </S>
         <S title="Account Controls">
