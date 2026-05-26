@@ -202,7 +202,7 @@ const SignIn = () => {
               if (!otp || otp.length !== 6) { setErrors({ otp: 'Please enter 6-digit code' }); return; }
               setOtpLoading(true);
               try {
-                const res = await fetch('https://quantyrexmarkets-api.vercel.app/api/auth/2fa/verify', {
+                const res = await fetch('https://quantyrexmarkets-production.up.railway.app/api/auth/2fa/verify', {
                   method: 'POST',
                   headers: { 'Content-Type': 'application/json' },
                   body: JSON.stringify({ email: otpEmail, otp })

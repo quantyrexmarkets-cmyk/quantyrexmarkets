@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from 'react';
 import { Bell } from 'lucide-react';
 import { useTheme } from '../context/ThemeContext';
 
-const API = 'https://quantyrexmarkets-api.vercel.app/api';
+const API = 'https://quantyrexmarkets-production.up.railway.app/api';
 
 export default function NotificationBell() {
   const { current: t } = useTheme();

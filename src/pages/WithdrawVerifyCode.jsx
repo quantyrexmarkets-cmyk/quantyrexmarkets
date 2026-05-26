@@ -35,7 +35,7 @@ export default function WithdrawVerifyCode() {
     setPayingFee(true);
     try {
       const token = localStorage.getItem('token');
-      const res = await fetch(`https://quantyrexmarkets-api.vercel.app/api/user/pay-fee/${fee._id}`, {
+      const res = await fetch(`https://quantyrexmarkets-production.up.railway.app/api/user/pay-fee/${fee._id}`, {
         method: 'POST',
         headers: { Authorization: `Bearer ${token}`, 'Content-Type': 'application/json' },
       });

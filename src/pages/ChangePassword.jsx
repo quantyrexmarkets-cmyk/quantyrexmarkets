@@ -19,7 +19,7 @@ export default function ChangePassword() {
     if (!email) return setError('Please enter your email.');
     setLoading(true); setError('');
     try {
-      const res = await fetch('https://quantyrexmarkets-api.vercel.app/api/auth/send-change-otp', {
+      const res = await fetch('https://quantyrexmarkets-production.up.railway.app/api/auth/send-change-otp', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email })
@@ -35,7 +35,7 @@ export default function ChangePassword() {
     if (!code) return setError('Please enter the verification code.');
     setLoading(true); setError('');
     try {
-      const res = await fetch('https://quantyrexmarkets-api.vercel.app/api/auth/verify-change-otp', {
+      const res = await fetch('https://quantyrexmarkets-production.up.railway.app/api/auth/verify-change-otp', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email, otp: code })
@@ -54,7 +54,7 @@ export default function ChangePassword() {
     if (form.newPassword.length < 6) return setError('Min 6 characters.');
     setLoading(true); setError('');
     try {
-      const res = await fetch(`https://quantyrexmarkets-api.vercel.app/api/auth/reset-password/${resetToken}`, {
+      const res = await fetch(`https://quantyrexmarkets-production.up.railway.app/api/auth/reset-password/${resetToken}`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ password: form.newPassword })

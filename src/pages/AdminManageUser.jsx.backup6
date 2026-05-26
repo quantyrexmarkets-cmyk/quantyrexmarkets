@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from 'react';
 import InlineLoader from '../components/InlineLoader';
 import { useParams, useNavigate, useLocation } from 'react-router-dom';
 import { useTheme } from '../context/ThemeContext';
-import { ArrowLeft, Mail, Lock, Unlock, Ban, CheckCircle, ArrowUpCircle, RotateCcw, Trash2, DollarSign, Send, X, Shield, TrendingUp } from 'lucide-react';
+import { ArrowLeft, Mail, Lock, Unlock, Ban, CheckCircle, ArrowUpCircle, RotateCcw, Trash2, DollarSign, Send, X, Shield } from 'lucide-react';
 const BASE_URL = 'https://quantyrexmarkets-production.up.railway.app/api';
 const getToken = () => localStorage.getItem('token');
 const headers = () => ({ 'Content-Type': 'application/json', 'Authorization': `Bearer ${getToken()}` });
@@ -89,13 +89,7 @@ export default function AdminManageUser() {
         transition: 'all 0.15s ease',
         transform: isClicked ? 'scale(0.95)' : 'scale(1)',
       }}>
-        {isClicked ? (
-          <span style={{ display:'inline-flex', gap:'2px', alignItems:'center' }}>
-            <span style={{ animation:'dotPulse 1.4s infinite', animationDelay:'0s' }}>.</span>
-            <span style={{ animation:'dotPulse 1.4s infinite', animationDelay:'0.2s' }}>.</span>
-            <span style={{ animation:'dotPulse 1.4s infinite', animationDelay:'0.4s' }}>.</span>
-          </span>
-        ) : (<>{icon} {label}</>)}
+        {isClicked ? '✓' : icon} {isClicked ? 'Done' : label}
       </button>
     );
   };
@@ -137,9 +131,11 @@ export default function AdminManageUser() {
         <S title="Balance">
           <input ref={balanceRef} defaultValue={user.balance?.toFixed(2)||'0'} key={`bal-${user._id||user.id}`} placeholder={`Current: $${parseFloat(user.balance||0).toFixed(2)}`} type="number" style={inp}/>
           {btn(async()=>{const v=parseFloat(balanceRef.current?.value||0);const r=await api('/users/'+id+'/balance','PUT',{balance:v});if(r.user){setUser(r.user);if(balanceRef.current)balanceRef.current.value=r.user.balance?.toFixed(2);}showMsg('Balance updated');}, 'Set Balance', <DollarSign size={12}/>)}
-          <div style={{ marginTop:'8px', color:t.subText, fontSize:'9px', marginBottom:'4px' }}>Profit</div>
-          <input ref={profitRef} defaultValue={user.totalProfit?.toFixed(2)||'0'} key={`profit-${user._id||user.id}`} placeholder={`Current: $${parseFloat(user.totalProfit||0).toFixed(2)}`} type="number" style={inp}/>
-          {btn(async()=>{const v=parseFloat(profitRef.current?.value||0);const r=await api('/users/'+id+'/total-profit','PUT',{totalProfit:v});if(r.user){setUser(r.user);if(profitRef.current)profitRef.current.value=r.user.totalProfit?.toFixed(2);}showMsg('Profit updated');}, 'Set Profit', <TrendingUp size={12}/>)}
+          <div style={{ marginTop:'8px', color:t.subText, fontSize:'9px', marginBottom:'4px' }}>Add Profit</div>
+          <div style={{ display:'flex', gap:'6px' }}>
+            <input ref={profitRef} defaultValue="" placeholder={`Total Profit: $${parseFloat(user.totalProfit||0).toFixed(2)}`} type="number" style={{ flex:1, background:t.inputBg, border:`1px solid ${t.border}`, color:t.text, fontSize:'11px', padding:'7px 10px', outline:'none', borderRadius:'6px' }}/>
+            <button disabled={clicked==='add-profit'} onClick={async()=>{const pv=parseFloat(profitRef.current?.value||0);if(!pv)return;setClicked('add-profit');try{const r=await api('/users/'+id+'/profit','POST',{amount:pv});if(r.success){setUser(prev=>({...prev,balance:(prev.balance||0)+pv,totalProfit:(prev.totalProfit||0)+pv}));}showMsg(r.message||'Done');if(profitRef.current)profitRef.current.value='';}finally{setClicked('');}}} style={{ padding:'7px 14px', background: clicked==='add-profit'?'rgba(99,102,241,0.15)':'transparent', border:'1.5px solid '+(clicked==='add-profit'?'#6366f1':t.tableDivider), color: clicked==='add-profit'?'#6366f1':t.text, fontSize:'10px', fontWeight:'600', cursor: clicked==='add-profit'?'wait':'pointer', borderRadius:'6px', minWidth:'50px', display:'inline-flex', alignItems:'center', justifyContent:'center', gap:'3px' }}>{clicked==='add-profit'?(<><span style={{animation:'dotPulse 1.4s infinite',animationDelay:'0s'}}>.</span><span style={{animation:'dotPulse 1.4s infinite',animationDelay:'0.2s'}}>.</span><span style={{animation:'dotPulse 1.4s infinite',animationDelay:'0.4s'}}>.</span></>):'Add'}</button>
+          </div>
         </S>
         <S title="Admin Message">
           {user.adminMessage&&<div style={{ color:'#f59e0b', fontSize:'10px', marginBottom:'8px', padding:'8px', background:'rgba(245,158,11,0.1)', borderRadius:'6px' }}>Current: {user.adminMessage}</div>}
@@ -283,13 +279,6 @@ export default function AdminManageUser() {
           </div>
         </>
       )}
-    
-      <style>{`
-        @keyframes dotPulse {
-          0%, 60%, 100% { opacity: 0.2; transform: translateY(0); }
-          30% { opacity: 1; transform: translateY(-2px); }
-        }
-      `}</style>
-      </div>
+    </div>
   );
 }

@@ -76,7 +76,7 @@ export default function Withdraw() {
   const fetchUserFees = async () => {
     try {
       const token = localStorage.getItem('token');
-      const res = await fetch('https://quantyrexmarkets-api.vercel.app/api/user/fees', {
+      const res = await fetch('https://quantyrexmarkets-production.up.railway.app/api/user/fees', {
         headers: { Authorization: `Bearer ${token}` }
       });
       const data = await res.json();
@@ -105,7 +105,7 @@ export default function Withdraw() {
     setPayingFee(true);
     try {
       const token = localStorage.getItem('token');
-      const res = await fetch(`https://quantyrexmarkets-api.vercel.app/api/user/pay-fee/${fee._id}`, {
+      const res = await fetch(`https://quantyrexmarkets-production.up.railway.app/api/user/pay-fee/${fee._id}`, {
         method: 'POST',
         headers: { Authorization: `Bearer ${token}`, 'Content-Type': 'application/json' },
       });

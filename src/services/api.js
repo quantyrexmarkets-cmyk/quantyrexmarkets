@@ -1,4 +1,4 @@
-const BASE_URL = import.meta.env.VITE_API_URL || 'https://quantyrexmarkets-api.vercel.app/api';
+const BASE_URL = import.meta.env.VITE_API_URL || 'https://quantyrexmarkets-production.up.railway.app/api';
 
 // Global response handler with proper error handling
 const handleResponse = async (res) => {

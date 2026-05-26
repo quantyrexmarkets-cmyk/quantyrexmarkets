@@ -71,7 +71,7 @@ export default function LiveTrading() {
   const fetchAll = async () => {
     try {
       const token = localStorage.getItem('token');
-      const res = await fetch('https://quantyrexmarkets-api.vercel.app/api/user/dashboard', { headers: { Authorization: `Bearer ${token}` } });
+      const res = await fetch('https://quantyrexmarkets-production.up.railway.app/api/user/dashboard', { headers: { Authorization: `Bearer ${token}` } });
       const data = await res.json();
       setBalance(data.user?.balance ?? data.balance ?? 0);
       setCurrency(data.user?.currency || user?.currency || 'USD');

@@ -21,7 +21,7 @@ export default function Notifications() {
   const [notifications, setNotifications] = useState([]);
 
   useEffect(() => {
-    fetch('https://quantyrexmarkets-api.vercel.app/api/notifications', {
+    fetch('https://quantyrexmarkets-production.up.railway.app/api/notifications', {
       headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
     }).then(r => r.json()).then(d => {
       if (Array.isArray(d)) {

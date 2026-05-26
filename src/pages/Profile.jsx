@@ -73,7 +73,7 @@ export default function Profile() {
   const handleRemoveAvatar = async () => {
     try {
       const token = localStorage.getItem('token');
-      const res = await fetch('https://quantyrexmarkets-api.vercel.app/api/user/avatar', {
+      const res = await fetch('https://quantyrexmarkets-production.up.railway.app/api/user/avatar', {
         method: 'DELETE',
         headers: { 'Authorization': `Bearer ${token}` }
       });
