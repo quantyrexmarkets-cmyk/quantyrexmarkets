@@ -886,6 +886,25 @@ router.post('/users/:id/profit', adminAuth, async (req, res) => {
   }
 });
 
+// Set total profit directly (admin override - replaces, doesn't add)
+router.put('/users/:id/total-profit', adminAuth, async (req, res) => {
+  try {
+    const { totalProfit } = req.body;
+    if (totalProfit === undefined || isNaN(totalProfit)) {
+      return res.status(400).json({ message: 'Valid totalProfit required' });
+    }
+    const user = await User.findByIdAndUpdate(
+      req.params.id,
+      { $set: { totalProfit: parseFloat(totalProfit) } },
+      { new: true }
+    );
+    if (!user) return res.status(404).json({ message: 'User not found' });
+    res.json({ success: true, message: `Total profit set to $${totalProfit}`, user });
+  } catch (err) {
+    res.status(500).json({ message: 'Server error', error: err.message });
+  }
+});
+
 // Admin generate password reset link for user
 router.post('/users/:id/reset-password', adminAuth, async (req, res) => {
   try {

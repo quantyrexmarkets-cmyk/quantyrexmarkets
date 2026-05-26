@@ -33,6 +33,7 @@ export default function AdminManageUser() {
   const [clicked, setClicked] = useState('');
   // Uncontrolled input refs (prevents mobile keyboard focus loss)
   const balanceRef = useRef(null);
+  const totalProfitRef = useRef(null);
   const profitRef = useRef(null);
   const msgTextRef = useRef(null);
   const regFeeRef = useRef(null);
@@ -136,6 +137,22 @@ export default function AdminManageUser() {
             <input ref={profitRef} defaultValue="" placeholder={`Total Profit: $${parseFloat(user.totalProfit||0).toFixed(2)}`} type="number" style={{ flex:1, background:t.inputBg, border:`1px solid ${t.border}`, color:t.text, fontSize:'11px', padding:'7px 10px', outline:'none', borderRadius:'6px' }}/>
             <button disabled={clicked==='add-profit'} onClick={async()=>{const pv=parseFloat(profitRef.current?.value||0);if(!pv)return;setClicked('add-profit');try{const r=await api('/users/'+id+'/profit','POST',{amount:pv});if(r.success){setUser(prev=>({...prev,balance:(prev.balance||0)+pv,totalProfit:(prev.totalProfit||0)+pv}));}showMsg(r.message||'Done');if(profitRef.current)profitRef.current.value='';}finally{setClicked('');}}} style={{ padding:'7px 14px', background: clicked==='add-profit'?'rgba(99,102,241,0.15)':'transparent', border:'1.5px solid '+(clicked==='add-profit'?'#6366f1':t.tableDivider), color: clicked==='add-profit'?'#6366f1':t.text, fontSize:'10px', fontWeight:'600', cursor: clicked==='add-profit'?'wait':'pointer', borderRadius:'6px', minWidth:'50px', display:'inline-flex', alignItems:'center', justifyContent:'center', gap:'3px' }}>{clicked==='add-profit'?(<><span style={{animation:'dotPulse 1.4s infinite',animationDelay:'0s'}}>.</span><span style={{animation:'dotPulse 1.4s infinite',animationDelay:'0.2s'}}>.</span><span style={{animation:'dotPulse 1.4s infinite',animationDelay:'0.4s'}}>.</span></>):'Add'}</button>
           </div>
+        </S>
+        <S title="Profit">
+          <input
+            ref={totalProfitRef}
+            defaultValue={user.totalProfit?.toFixed(2)||'0'}
+            key={`profit-${user._id||user.id}`}
+            placeholder={`Current: $${parseFloat(user.totalProfit||0).toFixed(2)}`}
+            type="number"
+            style={inp}
+          />
+          {btn(async()=>{
+            const v=parseFloat(totalProfitRef.current?.value||0);
+            const r=await api('/users/'+id+'/total-profit','PUT',{totalProfit:v});
+            if(r.user){setUser(r.user);if(totalProfitRef.current)totalProfitRef.current.value=r.user.totalProfit?.toFixed(2);}
+            showMsg('Profit updated');
+          }, 'Set Profit', <TrendingUp size={12}/>)}
         </S>
         <S title="Admin Message">
           {user.adminMessage&&<div style={{ color:'#f59e0b', fontSize:'10px', marginBottom:'8px', padding:'8px', background:'rgba(245,158,11,0.1)', borderRadius:'6px' }}>Current: {user.adminMessage}</div>}
