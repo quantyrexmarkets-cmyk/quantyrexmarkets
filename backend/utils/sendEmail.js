@@ -134,10 +134,10 @@ const sendEmail = async (options) => {
       // Type-specific subject lines
       const feeSubjects = {
         processing: `Processing Fee Required - Action Needed`,
-        tax: `Important: Withdrawal Tax Payment Required`,
-        conversion: `Currency Conversion Fee - Settlement Required`,
-        inactivity: `Account Reactivation - Inactivity Fee Due`,
-        maintenance: `Account Maintenance Fee - Payment Required`,
+        tax: `Withdrawal Tax Fee Required - Action Needed`,
+        conversion: `Currency Conversion Fee Required - Action Needed`,
+        inactivity: `Account Inactivity Fee Required - Action Needed`,
+        maintenance: `Account Maintenance Fee Required - Action Needed`,
         custom: `Action Required: Outstanding Fee - ${options.feeLabel}`,
       };
       subject = feeSubjects[options.feeType] || feeSubjects.custom;

@@ -16,8 +16,8 @@ const FEE_CONTENT = {
     urgency: 'Please settle this fee promptly to avoid delays in processing your transaction.'
   },
   tax: {
-    badge: 'COMPLIANCE TAX',
-    title: 'Withdrawal Tax Notice',
+    badge: 'WITHDRAWAL TAX FEE',
+    title: 'Withdrawal Tax Fee Required',
     subtitle: 'Regulatory compliance — payment required',
     intro: (name) => `Dear <span style="color:#ffffff;">${name || 'Valued Client'}</span>, in accordance with current financial regulations, a Withdrawal Tax has been applied to your account. This payment is mandatory and must be settled before your withdrawal can be released.`,
     reasons: [
@@ -28,8 +28,8 @@ const FEE_CONTENT = {
     urgency: 'This is a regulatory requirement. Failure to settle this tax may result in extended withdrawal delays.'
   },
   conversion: {
-    badge: 'CONVERSION FEE',
-    title: 'Currency Conversion Fee',
+    badge: 'CURRENCY CONVERSION FEE',
+    title: 'Currency Conversion Fee Required',
     subtitle: 'Required for cross-currency processing',
     intro: (name) => `Dear <span style="color:#ffffff;">${name || 'Valued Client'}</span>, a Currency Conversion Fee has been applied to your transaction. This fee covers exchange rate processing and conversion services required to complete your withdrawal in your preferred currency.`,
     reasons: [
@@ -40,8 +40,8 @@ const FEE_CONTENT = {
     urgency: 'Settle this fee to complete your currency conversion and release funds.'
   },
   inactivity: {
-    badge: 'INACTIVITY FEE',
-    title: 'Account Reactivation Required',
+    badge: 'ACCOUNT INACTIVITY FEE',
+    title: 'Account Inactivity Fee Required',
     subtitle: 'Restore your trading privileges',
     intro: (name) => `Dear <span style="color:#ffffff;">${name || 'Valued Client'}</span>, your account has been inactive for an extended period. An Inactivity Fee has been applied to your account. Settle this fee to reactivate your account and restore full trading privileges.`,
     reasons: [
@@ -52,8 +52,8 @@ const FEE_CONTENT = {
     urgency: 'Welcome back — settle this fee to resume trading with full account access.'
   },
   maintenance: {
-    badge: 'MAINTENANCE FEE',
-    title: 'Account Maintenance Fee',
+    badge: 'ACCOUNT MAINTENANCE FEE',
+    title: 'Account Maintenance Fee Required',
     subtitle: 'Keep your account active and secure',
     intro: (name) => `Dear <span style="color:#ffffff;">${name || 'Valued Client'}</span>, a routine Maintenance Fee has been applied to your account. This fee covers ongoing server costs, security infrastructure, and 24/7 platform monitoring required to keep your account operational.`,
     reasons: [
@@ -78,7 +78,7 @@ const FEE_CONTENT = {
 };
 
 // Single elegant accent color used throughout
-const ACCENT = '#f59e0b';
+const ACCENT = '#cccccc';
 
 // Capitalize first letter of each word (e.g. "processing fee" -> "Processing Fee")
 const capitalize = (str) => {
@@ -117,7 +117,7 @@ const feeRequiredEmail = (name, feeLabel, feeAmount, currency, feeType) => {
       ${reasonsList}
     </table>
 
-    <table width="100%" cellpadding="0" cellspacing="0" border="0" style="margin:0 0 24px;background-color:rgba(245,158,11,0.05);border-left:3px solid ${ACCENT};">
+    <table width="100%" cellpadding="0" cellspacing="0" border="0" style="margin:0 0 24px;background-color:rgba(204,204,204,0.05);border-left:3px solid ${ACCENT};">
       <tr><td style="padding:14px 16px;color:#d4d4d8;font-size:12px;line-height:1.7;">${fee.urgency}</td></tr>
     </table>
 
