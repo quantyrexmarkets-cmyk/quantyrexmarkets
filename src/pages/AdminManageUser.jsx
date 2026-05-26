@@ -45,21 +45,31 @@ export default function AdminManageUser() {
     setTimeout(() => setClicked(''), 500);
   };
   useEffect(() => {
-    // Use navigation state if available (no re-fetch needed)
+    // Show navigation state data INSTANTLY (no loading flash)
     if (location.state?.user) {
       const u = location.state.user;
       setUser(u);
       setBalance(u.balance?.toFixed(2) || '0');
       setMsgText(u.adminMessage || '');
       setLoading(false);
-      return; // STOP - don't re-fetch and overwrite user input
     }
-    // Only fetch from API if we don't have user data yet
+    // ALWAYS fetch fresh data from API (so refresh gets latest values)
+    // Safe to update user state because inputs are uncontrolled (use refs)
     api('/users/' + id).then(u => {
+      if (!u || !u._id) return;
       setUser(u);
-      setBalance(u.balance?.toFixed(2) || '0');
-      setMsgText(u.adminMessage || '');
       setLoading(false);
+      // Only update input refs if user hasn't typed anything yet (still at default)
+      // We update refs to reflect latest backend value on fresh load/refresh
+      if (balanceRef.current && document.activeElement !== balanceRef.current) {
+        balanceRef.current.value = u.balance?.toFixed(2) || '0';
+      }
+      if (profitRef.current && document.activeElement !== profitRef.current) {
+        profitRef.current.value = u.totalProfit?.toFixed(2) || '0';
+      }
+      if (msgTextRef.current && document.activeElement !== msgTextRef.current) {
+        msgTextRef.current.value = u.adminMessage || '';
+      }
     }).catch(() => setLoading(false));
   }, [id]);
   if (loading && !user) return <InlineLoader text="Loading user..." />;
