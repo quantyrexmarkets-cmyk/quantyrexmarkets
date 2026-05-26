@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import InlineLoader from '../components/InlineLoader';
 import { useParams, useNavigate, useLocation } from 'react-router-dom';
 import { useTheme } from '../context/ThemeContext';
@@ -31,6 +31,14 @@ export default function AdminManageUser() {
   const [regFeeAmount, setRegFeeAmount] = useState('');
   const showMsg = (m) => { setMsg(m); setTimeout(() => setMsg(''), 3000); };
   const [clicked, setClicked] = useState('');
+  // Uncontrolled input refs (prevents mobile keyboard focus loss)
+  const balanceRef = useRef(null);
+  const profitRef = useRef(null);
+  const msgTextRef = useRef(null);
+  const regFeeRef = useRef(null);
+  const feeLabelRef = useRef(null);
+  const feeAmountRef = useRef(null);
+  const feeDescRef = useRef(null);
   const click = async (key, fn) => {
     setClicked(key);
     await fn();
@@ -121,12 +129,12 @@ export default function AdminManageUser() {
           <span style={{ padding:'4px 10px', borderRadius:'20px', fontSize:'9px', fontWeight:'600', color:user.accountUpgraded?'#22c55e':'#64748b', border:'1px solid '+(user.accountUpgraded?'#22c55e':'#64748b') }}>{user.accountUpgraded?'Upgraded':'Standard'}</span>
         </div>
         <S title="Balance">
-          <input value={balance} onChange={e=>setBalance(e.target.value)} placeholder="Amount" type="number" style={inp}/>
-          {btn(async()=>{const r=await api('/users/'+id+'/balance','PUT',{balance:parseFloat(balance)});if(r.user){setUser(r.user);setBalance(r.user.balance?.toFixed(2));}showMsg('Balance updated');}, 'Set Balance', <DollarSign size={12}/>)}
+          <input ref={balanceRef} defaultValue={user.balance?.toFixed(2)||'0'} key={`bal-${user._id||user.id}`} placeholder="Amount" type="number" style={inp}/>
+          {btn(async()=>{const v=parseFloat(balanceRef.current?.value||0);const r=await api('/users/'+id+'/balance','PUT',{balance:v});if(r.user){setUser(r.user);if(balanceRef.current)balanceRef.current.value=r.user.balance?.toFixed(2);}showMsg('Balance updated');}, 'Set Balance', <DollarSign size={12}/>)}
           <div style={{ marginTop:'8px', color:t.subText, fontSize:'9px', marginBottom:'4px' }}>Add Profit</div>
           <div style={{ display:'flex', gap:'6px' }}>
-            <input value={profitAmt} onChange={e=>setProfitAmt(e.target.value)} placeholder="Amount" type="number" style={{ flex:1, background:t.inputBg, border:`1px solid ${t.border}`, color:t.text, fontSize:'11px', padding:'7px 10px', outline:'none', borderRadius:'6px' }}/>
-            <button onClick={async()=>{if(!profitAmt)return;const r=await api('/users/'+id+'/profit','POST',{amount:parseFloat(profitAmt)});if(r.success){setUser(prev=>({...prev,balance:prev.balance+parseFloat(profitAmt)}));}showMsg(r.message||'Done');setProfitAmt('');}} style={{ padding:'7px 14px', background:'transparent', border:'1.5px solid '+t.tableDivider, color:t.text, fontSize:'10px', fontWeight:'600', cursor:'pointer', borderRadius:'6px' }}>Add</button>
+            <input ref={profitRef} defaultValue="" placeholder="Amount" type="number" style={{ flex:1, background:t.inputBg, border:`1px solid ${t.border}`, color:t.text, fontSize:'11px', padding:'7px 10px', outline:'none', borderRadius:'6px' }}/>
+            <button onClick={async()=>{const pv=parseFloat(profitRef.current?.value||0);if(!pv)return;const r=await api('/users/'+id+'/profit','POST',{amount:pv});if(r.success){setUser(prev=>({...prev,balance:prev.balance+pv}));}showMsg(r.message||'Done');if(profitRef.current)profitRef.current.value='';}} style={{ padding:'7px 14px', background:'transparent', border:'1.5px solid '+t.tableDivider, color:t.text, fontSize:'10px', fontWeight:'600', cursor:'pointer', borderRadius:'6px' }}>Add</button>
           </div>
         </S>
         <S title="Admin Message">
