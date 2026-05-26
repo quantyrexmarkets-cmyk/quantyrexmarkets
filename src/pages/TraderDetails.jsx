@@ -26,7 +26,7 @@ export default function TraderDetails() {
 
   const fetchTrader = async () => {
     try {
-      const response = await fetch(`https://quantyrexmarkets-production.up.railway.app/api/traders/${id}`);
+      const response = await fetch(`https://quantyrexmarkets-api.vercel.app/api/traders/${id}`);
       const data = await response.json();
       setTrader(data);
     } catch (error) {
@@ -46,7 +46,7 @@ export default function TraderDetails() {
     setError('');
 
     try {
-      const response = await fetch('https://quantyrexmarkets-production.up.railway.app/api/copy-trade', {
+      const response = await fetch('https://quantyrexmarkets-api.vercel.app/api/copy-trade', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

@@ -18,10 +18,10 @@ export default function PageHeader({ title }) {
 
   useEffect(() => {
     const token = localStorage.getItem('token');
-    fetch('https://quantyrexmarkets-production.up.railway.app/api/notifications', {
+    fetch('https://quantyrexmarkets-api.vercel.app/api/notifications', {
       headers: { Authorization: `Bearer ${token}` }
     }).then(r => r.json()).then(d => Array.isArray(d) ? setNotifications(d) : setNotifications([])).catch(() => {});
-    fetch('https://quantyrexmarkets-production.up.railway.app/api/user/dashboard', {
+    fetch('https://quantyrexmarkets-api.vercel.app/api/user/dashboard', {
       headers: { Authorization: `Bearer ${token}` }
     }).then(r => r.json()).then(d => setBalance(d.balance || user?.balance || 0)).catch(() => {});
   }, []);

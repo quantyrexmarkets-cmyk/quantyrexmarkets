@@ -2,7 +2,7 @@ import { useTheme } from '../context/ThemeContext';
 import { useState, useEffect, useRef } from 'react';
 import { useAuth } from '../context/AuthContext';
 
-const API = 'https://quantyrexmarkets-production.up.railway.app/api/chat';
+const API = 'https://quantyrexmarkets-api.vercel.app/api/chat';
 
 export default function LiveChat() {
   const { current: t } = useTheme();

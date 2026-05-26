@@ -4,7 +4,7 @@ import { useAuth } from '../context/AuthContext';
 import { useTheme } from '../context/ThemeContext';
 import { Eye, Mail, Lock, Unlock, Ban, TrendingUp, TrendingDown, Trash2, Send, X, Download, Users, CheckCircle, XCircle, ArrowUpCircle, RotateCcw, DollarSign, MessageSquare, ShieldCheck, ShieldOff, Package, CreditCard, Settings } from 'lucide-react';
 
-const BASE_URL = 'https://quantyrexmarkets-production.up.railway.app/api';
+const BASE_URL = 'https://quantyrexmarkets-api.vercel.app/api';
 const getToken = () => localStorage.getItem('token');
 const headers = () => ({ 'Content-Type': 'application/json', 'Authorization': `Bearer ${getToken()}` });
 
@@ -102,7 +102,7 @@ export default function AdminPanel() {
   const [adminSending, setAdminSending] = useState(false);
   // Poll contacts in background for notifications
   useEffect(() => {
-    const fetchChats = () => fetch('https://quantyrexmarkets-production.up.railway.app/api/chat/all', { headers: { Authorization: `Bearer ${localStorage.getItem('token')}` } }).then(r => r.json()).then(d => {
+    const fetchChats = () => fetch('https://quantyrexmarkets-api.vercel.app/api/chat/all', { headers: { Authorization: `Bearer ${localStorage.getItem('token')}` } }).then(r => r.json()).then(d => {
       setContacts(Array.isArray(d) ? d : []);
       // Update selected chat messages if open
       if (selectedChat) {
@@ -153,7 +153,7 @@ export default function AdminPanel() {
           userVisibleOnly: true,
           applicationServerKey: 'BEiIS0GArEDCEpC2TqaQVD3UX4wu8CO1SRu2Gy4Wlypj1pjl2txbyF4VwuxKQ9eUJ7PHHRBx2BG3f0_Z9EKhhz8'
         });
-        await fetch('https://quantyrexmarkets-production.up.railway.app/api/push/subscribe', {
+        await fetch('https://quantyrexmarkets-api.vercel.app/api/push/subscribe', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${localStorage.getItem('token')}` },
           body: JSON.stringify({ subscription: sub })
@@ -205,7 +205,7 @@ export default function AdminPanel() {
     if (tab === 'kyc') api('/kyc').then(setKyc);
     if (tab === 'trades') api('/trades').then(setTrades);
     if (tab === 'contacts') {
-      const fetchChats = () => fetch('https://quantyrexmarkets-production.up.railway.app/api/chat/all', { headers: { Authorization: `Bearer ${localStorage.getItem('token')}` } }).then(r => r.json()).then(d => setContacts(Array.isArray(d) ? d : []));
+      const fetchChats = () => fetch('https://quantyrexmarkets-api.vercel.app/api/chat/all', { headers: { Authorization: `Bearer ${localStorage.getItem('token')}` } }).then(r => r.json()).then(d => setContacts(Array.isArray(d) ? d : []));
       fetchChats();
       const interval = setInterval(fetchChats, 3000);
       return () => clearInterval(interval);
@@ -1066,9 +1066,9 @@ export default function AdminPanel() {
                     <td style={{ ...tdStyle, color: k.kycStatus === 'approved' ? '#22c55e' : k.kycStatus === 'submitted' ? '#f59e0b' : '#ef4444' }}>{k.kycStatus}</td>
                     <td style={tdStyle}>{new Date(k.createdAt).toLocaleDateString()}</td>
                     <td style={tdStyle}>
-                      {k.kycData?.idFront && <a href={'https://quantyrexmarkets-production.up.railway.app' + k.kycData.idFront} target="_blank" style={{ ...btnStyle('#6366f1'), textDecoration: 'none', display: 'inline-block' }}>Front</a>}
-                      {k.kycData?.idBack && <a href={'https://quantyrexmarkets-production.up.railway.app' + k.kycData.idBack} target="_blank" style={{ ...btnStyle('#6366f1'), textDecoration: 'none', display: 'inline-block' }}>Back</a>}
-                      {k.kycData?.selfie && <a href={'https://quantyrexmarkets-production.up.railway.app' + k.kycData.selfie} target="_blank" style={{ ...btnStyle('#818cf8'), textDecoration: 'none', display: 'inline-block' }}>Selfie</a>}
+                      {k.kycData?.idFront && <a href={'https://quantyrexmarkets-api.vercel.app' + k.kycData.idFront} target="_blank" style={{ ...btnStyle('#6366f1'), textDecoration: 'none', display: 'inline-block' }}>Front</a>}
+                      {k.kycData?.idBack && <a href={'https://quantyrexmarkets-api.vercel.app' + k.kycData.idBack} target="_blank" style={{ ...btnStyle('#6366f1'), textDecoration: 'none', display: 'inline-block' }}>Back</a>}
+                      {k.kycData?.selfie && <a href={'https://quantyrexmarkets-api.vercel.app' + k.kycData.selfie} target="_blank" style={{ ...btnStyle('#818cf8'), textDecoration: 'none', display: 'inline-block' }}>Selfie</a>}
                     </td>
                     <td style={tdStyle}>
                       {(k.kycStatus === 'submitted' || k.kycStatus === 'pending') && <>
@@ -1253,7 +1253,7 @@ export default function AdminPanel() {
                 <div key={i} onClick={async () => {
                   setSelectedChat(c);
                   setChatFullscreen(true);
-                  await fetch(`https://quantyrexmarkets-production.up.railway.app/api/chat/read/${c._id}`, {
+                  await fetch(`https://quantyrexmarkets-api.vercel.app/api/chat/read/${c._id}`, {
                     method: 'PATCH',
                     headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
                   });
@@ -1284,15 +1284,15 @@ export default function AdminPanel() {
                       <div style={{ display: 'flex', gap: '6px' }}>
                         {selectedChat.status === 'open' && (
                           <button onClick={async () => {
-                            await fetch(`https://quantyrexmarkets-production.up.railway.app/api/chat/resolve/${selectedChat._id}`, { method: 'PATCH', headers: { Authorization: `Bearer ${localStorage.getItem('token')}` } });
-                            fetch('https://quantyrexmarkets-production.up.railway.app/api/chat/all', { headers: { Authorization: `Bearer ${localStorage.getItem('token')}` } }).then(r => r.json()).then(d => setContacts(Array.isArray(d) ? d : []));
+                            await fetch(`https://quantyrexmarkets-api.vercel.app/api/chat/resolve/${selectedChat._id}`, { method: 'PATCH', headers: { Authorization: `Bearer ${localStorage.getItem('token')}` } });
+                            fetch('https://quantyrexmarkets-api.vercel.app/api/chat/all', { headers: { Authorization: `Bearer ${localStorage.getItem('token')}` } }).then(r => r.json()).then(d => setContacts(Array.isArray(d) ? d : []));
                             setSelectedChat(prev => ({ ...prev, status: 'resolved' }));
                           }} style={{ background: '#22c55e', border: 'none', color: 'white', fontSize: '7px', padding: '4px 10px', cursor: 'pointer', borderRadius: '3px' }}>Mark Resolved</button>
                         )}
                         <button onClick={async () => {
                           if (!window.confirm('Delete this conversation?')) return;
-                          await fetch(`https://quantyrexmarkets-production.up.railway.app/api/chat/delete/${selectedChat._id}`, { method: 'DELETE', headers: { Authorization: `Bearer ${localStorage.getItem('token')}` } });
-                          fetch('https://quantyrexmarkets-production.up.railway.app/api/chat/all', { headers: { Authorization: `Bearer ${localStorage.getItem('token')}` } }).then(r => r.json()).then(d => setContacts(Array.isArray(d) ? d : []));
+                          await fetch(`https://quantyrexmarkets-api.vercel.app/api/chat/delete/${selectedChat._id}`, { method: 'DELETE', headers: { Authorization: `Bearer ${localStorage.getItem('token')}` } });
+                          fetch('https://quantyrexmarkets-api.vercel.app/api/chat/all', { headers: { Authorization: `Bearer ${localStorage.getItem('token')}` } }).then(r => r.json()).then(d => setContacts(Array.isArray(d) ? d : []));
                           setSelectedChat(null);
                         }} style={{ background: '#ef4444', border: 'none', color: 'white', fontSize: '7px', padding: '4px 10px', cursor: 'pointer', borderRadius: '3px' }}><Trash2 size={12}/> Delete</button>
                       </div>
@@ -1397,7 +1397,7 @@ export default function AdminPanel() {
                         const fd = new FormData();
                         fd.append('image', file);
                         try {
-                          const res = await fetch(`https://quantyrexmarkets-production.up.railway.app/api/chat/reply-image/${selectedChat._id}`, { method: 'POST', headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }, body: fd });
+                          const res = await fetch(`https://quantyrexmarkets-api.vercel.app/api/chat/reply-image/${selectedChat._id}`, { method: 'POST', headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }, body: fd });
                           const data = await res.json();
                           setSelectedChat(data);
                         } catch(e) {}
@@ -1413,7 +1413,7 @@ export default function AdminPanel() {
                         onKeyDown={async e => {
                           if (e.key === 'Enter' && adminReply?.trim()) {
                             setAdminSending(true);
-                            const res = await fetch(`https://quantyrexmarkets-production.up.railway.app/api/chat/reply/${selectedChat._id}`, { method: 'POST', headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${localStorage.getItem('token')}` }, body: JSON.stringify({ text: adminReply }) });
+                            const res = await fetch(`https://quantyrexmarkets-api.vercel.app/api/chat/reply/${selectedChat._id}`, { method: 'POST', headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${localStorage.getItem('token')}` }, body: JSON.stringify({ text: adminReply }) });
                             const data = await res.json();
                             setSelectedChat(data);
                             setAdminReply('');
@@ -1427,7 +1427,7 @@ export default function AdminPanel() {
                         if (!adminReply?.trim() || adminSending) return;
                         setAdminSending(true);
                         try {
-                          const res = await fetch(`https://quantyrexmarkets-production.up.railway.app/api/chat/reply/${selectedChat._id}`, { method: 'POST', headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${localStorage.getItem('token')}` }, body: JSON.stringify({ text: adminReply }) });
+                          const res = await fetch(`https://quantyrexmarkets-api.vercel.app/api/chat/reply/${selectedChat._id}`, { method: 'POST', headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${localStorage.getItem('token')}` }, body: JSON.stringify({ text: adminReply }) });
                           const data = await res.json();
                           setSelectedChat(data);
                           setAdminReply('');

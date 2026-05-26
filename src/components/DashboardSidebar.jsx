@@ -11,7 +11,7 @@ function useNotifications() {
   const fetch_ = async () => {
     try {
       const token = localStorage.getItem('token');
-      const res = await fetch('https://quantyrexmarkets-production.up.railway.app/api/notifications', {
+      const res = await fetch('https://quantyrexmarkets-api.vercel.app/api/notifications', {
         headers: { Authorization: `Bearer ${token}` }
       }).then(r => r.json());
       if (res.notifications) { setNotifications(res.notifications); setUnread(res.unread); }
@@ -23,7 +23,7 @@ function useNotifications() {
   const markAllRead = async () => {
     try {
       const token = localStorage.getItem('token');
-      await fetch('https://quantyrexmarkets-production.up.railway.app/api/notifications/read-all', {
+      await fetch('https://quantyrexmarkets-api.vercel.app/api/notifications/read-all', {
         method: 'PUT', headers: { Authorization: `Bearer ${token}` }
       });
       setUnread(0);
