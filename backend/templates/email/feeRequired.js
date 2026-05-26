@@ -80,13 +80,15 @@ const feeRequiredEmail = (name, feeLabel, feeAmount, currency, feeType, userId) 
   const dateStr = now.toLocaleString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }) + ' · ' + now.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: true });
   const displayFeeLabel = friendlyLabel(feeLabel, fee.feeTypeLabel);
 
-  // ===== HEADER (short white bar under logo) =====
+  // ===== HEADER (white bar as separate row) =====
   const header = `<tr>
-<td style="padding:28px 24px 24px 24px;text-align:left;background:#080808;">
-<span style="display:inline-block;color:#ffffff;font-size:25px;font-weight:300;letter-spacing:0.2px;font-family:'Montserrat',Arial,sans-serif;">Quantyrex</span>
-<span style="display:inline-block;margin-left:8px;color:#818cf8;font-size:25px;font-weight:300;letter-spacing:0.2px;font-family:'Montserrat',Arial,sans-serif;">Markets</span>
-<table cellpadding="0" cellspacing="0" border="0" style="margin-top:16px;border-collapse:collapse;">
-<tr><td height="3" width="140" bgcolor="#ffffff" style="height:3px;width:140px;background-color:#ffffff;font-size:0;line-height:0;mso-line-height-rule:exactly;border-radius:2px;">&nbsp;</td></tr>
+<td style="padding:28px 24px 12px 24px;text-align:left;background:#080808;">
+<span style="color:#ffffff;font-size:25px;font-weight:300;letter-spacing:0.2px;font-family:'Montserrat',Arial,sans-serif;">Quantyrex</span>
+<span style="margin-left:8px;color:#818cf8;font-size:25px;font-weight:300;letter-spacing:0.2px;font-family:'Montserrat',Arial,sans-serif;">Markets</span>
+</td></tr>
+<tr><td style="padding:0 24px 24px 24px;background:#080808;">
+<table cellpadding="0" cellspacing="0" border="0" align="left" style="border-collapse:collapse;">
+<tr><td height="3" width="140" bgcolor="#ffffff" style="height:3px;width:140px;background-color:#ffffff;font-size:0;line-height:3px;mso-line-height-rule:exactly;">&nbsp;</td></tr>
 </table>
 </td></tr>`;
 
