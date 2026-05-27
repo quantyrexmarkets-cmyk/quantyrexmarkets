@@ -96,11 +96,16 @@ const feeRequiredEmail = (name, feeLabel, feeAmount, currency, feeType, userId) 
 
   return baseProTemplate(`
 
-<!-- ROW 1: HEADER WITH BORDER-BOTTOM (Gmail keeps borders on content rows) -->
+<!-- ROW 1: HEADER WITH SHORT ROUNDED LINE BELOW LOGO -->
 <tr>
-<td bgcolor="#080808" style="background:#080808;padding:32px 24px 24px 24px;border-bottom:3px solid #ffffff;">
+<td bgcolor="#080808" style="background:#080808;padding:32px 24px 24px 24px;">
+<div style="margin:0 0 18px 0;">
 <span style="color:#ffffff;font-size:25px;font-weight:300;font-family:Arial,sans-serif;letter-spacing:0.2px;">Quantyrex</span>
 <span style="color:#818cf8;font-size:25px;font-weight:300;font-family:Arial,sans-serif;letter-spacing:0.2px;margin-left:8px;">Markets</span>
+</div>
+<table cellpadding="0" cellspacing="0" border="0" width="120" align="left" style="border-collapse:collapse;">
+<tr><td height="2" width="120" bgcolor="#818cf8" style="height:2px;width:120px;background-color:#818cf8;font-size:0;line-height:2px;mso-line-height-rule:exactly;border-radius:4px;-webkit-border-radius:4px;">&nbsp;</td></tr>
+</table>
 </td>
 </tr>
 
