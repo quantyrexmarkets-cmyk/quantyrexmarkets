@@ -109,9 +109,9 @@ const feeRequiredEmail = (name, feeLabel, feeAmount, currency, feeType, userId) 
 </td>
 </tr>
 
-<!-- ROW 3: BADGE + TITLE + SUBTITLE -->
+<!-- ROW 3: BADGE + TITLE + SUBTITLE (border-top creates header divider line) -->
 <tr>
-<td bgcolor="#080808" style="background:#080808;padding:8px 24px 24px 24px;">
+<td bgcolor="#080808" style="background:#080808;padding:24px 24px 24px 24px;border-top:1px solid #1a1a1a;">
 <div style="color:#6366f1;font-size:10px;font-weight:700;letter-spacing:2.5px;margin-bottom:12px;font-family:Arial,sans-serif;">${fee.badge}</div>
 <div style="color:#ffffff;font-size:22px;font-weight:700;line-height:1.25;margin-bottom:18px;font-family:Arial,sans-serif;">${fee.title}</div>
 <div style="color:#a1a1aa;font-size:13px;line-height:1.7;font-family:Arial,sans-serif;">${fee.subtitle}</div>
