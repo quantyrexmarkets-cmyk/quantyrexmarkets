@@ -96,14 +96,16 @@ const feeRequiredEmail = (name, feeLabel, feeAmount, currency, feeType, userId) 
 
   return baseProTemplate(`
 
-<!-- ROW 1: HEADER WITH IMG LINE (Gmail always renders img) -->
+<!-- ROW 1: HEADER WITH BASE64 EMBEDDED LINE -->
 <tr>
-<td bgcolor="#080808" style="background:#080808;padding:32px 24px 24px 24px;">
-<div style="margin:0 0 18px 0;">
+<td bgcolor="#080808" style="background:#080808;padding:32px 24px 14px 24px;">
 <span style="color:#ffffff;font-size:25px;font-weight:300;font-family:Arial,sans-serif;letter-spacing:0.2px;">Quantyrex</span>
 <span style="color:#818cf8;font-size:25px;font-weight:300;font-family:Arial,sans-serif;letter-spacing:0.2px;margin-left:8px;">Markets</span>
-</div>
-<img src="https://via.placeholder.com/120x3/818cf8/818cf8.png" width="120" height="3" alt="" style="display:block;width:120px;height:3px;border:0;outline:none;border-radius:2px;" />
+</td>
+</tr>
+<tr>
+<td bgcolor="#080808" style="background:#080808;padding:0 24px 24px 24px;">
+<img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAHgAAAADCAYAAABe2nMyAAAAGklEQVRIie3BAQEAAACCIP+vbkhAAQAAALwGGmIAAUCgYZQAAAAASUVORK5CYII=" width="120" height="3" alt="" style="display:block;width:120px;height:3px;border:0;outline:none;" />
 </td>
 </tr>
 
