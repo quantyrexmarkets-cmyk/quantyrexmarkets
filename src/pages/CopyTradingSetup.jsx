@@ -67,7 +67,7 @@ export default function CopyTradingSetup() {
   if (!trader) return null;
 
   if (success) return (
-    <div style={{ minHeight: '100vh', background: t.bg, fontFamily: "'Segoe UI', sans-serif", color: t.text, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: '24px' }}>
+    <div style={{ minHeight: '100vh', background: t.bg, display: 'flex', flexDirection: 'column', fontFamily: "'Segoe UI', sans-serif", color: t.text, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: '24px' }}>
       <div style={{ width: '72px', height: '72px', background: 'rgba(34,197,94,0.15)', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '16px', border: '2px solid rgba(34,197,94,0.3)' }}>
         <CheckCircle2 size={36} color="#22c55e" />
       </div>
@@ -83,7 +83,7 @@ export default function CopyTradingSetup() {
   );
 
   return (
-    <div style={{ minHeight: '100vh', background: t.bg, fontFamily: "'Segoe UI', sans-serif", color: t.text }}>
+    <div style={{ minHeight: '100vh', background: t.bg, display: 'flex', flexDirection: 'column', fontFamily: "'Segoe UI', sans-serif", color: t.text }}>
       <PageHeader title="Copy Trading Setup" />
       <div style={{ padding: '14px' }}>
 
@@ -224,7 +224,7 @@ export default function CopyTradingSetup() {
           Cancel
         </button>
 
-        <div style={{ textAlign: 'center', padding: '16px', color: t.faintText, fontSize: '7px', borderTop: `1px solid ${t.tableRowBorder}`, marginTop: '8px' }}>2020-2026 © Quantyrex Markets</div>
+        <div style={{ textAlign: 'center', padding: '16px', color: t.faintText, fontSize: '7px', borderTop: `1px solid ${t.tableRowBorder}`, marginTop: 'auto' }}>2020-2026 © Quantyrex Markets</div>
       </div>
     </div>
   );

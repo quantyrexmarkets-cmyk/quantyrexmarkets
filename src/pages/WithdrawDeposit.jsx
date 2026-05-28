@@ -135,7 +135,7 @@ const handleWithdraw = async () => {
   const statusColor = (s) => s === 'completed' ? '#22c55e' : s === 'pending' ? '#f59e0b' : '#ef4444';
 
   return (
-    <div style={{ minHeight: '100vh', background: t.bg, fontFamily: "'Segoe UI', sans-serif", color: t.text }}>
+    <div style={{ minHeight: '100vh', background: t.bg, display: 'flex', flexDirection: 'column', fontFamily: "'Segoe UI', sans-serif", color: t.text }}>
       <DashboardSidebar open={sidebarOpen} onClose={() => setSidebarOpen(false)} />
 
       {/* Header */}
@@ -279,7 +279,7 @@ const handleWithdraw = async () => {
         )}
 
       </div>
-      <div style={{ textAlign: "center", padding: "16px", color: t.faintText, fontSize: "7px", borderTop: `1px solid ${t.tableRowBorder}`, marginTop: "16px" }}>2020-2026 &copy; Quantyrex Markets</div>
+      <div style={{ textAlign: "center", padding: "16px", color: t.faintText, fontSize: "7px", borderTop: `1px solid ${t.tableRowBorder}`, marginTop: 'auto' }}>2020-2026 &copy; Quantyrex Markets</div>
 
     </div>
   );

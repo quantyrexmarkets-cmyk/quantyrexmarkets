@@ -68,7 +68,7 @@ export default function SettingsPage() {
   // ToggleSwitch, Section, Row moved outside (was causing re-renders)
 
   return (
-    <div style={{ minHeight: '100vh', background: t.bg, fontFamily: "'Segoe UI', sans-serif" }}>
+    <div style={{ minHeight: '100vh', background: t.bg, display: 'flex', flexDirection: 'column', fontFamily: "'Segoe UI', sans-serif" }}>
       <DashboardSidebar open={sidebarOpen} onClose={() => setSidebarOpen(false)} />
 
       {/* Header */}

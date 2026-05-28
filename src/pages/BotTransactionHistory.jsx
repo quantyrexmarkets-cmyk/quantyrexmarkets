@@ -44,7 +44,7 @@ export default function BotTransactionHistory() {
   );
 
   return (
-    <div style={{ minHeight: '100vh', background: t.bg, fontFamily: "'Segoe UI', sans-serif", color: t.text }}>
+    <div style={{ minHeight: '100vh', background: t.bg, display: 'flex', flexDirection: 'column', fontFamily: "'Segoe UI', sans-serif", color: t.text }}>
 
       {/* Header */}
       <PageHeader title="Bot History" />
@@ -161,7 +161,7 @@ export default function BotTransactionHistory() {
           </div>
         </div>
       </div>
-      <div style={{ textAlign: "center", padding: "16px", color: t.faintText, fontSize: "7px", borderTop: `1px solid ${t.tableRowBorder}`, marginTop: "16px" }}>2020-2026 &copy; Quantyrex Markets</div>
+      <div style={{ textAlign: "center", padding: "16px", color: t.faintText, fontSize: "7px", borderTop: `1px solid ${t.tableRowBorder}`, marginTop: 'auto' }}>2020-2026 &copy; Quantyrex Markets</div>
 
     </div>
   );

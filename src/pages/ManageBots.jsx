@@ -79,7 +79,7 @@ export default function ManageBots() {
   const paginated = filtered.slice((page-1)*show, page*show);
 
   return (
-    <div style={{ minHeight: '100vh', background: t.bg, fontFamily: "'Segoe UI', sans-serif", color: t.text }}>
+    <div style={{ minHeight: '100vh', background: t.bg, display: 'flex', flexDirection: 'column', fontFamily: "'Segoe UI', sans-serif", color: t.text }}>
       <PageHeader title="Trading Bots" />
 
       {msg && <div style={{ background: '#22c55e', color: t.text, padding: '8px 16px', fontSize: '9px', fontWeight: '600' }}>{msg}</div>}
@@ -242,7 +242,7 @@ export default function ManageBots() {
         </div>
       )}
 
-      <div style={{ textAlign: 'center', padding: '16px', color: t.faintText, fontSize: '7px', borderTop: `1px solid ${t.tableRowBorder}`, marginTop: '16px' }}>2020-2026 © Quantyrex Markets</div>
+      <div style={{ textAlign: 'center', padding: '16px', color: t.faintText, fontSize: '7px', borderTop: `1px solid ${t.tableRowBorder}`, marginTop: 'auto' }}>2020-2026 © Quantyrex Markets</div>
     </div>
   );
 }

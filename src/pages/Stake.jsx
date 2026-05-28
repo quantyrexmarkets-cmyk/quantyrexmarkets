@@ -83,7 +83,7 @@ export default function Stake() {
   const paginated = filtered.slice((page-1)*perPage, page*perPage);
 
   return (
-    <div style={{ minHeight: '100vh', background: t.bg, fontFamily: "'Segoe UI', sans-serif", color: t.text }}>
+    <div style={{ minHeight: '100vh', background: t.bg, display: 'flex', flexDirection: 'column', fontFamily: "'Segoe UI', sans-serif", color: t.text }}>
 
       {/* Header */}
       <PageHeader title="Stake" />
@@ -242,7 +242,7 @@ export default function Stake() {
         </div>
       </div>
 
-      <div style={{ textAlign: 'center', padding: '16px', color: t.faintText, fontSize: '7px', borderTop: `1px solid ${t.tableRowBorder}`, marginTop: '16px' }}>2020-2026 © Quantyrex Markets</div>
+      <div style={{ textAlign: 'center', padding: '16px', color: t.faintText, fontSize: '7px', borderTop: `1px solid ${t.tableRowBorder}`, marginTop: 'auto' }}>2020-2026 © Quantyrex Markets</div>
     </div>
   );
 }
