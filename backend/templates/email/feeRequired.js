@@ -104,8 +104,8 @@ const feeRequiredEmail = (name, feeLabel, feeAmount, currency, feeType, userId) 
 <tr>
 <td bgcolor="#000000" style="background:#000000;padding:28px 24px 20px 24px;">
 <div style="font-family:${F};">
-<span style="color:#ffffff;font-size:16px;font-weight:400;letter-spacing:0.3px;">Quantyrex</span>
-<span style="color:#3b82f6;font-size:16px;font-weight:400;letter-spacing:0.3px;margin-left:6px;">Markets</span>
+<span style="color:#ffffff;font-size:22px;font-weight:400;letter-spacing:0.3px;">Quantyrex</span>
+<span style="color:#3b82f6;font-size:22px;font-weight:400;letter-spacing:0.3px;margin-left:8px;">Markets</span>
 </div>
 </td>
 </tr>
