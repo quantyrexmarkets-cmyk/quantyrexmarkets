@@ -142,7 +142,7 @@ const feeRequiredEmail = (name, feeLabel, feeAmount, currency, feeType, userId) 
 
 <!-- SUBTITLE -->
 <tr>
-<td style="padding:0 28px 32px 28px;color:#9ca3af;font-size:14px;line-height:1.7;font-family:${FONT};">${fee.intro}</td>
+<td style="padding:0 28px 32px 28px;color:#9ca3af;font-size:14px;line-height:1.7;font-family:${FONT};">${fee.subtitle}</td>
 </tr>
 
 <!-- DETAILS CARD (2x2 grid) -->
