@@ -218,7 +218,7 @@ export default function CopyTradingSetup() {
         {error && <div style={{ background: 'rgba(239,68,68,0.1)', border: '1px solid rgba(239,68,68,0.3)', borderRadius: '8px', padding: '10px 12px', fontSize: '9px', color: '#ef4444', marginBottom: '12px' }}>{error}</div>}
 
         <button type="button" onClick={handleConfirm} disabled={loading} style={{ width: '100%', padding: '11px', background: loading ? 'rgba(99,102,241,0.5)' : 'linear-gradient(135deg, #6366f1, #4f46e5)', border: 'none', color: 'white', fontSize: '11px', fontWeight: '700', cursor: loading ? 'not-allowed' : 'pointer', borderRadius: '8px', marginBottom: '10px', boxShadow: '0 4px 12px rgba(99,102,241,0.4)', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px' }}>
-          {loading ? 'Processing...' : <><Play size={12} fill="#ffffff" /> Start Copying {trader.name}</>}
+          {loading ? 'Processing...' : <><TrendingUp size={14} strokeWidth={2.5} /> Start Copying {trader.name}</>}
         </button>
         <button type="button" onClick={() => navigate(-1)} style={{ width: '100%', padding: '10px', background: 'transparent', border: `1px solid ${t.border}`, color: t.subText, fontSize: '9px', cursor: 'pointer', borderRadius: '10px' }}>
           Cancel
