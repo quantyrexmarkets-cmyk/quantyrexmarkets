@@ -204,6 +204,12 @@ const handleWithdraw = async () => {
                 <div style={{ marginBottom: '12px' }}>
                   <label style={labelStyle}>Amount to deposit</label>
                   <input value={amount} onChange={e => setAmount(e.target.value)} placeholder='Enter amount (min $10)' style={inputStyle} />
+
+              {Number(amount) > 0 && user?.currency && user?.currency !== 'USD' && (
+                <div style={{ fontSize: '9px', color: '#f59e0b', marginTop: '4px', marginBottom: '4px' }}>
+                  ≈ {formatAmountWithCode(Number(amount), user.currency)} in your currency
+                </div>
+              )}
                 </div>
                 <div style={{ marginBottom: '16px' }}>
                   <label style={labelStyle}>Payment Proof</label>
@@ -277,6 +283,7 @@ const handleWithdraw = async () => {
             </div>
           </div>
         )}
+
 
       </div>
       <div style={{ textAlign: "center", padding: "16px", color: t.faintText, fontSize: "7px", borderTop: `1px solid ${t.tableRowBorder}`, marginTop: "16px" }}>2020-2026 &copy; Quantyrex Markets</div>

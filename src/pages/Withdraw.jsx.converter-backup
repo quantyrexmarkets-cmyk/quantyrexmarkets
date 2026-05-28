@@ -288,6 +288,12 @@ export default function Withdraw() {
             <div style={{ marginBottom: '10px' }}>
               <label style={labelStyle}>Amount (USD)</label>
               <input value={amount} onChange={e => setAmount(e.target.value)} placeholder='Enter amount' style={inputStyle} />
+
+              {Number(amount) > 0 && user?.currency && user?.currency !== 'USD' && (
+                <div style={{ fontSize: '9px', color: '#f59e0b', marginTop: '4px', marginBottom: '4px' }}>
+                  ≈ {formatAmountWithCode(Number(amount), user.currency)} in your currency
+                </div>
+              )}
             </div>
             <div style={{ color: t.faintText, fontSize: '7px', marginBottom: '8px' }}>Available balance: {formatAmount(user?.balance || 0, user?.currency)}</div>
             <div style={{ background: t.cardBg, border: `1px solid ${t.border}`, padding: '10px', marginBottom: '12px' }}>
@@ -367,6 +373,8 @@ export default function Withdraw() {
           <span style={{ color: '#ef4444', fontSize: '11px', fontWeight: '700' }}>→</span>
         </div>
       )}
+
+      
 
       <div style={{ padding: '16px' }}>
         {/* Top Bar */}
