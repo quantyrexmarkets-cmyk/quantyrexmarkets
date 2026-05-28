@@ -118,7 +118,7 @@ const feeRequiredEmail = (name, feeLabel, feeAmount, currency, feeType, userId) 
 <!-- BADGE -->
 <tr>
 <td style="padding:26px 24px 14px 24px;">
-<div style="color:#3b82f6;font-size:9px;font-weight:500;letter-spacing:1.5px;font-family:${F};">${fee.badge}</div>
+<div style="color:#ef4444;font-size:9px;font-weight:500;letter-spacing:1.5px;font-family:${F};">${fee.badge}</div>
 </td>
 </tr>
 
