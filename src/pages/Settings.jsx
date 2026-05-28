@@ -118,7 +118,7 @@ export default function SettingsPage() {
 
         {/* Security */}
         <Section t={t} title="Security">
-          <Row
+          <Row t={t}
             icon={<Shield size={16} color="#6366f1" />}
             title="Two-Factor Authentication"
             desc="Require email OTP on every login"
@@ -128,7 +128,7 @@ export default function SettingsPage() {
               </button>
             }
           />
-          <Row
+          <Row t={t}
             icon={<Lock size={16} color="#6366f1" />}
             title="Change Password"
             desc="Update your account password"
@@ -138,19 +138,19 @@ export default function SettingsPage() {
 
         {/* Notifications */}
         <Section t={t} title="Notification Preferences">
-          <Row
+          <Row t={t}
             icon={<Bell size={16} color="#6366f1" />}
             title="Deposit Alerts"
             desc="Get notified on deposit updates"
             right={<ToggleSwitch t={t} value={notifDeposit} onChange={() => setNotifDeposit(!notifDeposit)} />}
           />
-          <Row
+          <Row t={t}
             icon={<Bell size={16} color="#6366f1" />}
             title="Withdrawal Alerts"
             desc="Get notified on withdrawal updates"
             right={<ToggleSwitch t={t} value={notifWithdrawal} onChange={() => setNotifWithdrawal(!notifWithdrawal)} />}
           />
-          <Row
+          <Row t={t}
             icon={<Bell size={16} color="#6366f1" />}
             title="Trade Alerts"
             desc="Get notified on trade updates"
@@ -163,7 +163,7 @@ export default function SettingsPage() {
 
         {/* Account */}
         <Section t={t} title="Account">
-          <Row
+          <Row t={t}
             icon={<Eye size={16} color="#6366f1" />}
             title="KYC Verification"
             desc={user?.kycStatus === 'approved' ? '✅ Verified' : 'Complete identity verification'}
