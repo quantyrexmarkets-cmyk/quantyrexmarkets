@@ -247,8 +247,8 @@ export default function Profile() {
             <div style={{ background: '#6366f1', padding: '16px', marginBottom: '16px' }}>
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '12px' }}>
                 <div>
-                  <div style={{ color: t.text, fontSize: '13px', fontWeight: '700' }}>{form.firstName} {form.lastName}</div>
-                  <div style={{ color: t.subText, fontSize: '8px' }}>{user?.email || ''}</div>
+                  <div style={{ color: '#ffffff', fontSize: '13px', fontWeight: '700' }}>{form.firstName} {form.lastName}</div>
+                  <div style={{ color: 'rgba(255,255,255,0.75)', fontSize: '8px' }}>{user?.email || ''}</div>
                 </div>
                 <button type="button" onClick={() => setActiveTab('edit')} style={{ background: 'rgba(0,0,0,0.2)', border: 'none', color: 'white', fontSize: '8px', padding: '6px 12px', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '4px' }}>
                   <Edit2 size={9}/> Edit Profile
@@ -256,16 +256,16 @@ export default function Profile() {
                 <button type="button" onClick={() => { logout(); navigate('/signin'); }} style={{ background: '#ef4444', border: 'none', color: 'white', fontSize: '8px', padding: '6px 12px', cursor: 'pointer' }}>Logout</button>
               </div>
               <div style={{ display: 'flex', alignItems: 'center', gap: '14px' }}>
-                <div style={{ width: '55px', height: '55px', borderRadius: '50%', background: t.hoverBg, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, border: `2px solid ${t.border}`, overflow: 'hidden' }}>
-                  {avatarSrc ? <img src={avatarSrc} style={{ width: '100%', height: '100%', objectFit: 'cover' }} alt="avatar" onError={e => { e.target.style.display='none'; e.target.nextSibling.style.display='flex'; }}/> : null}<User size={26} color={t.subText} style={{ display: avatarSrc ? 'none' : 'block' }}/>
+                <div style={{ width: '55px', height: '55px', borderRadius: '50%', background: 'rgba(255,255,255,0.1)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, border: '2px solid rgba(255,255,255,0.25)', overflow: 'hidden' }}>
+                  {avatarSrc ? <img src={avatarSrc} style={{ width: '100%', height: '100%', objectFit: 'cover' }} alt="avatar" onError={e => { e.target.style.display='none'; e.target.nextSibling.style.display='flex'; }}/> : null}<User size={26} color='rgba(255,255,255,0.6)' style={{ display: avatarSrc ? 'none' : 'block' }}/>
                 </div>
                 <div>
                   <div style={{ display: 'flex', gap: '20px', marginBottom: '8px' }}>
-                    <div><div style={{ color: t.text, fontSize: '10px', fontWeight: '700' }}>Starter</div><div style={{ color: t.subText, fontSize: '7px' }}>Plan</div></div>
-                    <div><div style={{ color: t.text, fontSize: '10px', fontWeight: '700' }}>{form.currency?.split('(')[1]?.replace(')', '') || 'USD'}</div><div style={{ color: t.subText, fontSize: '7px' }}>Currency</div></div>
-                    <div><div style={{ color: t.text, fontSize: '10px', fontWeight: '700' }}>—</div><div style={{ color: t.subText, fontSize: '7px' }}>Gender</div></div>
+                    <div><div style={{ color: '#ffffff', fontSize: '10px', fontWeight: '700' }}>Starter</div><div style={{ color: 'rgba(255,255,255,0.75)', fontSize: '7px' }}>Plan</div></div>
+                    <div><div style={{ color: '#ffffff', fontSize: '10px', fontWeight: '700' }}>{form.currency?.split('(')[1]?.replace(')', '') || 'USD'}</div><div style={{ color: 'rgba(255,255,255,0.75)', fontSize: '7px' }}>Currency</div></div>
+                    <div><div style={{ color: '#ffffff', fontSize: '10px', fontWeight: '700' }}>—</div><div style={{ color: 'rgba(255,255,255,0.75)', fontSize: '7px' }}>Gender</div></div>
                   </div>
-                  <div style={{ color: t.subText, fontSize: '8px' }}>Email: {user?.email || 'N/A'}</div>
+                  <div style={{ color: 'rgba(255,255,255,0.75)', fontSize: '8px' }}>Email: {user?.email || 'N/A'}</div>
                 </div>
               </div>
             </div>
@@ -273,7 +273,7 @@ export default function Profile() {
         ) : (
           <div style={{ background: t.cardBg, padding: '16px', border: `1px solid ${t.border}` }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px' }}>
-              <span style={{ color: t.subText, fontSize: '9px' }}>Edit Account</span>
+              <span style={{ color: 'rgba(255,255,255,0.75)', fontSize: '9px' }}>Edit Account</span>
               <button type="button" onClick={() => { setActiveTab('profile'); setErrors({}); setAvatarPreview(null); setAvatarFile(null); setFileName('No file chosen'); }} style={{ background: 'none', border: 'none', color: '#6366f1', fontSize: '8px', cursor: 'pointer' }}>Previous →</button>
             </div>
 
