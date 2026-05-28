@@ -4,17 +4,12 @@ const baseProTemplate = (content) => `<!DOCTYPE html>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
 <meta name="color-scheme" content="dark only">
-<meta name="supported-color-schemes" content="dark only">
-<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-<style type="text/css">
-  @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&display=swap');
-  body, table, td, div, h1, p, span, a { font-family: 'Montserrat', Arial, sans-serif !important; }
-</style>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <title>Quantyrex Markets</title>
 </head>
-<body style="margin:0;padding:0;background:#000000;font-family:'Montserrat',Arial,sans-serif;-webkit-font-smoothing:antialiased;">
+<body style="margin:0;padding:0;background:#000000;font-family:'Montserrat',Arial,sans-serif;">
 <table width="100%" cellpadding="0" cellspacing="0" border="0" bgcolor="#000000" style="background:#000000;">
-<tr><td align="center">
+<tr><td align="center" style="padding:0;">
 <table width="100%" cellpadding="0" cellspacing="0" border="0" bgcolor="#000000" style="max-width:680px;background:#000000;">
 ${content}
 </table>
