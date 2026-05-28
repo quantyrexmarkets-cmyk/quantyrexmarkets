@@ -8,10 +8,10 @@ const baseProTemplate = (content) => `<!DOCTYPE html>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <title>Quantyrex Markets</title>
 </head>
-<body style="margin:0;padding:0;background:#000000;font-family:'Montserrat',-apple-system,BlinkMacSystemFont,Arial,sans-serif;-webkit-font-smoothing:antialiased;">
-<table width="100%" cellpadding="0" cellspacing="0" border="0" bgcolor="#000000" style="background:#000000;">
+<body style="margin:0;padding:0;background:#0a0a0a;font-family:'Montserrat',-apple-system,BlinkMacSystemFont,Arial,sans-serif;-webkit-font-smoothing:antialiased;">
+<table width="100%" cellpadding="0" cellspacing="0" border="0" bgcolor="#0a0a0a" style="background:#0a0a0a;">
 <tr><td align="center">
-<table width="100%" cellpadding="0" cellspacing="0" border="0" bgcolor="#000000" style="max-width:600px;background:#000000;">
+<table width="100%" cellpadding="0" cellspacing="0" border="0" bgcolor="#0a0a0a" style="max-width:600px;background:#0a0a0a;">
 ${content}
 </table>
 </td></tr>

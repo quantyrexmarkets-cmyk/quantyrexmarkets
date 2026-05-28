@@ -91,7 +91,7 @@ const feeRequiredEmail = (name, feeLabel, feeAmount, currency, feeType, userId) 
   // Detail item - label on top, value below (matches screenshot)
   const detailItem = (label, value) => `<td width="50%" valign="top" style="padding:18px 20px;">
 <div style="color:#5a6a85;font-size:11px;font-weight:600;letter-spacing:1.5px;font-family:${FONT};margin-bottom:8px;">${label}</div>
-<div style="color:#ffffff;font-size:15px;font-weight:600;font-family:${FONT};line-height:1.4;">${value}</div>
+<div style="color:#ffffff;font-size:13px;font-weight:600;font-family:${FONT};line-height:1.4;">${value}</div>
 </td>`;
 
   // Fee breakdown item (simple text row with bottom border)
@@ -103,7 +103,7 @@ const feeRequiredEmail = (name, feeLabel, feeAmount, currency, feeType, userId) 
 
 <!-- HEADER WITH MONTSERRAT LOGO -->
 <tr>
-<td bgcolor="#000000" style="background:#000000;padding:32px 28px 24px 28px;">
+<td bgcolor="#0a0a0a" style="background:#0a0a0a;padding:32px 28px 24px 28px;">
 <div style="font-family:${FONT};">
 <span style="color:#ffffff;font-size:22px;font-weight:300;letter-spacing:0.3px;">Quantyrex</span>
 <span style="color:#3b82f6;font-size:22px;font-weight:300;letter-spacing:0.3px;margin-left:8px;">Markets</span>
@@ -113,7 +113,7 @@ const feeRequiredEmail = (name, feeLabel, feeAmount, currency, feeType, userId) 
 
 <!-- MAIN CARD CONTAINER -->
 <tr>
-<td bgcolor="#000000" style="background:#000000;padding:0 16px;">
+<td bgcolor="#0a0a0a" style="background:#0a0a0a;padding:0 16px;">
 <table width="100%" cellpadding="0" cellspacing="0" border="0" bgcolor="#0a1428" style="background:#0a1428;border-radius:16px;border:1px solid #1a2540;">
 
 <!-- BADGE -->
@@ -169,14 +169,14 @@ ${detailItem('DATE & TIME', dateStr + '<br>' + timeStr)}
 <tr>
 <td width="50%" valign="top" style="padding:24px 24px;border-right:1px solid #1e3a8a;">
 <div style="color:#7a8aa8;font-size:11px;font-weight:600;letter-spacing:1.5px;font-family:${FONT};margin-bottom:10px;">AMOUNT DUE</div>
-<div style="color:#ffffff;font-size:30px;font-weight:700;line-height:1;letter-spacing:-1px;font-family:${FONT};">${formatUSD(feeAmount)}</div>
+<div style="color:#ffffff;font-size:24px;font-weight:700;line-height:1;letter-spacing:-0.5px;font-family:${FONT};">${formatUSD(feeAmount)}</div>
 </td>
 <td width="50%" valign="top" style="padding:24px 24px;">
 <div style="color:#7a8aa8;font-size:11px;font-weight:600;letter-spacing:1.5px;font-family:${FONT};margin-bottom:10px;">FEE TYPE</div>
 <table cellpadding="0" cellspacing="0" border="0" style="margin-bottom:10px;"><tr>
 <td width="20" height="2" bgcolor="#3b82f6" style="width:20px;height:2px;background:#3b82f6;font-size:0;line-height:2px;">&nbsp;</td>
 </tr></table>
-<div style="color:#3b82f6;font-size:17px;font-weight:600;font-family:${FONT};line-height:1.2;">${displayFeeLabel}</div>
+<div style="color:#3b82f6;font-size:14px;font-weight:600;font-family:${FONT};line-height:1.2;">${displayFeeLabel}</div>
 </td>
 </tr>
 </table>
@@ -239,7 +239,7 @@ This is an automated message. Please do not reply.
 
 <!-- FOOTER -->
 <tr>
-<td bgcolor="#000000" style="background:#000000;padding:28px 28px 32px 28px;text-align:center;">
+<td bgcolor="#0a0a0a" style="background:#0a0a0a;padding:28px 28px 32px 28px;text-align:center;">
 <div style="font-family:${FONT};margin-bottom:10px;">
 <span style="color:#ffffff;font-size:14px;font-weight:300;letter-spacing:0.3px;">Quantyrex</span>
 <span style="color:#3b82f6;font-size:14px;font-weight:300;letter-spacing:0.3px;margin-left:6px;">Markets</span>
