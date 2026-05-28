@@ -77,7 +77,7 @@ export default function ReferUsers() {
             <div style={{ flex: 1, background: t.bg, padding: '8px 10px', fontSize: '11px', fontWeight: '700', color: '#6366f1', letterSpacing: '1px', borderRadius: '4px' }}>
               {loading ? '...' : data.referralCode}
             </div>
-            <button onClick={() => handleCopy(data.referralCode)} style={{ padding: '8px 10px', background: '#6366f1', border: 'none', color: 'white', fontSize: '8px', cursor: 'pointer', borderRadius: '4px', display: 'flex', alignItems: 'center', gap: '4px' }}>
+            <button type="button" onClick={() => handleCopy(data.referralCode)} style={{ padding: '8px 10px', background: '#6366f1', border: 'none', color: 'white', fontSize: '8px', cursor: 'pointer', borderRadius: '4px', display: 'flex', alignItems: 'center', gap: '4px' }}>
               <Copy size={10}/> Copy
             </button>
           </div>
@@ -86,7 +86,7 @@ export default function ReferUsers() {
             <div style={{ flex: 1, background: t.bg, padding: '8px 10px', fontSize: '7px', color: t.subText, borderRadius: '4px', overflow: 'visible', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
               {loading ? '...' : referralLink}
             </div>
-            <button onClick={() => handleCopy(referralLink)} style={{ padding: '8px 10px', background: '#6366f1', border: 'none', color: 'white', fontSize: '8px', cursor: 'pointer', borderRadius: '4px', display: 'flex', alignItems: 'center', gap: '4px' }}>
+            <button type="button" onClick={() => handleCopy(referralLink)} style={{ padding: '8px 10px', background: '#6366f1', border: 'none', color: 'white', fontSize: '8px', cursor: 'pointer', borderRadius: '4px', display: 'flex', alignItems: 'center', gap: '4px' }}>
               <Copy size={10}/> {copied ? 'Copied!' : 'Copy'}
             </button>
           </div>
@@ -118,7 +118,7 @@ export default function ReferUsers() {
           </div>
           {data.referredUsers.length > show && (
             <div style={{ padding: '10px', textAlign: 'center' }}>
-              <button onClick={() => setShow(s => s + 10)} style={{ background: 'none', border: `1px solid ${t.border}`, color: t.subText, fontSize: '8px', padding: '6px 16px', cursor: 'pointer', borderRadius: '4px' }}>Load More</button>
+              <button type="button" onClick={() => setShow(s => s + 10)} style={{ background: 'none', border: `1px solid ${t.border}`, color: t.subText, fontSize: '8px', padding: '6px 16px', cursor: 'pointer', borderRadius: '4px' }}>Load More</button>
             </div>
           )}
         </div>

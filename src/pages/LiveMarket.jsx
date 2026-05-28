@@ -161,7 +161,7 @@ export default function LiveMarket() {
             { id: 'chart', label: 'Chart', icon: <BarChart2 size={10}/> },
             { id: 'screener', label: 'Screener', icon: <Bitcoin size={10}/> },
           ].map(tab => (
-            <button key={tab.id} onClick={() => setActiveTab(tab.id)} style={{
+            <button type="button" key={tab.id} onClick={() => setActiveTab(tab.id)} style={{
               background: activeTab === tab.id ? (t.bg === '#f8fafc' ? 'rgba(99,102,241,0.1)' : 'rgba(99,102,241,0.15)') : 'transparent',
               borderRadius: activeTab === tab.id ? '6px 6px 0 0' : '0',
               padding: '8px 14px', border: 'none',
@@ -178,7 +178,7 @@ export default function LiveMarket() {
         {activeTab === 'chart' && (
           <div style={{ display: 'flex', gap: '6px', flexWrap: 'wrap', marginBottom: '10px' }}>
             {symbols.map(s => (
-              <button key={s} onClick={() => setSymbol(s)} style={{
+              <button type="button" key={s} onClick={() => setSymbol(s)} style={{
                 padding: '4px 8px',
                 background: symbol === s ? '#6366f1' : t.subtleBg,
                 border: 'none', color: 'white', fontSize: '7px', fontWeight: '700', cursor: 'pointer',

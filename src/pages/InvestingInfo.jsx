@@ -16,8 +16,8 @@ export default function InvestingInfo() {
       <div style={{ background: '#1a2e4a', padding: '14px 20px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', borderBottom: `1px solid ${'rgba(255,255,255,0.08)'}` }}>
         <span style={{ fontWeight: '800', fontSize: '13px' }}>QUANTYREX <span style={{ color: '#6366f1' }}>MARKETS</span></span>
         <div style={{ display: 'flex', gap: '12px' }}>
-          <button onClick={() => navigate('/')} style={{ background: 'none', border: 'none', color: 'rgba(255,255,255,0.6)', fontSize: '10px', cursor: 'pointer' }}>Home</button>
-          <button onClick={() => navigate('/signup')} style={{ background: '#6366f1', border: 'none', color: 'white', fontSize: '10px', padding: '6px 14px', cursor: 'pointer', fontWeight: '700' }}>Get Started</button>
+          <button type="button" onClick={() => navigate('/')} style={{ background: 'none', border: 'none', color: 'rgba(255,255,255,0.6)', fontSize: '10px', cursor: 'pointer' }}>Home</button>
+          <button type="button" onClick={() => navigate('/signup')} style={{ background: '#6366f1', border: 'none', color: 'white', fontSize: '10px', padding: '6px 14px', cursor: 'pointer', fontWeight: '700' }}>Get Started</button>
         </div>
       </div>
       <div style={{ maxWidth: '800px', margin: '0 auto', padding: '40px 20px' }}>
@@ -58,11 +58,11 @@ export default function InvestingInfo() {
                 <span style={{ color: 'rgba(255,255,255,0.6)', fontSize: '9px' }}>Duration</span>
                 <span style={{ color: 'white', fontSize: '9px', fontWeight: '500' }}>{p.duration}</span>
               </div>
-              <button onClick={() => navigate('/signup')} style={{ width: '100%', background: '#6366f1', border: 'none', color: 'white', padding: '8px', fontSize: '9px', fontWeight: '600', cursor: 'pointer' }}>Join Plan</button>
+              <button type="button" onClick={() => navigate('/signup')} style={{ width: '100%', background: '#6366f1', border: 'none', color: 'white', padding: '8px', fontSize: '9px', fontWeight: '600', cursor: 'pointer' }}>Join Plan</button>
             </div>
           ))}
         </div>
-        <button onClick={() => navigate('/signup')} style={{ background: '#f59e0b', border: 'none', color: 'white', padding: '14px 32px', fontSize: '12px', fontWeight: '700', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '8px' }}>
+        <button type="button" onClick={() => navigate('/signup')} style={{ background: '#f59e0b', border: 'none', color: 'white', padding: '14px 32px', fontSize: '12px', fontWeight: '700', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '8px' }}>
           Start Investing Now <ArrowRight size={13}/>
         </button>
       </div>

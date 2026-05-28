@@ -23,8 +23,8 @@ export default function Terms() {
       <div style={{ background: '#1a2e4a', padding: '14px 20px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', borderBottom: `1px solid ${'rgba(255,255,255,0.08)'}`, position: 'sticky', top: 0, zIndex: 100 }}>
         <span style={{ fontWeight: '800', fontSize: '13px', cursor: 'pointer' }} onClick={() => navigate('/')}>QUANTYREX <span style={{ color: '#6366f1' }}>MARKETS</span></span>
         <div style={{ display: 'flex', gap: '12px' }}>
-          <button onClick={() => navigate('/')} style={{ background: 'none', border: 'none', color: 'rgba(255,255,255,0.6)', fontSize: '10px', cursor: 'pointer' }}>Home</button>
-          <button onClick={() => navigate('/signup')} style={{ background: '#6366f1', border: 'none', color: 'white', fontSize: '10px', padding: '6px 14px', cursor: 'pointer', fontWeight: '700' }}>Get Started</button>
+          <button type="button" onClick={() => navigate('/')} style={{ background: 'none', border: 'none', color: 'rgba(255,255,255,0.6)', fontSize: '10px', cursor: 'pointer' }}>Home</button>
+          <button type="button" onClick={() => navigate('/signup')} style={{ background: '#6366f1', border: 'none', color: 'white', fontSize: '10px', padding: '6px 14px', cursor: 'pointer', fontWeight: '700' }}>Get Started</button>
         </div>
       </div>
 
@@ -43,7 +43,7 @@ export default function Terms() {
         ))}
         <div style={{ background: '#132035', padding: '20px', marginTop: '32px', textAlign: 'center' }}>
           <p style={{ color: 'rgba(255,255,255,0.6)', fontSize: '10px', marginBottom: '12px' }}>Have questions about our terms?</p>
-          <button onClick={() => navigate('/#contact')} style={{ background: '#6366f1', border: 'none', color: 'white', padding: '10px 24px', fontSize: '10px', fontWeight: '700', cursor: 'pointer' }}>Contact Us</button>
+          <button type="button" onClick={() => navigate('/#contact')} style={{ background: '#6366f1', border: 'none', color: 'white', padding: '10px 24px', fontSize: '10px', fontWeight: '700', cursor: 'pointer' }}>Contact Us</button>
         </div>
       </div>
 

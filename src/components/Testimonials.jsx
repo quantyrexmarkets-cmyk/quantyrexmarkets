@@ -79,9 +79,9 @@ export default function Testimonials() {
         <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '10px' }}>
           <div style={{ width: '60px', height: '2px', background: '#6366f1', borderRadius: '2px' }} />
           <div style={{ display: 'flex', gap: '8px' }}>
-            <button onClick={() => setCurrent((current - 1 + testimonials.length) % testimonials.length)}
+            <button type="button" onClick={() => setCurrent((current - 1 + testimonials.length) % testimonials.length)}
               style={{ width: '36px', height: '36px', borderRadius: '50%', background: '#6366f1', border: 'none', color: 'white', fontSize: '12px', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>&#8249;</button>
-            <button onClick={() => setCurrent((current + 1) % testimonials.length)}
+            <button type="button" onClick={() => setCurrent((current + 1) % testimonials.length)}
               style={{ width: '36px', height: '36px', borderRadius: '50%', background: '#6366f1', border: 'none', color: 'white', fontSize: '12px', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>&#8250;</button>
           </div>
         </div>

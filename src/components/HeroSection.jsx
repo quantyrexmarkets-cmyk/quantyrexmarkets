@@ -106,7 +106,7 @@ function Navbar({ onGetStarted }) {
           <a href="/investing-info" style={{ fontSize: "clamp(7px, 1.8vw, 15px)" }} className="text-gray-300 hover:text-white font-medium transition-colors whitespace-nowrap">Investing</a>
 
           <div style={{ position: 'relative' }} className="group">
-            <button style={{ fontSize: "clamp(7px, 1.8vw, 15px)" }} className="flex items-center gap-0.5 text-gray-300 hover:text-white font-medium transition-colors whitespace-nowrap">
+            <button type="button" style={{ fontSize: "clamp(7px, 1.8vw, 15px)" }} className="flex items-center gap-0.5 text-gray-300 hover:text-white font-medium transition-colors whitespace-nowrap">
               Links<svg className="w-2 h-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7"/></svg>
             </button>
             <div style={{ position: "absolute", top: "24px", left: 0, background: "#1a2e4a", border: "1px solid rgba(255,255,255,0.1)", padding: "8px 0", width: "144px", zIndex: 9999 }} className="hidden group-hover:block">
@@ -117,7 +117,7 @@ function Navbar({ onGetStarted }) {
           </div>
 
           <div style={{ position: 'relative' }} className="group">
-            <button style={{ fontSize: "clamp(8px, 2vw, 15px)" }} className="flex items-center gap-0.5 text-gray-300 hover:text-white font-medium transition-colors whitespace-nowrap">
+            <button type="button" style={{ fontSize: "clamp(8px, 2vw, 15px)" }} className="flex items-center gap-0.5 text-gray-300 hover:text-white font-medium transition-colors whitespace-nowrap">
               Company<svg className="w-2 h-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7"/></svg>
             </button>
             <div style={{ position: "absolute", top: "24px", left: 0, background: "#1a2e4a", border: "1px solid rgba(255,255,255,0.1)", padding: "8px 0", width: "144px", zIndex: 9999 }} className="hidden group-hover:block">
@@ -127,7 +127,7 @@ function Navbar({ onGetStarted }) {
             </div>
           </div>
 
-          <button
+          <button type="button"
             style={{ fontSize: "clamp(6px, 1.6vw, 14px)", padding: "clamp(2px, 0.6vw, 4px) clamp(4px, 1vw, 7px)" }}
             className="bg-[#6366F1] hover:bg-[#5558E0] text-white rounded-sm font-semibold transition-colors whitespace-nowrap"
             onClick={onGetStarted}
@@ -171,10 +171,10 @@ export default function HeroSection({ onGetStarted }) {
 
           {/* Buttons */}
           <div className="flex gap-2 pt-1">
-            <button style={{ fontSize: "clamp(9px, 2.2vw, 17px)" }} className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-none font-bold transition-colors" onClick={onGetStarted}>
+            <button type="button" style={{ fontSize: "clamp(9px, 2.2vw, 17px)" }} className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-none font-bold transition-colors" onClick={onGetStarted}>
               Get Started
             </button>
-            <button style={{ fontSize: "clamp(9px, 2.2vw, 17px)" }} className="group bg-white/5 hover:bg-white/10 border border-white/20 px-4 py-2 rounded-none font-bold flex items-center gap-1 transition-all" onClick={() => window.location.href="/signin"}>
+            <button type="button" style={{ fontSize: "clamp(9px, 2.2vw, 17px)" }} className="group bg-white/5 hover:bg-white/10 border border-white/20 px-4 py-2 rounded-none font-bold flex items-center gap-1 transition-all" onClick={() => window.location.href="/signin"}>
               Learn More
               <span className="inline-block transform -rotate-45 transition-transform duration-200 group-hover:translate-x-1 group-hover:-translate-y-1">→</span>
             </button>

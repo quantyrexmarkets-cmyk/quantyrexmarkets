@@ -49,7 +49,7 @@ const OurMission = () => {
               <div style={{ display: 'flex', flexDirection: 'column' }}>
                 {accordionItems.map((item, index) => (
                   <div key={index} style={{ borderBottom: '1px solid rgba(255,255,255,0.06)' }}>
-                    <button onClick={() => setOpenIndex(openIndex === index ? -1 : index)}
+                    <button type="button" onClick={() => setOpenIndex(openIndex === index ? -1 : index)}
                       style={{ width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'space-between', background: 'transparent', border: 'none', cursor: 'pointer', padding: '4px 0', gap: '4px' }}>
                       <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
                         <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="#6366f1" strokeWidth="2">
@@ -70,10 +70,10 @@ const OurMission = () => {
               </div>
             </div>
             <div style={{ display: 'flex', gap: '6px' }}>
-              <button onClick={() => window.location.href="/signup"} style={{ flex: 1, padding: '7px', background: '#6366f1', border: 'none', borderRadius: '4px', color: 'white', fontSize: '7px', fontWeight: '600', cursor: 'pointer' }}>
+              <button type="button" onClick={() => window.location.href="/signup"} style={{ flex: 1, padding: '7px', background: '#6366f1', border: 'none', borderRadius: '4px', color: 'white', fontSize: '7px', fontWeight: '600', cursor: 'pointer' }}>
                 Get Started
               </button>
-              <button style={{ flex: 1, padding: '7px', background: 'transparent', border: '1px solid rgba(255,255,255,0.2)', borderRadius: '4px', color: 'white', fontSize: 'clamp(7px, 1.8vw, 15px)', fontWeight: '600', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '3px' }} onClick={() => window.location.href="/signin"}>
+              <button type="button" style={{ flex: 1, padding: '7px', background: 'transparent', border: '1px solid rgba(255,255,255,0.2)', borderRadius: '4px', color: 'white', fontSize: 'clamp(7px, 1.8vw, 15px)', fontWeight: '600', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '3px' }} onClick={() => window.location.href="/signin"}>
                 Learn More <ArrowUpRight size={8} />
               </button>
             </div>

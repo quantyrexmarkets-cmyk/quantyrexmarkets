@@ -117,7 +117,7 @@ export default function Deposit() {
           <div style={{ position: 'fixed', top: '50%', left: '50%', transform: 'translate(-50%,-50%)', zIndex: 101, background: t.bg, border: '1px solid rgba(99,102,241,0.3)', padding: '16px', width: '320px', maxHeight: '90vh', overflowY: 'auto' }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '14px' }}>
               <span style={{ color: t.text, fontSize: '11px', fontWeight: '700' }}>Deposit Funds</span>
-              <button onClick={() => setShowForm(false)} style={{ background: 'none', border: 'none', color: t.subText, cursor: 'pointer', fontSize: '16px' }}>×</button>
+              <button type="button" onClick={() => setShowForm(false)} style={{ background: 'none', border: 'none', color: t.subText, cursor: 'pointer', fontSize: '16px' }}>×</button>
             </div>
 
             <div style={{ display: 'flex', gap: '12px', alignItems: 'flex-start' }}>
@@ -146,7 +146,7 @@ export default function Deposit() {
                   </div>
                 </div>
                 {error && <div style={{ color: '#ef4444', fontSize: '8px', marginBottom: '8px' }}>{error}</div>}
-                <button onClick={handleSubmit} disabled={submitting} style={{ width: '100%', padding: '9px', background: submitting ? '#4b4e9b' : '#22c55e', border: 'none', color: 'white', fontSize: '9px', fontWeight: '700', cursor: submitting ? 'not-allowed' : 'pointer' }}>
+                <button type="button" onClick={handleSubmit} disabled={submitting} style={{ width: '100%', padding: '9px', background: submitting ? '#4b4e9b' : '#22c55e', border: 'none', color: 'white', fontSize: '9px', fontWeight: '700', cursor: submitting ? 'not-allowed' : 'pointer' }}>
                   {submitting ? 'Submitting...' : 'Submit Deposit'}
                 </button>
               </div>
@@ -155,7 +155,7 @@ export default function Deposit() {
               <div style={{ width: '120px', flexShrink: 0, background: t.inputBg, border: `1px solid ${t.border}`, padding: '10px', textAlign: 'center' }}>
                 <div style={{ color: t.subText, fontSize: '6px', marginBottom: '3px', textAlign: 'left' }}>USDT Address:</div>
                 <div style={{ color: '#6366f1', fontSize: '6px', wordBreak: 'break-all', marginBottom: '4px', textAlign: 'left' }}>{walletAddress}</div>
-                <button onClick={handleCopy} style={{ display: 'flex', alignItems: 'center', gap: '3px', background: copied ? '#22c55e' : '#6366f1', border: 'none', color: 'white', fontSize: '6px', padding: '3px 6px', cursor: 'pointer', marginBottom: '6px', width: '100%', justifyContent: 'center' }}>
+                <button type="button" onClick={handleCopy} style={{ display: 'flex', alignItems: 'center', gap: '3px', background: copied ? '#22c55e' : '#6366f1', border: 'none', color: 'white', fontSize: '6px', padding: '3px 6px', cursor: 'pointer', marginBottom: '6px', width: '100%', justifyContent: 'center' }}>
                   <Copy size={8}/> {copied ? 'Copied!' : 'Copy'}
                 </button>
                 <div style={{ color: t.text, fontSize: '7px', fontWeight: '700', marginBottom: '6px' }}>Deposit USDT to Quantyrex Markets</div>
@@ -178,7 +178,7 @@ export default function Deposit() {
             </div>
             <div style={{ color: '#111', fontSize: '18px', fontWeight: '700', marginBottom: '10px' }}>Deposit Submitted!</div>
             <div style={{ color: '#555', fontSize: '12px', marginBottom: '24px', lineHeight: '1.8' }}>Your deposit is pending approval. We'll notify you once confirmed.</div>
-            <button onClick={() => setShowSuccess(false)} style={{ padding: '8px 28px', background: '#6366f1', border: 'none', color: 'white', fontSize: '10px', fontWeight: '600', cursor: 'pointer' }}>Okay</button>
+            <button type="button" onClick={() => setShowSuccess(false)} style={{ padding: '8px 28px', background: '#6366f1', border: 'none', color: 'white', fontSize: '10px', fontWeight: '600', cursor: 'pointer' }}>Okay</button>
           </div>
         </>
       )}
@@ -186,7 +186,7 @@ export default function Deposit() {
       <div style={{ padding: '16px' }}>
         {/* Balance + New Deposit */}
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '14px' }}>
-          <button onClick={() => navigate('/dashboard/deposit-funds')} style={{ background: '#6366f1', border: 'none', color: 'white', fontSize: '9px', fontWeight: '700', padding: '8px 14px', cursor: 'pointer' }}>+ New Deposit</button>
+          <button type="button" onClick={() => navigate('/dashboard/deposit-funds')} style={{ background: '#6366f1', border: 'none', color: 'white', fontSize: '9px', fontWeight: '700', padding: '8px 14px', cursor: 'pointer' }}>+ New Deposit</button>
         </div>
 
         {/* Table */}
@@ -234,11 +234,11 @@ export default function Deposit() {
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '7px 10px', borderTop: `1px solid ${t.tableRowBorder}` }}>
             <span style={{ color: t.faintText, fontSize: '8px' }}>Showing {filtered.length === 0 ? 0 : (page-1)*perPage+1}–{Math.min(page*perPage, filtered.length)} of {filtered.length} entries</span>
             <div style={{ display: 'flex', gap: '4px' }}>
-              <button onClick={() => setPage(1)} disabled={page === 1} style={{ background: t.border, border: `1px solid ${t.border}`, color: page === 1 ? t.faintText : t.dimText, fontSize: '8px', padding: '2px 6px', cursor: page === 1 ? 'default' : 'pointer' }}>«</button>
-              <button onClick={() => setPage(p => Math.max(1, p-1))} disabled={page === 1} style={{ background: t.border, border: `1px solid ${t.border}`, color: page === 1 ? t.faintText : t.dimText, fontSize: '10px', padding: '2px 8px', cursor: page === 1 ? 'default' : 'pointer' }}>‹</button>
+              <button type="button" onClick={() => setPage(1)} disabled={page === 1} style={{ background: t.border, border: `1px solid ${t.border}`, color: page === 1 ? t.faintText : t.dimText, fontSize: '8px', padding: '2px 6px', cursor: page === 1 ? 'default' : 'pointer' }}>«</button>
+              <button type="button" onClick={() => setPage(p => Math.max(1, p-1))} disabled={page === 1} style={{ background: t.border, border: `1px solid ${t.border}`, color: page === 1 ? t.faintText : t.dimText, fontSize: '10px', padding: '2px 8px', cursor: page === 1 ? 'default' : 'pointer' }}>‹</button>
               <span style={{ color: t.subText, fontSize: '8px' }}>Page {page} of {totalPages || 1}</span>
-              <button onClick={() => setPage(p => Math.min(totalPages, p+1))} disabled={page >= totalPages} style={{ background: t.border, border: `1px solid ${t.border}`, color: page >= totalPages ? t.faintText : t.dimText, fontSize: '10px', padding: '2px 8px', cursor: page >= totalPages ? 'default' : 'pointer' }}>›</button>
-              <button onClick={() => setPage(totalPages)} disabled={page >= totalPages} style={{ background: t.border, border: `1px solid ${t.border}`, color: page >= totalPages ? t.faintText : t.dimText, fontSize: '8px', padding: '2px 6px', cursor: page >= totalPages ? 'default' : 'pointer' }}>»</button>
+              <button type="button" onClick={() => setPage(p => Math.min(totalPages, p+1))} disabled={page >= totalPages} style={{ background: t.border, border: `1px solid ${t.border}`, color: page >= totalPages ? t.faintText : t.dimText, fontSize: '10px', padding: '2px 8px', cursor: page >= totalPages ? 'default' : 'pointer' }}>›</button>
+              <button type="button" onClick={() => setPage(totalPages)} disabled={page >= totalPages} style={{ background: t.border, border: `1px solid ${t.border}`, color: page >= totalPages ? t.faintText : t.dimText, fontSize: '8px', padding: '2px 6px', cursor: page >= totalPages ? 'default' : 'pointer' }}>»</button>
             </div>
           </div>
         </div>

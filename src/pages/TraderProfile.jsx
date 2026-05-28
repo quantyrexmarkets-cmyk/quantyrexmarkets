@@ -68,7 +68,7 @@ export default function TraderProfile() {
     <div style={{minHeight:'100vh',background:t.bg,display:'flex',alignItems:'center',justifyContent:'center'}}>
       <div style={{textAlign:'center'}}>
         <p style={{fontSize:'12px',color:t.mutedText}}>Trader not found</p>
-        <button onClick={() => navigate('/dashboard/copy-trading')} style={{marginTop:'12px',background:'#6366f1',border:'none',color:'white',padding:'8px 16px',borderRadius:'6px',cursor:'pointer',fontSize:'10px'}}>Go Back</button>
+        <button type="button" onClick={() => navigate('/dashboard/copy-trading')} style={{marginTop:'12px',background:'#6366f1',border:'none',color:'white',padding:'8px 16px',borderRadius:'6px',cursor:'pointer',fontSize:'10px'}}>Go Back</button>
       </div>
     </div>
   );
@@ -90,7 +90,7 @@ export default function TraderProfile() {
     <div style={{minHeight:'100vh',background:t.bg,fontFamily:"'Segoe UI', sans-serif",color:t.text,paddingBottom:'40px'}}>
       <PageHeader title="Trader Profile" />
       <div style={{padding:'12px 14px 0'}}>
-        <button onClick={() => navigate('/dashboard/copy-trading')} style={{display:'flex',alignItems:'center',gap:'5px',background:'none',border:'none',color:t.subText,cursor:'pointer',fontSize:'9px',padding:'0'}}>
+        <button type="button" onClick={() => navigate('/dashboard/copy-trading')} style={{display:'flex',alignItems:'center',gap:'5px',background:'none',border:'none',color:t.subText,cursor:'pointer',fontSize:'9px',padding:'0'}}>
           <ArrowLeft size={12}/> Back to Copy Trading
         </button>
       </div>
@@ -130,7 +130,7 @@ export default function TraderProfile() {
             </div>
           ))}
         </div>
-        <button onClick={() => { setModal(true); setAmount(''); setCopyError(''); }} style={{width:'100%',padding:'11px',background:'#6366f1',border:'none',color:'white',fontSize:'10px',fontWeight:'700',cursor:'pointer',borderRadius:'8px',display:'flex',alignItems:'center',justifyContent:'center',gap:'6px'}}>
+        <button type="button" onClick={() => { setModal(true); setAmount(''); setCopyError(''); }} style={{width:'100%',padding:'11px',background:'#6366f1',border:'none',color:'white',fontSize:'10px',fontWeight:'700',cursor:'pointer',borderRadius:'8px',display:'flex',alignItems:'center',justifyContent:'center',gap:'6px'}}>
           <Copy size={12}/> Copy Trader Strategy
         </button>
       </div>
@@ -138,7 +138,7 @@ export default function TraderProfile() {
       {/* Tabs */}
       <div style={{margin:'14px 14px 0',display:'grid',gridTemplateColumns:'repeat(4,1fr)',background:t.cardBg2,borderRadius:'10px',padding:'3px',border:`1px solid ${t.subtleBorder}`}}>
         {['overview','trades','followers','copy'].map(tab=>(
-          <button key={tab} onClick={()=>setActiveTab(tab)} style={{padding:'7px 4px',background:activeTab===tab?'#6366f1':'transparent',border:'none',color:activeTab===tab?'white':t.mutedText,fontSize:'8px',fontWeight:activeTab===tab?'700':'400',cursor:'pointer',borderRadius:'7px',textTransform:'capitalize'}}>
+          <button type="button" key={tab} onClick={()=>setActiveTab(tab)} style={{padding:'7px 4px',background:activeTab===tab?'#6366f1':'transparent',border:'none',color:activeTab===tab?'white':t.mutedText,fontSize:'8px',fontWeight:activeTab===tab?'700':'400',cursor:'pointer',borderRadius:'7px',textTransform:'capitalize'}}>
             {tab==='copy'?'Copy Info':tab.charAt(0).toUpperCase()+tab.slice(1)}
           </button>
         ))}
@@ -192,7 +192,7 @@ export default function TraderProfile() {
                   <span style={{fontSize:'9px',fontWeight:'700',color:t.profit.startsWith('+')?'#22c55e':'#ef4444'}}>{t.profit}</span>
                 </div>
               ))}
-              <button onClick={()=>setShowAllTrades(!showAllTrades)} style={{width:'100%',background:'none',border:'none',color:t.mutedText,fontSize:'8px',padding:'10px',cursor:'pointer',display:'flex',alignItems:'center',justifyContent:'center',gap:'4px'}}>
+              <button type="button" onClick={()=>setShowAllTrades(!showAllTrades)} style={{width:'100%',background:'none',border:'none',color:t.mutedText,fontSize:'8px',padding:'10px',cursor:'pointer',display:'flex',alignItems:'center',justifyContent:'center',gap:'4px'}}>
                 {showAllTrades?<><ChevronUp size={10}/>Show less</>:<><ChevronDown size={10}/>View all</>}
               </button>
             </div>
@@ -248,7 +248,7 @@ export default function TraderProfile() {
                 <p style={{margin:0,fontSize:'7.5px',color:t.subText,lineHeight:'1.5'}}>Copy trading involves risk. Past performance is not indicative of future results.</p>
               </div>
             </div>
-            <button onClick={()=>{ setModal(true); setAmount(''); setCopyError(''); }} style={{width:'100%',padding:'12px',background:'#6366f1',border:'none',color:'white',fontSize:'11px',fontWeight:'700',cursor:'pointer',borderRadius:'8px',display:'flex',alignItems:'center',justifyContent:'center',gap:'6px'}}>
+            <button type="button" onClick={()=>{ setModal(true); setAmount(''); setCopyError(''); }} style={{width:'100%',padding:'12px',background:'#6366f1',border:'none',color:'white',fontSize:'11px',fontWeight:'700',cursor:'pointer',borderRadius:'8px',display:'flex',alignItems:'center',justifyContent:'center',gap:'6px'}}>
               <Copy size={13}/> Copy {trader.name}
             </button>
           </div>
@@ -274,8 +274,8 @@ export default function TraderProfile() {
             {copyError && <div style={{fontSize:'8px',color:'#ef4444',marginBottom:'10px',background:'rgba(239,68,68,0.1)',padding:'8px 10px',borderRadius:'6px'}}>{copyError}</div>}
             {copySuccess && <div style={{fontSize:'8px',color:'#22c55e',marginBottom:'10px',background:'rgba(34,197,94,0.1)',padding:'8px 10px',borderRadius:'6px'}}>✓ {copySuccess}</div>}
             <div style={{display:'flex',gap:'8px'}}>
-              <button onClick={()=>setModal(false)} style={{flex:1,padding:'11px',background:t.subtleBg,border:'none',color:'white',fontSize:'10px',cursor:'pointer',borderRadius:'8px'}}>Cancel</button>
-              <button onClick={handleCopy} disabled={copying} style={{flex:2,padding:'11px',background:copying?'rgba(99,102,241,0.5)':'#6366f1',border:'none',color:'white',fontSize:'10px',fontWeight:'700',cursor:copying?'default':'pointer',borderRadius:'8px'}}>
+              <button type="button" onClick={()=>setModal(false)} style={{flex:1,padding:'11px',background:t.subtleBg,border:'none',color:'white',fontSize:'10px',cursor:'pointer',borderRadius:'8px'}}>Cancel</button>
+              <button type="button" onClick={handleCopy} disabled={copying} style={{flex:2,padding:'11px',background:copying?'rgba(99,102,241,0.5)':'#6366f1',border:'none',color:'white',fontSize:'10px',fontWeight:'700',cursor:copying?'default':'pointer',borderRadius:'8px'}}>
                 {copying?'Processing...':'Confirm & Start Copying'}
               </button>
             </div>

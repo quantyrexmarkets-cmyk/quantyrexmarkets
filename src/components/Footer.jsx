@@ -85,7 +85,7 @@ const Footer = () => {
               placeholder="Enter Your Email"
               style={{ flex: 1, background: '#1a2535', border: '1px solid rgba(255,255,255,0.1)', borderRight: 'none', padding: '6px 8px', color: 'white', fontSize: 'clamp(7px, 1.8vw, 15px)', outline: 'none', minWidth: 0 }}
             />
-            <button onClick={() => window.location.href='/signup'} style={{ background: '#6366f1', border: 'none', padding: '6px 10px', color: 'white', fontSize: 'clamp(7px, 1.8vw, 15px)', fontWeight: '600', cursor: 'pointer', whiteSpace: 'nowrap' }}>
+            <button type="button" onClick={() => window.location.href='/signup'} style={{ background: '#6366f1', border: 'none', padding: '6px 10px', color: 'white', fontSize: 'clamp(7px, 1.8vw, 15px)', fontWeight: '600', cursor: 'pointer', whiteSpace: 'nowrap' }}>
               Subscribe
             </button>
           </div>

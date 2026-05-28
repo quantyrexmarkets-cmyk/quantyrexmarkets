@@ -172,12 +172,12 @@ const SignUp = () => {
         <p style={{ color: '#94a3b8', fontSize: '9px', marginBottom: '24px', lineHeight: '1.8' }}>
           Hello! <strong style={{ color: 'white' }}>{form.firstName} {form.lastName}</strong>, an email has been sent to <strong style={{ color: 'white' }}>{form.email.replace(/(.{1})(.*)(@.*)/, '$1**********$3')}</strong>. Please click on the included link to confirm your email.
         </p>
-        <button onClick={() => window.location.href='/signin'} style={{ width: '100%', padding: '10px', background: '#6366f1', border: 'none', color: 'white', fontSize: '10px', fontWeight: '600', cursor: 'pointer', borderRadius: '4px', marginBottom: '10px', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '6px' }}>
+        <button type="button" onClick={() => window.location.href='/signin'} style={{ width: '100%', padding: '10px', background: '#6366f1', border: 'none', color: 'white', fontSize: '10px', fontWeight: '600', cursor: 'pointer', borderRadius: '4px', marginBottom: '10px', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '6px' }}>
           <svg width='12' height='12' fill='none' stroke='white' viewBox='0 0 24 24' strokeWidth='2'><path strokeLinecap='round' strokeLinejoin='round' d='M3 8l7.89 5.26a2 2 0 002.22 0L21 8'/></svg>
           Resend email
         </button>
         <div style={{ borderTop: `1px solid ${'rgba(255,255,255,0.08)'}`, paddingTop: '10px' }}>
-          <button onClick={() => window.location.href='/signin'} style={{ background: 'none', border: 'none', color: '#f59e0b', fontSize: '9px', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '4px', margin: '0 auto' }}>
+          <button type="button" onClick={() => window.location.href='/signin'} style={{ background: 'none', border: 'none', color: '#f59e0b', fontSize: '9px', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '4px', margin: '0 auto' }}>
             ← Return to login
           </button>
         </div>
@@ -216,7 +216,7 @@ const SignUp = () => {
                 </div>
                 <div style={{ color: '#111827', fontSize: '14px', fontWeight: '700', marginBottom: '8px' }}>Account Created!</div>
                 <div style={{ color: '#6b7280', fontSize: '9px', marginBottom: '20px', lineHeight: '1.6' }}>Welcome to Quantyrex Markets! Your account has been successfully created.</div>
-                <button onClick={() => window.location.replace('/signin')} style={{ padding: '8px 28px', background: '#6366f1', border: 'none', color: 'white', fontSize: '10px', fontWeight: '600', cursor: 'pointer' }}>Login</button>
+                <button type="button" onClick={() => window.location.replace('/signin')} style={{ padding: '8px 28px', background: '#6366f1', border: 'none', color: 'white', fontSize: '10px', fontWeight: '600', cursor: 'pointer' }}>Login</button>
               </div>
             </>
           )}
@@ -276,7 +276,7 @@ const SignUp = () => {
               <label style={{ color: 'white', fontSize: 'clamp(7px, 1.8vw, 15px)', fontWeight: '600', display: 'block', marginBottom: '4px' }}>Password *</label>
               <div style={{ position: 'relative' }}>
                 <input name="password" type={showPass ? 'text' : 'password'} value={form.password} onChange={handleChange} placeholder="Enter password" style={{ ...inputStyle('password'), paddingRight: '28px' }} />
-                <button onClick={() => setShowPass(!showPass)} style={{ position: 'absolute', right: '6px', top: '50%', transform: 'translateY(-50%)', background: 'none', border: 'none', cursor: 'pointer' }}>
+                <button type="button" onClick={() => setShowPass(!showPass)} style={{ position: 'absolute', right: '6px', top: '50%', transform: 'translateY(-50%)', background: 'none', border: 'none', cursor: 'pointer' }}>
                   {showPass
                     ? <svg width='12' height='12' fill='none' stroke='#94a3b8' viewBox='0 0 24 24'><path strokeLinecap='round' strokeLinejoin='round' strokeWidth='2' d='M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.88 9.88l-3.29-3.29m7.532 7.532l3.29 3.29M3 3l3.59 3.59m0 0A9.953 9.953 0 0112 5c4.478 0 8.268 2.943 9.543 7a10.025 10.025 0 01-4.132 5.411m0 0L21 21'/></svg>
                     : <svg width='12' height='12' fill='none' stroke='#94a3b8' viewBox='0 0 24 24'><path strokeLinecap='round' strokeLinejoin='round' strokeWidth='2' d='M15 12a3 3 0 11-6 0 3 3 0 016 0z'/><path strokeLinecap='round' strokeLinejoin='round' strokeWidth='2' d='M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z'/></svg>
@@ -289,7 +289,7 @@ const SignUp = () => {
               <label style={{ color: 'white', fontSize: 'clamp(7px, 1.8vw, 15px)', fontWeight: '600', display: 'block', marginBottom: '4px' }}>Confirm Password *</label>
               <div style={{ position: 'relative' }}>
                 <input name="confirmPassword" type={showConfirm ? 'text' : 'password'} value={form.confirmPassword} onChange={handleChange} placeholder="Confirm Password" style={{ ...inputStyle('confirmPassword'), paddingRight: '28px' }} />
-                <button onClick={() => setShowConfirm(!showConfirm)} style={{ position: 'absolute', right: '6px', top: '50%', transform: 'translateY(-50%)', background: 'none', border: 'none', cursor: 'pointer' }}>
+                <button type="button" onClick={() => setShowConfirm(!showConfirm)} style={{ position: 'absolute', right: '6px', top: '50%', transform: 'translateY(-50%)', background: 'none', border: 'none', cursor: 'pointer' }}>
                   {showConfirm
                     ? <svg width='12' height='12' fill='none' stroke='#94a3b8' viewBox='0 0 24 24'><path strokeLinecap='round' strokeLinejoin='round' strokeWidth='2' d='M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.88 9.88l-3.29-3.29m7.532 7.532l3.29 3.29M3 3l3.59 3.59m0 0A9.953 9.953 0 0112 5c4.478 0 8.268 2.943 9.543 7a10.025 10.025 0 01-4.132 5.411m0 0L21 21'/></svg>
                     : <svg width='12' height='12' fill='none' stroke='#94a3b8' viewBox='0 0 24 24'><path strokeLinecap='round' strokeLinejoin='round' strokeWidth='2' d='M15 12a3 3 0 11-6 0 3 3 0 016 0z'/><path strokeLinecap='round' strokeLinejoin='round' strokeWidth='2' d='M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z'/></svg>
@@ -310,7 +310,7 @@ const SignUp = () => {
             {errors.agree && <div style={errStyle}>{errors.agree}</div>}
           </div>
 
-          <button onClick={handleSubmit} disabled={loading} style={{ width: '100%', padding: '10px', background: loading ? '#4b4f9e' : '#6366f1', border: 'none', borderRadius: '4px', color: 'white', fontSize: 'clamp(8px, 2vw, 15px)', fontWeight: '600', cursor: loading ? 'not-allowed' : 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '6px' }}>
+          <button type="button" onClick={handleSubmit} disabled={loading} style={{ width: '100%', padding: '10px', background: loading ? '#4b4f9e' : '#6366f1', border: 'none', borderRadius: '4px', color: 'white', fontSize: 'clamp(8px, 2vw, 15px)', fontWeight: '600', cursor: loading ? 'not-allowed' : 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '6px' }}>
             {loading ? (
               <>
                 <svg width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='white' strokeWidth='2' style={{ animation: 'spin 1s linear infinite' }}><path d='M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83'/></svg>

@@ -5,6 +5,19 @@ import PageHeader from '../components/PageHeader';
 import { submitKyc, getKycStatus } from '../services/api';
 import InlineLoader from '../components/InlineLoader';
 
+// Stable FileInput component (defined outside to prevent re-mounting)
+const FileInput = ({ label, fileName, onChange, labelStyle, t }) => (
+  <div style={{ marginBottom: '12px' }}>
+    <label style={labelStyle}>{label} <span style={{ color: '#ef4444' }}>*</span></label>
+    <div style={{ display: 'flex', alignItems: 'center', gap: '8px', background: t.cardBg, border: `1px solid ${t.border}`, padding: '6px 10px' }}>
+      <label style={{ background: t.hoverBg, color: t.text, fontSize: '8px', padding: '4px 10px', cursor: 'pointer', whiteSpace: 'nowrap' }}>
+        Choose File<input type='file' accept='image/*,.pdf' style={{ display: 'none' }} onChange={onChange} />
+      </label>
+      <span style={{ color: fileName !== 'No file chosen' ? '#22c55e' : t.faintText, fontSize: '8px', overflow: 'visible', textOverflow: 'ellipsis', whiteSpace: 'nowrap', maxWidth: '160px' }}>{fileName}</span>
+    </div>
+  </div>
+);
+
 export default function KYC() {
   const navigate = useNavigate();
   const { current: t } = useTheme();
@@ -41,17 +54,7 @@ export default function KYC() {
     }
   };
 
-  const FileInput = ({ label, fileName, onChange }) => (
-    <div style={{ marginBottom: '12px' }}>
-      <label style={labelStyle}>{label} <span style={{ color: '#ef4444' }}>*</span></label>
-      <div style={{ display: 'flex', alignItems: 'center', gap: '8px', background: t.cardBg, border: `1px solid ${t.border}`, padding: '6px 10px' }}>
-        <label style={{ background: t.hoverBg, color: t.text, fontSize: '8px', padding: '4px 10px', cursor: 'pointer', whiteSpace: 'nowrap' }}>
-          Choose File<input type='file' accept='image/*,.pdf' style={{ display: 'none' }} onChange={onChange} />
-        </label>
-        <span style={{ color: fileName !== 'No file chosen' ? '#22c55e' : t.faintText, fontSize: '8px', overflow: 'visible', textOverflow: 'ellipsis', whiteSpace: 'nowrap', maxWidth: '160px' }}>{fileName}</span>
-      </div>
-    </div>
-  );
+  // FileInput moved outside (was causing re-renders/scroll jumps)
 
   const handleSubmit = async () => {
     if (!idType) { setError('Please select an ID type.'); return; }
@@ -173,9 +176,9 @@ export default function KYC() {
               <input value={idNumber} onChange={e => setIdNumber(e.target.value)} placeholder='Enter your ID number' style={inputStyle} />
             </div>
 
-            <FileInput label='ID Front Side' fileName={idFrontName} onChange={e => { if(e.target.files[0]){ setIdFront(e.target.files[0]); setIdFrontName(e.target.files[0].name); }}} />
-            <FileInput label='ID Back Side' fileName={idBackName} onChange={e => { if(e.target.files[0]){ setIdBack(e.target.files[0]); setIdBackName(e.target.files[0].name); }}} />
-            <FileInput label='Selfie Holding ID' fileName={selfieName} onChange={e => { if(e.target.files[0]){ setSelfie(e.target.files[0]); setSelfieName(e.target.files[0].name); }}} />
+            <FileInput t={t} labelStyle={labelStyle}label='ID Front Side' fileName={idFrontName} onChange={e => { if(e.target.files[0]){ setIdFront(e.target.files[0]); setIdFrontName(e.target.files[0].name); }}} />
+            <FileInput t={t} labelStyle={labelStyle}label='ID Back Side' fileName={idBackName} onChange={e => { if(e.target.files[0]){ setIdBack(e.target.files[0]); setIdBackName(e.target.files[0].name); }}} />
+            <FileInput t={t} labelStyle={labelStyle}label='Selfie Holding ID' fileName={selfieName} onChange={e => { if(e.target.files[0]){ setSelfie(e.target.files[0]); setSelfieName(e.target.files[0].name); }}} />
 
             {/* Tips */}
             <div style={{ background: 'rgba(99,102,241,0.08)', border: '1px solid rgba(99,102,241,0.2)', padding: '10px 12px', marginBottom: '14px' }}>
@@ -195,7 +198,7 @@ export default function KYC() {
               </div>
             )}
 
-            <button onClick={handleSubmit} disabled={submitting}
+            <button type="button" onClick={handleSubmit} disabled={submitting}
               style={{ padding: '10px 28px', background: submitting ? '#374151' : '#6366f1', border: 'none', color: 'white', fontSize: '9px', fontWeight: '700', cursor: submitting ? 'not-allowed' : 'pointer' }}>
               {submitting ? 'Submitting...' : 'Submit for Verification'}
             </button>
@@ -213,7 +216,7 @@ export default function KYC() {
             </div>
             <div style={{ color: '#111', fontSize: '18px', fontWeight: '700', marginBottom: '10px' }}>KYC Submitted!</div>
             <div style={{ color: '#555', fontSize: '12px', marginBottom: '24px', lineHeight: '1.8' }}>Your KYC documents have been submitted successfully. Verification takes 24-48 hours.</div>
-            <button onClick={() => setShowSuccess(false)} style={{ padding: '8px 28px', background: '#6366f1', border: 'none', color: 'white', fontSize: '10px', fontWeight: '600', cursor: 'pointer', borderRadius: '3px' }}>Okay</button>
+            <button type="button" onClick={() => setShowSuccess(false)} style={{ padding: '8px 28px', background: '#6366f1', border: 'none', color: 'white', fontSize: '10px', fontWeight: '600', cursor: 'pointer', borderRadius: '3px' }}>Okay</button>
           </div>
         </>
       )}

@@ -62,7 +62,7 @@ const FAQ = () => {
             <div key={index} className={`scroll-anim delay-${(index % 5) + 1}`} style={{ animationDelay: index * 0.1 + 's',
               background: '#3d5060', borderRadius: '0px', overflow: 'hidden',
             }}>
-              <button
+              <button type="button"
                 onClick={() => setOpenIndex(openIndex === index ? -1 : index)}
                 style={{
                   width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'space-between',
@@ -108,7 +108,7 @@ const FAQ = () => {
           <p style={{ color: '#94a3b8', fontSize: 'clamp(7px, 1.8vw, 15px)', lineHeight: '1.6', marginBottom: '12px' }}>
             If you didn't find the answer you were looking for, our support team is here to help. Reach out to us directly for more assistance or explore our detailed support resources.
           </p>
-          <button onClick={() => window.location.href='/signup'} style={{
+          <button type="button" onClick={() => window.location.href='/signup'} style={{
             display: 'flex', alignItems: 'center', gap: '6px',
             background: '#6366f1', border: 'none', borderRadius: '4px',
             color: 'white', fontSize: 'clamp(8px, 2vw, 15px)', fontWeight: '600',

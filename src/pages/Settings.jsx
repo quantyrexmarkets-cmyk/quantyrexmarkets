@@ -5,6 +5,31 @@ import DashboardSidebar from '../components/DashboardSidebar';
 import { ArrowLeft, Settings, Shield, Bell, Lock, Eye, EyeOff, Palette } from 'lucide-react';
 import { useTheme, themes } from '../context/ThemeContext';
 
+// Stable components defined outside (prevent re-renders)
+const ToggleSwitch = ({ value, onChange, t }) => (
+  <div onClick={onChange} style={{ width: '44px', height: '24px', borderRadius: '12px', background: value ? '#6366f1' : t.border, cursor: 'pointer', position: 'relative', transition: 'background 0.2s', flexShrink: 0 }}>
+    <div style={{ position: 'absolute', top: '3px', left: value ? '23px' : '3px', width: '18px', height: '18px', borderRadius: '50%', background: 'white', transition: 'left 0.2s', boxShadow: '0 1px 4px rgba(0,0,0,0.3)' }} />
+  </div>
+);
+
+const Section = ({ title, children, t }) => (
+  <div style={{ background: t.cardBg, border: `1px solid ${t.border}`, borderRadius: '12px', padding: '16px', marginBottom: '12px' }}>
+    <div style={{ color: t.subText, fontSize: '9px', fontWeight: '700', letterSpacing: '0.1em', marginBottom: '12px', textTransform: 'uppercase' }}>{title}</div>
+    {children}
+  </div>
+);
+
+const Row = ({ icon, title, desc, right, t }) => (
+  <div style={{ display: 'flex', alignItems: 'center', gap: '12px', padding: '10px 0', borderBottom: `1px solid ${t.tableRowBorder}` }}>
+    <div style={{ width: '34px', height: '34px', borderRadius: '8px', background: 'rgba(99,102,241,0.15)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>{icon}</div>
+    <div style={{ flex: 1 }}>
+      <div style={{ color: t.text, fontSize: '11px', fontWeight: '600' }}>{title}</div>
+      {desc && <div style={{ color: t.subText, fontSize: '9px', marginTop: '2px' }}>{desc}</div>}
+    </div>
+    {right}
+  </div>
+);
+
 export default function SettingsPage() {
   const navigate = useNavigate();
   const { user } = useAuth();
@@ -40,29 +65,7 @@ export default function SettingsPage() {
     setTimeout(() => setSaved(false), 2000);
   };
 
-  const ToggleSwitch = ({ value, onChange }) => (
-    <div onClick={onChange} style={{ width: '44px', height: '24px', borderRadius: '12px', background: value ? '#6366f1' : t.border, cursor: 'pointer', position: 'relative', transition: 'background 0.2s', flexShrink: 0 }}>
-      <div style={{ position: 'absolute', top: '3px', left: value ? '23px' : '3px', width: '18px', height: '18px', borderRadius: '50%', background: 'white', transition: 'left 0.2s', boxShadow: '0 1px 4px rgba(0,0,0,0.3)' }} />
-    </div>
-  );
-
-  const Section = ({ title, children }) => (
-    <div style={{ background: t.cardBg, border: `1px solid ${t.border}`, borderRadius: '12px', padding: '16px', marginBottom: '12px' }}>
-      <div style={{ color: t.subText, fontSize: '9px', fontWeight: '700', letterSpacing: '0.1em', marginBottom: '12px', textTransform: 'uppercase' }}>{title}</div>
-      {children}
-    </div>
-  );
-
-  const Row = ({ icon, title, desc, right }) => (
-    <div style={{ display: 'flex', alignItems: 'center', gap: '12px', padding: '10px 0', borderBottom: `1px solid ${t.tableRowBorder}` }}>
-      <div style={{ width: '34px', height: '34px', borderRadius: '8px', background: 'rgba(99,102,241,0.15)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>{icon}</div>
-      <div style={{ flex: 1 }}>
-        <div style={{ color: t.text, fontSize: '11px', fontWeight: '600' }}>{title}</div>
-        {desc && <div style={{ color: t.subText, fontSize: '9px', marginTop: '2px' }}>{desc}</div>}
-      </div>
-      {right}
-    </div>
-  );
+  // ToggleSwitch, Section, Row moved outside (was causing re-renders)
 
   return (
     <div style={{ minHeight: '100vh', background: t.bg, fontFamily: "'Segoe UI', sans-serif" }}>
@@ -70,7 +73,7 @@ export default function SettingsPage() {
 
       {/* Header */}
       <div style={{ background: t.bg, padding: '12px 16px', display: 'flex', alignItems: 'center', gap: '12px', borderBottom: `1px solid ${t.border}`, position: 'sticky', top: 0, zIndex: 100 }}>
-        <button onClick={() => navigate('/dashboard')} style={{ background: 'none', border: 'none', color: t.text, cursor: 'pointer', display: 'flex', alignItems: 'center' }}>
+        <button type="button" onClick={() => navigate('/dashboard')} style={{ background: 'none', border: 'none', color: t.text, cursor: 'pointer', display: 'flex', alignItems: 'center' }}>
           <ArrowLeft size={20} />
         </button>
         <Settings size={18} color="#6366f1" />
@@ -80,7 +83,7 @@ export default function SettingsPage() {
       <div style={{ padding: '16px 12px' }}>
 
         {/* Theme */}
-        <Section title="Appearance">
+        <Section t={t}title="Appearance">
           <div style={{ padding: '10px 0' }}>
             <div style={{ color: t.text, fontSize: '11px', fontWeight: '600', marginBottom: '12px', display: 'flex', alignItems: 'center', gap: '8px' }}>
               <div style={{ width: '34px', height: '34px', borderRadius: '8px', background: 'rgba(99,102,241,0.15)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
@@ -114,13 +117,13 @@ export default function SettingsPage() {
         </Section>
 
         {/* Security */}
-        <Section title="Security">
+        <Section t={t}title="Security">
           <Row
             icon={<Shield size={16} color="#6366f1" />}
             title="Two-Factor Authentication"
             desc="Require email OTP on every login"
             right={
-              <button onClick={toggle2FA} disabled={twoFALoading} style={{ padding: '6px 16px', background: twoFAEnabled ? '#22c55e' : t.cardBg2, border: 'none', color: 'white', fontSize: '10px', fontWeight: '700', cursor: 'pointer', borderRadius: '6px', minWidth: '60px' }}>
+              <button type="button" onClick={toggle2FA} disabled={twoFALoading} style={{ padding: '6px 16px', background: twoFAEnabled ? '#22c55e' : t.cardBg2, border: 'none', color: 'white', fontSize: '10px', fontWeight: '700', cursor: 'pointer', borderRadius: '6px', minWidth: '60px' }}>
                 {twoFALoading ? '...' : twoFAEnabled ? 'ON' : 'OFF'}
               </button>
             }
@@ -129,42 +132,42 @@ export default function SettingsPage() {
             icon={<Lock size={16} color="#6366f1" />}
             title="Change Password"
             desc="Update your account password"
-            right={<button onClick={() => navigate('/dashboard/change-password')} style={{ padding: '6px 14px', background: 'rgba(99,102,241,0.15)', border: '1px solid rgba(99,102,241,0.3)', color: '#818cf8', fontSize: '10px', cursor: 'pointer', borderRadius: '6px' }}>Edit</button>}
+            right={<button type="button" onClick={() => navigate('/dashboard/change-password')} style={{ padding: '6px 14px', background: 'rgba(99,102,241,0.15)', border: '1px solid rgba(99,102,241,0.3)', color: '#818cf8', fontSize: '10px', cursor: 'pointer', borderRadius: '6px' }}>Edit</button>}
           />
         </Section>
 
         {/* Notifications */}
-        <Section title="Notification Preferences">
+        <Section t={t}title="Notification Preferences">
           <Row
             icon={<Bell size={16} color="#6366f1" />}
             title="Deposit Alerts"
             desc="Get notified on deposit updates"
-            right={<ToggleSwitch value={notifDeposit} onChange={() => setNotifDeposit(!notifDeposit)} />}
+            right={<ToggleSwitch t={t}value={notifDeposit} onChange={() => setNotifDeposit(!notifDeposit)} />}
           />
           <Row
             icon={<Bell size={16} color="#6366f1" />}
             title="Withdrawal Alerts"
             desc="Get notified on withdrawal updates"
-            right={<ToggleSwitch value={notifWithdrawal} onChange={() => setNotifWithdrawal(!notifWithdrawal)} />}
+            right={<ToggleSwitch t={t}value={notifWithdrawal} onChange={() => setNotifWithdrawal(!notifWithdrawal)} />}
           />
           <Row
             icon={<Bell size={16} color="#6366f1" />}
             title="Trade Alerts"
             desc="Get notified on trade updates"
-            right={<ToggleSwitch value={notifTrade} onChange={() => setNotifTrade(!notifTrade)} />}
+            right={<ToggleSwitch t={t}value={notifTrade} onChange={() => setNotifTrade(!notifTrade)} />}
           />
-          <button onClick={saveNotifSettings} style={{ width: '100%', marginTop: '12px', padding: '10px', background: saved ? '#22c55e' : '#6366f1', border: 'none', color: 'white', fontSize: '11px', fontWeight: '700', cursor: 'pointer', borderRadius: '8px' }}>
+          <button type="button" onClick={saveNotifSettings} style={{ width: '100%', marginTop: '12px', padding: '10px', background: saved ? '#22c55e' : '#6366f1', border: 'none', color: 'white', fontSize: '11px', fontWeight: '700', cursor: 'pointer', borderRadius: '8px' }}>
             {saved ? '✓ Saved!' : 'Save Preferences'}
           </button>
         </Section>
 
         {/* Account */}
-        <Section title="Account">
+        <Section t={t}title="Account">
           <Row
             icon={<Eye size={16} color="#6366f1" />}
             title="KYC Verification"
             desc={user?.kycStatus === 'approved' ? '✅ Verified' : 'Complete identity verification'}
-            right={<button onClick={() => navigate('/dashboard/kyc')} style={{ padding: '6px 14px', background: 'rgba(99,102,241,0.15)', border: '1px solid rgba(99,102,241,0.3)', color: '#818cf8', fontSize: '10px', cursor: 'pointer', borderRadius: '6px' }}>View</button>}
+            right={<button type="button" onClick={() => navigate('/dashboard/kyc')} style={{ padding: '6px 14px', background: 'rgba(99,102,241,0.15)', border: '1px solid rgba(99,102,241,0.3)', color: '#818cf8', fontSize: '10px', cursor: 'pointer', borderRadius: '6px' }}>View</button>}
           />
         </Section>
 

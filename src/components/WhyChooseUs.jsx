@@ -61,10 +61,10 @@ export default function WhyChooseUs() {
 
             {/* Buttons */}
             <div style={{ display: 'flex', gap: '8px' }}>
-              <button onClick={() => window.location.href="/signup"} style={{ padding: 'clamp(5px, 1.5vw, 7px) clamp(8px, 2vw, 12px)', background: '#6366f1', border: 'none', borderRadius: '4px', color: 'white', fontSize: '8px', fontWeight: '600', cursor: 'pointer' }}>
+              <button type="button" onClick={() => window.location.href="/signup"} style={{ padding: 'clamp(5px, 1.5vw, 7px) clamp(8px, 2vw, 12px)', background: '#6366f1', border: 'none', borderRadius: '4px', color: 'white', fontSize: '8px', fontWeight: '600', cursor: 'pointer' }}>
                 Get Started Today
               </button>
-              <button onClick={() => window.location.href='/signup'} style={{ padding: 'clamp(5px, 1.5vw, 7px) clamp(8px, 2vw, 12px)', background: 'transparent', border: '1px solid rgba(255,255,255,0.2)', borderRadius: '4px', color: 'white', fontSize: 'clamp(7px, 1.8vw, 15px)', fontWeight: '600', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '4px' }}>
+              <button type="button" onClick={() => window.location.href='/signup'} style={{ padding: 'clamp(5px, 1.5vw, 7px) clamp(8px, 2vw, 12px)', background: 'transparent', border: '1px solid rgba(255,255,255,0.2)', borderRadius: '4px', color: 'white', fontSize: 'clamp(7px, 1.8vw, 15px)', fontWeight: '600', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '4px' }}>
                 Explore Our Features
                 <svg width="10" height="10" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 17L17 7M17 7H7M17 7v10"/>

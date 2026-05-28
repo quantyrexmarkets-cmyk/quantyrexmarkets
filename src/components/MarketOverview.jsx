@@ -133,7 +133,7 @@ const MarketOverview = () => {
               {/* Tabs */}
               <div style={{ display: 'flex', gap: '2px', marginBottom: '6px' }}>
                 {tabs.map(tab => (
-                  <button key={tab} onClick={() => setActiveTab(tab)} style={{
+                  <button type="button" key={tab} onClick={() => setActiveTab(tab)} style={{
                     padding: '4px 8px', fontSize: 'clamp(9px, 2.2vw, 11px)', fontWeight: '500',
                     borderRadius: '5px', border: 'none', cursor: 'pointer', whiteSpace: 'nowrap',
                     background: activeTab === tab ? '#3b5bdb' : 'transparent',
@@ -164,7 +164,7 @@ const MarketOverview = () => {
               {/* Time Range */}
               <div style={{ display: 'flex', gap: '2px', marginBottom: '6px' }}>
                 {timeRanges.map(range => (
-                  <button key={range} onClick={() => setTimeRange(range)} style={{
+                  <button type="button" key={range} onClick={() => setTimeRange(range)} style={{
                     padding: '3px 6px', fontSize: 'clamp(8px, 2vw, 15px)', fontWeight: '500',
                     borderRadius: '4px', border: 'none', cursor: 'pointer',
                     background: timeRange === range ? '#3b5bdb' : 'transparent',
@@ -229,7 +229,7 @@ const MarketOverview = () => {
                   </div>
                 ))}
               </div>
-              <button
+              <button type="button"
                 style={{
                   display: 'flex', alignItems: 'center', justifyContent: 'space-between',
                   background: 'transparent', border: '1px solid #6366f1', color: 'white',

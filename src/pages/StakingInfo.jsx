@@ -8,8 +8,8 @@ export default function StakingInfo() {
       <div style={{ background: '#1a2e4a', padding: '14px 20px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', borderBottom: `1px solid ${'rgba(255,255,255,0.08)'}` }}>
         <span style={{ fontWeight: '800', fontSize: '13px' }}>QUANTYREX <span style={{ color: '#6366f1' }}>MARKETS</span></span>
         <div style={{ display: 'flex', gap: '12px' }}>
-          <button onClick={() => navigate('/')} style={{ background: 'none', border: 'none', color: 'rgba(255,255,255,0.6)', fontSize: '10px', cursor: 'pointer' }}>Home</button>
-          <button onClick={() => navigate('/signup')} style={{ background: '#6366f1', border: 'none', color: 'white', fontSize: '10px', padding: '6px 14px', cursor: 'pointer', fontWeight: '700' }}>Get Started</button>
+          <button type="button" onClick={() => navigate('/')} style={{ background: 'none', border: 'none', color: 'rgba(255,255,255,0.6)', fontSize: '10px', cursor: 'pointer' }}>Home</button>
+          <button type="button" onClick={() => navigate('/signup')} style={{ background: '#6366f1', border: 'none', color: 'white', fontSize: '10px', padding: '6px 14px', cursor: 'pointer', fontWeight: '700' }}>Get Started</button>
         </div>
       </div>
       <div style={{ maxWidth: '800px', margin: '0 auto', padding: '40px 20px' }}>
@@ -34,7 +34,7 @@ export default function StakingInfo() {
             </div>
           </div>
         ))}
-        <button onClick={() => navigate('/signup')} style={{ background: '#22c55e', border: 'none', color: 'white', padding: '14px 32px', fontSize: '12px', fontWeight: '700', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '8px', marginTop: '32px' }}>
+        <button type="button" onClick={() => navigate('/signup')} style={{ background: '#22c55e', border: 'none', color: 'white', padding: '14px 32px', fontSize: '12px', fontWeight: '700', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '8px', marginTop: '32px' }}>
           Start Staking Now <ArrowRight size={13}/>
         </button>
       </div>

@@ -69,7 +69,7 @@ export default function TradingAnalysis() {
               </div>
             ))}
           </div>
-          <button onClick={() => window.location.href='/signup'} style={{ display: 'flex', alignItems: 'center', gap: '6px', padding: '7px 12px', background: 'transparent', border: '1px solid #6366f1', color: 'white', fontSize: 'clamp(7px, 1.8vw, 10px)', fontWeight: '700', cursor: 'pointer' }}>
+          <button type="button" onClick={() => window.location.href='/signup'} style={{ display: 'flex', alignItems: 'center', gap: '6px', padding: '7px 12px', background: 'transparent', border: '1px solid #6366f1', color: 'white', fontSize: 'clamp(7px, 1.8vw, 10px)', fontWeight: '700', cursor: 'pointer' }}>
             Start Analyzing Now
             <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
               <path d="M7 17L17 7M17 7H7M17 7v10"/>

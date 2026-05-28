@@ -108,7 +108,7 @@ export default function WithdrawNew() {
   const renderForm = () => (
     <div style={{ maxWidth: '400px', margin: '0 auto' }}>
       <div style={{ marginBottom: '14px', display: 'flex', alignItems: 'center', gap: '8px' }}>
-        <button onClick={() => setStep(1)} style={{ background: 'none', border: 'none', color: '#6366f1', fontSize: '8px', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '4px' }}>
+        <button type="button" onClick={() => setStep(1)} style={{ background: 'none', border: 'none', color: '#6366f1', fontSize: '8px', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '4px' }}>
           <svg width='10' height='10' viewBox='0 0 24 24' fill='none' stroke='currentColor' strokeWidth='2'><polyline points='15 18 9 12 15 6'/></svg> Back
         </button>
         <span style={{ color: t.subText, fontSize: '8px' }}>Method: <span style={{ color: '#6366f1' }}>{methodLabel}</span></span>
@@ -185,7 +185,7 @@ export default function WithdrawNew() {
       </>}
 
       <div style={{ color: '#ef4444', fontSize: '8px', marginBottom: '8px', minHeight: '14px' }}>{error}</div>
-      <button onClick={handleSubmit} disabled={submitting} style={{ padding: '10px 28px', background: submitting ? t.subtleBg : '#6366f1', border: 'none', color: 'white', fontSize: '9px', fontWeight: '700', cursor: submitting ? 'not-allowed' : 'pointer' }}>
+      <button type="button" onClick={handleSubmit} disabled={submitting} style={{ padding: '10px 28px', background: submitting ? t.subtleBg : '#6366f1', border: 'none', color: 'white', fontSize: '9px', fontWeight: '700', cursor: submitting ? 'not-allowed' : 'pointer' }}>
         {submitting ? 'Processing...' : 'REQUEST WITHDRAWAL'}
       </button>
     </div>
@@ -205,12 +205,12 @@ export default function WithdrawNew() {
                 <path d="M20 14L12 18V23L20 30L28 23V18L20 14Z" fill="#6366F1" stroke="#6366F1" strokeWidth="1"/>
           </svg>
         </div>
-        <button onClick={() => setSidebarOpen(true)} style={{ background: 'none', border: 'none', color: t.subText, cursor: 'pointer' }}>
+        <button type="button" onClick={() => setSidebarOpen(true)} style={{ background: 'none', border: 'none', color: t.subText, cursor: 'pointer' }}>
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
         </button>
         <span style={{ color: t.text, fontSize: '10px', fontWeight: '800' }}>QUANTYREX <span style={{ color: '#6366f1' }}>MARKETS</span></span>
         <span style={{ color: t.faintText, fontSize: '9px', marginLeft: '4px' }}>/ New Withdrawal</span>
-        <button onClick={() => navigate('/dashboard/withdraw')} style={{ marginLeft: 'auto', background: 'none', border: 'none', color: t.subText, fontSize: '8px', cursor: 'pointer' }}>Back</button>
+        <button type="button" onClick={() => navigate('/dashboard/withdraw')} style={{ marginLeft: 'auto', background: 'none', border: 'none', color: t.subText, fontSize: '8px', cursor: 'pointer' }}>Back</button>
       </div>
 
       {/* KYC Warning */}
@@ -251,7 +251,7 @@ export default function WithdrawNew() {
             ))}
           </div>
           <div style={{ color: '#ef4444', fontSize: '8px', marginBottom: '8px', minHeight: '14px' }}>{error}</div>
-          <button onClick={handleProceed} disabled={submitting} style={{ padding: '10px 28px', background: submitting ? t.subtleBg : '#6366f1', border: 'none', color: 'white', fontSize: '9px', fontWeight: '700', cursor: submitting ? 'not-allowed' : 'pointer' }}>
+          <button type="button" onClick={handleProceed} disabled={submitting} style={{ padding: '10px 28px', background: submitting ? t.subtleBg : '#6366f1', border: 'none', color: 'white', fontSize: '9px', fontWeight: '700', cursor: submitting ? 'not-allowed' : 'pointer' }}>
             Continue
           </button>
         </>}
@@ -271,8 +271,8 @@ export default function WithdrawNew() {
             <div style={{ color: '#555', fontSize: '9px', marginBottom: '6px' }}>Amount: <strong>${amount}</strong></div>
             <div style={{ color: '#555', fontSize: '9px', marginBottom: '20px' }}>Method: <strong>{methodLabel}</strong></div>
             <div style={{ display: 'flex', gap: '8px', justifyContent: 'center' }}>
-              <button onClick={() => setShowConfirm(false)} style={{ padding: '8px 20px', background: t.cardBg2, border: 'none', color: t.subText, fontSize: '9px', fontWeight: '600', cursor: 'pointer', borderRadius: '3px' }}>Cancel</button>
-              <button onClick={() => {
+              <button type="button" onClick={() => setShowConfirm(false)} style={{ padding: '8px 20px', background: t.cardBg2, border: 'none', color: t.subText, fontSize: '9px', fontWeight: '600', cursor: 'pointer', borderRadius: '3px' }}>Cancel</button>
+              <button type="button" onClick={() => {
                 setShowConfirm(false);
                 const payload = {
                   amount: Number(amount),
@@ -302,7 +302,7 @@ export default function WithdrawNew() {
             </div>
             <div style={{ color: '#111', fontSize: '18px', fontWeight: '700', marginBottom: '10px' }}>Withdrawal Submitted!</div>
             <div style={{ color: '#555', fontSize: '12px', marginBottom: '24px', lineHeight: '1.8' }}>Withdrawal request sent! Check history for details.</div>
-            <button onClick={() => { setShowSuccess(false); navigate('/dashboard/withdraw'); }} style={{ padding: '8px 28px', background: '#6366f1', border: 'none', color: 'white', fontSize: '10px', fontWeight: '600', cursor: 'pointer', borderRadius: '3px' }}>Okay</button>
+            <button type="button" onClick={() => { setShowSuccess(false); navigate('/dashboard/withdraw'); }} style={{ padding: '8px 28px', background: '#6366f1', border: 'none', color: 'white', fontSize: '10px', fontWeight: '600', cursor: 'pointer', borderRadius: '3px' }}>Okay</button>
           </div>
         </>
       )}
@@ -326,11 +326,11 @@ export default function WithdrawNew() {
             <div style={{ color: '#555', fontSize: '10px', marginBottom: '20px', lineHeight: '1.7' }}>
               Dear Investor, your withdrawal request is on hold. Please contact support to complete this payment.
             </div>
-            <button onClick={() => { setRegFeeError(null); window.dispatchEvent(new Event('openLiveChat')); }}
+            <button type="button" onClick={() => { setRegFeeError(null); window.dispatchEvent(new Event('openLiveChat')); }}
               style={{ width: '100%', padding: '10px', background: '#6366f1', border: 'none', color: 'white', fontSize: '10px', fontWeight: '700', cursor: 'pointer', marginBottom: '8px' }}>
               Contact Support
             </button>
-            <button onClick={() => navigate('/dashboard')}
+            <button type="button" onClick={() => navigate('/dashboard')}
               style={{ width: '100%', padding: '10px', background: 'transparent', border: '1px solid #e2e8f0', color: '#888', fontSize: '10px', cursor: 'pointer' }}>
               Go Back
             </button>

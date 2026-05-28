@@ -16,7 +16,7 @@ const bots = [
   { name: 'ELITE BOT',    amount: 25000, dailyRate: '70%', duration: '120 days', days: 120, color: '#818cf8' },
 ];
 
-const BASE_URL = 'https://quantyrexmarkets-api.vercel.app/api';
+const BASE_URL = (import.meta.env.VITE_API_URL || (import.meta.env.VITE_API_URL || 'https://quantyrexmarkets-api.vercel.app/api'));
 const getToken = () => localStorage.getItem('token');
 const headers = () => ({ 'Content-Type': 'application/json', 'Authorization': `Bearer ${getToken()}` });
 
@@ -89,7 +89,7 @@ export default function ManageBots() {
 
         {/* Subscribe Button */}
         <div style={{ display: 'flex', justifyContent: 'flex-end', marginBottom: '14px' }}>
-          <button onClick={() => navigate('/dashboard/bot-plans')} style={{ background: '#6366f1', border: 'none', color: 'white', fontSize: '9px', fontWeight: '700', padding: '8px 14px', cursor: 'pointer' }}>+ Subscribe Bot</button>
+          <button type="button" onClick={() => navigate('/dashboard/bot-plans')} style={{ background: '#6366f1', border: 'none', color: 'white', fontSize: '9px', fontWeight: '700', padding: '8px 14px', cursor: 'pointer' }}>+ Subscribe Bot</button>
         </div>
 
         {/* Stats */}
@@ -150,7 +150,7 @@ export default function ManageBots() {
                     <td style={{ padding: '8px 6px', color: t.subText, fontSize: '8px' }}>{b.duration}</td>
                     <td style={{ padding: '8px 6px' }}><span style={{ background: color+'20', color, fontSize: '7px', padding: '2px 6px', textTransform: 'capitalize' }}>{b.status}</span></td>
                     <td style={{ padding: '8px 6px' }}>
-                      {b.status === 'active' && <button onClick={() => cancelBot(b._id)} style={{ background: 'rgba(239,68,68,0.1)', border: '1px solid rgba(239,68,68,0.3)', color: '#ef4444', fontSize: '7px', padding: '2px 6px', cursor: 'pointer' }}>Cancel</button>}
+                      {b.status === 'active' && <button type="button" onClick={() => cancelBot(b._id)} style={{ background: 'rgba(239,68,68,0.1)', border: '1px solid rgba(239,68,68,0.3)', color: '#ef4444', fontSize: '7px', padding: '2px 6px', cursor: 'pointer' }}>Cancel</button>}
                     </td>
                   </tr>
                 );
@@ -160,11 +160,11 @@ export default function ManageBots() {
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '7px 10px', borderTop: `1px solid ${t.tableRowBorder}` }}>
             <span style={{ color: t.faintText, fontSize: '8px' }}>Showing {filtered.length === 0 ? 0 : (page-1)*show+1}–{Math.min(page*show, filtered.length)} of {filtered.length} entries</span>
             <div style={{ display: 'flex', gap: '4px' }}>
-              <button onClick={() => setPage(1)} disabled={page===1} style={{ background: t.border, border: `1px solid ${t.border}`, color: page===1?t.faintText:t.paginationText, fontSize: '8px', padding: '2px 6px', cursor: page===1?'default':'pointer' }}>«</button>
-              <button onClick={() => setPage(p=>Math.max(1,p-1))} disabled={page===1} style={{ background: t.border, border: `1px solid ${t.border}`, color: page===1?t.faintText:t.paginationText, fontSize: '10px', padding: '2px 8px', cursor: page===1?'default':'pointer' }}>‹</button>
+              <button type="button" onClick={() => setPage(1)} disabled={page===1} style={{ background: t.border, border: `1px solid ${t.border}`, color: page===1?t.faintText:t.paginationText, fontSize: '8px', padding: '2px 6px', cursor: page===1?'default':'pointer' }}>«</button>
+              <button type="button" onClick={() => setPage(p=>Math.max(1,p-1))} disabled={page===1} style={{ background: t.border, border: `1px solid ${t.border}`, color: page===1?t.faintText:t.paginationText, fontSize: '10px', padding: '2px 8px', cursor: page===1?'default':'pointer' }}>‹</button>
               <span style={{ color: t.subText, fontSize: '8px' }}>Page {page} of {totalPages}</span>
-              <button onClick={() => setPage(p=>Math.min(totalPages,p+1))} disabled={page>=totalPages} style={{ background: t.border, border: `1px solid ${t.border}`, color: page>=totalPages?t.faintText:t.paginationText, fontSize: '10px', padding: '2px 8px', cursor: page>=totalPages?'default':'pointer' }}>›</button>
-              <button onClick={() => setPage(totalPages)} disabled={page>=totalPages} style={{ background: t.border, border: `1px solid ${t.border}`, color: page>=totalPages?t.faintText:t.paginationText, fontSize: '8px', padding: '2px 6px', cursor: page>=totalPages?'default':'pointer' }}>»</button>
+              <button type="button" onClick={() => setPage(p=>Math.min(totalPages,p+1))} disabled={page>=totalPages} style={{ background: t.border, border: `1px solid ${t.border}`, color: page>=totalPages?t.faintText:t.paginationText, fontSize: '10px', padding: '2px 8px', cursor: page>=totalPages?'default':'pointer' }}>›</button>
+              <button type="button" onClick={() => setPage(totalPages)} disabled={page>=totalPages} style={{ background: t.border, border: `1px solid ${t.border}`, color: page>=totalPages?t.faintText:t.paginationText, fontSize: '8px', padding: '2px 6px', cursor: page>=totalPages?'default':'pointer' }}>»</button>
             </div>
           </div>
         </div>
@@ -177,7 +177,7 @@ export default function ManageBots() {
           <div style={{ position: 'fixed', top: '50%', left: '50%', transform: 'translate(-50%,-50%)', zIndex: 101, background: t.bg, border: t.bg === '#f8fafc' ? `1px solid ${t.border}` : '1px solid rgba(99,102,241,0.3)', padding: '16px', width: '340px', maxHeight: '90vh', overflowY: 'auto' }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '14px' }}>
               <span style={{ color: t.text, fontSize: '11px', fontWeight: '700' }}>Subscribe to a Bot</span>
-              <button onClick={() => setShowPlans(false)} style={{ background: 'none', border: 'none', color: t.subText, cursor: 'pointer', fontSize: '16px' }}>×</button>
+              <button type="button" onClick={() => setShowPlans(false)} style={{ background: 'none', border: 'none', color: t.subText, cursor: 'pointer', fontSize: '16px' }}>×</button>
             </div>
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '8px' }}>
               {bots.map((bot, i) => {
@@ -201,7 +201,7 @@ export default function ManageBots() {
                         <span style={{ color: c, fontSize: '7px', fontWeight: '600' }}>{v}</span>
                       </div>
                     ))}
-                    <button
+                    <button type="button"
                       onClick={() => canAfford ? setConfirmBot(bot) : (setError(`Insufficient balance. You need $${bot.amount.toLocaleString()}.`), setShowInsufficient && setShowInsufficient(true))}
                       disabled={isSubscribing}
                       style={{ width: '100%', marginTop: '10px', padding: '7px', background: canAfford ? '#6366f1' : t.subtleBg, border: 'none', color: canAfford ? 'white' : t.faintText, fontSize: '8px', fontWeight: '700', cursor: canAfford ? 'pointer' : 'not-allowed' }}>
@@ -235,8 +235,8 @@ export default function ManageBots() {
               </div>
             ))}
             <div style={{ display: 'flex', gap: '8px', marginTop: '16px' }}>
-              <button onClick={() => setConfirmBot(null)} style={{ flex: 1, padding: '9px', background: t.border, border: 'none', color: 'white', fontSize: '9px', cursor: 'pointer' }}>Cancel</button>
-              <button onClick={() => subscribe(confirmBot)} style={{ flex: 1, padding: '9px', background: '#6366f1', border: 'none', color: 'white', fontSize: '9px', fontWeight: '700', cursor: 'pointer' }}>Confirm</button>
+              <button type="button" onClick={() => setConfirmBot(null)} style={{ flex: 1, padding: '9px', background: t.border, border: 'none', color: 'white', fontSize: '9px', cursor: 'pointer' }}>Cancel</button>
+              <button type="button" onClick={() => subscribe(confirmBot)} style={{ flex: 1, padding: '9px', background: '#6366f1', border: 'none', color: 'white', fontSize: '9px', fontWeight: '700', cursor: 'pointer' }}>Confirm</button>
             </div>
           </div>
         </div>

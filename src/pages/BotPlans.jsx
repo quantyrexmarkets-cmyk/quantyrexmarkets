@@ -14,7 +14,7 @@ const bots = [
   { name: 'ELITE BOT',    amount: 25000, dailyRate: '70%', duration: '120 days', days: 120, color: '#9b59b6' },
 ];
 
-const BASE_URL = 'https://quantyrexmarkets-api.vercel.app/api';
+const BASE_URL = (import.meta.env.VITE_API_URL || (import.meta.env.VITE_API_URL || 'https://quantyrexmarkets-api.vercel.app/api'));
 const headers = () => ({ 'Content-Type': 'application/json', 'Authorization': `Bearer ${localStorage.getItem('token')}` });
 
 export default function BotPlans() {
@@ -59,8 +59,8 @@ export default function BotPlans() {
             <div style={{ color: '#111', fontSize: '18px', fontWeight: '700', marginBottom: '10px' }}>Bot Activated!</div>
             <div style={{ color: '#555', fontSize: '12px', marginBottom: '24px', lineHeight: '1.8' }}>Your trading bot has been activated and is now running. Profits will be credited daily.</div>
             <div style={{ display: 'flex', gap: '8px' }}>
-              <button onClick={() => { setShowSuccess(false); }} style={{ flex: 1, padding: '8px', background: t.subtleBg, border: `1px solid ${t.border}`, color: t.text, fontSize: '9px', cursor: 'pointer' }}>Subscribe More</button>
-              <button onClick={() => navigate('/dashboard/manage-bots')} style={{ flex: 1, padding: '8px', background: '#6366f1', border: 'none', color: 'white', fontSize: '9px', fontWeight: '600', cursor: 'pointer' }}>View Bots</button>
+              <button type="button" onClick={() => { setShowSuccess(false); }} style={{ flex: 1, padding: '8px', background: t.subtleBg, border: `1px solid ${t.border}`, color: t.text, fontSize: '9px', cursor: 'pointer' }}>Subscribe More</button>
+              <button type="button" onClick={() => navigate('/dashboard/manage-bots')} style={{ flex: 1, padding: '8px', background: '#6366f1', border: 'none', color: 'white', fontSize: '9px', fontWeight: '600', cursor: 'pointer' }}>View Bots</button>
             </div>
           </div>
         </>
@@ -89,7 +89,7 @@ export default function BotPlans() {
                     <span style={{ color: c, fontSize: '8px', fontWeight: '600' }}>{v}</span>
                   </div>
                 ))}
-                <button
+                <button type="button"
                   onClick={() => canAfford ? setConfirmBot(bot) : setError(`Insufficient balance. You need $${bot.amount.toLocaleString()}.`)}
                   style={{ width: '100%', marginTop: '12px', padding: '8px', background: canAfford ? bot.color : t.subtleBg, border: 'none', color: canAfford ? 'white' : t.faintText, fontSize: '9px', fontWeight: '700', cursor: canAfford ? 'pointer' : 'not-allowed' }}>
                   {canAfford ? 'Subscribe Now' : 'Insufficient Balance'}
@@ -120,8 +120,8 @@ export default function BotPlans() {
               </div>
             ))}
             <div style={{ display: 'flex', gap: '8px', marginTop: '16px' }}>
-              <button onClick={() => setConfirmBot(null)} style={{ flex: 1, padding: '9px', background: t.subtleBg, border: 'none', color: 'white', fontSize: '9px', cursor: 'pointer' }}>Cancel</button>
-              <button onClick={() => subscribe(confirmBot)} disabled={subscribing === confirmBot.name} style={{ flex: 1, padding: '9px', background: '#6366f1', border: 'none', color: 'white', fontSize: '9px', fontWeight: '700', cursor: 'pointer' }}>
+              <button type="button" onClick={() => setConfirmBot(null)} style={{ flex: 1, padding: '9px', background: t.subtleBg, border: 'none', color: 'white', fontSize: '9px', cursor: 'pointer' }}>Cancel</button>
+              <button type="button" onClick={() => subscribe(confirmBot)} disabled={subscribing === confirmBot.name} style={{ flex: 1, padding: '9px', background: '#6366f1', border: 'none', color: 'white', fontSize: '9px', fontWeight: '700', cursor: 'pointer' }}>
                 {subscribing === confirmBot.name ? 'Activating...' : 'Confirm'}
               </button>
             </div>

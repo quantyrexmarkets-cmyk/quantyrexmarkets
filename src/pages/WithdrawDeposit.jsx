@@ -147,11 +147,11 @@ const handleWithdraw = async () => {
                 <path d="M20 14L12 18V23L20 30L28 23V18L20 14Z" fill="#6366F1" stroke="#6366F1" strokeWidth="1"/>
           </svg>
         </div>
-        <button onClick={() => setSidebarOpen(true)} style={{ background: 'none', border: 'none', color: t.subText, cursor: 'pointer' }}>
+        <button type="button" onClick={() => setSidebarOpen(true)} style={{ background: 'none', border: 'none', color: t.subText, cursor: 'pointer' }}>
           <svg width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='currentColor' strokeWidth='2'><line x1='3' y1='12' x2='21' y2='12'/><line x1='3' y1='6' x2='21' y2='6'/><line x1='3' y1='18' x2='21' y2='18'/></svg>
         </button>
         <span style={{ color: t.text, fontSize: '10px', fontWeight: '800' }}>QUANTYREX <span style={{ color: '#6366f1' }}>MARKETS</span></span>
-        <button onClick={() => navigate('/dashboard')} style={{ marginLeft: 'auto', background: 'none', border: 'none', color: t.subText, fontSize: '8px', cursor: 'pointer' }}>Back</button>
+        <button type="button" onClick={() => navigate('/dashboard')} style={{ marginLeft: 'auto', background: 'none', border: 'none', color: t.subText, fontSize: '8px', cursor: 'pointer' }}>Back</button>
       </div>
 
       {/* Deposit Header */}
@@ -187,7 +187,7 @@ const handleWithdraw = async () => {
                       <label style={labelStyle}>Select Coin</label>
                       <div style={{ display: 'flex', gap: '5px', flexWrap: 'wrap' }}>
                         {coins.map(c => (
-                          <button key={c} onClick={() => setCoin(c)} style={{ padding: '4px 8px', background: coin === c ? '#6366f1' : t.subtleBg, border: 'none', color: 'white', fontSize: '7px', fontWeight: '700', cursor: 'pointer' }}>{c}</button>
+                          <button type="button" key={c} onClick={() => setCoin(c)} style={{ padding: '4px 8px', background: coin === c ? '#6366f1' : t.subtleBg, border: 'none', color: 'white', fontSize: '7px', fontWeight: '700', cursor: 'pointer' }}>{c}</button>
                         ))}
                       </div>
                     </div>
@@ -195,7 +195,7 @@ const handleWithdraw = async () => {
                       <label style={labelStyle}>Select Network</label>
                       <div style={{ display: 'flex', gap: '5px' }}>
                         {['TRC20','ERC20','BEP20'].map(n => (
-                          <button key={n} onClick={() => setNetwork(n)} style={{ padding: '4px 8px', background: network === n ? '#6366f1' : t.subtleBg, border: 'none', color: 'white', fontSize: '7px', fontWeight: '700', cursor: 'pointer' }}>{n}</button>
+                          <button type="button" key={n} onClick={() => setNetwork(n)} style={{ padding: '4px 8px', background: network === n ? '#6366f1' : t.subtleBg, border: 'none', color: 'white', fontSize: '7px', fontWeight: '700', cursor: 'pointer' }}>{n}</button>
                         ))}
                       </div>
                     </div>
@@ -215,7 +215,7 @@ const handleWithdraw = async () => {
                     <span style={{ background: t.cardBg2, border: `1px solid ${t.border}`, borderLeft: 'none', color: t.faintText, fontSize: '8px', padding: '7px 10px', flex: 1, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{proofName}</span>
                   </div>
                 </div>
-                <button onClick={handleSubmitDeposit} disabled={submitting} style={{ padding: '8px 20px', background: submitting ? t.subtleBg : '#6366f1', border: 'none', color: 'white', fontSize: '9px', fontWeight: '700', cursor: submitting ? 'not-allowed' : 'pointer' }}>
+                <button type="button" onClick={handleSubmitDeposit} disabled={submitting} style={{ padding: '8px 20px', background: submitting ? t.subtleBg : '#6366f1', border: 'none', color: 'white', fontSize: '9px', fontWeight: '700', cursor: submitting ? 'not-allowed' : 'pointer' }}>
                   {submitting ? 'Submitting...' : 'Submit Payment'}
                 </button>
               </div>
@@ -236,7 +236,7 @@ const handleWithdraw = async () => {
                     <span style={{ color: t.subText, fontSize: '6px' }}>{network}</span>
                   </div>
                   <div style={{ color: t.faintText, fontSize: '6px', textAlign: 'center', marginBottom: '6px' }}>*Do not deposit assets other than {coin}.</div>
-                  <button onClick={handleCopy} style={{ width: '100%', padding: '5px', background: copied ? '#22c55e' : '#6366f1', border: 'none', color: 'white', fontSize: '7px', cursor: 'pointer' }}>
+                  <button type="button" onClick={handleCopy} style={{ width: '100%', padding: '5px', background: copied ? '#22c55e' : '#6366f1', border: 'none', color: 'white', fontSize: '7px', cursor: 'pointer' }}>
                     {copied ? 'Copied!' : 'Copy Address'}
                   </button>
                 </div>
@@ -270,8 +270,8 @@ const handleWithdraw = async () => {
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '7px 10px', borderTop: `1px solid ${t.tableRowBorder}` }}>
                 <span style={{ color: t.faintText, fontSize: '8px' }}>Showing {deposits.length} of {deposits.length} entries</span>
                 <div style={{ display: 'flex', gap: '4px' }}>
-                  <button style={{ background: t.border, border: `1px solid ${t.border}`, color: t.subText, fontSize: '10px', padding: '2px 8px', cursor: 'pointer' }}>&#8249;</button>
-                  <button style={{ background: t.border, border: `1px solid ${t.border}`, color: t.subText, fontSize: '10px', padding: '2px 8px', cursor: 'pointer' }}>&#8250;</button>
+                  <button type="button" style={{ background: t.border, border: `1px solid ${t.border}`, color: t.subText, fontSize: '10px', padding: '2px 8px', cursor: 'pointer' }}>&#8249;</button>
+                  <button type="button" style={{ background: t.border, border: `1px solid ${t.border}`, color: t.subText, fontSize: '10px', padding: '2px 8px', cursor: 'pointer' }}>&#8250;</button>
                 </div>
               </div>
             </div>

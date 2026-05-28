@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from 'react';
 import { Bell } from 'lucide-react';
 import { useTheme } from '../context/ThemeContext';
 
-const API = 'https://quantyrexmarkets-api.vercel.app/api';
+const API = (import.meta.env.VITE_API_URL || (import.meta.env.VITE_API_URL || 'https://quantyrexmarkets-api.vercel.app/api'));
 
 export default function NotificationBell() {
   const { current: t } = useTheme();
@@ -62,7 +62,7 @@ export default function NotificationBell() {
 
   return (
     <div ref={ref} style={{ position: 'relative' }}>
-      <button onClick={() => { setOpen(!open); if (!open && unread > 0) markAllRead(); }}
+      <button type="button" onClick={() => { setOpen(!open); if (!open && unread > 0) markAllRead(); }}
         style={{ background: 'none', border: 'none', cursor: 'pointer', position: 'relative', padding: '4px', display: 'flex', alignItems: 'center' }}>
         <Bell size={18} color="white" />
         {unread > 0 && (
@@ -76,7 +76,7 @@ export default function NotificationBell() {
         <div style={{ position: 'absolute', top: '30px', right: 0, width: '280px', background: t.dropdownBg, border: `1px solid ${t.border}`, zIndex: 9999, boxShadow: '0 10px 40px rgba(0,0,0,0.5)' }}>
           <div style={{ padding: '10px 14px', borderBottom: `1px solid ${t.border}`, display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
             <span style={{ color: 'white', fontSize: '10px', fontWeight: '700' }}>Notifications</span>
-            {unread > 0 && <button onClick={markAllRead} style={{ background: 'none', border: 'none', color: '#6366f1', fontSize: '8px', cursor: 'pointer' }}>Mark all read</button>}
+            {unread > 0 && <button type="button" onClick={markAllRead} style={{ background: 'none', border: 'none', color: '#6366f1', fontSize: '8px', cursor: 'pointer' }}>Mark all read</button>}
           </div>
           <div style={{ maxHeight: '320px', overflowY: 'auto' }}>
             {notifications.length === 0 ? (

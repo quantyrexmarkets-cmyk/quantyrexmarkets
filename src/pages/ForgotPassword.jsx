@@ -45,7 +45,7 @@ export default function ForgotPassword() {
               style={{ width: '100%', background: 'rgba(255,255,255,0.08)', border: `1px solid ${'rgba(255,255,255,0.08)'}`, color: 'white', fontSize: '13px', padding: '8px 16px', outline: 'none', borderRadius: '6px', boxSizing: 'border-box', marginBottom: '12px' }}
             />
             {msg && <div style={{ color: msg.includes('sent') ? '#22c55e' : '#ef4444', fontSize: '11px', marginBottom: '12px' }}>{msg}</div>}
-            <button onClick={handleSubmit} disabled={loading} style={{ width: '100%', padding: '9px', background: loading ? '#4b5563' : '#6366f1', border: 'none', color: 'white', fontSize: '14px', fontWeight: '600', cursor: loading ? 'not-allowed' : 'pointer', borderRadius: '6px', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px' }}>
+            <button type="button" onClick={handleSubmit} disabled={loading} style={{ width: '100%', padding: '9px', background: loading ? '#4b5563' : '#6366f1', border: 'none', color: 'white', fontSize: '14px', fontWeight: '600', cursor: loading ? 'not-allowed' : 'pointer', borderRadius: '6px', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px' }}>
               <svg width="16" height="16" fill="white" viewBox="0 0 24 24"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg>
               {loading ? 'Sending...' : 'Send reset link'}
             </button>

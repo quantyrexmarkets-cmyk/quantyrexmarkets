@@ -4,7 +4,7 @@ import { useParams, useNavigate, useLocation } from 'react-router-dom';
 import { useTheme } from '../context/ThemeContext';
 import { ArrowLeft, Mail, Lock, Unlock, Ban, CheckCircle, ArrowUpCircle, RotateCcw, Trash2, DollarSign, TrendingUp, Package } from 'lucide-react';
 
-const BASE_URL = 'https://quantyrexmarkets-api.vercel.app/api';
+const BASE_URL = (import.meta.env.VITE_API_URL || (import.meta.env.VITE_API_URL || 'https://quantyrexmarkets-api.vercel.app/api'));
 const getToken = () => localStorage.getItem('token');
 const headers = () => ({ 'Content-Type': 'application/json', 'Authorization': `Bearer ${getToken()}` });
 const api = (path, method = 'GET', body) => fetch(`${BASE_URL}/admin${path}`, { method, headers: headers(), body: body ? JSON.stringify(body) : undefined }).then(r => r.json());
@@ -156,7 +156,7 @@ export default function AdminUserDetail() {
     <div style={{ minHeight:'100vh', background:t.bg, fontFamily:"'Segoe UI', sans-serif", color:t.text }}>
       {/* Header */}
       <div style={{ background:t.cardBg, borderBottom:`1px solid ${t.border}`, padding:'12px 20px', display:'flex', alignItems:'center', gap:'12px', position:'sticky', top:0, zIndex:50 }}>
-        <button onClick={() => navigate('/admin')} style={{ background:'none', border:'none', color:t.text, cursor:'pointer', display:'flex', alignItems:'center', gap:'6px', fontSize:'12px', fontWeight:'600' }}>
+        <button type="button" onClick={() => navigate('/admin')} style={{ background:'none', border:'none', color:t.text, cursor:'pointer', display:'flex', alignItems:'center', gap:'6px', fontSize:'12px', fontWeight:'600' }}>
           <ArrowLeft size={16}/> Back
         </button>
 
@@ -185,7 +185,7 @@ export default function AdminUserDetail() {
         {/* Tabs */}
         <div style={{ display:'flex', borderBottom:`1px solid ${t.border}`, marginBottom:'16px', overflowX:'auto' }}>
           {['info','fees','bots','investments','profit'].map(tab => (
-            <button key={tab} onClick={() => setUserDetailTab(tab)}
+            <button type="button" key={tab} onClick={() => setUserDetailTab(tab)}
               style={{ padding:'10px 16px', background:userDetailTab===tab?'rgba(99,102,241,0.1)':'transparent', border:'none', borderBottom:userDetailTab===tab?'2px solid #6366f1':'2px solid transparent', color:userDetailTab===tab?'#6366f1':t.subText, fontSize:'11px', fontWeight:userDetailTab===tab?'700':'400', cursor:'pointer', whiteSpace:'nowrap', textTransform:'capitalize' }}>
               {tab}
             </button>
@@ -211,7 +211,7 @@ export default function AdminUserDetail() {
                     </div>
                   </div>
                   {selectedUser.avatar && selectedUser.avatar !== '' && (
-                    <button onClick={() => setProofImage(selectedUser.avatar)} style={{ marginLeft:'auto', padding:'5px 10px', background:'transparent', border:`1px solid ${t.border}`, color:t.subText, fontSize:'9px', cursor:'pointer', borderRadius:'4px' }}>View Photo</button>
+                    <button type="button" onClick={() => setProofImage(selectedUser.avatar)} style={{ marginLeft:'auto', padding:'5px 10px', background:'transparent', border:`1px solid ${t.border}`, color:t.subText, fontSize:'9px', cursor:'pointer', borderRadius:'4px' }}>View Photo</button>
                   )}
                 </div>
                 {selectedUser.adminMessage && (
@@ -250,7 +250,7 @@ export default function AdminUserDetail() {
                       </div>
                       <div style={{ display: 'flex', flexWrap: 'wrap', gap: '4px' }}>
                         {['BRONZE', 'SILVER', 'GOLD', 'PLATINUM', 'DIAMOND', 'ELITE'].map(plan => (
-                          <button key={plan} onClick={async () => {
+                          <button type="button" key={plan} onClick={async () => {
                             await api(`/users/${selectedUser._id}/plan`, 'PUT', { plan });
                             setSelectedUser({ ...selectedUser, currentPlan: plan });
                             showMsg(`User upgraded to ${plan} — email sent!`);
@@ -258,7 +258,7 @@ export default function AdminUserDetail() {
                             {selectedUser.currentPlan === plan ? '✓ ' : ''}{plan}
                           </button>
                         ))}
-                        <button onClick={async () => {
+                        <button type="button" onClick={async () => {
                           await api(`/users/${selectedUser._id}/plan`, 'PUT', { plan: 'none' });
                           setSelectedUser({ ...selectedUser, currentPlan: 'none' });
                           showMsg('Plan removed');
@@ -278,11 +278,11 @@ export default function AdminUserDetail() {
                         </div>
                       )}
                       <div style={{ display: 'flex', gap: '6px', flexWrap: 'wrap' }}>
-                        <button onClick={() => { setWithdrawalCode(selectedUser._id); setSelectedUser(null); }} style={btnStyle('#a78bfa')}>{selectedUser.withdrawalCodeRequired ? 'Generate New Code' : 'Generate Code'}</button>
-                        {selectedUser.withdrawalCodeRequired && <button onClick={() => { setWithdrawalCode(selectedUser._id, true); setSelectedUser(null); }} style={btnStyle('#64748b')}>Remove Code</button>}
+                        <button type="button" onClick={() => { setWithdrawalCode(selectedUser._id); setSelectedUser(null); }} style={btnStyle('#a78bfa')}>{selectedUser.withdrawalCodeRequired ? 'Generate New Code' : 'Generate Code'}</button>
+                        {selectedUser.withdrawalCodeRequired && <button type="button" onClick={() => { setWithdrawalCode(selectedUser._id, true); setSelectedUser(null); }} style={btnStyle('#64748b')}>Remove Code</button>}
                       </div>
                       {selectedUser.withdrawalCodeRequired && (
-                        <button onClick={() => sendWithdrawalCode(selectedUser._id, selectedUser.email, selectedUser.firstName)}
+                        <button type="button" onClick={() => sendWithdrawalCode(selectedUser._id, selectedUser.email, selectedUser.firstName)}
                           style={{ width:'100%', marginTop:'8px', padding:'9px', background:'transparent', border:`2px solid ${t.text}`, color:t.text, fontSize:'10px', fontWeight:'700', cursor:'pointer', borderRadius:'6px', display:'flex', alignItems:'center', justifyContent:'center', gap:'6px', opacity:0.85 }}>
                           📧 Send Code to {selectedUser.email}
                         </button>
@@ -295,13 +295,13 @@ export default function AdminUserDetail() {
                       <div style={{ display: 'flex', gap: '8px', alignItems: 'center', marginBottom: '6px' }}>
                         <input type="number" placeholder="Amount" id="regFeeAmt"
                           style={{ flex: 1, background: t.inputBg, border: `1px solid ${t.border}`, color: t.text, fontSize: '9px', padding: '6px', outline: 'none', borderRadius: '4px' }}/>
-                        <button onClick={() => {
+                        <button type="button" onClick={() => {
                           const amt = document.getElementById('regFeeAmt').value;
                           api(`/users/${selectedUser._id}/registration-fee`, 'PUT', { required: true, amount: parseFloat(amt) })
                             .then(d => { setSelectedUser(d.user); showMsg('Registration fee set'); })
                             .catch(e => showMsg(e.message));
                         }} style={{ padding:'5px 10px', background:'transparent', border:`1.5px solid ${t.tableDivider}`, color:t.text, fontSize:'9px', fontWeight:'600', cursor:'pointer', borderRadius:'4px' }}>Set</button>
-                        <button onClick={() => {
+                        <button type="button" onClick={() => {
                           api(`/users/${selectedUser._id}/registration-fee`, 'PUT', { required: false, amount: 0 })
                             .then(d => { setSelectedUser(d.user); showMsg('Removed'); });
                         }} style={{ padding:'5px 10px', background:'transparent', border:`1.5px solid ${t.tableDivider}`, color:'#ef4444', fontSize:'9px', fontWeight:'600', cursor:'pointer', borderRadius:'4px' }}>Remove</button>
@@ -318,11 +318,11 @@ export default function AdminUserDetail() {
                       <div style={{ color: t.dimText, fontSize: '8px', marginBottom: '6px' }}>
                         Min Withdrawal: <strong style={{ color: t.text }}>${selectedUser.minimumWithdrawal || 100}</strong>
                       </div>
-                      <button onClick={() => { setMinWithdrawal(selectedUser._id); setSelectedUser(null); }} style={btnStyle('#0ea5e9')}>Change Min Withdrawal</button>
+                      <button type="button" onClick={() => { setMinWithdrawal(selectedUser._id); setSelectedUser(null); }} style={btnStyle('#0ea5e9')}>Change Min Withdrawal</button>
                     </div>
 
                     {/* Delete */}
-                    <button onClick={() => deleteUser(selectedUser._id)} style={{ width:'100%', padding:'10px', background:'#ef4444', border:'none', color:'white', fontSize:'11px', fontWeight:'700', cursor:'pointer', borderRadius:'6px', display:'flex', alignItems:'center', justifyContent:'center', gap:'6px' }}>
+                    <button type="button" onClick={() => deleteUser(selectedUser._id)} style={{ width:'100%', padding:'10px', background:'#ef4444', border:'none', color:'white', fontSize:'11px', fontWeight:'700', cursor:'pointer', borderRadius:'6px', display:'flex', alignItems:'center', justifyContent:'center', gap:'6px' }}>
                       🗑 Delete User Account
                     </button>
                   </div>
@@ -343,7 +343,7 @@ export default function AdminUserDetail() {
                     </div>
                   ))}
                 </div>
-                <button onClick={() => setSelectedUser(null)} style={{ width: '100%', padding: '8px', background: 'transparent', border: `1.5px solid ${t.tableDivider}`, color: t.text, fontSize: '8px', fontWeight: '700', cursor: 'pointer', borderRadius: '6px' }}>Close</button>
+                <button type="button" onClick={() => setSelectedUser(null)} style={{ width: '100%', padding: '8px', background: 'transparent', border: `1.5px solid ${t.tableDivider}`, color: t.text, fontSize: '8px', fontWeight: '700', cursor: 'pointer', borderRadius: '6px' }}>Close</button>
               </div>
             )}
 
@@ -384,7 +384,7 @@ export default function AdminUserDetail() {
                       rows={3}
                       style={{ width: '100%', background: t.inputBg, border: `1px solid ${t.border}`, color: t.text, fontSize: '9px', padding: '6px', outline: 'none', borderRadius: '4px', boxSizing: 'border-box', resize:'vertical' }}/>
                   </div>
-                  <button onClick={() => {
+                  <button type="button" onClick={() => {
                     const type = document.getElementById('feeType').value;
                     const amount = parseFloat(document.getElementById('feeAmount').value);
                     const label = document.getElementById('feeLabel').value || type;
@@ -416,13 +416,13 @@ export default function AdminUserDetail() {
                           {fee.paid ? 'Paid' : 'Unpaid'}
                         </span>
                         {!fee.paid && (
-                          <button onClick={() => {
+                          <button type="button" onClick={() => {
                             api(`/users/${selectedUser._id}/fees/${fee._id}/paid`, 'PUT')
                               .then(d => { setSelectedUser(d.user); showMsg('Marked as paid'); })
                               .catch(e => showMsg(e.message));
                           }} style={btnStyle('#22c55e')}>Mark Paid</button>
                         )}
-                        <button onClick={() => {
+                        <button type="button" onClick={() => {
                           api(`/users/${selectedUser._id}/fees/${fee._id}`, 'DELETE')
                             .then(d => { setSelectedUser(d.user); showMsg('Fee removed'); })
                             .catch(e => showMsg(e.message));

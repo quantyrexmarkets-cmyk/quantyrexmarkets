@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-const BASE_URL = 'https://quantyrexmarkets-api.vercel.app/api';
+const BASE_URL = (import.meta.env.VITE_API_URL || (import.meta.env.VITE_API_URL || 'https://quantyrexmarkets-api.vercel.app/api'));
 
 export default function ResetPassword() {
   const navigate = useNavigate();
@@ -64,7 +64,7 @@ export default function ResetPassword() {
                   <input type="password" value={confirm} onChange={e => setConfirm(e.target.value)} placeholder="Repeat password" style={{ width: '100%', background: '#1a2e4a', border: `1px solid ${'rgba(255,255,255,0.08)'}`, color: 'white', fontSize: '9px', padding: '9px 10px', outline: 'none', boxSizing: 'border-box' }} />
                 </div>
                 {error && <div style={{ color: '#ef4444', fontSize: '8px', marginBottom: '10px' }}>{error}</div>}
-                <button onClick={handleReset} disabled={loading} style={{ width: '100%', padding: '10px', background: '#6366f1', border: 'none', color: 'white', fontSize: '9px', fontWeight: '700', cursor: loading ? 'not-allowed' : 'pointer', opacity: loading ? 0.7 : 1 }}>
+                <button type="button" onClick={handleReset} disabled={loading} style={{ width: '100%', padding: '10px', background: '#6366f1', border: 'none', color: 'white', fontSize: '9px', fontWeight: '700', cursor: loading ? 'not-allowed' : 'pointer', opacity: loading ? 0.7 : 1 }}>
                   {loading ? 'Resetting...' : 'Reset Password'}
                 </button>
               </>

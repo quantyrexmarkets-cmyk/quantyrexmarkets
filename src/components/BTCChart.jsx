@@ -66,7 +66,7 @@ export default function BTCChart() {
       }}>
         <div style={{ display: 'flex', gap: '4px', flexWrap: 'wrap' }}>
           {coins.map(c => (
-            <button key={c.value} onClick={() => setSymbol(c)}
+            <button type="button" key={c.value} onClick={() => setSymbol(c)}
               style={symbol.value === c.value ? activeTab : inactiveTab}>
               {c.label}
             </button>
@@ -74,7 +74,7 @@ export default function BTCChart() {
         </div>
         <div style={{ display: 'flex', gap: '4px' }}>
           {intervals.map(iv => (
-            <button key={iv.value} onClick={() => setInterval(iv)}
+            <button type="button" key={iv.value} onClick={() => setInterval(iv)}
               style={interval.value === iv.value ? activeTab : inactiveTab}>
               {iv.label}
             </button>

@@ -119,7 +119,7 @@ export default function WhyChooseSection() {
                 <p style={{ color: "rgba(255,255,255,0.7)", fontSize: "clamp(7px, 1.8vw, 15px)", lineHeight: "1.4", flex: 1 }}>{feature.description}</p>
               </div>
               <div style={{ position: "relative", zIndex: 10, display: "flex", justifyContent: "space-between", alignItems: "flex-end", marginTop: "8px" }}>
-                <button
+                <button type="button"
                   style={{ color: "rgba(255,255,255,0.8)", fontSize: "clamp(7px, 1.8vw, 15px)", textDecoration: "underline", display: "flex", alignItems: "center", gap: "2px" }}
                   onClick={() => window.location.href="/signin"}
                 >

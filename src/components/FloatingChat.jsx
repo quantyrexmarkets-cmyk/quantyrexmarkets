@@ -28,7 +28,7 @@ const FloatingChat = () => {
       )}
 
       {/* Floating button */}
-      <button
+      <button type="button"
         onClick={() => setOpen(!open)}
         style={{
           width: '48px', height: '48px', borderRadius: '50%',

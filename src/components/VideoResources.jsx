@@ -97,7 +97,7 @@ export default function VideoResources() {
               ))}
             </div>
 
-            <button style={{
+            <button type="button" style={{
               display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '10px',
               background: 'transparent', border: '1px solid #6366f1', color: 'white',
               padding: '10px 12px', borderRadius: '0px', fontSize: 'clamp(8px, 2vw, 15px)',

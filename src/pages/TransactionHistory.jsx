@@ -92,7 +92,7 @@ export default function TransactionHistory() {
         </div>
         <div style={{ display: 'flex', gap: '6px', marginBottom: '14px', flexWrap: 'wrap' }}>
           {['All', 'Deposit', 'Withdrawal', 'Completed', 'Pending', 'Failed'].map(f => (
-            <button key={f} onClick={() => { setFilter(f); setPage(1); }} style={{ padding: '4px 10px', background: filter === f ? (t.bg === '#f8fafc' ? 'rgba(99,102,241,0.15)' : '#6366f1') : t.subtleBg, border: filter === f ? '1px solid rgba(99,102,241,0.4)' : `1px solid ${t.border}`, color: filter === f ? '#6366f1' : t.subText, borderRadius: '6px', fontSize: '8px', fontWeight: '600', cursor: 'pointer' }}>{f}</button>
+            <button type="button" key={f} onClick={() => { setFilter(f); setPage(1); }} style={{ padding: '4px 10px', background: filter === f ? (t.bg === '#f8fafc' ? 'rgba(99,102,241,0.15)' : '#6366f1') : t.subtleBg, border: filter === f ? '1px solid rgba(99,102,241,0.4)' : `1px solid ${t.border}`, color: filter === f ? '#6366f1' : t.subText, borderRadius: '6px', fontSize: '8px', fontWeight: '600', cursor: 'pointer' }}>{f}</button>
           ))}
         </div>
         <div style={{ background: t.cardBg, border: `1px solid ${t.tableOuterBorder}` }}>
@@ -131,11 +131,11 @@ export default function TransactionHistory() {
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '7px 10px', borderTop: `1px solid ${t.tableRowBorder}` }}>
             <span style={{ color: t.faintText, fontSize: '8px' }}>Showing {filtered.length === 0 ? 0 : (page - 1) * perPage + 1}–{Math.min(page * perPage, filtered.length)} of {filtered.length} entries</span>
             <div style={{ display: 'flex', gap: '4px' }}>
-              <button onClick={() => setPage(1)} disabled={page === 1} style={{ background: t.border, border: `1px solid ${t.border}`, color: page === 1 ? t.faintText : t.paginationText, fontSize: '8px', padding: '2px 6px', cursor: page === 1 ? 'default' : 'pointer' }}>«</button>
-              <button onClick={() => setPage(p => Math.max(1, p - 1))} disabled={page === 1} style={{ background: t.border, border: `1px solid ${t.border}`, color: page === 1 ? t.faintText : t.paginationText, fontSize: '10px', padding: '2px 8px', cursor: page === 1 ? 'default' : 'pointer' }}>‹</button>
+              <button type="button" onClick={() => setPage(1)} disabled={page === 1} style={{ background: t.border, border: `1px solid ${t.border}`, color: page === 1 ? t.faintText : t.paginationText, fontSize: '8px', padding: '2px 6px', cursor: page === 1 ? 'default' : 'pointer' }}>«</button>
+              <button type="button" onClick={() => setPage(p => Math.max(1, p - 1))} disabled={page === 1} style={{ background: t.border, border: `1px solid ${t.border}`, color: page === 1 ? t.faintText : t.paginationText, fontSize: '10px', padding: '2px 8px', cursor: page === 1 ? 'default' : 'pointer' }}>‹</button>
               <span style={{ color: t.subText, fontSize: '8px' }}>Page {page} of {totalPages || 1}</span>
-              <button onClick={() => setPage(p => Math.min(totalPages, p + 1))} disabled={page >= totalPages} style={{ background: t.border, border: `1px solid ${t.border}`, color: page >= totalPages ? t.faintText : t.paginationText, fontSize: '10px', padding: '2px 8px', cursor: page >= totalPages ? 'default' : 'pointer' }}>›</button>
-              <button onClick={() => setPage(totalPages)} disabled={page >= totalPages} style={{ background: t.border, border: `1px solid ${t.border}`, color: page >= totalPages ? t.faintText : t.paginationText, fontSize: '8px', padding: '2px 6px', cursor: page >= totalPages ? 'default' : 'pointer' }}>»</button>
+              <button type="button" onClick={() => setPage(p => Math.min(totalPages, p + 1))} disabled={page >= totalPages} style={{ background: t.border, border: `1px solid ${t.border}`, color: page >= totalPages ? t.faintText : t.paginationText, fontSize: '10px', padding: '2px 8px', cursor: page >= totalPages ? 'default' : 'pointer' }}>›</button>
+              <button type="button" onClick={() => setPage(totalPages)} disabled={page >= totalPages} style={{ background: t.border, border: `1px solid ${t.border}`, color: page >= totalPages ? t.faintText : t.paginationText, fontSize: '8px', padding: '2px 6px', cursor: page >= totalPages ? 'default' : 'pointer' }}>»</button>
             </div>
           </div>
         </div>

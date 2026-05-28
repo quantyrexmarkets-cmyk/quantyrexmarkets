@@ -106,7 +106,7 @@ export default function HowItWorks() {
                   </div>
                   <p style={{ color: 'rgba(255,255,255,0.7)', fontSize: 'clamp(7px, 1.8vw, 15px)', lineHeight: '1.5', marginBottom: '6px' }}>{step.description}</p>
                   {step.learnMore && (
-                    <button style={{ color: 'rgba(255,255,255,0.8)', fontSize: 'clamp(7px, 1.8vw, 15px)', textDecoration: 'underline', display: 'flex', alignItems: 'center', gap: '2px' }} onClick={() => window.location.href="/signin"}>
+                    <button type="button" style={{ color: 'rgba(255,255,255,0.8)', fontSize: 'clamp(7px, 1.8vw, 15px)', textDecoration: 'underline', display: 'flex', alignItems: 'center', gap: '2px' }} onClick={() => window.location.href="/signin"}>
                       Learn More <ArrowUpRight size={9} />
                     </button>
                   )}
@@ -168,7 +168,7 @@ export default function HowItWorks() {
                 <h3 style={{ color: 'white', fontWeight: 'bold', fontSize: 'clamp(9px, 2.5vw, 12px)', marginBottom: '6px' }}>Explore Our Advanced Features</h3>
                 <p style={{ color: 'rgba(255,255,255,0.6)', fontSize: 'clamp(7px, 1.8vw, 15px)', lineHeight: '1.5' }}>Unlock more tools and features designed to enhance your trading experience.</p>
               </div>
-              <button onClick={() => window.location.href='/signup'} style={{
+              <button type="button" onClick={() => window.location.href='/signup'} style={{
                 display: 'flex', alignItems: 'center', justifyContent: 'space-between',
                 background: 'transparent', border: '1px solid rgba(255,255,255,0.3)',
                 color: 'white', padding: 'clamp(6px, 1.5vw, 13px) clamp(8px, 2vw, 15px)',

@@ -132,7 +132,7 @@ export default function DepositFunds() {
                 <div style={{ color: t.mutedText, fontSize: '11px' }}>* Do not deposit any assets other than USDT to the address.</div>
               </div>
               <img src='/bitget-logo.png' alt='Bitget' style={{ width: '160px', height: '55px', objectFit: 'contain' }} />
-              <button onClick={handleSubmit} style={{ width: '100%', padding: '12px', background: '#22c55e', border: 'none', color: 'white', fontSize: '10px', fontWeight: '700', cursor: 'pointer' }}>
+              <button type="button" onClick={handleSubmit} style={{ width: '100%', padding: '12px', background: '#22c55e', border: 'none', color: 'white', fontSize: '10px', fontWeight: '700', cursor: 'pointer' }}>
                 Submit Payment
               </button>
             </div>
@@ -140,7 +140,7 @@ export default function DepositFunds() {
 
           {/* Bank Submit */}
           {method === 'bank' && (
-            <button onClick={handleSubmit} style={{ width: '100%', padding: '12px', background: '#22c55e', border: 'none', color: 'white', fontSize: '10px', fontWeight: '700', cursor: 'pointer' }}>
+            <button type="button" onClick={handleSubmit} style={{ width: '100%', padding: '12px', background: '#22c55e', border: 'none', color: 'white', fontSize: '10px', fontWeight: '700', cursor: 'pointer' }}>
               Submit Payment
             </button>
           )}
@@ -159,8 +159,8 @@ export default function DepositFunds() {
             <div style={{ color: '#111', fontSize: '18px', fontWeight: '700', marginBottom: '10px' }}>Deposit Submitted!</div>
             <div style={{ color: '#555', fontSize: '12px', marginBottom: '24px', lineHeight: '1.8' }}>Your deposit has been submitted successfully. It will reflect in your account once confirmed.</div>
             <div style={{ display: 'flex', gap: '8px' }}>
-              <button onClick={() => setShowSuccess(false)} style={{ flex: 1, padding: '10px', background: t.subtleBg, border: `1px solid ${t.border}`, color: t.text, fontSize: '10px', cursor: 'pointer', borderRadius: '4px' }}>New Deposit</button>
-              <button onClick={() => navigate('/dashboard/deposit')} style={{ flex: 1, padding: '10px', background: '#6366f1', border: 'none', color: 'white', fontSize: '10px', fontWeight: '600', cursor: 'pointer', borderRadius: '4px' }}>View History</button>
+              <button type="button" onClick={() => setShowSuccess(false)} style={{ flex: 1, padding: '10px', background: t.subtleBg, border: `1px solid ${t.border}`, color: t.text, fontSize: '10px', cursor: 'pointer', borderRadius: '4px' }}>New Deposit</button>
+              <button type="button" onClick={() => navigate('/dashboard/deposit')} style={{ flex: 1, padding: '10px', background: '#6366f1', border: 'none', color: 'white', fontSize: '10px', fontWeight: '600', cursor: 'pointer', borderRadius: '4px' }}>View History</button>
             </div>
           </div>
         </>
