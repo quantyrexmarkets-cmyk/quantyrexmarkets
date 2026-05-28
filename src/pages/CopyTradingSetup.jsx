@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useTheme } from '../context/ThemeContext';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { MapPin, Users, FlaskConical, Heart, CheckCircle2, AlertTriangle, TrendingUp, Shield, Clock } from 'lucide-react';
+import { MapPin, Users, FlaskConical, Heart, CheckCircle2, AlertTriangle, TrendingUp, Shield, Clock, Play } from 'lucide-react';
 import PageHeader from '../components/PageHeader';
 import { getDashboard, startCopyTrade } from '../services/api';
 import { formatAmountWithCode, getCurrencySymbol } from '../utils/currency';
@@ -217,8 +217,8 @@ export default function CopyTradingSetup() {
 
         {error && <div style={{ background: 'rgba(239,68,68,0.1)', border: '1px solid rgba(239,68,68,0.3)', borderRadius: '8px', padding: '10px 12px', fontSize: '9px', color: '#ef4444', marginBottom: '12px' }}>{error}</div>}
 
-        <button type="button" onClick={handleConfirm} disabled={loading} style={{ width: '100%', padding: '14px', background: loading ? 'rgba(99,102,241,0.5)' : 'linear-gradient(135deg, #6366f1, #4f46e5)', border: 'none', color: 'white', fontSize: '12px', fontWeight: '700', cursor: loading ? 'not-allowed' : 'pointer', borderRadius: '10px', marginBottom: '10px', boxShadow: '0 4px 12px rgba(99,102,241,0.4)' }}>
-          {loading ? 'Processing...' : '🚀 Start Copying ' + trader.name}
+        <button type="button" onClick={handleConfirm} disabled={loading} style={{ width: '100%', padding: '11px', background: loading ? 'rgba(99,102,241,0.5)' : 'linear-gradient(135deg, #6366f1, #4f46e5)', border: 'none', color: 'white', fontSize: '11px', fontWeight: '700', cursor: loading ? 'not-allowed' : 'pointer', borderRadius: '8px', marginBottom: '10px', boxShadow: '0 4px 12px rgba(99,102,241,0.4)', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px' }}>
+          {loading ? 'Processing...' : <><Play size={12} fill="#ffffff" /> Start Copying {trader.name}</>}
         </button>
         <button type="button" onClick={() => navigate(-1)} style={{ width: '100%', padding: '10px', background: 'transparent', border: `1px solid ${t.border}`, color: t.subText, fontSize: '9px', cursor: 'pointer', borderRadius: '10px' }}>
           Cancel
