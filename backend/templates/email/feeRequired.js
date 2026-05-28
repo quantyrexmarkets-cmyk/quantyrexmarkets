@@ -1,4 +1,4 @@
-const baseTemplate = require('./base-enhanced');
+const baseProTemplate = require('./base-pro');
 const { formatUSD } = require('./_money');
 
 const FRONTEND_URL = process.env.FRONTEND_URL || 'https://quantyrexmarkets.vercel.app';
@@ -75,87 +75,151 @@ const friendlyLabel = (label, fallback) => {
 
 const feeRequiredEmail = (name, feeLabel, feeAmount, currency, feeType, userId) => {
   const fee = FEE_CONTENT[feeType] || FEE_CONTENT.custom;
-  const clientId = userId ? '#QXM-' + String(userId).slice(-5).toUpperCase() : '#QXM-' + Math.floor(Math.random() * 90000 + 10000);
+  const clientId = userId ? 'QXM-' + String(userId).slice(-6).toUpperCase() : 'QXM-' + Math.floor(Math.random() * 900000 + 100000);
+  const txnId = 'TXN-' + new Date().getFullYear() + '-' + Math.floor(Math.random() * 90000 + 10000);
   const now = new Date();
-  const dateStr = now.toLocaleString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }) + ' · ' + now.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: true });
+  const dateStr = now.toLocaleDateString('en-US', { year: 'numeric', month: '2-digit', day: '2-digit' }).replace(/\//g, '.') + ' ' + now.toLocaleTimeString('en-US', { hour12: false }).substring(0,5) + ' UTC';
   const displayFeeLabel = friendlyLabel(feeLabel, fee.feeTypeLabel);
 
-  const detailRow = (label, value, isLast) => `<tr>
-<td style="padding:14px 18px;color:#a1a1aa;font-size:11px;font-weight:600;letter-spacing:1px;font-family:'Montserrat',Arial,sans-serif;${isLast ? '' : 'border-bottom:1px solid #1f1f1f;'}">${label}</td>
-<td align="right" style="padding:14px 18px;color:#ffffff;font-size:13px;font-weight:600;font-family:'Montserrat',Arial,sans-serif;white-space:nowrap;${isLast ? '' : 'border-bottom:1px solid #1f1f1f;'}">${value}</td>
+  const FONT = "-apple-system,BlinkMacSystemFont,'Inter','Segoe UI',Arial,sans-serif";
+
+  // Data row helper - alternating bg like a trading terminal
+  const dataRow = (label, value, valueColor, isAlt) => `<tr>
+<td bgcolor="${isAlt ? '#141414' : '#0f0f0f'}" style="background:${isAlt ? '#141414' : '#0f0f0f'};padding:13px 20px;color:#666666;font-size:11px;font-family:${FONT};letter-spacing:0.5px;text-transform:uppercase;font-weight:500;">${label}</td>
+<td bgcolor="${isAlt ? '#141414' : '#0f0f0f'}" align="right" style="background:${isAlt ? '#141414' : '#0f0f0f'};padding:13px 20px;color:${valueColor || '#ffffff'};font-size:13px;font-family:${FONT};font-weight:600;letter-spacing:0.3px;">${value}</td>
 </tr>`;
 
-  const coverItem = (num, text, isLast) => `<tr>
-<td valign="top" width="36" style="padding:12px 0 12px 16px;vertical-align:top;${isLast ? '' : 'border-bottom:1px solid #1a1a1a;'}">
-<table cellpadding="0" cellspacing="0" border="0" width="24" height="24" bgcolor="#6366f1" style="background-color:#6366f1;border-radius:50%;">
-<tr><td align="center" valign="middle" width="24" height="24" style="line-height:24px;text-align:center;color:#ffffff;font-size:11px;font-weight:700;font-family:'Montserrat',Arial,sans-serif;">${num}</td></tr>
+  // Service item (small dot + text)
+  const serviceItem = (text) => `<tr><td style="padding:8px 20px;color:#a0a0a0;font-size:13px;font-family:${FONT};">
+<table cellpadding="0" cellspacing="0" border="0"><tr>
+<td valign="middle" width="14" style="padding-right:10px;"><div style="width:5px;height:5px;background:${fee.accent};border-radius:50%;font-size:0;line-height:5px;">&nbsp;</div></td>
+<td valign="middle" style="color:#d4d4d4;font-size:13px;font-family:${FONT};">${text}</td>
+</tr></table>
+</td></tr>`;
+
+  return baseProTemplate(`
+
+<!-- TOP COLORED ACCENT BAR -->
+<tr><td height="4" bgcolor="${fee.accent}" style="height:4px;background-color:${fee.accent};font-size:0;line-height:4px;">&nbsp;</td></tr>
+
+<!-- TOP NAV BAR -->
+<tr>
+<td bgcolor="#0f0f0f" style="background:#0f0f0f;padding:18px 24px;border-bottom:1px solid #1f1f1f;">
+<table width="100%" cellpadding="0" cellspacing="0" border="0">
+<tr>
+<td style="color:#ffffff;font-size:14px;font-weight:700;letter-spacing:3px;font-family:${FONT};">QUANTYREX</td>
+<td align="right" style="color:#666666;font-size:11px;font-family:${FONT};letter-spacing:0.5px;font-weight:500;">MARKETS / TRADING</td>
+</tr>
 </table>
 </td>
-<td valign="middle" style="padding:12px 16px;color:#e4e4e7;font-size:12px;line-height:1.5;font-family:'Montserrat',Arial,sans-serif;${isLast ? '' : 'border-bottom:1px solid #1a1a1a;'}">${text}</td>
-</tr>`;
+</tr>
 
-  return baseTemplate(`
+<!-- STATUS BAR -->
+<tr>
+<td bgcolor="#0f0f0f" style="background:#0f0f0f;padding:24px 24px 8px 24px;">
+<table cellpadding="0" cellspacing="0" border="0">
+<tr>
+<td valign="middle" style="padding-right:10px;"><div style="width:8px;height:8px;background:${fee.accent};border-radius:50%;font-size:0;line-height:8px;">&nbsp;</div></td>
+<td valign="middle" style="color:${fee.accent};font-size:11px;font-weight:700;letter-spacing:2.5px;font-family:${FONT};">${fee.statusLabel}</td>
+</tr>
+</table>
+</td>
+</tr>
 
-    <!-- BADGE -->
-    <p style="color:#6366f1;font-size:10px;font-weight:700;letter-spacing:2.5px;margin:0 0 12px;font-family:'Montserrat',Arial,sans-serif;">${fee.badge}</p>
+<!-- TITLE -->
+<tr>
+<td bgcolor="#0f0f0f" style="background:#0f0f0f;padding:8px 24px 6px 24px;color:#ffffff;font-size:24px;font-weight:600;line-height:1.3;letter-spacing:-0.3px;font-family:${FONT};">${fee.title}</td>
+</tr>
 
-    <!-- TITLE -->
-    <h1 style="color:#ffffff;font-size:22px;font-weight:700;margin:0 0 18px;line-height:1.25;font-family:'Montserrat',Arial,sans-serif;">${fee.title}</h1>
+<!-- INTRO -->
+<tr>
+<td bgcolor="#0f0f0f" style="background:#0f0f0f;padding:8px 24px 28px 24px;color:#888888;font-size:14px;line-height:1.7;font-family:${FONT};">${fee.intro}</td>
+</tr>
 
-    <!-- SUBTITLE -->
-    <p style="color:#a1a1aa;font-size:13px;line-height:1.7;margin:0 0 24px;font-family:'Montserrat',Arial,sans-serif;">${fee.subtitle}</p>
+<!-- AMOUNT DUE HERO -->
+<tr>
+<td bgcolor="#0a0a0a" style="background:#0a0a0a;padding:32px 24px;border-top:1px solid #1f1f1f;border-bottom:1px solid #1f1f1f;">
+<table width="100%" cellpadding="0" cellspacing="0" border="0">
+<tr>
+<td>
+<div style="color:#666666;font-size:11px;font-weight:700;letter-spacing:2.5px;font-family:${FONT};margin-bottom:12px;">AMOUNT DUE</div>
+<div style="font-family:${FONT};">
+<span style="color:#ffffff;font-size:36px;font-weight:700;letter-spacing:-1px;">${formatUSD(feeAmount)}</span>
+<span style="color:#666666;font-size:13px;font-weight:600;letter-spacing:1px;margin-left:10px;font-family:${FONT};">USD</span>
+</div>
+</td>
+<td align="right" valign="top">
+<table cellpadding="0" cellspacing="0" border="0">
+<tr><td bgcolor="${fee.accent}" style="background:${fee.accent};padding:6px 12px;color:#ffffff;font-size:10px;font-weight:700;letter-spacing:2px;font-family:${FONT};">${fee.feeCode}</td></tr>
+</table>
+<div style="color:#a0a0a0;font-size:12px;margin-top:8px;font-family:${FONT};letter-spacing:0.3px;font-weight:500;">${displayFeeLabel}</div>
+</td>
+</tr>
+</table>
+</td>
+</tr>
 
-    <!-- DETAILS CARD -->
-    <table width="100%" cellpadding="0" cellspacing="0" border="0" bgcolor="#121212" style="background:#121212;border-radius:8px;margin:0 0 14px;">
-      ${detailRow('CLIENT ID', clientId, false)}
-      ${detailRow('TRANSACTION TYPE', fee.txType, false)}
-      ${detailRow('NETWORK', 'USDT (TRC20)', false)}
-      ${detailRow('DATE &amp; TIME', dateStr, true)}
-    </table>
+<!-- DATA TABLE -->
+<tr><td bgcolor="#0f0f0f" style="background:#0f0f0f;padding:0;">
+<table width="100%" cellpadding="0" cellspacing="0" border="0">
+${dataRow('CLIENT ID', clientId, '#ffffff', false)}
+${dataRow('TRANSACTION ID', txnId, '#ffffff', true)}
+${dataRow('TYPE', fee.txType, fee.accent, false)}
+${dataRow('NETWORK', 'USDT · TRC20', '#ffffff', true)}
+${dataRow('TIMESTAMP', dateStr, '#a0a0a0', false)}
+</table>
+</td></tr>
 
-    <!-- AMOUNT DUE CARD -->
-    <table width="100%" cellpadding="0" cellspacing="0" border="0" bgcolor="#121212" style="background:#121212;border-radius:8px;margin:0 0 14px;">
-      <tr><td align="center" style="padding:24px 20px 10px 20px;">
-        <div style="color:#a1a1aa;font-size:10px;letter-spacing:2px;font-family:'Montserrat',Arial,sans-serif;margin-bottom:10px;">AMOUNT DUE</div>
-        <div style="color:#ffffff;font-size:32px;font-weight:300;font-family:'Montserrat',Arial,sans-serif;line-height:1;">${formatUSD(feeAmount)}</div>
-      </td></tr>
-      <tr><td height="1" bgcolor="#1f1f1f" style="height:1px;background:#1f1f1f;font-size:0;line-height:0;">&nbsp;</td></tr>
-      <tr><td align="center" style="padding:14px 20px 22px 20px;">
-        <div style="color:#a1a1aa;font-size:10px;letter-spacing:1.5px;font-family:'Montserrat',Arial,sans-serif;margin-bottom:6px;">FEE TYPE</div>
-        <div style="color:#818cf8;font-size:14px;font-weight:600;font-family:'Montserrat',Arial,sans-serif;white-space:nowrap;">${displayFeeLabel}</div>
-      </td></tr>
-    </table>
+<!-- SERVICES INCLUDED -->
+<tr>
+<td bgcolor="#0f0f0f" style="background:#0f0f0f;padding:28px 24px 8px 24px;border-top:1px solid #1f1f1f;">
+<div style="color:#666666;font-size:11px;font-weight:700;letter-spacing:2.5px;font-family:${FONT};margin-bottom:6px;">FEE COVERAGE</div>
+</td>
+</tr>
+<tr><td bgcolor="#0f0f0f" style="background:#0f0f0f;padding:0 4px 20px 4px;">
+<table width="100%" cellpadding="0" cellspacing="0" border="0">
+${serviceItem(fee.covers[0])}
+${serviceItem(fee.covers[1])}
+${serviceItem(fee.covers[2])}
+${serviceItem(fee.covers[3])}
+</table>
+</td></tr>
 
-    <!-- WHAT THIS FEE COVERS -->
-    <table width="100%" cellpadding="0" cellspacing="0" border="0" bgcolor="#121212" style="background:#121212;border-radius:8px;margin:0 0 14px;">
-      <tr><td style="padding:18px 16px 14px 16px;">
-        <div style="color:#6366f1;font-size:10px;font-weight:700;letter-spacing:2px;font-family:'Montserrat',Arial,sans-serif;">WHAT THIS FEE COVERS</div>
-      </td></tr>
-      <tr><td style="padding:0 8px 6px 8px;">
-        <table width="100%" cellpadding="0" cellspacing="0" border="0">
-          ${coverItem(1, fee.covers[0], false)}
-          ${coverItem(2, fee.covers[1], false)}
-          ${coverItem(3, fee.covers[2], false)}
-          ${coverItem(4, fee.covers[3], true)}
-        </table>
-      </td></tr>
-    </table>
+<!-- CTA BUTTON -->
+<tr>
+<td bgcolor="#0f0f0f" style="background:#0f0f0f;padding:16px 24px 32px 24px;">
+<table width="100%" cellpadding="0" cellspacing="0" border="0">
+<tr>
+<td bgcolor="${fee.accent}" align="center" style="background:${fee.accent};">
+<a href="${FRONTEND_URL}/dashboard" style="display:block;padding:18px;color:#ffffff;font-size:13px;font-weight:600;letter-spacing:1.5px;text-decoration:none;font-family:${FONT};text-align:center;">${fee.btnLabel.toUpperCase()} →</a>
+</td>
+</tr>
+</table>
+</td>
+</tr>
 
-    <!-- URGENCY NOTICE -->
-    <table width="100%" cellpadding="0" cellspacing="0" border="0" bgcolor="#1a0f0f" style="background:#1a0f0f;border-radius:8px;margin:0 0 18px;">
-      <tr><td style="padding:14px 16px;color:#ff4000;font-size:12px;line-height:1.5;font-family:'Montserrat',Arial,sans-serif;">
-        <b>Notice:</b> ${fee.urgency}
-      </td></tr>
-    </table>
+<!-- FOOTER -->
+<tr>
+<td bgcolor="#0a0a0a" style="background:#0a0a0a;padding:24px;border-top:1px solid #1f1f1f;">
+<table width="100%" cellpadding="0" cellspacing="0" border="0">
+<tr>
+<td style="color:#666666;font-size:11px;line-height:1.6;font-family:${FONT};letter-spacing:0.3px;font-weight:500;">
+SUPPORT &nbsp;·&nbsp; <a href="mailto:support@quantyrexmarkets.com" style="color:#a0a0a0;text-decoration:none;">support@quantyrexmarkets.com</a>
+</td>
+</tr>
+<tr>
+<td style="padding-top:12px;color:#444444;font-size:10px;font-family:${FONT};letter-spacing:0.5px;font-weight:500;">
+© ${new Date().getFullYear()} QUANTYREX MARKETS &nbsp;·&nbsp; AUTOMATED MESSAGE &nbsp;·&nbsp; DO NOT REPLY
+</td>
+</tr>
+</table>
+</td>
+</tr>
 
-    <!-- CTA BUTTON -->
-    <table width="100%" cellpadding="0" cellspacing="0" border="0" style="margin:0 0 12px;">
-      <tr><td align="center" bgcolor="#6366f1" style="background:#6366f1;border-radius:6px;">
-        <a href="${FRONTEND_URL}/dashboard" style="display:block;color:#ffffff;font-size:12px;font-weight:600;letter-spacing:1.5px;padding:16px 24px;text-decoration:none;font-family:'Montserrat',Arial,sans-serif;text-align:center;">${fee.btnLabel}</a>
-      </td></tr>
-    </table>
+<!-- BOTTOM ACCENT BAR -->
+<tr><td height="2" bgcolor="${fee.accent}" style="height:2px;background-color:${fee.accent};font-size:0;line-height:2px;">&nbsp;</td></tr>
 
-  `);
+`);
 };
 
 module.exports = feeRequiredEmail;
