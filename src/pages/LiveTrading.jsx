@@ -75,16 +75,16 @@ export default function LiveTrading() {
       width: chartContainerRef.current.clientWidth,
       height: 360,
       layout: {
-        background: { type: 'solid', color: '#0a0a0a' },
-        textColor: '#9ca3af',
+        background: { type: 'solid', color: t.bg },
+        textColor: t.subText,
         fontSize: 11,
       },
       grid: {
-        vertLines: { color: 'rgba(255,255,255,0.04)' },
-        horzLines: { color: 'rgba(255,255,255,0.04)' },
+        vertLines: { color: t.border },
+        horzLines: { color: t.border },
       },
-      rightPriceScale: { borderColor: 'rgba(255,255,255,0.08)' },
-      timeScale: { borderColor: 'rgba(255,255,255,0.08)', timeVisible: true, secondsVisible: false },
+      rightPriceScale: { borderColor: t.border },
+      timeScale: { borderColor: t.border, timeVisible: true, secondsVisible: false },
       crosshair: { mode: 1 },
     });
 
@@ -121,7 +121,7 @@ export default function LiveTrading() {
       window.removeEventListener('resize', handleResize);
       chart.remove();
     };
-  }, []);
+  }, [t.bg, t.border, t.subText]);
 
   // ====== LOAD HISTORICAL CANDLES + LIVE WEBSOCKET ======
   useEffect(() => {
@@ -338,7 +338,7 @@ export default function LiveTrading() {
       </div>
 
       {/* CHART */}
-      <div ref={chartContainerRef} style={{ width: '100%', height: '360px', background: '#0a0a0a' }} />
+      <div ref={chartContainerRef} style={{ width: '100%', height: '360px', background: t.bg }} />
 
       {/* TABS */}
       <div style={{ display: 'flex', borderBottom: `1px solid ${t.border}`, background: t.cardBg }}>
