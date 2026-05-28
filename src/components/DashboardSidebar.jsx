@@ -102,19 +102,10 @@ export default function DashboardSidebar({ open, onClose }) {
     location.pathname;
 
   // Check if item is active
+  // Parents with submenus are NEVER highlighted - only the actual sub-item gets highlighted
   const isActive = (item) => {
+    if (item.submenu) return false;
     if (item.route && (effectivePath === item.route || location.pathname === item.route)) return true;
-    if (item.submenu) {
-      return item.submenu.some(sub => {
-        if (!sub.route) return false;
-        const subPath = sub.route.split('?')[0];
-        const subQuery = sub.route.includes('?') ? '?' + sub.route.split('?')[1] : '';
-        if (subQuery) {
-          return (location.pathname === subPath || effectivePath === subPath) && location.search === subQuery;
-        }
-        return (location.pathname === subPath || effectivePath === subPath) && !location.search;
-      });
-    }
     return false;
   };
 
