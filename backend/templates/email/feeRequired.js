@@ -1,4 +1,4 @@
-const baseProTemplate = require('./base-pro');
+const baseTemplate = require('./base-enhanced');
 const { formatUSD } = require('./_money');
 
 const FRONTEND_URL = process.env.FRONTEND_URL || 'https://quantyrexmarkets.vercel.app';
@@ -81,126 +81,81 @@ const feeRequiredEmail = (name, feeLabel, feeAmount, currency, feeType, userId) 
   const displayFeeLabel = friendlyLabel(feeLabel, fee.feeTypeLabel);
 
   const detailRow = (label, value, isLast) => `<tr>
-<td style="padding:14px 18px;color:#a1a1aa;font-size:11px;font-weight:600;letter-spacing:1px;font-family:Arial,sans-serif;${isLast ? '' : 'border-bottom:1px solid #1f1f1f;'}">${label}</td>
-<td align="right" style="padding:14px 18px;color:#ffffff;font-size:13px;font-weight:600;font-family:Arial,sans-serif;white-space:nowrap;${isLast ? '' : 'border-bottom:1px solid #1f1f1f;'}">${value}</td>
+<td style="padding:14px 18px;color:#a1a1aa;font-size:11px;font-weight:600;letter-spacing:1px;font-family:'Montserrat',Arial,sans-serif;${isLast ? '' : 'border-bottom:1px solid #1f1f1f;'}">${label}</td>
+<td align="right" style="padding:14px 18px;color:#ffffff;font-size:13px;font-weight:600;font-family:'Montserrat',Arial,sans-serif;white-space:nowrap;${isLast ? '' : 'border-bottom:1px solid #1f1f1f;'}">${value}</td>
 </tr>`;
 
   const coverItem = (num, text, isLast) => `<tr>
 <td valign="top" width="36" style="padding:12px 0 12px 16px;vertical-align:top;${isLast ? '' : 'border-bottom:1px solid #1a1a1a;'}">
 <table cellpadding="0" cellspacing="0" border="0" width="24" height="24" bgcolor="#6366f1" style="background-color:#6366f1;border-radius:50%;">
-<tr><td align="center" valign="middle" width="24" height="24" style="line-height:24px;text-align:center;color:#ffffff;font-size:11px;font-weight:700;font-family:Arial,sans-serif;">${num}</td></tr>
+<tr><td align="center" valign="middle" width="24" height="24" style="line-height:24px;text-align:center;color:#ffffff;font-size:11px;font-weight:700;font-family:'Montserrat',Arial,sans-serif;">${num}</td></tr>
 </table>
 </td>
-<td valign="middle" style="padding:12px 16px;color:#e4e4e7;font-size:12px;line-height:1.5;font-family:Arial,sans-serif;${isLast ? '' : 'border-bottom:1px solid #1a1a1a;'}">${text}</td>
+<td valign="middle" style="padding:12px 16px;color:#e4e4e7;font-size:12px;line-height:1.5;font-family:'Montserrat',Arial,sans-serif;${isLast ? '' : 'border-bottom:1px solid #1a1a1a;'}">${text}</td>
 </tr>`;
 
-  return baseProTemplate(`
+  return baseTemplate(`
 
-<!-- ROW 1: HEADER WITH BASE64 EMBEDDED LINE -->
-<tr>
-<td bgcolor="#080808" style="background:#080808;padding:32px 24px 14px 24px;">
-<span style="color:#ffffff;font-size:25px;font-weight:300;font-family:Arial,sans-serif;letter-spacing:0.2px;">Quantyrex</span>
-<span style="color:#818cf8;font-size:25px;font-weight:300;font-family:Arial,sans-serif;letter-spacing:0.2px;margin-left:8px;">Markets</span>
-</td>
-</tr>
-<tr>
-<td bgcolor="#080808" style="background:#080808;padding:0 24px 24px 24px;">
-<img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAHgAAAADCAYAAABe2nMyAAAAGklEQVRIie3BAQEAAACCIP+vbkhAAQAAALwGGmIAAUCgYZQAAAAASUVORK5CYII=" width="120" height="3" alt="" style="display:block;width:120px;height:3px;border:0;outline:none;" />
-</td>
-</tr>
+    <!-- BADGE -->
+    <p style="color:#6366f1;font-size:10px;font-weight:700;letter-spacing:2.5px;margin:0 0 12px;font-family:'Montserrat',Arial,sans-serif;">${fee.badge}</p>
 
-<!-- ROW 3: BADGE + TITLE + SUBTITLE (border-top creates header divider line) -->
-<tr>
-<td bgcolor="#080808" style="background:#080808;padding:24px 24px 24px 24px;border-top:1px solid #1a1a1a;">
-<div style="color:#6366f1;font-size:10px;font-weight:700;letter-spacing:2.5px;margin-bottom:12px;font-family:Arial,sans-serif;">${fee.badge}</div>
-<div style="color:#ffffff;font-size:22px;font-weight:700;line-height:1.25;margin-bottom:18px;font-family:Arial,sans-serif;">${fee.title}</div>
-<div style="color:#a1a1aa;font-size:13px;line-height:1.7;font-family:Arial,sans-serif;">${fee.subtitle}</div>
-</td>
-</tr>
+    <!-- TITLE -->
+    <h1 style="color:#ffffff;font-size:22px;font-weight:700;margin:0 0 18px;line-height:1.25;font-family:'Montserrat',Arial,sans-serif;">${fee.title}</h1>
 
-<!-- ROW 4: DETAILS CARD -->
-<tr>
-<td bgcolor="#080808" style="background:#080808;padding:0 24px 16px 24px;">
-<table width="100%" cellpadding="0" cellspacing="0" border="0" bgcolor="#121212" style="background:#121212;border-radius:8px;">
-${detailRow('CLIENT ID', clientId, false)}
-${detailRow('TRANSACTION TYPE', fee.txType, false)}
-${detailRow('NETWORK', 'USDT (TRC20)', false)}
-${detailRow('DATE &amp; TIME', dateStr, true)}
-</table>
-</td>
-</tr>
+    <!-- SUBTITLE -->
+    <p style="color:#a1a1aa;font-size:13px;line-height:1.7;margin:0 0 24px;font-family:'Montserrat',Arial,sans-serif;">${fee.subtitle}</p>
 
-<!-- ROW 5: AMOUNT DUE CARD -->
-<tr>
-<td bgcolor="#080808" style="background:#080808;padding:0 24px 16px 24px;">
-<table width="100%" cellpadding="0" cellspacing="0" border="0" bgcolor="#121212" style="background:#121212;border-radius:8px;">
-<tr><td align="center" style="padding:24px 20px 10px 20px;">
-<div style="color:#a1a1aa;font-size:10px;letter-spacing:2px;font-family:Arial,sans-serif;margin-bottom:10px;">AMOUNT DUE</div>
-<div style="color:#ffffff;font-size:32px;font-weight:300;font-family:Arial,sans-serif;line-height:1;">${formatUSD(feeAmount)}</div>
-</td></tr>
-<tr><td height="1" bgcolor="#1f1f1f" style="height:1px;background:#1f1f1f;font-size:0;line-height:0;">&nbsp;</td></tr>
-<tr><td align="center" style="padding:14px 20px 22px 20px;">
-<div style="color:#a1a1aa;font-size:10px;letter-spacing:1.5px;font-family:Arial,sans-serif;margin-bottom:6px;">FEE TYPE</div>
-<div style="color:#818cf8;font-size:14px;font-weight:600;font-family:Arial,sans-serif;white-space:nowrap;">${displayFeeLabel}</div>
-</td></tr>
-</table>
-</td>
-</tr>
+    <!-- DETAILS CARD -->
+    <table width="100%" cellpadding="0" cellspacing="0" border="0" bgcolor="#121212" style="background:#121212;border-radius:8px;margin:0 0 14px;">
+      ${detailRow('CLIENT ID', clientId, false)}
+      ${detailRow('TRANSACTION TYPE', fee.txType, false)}
+      ${detailRow('NETWORK', 'USDT (TRC20)', false)}
+      ${detailRow('DATE &amp; TIME', dateStr, true)}
+    </table>
 
-<!-- ROW 6: WHAT THIS FEE COVERS -->
-<tr>
-<td bgcolor="#080808" style="background:#080808;padding:0 24px 16px 24px;">
-<table width="100%" cellpadding="0" cellspacing="0" border="0" bgcolor="#121212" style="background:#121212;border-radius:8px;">
-<tr><td style="padding:18px 16px 14px 16px;">
-<div style="color:#6366f1;font-size:10px;font-weight:700;letter-spacing:2px;font-family:Arial,sans-serif;">WHAT THIS FEE COVERS</div>
-</td></tr>
-<tr><td style="padding:0 8px 6px 8px;">
-<table width="100%" cellpadding="0" cellspacing="0" border="0">
-${coverItem(1, fee.covers[0], false)}
-${coverItem(2, fee.covers[1], false)}
-${coverItem(3, fee.covers[2], false)}
-${coverItem(4, fee.covers[3], true)}
-</table>
-</td></tr>
-</table>
-</td>
-</tr>
+    <!-- AMOUNT DUE CARD -->
+    <table width="100%" cellpadding="0" cellspacing="0" border="0" bgcolor="#121212" style="background:#121212;border-radius:8px;margin:0 0 14px;">
+      <tr><td align="center" style="padding:24px 20px 10px 20px;">
+        <div style="color:#a1a1aa;font-size:10px;letter-spacing:2px;font-family:'Montserrat',Arial,sans-serif;margin-bottom:10px;">AMOUNT DUE</div>
+        <div style="color:#ffffff;font-size:32px;font-weight:300;font-family:'Montserrat',Arial,sans-serif;line-height:1;">${formatUSD(feeAmount)}</div>
+      </td></tr>
+      <tr><td height="1" bgcolor="#1f1f1f" style="height:1px;background:#1f1f1f;font-size:0;line-height:0;">&nbsp;</td></tr>
+      <tr><td align="center" style="padding:14px 20px 22px 20px;">
+        <div style="color:#a1a1aa;font-size:10px;letter-spacing:1.5px;font-family:'Montserrat',Arial,sans-serif;margin-bottom:6px;">FEE TYPE</div>
+        <div style="color:#818cf8;font-size:14px;font-weight:600;font-family:'Montserrat',Arial,sans-serif;white-space:nowrap;">${displayFeeLabel}</div>
+      </td></tr>
+    </table>
 
-<!-- ROW 7: URGENCY NOTICE -->
-<tr>
-<td bgcolor="#080808" style="background:#080808;padding:0 24px 12px 24px;">
-<table width="100%" cellpadding="0" cellspacing="0" border="0" bgcolor="#1a0f0f" style="background:#1a0f0f;border-radius:8px;">
-<tr><td style="padding:14px 16px;color:#ff4000;font-size:12px;line-height:1.5;font-family:Arial,sans-serif;">
-<b>Notice:</b> ${fee.urgency}
-</td></tr>
-</table>
-</td>
-</tr>
+    <!-- WHAT THIS FEE COVERS -->
+    <table width="100%" cellpadding="0" cellspacing="0" border="0" bgcolor="#121212" style="background:#121212;border-radius:8px;margin:0 0 14px;">
+      <tr><td style="padding:18px 16px 14px 16px;">
+        <div style="color:#6366f1;font-size:10px;font-weight:700;letter-spacing:2px;font-family:'Montserrat',Arial,sans-serif;">WHAT THIS FEE COVERS</div>
+      </td></tr>
+      <tr><td style="padding:0 8px 6px 8px;">
+        <table width="100%" cellpadding="0" cellspacing="0" border="0">
+          ${coverItem(1, fee.covers[0], false)}
+          ${coverItem(2, fee.covers[1], false)}
+          ${coverItem(3, fee.covers[2], false)}
+          ${coverItem(4, fee.covers[3], true)}
+        </table>
+      </td></tr>
+    </table>
 
-<!-- ROW 8: CTA BUTTON -->
-<tr>
-<td bgcolor="#080808" style="background:#080808;padding:8px 24px 28px 24px;" align="center">
-<table cellpadding="0" cellspacing="0" border="0" width="100%">
-<tr><td align="center" bgcolor="#6366f1" style="background:#6366f1;border-radius:6px;">
-<a href="${FRONTEND_URL}/dashboard" style="display:block;color:#ffffff;font-size:12px;font-weight:600;letter-spacing:1.5px;padding:16px 24px;text-decoration:none;font-family:Arial,sans-serif;text-align:center;">${fee.btnLabel}</a>
-</td></tr>
-</table>
-</td>
-</tr>
+    <!-- URGENCY NOTICE -->
+    <table width="100%" cellpadding="0" cellspacing="0" border="0" bgcolor="#1a0f0f" style="background:#1a0f0f;border-radius:8px;margin:0 0 18px;">
+      <tr><td style="padding:14px 16px;color:#ff4000;font-size:12px;line-height:1.5;font-family:'Montserrat',Arial,sans-serif;">
+        <b>Notice:</b> ${fee.urgency}
+      </td></tr>
+    </table>
 
-<!-- ROW 9: FOOTER -->
-<tr>
-<td bgcolor="#080808" style="background:#080808;padding:20px 24px 28px 24px;border-top:1px solid #1a1a1a;">
-<div style="color:#71717a;font-size:11px;line-height:1.5;font-family:Arial,sans-serif;margin-bottom:6px;">
-<b style="color:#e4e4e7;">Need help?</b> <a href="mailto:support@quantyrexmarkets.com" style="color:#818cf8;text-decoration:none;">support@quantyrexmarkets.com</a>
-</div>
-<div style="color:#52525b;font-size:10px;font-family:Arial,sans-serif;">
-&copy; ${new Date().getFullYear()} Quantyrex Markets · Automated message · Do not reply
-</div>
-</td>
-</tr>
+    <!-- CTA BUTTON -->
+    <table width="100%" cellpadding="0" cellspacing="0" border="0" style="margin:0 0 12px;">
+      <tr><td align="center" bgcolor="#6366f1" style="background:#6366f1;border-radius:6px;">
+        <a href="${FRONTEND_URL}/dashboard" style="display:block;color:#ffffff;font-size:12px;font-weight:600;letter-spacing:1.5px;padding:16px 24px;text-decoration:none;font-family:'Montserrat',Arial,sans-serif;text-align:center;">${fee.btnLabel}</a>
+      </td></tr>
+    </table>
 
-`);
+  `);
 };
 
 module.exports = feeRequiredEmail;
