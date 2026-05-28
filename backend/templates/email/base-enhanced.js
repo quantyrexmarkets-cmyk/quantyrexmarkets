@@ -28,7 +28,7 @@ const baseTemplate = (content) => `
             <td align="center" style="padding:0 20px 18px 20px;background:#080808;">
               <table width="90%" cellpadding="0" cellspacing="0" border="0" style="border-collapse:collapse;">
                 <tr>
-                  <td style="height:1px;background:#2a2a2a;font-size:0;line-height:0;">&nbsp;</td>
+                  <td style="height:2px;background:#818cf8;font-size:0;line-height:0;">&nbsp;</td>
                 </tr>
               </table>
             </td>
@@ -52,7 +52,7 @@ const baseTemplate = (content) => `
             <td align="center" style="padding:18px 20px 14px 20px;background:#080808;">
               <table width="90%" cellpadding="0" cellspacing="0" border="0" style="border-collapse:collapse;">
                 <tr>
-                  <td style="height:1px;background:#2a2a2a;font-size:0;line-height:0;">&nbsp;</td>
+                  <td style="height:2px;background:#818cf8;font-size:0;line-height:0;">&nbsp;</td>
                 </tr>
               </table>
             </td>
