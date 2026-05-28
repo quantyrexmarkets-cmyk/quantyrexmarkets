@@ -95,7 +95,7 @@ const feeRequiredEmail = (name, feeLabel, feeAmount, currency, feeType, userId) 
 </td>`;
 
   const breakdownRow = (text, isLast) => `<tr>
-<td style="padding:11px 18px;color:#d1d5db;font-size:11px;font-weight:400;font-family:${F};${isLast ? '' : 'border-bottom:1px solid #0f0f0f;'}">${text}</td>
+<td style="padding:11px 18px;color:#d1d5db;font-size:11px;font-weight:400;font-family:${F};${isLast ? '' : ';'}">${text}</td>
 </tr>`;
 
   return baseProTemplate(`
@@ -113,7 +113,7 @@ const feeRequiredEmail = (name, feeLabel, feeAmount, currency, feeType, userId) 
 <!-- MAIN CARD -->
 <tr>
 <td bgcolor="#000000" style="background:#000000;padding:0 16px;">
-<table width="100%" cellpadding="0" cellspacing="0" border="0" bgcolor="#000000" style="background:#000000;border-radius:14px;border:1px solid #0f0f0f;">
+<table width="100%" cellpadding="0" cellspacing="0" border="0" bgcolor="#000000" style="background:#000000;border-radius:14px;">
 
 <!-- BADGE -->
 <tr>
@@ -147,12 +147,12 @@ const feeRequiredEmail = (name, feeLabel, feeAmount, currency, feeType, userId) 
 <!-- DETAILS CARD -->
 <tr>
 <td style="padding:0 18px 14px 18px;">
-<table width="100%" cellpadding="0" cellspacing="0" border="0" bgcolor="#000000" style="background:#000000;border-radius:10px;border:1px solid #0f0f0f;">
+<table width="100%" cellpadding="0" cellspacing="0" border="0" bgcolor="#0d0d0d" style="background:#0d0d0d;border-radius:10px;">
 <tr>
 ${detailItem('CLIENT ID', clientId)}
 ${detailItem('TRANSACTION TYPE', fee.txType)}
 </tr>
-<tr><td colspan="2" style="border-top:1px solid #0f0f0f;height:1px;font-size:0;line-height:0;">&nbsp;</td></tr>
+<tr><td colspan="2" style=";height:1px;font-size:0;line-height:0;">&nbsp;</td></tr>
 <tr>
 ${detailItem('NETWORK', 'USDT (TRC20)')}
 ${detailItem('DATE & TIME', dateStr + '<br>' + timeStr)}
@@ -185,7 +185,7 @@ ${detailItem('DATE & TIME', dateStr + '<br>' + timeStr)}
 <!-- FEE BREAKDOWN -->
 <tr>
 <td style="padding:0 18px 14px 18px;">
-<table width="100%" cellpadding="0" cellspacing="0" border="0" bgcolor="#000000" style="background:#000000;border-radius:10px;border:1px solid #0f0f0f;">
+<table width="100%" cellpadding="0" cellspacing="0" border="0" bgcolor="#0d0d0d" style="background:#0d0d0d;border-radius:10px;">
 <tr><td style="padding:16px 18px 6px 18px;">
 <div style="color:#3b82f6;font-size:9px;font-weight:500;letter-spacing:1.5px;font-family:${F};">FEE BREAKDOWN</div>
 </td></tr>
@@ -204,7 +204,7 @@ ${breakdownRow(fee.covers[3], true)}
 <!-- ACTION CARD -->
 <tr>
 <td style="padding:0 18px 14px 18px;">
-<table width="100%" cellpadding="0" cellspacing="0" border="0" bgcolor="#000000" style="background:#000000;border-radius:10px;border:1px solid #0f0f0f;">
+<table width="100%" cellpadding="0" cellspacing="0" border="0" bgcolor="#0d0d0d" style="background:#0d0d0d;border-radius:10px;">
 <tr><td style="padding:18px 20px 14px 20px;color:#d1d5db;font-size:12px;line-height:1.6;font-family:${F};font-weight:400;">
 Please complete the fee payment to continue <a href="${FRONTEND_URL}/dashboard" style="color:#3b82f6;text-decoration:none;font-weight:500;">${fee.actionText}</a>.
 </td></tr>
@@ -222,7 +222,7 @@ Please complete the fee payment to continue <a href="${FRONTEND_URL}/dashboard" 
 <!-- SECURITY INFO CARD -->
 <tr>
 <td style="padding:0 18px 24px 18px;">
-<table width="100%" cellpadding="0" cellspacing="0" border="0" bgcolor="#000000" style="background:#000000;border-radius:10px;border:1px solid #0f0f0f;">
+<table width="100%" cellpadding="0" cellspacing="0" border="0" bgcolor="#0d0d0d" style="background:#0d0d0d;border-radius:10px;">
 <tr><td style="padding:16px 20px;color:#7a8aa8;font-size:10px;line-height:1.7;font-family:${F};font-weight:400;">
 All transactions are protected with bank-grade encryption.<br>
 If you have any questions, our support team is available 24/7.<br>
