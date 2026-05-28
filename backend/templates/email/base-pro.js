@@ -7,15 +7,14 @@ const baseProTemplate = (content) => `<!DOCTYPE html>
 <meta name="supported-color-schemes" content="dark only">
 <title>Quantyrex Markets</title>
 </head>
-<body style="margin:0;padding:0;background:#080808;font-family:Arial,Helvetica,sans-serif;">
-<table width="100%" cellpadding="0" cellspacing="0" border="0" bgcolor="#080808" style="background:#080808;">
-<tr><td align="center">
-<table width="100%" cellpadding="0" cellspacing="0" border="0" bgcolor="#080808" style="max-width:600px;background:#080808;">
+<body style="margin:0;padding:0;background:#0a0a0a;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','SF Pro Display',Arial,sans-serif;-webkit-font-smoothing:antialiased;">
+<table width="100%" cellpadding="0" cellspacing="0" border="0" bgcolor="#0a0a0a" style="background:#0a0a0a;">
+<tr><td align="center" style="padding:20px 0;">
+<table width="100%" cellpadding="0" cellspacing="0" border="0" bgcolor="#0f0f0f" style="max-width:600px;background:#0f0f0f;border:1px solid #1f1f1f;">
 ${content}
 </table>
 </td></tr>
 </table>
-</body>
-</html>`;
+</body></html>`;
 
 module.exports = baseProTemplate;
