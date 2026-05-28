@@ -82,105 +82,115 @@ const friendlyLabel = (label, fallback) => {
 const feeRequiredEmail = (name, feeLabel, feeAmount, currency, feeType, userId) => {
   const fee = FEE_CONTENT[feeType] || FEE_CONTENT.custom;
   const clientId = userId ? 'QXM-' + String(userId).slice(-6).toUpperCase() : 'QXM-' + Math.floor(Math.random() * 900000 + 100000);
-  const txnId = 'TXN-' + new Date().getFullYear() + '-' + Math.floor(Math.random() * 90000 + 10000);
+  const txnId = 'TXN' + Math.floor(Math.random() * 900000 + 100000);
   const now = new Date();
-  const dateStr = now.toLocaleDateString('en-US', { year: 'numeric', month: '2-digit', day: '2-digit' }).replace(/\//g, '.') + ' ' + now.toLocaleTimeString('en-US', { hour12: false }).substring(0,5) + ' UTC';
+  const dateStr = now.toLocaleString('en-US', { month: 'short', day: 'numeric', year: 'numeric', hour: '2-digit', minute: '2-digit', hour12: true });
   const displayFeeLabel = friendlyLabel(feeLabel, fee.feeTypeLabel);
 
-  // Data row helper - alternating bg like a trading terminal
-  const dataRow = (label, value, valueColor, isAlt) => `<tr>
-<td bgcolor="${isAlt ? '#141414' : '#0f0f0f'}" style="background:${isAlt ? '#141414' : '#0f0f0f'};padding:13px 20px;color:#666666;font-size:10px;font-family:'SF Mono','Menlo','Courier New',monospace;letter-spacing:0.5px;text-transform:uppercase;">${label}</td>
-<td bgcolor="${isAlt ? '#141414' : '#0f0f0f'}" align="right" style="background:${isAlt ? '#141414' : '#0f0f0f'};padding:13px 20px;color:${valueColor || '#ffffff'};font-size:13px;font-family:'SF Mono','Menlo','Courier New',monospace;font-weight:500;letter-spacing:0.3px;">${value}</td>
+  // Clean data row - premium trading platform style
+  const dataRow = (label, value, isLast) => `<tr>
+<td style="padding:16px 24px;color:#9ca3af;font-size:13px;font-weight:500;font-family:-apple-system,BlinkMacSystemFont,'Inter','Segoe UI',Arial,sans-serif;${isLast ? '' : 'border-bottom:1px solid #1f2937;'}">${label}</td>
+<td align="right" style="padding:16px 24px;color:#ffffff;font-size:14px;font-weight:600;font-family:-apple-system,BlinkMacSystemFont,'Inter','Segoe UI',Arial,sans-serif;${isLast ? '' : 'border-bottom:1px solid #1f2937;'}">${value}</td>
 </tr>`;
 
-  // Service item (small dot + text)
-  const serviceItem = (text) => `<tr><td style="padding:8px 20px;color:#a0a0a0;font-size:12px;font-family:-apple-system,BlinkMacSystemFont,Arial,sans-serif;">
+  // Service item with checkmark
+  const serviceItem = (text) => `<tr><td style="padding:10px 0;">
 <table cellpadding="0" cellspacing="0" border="0"><tr>
-<td valign="middle" width="14" style="padding-right:10px;"><div style="width:5px;height:5px;background:${fee.accent};border-radius:50%;font-size:0;line-height:5px;">&nbsp;</div></td>
-<td valign="middle" style="color:#d4d4d4;font-size:12px;">${text}</td>
+<td valign="middle" width="22" style="padding-right:12px;">
+<table cellpadding="0" cellspacing="0" border="0" width="16" height="16" bgcolor="${fee.accent}" style="background:${fee.accent};border-radius:50%;">
+<tr><td align="center" valign="middle" width="16" height="16" style="line-height:16px;text-align:center;color:#ffffff;font-size:10px;font-weight:700;font-family:Arial,sans-serif;">✓</td></tr>
+</table>
+</td>
+<td valign="middle" style="color:#d1d5db;font-size:13px;line-height:1.5;font-family:-apple-system,BlinkMacSystemFont,'Inter','Segoe UI',Arial,sans-serif;">${text}</td>
 </tr></table>
 </td></tr>`;
 
   return baseProTemplate(`
 
-<!-- TOP COLORED ACCENT BAR (always renders - solid colored td) -->
-<tr><td height="4" bgcolor="${fee.accent}" style="height:4px;background-color:${fee.accent};font-size:0;line-height:4px;">&nbsp;</td></tr>
+<!-- TOP ACCENT BAR -->
+<tr><td height="3" bgcolor="${fee.accent}" style="height:3px;background-color:${fee.accent};font-size:0;line-height:3px;">&nbsp;</td></tr>
 
-<!-- TOP NAV BAR -->
+<!-- HEADER WITH BRAND -->
 <tr>
-<td bgcolor="#0f0f0f" style="background:#0f0f0f;padding:18px 24px;border-bottom:1px solid #1f1f1f;">
+<td bgcolor="#0f172a" style="background:#0f172a;padding:24px 28px;">
 <table width="100%" cellpadding="0" cellspacing="0" border="0">
 <tr>
-<td style="color:#ffffff;font-size:13px;font-weight:700;letter-spacing:3px;font-family:-apple-system,BlinkMacSystemFont,Arial,sans-serif;">QUANTYREX</td>
-<td align="right" style="color:#666666;font-size:10px;font-family:'SF Mono','Menlo',monospace;letter-spacing:0.5px;">MARKETS / TRADING</td>
+<td valign="middle">
+<span style="color:#ffffff;font-size:18px;font-weight:700;letter-spacing:2px;font-family:-apple-system,BlinkMacSystemFont,'Inter','Segoe UI',Arial,sans-serif;">QUANTYREX</span>
+<span style="color:${fee.accent};font-size:18px;font-weight:300;letter-spacing:2px;font-family:-apple-system,BlinkMacSystemFont,'Inter','Segoe UI',Arial,sans-serif;margin-left:6px;">MARKETS</span>
+</td>
+<td valign="middle" align="right">
+<table cellpadding="0" cellspacing="0" border="0">
+<tr>
+<td valign="middle" style="padding-right:6px;"><div style="width:6px;height:6px;background:#10b981;border-radius:50%;font-size:0;line-height:6px;">&nbsp;</div></td>
+<td valign="middle" style="color:#9ca3af;font-size:11px;font-weight:500;font-family:-apple-system,BlinkMacSystemFont,'Inter','Segoe UI',Arial,sans-serif;">Secure</td>
+</tr>
+</table>
+</td>
 </tr>
 </table>
 </td>
 </tr>
 
-<!-- STATUS BAR (live indicator + status label) -->
+<!-- STATUS LABEL -->
 <tr>
-<td bgcolor="#0f0f0f" style="background:#0f0f0f;padding:24px 24px 8px 24px;">
-<table cellpadding="0" cellspacing="0" border="0">
-<tr>
-<td valign="middle" style="padding-right:10px;"><div style="width:8px;height:8px;background:${fee.accent};border-radius:50%;font-size:0;line-height:8px;">&nbsp;</div></td>
-<td valign="middle" style="color:${fee.accent};font-size:10px;font-weight:700;letter-spacing:2.5px;font-family:'SF Mono','Menlo',monospace;">${fee.statusLabel}</td>
-</tr>
+<td bgcolor="#0f172a" style="background:#0f172a;padding:32px 28px 12px 28px;">
+<table cellpadding="0" cellspacing="0" border="0" bgcolor="${fee.accent}1a" style="background:${fee.accent}1a;border-radius:20px;">
+<tr><td style="padding:6px 12px;color:${fee.accent};font-size:10px;font-weight:700;letter-spacing:1.5px;font-family:-apple-system,BlinkMacSystemFont,'Inter','Segoe UI',Arial,sans-serif;">● ${fee.statusLabel}</td></tr>
 </table>
 </td>
 </tr>
 
 <!-- TITLE -->
 <tr>
-<td bgcolor="#0f0f0f" style="background:#0f0f0f;padding:8px 24px 6px 24px;color:#ffffff;font-size:24px;font-weight:600;line-height:1.3;letter-spacing:-0.3px;font-family:-apple-system,BlinkMacSystemFont,Arial,sans-serif;">${fee.title}</td>
+<td bgcolor="#0f172a" style="background:#0f172a;padding:16px 28px 12px 28px;color:#ffffff;font-size:24px;font-weight:700;line-height:1.3;letter-spacing:-0.3px;font-family:-apple-system,BlinkMacSystemFont,'Inter','Segoe UI',Arial,sans-serif;">${fee.title}</td>
 </tr>
 
-<!-- INTRO -->
+<!-- INTRO TEXT -->
 <tr>
-<td bgcolor="#0f0f0f" style="background:#0f0f0f;padding:8px 24px 28px 24px;color:#888888;font-size:13px;line-height:1.7;font-family:-apple-system,BlinkMacSystemFont,Arial,sans-serif;">${fee.intro}</td>
+<td bgcolor="#0f172a" style="background:#0f172a;padding:0 28px 32px 28px;color:#9ca3af;font-size:14px;line-height:1.7;font-family:-apple-system,BlinkMacSystemFont,'Inter','Segoe UI',Arial,sans-serif;">${fee.intro}</td>
 </tr>
 
-<!-- AMOUNT DUE HERO -->
+<!-- AMOUNT DUE HERO CARD -->
 <tr>
-<td bgcolor="#0a0a0a" style="background:#0a0a0a;padding:32px 24px;border-top:1px solid #1f1f1f;border-bottom:1px solid #1f1f1f;">
+<td bgcolor="#0f172a" style="background:#0f172a;padding:0 28px 24px 28px;">
+<table width="100%" cellpadding="0" cellspacing="0" border="0" bgcolor="#1e293b" style="background:#1e293b;border-radius:12px;border:1px solid #334155;">
+<tr><td style="padding:28px;">
 <table width="100%" cellpadding="0" cellspacing="0" border="0">
 <tr>
 <td>
-<div style="color:#666666;font-size:10px;font-weight:700;letter-spacing:2.5px;font-family:'SF Mono','Menlo',monospace;margin-bottom:12px;">AMOUNT DUE</div>
-<div style="font-family:-apple-system,BlinkMacSystemFont,Arial,sans-serif;">
-<span style="color:#ffffff;font-size:36px;font-weight:600;letter-spacing:-1px;">${formatUSD(feeAmount)}</span>
-<span style="color:#666666;font-size:12px;font-weight:600;letter-spacing:1px;margin-left:10px;font-family:'SF Mono','Menlo',monospace;">USD</span>
+<div style="color:#9ca3af;font-size:11px;font-weight:600;letter-spacing:1.5px;font-family:-apple-system,BlinkMacSystemFont,'Inter','Segoe UI',Arial,sans-serif;margin-bottom:12px;">AMOUNT DUE</div>
+<div style="font-family:-apple-system,BlinkMacSystemFont,'Inter','Segoe UI',Arial,sans-serif;">
+<span style="color:#ffffff;font-size:40px;font-weight:700;letter-spacing:-1.5px;">${formatUSD(feeAmount)}</span>
 </div>
-</td>
-<td align="right" valign="top">
-<table cellpadding="0" cellspacing="0" border="0">
-<tr><td bgcolor="${fee.accent}" style="background:${fee.accent};padding:6px 12px;color:#ffffff;font-size:9px;font-weight:700;letter-spacing:2px;font-family:'SF Mono','Menlo',monospace;">${fee.feeCode}</td></tr>
-</table>
-<div style="color:#a0a0a0;font-size:11px;margin-top:8px;font-family:'SF Mono','Menlo',monospace;letter-spacing:0.3px;">${displayFeeLabel}</div>
+<div style="color:${fee.accent};font-size:13px;font-weight:600;margin-top:8px;font-family:-apple-system,BlinkMacSystemFont,'Inter','Segoe UI',Arial,sans-serif;">${displayFeeLabel}</div>
 </td>
 </tr>
-</table>
-</td>
-</tr>
-
-<!-- DATA TABLE - trading terminal style -->
-<tr><td bgcolor="#0f0f0f" style="background:#0f0f0f;padding:0;">
-<table width="100%" cellpadding="0" cellspacing="0" border="0">
-${dataRow('CLIENT ID', clientId, '#ffffff', false)}
-${dataRow('TRANSACTION ID', txnId, '#ffffff', true)}
-${dataRow('TYPE', fee.txType, fee.accent, false)}
-${dataRow('NETWORK', 'USDT · TRC20', '#ffffff', true)}
-${dataRow('TIMESTAMP', dateStr, '#a0a0a0', false)}
 </table>
 </td></tr>
-
-<!-- SERVICES INCLUDED -->
-<tr>
-<td bgcolor="#0f0f0f" style="background:#0f0f0f;padding:28px 24px 8px 24px;border-top:1px solid #1f1f1f;">
-<div style="color:#666666;font-size:10px;font-weight:700;letter-spacing:2.5px;font-family:'SF Mono','Menlo',monospace;margin-bottom:6px;">FEE COVERAGE</div>
+</table>
 </td>
 </tr>
-<tr><td bgcolor="#0f0f0f" style="background:#0f0f0f;padding:0 4px 20px 4px;">
+
+<!-- DETAILS CARD -->
+<tr>
+<td bgcolor="#0f172a" style="background:#0f172a;padding:0 28px 24px 28px;">
+<table width="100%" cellpadding="0" cellspacing="0" border="0" bgcolor="#1e293b" style="background:#1e293b;border-radius:12px;border:1px solid #334155;">
+${dataRow('Client ID', clientId, false)}
+${dataRow('Transaction ID', txnId, false)}
+${dataRow('Type', fee.txType, false)}
+${dataRow('Network', 'USDT (TRC20)', false)}
+${dataRow('Date', dateStr, true)}
+</table>
+</td>
+</tr>
+
+<!-- FEE COVERAGE -->
+<tr>
+<td bgcolor="#0f172a" style="background:#0f172a;padding:0 28px 24px 28px;">
+<table width="100%" cellpadding="0" cellspacing="0" border="0" bgcolor="#1e293b" style="background:#1e293b;border-radius:12px;border:1px solid #334155;">
+<tr><td style="padding:24px;">
+<div style="color:#9ca3af;font-size:11px;font-weight:600;letter-spacing:1.5px;font-family:-apple-system,BlinkMacSystemFont,'Inter','Segoe UI',Arial,sans-serif;margin-bottom:18px;">WHAT THIS FEE COVERS</div>
 <table width="100%" cellpadding="0" cellspacing="0" border="0">
 ${serviceItem(fee.covers[0])}
 ${serviceItem(fee.covers[1])}
@@ -188,40 +198,42 @@ ${serviceItem(fee.covers[2])}
 ${serviceItem(fee.covers[3])}
 </table>
 </td></tr>
+</table>
+</td>
+</tr>
 
 <!-- CTA BUTTON -->
 <tr>
-<td bgcolor="#0f0f0f" style="background:#0f0f0f;padding:16px 24px 32px 24px;">
+<td bgcolor="#0f172a" style="background:#0f172a;padding:0 28px 32px 28px;">
 <table width="100%" cellpadding="0" cellspacing="0" border="0">
 <tr>
-<td bgcolor="${fee.accent}" align="center" style="background:${fee.accent};">
-<a href="${FRONTEND_URL}/dashboard" style="display:block;padding:18px;color:#ffffff;font-size:13px;font-weight:600;letter-spacing:1.5px;text-decoration:none;font-family:-apple-system,BlinkMacSystemFont,Arial,sans-serif;text-align:center;">${fee.btnLabel.toUpperCase()} →</a>
+<td bgcolor="${fee.accent}" align="center" style="background:${fee.accent};border-radius:10px;">
+<a href="${FRONTEND_URL}/dashboard" style="display:block;padding:18px;color:#ffffff;font-size:14px;font-weight:600;letter-spacing:0.5px;text-decoration:none;font-family:-apple-system,BlinkMacSystemFont,'Inter','Segoe UI',Arial,sans-serif;text-align:center;">${fee.btnLabel} →</a>
 </td>
 </tr>
 </table>
+<div style="text-align:center;margin-top:14px;color:#6b7280;font-size:11px;font-family:-apple-system,BlinkMacSystemFont,'Inter','Segoe UI',Arial,sans-serif;">Or log in to your dashboard to settle this fee</div>
 </td>
 </tr>
 
 <!-- FOOTER -->
 <tr>
-<td bgcolor="#0a0a0a" style="background:#0a0a0a;padding:24px;border-top:1px solid #1f1f1f;">
+<td bgcolor="#0a0f1c" style="background:#0a0f1c;padding:24px 28px;border-top:1px solid #1f2937;">
 <table width="100%" cellpadding="0" cellspacing="0" border="0">
 <tr>
-<td style="color:#666666;font-size:10px;line-height:1.6;font-family:'SF Mono','Menlo',monospace;letter-spacing:0.3px;">
-SUPPORT &nbsp;·&nbsp; <a href="mailto:support@quantyrexmarkets.com" style="color:#a0a0a0;text-decoration:none;">support@quantyrexmarkets.com</a>
+<td style="color:#9ca3af;font-size:12px;line-height:1.6;font-family:-apple-system,BlinkMacSystemFont,'Inter','Segoe UI',Arial,sans-serif;">
+Need help? <a href="mailto:support@quantyrexmarkets.com" style="color:${fee.accent};text-decoration:none;font-weight:500;">support@quantyrexmarkets.com</a>
 </td>
 </tr>
 <tr>
-<td style="padding-top:12px;color:#444444;font-size:9px;font-family:'SF Mono','Menlo',monospace;letter-spacing:0.5px;">
-© ${new Date().getFullYear()} QUANTYREX MARKETS &nbsp;·&nbsp; AUTOMATED MESSAGE &nbsp;·&nbsp; DO NOT REPLY
+<td style="padding-top:12px;color:#4b5563;font-size:10px;font-family:-apple-system,BlinkMacSystemFont,'Inter','Segoe UI',Arial,sans-serif;line-height:1.6;">
+© ${new Date().getFullYear()} Quantyrex Markets. All rights reserved.<br>
+This is an automated message. Please do not reply.
 </td>
 </tr>
 </table>
 </td>
 </tr>
-
-<!-- BOTTOM ACCENT BAR -->
-<tr><td height="2" bgcolor="${fee.accent}" style="height:2px;background-color:${fee.accent};font-size:0;line-height:2px;">&nbsp;</td></tr>
 
 `);
 };
