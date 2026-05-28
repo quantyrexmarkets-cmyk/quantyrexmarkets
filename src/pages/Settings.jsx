@@ -83,7 +83,7 @@ export default function SettingsPage() {
       <div style={{ padding: '16px 12px' }}>
 
         {/* Theme */}
-        <Section t={t}title="Appearance">
+        <Section t={t} title="Appearance">
           <div style={{ padding: '10px 0' }}>
             <div style={{ color: t.text, fontSize: '11px', fontWeight: '600', marginBottom: '12px', display: 'flex', alignItems: 'center', gap: '8px' }}>
               <div style={{ width: '34px', height: '34px', borderRadius: '8px', background: 'rgba(99,102,241,0.15)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
@@ -117,7 +117,7 @@ export default function SettingsPage() {
         </Section>
 
         {/* Security */}
-        <Section t={t}title="Security">
+        <Section t={t} title="Security">
           <Row
             icon={<Shield size={16} color="#6366f1" />}
             title="Two-Factor Authentication"
@@ -137,24 +137,24 @@ export default function SettingsPage() {
         </Section>
 
         {/* Notifications */}
-        <Section t={t}title="Notification Preferences">
+        <Section t={t} title="Notification Preferences">
           <Row
             icon={<Bell size={16} color="#6366f1" />}
             title="Deposit Alerts"
             desc="Get notified on deposit updates"
-            right={<ToggleSwitch t={t}value={notifDeposit} onChange={() => setNotifDeposit(!notifDeposit)} />}
+            right={<ToggleSwitch t={t} value={notifDeposit} onChange={() => setNotifDeposit(!notifDeposit)} />}
           />
           <Row
             icon={<Bell size={16} color="#6366f1" />}
             title="Withdrawal Alerts"
             desc="Get notified on withdrawal updates"
-            right={<ToggleSwitch t={t}value={notifWithdrawal} onChange={() => setNotifWithdrawal(!notifWithdrawal)} />}
+            right={<ToggleSwitch t={t} value={notifWithdrawal} onChange={() => setNotifWithdrawal(!notifWithdrawal)} />}
           />
           <Row
             icon={<Bell size={16} color="#6366f1" />}
             title="Trade Alerts"
             desc="Get notified on trade updates"
-            right={<ToggleSwitch t={t}value={notifTrade} onChange={() => setNotifTrade(!notifTrade)} />}
+            right={<ToggleSwitch t={t} value={notifTrade} onChange={() => setNotifTrade(!notifTrade)} />}
           />
           <button type="button" onClick={saveNotifSettings} style={{ width: '100%', marginTop: '12px', padding: '10px', background: saved ? '#22c55e' : '#6366f1', border: 'none', color: 'white', fontSize: '11px', fontWeight: '700', cursor: 'pointer', borderRadius: '8px' }}>
             {saved ? '✓ Saved!' : 'Save Preferences'}
@@ -162,7 +162,7 @@ export default function SettingsPage() {
         </Section>
 
         {/* Account */}
-        <Section t={t}title="Account">
+        <Section t={t} title="Account">
           <Row
             icon={<Eye size={16} color="#6366f1" />}
             title="KYC Verification"

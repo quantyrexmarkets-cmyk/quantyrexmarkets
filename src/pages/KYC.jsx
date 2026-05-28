@@ -176,9 +176,9 @@ export default function KYC() {
               <input value={idNumber} onChange={e => setIdNumber(e.target.value)} placeholder='Enter your ID number' style={inputStyle} />
             </div>
 
-            <FileInput t={t} labelStyle={labelStyle}label='ID Front Side' fileName={idFrontName} onChange={e => { if(e.target.files[0]){ setIdFront(e.target.files[0]); setIdFrontName(e.target.files[0].name); }}} />
-            <FileInput t={t} labelStyle={labelStyle}label='ID Back Side' fileName={idBackName} onChange={e => { if(e.target.files[0]){ setIdBack(e.target.files[0]); setIdBackName(e.target.files[0].name); }}} />
-            <FileInput t={t} labelStyle={labelStyle}label='Selfie Holding ID' fileName={selfieName} onChange={e => { if(e.target.files[0]){ setSelfie(e.target.files[0]); setSelfieName(e.target.files[0].name); }}} />
+            <FileInput t={t} labelStyle={labelStyle} label='ID Front Side' fileName={idFrontName} onChange={e => { if(e.target.files[0]){ setIdFront(e.target.files[0]); setIdFrontName(e.target.files[0].name); }}} />
+            <FileInput t={t} labelStyle={labelStyle} label='ID Back Side' fileName={idBackName} onChange={e => { if(e.target.files[0]){ setIdBack(e.target.files[0]); setIdBackName(e.target.files[0].name); }}} />
+            <FileInput t={t} labelStyle={labelStyle} label='Selfie Holding ID' fileName={selfieName} onChange={e => { if(e.target.files[0]){ setSelfie(e.target.files[0]); setSelfieName(e.target.files[0].name); }}} />
 
             {/* Tips */}
             <div style={{ background: 'rgba(99,102,241,0.08)', border: '1px solid rgba(99,102,241,0.2)', padding: '10px 12px', marginBottom: '14px' }}>
