@@ -126,13 +126,15 @@ export default function Deposit() {
 
       {/* New Deposit Form Modal */}
       {isProDeposit && (
-        <div style={{ background: 'linear-gradient(135deg, rgba(99,102,241,0.18), rgba(79,70,229,0.08))', border: '1px solid rgba(99,102,241,0.35)', borderRadius: '10px', padding: '12px 14px', marginBottom: '14px' }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '6px' }}>
-            <Crown size={14} color="#818cf8"/>
-            <div style={{ color: '#818cf8', fontSize: '10px', fontWeight: '700', letterSpacing: '1.5px' }}>PRO SUBSCRIPTION</div>
-          </div>
-          <div style={{ color: t.text, fontSize: '11px', lineHeight: '1.6' }}>
-            Deposit <b>${lockedAmount || 499}</b> to activate your Pro subscription for <b>365 days</b>.
+        <div style={{ padding: '16px 16px 0 16px' }}>
+          <div style={{ background: 'linear-gradient(135deg, rgba(99,102,241,0.18), rgba(79,70,229,0.08))', border: '1px solid rgba(99,102,241,0.35)', borderRadius: '10px', padding: '12px 14px' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '6px' }}>
+              <Crown size={14} color="#818cf8"/>
+              <div style={{ color: '#818cf8', fontSize: '10px', fontWeight: '700', letterSpacing: '1.5px' }}>PRO SUBSCRIPTION</div>
+            </div>
+            <div style={{ color: t.text, fontSize: '11px', lineHeight: '1.6' }}>
+              Deposit <b>${lockedAmount || 499}</b> to activate your Pro subscription for <b>365 days</b>.
+            </div>
           </div>
         </div>
       )}
