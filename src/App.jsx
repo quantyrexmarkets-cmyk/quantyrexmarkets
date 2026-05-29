@@ -53,6 +53,7 @@ import AdminUserDetail from "./pages/AdminUserDetail";
 import AdminManageUser from "./pages/AdminManageUser";
 import Notifications from "./pages/Notifications";
 import SettingsPage from "./pages/Settings";
+import Subscription from "./pages/Subscription";
 import ChangePassword from "./pages/ChangePassword";
 import SupportPage from "./pages/SupportPage";
 import ResetPassword from "./pages/ResetPassword";
@@ -127,6 +128,7 @@ function App() {
                 <Route path="/admin/users/:id" element={<AdminRoute><AdminUserDetail /></AdminRoute>} />
                 <Route path="/admin/manage/:id" element={<AdminRoute><AdminManageUser /></AdminRoute>} />
         <Route path="/dashboard/change-password" element={<PrivateRoute><ChangePassword /></PrivateRoute>} />
+                <Route path="/dashboard/subscription" element={<PrivateRoute><Subscription /></PrivateRoute>} />
         <Route path="/dashboard/settings" element={<PrivateRoute><SettingsPage /></PrivateRoute>} />
         <Route path="/dashboard/notifications" element={<PrivateRoute><Notifications /></PrivateRoute>} />
         <Route path="/admin/support" element={<AdminRoute><SupportPage /></AdminRoute>} />

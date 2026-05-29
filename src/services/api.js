@@ -74,3 +74,7 @@ export const getTraders = () => fetch(`${BASE_URL}/traders`).then(handleResponse
 export const addTrader = (data) => fetch(`${BASE_URL}/traders`, { method: 'POST', headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }, body: data }).then(handleResponse);
 export const updateTrader = (id, data) => fetch(`${BASE_URL}/traders/${id}`, { method: 'PUT', headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }, body: data }).then(handleResponse);
 export const deleteTrader = (id) => fetch(`${BASE_URL}/traders/${id}`, { method: 'DELETE', headers: headers() }).then(handleResponse);
+
+// Subscription
+export const getSubscriptionStatus = () => fetch(`${BASE_URL}/subscription/status`, { headers: headers() }).then(handleResponse);
+export const activateSubscription = () => fetch(`${BASE_URL}/subscription/activate`, { method: 'POST', headers: headers() }).then(handleResponse);
