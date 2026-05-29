@@ -90,6 +90,7 @@ app.use('/api/', globalLimiter);
 app.use('/api/auth/login', authLimiter);
 app.use('/api/auth/register', authLimiter);
 app.use('/api/admin', adminLimiter);
+app.use('/api/subscription', subscriptionRoutes);
 
 app.use('/api/auth', require('./routes/auth'));
 app.use('/api/user', require('./routes/user'));
