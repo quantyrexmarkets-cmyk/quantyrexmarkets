@@ -10,6 +10,7 @@ const transactionSchema = new mongoose.Schema({
   walletAddress: { type: String },
   bankDetails: { type: Object },
   notes: { type: String },
+  purpose: { type: String, enum: ['general', 'pro_subscription'], default: 'general' },
   createdAt: { type: Date, default: Date.now },
 });
 
