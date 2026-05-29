@@ -80,7 +80,7 @@ export default function Subscription() {
           <div style={{ width: '54px', height: '54px', borderRadius: '50%', background: 'linear-gradient(135deg, #6366f1, #4f46e5)', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', marginBottom: '12px' }}>
             <Crown size={24} color="#ffffff" />
           </div>
-          <div style={{ fontSize: '20px', fontWeight: '700', marginBottom: '4px' }}>Quantyrex Pro</div>
+          <div style={{ fontSize: '20px', fontWeight: '400', marginBottom: '4px', fontFamily: "'Montserrat', Arial, sans-serif", letterSpacing: '0.5px' }}>Quantyrex <span style={{ color: '#818cf8' }}>Pro</span></div>
           <div style={{ fontSize: '11px', color: t.subText }}>Unlock the full power of trading</div>
         </div>
 
@@ -130,17 +130,6 @@ export default function Subscription() {
             ))}
           </div>
 
-          {/* Balance display */}
-          <div style={{ background: t.bg, border: `1px solid ${t.border}`, borderRadius: '8px', padding: '12px 14px', marginBottom: '14px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-            <div>
-              <div style={{ fontSize: '9px', color: t.subText, fontWeight: '600', letterSpacing: '1px', marginBottom: '4px' }}>YOUR BALANCE</div>
-              <div style={{ fontSize: '15px', fontWeight: '700', color: t.text }}>${status?.balance?.toLocaleString('en-US', { minimumFractionDigits: 2 }) || '0.00'}</div>
-            </div>
-            <div style={{ textAlign: 'right' }}>
-              <div style={{ fontSize: '9px', color: t.subText, fontWeight: '600', letterSpacing: '1px', marginBottom: '4px' }}>REQUIRED</div>
-              <div style={{ fontSize: '15px', fontWeight: '700', color: status?.balance >= (status?.planPrice || 499) ? '#22c55e' : '#ef4444' }}>${status?.planPrice || 499}</div>
-            </div>
-          </div>
 
           {/* Action Button */}
           {isActive ? (

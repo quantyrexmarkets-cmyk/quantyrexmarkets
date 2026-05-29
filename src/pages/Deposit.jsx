@@ -125,19 +125,19 @@ export default function Deposit() {
       
 
       {/* New Deposit Form Modal */}
-      {isProDeposit && (
-        <div style={{ background: 'linear-gradient(135deg, rgba(99,102,241,0.15), rgba(99,102,241,0.05))', border: '1px solid rgba(99,102,241,0.4)', borderRadius: '10px', padding: '14px 16px', marginBottom: '14px', display: 'flex', gap: '12px', alignItems: 'flex-start' }}>
-          <Crown size={18} color="#818cf8" style={{ flexShrink: 0, marginTop: '2px' }}/>
-          <div style={{ flex: 1 }}>
-            <div style={{ color: '#818cf8', fontSize: '11px', fontWeight: '700', letterSpacing: '1.5px', marginBottom: '4px' }}>PRO SUBSCRIPTION DEPOSIT</div>
+      {showForm && (
+        <>
+        {isProDeposit && (
+          <div style={{ background: 'linear-gradient(135deg, rgba(99,102,241,0.18), rgba(79,70,229,0.08))', border: '1px solid rgba(99,102,241,0.35)', borderRadius: '10px', padding: '12px 14px', marginBottom: '14px' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '6px' }}>
+              <Crown size={14} color="#818cf8"/>
+              <div style={{ color: '#818cf8', fontSize: '10px', fontWeight: '700', letterSpacing: '1.5px' }}>PRO SUBSCRIPTION</div>
+            </div>
             <div style={{ color: t.text, fontSize: '11px', lineHeight: '1.6' }}>
-              Deposit <b>${lockedAmount || 499}</b> for your Pro subscription. Once admin approves your deposit, Pro will be activated automatically for <b>365 days</b>.
+              Deposit <b>${lockedAmount || 499}</b> to activate your Pro subscription for <b>365 days</b>.
             </div>
           </div>
-        </div>
-      )}
-
-      {showForm && (
+        )}
         <>
           <div onClick={() => setShowForm(false)} style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.6)', zIndex: 100 }}/>
           <div style={{ position: 'fixed', top: '50%', left: '50%', transform: 'translate(-50%,-50%)', zIndex: 101, background: t.bg, border: '1px solid rgba(99,102,241,0.3)', padding: '16px', width: '320px', maxHeight: '90vh', overflowY: 'auto' }}>
