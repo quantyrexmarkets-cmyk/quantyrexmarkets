@@ -86,8 +86,23 @@ export const AuthProvider = ({ children }) => {
     });
   };
 
+  // Fetch latest user data from server (used when admin updates something)
+  const refreshUser = async () => {
+    try {
+      const data = await getMe();
+      if (data && data._id) {
+        setUser(data);
+        sessionStorage.setItem('user', JSON.stringify(data));
+        return data;
+      }
+    } catch (e) {
+      console.warn('[Auth] Refresh failed:', e.message);
+    }
+    return null;
+  };
+
   return (
-    <AuthContext.Provider value={{ user, loading, login, logout, updateUser }}>
+    <AuthContext.Provider value={{ user, loading, login, logout, updateUser, refreshUser }}>
       {children}
     </AuthContext.Provider>
   );

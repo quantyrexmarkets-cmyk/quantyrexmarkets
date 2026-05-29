@@ -19,7 +19,10 @@ const methods = [
 
 export default function Withdraw() {
   const navigate = useNavigate();
-  const { user } = useAuth();
+  const { user, refreshUser } = useAuth();
+
+  // Auto-refresh user data on mount to get latest minimumWithdrawal
+  useEffect(() => { if(refreshUser) refreshUser(); }, []);
   const { requireSub, handleApiError } = useSubscription();
   const { current: t } = useTheme();
   const [showMethodSelector, setShowMethodSelector] = useState(false);
