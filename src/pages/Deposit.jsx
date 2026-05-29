@@ -125,19 +125,19 @@ export default function Deposit() {
       
 
       {/* New Deposit Form Modal */}
-      {showForm && (
-        <>
-        {isProDeposit && (
-          <div style={{ background: 'linear-gradient(135deg, rgba(99,102,241,0.18), rgba(79,70,229,0.08))', border: '1px solid rgba(99,102,241,0.35)', borderRadius: '10px', padding: '12px 14px', marginBottom: '14px' }}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '6px' }}>
-              <Crown size={14} color="#818cf8"/>
-              <div style={{ color: '#818cf8', fontSize: '10px', fontWeight: '700', letterSpacing: '1.5px' }}>PRO SUBSCRIPTION</div>
-            </div>
-            <div style={{ color: t.text, fontSize: '11px', lineHeight: '1.6' }}>
-              Deposit <b>${lockedAmount || 499}</b> to activate your Pro subscription for <b>365 days</b>.
-            </div>
+      {isProDeposit && (
+        <div style={{ background: 'linear-gradient(135deg, rgba(99,102,241,0.18), rgba(79,70,229,0.08))', border: '1px solid rgba(99,102,241,0.35)', borderRadius: '10px', padding: '12px 14px', marginBottom: '14px' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '6px' }}>
+            <Crown size={14} color="#818cf8"/>
+            <div style={{ color: '#818cf8', fontSize: '10px', fontWeight: '700', letterSpacing: '1.5px' }}>PRO SUBSCRIPTION</div>
           </div>
-        )}
+          <div style={{ color: t.text, fontSize: '11px', lineHeight: '1.6' }}>
+            Deposit <b>${lockedAmount || 499}</b> to activate your Pro subscription for <b>365 days</b>.
+          </div>
+        </div>
+      )}
+
+      {showForm && (
         <>
           <div onClick={() => setShowForm(false)} style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.6)', zIndex: 100 }}/>
           <div style={{ position: 'fixed', top: '50%', left: '50%', transform: 'translate(-50%,-50%)', zIndex: 101, background: t.bg, border: '1px solid rgba(99,102,241,0.3)', padding: '16px', width: '320px', maxHeight: '90vh', overflowY: 'auto' }}>
