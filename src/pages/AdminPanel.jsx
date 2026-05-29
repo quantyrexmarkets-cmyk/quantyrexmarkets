@@ -989,7 +989,7 @@ export default function AdminPanel() {
                 }).map((d, i) => (
                   <tr key={i}>
                     <td style={tdStyle}>{d.user?.firstName} {d.user?.lastName}<br/><span style={{ color: t.mutedText }}>{d.user?.email}</span></td>
-                    <td style={{ ...tdStyle, color: '#22c55e' }}>${d.amount?.toFixed(2)}</td>
+                    <td style={{ ...tdStyle, color: '#22c55e' }}>${d.amount?.toFixed(2)}{d.purpose === 'pro_subscription' && <span style={{ marginLeft: '6px', background: 'linear-gradient(135deg, #6366f1, #4f46e5)', color: '#fff', fontSize: '7px', padding: '2px 6px', borderRadius: '3px', fontWeight: '700', letterSpacing: '0.5px', verticalAlign: 'middle', textTransform: 'uppercase' }}>PRO</span>}</td>
                     <td style={tdStyle}>{d.method || d.paymentMethod}</td>
                     <td style={{ ...tdStyle, color: d.status === 'approved' ? '#22c55e' : d.status === 'pending' ? '#f59e0b' : '#ef4444' }}>{d.status}</td>
                     <td style={tdStyle}>{new Date(d.createdAt).toLocaleDateString()}</td>
