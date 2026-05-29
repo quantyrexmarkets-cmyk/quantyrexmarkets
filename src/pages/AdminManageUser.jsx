@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from 'react';
 import InlineLoader from '../components/InlineLoader';
 import { useParams, useNavigate, useLocation } from 'react-router-dom';
 import { useTheme } from '../context/ThemeContext';
-import { ArrowLeft, Mail, Lock, Unlock, Ban, CheckCircle, ArrowUpCircle, RotateCcw, Trash2, DollarSign, Send, X, Shield, TrendingUp } from 'lucide-react';
+import { ArrowLeft, Mail, Lock, Unlock, Ban, CheckCircle, ArrowUpCircle, RotateCcw, Trash2, DollarSign, Send, X, Shield, TrendingUp, Crown, Clock } from 'lucide-react';
 const BASE_URL = (import.meta.env.VITE_API_URL || (import.meta.env.VITE_API_URL || 'https://quantyrexmarkets-api.vercel.app/api'));
 const getToken = () => localStorage.getItem('token');
 const headers = () => ({ 'Content-Type': 'application/json', 'Authorization': `Bearer ${getToken()}` });
@@ -195,6 +195,33 @@ export default function AdminManageUser() {
             ))}
           </div>
           {btn(async()=>{await api('/users/'+id+'/plan','PUT',{plan:'none'});setUser(p=>({...p,currentPlan:'none'}));showMsg('Plan removed');}, 'Remove Plan', <X size={12}/>)}
+        </S>
+        <S title="Subscription" t={t}>
+          <div style={{ display:'flex', alignItems:'center', gap:'8px', marginBottom:'10px', padding:'10px 12px', background:t.bg, borderRadius:'6px' }}>
+            <div style={{ width:'8px', height:'8px', borderRadius:'50%', background:(user.subscription?.active && user.subscription?.expiresAt && new Date(user.subscription.expiresAt) > new Date())?'#22c55e':'#ef4444' }}/>
+            <div style={{ flex:1 }}>
+              <div style={{ color:t.text, fontSize:'11px', fontWeight:'700' }}>
+                {(user.subscription?.active && user.subscription?.expiresAt && new Date(user.subscription.expiresAt) > new Date()) ? 'PRO ACTIVE' : 'NOT SUBSCRIBED'}
+              </div>
+              {user.subscription?.expiresAt && (
+                <div style={{ color:t.subText, fontSize:'9px', marginTop:'2px' }}>
+                  {(new Date(user.subscription.expiresAt) > new Date())
+                    ? 'Expires: ' + new Date(user.subscription.expiresAt).toLocaleDateString('en-US', { year:'numeric', month:'short', day:'numeric' }) + ' (' + Math.ceil((new Date(user.subscription.expiresAt) - new Date()) / (1000*60*60*24)) + ' days left)'
+                    : 'Expired: ' + new Date(user.subscription.expiresAt).toLocaleDateString('en-US', { year:'numeric', month:'short', day:'numeric' })
+                  }
+                </div>
+              )}
+              {user.subscription?.activatedBy && (
+                <div style={{ color:t.faintText, fontSize:'9px', marginTop:'2px' }}>Activated by: {user.subscription.activatedBy}</div>
+              )}
+            </div>
+          </div>
+          <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:'6px' }}>
+            {btn(async()=>{const r=await api('/users/'+id+'/subscription/grant','POST',{days:365});if(r.user)setUser(r.user);showMsg('Granted 1 year');}, 'Grant 1 Year', <Crown size={12}/>)}
+            {btn(async()=>{const r=await api('/users/'+id+'/subscription/grant','POST',{days:30});if(r.user)setUser(r.user);showMsg('Granted 30 days');}, 'Grant 30 Days', <Crown size={12}/>)}
+            {btn(async()=>{const r=await api('/users/'+id+'/subscription/extend','POST',{days:30});if(r.user)setUser(r.user);showMsg('Extended 30 days');}, 'Extend 30 Days', <Clock size={12}/>)}
+            {btn(async()=>{if(!window.confirm('Revoke Pro subscription?'))return;const r=await api('/users/'+id+'/subscription/revoke','POST');if(r.user)setUser(r.user);showMsg('Revoked');}, 'Revoke Pro', <X size={12}/>)}
+          </div>
         </S>
         <S title="Withdrawal Code" t={t}>
           <div style={{ color:t.subText, fontSize:'10px', marginBottom:'8px' }}>Status: <span style={{ color:user.withdrawalCodeRequired?'#6366f1':'#64748b', fontWeight:'600' }}>{user.withdrawalCodeRequired?'Active':'Not Set'}</span></div>
