@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useSubscription } from '../hooks/useSubscription';
 import { useTheme } from '../context/ThemeContext';
 import { formatAmountWithCode } from '../utils/currency';
 import { createWithdrawal } from '../services/api';
@@ -24,6 +25,7 @@ const methods = [
 export default function WithdrawNew() {
   const navigate = useNavigate();
   const { user } = useAuth();
+  const { requireSub, handleApiError } = useSubscription();
   const { current: t } = useTheme();
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [step, setStep] = useState(1); // 1 = select method, 2 = fill form

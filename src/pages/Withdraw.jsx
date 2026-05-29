@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
+import { useSubscription } from '../hooks/useSubscription';
 import { useTheme } from '../context/ThemeContext';
 import { useNavigate, useLocation } from 'react-router-dom';
 import PageHeader from '../components/PageHeader';
@@ -19,6 +20,7 @@ const methods = [
 export default function Withdraw() {
   const navigate = useNavigate();
   const { user } = useAuth();
+  const { requireSub, handleApiError } = useSubscription();
   const { current: t } = useTheme();
   const [showMethodSelector, setShowMethodSelector] = useState(false);
   const [selected, setSelected] = useState('');

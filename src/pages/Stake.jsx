@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { useSubscription } from '../hooks/useSubscription';
 import { useTheme } from '../context/ThemeContext';
 import { useAuth } from '../context/AuthContext';
 import { formatAmount, getCurrencySymbol } from '../utils/currency';
@@ -19,6 +20,7 @@ const stakePlans = [
 
 export default function Stake() {
   const { user } = useAuth();
+  const { requireSub, handleApiError } = useSubscription();
   const { current: t } = useTheme();
   const navigate = useNavigate();
   const location = useLocation();

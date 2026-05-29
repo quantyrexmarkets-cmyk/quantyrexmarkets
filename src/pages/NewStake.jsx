@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useSubscription } from '../hooks/useSubscription';
 import { useTheme } from '../context/ThemeContext';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
@@ -27,6 +28,7 @@ const cryptoPlans = [
 export default function NewStake() {
   const navigate = useNavigate();
   const { user } = useAuth();
+  const { requireSub, handleApiError } = useSubscription();
   const { current: t } = useTheme();
   const [selected, setSelected] = useState(null);
   const [amount, setAmount] = useState('');

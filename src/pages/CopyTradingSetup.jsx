@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { useSubscription } from '../hooks/useSubscription';
 import { useTheme } from '../context/ThemeContext';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { MapPin, Users, FlaskConical, Heart, CheckCircle2, AlertTriangle, TrendingUp, Shield, Clock, Play } from 'lucide-react';
@@ -16,6 +17,7 @@ const DURATIONS = [
 export default function CopyTradingSetup() {
   const { state } = useLocation();
   const navigate = useNavigate();
+  const { requireSub, handleApiError } = useSubscription();
   const { current: t } = useTheme();
   const trader = state?.trader;
   console.log("Received trader:", trader);
@@ -50,6 +52,7 @@ export default function CopyTradingSetup() {
     : '0.00';
 
   const handleConfirm = async () => {
+    if (!requireSub('start copy trading')) return;
     setError('');
     if (!amount || isNaN(amount) || Number(amount) <= 0) { setError('Please enter a valid amount.'); return; }
     if (Number(amount) < 10) { setError('Minimum investment is $10.'); return; }

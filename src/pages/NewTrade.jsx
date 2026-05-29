@@ -1,5 +1,6 @@
 import { useTheme } from '../context/ThemeContext';
 import { useState, useEffect } from 'react';
+import { useSubscription } from '../hooks/useSubscription';
 import { formatAmountWithCode, formatAmount } from '../utils/currency';
 import { useAuth } from '../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
@@ -20,6 +21,7 @@ const DURATIONS = ['30 seconds','1 minute','2 minutes','5 minutes','10 minutes',
 export default function NewTrade() {
   const { current: t } = useTheme();
   const { user } = useAuth();
+  const { requireSub, handleApiError } = useSubscription();
   const navigate = useNavigate();
   const [balance, setBalance] = useState(null);
   const [symbol, setSymbol] = useState(SYMBOLS[0]);

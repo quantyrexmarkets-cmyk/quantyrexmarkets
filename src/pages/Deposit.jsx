@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { useSubscription } from '../hooks/useSubscription';
 import { useTheme } from '../context/ThemeContext';
 import { createDeposit, getDeposits } from '../services/api';
 import { useNavigate } from 'react-router-dom';
@@ -11,6 +12,7 @@ import InlineLoader from '../components/InlineLoader';
 export default function Deposit() {
   const navigate = useNavigate();
   const { user } = useAuth();
+  const { requireSub, handleApiError } = useSubscription();
   const { current: t } = useTheme();
   const [showForm, setShowForm] = useState(false);
   const [deposits, setDeposits] = useState([]);

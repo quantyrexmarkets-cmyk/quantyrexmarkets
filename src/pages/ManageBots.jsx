@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { useSubscription } from '../hooks/useSubscription';
 import { useTheme } from '../context/ThemeContext';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
@@ -23,6 +24,7 @@ const headers = () => ({ 'Content-Type': 'application/json', 'Authorization': `B
 export default function ManageBots() {
   const navigate = useNavigate();
   const { user } = useAuth();
+  const { requireSub, handleApiError } = useSubscription();
   const { current: t } = useTheme();
   const [activeBots, setActiveBots] = useState([]);
   const [totalEarned, setTotalEarned] = useState(0);

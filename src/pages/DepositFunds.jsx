@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useSubscription } from '../hooks/useSubscription';
 import { useTheme } from '../context/ThemeContext';
 import { useAuth } from '../context/AuthContext';
 import { formatAmountWithCode } from '../utils/currency';
@@ -8,6 +9,7 @@ import PageHeader from '../components/PageHeader';
 
 export default function DepositFunds() {
   const navigate = useNavigate();
+  const { requireSub, handleApiError } = useSubscription();
   const { current: t } = useTheme();
   const [amount, setAmount] = useState('100.00');
   const [method, setMethod] = useState('crypto');

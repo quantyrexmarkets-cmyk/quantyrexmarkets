@@ -1,5 +1,6 @@
 import { useTheme } from '../context/ThemeContext';
 import { useState } from 'react';
+import { useSubscription } from '../hooks/useSubscription';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { formatAmount } from '../utils/currency';
@@ -21,6 +22,7 @@ export default function BotPlans() {
   const { current: t } = useTheme();
   const navigate = useNavigate();
   const { user } = useAuth();
+  const { requireSub, handleApiError } = useSubscription();
   const [confirmBot, setConfirmBot] = useState(null);
   const [subscribing, setSubscribing] = useState('');
   const [error, setError] = useState('');

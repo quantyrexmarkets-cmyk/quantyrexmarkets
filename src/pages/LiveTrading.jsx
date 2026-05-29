@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef, useMemo } from 'react';
+import { useSubscription } from '../hooks/useSubscription';
 import { useNavigate } from 'react-router-dom';
 import { createChart } from 'lightweight-charts';
 import { TrendingUp, TrendingDown, Clock, X } from 'lucide-react';
@@ -36,6 +37,7 @@ const LEVERAGES = ['1x', '2x', '5x', '10x', '20x', '50x', '100x'];
 export default function LiveTrading() {
   const navigate = useNavigate();
   const { user } = useAuth();
+  const { requireSub, handleApiError } = useSubscription();
   const { current: t } = useTheme();
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
@@ -221,6 +223,7 @@ export default function LiveTrading() {
 
   // ====== HANDLE TRADE EXECUTION ======
   const handleTrade = async () => {
+    if (!requireSub('execute trade')) return;
     if (!amount || parseFloat(amount) < 10) {
       toast.error('Minimum trade amount is $10');
       return;

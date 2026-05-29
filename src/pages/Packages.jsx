@@ -1,4 +1,5 @@
 import { useNavigate, useLocation } from 'react-router-dom';
+import { useSubscription } from '../hooks/useSubscription';
 import { useTheme } from '../context/ThemeContext';
 import { useState, useEffect } from 'react';
 import PageHeader from '../components/PageHeader';
@@ -21,6 +22,7 @@ export default function Packages() {
   const location = useLocation();
   const urlTab = new URLSearchParams(location.search).get('tab');
   const { user } = useAuth();
+  const { requireSub, handleApiError } = useSubscription();
   const { current: t } = useTheme();
   const [activeTab, setActiveTab] = useState(urlTab || 'available');
 
