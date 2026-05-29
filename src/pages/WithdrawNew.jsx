@@ -64,7 +64,8 @@ export default function WithdrawNew() {
 
   const handleSubmit = () => {
     if (!amount || isNaN(amount) || Number(amount) <= 0) { setError('Please enter a valid amount.'); return; }
-    if (Number(amount) < 100) { setError('Minimum withdrawal amount is $100.'); return; }
+    const minW = user?.minimumWithdrawal || 100;
+    if (Number(amount) < minW) { setError(`Minimum withdrawal amount is $${minW.toLocaleString('en-US', {minimumFractionDigits: 2})}.`); return; }
 
     if (selectedMethod === 'crypto') {
       if (!coin) { setError('Please select a coin.'); return; }
@@ -229,7 +230,7 @@ export default function WithdrawNew() {
       <div style={{ padding: '16px' }}>
         <div style={{ marginBottom: '16px' }}>
           <span style={{ color: t.text, fontSize: '11px', fontWeight: '700' }}>New Withdrawal</span>
-          <div style={{ color: t.subText, fontSize: '8px', marginTop: '3px' }}>Withdrawal Limit: <span style={{ color: '#ef4444', fontWeight: '700' }}>$100</span></div>
+          <div style={{ color: t.subText, fontSize: '8px', marginTop: '3px' }}>Withdrawal Limit: <span style={{ color: '#22c55e', fontWeight: '700' }}>${(user?.minimumWithdrawal||100).toLocaleString()}</span></div>
         </div>
 
         {step === 1 && <>
