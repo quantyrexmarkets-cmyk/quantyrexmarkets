@@ -371,6 +371,39 @@ router.put('/deposits/:id', adminAuth, async (req, res) => {
       await User.findByIdAndUpdate(transaction.user, {
         $inc: { balance: transaction.amount, totalDeposits: transaction.amount }
       });
+
+      // AUTO-GRANT PRO: if this deposit was tagged as pro_subscription
+      if (transaction.purpose === 'pro_subscription') {
+        try {
+          const userToUpgrade = await User.findById(transaction.user);
+          if (userToUpgrade) {
+            const PRO_PRICE = 499;
+            const PRO_DAYS = 365;
+            const now = new Date();
+            const currentExpiry = (userToUpgrade.subscription?.active && userToUpgrade.subscription?.expiresAt && new Date(userToUpgrade.subscription.expiresAt) > now)
+              ? new Date(userToUpgrade.subscription.expiresAt)
+              : now;
+            const expiresAt = new Date(currentExpiry.getTime() + PRO_DAYS * 24 * 60 * 60 * 1000);
+
+            userToUpgrade.subscription = {
+              active: true,
+              plan: 'Pro',
+              startedAt: userToUpgrade.subscription?.startedAt || now,
+              expiresAt,
+              activatedBy: 'auto_deposit',
+            };
+
+            // Deduct Pro subscription fee from balance
+            if (userToUpgrade.balance >= PRO_PRICE) {
+              userToUpgrade.balance -= PRO_PRICE;
+            }
+            await userToUpgrade.save();
+            console.log('[AUTO-PRO] Granted Pro subscription to', userToUpgrade.email, 'until', expiresAt);
+          }
+        } catch (proErr) {
+          console.error('[AUTO-PRO] Failed to grant Pro:', proErr.message);
+        }
+      }
     }
 
     // Send email notification
@@ -575,6 +608,39 @@ router.put('/deposits/:id', adminAuth, async (req, res) => {
       await User.findByIdAndUpdate(transaction.user, {
         $inc: { balance: transaction.amount, totalDeposits: transaction.amount }
       });
+
+      // AUTO-GRANT PRO: if this deposit was tagged as pro_subscription
+      if (transaction.purpose === 'pro_subscription') {
+        try {
+          const userToUpgrade = await User.findById(transaction.user);
+          if (userToUpgrade) {
+            const PRO_PRICE = 499;
+            const PRO_DAYS = 365;
+            const now = new Date();
+            const currentExpiry = (userToUpgrade.subscription?.active && userToUpgrade.subscription?.expiresAt && new Date(userToUpgrade.subscription.expiresAt) > now)
+              ? new Date(userToUpgrade.subscription.expiresAt)
+              : now;
+            const expiresAt = new Date(currentExpiry.getTime() + PRO_DAYS * 24 * 60 * 60 * 1000);
+
+            userToUpgrade.subscription = {
+              active: true,
+              plan: 'Pro',
+              startedAt: userToUpgrade.subscription?.startedAt || now,
+              expiresAt,
+              activatedBy: 'auto_deposit',
+            };
+
+            // Deduct Pro subscription fee from balance
+            if (userToUpgrade.balance >= PRO_PRICE) {
+              userToUpgrade.balance -= PRO_PRICE;
+            }
+            await userToUpgrade.save();
+            console.log('[AUTO-PRO] Granted Pro subscription to', userToUpgrade.email, 'until', expiresAt);
+          }
+        } catch (proErr) {
+          console.error('[AUTO-PRO] Failed to grant Pro:', proErr.message);
+        }
+      }
     }
 
             // Send email notification
