@@ -6,6 +6,7 @@ import { useTheme } from '../context/ThemeContext';
 import { getSubscriptionStatus, activateSubscription } from '../services/api';
 import PageHeader from '../components/PageHeader';
 import DashboardSidebar from '../components/DashboardSidebar';
+import LoadingScreen from '../components/LoadingScreen';
 import { toast } from 'react-toastify';
 
 export default function Subscription() {
@@ -52,13 +53,7 @@ export default function Subscription() {
     }
   };
 
-  if (loading) {
-    return (
-      <div style={{ minHeight: '100vh', background: t.bg, color: t.text, fontFamily: "'Segoe UI', sans-serif", display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-        Loading...
-      </div>
-    );
-  }
+  if (loading) return <LoadingScreen />;
 
   const features = [
     { icon: <TrendingUp size={14}/>, label: 'Execute Live Trades (Buy/Sell)' },
