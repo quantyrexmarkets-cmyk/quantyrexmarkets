@@ -8,24 +8,13 @@ cloudinary.config({
 });
 
 const uploadToCloudinary = async (file, folder = 'vertextrade') => {
+  // Try direct upload via raw API as backup
   return new Promise((resolve, reject) => {
     const stream = cloudinary.uploader.upload_stream(
-      {
-        folder,
-        resource_type: 'image',
-        type: 'upload',
-        access_mode: 'public',
-        use_filename: false,
-        unique_filename: true,
-        overwrite: false,
-      },
+      { folder, resource_type: 'auto' },
       (error, result) => {
         if (error) {
-          console.error('[CLOUDINARY ERROR]', JSON.stringify({
-            message: error.message,
-            http_code: error.http_code,
-            name: error.name,
-          }));
+          console.error('[CLOUDINARY ERROR]', error.message, '| code:', error.http_code, '| name:', error.name);
           reject(error);
         } else {
           resolve(result);
