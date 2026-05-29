@@ -2,8 +2,8 @@ import { useState, useEffect } from 'react';
 import { useSubscription } from '../hooks/useSubscription';
 import { useTheme } from '../context/ThemeContext';
 import { createDeposit, getDeposits } from '../services/api';
-import { useNavigate } from 'react-router-dom';
-import { Copy } from 'lucide-react';
+import { useNavigate, useSearchParams } from 'react-router-dom';
+import { Copy, Crown } from 'lucide-react';
 import PageHeader from '../components/PageHeader';
 import { useAuth } from '../context/AuthContext';
 import { formatAmountWithCode, formatAmount, getCurrencySymbol } from '../utils/currency';
@@ -17,6 +17,9 @@ export default function Deposit() {
   const [showForm, setShowForm] = useState(false);
   const [deposits, setDeposits] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [searchParams] = useSearchParams();
+  const isProDeposit = searchParams.get('purpose') === 'pro';
+  const lockedAmount = searchParams.get('amount');
   const [depositMethod, setDepositMethod] = useState('crypto');
   const [amount, setAmount] = useState('');
   const [fileData, setFileData] = useState(null);
@@ -30,7 +33,15 @@ export default function Deposit() {
   const [show, setShow] = useState(10);
   const perPage = show;
 
-  const coinData = {
+  // Auto-fill from URL params (e.g. ?purpose=pro&amount=499)
+  useEffect(() => {
+    if (isProDeposit) {
+      setShowForm(true);
+      if (lockedAmount) setAmount(lockedAmount);
+    }
+  }, [isProDeposit, lockedAmount]);
+
+    const coinData = {
     USDT: { address: 'TRLEtqXxtP9VV49nzvEuLhpo8S1UVFwGkS', network: 'TRC20 (Tron)' },
     ETH:  { address: '0xc6b676d4595687ac100dcb3f350fb6845df2daa8', network: 'Ethereum (ERC20)' },
     USDC: { address: '0xc6b676d4595687ac100dcb3f350fb6845df2daa8', network: 'BEP20 (Binance Smart Chain)' },
@@ -70,6 +81,7 @@ export default function Deposit() {
       const formData = new FormData();
       formData.append('amount', Number(amount));
       formData.append('method', depositMethod);
+      formData.append('purpose', isProDeposit ? 'pro_subscription' : 'general');
       formData.append('proof', fileData);
       const res = await createDeposit(formData);
       if (res.transaction) {
@@ -113,6 +125,18 @@ export default function Deposit() {
       
 
       {/* New Deposit Form Modal */}
+      {isProDeposit && (
+        <div style={{ background: 'linear-gradient(135deg, rgba(99,102,241,0.15), rgba(99,102,241,0.05))', border: '1px solid rgba(99,102,241,0.4)', borderRadius: '10px', padding: '14px 16px', marginBottom: '14px', display: 'flex', gap: '12px', alignItems: 'flex-start' }}>
+          <Crown size={18} color="#818cf8" style={{ flexShrink: 0, marginTop: '2px' }}/>
+          <div style={{ flex: 1 }}>
+            <div style={{ color: '#818cf8', fontSize: '11px', fontWeight: '700', letterSpacing: '1.5px', marginBottom: '4px' }}>PRO SUBSCRIPTION DEPOSIT</div>
+            <div style={{ color: t.text, fontSize: '11px', lineHeight: '1.6' }}>
+              Deposit <b>${lockedAmount || 499}</b> for your Pro subscription. Once admin approves your deposit, Pro will be activated automatically for <b>365 days</b>.
+            </div>
+          </div>
+        </div>
+      )}
+
       {showForm && (
         <>
           <div onClick={() => setShowForm(false)} style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.6)', zIndex: 100 }}/>
