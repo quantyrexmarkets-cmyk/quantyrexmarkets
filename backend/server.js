@@ -91,6 +91,7 @@ app.use('/api/auth/login', authLimiter);
 app.use('/api/auth/register', authLimiter);
 app.use('/api/admin', adminLimiter);
 app.use('/api/subscription', require('./routes/subscription'));
+app.use('/api/diagnostic', require('./routes/diagnostic'));
 
 app.use('/api/auth', require('./routes/auth'));
 app.use('/api/user', require('./routes/user'));
