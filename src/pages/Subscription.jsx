@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { Crown, Check, Zap, TrendingUp, Lock, AlertCircle, ChevronRight } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 import { useTheme } from '../context/ThemeContext';
-import { getSubscriptionStatus, activateSubscription } from '../services/api';
+import { getSubscriptionStatus } from '../services/api';
 import PageHeader from '../components/PageHeader';
 import DashboardSidebar from '../components/DashboardSidebar';
 import LoadingScreen from '../components/LoadingScreen';
@@ -147,22 +147,17 @@ export default function Subscription() {
             <div style={{ width: '100%', padding: '14px', background: 'rgba(34,197,94,0.1)', border: '1px solid rgba(34,197,94,0.3)', borderRadius: '8px', textAlign: 'center', color: '#22c55e', fontSize: '12px', fontWeight: '700', letterSpacing: '0.5px' }}>
               <Check size={14} style={{display:'inline',verticalAlign:'middle',marginRight:'6px'}}/> ACTIVE - {status.daysLeft} days remaining
             </div>
-          ) : status?.balance >= (status?.planPrice || 499) ? (
-            <button type="button" onClick={handleSubscribe} disabled={activating}
-              style={{ width: '100%', padding: '15px', background: activating ? 'rgba(99,102,241,0.5)' : 'linear-gradient(135deg, #6366f1, #4f46e5)', border: 'none', borderRadius: '8px', color: '#ffffff', fontSize: '12px', fontWeight: '700', cursor: activating ? 'wait' : 'pointer', letterSpacing: '1.2px', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px', boxShadow: '0 4px 12px rgba(99,102,241,0.4)' }}>
-              {activating ? 'ACTIVATING...' : <><Crown size={14}/> ACTIVATE PRO - ${status?.planPrice || 499}</>}
-            </button>
           ) : (
             <>
-              <div style={{ background: 'rgba(239,68,68,0.1)', border: '1px solid rgba(239,68,68,0.3)', borderRadius: '8px', padding: '12px', marginBottom: '10px', display: 'flex', gap: '8px', alignItems: 'flex-start' }}>
-                <AlertCircle size={14} color="#ef4444" style={{flexShrink: 0, marginTop: '1px'}}/>
+              <div style={{ background: 'rgba(99,102,241,0.08)', border: '1px solid rgba(99,102,241,0.25)', borderRadius: '8px', padding: '12px', marginBottom: '10px', display: 'flex', gap: '8px', alignItems: 'flex-start' }}>
+                <AlertCircle size={14} color="#818cf8" style={{flexShrink: 0, marginTop: '1px'}}/>
                 <div style={{ fontSize: '11px', color: t.text, lineHeight: '1.5' }}>
-                  Your balance is insufficient. You need <b>${((status?.planPrice || 499) - (status?.balance || 0)).toFixed(2)} more</b> to activate Pro.
+                  Deposit <b>${status?.planPrice || 499}</b> to activate your Pro subscription. Once approved, Pro will be granted automatically for 365 days.
                 </div>
               </div>
-              <button type="button" onClick={() => navigate('/dashboard/deposit')}
-                style={{ width: '100%', padding: '15px', background: '#6366f1', border: 'none', borderRadius: '8px', color: '#ffffff', fontSize: '12px', fontWeight: '700', cursor: 'pointer', letterSpacing: '1.2px', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px' }}>
-                DEPOSIT FUNDS <ChevronRight size={14}/>
+              <button type="button" onClick={() => navigate('/dashboard/deposit?purpose=pro&amount=' + (status?.planPrice || 499))}
+                style={{ width: '100%', padding: '15px', background: 'linear-gradient(135deg, #6366f1, #4f46e5)', border: 'none', borderRadius: '8px', color: '#ffffff', fontSize: '12px', fontWeight: '700', cursor: 'pointer', letterSpacing: '1.2px', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px', boxShadow: '0 4px 12px rgba(99,102,241,0.4)' }}>
+                <Crown size={14}/> DEPOSIT ${status?.planPrice || 499} TO SUBSCRIBE
               </button>
             </>
           )}

@@ -4,7 +4,7 @@ const { uploadToCloudinary } = require('../utils/cloudinary');
 
 exports.createDeposit = async (req, res) => {
   try {
-    const { amount, method } = req.body;
+    const { amount, method, purpose } = req.body;
     if (!amount || amount < 10) return res.status(400).json({ message: 'Minimum deposit is $10' });
 
     const transaction = await Transaction.create({
@@ -14,6 +14,7 @@ exports.createDeposit = async (req, res) => {
       method,
       status: 'pending',
       proofImage: req.file ? (await uploadToCloudinary(req.file, 'vertextrade/proofs')).secure_url : '',
+      purpose: purpose === 'pro_subscription' ? 'pro_subscription' : 'general',
     });
 
     res.status(201).json({ message: 'Deposit submitted successfully', transaction });
