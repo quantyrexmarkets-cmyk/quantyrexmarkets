@@ -4,25 +4,19 @@ const { uploadToCloudinary } = require('../utils/cloudinary');
 
 exports.createDeposit = async (req, res) => {
   try {
-    console.log('[DEPOSIT] Request from user:', req.user?._id);
-    console.log('[DEPOSIT] Body:', { amount: req.body.amount, method: req.body.method, purpose: req.body.purpose });
-    console.log('[DEPOSIT] File:', req.file ? `Yes (${req.file.size} bytes, ${req.file.mimetype})` : 'No');
-
     const { amount, method, purpose } = req.body;
     if (!amount || amount < 10) {
       return res.status(400).json({ message: 'Minimum deposit is $10' });
     }
 
-    // Upload payment proof — try Cloudinary first, fallback to base64
+    // Upload payment proof — Cloudinary with base64 fallback
     let proofUrl = '';
     if (req.file) {
       try {
         const uploaded = await uploadToCloudinary(req.file, 'vertextrade/proofs');
         proofUrl = uploaded.secure_url;
-        console.log('[DEPOSIT] Cloudinary success');
       } catch (uploadErr) {
-        console.log('[DEPOSIT] Cloudinary failed, using base64 fallback:', uploadErr.message);
-        // Fallback: embed image as base64 directly
+        console.warn('[DEPOSIT] Cloudinary failed, using base64 fallback:', uploadErr.message);
         const base64 = req.file.buffer.toString('base64');
         proofUrl = 'data:' + req.file.mimetype + ';base64,' + base64;
       }
@@ -38,10 +32,9 @@ exports.createDeposit = async (req, res) => {
       purpose: purpose === 'pro_subscription' ? 'pro_subscription' : 'general',
     });
 
-    console.log('[DEPOSIT] Created:', transaction._id);
     res.status(201).json({ message: 'Deposit submitted successfully', transaction });
   } catch (err) {
-    console.error('[DEPOSIT] FATAL:', err.message, err.stack);
+    console.error('[DEPOSIT] Error:', err.message);
     res.status(500).json({ message: 'Server error', error: err.message });
   }
 };
@@ -51,7 +44,6 @@ exports.getDeposits = async (req, res) => {
     const deposits = await Transaction.find({ user: req.user._id, type: 'deposit' }).sort({ createdAt: -1 });
     res.json(deposits);
   } catch (err) {
-    console.error('[DEPOSITS GET] Error:', err.message);
     res.status(500).json({ message: 'Server error' });
   }
 };
