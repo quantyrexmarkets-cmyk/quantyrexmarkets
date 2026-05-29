@@ -1076,6 +1076,76 @@ router.post('/test-email', adminAuth, async (req, res) => {
   }
 });
 
+
+// ========== ADMIN SUBSCRIPTION MANAGEMENT ==========
+
+router.post('/users/:id/subscription/grant', adminAuth, async (req, res) => {
+  try {
+    const { days = 365 } = req.body;
+    const user = await User.findById(req.params.id);
+    if (!user) return res.status(404).json({ message: 'User not found' });
+
+    const now = new Date();
+    const currentExpiry = (user.subscription?.active && user.subscription?.expiresAt && new Date(user.subscription.expiresAt) > now)
+      ? new Date(user.subscription.expiresAt)
+      : now;
+    const expiresAt = new Date(currentExpiry.getTime() + days * 24 * 60 * 60 * 1000);
+
+    user.subscription = {
+      active: true,
+      plan: 'Pro',
+      startedAt: user.subscription?.startedAt || now,
+      expiresAt,
+      activatedBy: 'admin',
+    };
+    await user.save();
+    res.json({ success: true, message: 'Pro subscription granted for ' + days + ' days', user });
+  } catch (err) {
+    res.status(500).json({ message: 'Server error', error: err.message });
+  }
+});
+
+router.post('/users/:id/subscription/revoke', adminAuth, async (req, res) => {
+  try {
+    const user = await User.findByIdAndUpdate(
+      req.params.id,
+      { $set: { 'subscription.active': false, 'subscription.expiresAt': new Date() } },
+      { new: true }
+    );
+    if (!user) return res.status(404).json({ message: 'User not found' });
+    res.json({ success: true, message: 'Subscription revoked', user });
+  } catch (err) {
+    res.status(500).json({ message: 'Server error', error: err.message });
+  }
+});
+
+router.post('/users/:id/subscription/extend', adminAuth, async (req, res) => {
+  try {
+    const { days = 30 } = req.body;
+    const user = await User.findById(req.params.id);
+    if (!user) return res.status(404).json({ message: 'User not found' });
+
+    const now = new Date();
+    const base = (user.subscription?.expiresAt && new Date(user.subscription.expiresAt) > now)
+      ? new Date(user.subscription.expiresAt)
+      : now;
+    const expiresAt = new Date(base.getTime() + days * 24 * 60 * 60 * 1000);
+
+    user.subscription = {
+      ...user.subscription,
+      active: true,
+      plan: 'Pro',
+      startedAt: user.subscription?.startedAt || now,
+      expiresAt,
+    };
+    await user.save();
+    res.json({ success: true, message: 'Extended by ' + days + ' days', user });
+  } catch (err) {
+    res.status(500).json({ message: 'Server error', error: err.message });
+  }
+});
+
+
 module.exports = router;
 
 // Contact form submission

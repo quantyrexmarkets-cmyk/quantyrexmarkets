@@ -3,6 +3,7 @@ const router = express.Router();
 const Bot = require('../models/Bot');
 const User = require('../models/User');
 const auth = require('../middleware/auth');
+const requireSubscription = require('../middleware/requireSubscription');
 
 const botDetails = {
   'STARTER BOT':  { dailyRate: '10%', duration: '7 days',  days: 7,  amount: 500  },
@@ -25,7 +26,7 @@ router.get('/', auth, async (req, res) => {
 });
 
 // Subscribe to bot - deduct from balance
-router.post('/', auth, async (req, res) => {
+router.post('/', auth, requireSubscription, async (req, res) => {
   try {
     const { botName } = req.body;
     if (!botName) return res.status(400).json({ message: 'Bot name required' });
@@ -62,7 +63,7 @@ router.post('/', auth, async (req, res) => {
 });
 
 // Cancel bot - refund balance
-router.delete('/:id', auth, async (req, res) => {
+router.delete('/:id', auth, requireSubscription, async (req, res) => {
   try {
     const bot = await Bot.findOne({ _id: req.params.id, user: req.user.id });
     if (!bot) return res.status(404).json({ message: 'Bot not found' });

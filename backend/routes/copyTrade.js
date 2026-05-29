@@ -1,12 +1,13 @@
 const express = require('express');
 const router = express.Router();
 const auth = require('../middleware/auth');
+const requireSubscription = require('../middleware/requireSubscription');
 const CopyTrade = require('../models/CopyTrade');
 const User = require('../models/User');
 const Notification = require('../models/Notification');
 
 // Start copying a trader
-router.post('/', auth, async (req, res) => {
+router.post('/', auth, requireSubscription, async (req, res) => {
   try {
     const { traderId, traderName, traderImg, amount, profitShare, endDate } = req.body;
     if (!amount || amount < 10) return res.status(400).json({ message: 'Minimum investment is $10' });
@@ -39,7 +40,7 @@ router.get('/', auth, async (req, res) => {
 });
 
 // Stop copying a trader
-router.put('/:id/stop', auth, async (req, res) => {
+router.put('/:id/stop', auth, requireSubscription, async (req, res) => {
   try {
     const trade = await CopyTrade.findOneAndUpdate({ _id: req.params.id, user: req.user._id }, { status: 'stopped' }, { new: true });
     if (!trade) return res.status(404).json({ message: 'Copy trade not found' });

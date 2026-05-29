@@ -4,6 +4,7 @@ const Stake = require('../models/Stake');
 const User = require('../models/User');
 const Notification = require('../models/Notification');
 const auth = require('../middleware/auth');
+const requireSubscription = require('../middleware/requireSubscription');
 
 // Get all stakes for user
 router.get('/', auth, async (req, res) => {
@@ -16,7 +17,7 @@ router.get('/', auth, async (req, res) => {
 });
 
 // Create new stake
-router.post('/', auth, async (req, res) => {
+router.post('/', auth, requireSubscription, async (req, res) => {
   try {
     const { plan, amount, apy, duration } = req.body;
 
