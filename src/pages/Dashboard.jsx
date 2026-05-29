@@ -267,24 +267,23 @@ export default function Dashboard() {
             zIndex: 200,
             width: '92%',
             maxWidth: '440px',
-            background: 'linear-gradient(135deg, rgba(245,158,11,0.12) 0%, rgba(245,158,11,0.05) 100%)',
+            background: 'linear-gradient(135deg, rgba(239,68,68,0.12) 0%, rgba(239,68,68,0.05) 100%)',
             backdropFilter: 'blur(20px)',
             WebkitBackdropFilter: 'blur(20px)',
-            border: '1px solid rgba(245,158,11,0.3)',
-            borderLeft: '4px solid #f59e0b',
+            border: '1px solid rgba(239,68,68,0.3)',
             borderRadius: '12px',
-            boxShadow: '0 8px 32px rgba(0,0,0,0.4), 0 0 0 1px rgba(245,158,11,0.08)',
+            boxShadow: '0 8px 32px rgba(0,0,0,0.4), 0 0 0 1px rgba(239,68,68,0.08)',
             overflow: 'hidden',
             animation: 'noticeSlide 0.4s ease-out',
           }}>
             {/* Header */}
-            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '12px 14px 8px', borderBottom: '1px solid rgba(245,158,11,0.15)' }}>
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '12px 14px 8px', borderBottom: '1px solid rgba(239,68,68,0.15)' }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                <div style={{ width: '24px', height: '24px', borderRadius: '50%', background: 'rgba(245,158,11,0.18)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                  <svg width="13" height="13" fill="none" stroke="#f59e0b" viewBox="0 0 24 24" strokeWidth="2.2"><path strokeLinecap="round" strokeLinejoin="round" d="M12 9v2m0 4h.01M12 2a10 10 0 100 20 10 10 0 000-20z"/></svg>
+                <div style={{ width: '24px', height: '24px', borderRadius: '50%', background: 'rgba(239,68,68,0.18)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                  <svg width="13" height="13" fill="none" stroke="#ef4444" viewBox="0 0 24 24" strokeWidth="2.2"><path strokeLinecap="round" strokeLinejoin="round" d="M12 9v2m0 4h.01M12 2a10 10 0 100 20 10 10 0 000-20z"/></svg>
                 </div>
                 <div>
-                  <div style={{ color: '#f59e0b', fontSize: '10px', fontWeight: '700', letterSpacing: '1px', textTransform: 'uppercase' }}>Account Notice</div>
+                  <div style={{ color: '#ef4444', fontSize: '10px', fontWeight: '700', letterSpacing: '1px', textTransform: 'uppercase' }}>Account Notice</div>
                   <div style={{ color: t.text, fontSize: '11px', fontWeight: '600', marginTop: '1px' }}>Action Required</div>
                 </div>
               </div>
@@ -297,21 +296,8 @@ export default function Dashboard() {
             <div style={{ padding: '12px 14px 14px', color: t.text, fontSize: '11px', lineHeight: '1.6', fontWeight: '400' }}>
               {u.adminMessage}
             </div>
-
-            {/* Action buttons */}
-            <div style={{ padding: '0 14px 14px', display: 'flex', gap: '6px' }}>
-              <button type="button" onClick={() => navigate('/dashboard/deposit')} style={{ flex: 1, padding: '9px', background: 'linear-gradient(135deg, #f59e0b, #d97706)', border: 'none', borderRadius: '8px', color: '#ffffff', fontSize: '10px', fontWeight: '700', cursor: 'pointer', letterSpacing: '0.5px', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '5px' }}>
-                <svg width="11" height="11" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2.5"><path strokeLinecap="round" strokeLinejoin="round" d="M12 4v16m8-8H4"/></svg>
-                MAKE PAYMENT
-              </button>
-              <button type="button" onClick={() => navigate('/dashboard/support')} style={{ flex: 1, padding: '9px', background: 'rgba(255,255,255,0.05)', border: `1px solid ${t.border}`, borderRadius: '8px', color: t.text, fontSize: '10px', fontWeight: '700', cursor: 'pointer', letterSpacing: '0.5px', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '5px' }}>
-                <svg width="11" height="11" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2"><path strokeLinecap="round" strokeLinejoin="round" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"/></svg>
-                CONTACT
-              </button>
-            </div>
-
             {u.isAdmin && (
-              <div style={{ borderTop: '1px solid rgba(245,158,11,0.15)', padding: '8px 14px' }}>
+              <div style={{ borderTop: '1px solid rgba(239,68,68,0.15)', padding: '8px 14px' }}>
                 <button type="button" onClick={() => navigate('/admin')} style={{ background: 'transparent', border: 'none', color: '#818cf8', cursor: 'pointer', fontSize: '9px', fontWeight: '600', padding: '0', letterSpacing: '0.5px' }}>
                   → ADMIN PANEL
                 </button>
