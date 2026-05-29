@@ -69,7 +69,7 @@ function TrendyStocks() {
   }, [activeStock, period]);
 
   return (
-    <div style={{ background: t.cardBg, border: '1px solid rgba(99,102,241,0.2)', borderRadius: '12px', padding: '14px', marginBottom: '16px' }}>
+    <div style={{ background: 'rgba(239,68,68,0.12)', border: '1px solid rgba(99,102,241,0.2)', borderRadius: '12px', padding: '14px', marginBottom: '16px' }}>
       {/* Header */}
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px' }}>
         <div style={{ color: t.text, fontSize: '14px', fontWeight: '700' }}>Trendy Stock Markets</div>
@@ -181,7 +181,7 @@ export default function Dashboard() {
           </button>
 
           <div style={{ marginLeft: 'auto', display: 'flex', gap: '6px', alignItems: 'stretch' }}>
-            <button type="button" onClick={() => getDashboard().then(data => setDashData(data))} style={{ padding: '5px 10px', background: t.cardBg, border: `1px solid ${t.tableOuterBorder}`, color: t.text, fontSize: '11px', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '4px', whiteSpace: 'nowrap' }}><span style={{ color: '#f7931a' }}>₿</span> {u.balance ? formatAmount(u.balance, u.currency) : '0.00'}</button>
+            <button type="button" onClick={() => getDashboard().then(data => setDashData(data))} style={{ padding: '5px 10px', background: 'rgba(239,68,68,0.12)', border: `1px solid ${t.tableOuterBorder}`, color: t.text, fontSize: '11px', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '4px', whiteSpace: 'nowrap' }}><span style={{ color: '#f7931a' }}>₿</span> {u.balance ? formatAmount(u.balance, u.currency) : '0.00'}</button>
             <button type="button" onClick={() => navigate('/dashboard/live-trading')} style={{ padding: '5px 10px', background: 'transparent', border: '1px solid #6366f1', color: t.text, fontSize: '11px', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '4px', whiteSpace: 'nowrap' }}><RefreshCw size={11}/> Trade</button>
             <div style={{ position: 'relative' }}>
                       <button type="button" onClick={() => { const readIds = JSON.parse(localStorage.getItem('readNotifications') || '[]'); setNotifications(prev => prev.map(n => ({ ...n, unread: readIds.includes(String(n.id)) ? false : n.unread }))); setShowNotifications(!showNotifications); setShowProfileMenu(false); }} style={{ background: 'none', border: 'none', color: t.text, cursor: 'pointer', padding: '5px 8px', position: 'relative', display: 'flex', alignItems: 'center' }}>
@@ -267,10 +267,9 @@ export default function Dashboard() {
             zIndex: 200,
             width: '92%',
             maxWidth: '440px',
-            background: t.cardBg,
-            border: '1px solid rgba(239,68,68,0.3)',
+            background: 'rgba(239,68,68,0.12)',
             borderRadius: '12px',
-            boxShadow: '0 8px 32px rgba(0,0,0,0.4), 0 0 0 1px rgba(239,68,68,0.08)',
+            boxShadow: '0 8px 32px rgba(0,0,0,0.4)',
             overflow: 'hidden',
             animation: 'noticeSlide 0.4s ease-out',
           }}>
@@ -328,7 +327,7 @@ export default function Dashboard() {
             <DashboardTicker />
             <div style={{ height: '16px' }}></div>
             {/* Welcome Card */}
-            <div style={{ position: 'relative', borderRadius: '16px', overflow: 'hidden', marginBottom: '20px', background: t.cardBg, backdropFilter: 'blur(20px)', WebkitBackdropFilter: 'blur(20px)', border: `1px solid ${t.border}`, boxShadow: '0 8px 32px rgba(99,102,241,0.15), inset 0 1px 0 ${t.subtleBorder}', padding: '14px 12px', textAlign: 'center' }}>
+            <div style={{ position: 'relative', borderRadius: '16px', overflow: 'hidden', marginBottom: '20px', background: 'rgba(239,68,68,0.12)', backdropFilter: 'blur(20px)', WebkitBackdropFilter: 'blur(20px)', border: `1px solid ${t.border}`, boxShadow: '0 8px 32px rgba(99,102,241,0.15), inset 0 1px 0 ${t.subtleBorder}', padding: '14px 12px', textAlign: 'center' }}>
 
               {/* Glow effects */}
               <div style={{ position: 'absolute', top: '-40px', right: '-40px', width: '150px', height: '150px', borderRadius: '50%', background: 'rgba(99,102,241,0.2)', filter: 'blur(40px)', pointerEvents: 'none', opacity: 1 }} />
@@ -378,7 +377,7 @@ export default function Dashboard() {
             {/* Stats Grid */}
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px', marginBottom: '20px' }}>
               {Array.isArray(stats) && stats.map((s, i) => (
-                <div key={i} style={{ position: 'relative', overflow: 'hidden', background: t.cardBg, border: `1px solid ${t.tableOuterBorder}`, borderRadius: '14px', padding: '12px 10px', minHeight: '90px', boxShadow: t.bg === '#f8fafc' ? '0 2px 8px rgba(0,0,0,0.08)' : '0 4px 24px rgba(0,0,0,0.2)' }}>
+                <div key={i} style={{ position: 'relative', overflow: 'hidden', background: 'rgba(239,68,68,0.12)', border: `1px solid ${t.tableOuterBorder}`, borderRadius: '14px', padding: '12px 10px', minHeight: '90px', boxShadow: t.bg === '#f8fafc' ? '0 2px 8px rgba(0,0,0,0.08)' : '0 4px 24px rgba(0,0,0,0.2)' }}>
                   {/* Gradient overlay */}
                   <div style={{ position: 'absolute', inset: 0, background: `linear-gradient(135deg, ${s.iconBg}10, transparent)`, pointerEvents: 'none' }} />
                   {/* Top accent line */}
@@ -400,7 +399,7 @@ export default function Dashboard() {
             {/* Chart */}
             {/* Identity Verification Card */}
             {u.kycStatus !== 'approved' && (
-              <div style={{ background: t.cardBg, border: `1px solid ${t.tableOuterBorder}`, borderRadius: '16px', padding: '20px', marginBottom: '16px', textAlign: 'center', boxShadow: t.bg === '#f8fafc' ? '0 2px 8px rgba(0,0,0,0.08)' : '0 4px 24px rgba(0,0,0,0.2)' }}>
+              <div style={{ background: 'rgba(239,68,68,0.12)', border: `1px solid ${t.tableOuterBorder}`, borderRadius: '16px', padding: '20px', marginBottom: '16px', textAlign: 'center', boxShadow: t.bg === '#f8fafc' ? '0 2px 8px rgba(0,0,0,0.08)' : '0 4px 24px rgba(0,0,0,0.2)' }}>
                 <div style={{ width: '48px', height: '48px', background: 'rgba(99,102,241,0.15)', borderRadius: '12px', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 12px' }}>
                   <svg width='24' height='24' fill='none' stroke='#6366f1' viewBox='0 0 24 24' strokeWidth='2'><path d='M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z'/><polyline points='9 12 11 14 15 10'/></svg>
                 </div>
@@ -418,21 +417,21 @@ export default function Dashboard() {
             <div style={{ background: t.glassBg, backdropFilter: 'blur(16px)', WebkitBackdropFilter: 'blur(16px)', border: `1px solid ${t.glassBorder}`, borderRadius: '12px', padding: '10px', boxShadow: '0 4px 24px rgba(0,0,0,0.05)', marginBottom: '20px' }}>
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '12px' }}>
                 <span style={{ color: t.text, fontSize: '9px', fontWeight: '700', letterSpacing: '0.08em' }}>TRANSACTION LIST</span>
-                <select style={{ background: t.cardBg, border: `1px solid ${t.tableOuterBorder}`, color: t.text, fontSize: '8px', padding: '3px 8px', outline: 'none' }}>
+                <select style={{ background: 'rgba(239,68,68,0.12)', border: `1px solid ${t.tableOuterBorder}`, color: t.text, fontSize: '8px', padding: '3px 8px', outline: 'none' }}>
                   <option>Today</option><option>This Week</option><option>This Month</option>
                 </select>
               </div>
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
                   <span style={{ color: t.subText, fontSize: '8px' }}>Show</span>
-                  <select style={{ background: t.cardBg, border: `1px solid ${t.tableOuterBorder}`, color: t.text, fontSize: '8px', padding: '2px 5px', outline: 'none' }}><option>10</option><option>25</option><option>50</option></select>
+                  <select style={{ background: 'rgba(239,68,68,0.12)', border: `1px solid ${t.tableOuterBorder}`, color: t.text, fontSize: '8px', padding: '2px 5px', outline: 'none' }}><option>10</option><option>25</option><option>50</option></select>
                   <span style={{ color: t.subText, fontSize: '8px' }}>entries</span>
                 </div>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
                 </div>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
                   <span style={{ color: t.subText, fontSize: '8px' }}>Search:</span>
-                  <input style={{ background: t.cardBg, border: `1px solid ${t.tableOuterBorder}`, color: t.text, fontSize: '8px', padding: '3px 8px', outline: 'none', width: '90px' }} />
+                  <input style={{ background: 'rgba(239,68,68,0.12)', border: `1px solid ${t.tableOuterBorder}`, color: t.text, fontSize: '8px', padding: '3px 8px', outline: 'none', width: '90px' }} />
                 </div>
               </div>
               <div style={{ border: `1px solid ${t.tableDivider}` }}>
