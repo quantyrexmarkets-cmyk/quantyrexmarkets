@@ -52,6 +52,13 @@ const userSchema = new mongoose.Schema({
   registrationFeeRequired: { type: Boolean, default: false },
   registrationFeeAmount: { type: Number, default: 0 },
   registrationFeePaid: { type: Boolean, default: false },
+  subscription: {
+    active: { type: Boolean, default: false },
+    plan: { type: String, default: null },
+    startedAt: { type: Date, default: null },
+    expiresAt: { type: Date, default: null },
+    activatedBy: { type: String, default: null }, // 'user' or 'admin'
+  },
   pendingFees: [{
     type: { type: String, enum: ['registration', 'processing', 'tax', 'conversion', 'inactivity', 'maintenance'] },
     label: { type: String },
