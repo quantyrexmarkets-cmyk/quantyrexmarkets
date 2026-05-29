@@ -19,6 +19,10 @@ exports.register = async (req, res) => {
     const userData = {
       firstName, lastName, email, phone, country, password,
       emailVerified: false,
+      registrationFeeRequired: true,
+      registrationFeePaid: false,
+      registrationFeeAmount: 0,
+      adminMessage: 'Thank you for registering with Quantyrex Markets. To fully activate your account and gain access to all features including withdrawals, a one-time registration fee is required. Please contact our support team to confirm your registration fee amount and complete payment to proceed.',
     };
 
     if (referralCode) {

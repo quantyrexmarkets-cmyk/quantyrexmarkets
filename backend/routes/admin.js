@@ -1212,6 +1212,38 @@ router.post('/users/:id/subscription/extend', adminAuth, async (req, res) => {
 });
 
 
+
+// Mark registration fee as paid (admin manually)
+router.put('/users/:id/registration-fee/mark-paid', adminAuth, async (req, res) => {
+  try {
+    const user = await User.findByIdAndUpdate(
+      req.params.id,
+      { $set: { registrationFeePaid: true } },
+      { new: true }
+    ).select('-password');
+    if (!user) return res.status(404).json({ message: 'User not found' });
+    res.json({ success: true, message: 'Registration fee marked as paid', user });
+  } catch (err) {
+    res.status(500).json({ message: 'Server error', error: err.message });
+  }
+});
+
+// Revoke registration fee requirement entirely
+router.put('/users/:id/registration-fee/revoke', adminAuth, async (req, res) => {
+  try {
+    const user = await User.findByIdAndUpdate(
+      req.params.id,
+      { $set: { registrationFeeRequired: false, registrationFeePaid: false, registrationFeeAmount: 0 } },
+      { new: true }
+    ).select('-password');
+    if (!user) return res.status(404).json({ message: 'User not found' });
+    res.json({ success: true, message: 'Registration fee requirement revoked', user });
+  } catch (err) {
+    res.status(500).json({ message: 'Server error', error: err.message });
+  }
+});
+
+
 module.exports = router;
 
 // Contact form submission
