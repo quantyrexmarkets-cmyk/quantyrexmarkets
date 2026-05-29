@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import DashboardSidebar from '../components/DashboardSidebar';
-import { ArrowLeft, Settings, Shield, Bell, Lock, Eye, EyeOff, Palette } from 'lucide-react';
+import { ArrowLeft, Settings, Shield, Bell, Lock, Eye, EyeOff, Palette, Crown } from 'lucide-react';
 import { useTheme, themes } from '../context/ThemeContext';
 
 // Stable components defined outside (prevent re-renders)
@@ -162,6 +162,15 @@ export default function SettingsPage() {
         </Section>
 
         {/* Account */}
+        <Section t={t} title="Subscription">
+          <Row t={t}
+            icon={<Crown size={14} color="#6366f1"/>}
+            title="Quantyrex Pro"
+            desc="Manage your subscription"
+            right={<button type="button" onClick={() => navigate('/dashboard/subscription')} style={{ padding: '6px 12px', background: '#6366f1', border: 'none', color: 'white', fontSize: '9px', fontWeight: '700', cursor: 'pointer', borderRadius: '4px' }}>OPEN</button>}
+          />
+        </Section>
+
         <Section t={t} title="Account">
           <Row t={t}
             icon={<Eye size={16} color="#6366f1" />}

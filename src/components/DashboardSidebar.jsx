@@ -2,7 +2,7 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import { useTheme } from '../context/ThemeContext';
 import { useAuth } from '../context/AuthContext';
 import { useState, useEffect, useRef } from 'react';
-import { User, BarChart2, Wallet, Bot, TrendingUp, Clock, ArrowDownCircle, Package, Lock, Users, ChevronRight, Globe, X, Download, Bell, Settings, Home } from 'lucide-react';
+import { User, BarChart2, Wallet, Bot, TrendingUp, Clock, ArrowDownCircle, Package, Lock, Users, ChevronRight, Globe, X, Download, Bell, Settings, Home, Crown } from 'lucide-react';
 
 function useNotifications() {
   const [notifications, setNotifications] = useState([]);
@@ -67,6 +67,7 @@ const sidebarSections = [
         { label: 'My Copy Trades', route: '/dashboard/my-copy-trades' },
       ]},
       
+      { icon: <Crown size={16}/>, label: 'Upgrade to Pro', badge: 'Pro', route: '/dashboard/subscription' },
       { icon: <Lock size={16}/>, label: 'KYC', route: '/dashboard/kyc' },
       { icon: <Users size={16}/>, label: 'Refer Users', route: '/dashboard/refer-users' },
       { icon: <Bell size={16}/>, label: 'Support', route: null, external: null, action: 'smartsupp' },
