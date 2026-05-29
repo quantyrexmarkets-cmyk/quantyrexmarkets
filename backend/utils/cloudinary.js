@@ -12,14 +12,20 @@ const uploadToCloudinary = async (file, folder = 'vertextrade') => {
     const stream = cloudinary.uploader.upload_stream(
       {
         folder,
-        resource_type: 'auto',
+        resource_type: 'image',
+        type: 'upload',
+        access_mode: 'public',
         use_filename: false,
         unique_filename: true,
         overwrite: false,
       },
       (error, result) => {
         if (error) {
-          console.error('[CLOUDINARY] Upload error:', error.message, '| http:', error.http_code);
+          console.error('[CLOUDINARY ERROR]', JSON.stringify({
+            message: error.message,
+            http_code: error.http_code,
+            name: error.name,
+          }));
           reject(error);
         } else {
           resolve(result);
