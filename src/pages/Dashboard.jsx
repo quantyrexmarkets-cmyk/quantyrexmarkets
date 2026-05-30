@@ -175,7 +175,7 @@ export default function Dashboard() {
       <div style={{ flex: 1, display: 'flex', flexDirection: 'column', overflow: 'hidden', minWidth: 0 }}>
 
         {/* Top Nav */}
-        <div style={{ position: 'sticky', top: 0, zIndex: 1000, background: t.navBg, backdropFilter: 'blur(20px)', WebkitBackdropFilter: 'blur(20px)', padding: '12px 16px', display: 'flex', alignItems: 'center', gap: '4px', flexShrink: 0, borderBottom: `1px solid ${t.accent}4D`, boxShadow: t.bg === '#f8fafc' ? '0 2px 8px rgba(0,0,0,0.08)' : '0 4px 24px rgba(99,102,241,0.15), 0 1px 0 {t.subtleBorder} inset' }}>
+        <div style={{ position: 'sticky', top: 0, zIndex: 1000, background: t.navBg, padding: '12px 16px', display: 'flex', alignItems: 'center', gap: '4px', flexShrink: 0, borderBottom: `1px solid ${t.accent}4D`, boxShadow: t.bg === '#f8fafc' ? '0 2px 8px rgba(0,0,0,0.08)' : '0 4px 24px rgba(99,102,241,0.15), 0 1px 0 {t.subtleBorder} inset' }}>
           <button type="button" onClick={() => setSidebarOpen(true)} style={{ background: 'none', border: 'none', color: t.text, cursor: 'pointer', marginRight: '4px', display: 'flex', alignItems: 'center' }}>
             <Menu size={15}/>
           </button>
@@ -323,7 +323,7 @@ export default function Dashboard() {
             <DashboardTicker />
             <div style={{ height: '16px' }}></div>
             {/* Welcome Card */}
-            <div style={{ position: 'relative', borderRadius: '16px', overflow: 'hidden', marginBottom: '20px', background: t.cardBg, backdropFilter: 'blur(20px)', WebkitBackdropFilter: 'blur(20px)', border: `1px solid ${t.border}`, boxShadow: '0 8px 32px rgba(99,102,241,0.15), inset 0 1px 0 ${t.subtleBorder}', padding: '14px 12px', textAlign: 'center' }}>
+            <div style={{ position: 'relative', borderRadius: '16px', overflow: 'hidden', marginBottom: '20px', background: t.cardBg, border: `1px solid ${t.border}`, boxShadow: '0 8px 32px rgba(99,102,241,0.15), inset 0 1px 0 ${t.subtleBorder}', padding: '14px 12px', textAlign: 'center' }}>
 
               {/* Glow effects */}
               <div style={{ position: 'absolute', top: '-40px', right: '-40px', width: '150px', height: '150px', borderRadius: '50%', background: 'rgba(99,102,241,0.2)', filter: 'blur(40px)', pointerEvents: 'none', opacity: 1 }} />
@@ -334,7 +334,7 @@ export default function Dashboard() {
                 <div style={{ color: t.subText, fontSize: '11px', fontWeight: '300', marginBottom: '10px' }}>Your investment dashboard overview</div>
 
                 {/* Inner Glass Balance Card */}
-                <div style={{ background: t.cardBg2, backdropFilter: 'blur(20px)', WebkitBackdropFilter: 'blur(20px)', border: `1px solid ${t.border}`, borderRadius: '12px', padding: '14px', marginBottom: '8px', position: 'relative', overflow: 'hidden', boxShadow: t.bg === '#111111' ? '0 0 20px rgba(99,102,241,0.15), inset 0 1px 0 rgba(99,102,241,0.1)' : 'none' }}>
+                <div style={{ background: t.cardBg2, border: `1px solid ${t.border}`, borderRadius: '12px', padding: '14px', marginBottom: '8px', position: 'relative', overflow: 'hidden', boxShadow: t.bg === '#111111' ? '0 0 20px rgba(99,102,241,0.15), inset 0 1px 0 rgba(99,102,241,0.1)' : 'none' }}>
                   <div style={{ position: 'absolute', inset: 0, background: 'transparent', pointerEvents: 'none' }} />
                   {t.bg === '#111111' && <div style={{ position: 'absolute', bottom: '-20px', left: '50%', transform: 'translateX(-50%)', width: '80%', height: '60px', borderRadius: '50%', background: 'rgba(99,102,241,0.35)', filter: 'blur(40px)', pointerEvents: 'none' }} />}
                   <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '6px', marginBottom: '4px' }}>
@@ -410,7 +410,7 @@ export default function Dashboard() {
 
             <div style={{ borderRadius: "12px", overflow: "hidden", boxShadow: "0 4px 20px rgba(0,0,0,0.3)", border: `1px solid ${t.border}`, marginBottom: "12px" }}><BTCChart /></div>
             {/* Transaction List */}
-            <div style={{ background: t.glassBg, backdropFilter: 'blur(16px)', WebkitBackdropFilter: 'blur(16px)', border: `1px solid ${t.glassBorder}`, borderRadius: '12px', padding: '10px', boxShadow: '0 4px 24px rgba(0,0,0,0.05)', marginBottom: '20px' }}>
+            <div style={{ background: t.glassBg, border: `1px solid ${t.glassBorder}`, borderRadius: '12px', padding: '10px', boxShadow: '0 4px 24px rgba(0,0,0,0.05)', marginBottom: '20px' }}>
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '12px' }}>
                 <span style={{ color: t.text, fontSize: '9px', fontWeight: '700', letterSpacing: '0.08em' }}>TRANSACTION LIST</span>
                 <select style={{ background: t.cardBg, border: `1px solid ${t.tableOuterBorder}`, color: t.text, fontSize: '8px', padding: '3px 8px', outline: 'none' }}>
@@ -473,7 +473,7 @@ export default function Dashboard() {
 
         {/* Trade Assets - Full Width */}
         <div style={{ padding: '0 12px 20px' }}>
-          <div style={{ background: t.glassBg, backdropFilter: 'blur(10px)', WebkitBackdropFilter: 'blur(10px)', border: `1px solid ${t.glassBorder}`, borderRadius: '12px', padding: '14px', boxShadow: '0 4px 20px rgba(0,0,0,0.3)' }}>
+          <div style={{ background: t.glassBg, border: `1px solid ${t.glassBorder}`, borderRadius: '12px', padding: '14px', boxShadow: '0 4px 20px rgba(0,0,0,0.3)' }}>
             <div style={{ color: t.text, fontSize: '10px', fontWeight: '700', letterSpacing: '0.08em', marginBottom: '12px' }}>TRADE ASSETS</div>
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '8px', marginBottom: '10px' }}>
               {[

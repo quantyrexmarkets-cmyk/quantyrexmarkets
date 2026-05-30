@@ -133,7 +133,6 @@ export default function AdminManageUser() {
               transform:'translateX(-50%)',
               zIndex:9999,
               background:'rgba(34,197,94,0.95)',
-              backdropFilter:'blur(8px)',
               color:'white',
               padding:'10px 18px',
               borderRadius:'8px',

@@ -36,7 +36,7 @@ export default function CryptoNews() {
   };
 
   return (
-    <div style={{ background: t.glassBg, backdropFilter: 'blur(10px)', border: '1px solid rgba(99,102,241,0.3)', padding: '8px', marginTop: '12px', borderRadius: '12px', boxShadow: '0 4px 20px rgba(0,0,0,0.3)', marginLeft: '8px', marginRight: '8px' }}>
+    <div style={{ background: t.glassBg, border: '1px solid rgba(99,102,241,0.3)', padding: '8px', marginTop: '12px', borderRadius: '12px', boxShadow: '0 4px 20px rgba(0,0,0,0.3)', marginLeft: '8px', marginRight: '8px' }}>
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '12px' }}>
         <span style={{ color: 'white', fontSize: '9px', fontWeight: '700', letterSpacing: '0.08em' }}>CRYPTO NEWS</span>
         <span style={{ color: t.faintText, fontSize: '7px' }}>via CoinTelegraph</span>

@@ -159,7 +159,7 @@ export default function DashboardSidebar({ open, onClose }) {
 
   return (
     <>
-      {open && <div onClick={onClose} style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.4)', backdropFilter: 'blur(6px)', WebkitBackdropFilter: 'blur(6px)', zIndex: 1099 }} />}
+      {open && <div onClick={onClose} style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.4)', zIndex: 1099 }} />}
       <div style={{
           position: 'fixed', top: 0, left: open ? '0' : '-220px', height: '100vh', width: '210px', background: t.bg, zIndex: 1100, transition: 'left 0.3s ease',
         display: 'flex', flexDirection: 'column', borderRight: `1px solid ${t.sidebarBorder}`, overflowY: 'auto'
@@ -205,8 +205,6 @@ export default function DashboardSidebar({ open, onClose }) {
                         ? 'rgba(99,102,241,0.1)'
                         : 'rgba(99,102,241,0.15)'
                       : 'transparent',
-                    backdropFilter: isActive(item) && openSubmenu !== si+'-'+ii ? 'blur(12px)' : 'none',
-                    WebkitBackdropFilter: isActive(item) && openSubmenu !== si+'-'+ii ? 'blur(12px)' : 'none',
                     border: isActive(item) && openSubmenu !== si+'-'+ii
                       ? t.bg === '#f8fafc'
                         ? '1px solid rgba(99,102,241,0.4)'
@@ -250,8 +248,6 @@ export default function DashboardSidebar({ open, onClose }) {
                               : 'transparent',
                             border: subActive ? '1px solid rgba(99,102,241,0.35)' : '1px solid transparent',
                             borderRadius: '8px',
-                            backdropFilter: subActive ? 'blur(12px)' : 'none',
-                            WebkitBackdropFilter: subActive ? 'blur(12px)' : 'none',
                             boxShadow: subActive
                               ? t.bg === '#f8fafc' ? '0 2px 8px rgba(99,102,241,0.12)' : '0 4px 12px rgba(99,102,241,0.2)'
                               : 'none',
