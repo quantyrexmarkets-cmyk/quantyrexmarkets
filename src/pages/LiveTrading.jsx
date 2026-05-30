@@ -535,18 +535,18 @@ export default function LiveTrading() {
           <div>
             <div style={{ background: t.cardBg, border: `1px solid ${t.border}`, borderRadius: '8px', padding: '20px', marginBottom: '12px', textAlign: 'center' }}>
               <div style={{ color: t.subText, fontSize: '10px', letterSpacing: '1.5px', fontWeight: '400', marginBottom: '8px' }}>TOTAL P&L</div>
-              <div style={{ color: totalPnL >= 0 ? '#22c55e' : '#ef4444', fontSize: '28px', fontWeight: '500' }}>
+              <div style={{ color: totalPnL >= 0 ? '#22c55e' : '#ef4444', fontSize: '20px', fontWeight: '500' }}>
                 {totalPnL >= 0 ? '+' : ''}${totalPnL.toFixed(2)}
               </div>
               <div style={{ color: t.subText, fontSize: '10px', marginTop: '6px' }}>{closedTrades.length} closed trades</div>
             </div>
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '8px' }}>
               <div style={{ background: t.cardBg, border: `1px solid ${t.border}`, borderRadius: '8px', padding: '14px', textAlign: 'center' }}>
-                <div style={{ color: '#22c55e', fontSize: '18px', fontWeight: '500' }}>{closedTrades.filter(tr => tr.result > 0).length}</div>
+                <div style={{ color: '#22c55e', fontSize: '16px', fontWeight: '500' }}>{closedTrades.filter(tr => tr.result > 0).length}</div>
                 <div style={{ color: t.subText, fontSize: '9px', marginTop: '4px' }}>WINS</div>
               </div>
               <div style={{ background: t.cardBg, border: `1px solid ${t.border}`, borderRadius: '8px', padding: '14px', textAlign: 'center' }}>
-                <div style={{ color: '#ef4444', fontSize: '18px', fontWeight: '500' }}>{closedTrades.filter(tr => tr.result < 0).length}</div>
+                <div style={{ color: '#ef4444', fontSize: '16px', fontWeight: '500' }}>{closedTrades.filter(tr => tr.result < 0).length}</div>
                 <div style={{ color: t.subText, fontSize: '9px', marginTop: '4px' }}>LOSSES</div>
               </div>
             </div>
