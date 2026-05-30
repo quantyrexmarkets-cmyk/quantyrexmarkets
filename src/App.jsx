@@ -120,6 +120,16 @@ function App() {
   return (
     <>
     <BrowserRouter>
+      <ToastContainer
+        position="top-center"
+        autoClose={4000}
+        hideProgressBar={false}
+        newestOnTop
+        closeOnClick
+        pauseOnHover
+        theme="dark"
+        style={{ zIndex: 99999 }}
+      />
       <ScrollToTop />
       <Routes>
         <Route path="/" element={<HomePage />} />
