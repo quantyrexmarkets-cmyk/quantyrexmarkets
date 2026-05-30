@@ -209,11 +209,14 @@ export default function LiveChat() {
           {!open && showBubble && (
             <div style={{
               position: 'relative',
+              backgroundColor: '#ffffff',
               background: '#ffffff',
-              borderRadius: '14px',
-              padding: '12px 16px 12px 20px',
-              boxShadow: '0 8px 24px rgba(0,0,0,0.15)',
-              maxWidth: '200px',
+              borderRadius: '12px',
+              padding: '10px 14px',
+              boxShadow: '0 4px 16px rgba(0,0,0,0.2)',
+              width: 'auto',
+              maxWidth: '170px',
+              minWidth: '140px',
               animation: 'bubbleSlideIn 0.4s ease-out'
             }}>
               <button type="button" onClick={(e) => {
@@ -221,9 +224,9 @@ export default function LiveChat() {
                 setShowBubble(false);
                 localStorage.setItem('chatBubbleDismissed', Date.now().toString());
               }} style={{
-                position: 'absolute', top: '-8px', left: '-8px',
+                position: 'absolute', top: '-7px', left: '-7px',
                 background: '#1a1a1a', border: 'none', borderRadius: '50%',
-                width: '22px', height: '22px', cursor: 'pointer',
+                width: '20px', height: '20px', cursor: 'pointer',
                 display: 'flex', alignItems: 'center', justifyContent: 'center',
                 padding: 0, boxShadow: '0 2px 6px rgba(0,0,0,0.2)'
               }}>
@@ -232,10 +235,10 @@ export default function LiveChat() {
                 </svg>
               </button>
               <div onClick={() => setOpen(true)} style={{ cursor: 'pointer' }}>
-                <div style={{ color: '#111', fontSize: '13px', fontWeight: '700', marginBottom: '2px' }}>
+                <div style={{ color: '#111', fontSize: '12px', fontWeight: '700', marginBottom: '2px', lineHeight: '1.3' }}>
                   We're Online!
                 </div>
-                <div style={{ color: '#666', fontSize: '11px' }}>
+                <div style={{ color: '#666', fontSize: '10px', lineHeight: '1.3' }}>
                   How may I help you today?
                 </div>
               </div>
