@@ -271,7 +271,7 @@ export default function Dashboard() {
             {/* Close button */}
             <button type="button" onClick={() => setShowNotice(false)} style={{
               position: 'absolute', top: '10px', right: '10px',
-              background: 'transparent', border: 'none', color: '#3a3a3a',
+              background: 'transparent', border: 'none', color: '#7a1a1a',
               cursor: 'pointer', padding: '4px', display: 'flex',
               alignItems: 'center', justifyContent: 'center', opacity: 0.6
             }}>
@@ -281,7 +281,7 @@ export default function Dashboard() {
             </button>
 
             {/* Title */}
-            <div style={{ padding: '12px 36px 8px 16px', color: '#3a3a3a', fontSize: '13px', fontWeight: '700', textAlign: 'left' }}>
+            <div style={{ padding: '12px 36px 8px 16px', color: '#7a1a1a', fontSize: '13px', fontWeight: '700', textAlign: 'left' }}>
               ⚠️ Account Notice ⚠️
             </div>
 
@@ -289,14 +289,14 @@ export default function Dashboard() {
             <div style={{ height: '1px', background: 'rgba(0,0,0,0.1)', margin: '0 16px' }}></div>
 
             {/* Message body */}
-            <div style={{ padding: '10px 16px 12px', color: '#3a3a3a', fontSize: '11px', lineHeight: '1.5', fontWeight: '400' }}>
+            <div style={{ padding: '10px 16px 12px', color: '#7a1a1a', fontSize: '11px', lineHeight: '1.5', fontWeight: '400' }}>
               {u.adminMessage}
             </div>
 
             {u.isAdmin && (
               <div style={{ padding: '0 16px 12px' }}>
                 <button type="button" onClick={() => navigate('/admin')} style={{
-                  background: 'transparent', border: 'none', color: '#3a3a3a',
+                  background: 'transparent', border: 'none', color: '#7a1a1a',
                   cursor: 'pointer', fontSize: '11px', fontWeight: '700',
                   padding: 0, letterSpacing: '0.5px', opacity: 0.7
                 }}>
