@@ -80,7 +80,7 @@ export default function Subscription() {
           <div style={{ width: '54px', height: '54px', borderRadius: '50%', background: 'linear-gradient(135deg, #6366f1, #4f46e5)', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', marginBottom: '12px' }}>
             <Crown size={24} color="#ffffff" />
           </div>
-          <div style={{ fontSize: '20px', fontWeight: '400', marginBottom: '4px', fontFamily: "'Montserrat', Arial, sans-serif", letterSpacing: '0.5px' }}>Quantyrex <span style={{ color: '#818cf8' }}>Pro</span></div>
+          <div style={{ fontSize: '20px', fontWeight: '400', marginBottom: '4px', fontFamily: 'inherit', letterSpacing: '0.5px' }}>Quantyrex <span style={{ color: '#818cf8' }}>Pro</span></div>
           <div style={{ fontSize: '11px', color: t.subText }}>Unlock the full power of trading</div>
         </div>
 
