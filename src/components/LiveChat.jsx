@@ -11,10 +11,7 @@ export default function LiveChat() {
   const token = localStorage.getItem('token');
   const [open, setOpen] = useState(false);
   const [showBubble, setShowBubble] = useState(() => {
-    const dismissed = localStorage.getItem('chatBubbleDismissed');
-    if (!dismissed) return true;
-    // Re-show after 24 hours
-    return (Date.now() - parseInt(dismissed)) > 86400000;
+    return !sessionStorage.getItem('chatBubbleDismissed');
   });
 
   // Allow external trigger
@@ -223,7 +220,7 @@ export default function LiveChat() {
               <button type="button" onClick={(e) => {
                 e.stopPropagation();
                 setShowBubble(false);
-                localStorage.setItem('chatBubbleDismissed', Date.now().toString());
+                sessionStorage.setItem('chatBubbleDismissed', '1');
               }} style={{
                 position: 'absolute', top: '-7px', left: '-7px',
                 background: '#1a1a1a', border: 'none', borderRadius: '50%',
