@@ -260,13 +260,9 @@ export default function Dashboard() {
 
         {u.adminMessage && showNotice && (
           <div style={{
-            position: 'fixed',
-            top: '70px',
-            left: '50%',
-            transform: 'translateX(-50%)',
-            zIndex: 200,
             width: '92%',
             maxWidth: '440px',
+            margin: '20px auto',
             background: 'rgba(239,68,68,0.12)',
             borderRadius: '12px',
             boxShadow: '0 8px 32px rgba(0,0,0,0.4)',
@@ -303,8 +299,8 @@ export default function Dashboard() {
 
             <style>{`
               @keyframes noticeSlide {
-                from { opacity: 0; transform: translate(-50%, -10px); }
-                to { opacity: 1; transform: translate(-50%, 0); }
+                from { opacity: 0; transform: translateY(-10px); }
+                to { opacity: 1; transform: translateY(0); }
               }
             `}</style>
           </div>
