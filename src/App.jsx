@@ -3,7 +3,6 @@ import { useAuth } from "./context/AuthContext";
 import { Navigate } from "react-router-dom";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import ScrollToTop from "./components/ScrollToTop";
-import BrowserNotice from "./components/BrowserNotice";
 import CopyTrading from './pages/CopyTrading';
 import TraderProfile from './pages/TraderProfile';
 import TraderDetails from "./pages/TraderDetails";
@@ -122,7 +121,6 @@ function App() {
     <>
     <BrowserRouter>
       <ScrollToTop />
-      <BrowserNotice />
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/signup" element={<SignUp />} />
