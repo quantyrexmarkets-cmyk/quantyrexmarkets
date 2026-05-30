@@ -3,12 +3,21 @@ const BASE_URL = import.meta.env.VITE_API_URL || 'https://quantyrexmarkets-api.v
 // Global response handler with proper error handling
 const handleResponse = async (res) => {
   const text = await res.text();
+  let data;
   try {
-    const data = JSON.parse(text);
-    return data;
+    data = JSON.parse(text);
   } catch(e) {
     throw new Error('Server error: ' + res.status);
   }
+  // Throw on HTTP error so frontend catch blocks fire
+  if (!res.ok) {
+    const msg = data?.message || data?.error || `HTTP ${res.status}`;
+    const err = new Error(msg);
+    err.status = res.status;
+    err.data = data;
+    throw err;
+  }
+  return data;
 };
 
 const getToken = () => localStorage.getItem('token');

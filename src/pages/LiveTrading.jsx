@@ -242,7 +242,13 @@ export default function LiveTrading() {
         takeProfit: takeProfit ? parseFloat(takeProfit) : null,
       };
       const res = await createTrade(payload);
+      console.log('[Trade] Response:', res);
       console.log('Trade response:', res);
+      if (res?.message && !res?.trade) {
+        toast.error(res.message);
+        setSubmitting(false);
+        return;
+      }
       if (res?.trade) {
         toast.success(`${tradeType} ${symbol.label} executed: $${amount}`);
         setAmount('');
@@ -255,8 +261,8 @@ export default function LiveTrading() {
         toast.error(res?.message || res?.error || JSON.stringify(res).slice(0,150));
       }
     } catch (e) {
-      toast.error('Error: ' + (e?.message || 'unknown').slice(0, 120));
-      console.error('Trade error:', e);
+      console.error('[Trade] Error:', e);
+      toast.error('Error: ' + (e?.message || JSON.stringify(e)).slice(0, 150));
     } finally {
       setSubmitting(false);
     }
