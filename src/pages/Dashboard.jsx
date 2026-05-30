@@ -80,7 +80,7 @@ function TrendyStocks() {
       <div style={{ display: 'flex', gap: '8px', marginBottom: '16px', overflowX: 'auto' }}>
         {stocks.map(s => (
           <button type="button" key={s.symbol} onClick={() => setActiveStock(s.symbol.split(':')[1])}
-            style={{ padding: '6px 14px', borderRadius: '8px', background: activeStock === s.symbol.split(':')[1] ? (t.bg === '#c4c4c4' ? 'rgba(0,0,0,0.08)' : 'rgba(255,255,255,0.15)') : 'transparent', border: 'none', color: activeStock === s.symbol.split(':')[1] ? t.text : t.subText, fontSize: '11px', fontWeight: activeStock === s.symbol.split(':')[1] ? '700' : '400', cursor: 'pointer', whiteSpace: 'nowrap' }}>
+            style={{ padding: '6px 14px', borderRadius: '8px', background: activeStock === s.symbol.split(':')[1] ? (t.bg === '#e6e6e6' ? 'rgba(0,0,0,0.08)' : 'rgba(255,255,255,0.15)') : 'transparent', border: 'none', color: activeStock === s.symbol.split(':')[1] ? t.text : t.subText, fontSize: '11px', fontWeight: activeStock === s.symbol.split(':')[1] ? '700' : '400', cursor: 'pointer', whiteSpace: 'nowrap' }}>
             {s.label}
           </button>
         ))}
@@ -90,7 +90,7 @@ function TrendyStocks() {
       <div style={{ display: 'flex', gap: '8px', marginBottom: '16px' }}>
         {periods.map(p => (
           <button type="button" key={p} onClick={() => setPeriod(p)}
-            style={{ padding: '4px 10px', borderRadius: '6px', background: period === p ? (t.bg === '#c4c4c4' ? 'rgba(0,0,0,0.08)' : 'rgba(255,255,255,0.15)') : 'transparent', border: 'none', color: period === p ? t.text : t.mutedText, fontSize: '10px', fontWeight: period === p ? '700' : '400', cursor: 'pointer' }}>
+            style={{ padding: '4px 10px', borderRadius: '6px', background: period === p ? (t.bg === '#e6e6e6' ? 'rgba(0,0,0,0.08)' : 'rgba(255,255,255,0.15)') : 'transparent', border: 'none', color: period === p ? t.text : t.mutedText, fontSize: '10px', fontWeight: period === p ? '700' : '400', cursor: 'pointer' }}>
             {p}
           </button>
         ))}
@@ -175,7 +175,7 @@ export default function Dashboard() {
       <div style={{ flex: 1, display: 'flex', flexDirection: 'column', overflow: 'hidden', minWidth: 0 }}>
 
         {/* Top Nav */}
-        <div style={{ position: 'sticky', top: 0, zIndex: 1000, background: t.navBg, padding: '12px 16px', display: 'flex', alignItems: 'center', gap: '4px', flexShrink: 0, borderBottom: `1px solid ${t.accent}4D`, boxShadow: t.bg === '#c4c4c4' ? 'none' : '0 4px 24px rgba(99,102,241,0.15), 0 1px 0 {t.subtleBorder} inset' }}>
+        <div style={{ position: 'sticky', top: 0, zIndex: 1000, background: t.navBg, padding: '12px 16px', display: 'flex', alignItems: 'center', gap: '4px', flexShrink: 0, borderBottom: `1px solid ${t.accent}4D`, boxShadow: t.bg === '#e6e6e6' ? 'none' : '0 4px 24px rgba(99,102,241,0.15), 0 1px 0 {t.subtleBorder} inset' }}>
           <button type="button" onClick={() => setSidebarOpen(true)} style={{ background: 'none', border: 'none', color: t.text, cursor: 'pointer', marginRight: '4px', display: 'flex', alignItems: 'center' }}>
             <Menu size={15}/>
           </button>
@@ -374,7 +374,7 @@ export default function Dashboard() {
             {/* Stats Grid */}
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px', marginBottom: '20px' }}>
               {Array.isArray(stats) && stats.map((s, i) => (
-                <div key={i} style={{ position: 'relative', overflow: 'hidden', background: t.cardBg, border: `1px solid ${t.tableOuterBorder}`, borderRadius: '14px', padding: '12px 10px', minHeight: '90px', boxShadow: t.bg === '#c4c4c4' ? 'none' : '0 4px 24px rgba(0,0,0,0.2)' }}>
+                <div key={i} style={{ position: 'relative', overflow: 'hidden', background: t.cardBg, border: `1px solid ${t.tableOuterBorder}`, borderRadius: '14px', padding: '12px 10px', minHeight: '90px', boxShadow: t.bg === '#e6e6e6' ? 'none' : '0 4px 24px rgba(0,0,0,0.2)' }}>
                   {/* Gradient overlay */}
                   <div style={{ position: 'absolute', inset: 0, background: `linear-gradient(135deg, ${s.iconBg}10, transparent)`, pointerEvents: 'none' }} />
                   {/* Top accent line */}
@@ -396,7 +396,7 @@ export default function Dashboard() {
             {/* Chart */}
             {/* Identity Verification Card */}
             {u.kycStatus !== 'approved' && (
-              <div style={{ background: t.cardBg, border: `1px solid ${t.tableOuterBorder}`, borderRadius: '16px', padding: '20px', marginBottom: '16px', textAlign: 'center', boxShadow: t.bg === '#c4c4c4' ? 'none' : '0 4px 24px rgba(0,0,0,0.2)' }}>
+              <div style={{ background: t.cardBg, border: `1px solid ${t.tableOuterBorder}`, borderRadius: '16px', padding: '20px', marginBottom: '16px', textAlign: 'center', boxShadow: t.bg === '#e6e6e6' ? 'none' : '0 4px 24px rgba(0,0,0,0.2)' }}>
                 <div style={{ width: '48px', height: '48px', background: 'rgba(99,102,241,0.15)', borderRadius: '12px', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 12px' }}>
                   <svg width='24' height='24' fill='none' stroke='#6366f1' viewBox='0 0 24 24' strokeWidth='2'><path d='M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z'/><polyline points='9 12 11 14 15 10'/></svg>
                 </div>

@@ -40,7 +40,7 @@ export default function ReferUsers() {
   };
 
   const statCard = (icon, label, value, color) => (
-    <div style={{ background: t.bg === '#c4c4c4' ? t.cardBg : 'linear-gradient(135deg, rgba(15,23,42,0.9), rgba(30,41,59,0.8))', border: t.bg === '#c4c4c4' ? `1px solid ${t.border}` : '1px solid rgba(99,102,241,0.3)', borderRadius: '12px', padding: '10px', flex: 1, textAlign: 'center', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '6px', boxShadow: '0 4px 24px rgba(99,102,241,0.1)' }}>
+    <div style={{ background: t.bg === '#e6e6e6' ? t.cardBg : 'linear-gradient(135deg, rgba(15,23,42,0.9), rgba(30,41,59,0.8))', border: t.bg === '#e6e6e6' ? `1px solid ${t.border}` : '1px solid rgba(99,102,241,0.3)', borderRadius: '12px', padding: '10px', flex: 1, textAlign: 'center', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '6px', boxShadow: '0 4px 24px rgba(99,102,241,0.1)' }}>
       <div style={{ width: '32px', height: '32px', borderRadius: '50%', background: `${color}20`, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
         {icon}
       </div>

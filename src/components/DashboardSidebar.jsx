@@ -202,7 +202,7 @@ export default function DashboardSidebar({ open, onClose }) {
                 <div key={ii} style={{ padding: 0 }}>
                   <div style={{
                     background: isActive(item) && openSubmenu !== si+'-'+ii
-                      ? t.bg === '#c4c4c4'
+                      ? t.bg === '#e6e6e6'
                         ? 'rgba(99,102,241,0.08)'
                         : 'rgba(99,102,241,0.1)'
                       : 'transparent',
@@ -238,12 +238,12 @@ export default function DashboardSidebar({ open, onClose }) {
                           style={{
                             width: '100%', padding: '9px 14px', marginBottom: '2px',
                             background: subActive
-                              ? t.bg === '#c4c4c4' ? 'rgba(99,102,241,0.1)' : 'rgba(99,102,241,0.18)'
+                              ? t.bg === '#e6e6e6' ? 'rgba(99,102,241,0.1)' : 'rgba(99,102,241,0.18)'
                               : 'transparent',
                             border: subActive ? '1px solid rgba(99,102,241,0.35)' : '1px solid transparent',
                             borderRadius: '8px',
                             boxShadow: subActive
-                              ? t.bg === '#c4c4c4' ? '0 2px 8px rgba(99,102,241,0.12)' : '0 4px 12px rgba(99,102,241,0.2)'
+                              ? t.bg === '#e6e6e6' ? '0 2px 8px rgba(99,102,241,0.12)' : '0 4px 12px rgba(99,102,241,0.2)'
                               : 'none',
                             cursor: 'pointer',
                             color: subActive ? '#6366f1' : t.subText,

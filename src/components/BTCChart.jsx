@@ -21,7 +21,7 @@ export default function BTCChart() {
   const [symbol, setSymbol] = useState(coins[0]);
   const [interval, setInterval] = useState(intervals[2]);
 
-  const isDark = t.bg !== '#c4c4c4';
+  const isDark = t.bg !== '#e6e6e6';
   const theme = isDark ? 'dark' : 'light';
 
   const src = `https://www.tradingview.com/widgetembed/?frameElementId=tradingview_chart&symbol=${symbol.value}&interval=${interval.value}&hidesidetoolbar=0&hidetoptoolbar=0&symboledit=0&saveimage=0&toolbarbg=${isDark ? '0f172a' : 'ffffff'}&studies=[]&theme=${theme}&style=1&timezone=Etc%2FUTC&studies_overrides={}&overrides={}&enabled_features=[]&disabled_features=[]&locale=en&utm_source=quantyrexmarkets.vercel.app`;

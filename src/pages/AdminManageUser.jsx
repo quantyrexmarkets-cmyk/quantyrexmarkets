@@ -318,7 +318,7 @@ export default function AdminManageUser() {
                 {value:'adminMessage', label:'Admin Announcement'},
               ].map(opt => (
                 <div key={opt.value} onClick={() => setEmailType(opt.value)}
-                  style={{ padding:'8px 12px', background:emailType===opt.value?'rgba(99,102,241,0.1)':'#c4c4c4', border:'1px solid '+(emailType===opt.value?'#6366f1':'#e2e8f0'), cursor:'pointer', color:emailType===opt.value?'#6366f1':'#555', fontSize:'11px', fontWeight:emailType===opt.value?'600':'400', borderRadius:'6px' }}>
+                  style={{ padding:'8px 12px', background:emailType===opt.value?'rgba(99,102,241,0.1)':'#e6e6e6', border:'1px solid '+(emailType===opt.value?'#6366f1':'#e2e8f0'), cursor:'pointer', color:emailType===opt.value?'#6366f1':'#555', fontSize:'11px', fontWeight:emailType===opt.value?'600':'400', borderRadius:'6px' }}>
                   {opt.label}
                 </div>
               ))}
@@ -327,7 +327,7 @@ export default function AdminManageUser() {
               <div style={{ marginBottom:'12px' }}>
                 <div style={{ color:'#888', fontSize:'10px', marginBottom:'4px' }}>Fee Amount ($)</div>
                 <input value={regFeeAmount} onChange={e=>setRegFeeAmount(e.target.value)} placeholder="e.g. 250"
-                  style={{ width:'100%', background:'#c4c4c4', border:'1px solid #e2e8f0', color:'#111', fontSize:'11px', padding:'8px 10px', outline:'none', borderRadius:'6px', boxSizing:'border-box' }}/>
+                  style={{ width:'100%', background:'#e6e6e6', border:'1px solid #e2e8f0', color:'#111', fontSize:'11px', padding:'8px 10px', outline:'none', borderRadius:'6px', boxSizing:'border-box' }}/>
               </div>
             )}
             {(emailType==='custom'||emailType==='adminMessage') && (
@@ -335,12 +335,12 @@ export default function AdminManageUser() {
                 <div style={{ marginBottom:'10px' }}>
                   <div style={{ color:'#888', fontSize:'10px', marginBottom:'4px' }}>Subject</div>
                   <input value={emailSubject} onChange={e=>setEmailSubject(e.target.value)} placeholder="Email subject..."
-                    style={{ width:'100%', background:'#c4c4c4', border:'1px solid #e2e8f0', color:'#111', fontSize:'11px', padding:'8px 10px', outline:'none', borderRadius:'6px', boxSizing:'border-box' }}/>
+                    style={{ width:'100%', background:'#e6e6e6', border:'1px solid #e2e8f0', color:'#111', fontSize:'11px', padding:'8px 10px', outline:'none', borderRadius:'6px', boxSizing:'border-box' }}/>
                 </div>
                 <div style={{ marginBottom:'14px' }}>
                   <div style={{ color:'#888', fontSize:'10px', marginBottom:'4px' }}>Message</div>
                   <textarea value={emailMessage} onChange={e=>setEmailMessage(e.target.value)} placeholder="Type your message..." rows={4}
-                    style={{ width:'100%', background:'#c4c4c4', border:'1px solid #e2e8f0', color:'#111', fontSize:'11px', padding:'8px 10px', outline:'none', resize:'vertical', boxSizing:'border-box', borderRadius:'6px' }}/>
+                    style={{ width:'100%', background:'#e6e6e6', border:'1px solid #e2e8f0', color:'#111', fontSize:'11px', padding:'8px 10px', outline:'none', resize:'vertical', boxSizing:'border-box', borderRadius:'6px' }}/>
                 </div>
               </>
             )}

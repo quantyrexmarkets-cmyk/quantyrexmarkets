@@ -343,7 +343,7 @@ export default function Withdraw() {
             <div style={{ color: '#555', fontSize: '11px', marginBottom: '8px', lineHeight: '1.8' }}>
               Dear Investor, your withdrawal request has been successfully submitted and is currently <strong>pending review</strong> by our team.
             </div>
-            <div style={{ background: '#c4c4c4', border: '1px solid #e2e8f0', borderRadius: '8px', padding: '12px', marginBottom: '16px', textAlign: 'left' }}>
+            <div style={{ background: '#e6e6e6', border: '1px solid #e2e8f0', borderRadius: '8px', padding: '12px', marginBottom: '16px', textAlign: 'left' }}>
               <div style={{ color: '#888', fontSize: '9px', marginBottom: '6px', fontWeight: '600' }}>WHAT HAPPENS NEXT?</div>
               <div style={{ color: '#555', fontSize: '10px', lineHeight: '1.8' }}>
                 1. Our team will review your request within 24-48 hours<br/>
