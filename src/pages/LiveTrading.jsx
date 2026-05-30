@@ -6,6 +6,7 @@ import { TrendingUp, TrendingDown, Clock, X } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 import { useTheme } from '../context/ThemeContext';
 import { createTrade, getTrades } from '../services/api';
+import StatusPopup from '../components/StatusPopup';
 import PageHeader from '../components/PageHeader';
 import DashboardSidebar from '../components/DashboardSidebar';
 import { toast } from 'react-toastify';
@@ -57,6 +58,7 @@ export default function LiveTrading() {
   const [stopLoss, setStopLoss] = useState('');
   const [takeProfit, setTakeProfit] = useState('');
   const [submitting, setSubmitting] = useState(false);
+  const [popup, setPopup] = useState({ show: false, type: 'success', title: '', message: '' });
 
   // Positions
   const [trades, setTrades] = useState([]);
@@ -225,7 +227,7 @@ export default function LiveTrading() {
   const handleTrade = async () => {
     if (!requireSub('execute trade')) return;
     if (!amount || parseFloat(amount) < 10) {
-      toast.error('Minimum trade amount is $10');
+      setPopup({ show: true, type: 'error', title: 'Invalid Amount', message: 'Minimum trade amount is $10' });
       return;
     }
     setSubmitting(true);
@@ -245,12 +247,12 @@ export default function LiveTrading() {
       console.log('[Trade] Response:', res);
       console.log('Trade response:', res);
       if (res?.message && !res?.trade) {
-        toast.error(res.message);
+        setPopup({ show: true, type: 'error', title: 'Trade Failed', message: res.message });
         setSubmitting(false);
         return;
       }
       if (res?.trade) {
-        toast.success(`${tradeType} ${symbol.label} executed: $${amount}`);
+        setPopup({ show: true, type: 'success', title: 'Trade Executed!', message: `${tradeType} ${symbol.label} for $${amount}` });
         setAmount('');
         setStopLoss('');
         setTakeProfit('');
@@ -258,11 +260,11 @@ export default function LiveTrading() {
         const data = await getTrades();
         if (Array.isArray(data)) setTrades(data);
       } else {
-        toast.error(res?.message || res?.error || JSON.stringify(res).slice(0,150));
+        setPopup({ show: true, type: 'error', title: 'Trade Failed', message: res?.message || res?.error || 'Unable to place trade' });
       }
     } catch (e) {
       console.error('[Trade] Error:', e);
-      toast.error('Error: ' + (e?.message || JSON.stringify(e)).slice(0, 150));
+      setPopup({ show: true, type: 'error', title: 'Trade Failed', message: e?.message || 'Network error - please try again' });
     } finally {
       setSubmitting(false);
     }
@@ -281,6 +283,7 @@ export default function LiveTrading() {
     <div style={{ minHeight: '100vh', background: t.bg, fontFamily: "'Segoe UI', sans-serif", color: t.text, display: 'flex', flexDirection: 'column' }}>
       <PageHeader />
       <DashboardSidebar open={sidebarOpen} onClose={() => setSidebarOpen(false)} />
+      <StatusPopup {...popup} onClose={() => setPopup(p => ({ ...p, show: false }))} />
 
       {/* SYMBOL SELECTOR ROW */}
       <div style={{ padding: '10px 12px', background: t.cardBg, borderBottom: `1px solid ${t.border}`, overflowX: 'auto', whiteSpace: 'nowrap', display: 'flex', gap: '6px' }}>
