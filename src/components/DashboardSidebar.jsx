@@ -199,24 +199,16 @@ export default function DashboardSidebar({ open, onClose }) {
             <div key={si} style={{ marginBottom: '16px' }}>
               <div style={{ color: t.subText, fontSize: '8px', fontWeight: '700', letterSpacing: '0.1em', padding: '0 16px', marginBottom: '8px', marginTop: '8px' }}>{section.title}</div>
               {section.items.map((item, ii) => (
-                <div key={ii} style={{ padding: '2px 8px' }}>
+                <div key={ii} style={{ padding: 0 }}>
                   <div style={{
-                    borderRadius: '8px',
                     background: isActive(item) && openSubmenu !== si+'-'+ii
                       ? t.bg === '#f8fafc'
-                        ? 'rgba(99,102,241,0.1)'
-                        : 'rgba(99,102,241,0.15)'
+                        ? 'rgba(99,102,241,0.08)'
+                        : 'rgba(99,102,241,0.1)'
                       : 'transparent',
-                    border: isActive(item) && openSubmenu !== si+'-'+ii
-                      ? t.bg === '#f8fafc'
-                        ? '1px solid rgba(99,102,241,0.4)'
-                        : '1px solid rgba(99,102,241,0.3)'
-                      : '1px solid transparent',
-                    boxShadow: isActive(item) && openSubmenu !== si+'-'+ii
-                      ? t.bg === '#f8fafc'
-                        ? '0 2px 8px rgba(99,102,241,0.15)'
-                        : '0 4px 16px rgba(99,102,241,0.15), inset 0 1px 0 rgba(99,102,241,0.05)'
-                      : 'none',
+                    borderLeft: isActive(item) && openSubmenu !== si+'-'+ii
+                      ? '3px solid #6366f1'
+                      : '3px solid transparent',
                   }}>
                   <button type="button" onClick={() => {
                     if (item.action === 'smartsupp') { if(window.smartsupp) window.smartsupp('chat:open'); onClose(); }
