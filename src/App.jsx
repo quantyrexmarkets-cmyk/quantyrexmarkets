@@ -67,6 +67,8 @@ import NotFound from "./pages/NotFound";
 import ForgotPassword from "./pages/ForgotPassword";
 import LoadingScreen from "./components/LoadingScreen";
 import LiveChat from "./components/LiveChat";
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const AdminRoute = ({ children }) => {
   const { user, loading } = useAuth();
