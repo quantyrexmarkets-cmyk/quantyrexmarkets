@@ -299,7 +299,7 @@ export default function LiveTrading() {
               borderRadius: '6px',
               color: symbol.binance === s.binance ? '#818cf8' : t.text,
               fontSize: '10px',
-              fontWeight: '700',
+              fontWeight: '500',
               cursor: 'pointer',
               whiteSpace: 'nowrap',
             }}>
@@ -312,17 +312,17 @@ export default function LiveTrading() {
       <div style={{ padding: '14px 16px', background: t.cardBg, borderBottom: `1px solid ${t.border}` }}>
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
           <div>
-            <div style={{ color: t.subText, fontSize: '11px', fontWeight: '600' }}>{symbol.name} · {symbol.label}</div>
-            <div style={{ color: t.text, fontSize: '22px', fontWeight: '700', marginTop: '4px', fontFamily: "'SF Mono', Menlo, monospace" }}>
+            <div style={{ color: t.subText, fontSize: '11px', fontWeight: '400' }}>{symbol.name} · {symbol.label}</div>
+            <div style={{ color: t.text, fontSize: '22px', fontWeight: '500', marginTop: '4px', fontFamily: "'SF Mono', Menlo, monospace" }}>
               ${currentPrice.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: symbol.binance.startsWith('xrp') || symbol.binance.startsWith('ada') ? 4 : 2 })}
             </div>
           </div>
           <div style={{ textAlign: 'right' }}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '4px', justifyContent: 'flex-end', color: priceColor, fontSize: '12px', fontWeight: '700' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '4px', justifyContent: 'flex-end', color: priceColor, fontSize: '12px', fontWeight: '500' }}>
               {isUp ? <TrendingUp size={12}/> : <TrendingDown size={12}/>}
               {isUp ? '+' : ''}{priceChange.toFixed(2)}
             </div>
-            <div style={{ color: priceColor, fontSize: '11px', fontWeight: '600', marginTop: '4px' }}>
+            <div style={{ color: priceColor, fontSize: '11px', fontWeight: '400', marginTop: '4px' }}>
               ({isUp ? '+' : ''}{pricePercent.toFixed(2)}%)
             </div>
           </div>
@@ -343,7 +343,7 @@ export default function LiveTrading() {
               borderRadius: '4px',
               color: timeframe.binance === tf.binance ? '#ffffff' : t.text,
               fontSize: '10px',
-              fontWeight: '700',
+              fontWeight: '500',
               cursor: 'pointer',
             }}>
             {tf.label}
@@ -374,7 +374,7 @@ export default function LiveTrading() {
               borderBottom: activeTab === tab.id ? '2px solid #6366f1' : '2px solid transparent',
               color: activeTab === tab.id ? '#818cf8' : t.subText,
               fontSize: '10px',
-              fontWeight: '700',
+              fontWeight: '500',
               cursor: 'pointer',
             }}>
             {tab.label}
@@ -392,13 +392,13 @@ export default function LiveTrading() {
               <button type="button" onClick={() => setTradeType('BUY')} style={{
                 padding: '14px', background: tradeType === 'BUY' ? '#22c55e' : 'transparent',
                 border: `1.5px solid ${tradeType === 'BUY' ? '#22c55e' : t.border}`, borderRadius: '8px',
-                color: tradeType === 'BUY' ? '#ffffff' : t.text, fontSize: '12px', fontWeight: '700',
+                color: tradeType === 'BUY' ? '#ffffff' : t.text, fontSize: '12px', fontWeight: '500',
                 cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '6px',
               }}><TrendingUp size={14}/> BUY</button>
               <button type="button" onClick={() => setTradeType('SELL')} style={{
                 padding: '14px', background: tradeType === 'SELL' ? '#ef4444' : 'transparent',
                 border: `1.5px solid ${tradeType === 'SELL' ? '#ef4444' : t.border}`, borderRadius: '8px',
-                color: tradeType === 'SELL' ? '#ffffff' : t.text, fontSize: '12px', fontWeight: '700',
+                color: tradeType === 'SELL' ? '#ffffff' : t.text, fontSize: '12px', fontWeight: '500',
                 cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '6px',
               }}><TrendingDown size={14}/> SELL</button>
             </div>
@@ -409,7 +409,7 @@ export default function LiveTrading() {
                 <button type="button" key={amt} onClick={() => setAmount(String(amt))}
                   style={{ padding: '10px 0', background: amount === String(amt) ? 'rgba(99,102,241,0.15)' : t.inputBg,
                     border: `1px solid ${amount === String(amt) ? '#6366f1' : t.border}`, borderRadius: '6px',
-                    color: amount === String(amt) ? '#818cf8' : t.subText, fontSize: '11px', fontWeight: '600', cursor: 'pointer' }}>
+                    color: amount === String(amt) ? '#818cf8' : t.subText, fontSize: '11px', fontWeight: '400', cursor: 'pointer' }}>
                   ${amt}
                 </button>
               ))}
@@ -418,7 +418,7 @@ export default function LiveTrading() {
             {/* Amount input */}
             <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '4px' }}>
               <span style={{ color: t.subText, fontSize: '10px' }}>Amount (USD)</span>
-              <span style={{ color: '#818cf8', fontSize: '10px', fontWeight: '600' }}>Bal: ${user?.balance?.toLocaleString() || '0'}</span>
+              <span style={{ color: '#818cf8', fontSize: '10px', fontWeight: '400' }}>Bal: ${user?.balance?.toLocaleString() || '0'}</span>
             </div>
             <input type="number" value={amount} onChange={e => setAmount(e.target.value)} placeholder="Min $10"
               style={{ width: '100%', padding: '11px 12px', background: t.inputBg, border: `1px solid ${t.border}`,
@@ -447,13 +447,13 @@ export default function LiveTrading() {
             {/* Stop Loss + Take Profit */}
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px', marginBottom: '14px' }}>
               <div>
-                <div style={{ color: '#ef4444', fontSize: '10px', marginBottom: '4px', fontWeight: '600' }}>◎ Stop Loss</div>
+                <div style={{ color: '#ef4444', fontSize: '10px', marginBottom: '4px', fontWeight: '400' }}>◎ Stop Loss</div>
                 <input type="number" value={stopLoss} onChange={e => setStopLoss(e.target.value)} placeholder="Optional"
                   style={{ width: '100%', padding: '10px', background: t.inputBg, border: `1px solid ${t.border}`,
                     borderRadius: '6px', color: t.text, fontSize: '11px', outline: 'none', boxSizing: 'border-box' }} />
               </div>
               <div>
-                <div style={{ color: '#22c55e', fontSize: '10px', marginBottom: '4px', fontWeight: '600' }}>◎ Take Profit</div>
+                <div style={{ color: '#22c55e', fontSize: '10px', marginBottom: '4px', fontWeight: '400' }}>◎ Take Profit</div>
                 <input type="number" value={takeProfit} onChange={e => setTakeProfit(e.target.value)} placeholder="Optional"
                   style={{ width: '100%', padding: '10px', background: t.inputBg, border: `1px solid ${t.border}`,
                     borderRadius: '6px', color: t.text, fontSize: '11px', outline: 'none', boxSizing: 'border-box' }} />
@@ -463,7 +463,7 @@ export default function LiveTrading() {
             {/* Execute Button */}
             <button type="button" disabled={submitting} onClick={handleTrade}
               style={{ width: '100%', padding: '15px', background: tradeType === 'BUY' ? '#22c55e' : '#ef4444',
-                border: 'none', borderRadius: '8px', color: '#ffffff', fontSize: '13px', fontWeight: '700',
+                border: 'none', borderRadius: '8px', color: '#ffffff', fontSize: '13px', fontWeight: '500',
                 cursor: submitting ? 'wait' : 'pointer', letterSpacing: '0.5px',
                 opacity: submitting ? 0.7 : 1 }}>
               {submitting ? 'Executing...' : `${tradeType} ${symbol.display} · $${amount || '0'}`}
@@ -484,13 +484,13 @@ export default function LiveTrading() {
                 <div key={tr._id} style={{ padding: '12px', background: t.cardBg, border: `1px solid ${t.border}`, borderRadius: '8px', marginBottom: '8px' }}>
                   <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '8px' }}>
                     <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-                      <span style={{ color: tr.type === 'BUY' ? '#22c55e' : '#ef4444', fontSize: '11px', fontWeight: '700' }}>
+                      <span style={{ color: tr.type === 'BUY' ? '#22c55e' : '#ef4444', fontSize: '11px', fontWeight: '500' }}>
                         {tr.type === 'BUY' ? '▲' : '▼'} {tr.type}
                       </span>
-                      <span style={{ color: t.text, fontSize: '11px', fontWeight: '600' }}>{tr.symbol}</span>
+                      <span style={{ color: t.text, fontSize: '11px', fontWeight: '400' }}>{tr.symbol}</span>
                       <span style={{ color: t.subText, fontSize: '9px' }}>{tr.leverage}</span>
                     </div>
-                    <span style={{ color: t.text, fontSize: '11px', fontWeight: '600' }}>${tr.amount}</span>
+                    <span style={{ color: t.text, fontSize: '11px', fontWeight: '400' }}>${tr.amount}</span>
                   </div>
                   <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '10px', color: t.subText }}>
                     <span>Entry: ${tr.openPrice?.toFixed(2)}</span>
@@ -512,7 +512,7 @@ export default function LiveTrading() {
               trades.slice(0, 20).map(tr => (
                 <div key={tr._id} style={{ padding: '10px 12px', background: t.cardBg, border: `1px solid ${t.border}`, borderRadius: '6px', marginBottom: '6px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                   <div>
-                    <div style={{ fontSize: '11px', fontWeight: '600' }}>
+                    <div style={{ fontSize: '11px', fontWeight: '400' }}>
                       <span style={{ color: tr.type === 'BUY' ? '#22c55e' : '#ef4444' }}>{tr.type}</span> {tr.symbol}
                     </div>
                     <div style={{ fontSize: '9px', color: t.subText, marginTop: '2px' }}>
@@ -520,8 +520,8 @@ export default function LiveTrading() {
                     </div>
                   </div>
                   <div style={{ textAlign: 'right' }}>
-                    <div style={{ fontSize: '11px', fontWeight: '600' }}>${tr.amount}</div>
-                    <div style={{ fontSize: '9px', color: tr.status === 'closed' ? (tr.result > 0 ? '#22c55e' : '#ef4444') : '#f59e0b', marginTop: '2px', fontWeight: '600' }}>
+                    <div style={{ fontSize: '11px', fontWeight: '400' }}>${tr.amount}</div>
+                    <div style={{ fontSize: '9px', color: tr.status === 'closed' ? (tr.result > 0 ? '#22c55e' : '#ef4444') : '#f59e0b', marginTop: '2px', fontWeight: '400' }}>
                       {tr.status === 'closed' ? (tr.result > 0 ? `+$${tr.result.toFixed(2)}` : `$${tr.result.toFixed(2)}`) : tr.status.toUpperCase()}
                     </div>
                   </div>
@@ -534,19 +534,19 @@ export default function LiveTrading() {
         {activeTab === 'pnl' && (
           <div>
             <div style={{ background: t.cardBg, border: `1px solid ${t.border}`, borderRadius: '8px', padding: '20px', marginBottom: '12px', textAlign: 'center' }}>
-              <div style={{ color: t.subText, fontSize: '10px', letterSpacing: '1.5px', fontWeight: '600', marginBottom: '8px' }}>TOTAL P&L</div>
-              <div style={{ color: totalPnL >= 0 ? '#22c55e' : '#ef4444', fontSize: '28px', fontWeight: '700' }}>
+              <div style={{ color: t.subText, fontSize: '10px', letterSpacing: '1.5px', fontWeight: '400', marginBottom: '8px' }}>TOTAL P&L</div>
+              <div style={{ color: totalPnL >= 0 ? '#22c55e' : '#ef4444', fontSize: '28px', fontWeight: '500' }}>
                 {totalPnL >= 0 ? '+' : ''}${totalPnL.toFixed(2)}
               </div>
               <div style={{ color: t.subText, fontSize: '10px', marginTop: '6px' }}>{closedTrades.length} closed trades</div>
             </div>
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '8px' }}>
               <div style={{ background: t.cardBg, border: `1px solid ${t.border}`, borderRadius: '8px', padding: '14px', textAlign: 'center' }}>
-                <div style={{ color: '#22c55e', fontSize: '18px', fontWeight: '700' }}>{closedTrades.filter(tr => tr.result > 0).length}</div>
+                <div style={{ color: '#22c55e', fontSize: '18px', fontWeight: '500' }}>{closedTrades.filter(tr => tr.result > 0).length}</div>
                 <div style={{ color: t.subText, fontSize: '9px', marginTop: '4px' }}>WINS</div>
               </div>
               <div style={{ background: t.cardBg, border: `1px solid ${t.border}`, borderRadius: '8px', padding: '14px', textAlign: 'center' }}>
-                <div style={{ color: '#ef4444', fontSize: '18px', fontWeight: '700' }}>{closedTrades.filter(tr => tr.result < 0).length}</div>
+                <div style={{ color: '#ef4444', fontSize: '18px', fontWeight: '500' }}>{closedTrades.filter(tr => tr.result < 0).length}</div>
                 <div style={{ color: t.subText, fontSize: '9px', marginTop: '4px' }}>LOSSES</div>
               </div>
             </div>
