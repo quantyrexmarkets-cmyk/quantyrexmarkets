@@ -62,10 +62,31 @@ export default function LiveChat() {
   useEffect(() => {
     if (open) {
       setUnread(0);
-      setFullscreen(true);
+      // Auto-fullscreen on mobile only
+      if (window.innerWidth < 768) {
+        setFullscreen(true);
+      }
       bottomRef.current?.scrollIntoView({ behavior: 'smooth' });
     }
   }, [open, chat]);
+
+  // Lock body scroll when fullscreen chat is open
+  useEffect(() => {
+    if (open && fullscreen) {
+      document.body.style.overflow = 'hidden';
+      document.body.style.position = 'fixed';
+      document.body.style.width = '100%';
+    } else {
+      document.body.style.overflow = '';
+      document.body.style.position = '';
+      document.body.style.width = '';
+    }
+    return () => {
+      document.body.style.overflow = '';
+      document.body.style.position = '';
+      document.body.style.width = '';
+    };
+  }, [open, fullscreen]);
 
   const sendMessage = async () => {
     if (!text.trim() || loading) return;
