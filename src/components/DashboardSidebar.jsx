@@ -163,7 +163,7 @@ export default function DashboardSidebar({ open, onClose }) {
     <>
       {open && <div onClick={onClose} style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.4)', zIndex: 1099 }} />}
       <div style={{
-          position: 'fixed', top: 0, left: open ? '0' : '-220px', height: '100vh', width: '210px', background: t.bg, zIndex: 1100, transition: 'left 0.3s ease',
+          position: 'fixed', top: 0, left: open ? '0' : '-220px', height: '100vh', width: '210px', background: t.sidebarBg || t.cardBg, zIndex: 1100, transition: 'left 0.3s ease',
         display: 'flex', flexDirection: 'column', borderRight: `1px solid ${t.sidebarBorder}`, overflowY: 'auto'
       }}>
         {/* Logo */}
