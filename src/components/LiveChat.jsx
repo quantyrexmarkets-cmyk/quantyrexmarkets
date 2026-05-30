@@ -73,17 +73,24 @@ export default function LiveChat() {
   // Lock body scroll when fullscreen chat is open
   useEffect(() => {
     if (open && fullscreen) {
+      const scrollY = window.scrollY;
       document.body.style.overflow = 'hidden';
       document.body.style.position = 'fixed';
+      document.body.style.top = `-${scrollY}px`;
       document.body.style.width = '100%';
+      document.body.dataset.scrollY = scrollY;
     } else {
+      const scrollY = document.body.dataset.scrollY || '0';
       document.body.style.overflow = '';
       document.body.style.position = '';
+      document.body.style.top = '';
       document.body.style.width = '';
+      window.scrollTo(0, parseInt(scrollY));
     }
     return () => {
       document.body.style.overflow = '';
       document.body.style.position = '';
+      document.body.style.top = '';
       document.body.style.width = '';
     };
   }, [open, fullscreen]);
@@ -152,7 +159,7 @@ export default function LiveChat() {
       {/* Chat Window */}
       <div style={{ position: 'fixed', bottom: '20px', right: '20px', zIndex: 9999 }}>
         {open && (
-          <div style={{ position: fullscreen ? 'fixed' : 'absolute', bottom: fullscreen ? 0 : '50px', right: fullscreen ? 0 : 0, top: fullscreen ? 'env(safe-area-inset-top, 0px)' : 'auto', left: fullscreen ? 0 : 'auto', width: fullscreen ? '100%' : '280px', height: fullscreen ? '100%' : 'auto', background: '#dedede', border: '1px solid rgba(99,102,241,0.4)', borderRadius: fullscreen ? '0' : '8px', overflow: 'hidden', boxShadow: '0 8px 32px rgba(0,0,0,0.4)', zIndex: 9999, display: 'flex', flexDirection: 'column' }}>
+          <div style={{ position: fullscreen ? 'fixed' : 'absolute', bottom: fullscreen ? 0 : '50px', right: fullscreen ? 0 : 0, top: fullscreen ? 'env(safe-area-inset-top, 0px)' : 'auto', left: fullscreen ? 0 : 'auto', width: fullscreen ? '100%' : '280px', height: fullscreen ? '100dvh' : 'auto', background: '#dedede', border: '1px solid rgba(99,102,241,0.4)', borderRadius: fullscreen ? '0' : '8px', overflow: 'hidden', boxShadow: '0 8px 32px rgba(0,0,0,0.4)', zIndex: 9999, display: 'flex', flexDirection: 'column' }}>
 
             {/* Header */}
             <div style={{ background: '#6366f1', padding: 'env(safe-area-inset-top, 0px) 12px 16px 12px', paddingTop: fullscreen ? 'max(16px, env(safe-area-inset-top, 16px))' : '16px', minHeight: '68px', flexShrink: 0, boxSizing: 'border-box', borderRadius: fullscreen ? '0' : '8px 8px 0 0', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
@@ -185,7 +192,7 @@ export default function LiveChat() {
             </div>
 
             {/* Messages */}
-            <div style={{ flex: fullscreen ? 1 : 'none', height: fullscreen ? 'auto' : '220px', overflowY: 'auto', padding: '10px', minHeight: 0, display: 'flex', flexDirection: 'column', gap: '8px', background: '#dedede' }}>
+            <div style={{ flex: fullscreen ? 1 : 'none', height: fullscreen ? 'auto' : '220px', overflowY: 'auto', padding: '10px', minHeight: 0, overscrollBehavior: 'contain', WebkitOverflowScrolling: 'touch', display: 'flex', flexDirection: 'column', gap: '8px', background: '#dedede' }}>
               {!chat || !chat.messages || chat.messages.filter(msg => !(msg.sender === 'system' && msg.text?.includes('left'))).length === 0 ? (
                 <div style={{ color: 'rgba(0,0,0,0.3)', fontSize: '9px', textAlign: 'center', marginTop: '80px' }}>
                   Send a message to start chatting
