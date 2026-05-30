@@ -150,7 +150,6 @@ body.light-mode .dashboard-root {
 }
 
 /* White theme - flat design, no shadows */
-body[data-theme="white"] *,
-html:has(body[style*="#eef0f4"]) * {
+[data-theme="white"] * {
   box-shadow: none !important;
 }
