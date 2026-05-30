@@ -263,46 +263,47 @@ export default function Dashboard() {
             width: '92%',
             maxWidth: '440px',
             margin: '20px auto',
-            background: 'rgba(239,68,68,0.12)',
-            borderRadius: '12px',
-            boxShadow: '0 8px 32px rgba(0,0,0,0.4)',
+            background: '#fdd5d5',
+            borderRadius: '8px',
             overflow: 'hidden',
-            animation: 'noticeSlide 0.4s ease-out',
+            position: 'relative',
           }}>
-            {/* Header */}
-            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '12px 14px 8px', borderBottom: '1px solid rgba(239,68,68,0.15)' }}>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                <div style={{ width: '24px', height: '24px', borderRadius: '50%', background: 'rgba(239,68,68,0.18)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                  <svg width="13" height="13" fill="none" stroke="#ef4444" viewBox="0 0 24 24" strokeWidth="2.2"><path strokeLinecap="round" strokeLinejoin="round" d="M12 9v2m0 4h.01M12 2a10 10 0 100 20 10 10 0 000-20z"/></svg>
-                </div>
-                <div>
-                  <div style={{ color: '#ef4444', fontSize: '10px', fontWeight: '700', letterSpacing: '1px', textTransform: 'uppercase' }}>Account Notice</div>
-                  <div style={{ color: t.text, fontSize: '11px', fontWeight: '600', marginTop: '1px' }}>Action Required</div>
-                </div>
-              </div>
-              <button type="button" onClick={() => setShowNotice(false)} style={{ background: 'rgba(255,255,255,0.06)', border: 'none', color: t.subText, cursor: 'pointer', width: '24px', height: '24px', borderRadius: '6px', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 0, transition: 'all 0.2s' }}>
-                <svg width="11" height="11" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2.5"><path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
-              </button>
+            {/* Close button */}
+            <button type="button" onClick={() => setShowNotice(false)} style={{
+              position: 'absolute', top: '10px', right: '10px',
+              background: 'transparent', border: 'none', color: '#1a1a1a',
+              cursor: 'pointer', padding: '4px', display: 'flex',
+              alignItems: 'center', justifyContent: 'center', opacity: 0.6
+            }}>
+              <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2.5">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12"/>
+              </svg>
+            </button>
+
+            {/* Title */}
+            <div style={{ padding: '14px 36px 10px 16px', color: '#1a1a1a', fontSize: '15px', fontWeight: '700', textAlign: 'center' }}>
+              ⚠️ Account Notice ⚠️
             </div>
 
+            {/* Divider */}
+            <div style={{ height: '1px', background: 'rgba(0,0,0,0.1)', margin: '0 16px' }}></div>
+
             {/* Message body */}
-            <div style={{ padding: '12px 14px 14px', color: t.text, fontSize: '11px', lineHeight: '1.6', fontWeight: '400' }}>
+            <div style={{ padding: '12px 16px 14px', color: '#1a1a1a', fontSize: '13px', lineHeight: '1.5', fontWeight: '400' }}>
               {u.adminMessage}
             </div>
+
             {u.isAdmin && (
-              <div style={{ borderTop: '1px solid rgba(239,68,68,0.15)', padding: '8px 14px' }}>
-                <button type="button" onClick={() => navigate('/admin')} style={{ background: 'transparent', border: 'none', color: '#818cf8', cursor: 'pointer', fontSize: '9px', fontWeight: '600', padding: '0', letterSpacing: '0.5px' }}>
+              <div style={{ padding: '0 16px 12px' }}>
+                <button type="button" onClick={() => navigate('/admin')} style={{
+                  background: 'transparent', border: 'none', color: '#1a1a1a',
+                  cursor: 'pointer', fontSize: '11px', fontWeight: '700',
+                  padding: 0, letterSpacing: '0.5px', opacity: 0.7
+                }}>
                   → ADMIN PANEL
                 </button>
               </div>
             )}
-
-            <style>{`
-              @keyframes noticeSlide {
-                from { opacity: 0; transform: translateY(-10px); }
-                to { opacity: 1; transform: translateY(0); }
-              }
-            `}</style>
           </div>
         )}
 
