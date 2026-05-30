@@ -251,13 +251,13 @@ export default function LiveChat() {
           )}
           <button type="button" onClick={() => setOpen(!open)} style={{
             width: '52px', height: '52px', borderRadius: '50%',
-            background: '#22c55e', border: 'none', cursor: 'pointer',
+            background: '#16a34a', border: 'none', cursor: 'pointer',
             display: 'flex', alignItems: 'center', justifyContent: 'center',
-            boxShadow: '0 6px 20px rgba(34,197,94,0.4)',
+            boxShadow: '0 6px 20px rgba(22,163,74,0.5)',
             position: 'relative', flexShrink: 0
           }}>
-            <svg width="24" height="24" fill="white" viewBox="0 0 24 24">
-              <path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2z"/>
+            <svg width="26" height="26" fill="none" stroke="#ffffff" strokeWidth="2.2" viewBox="0 0 24 24" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
             </svg>
             {unread > 0 && (
               <div style={{
