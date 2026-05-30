@@ -209,11 +209,12 @@ export default function LiveChat() {
           {!open && showBubble && (
             <div style={{
               position: 'relative',
-              backgroundColor: '#ffffff',
-              background: '#ffffff',
+              backgroundColor: '#f5f5f5',
+              background: '#f5f5f5',
               borderRadius: '12px',
               padding: '10px 14px',
-              boxShadow: '0 4px 16px rgba(0,0,0,0.2)',
+              border: '1px solid #d4d4d4',
+              boxShadow: '0 4px 16px rgba(0,0,0,0.25)',
               width: 'auto',
               maxWidth: '170px',
               minWidth: '140px',
@@ -248,7 +249,7 @@ export default function LiveChat() {
                 width: 0, height: 0,
                 borderTop: '8px solid transparent',
                 borderBottom: '8px solid transparent',
-                borderLeft: '8px solid #ffffff'
+                borderLeft: '8px solid #f5f5f5'
               }} />
             </div>
           )}
