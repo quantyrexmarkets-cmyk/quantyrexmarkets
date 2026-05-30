@@ -38,40 +38,40 @@ const sidebarSections = [
   {
     title: 'DASHBOARD',
     items: [
-      { icon: <Home size={16}/>, label: 'Dashboard', route: '/dashboard' },
-      { icon: <User size={16}/>, label: 'Profile', route: '/dashboard/profile' },
-      { icon: <BarChart2 size={16}/>, label: 'Live Market', badge: 'New', route: '/dashboard/live-market' },
-      { icon: <Wallet size={16}/>, label: 'Stake', route: null, submenu: [
+      { icon: <Home size={13}/>, label: 'Dashboard', route: '/dashboard' },
+      { icon: <User size={13}/>, label: 'Profile', route: '/dashboard/profile' },
+      { icon: <BarChart2 size={13}/>, label: 'Live Market', badge: 'New', route: '/dashboard/live-market' },
+      { icon: <Wallet size={13}/>, label: 'Stake', route: null, submenu: [
         { label: 'New Stake', route: '/dashboard/new-stake' },
         { label: 'Stake History', route: '/dashboard/stake' },
       ]},
-      { icon: <Bot size={16}/>, label: 'Manage Bots', badge: 'New', route: '/dashboard/manage-bots' },
+      { icon: <Bot size={13}/>, label: 'Manage Bots', badge: 'New', route: '/dashboard/manage-bots' },
     ]
   },
   {
     title: 'INVESTMENTS',
     items: [
-      { icon: <BarChart2 size={16}/>, label: 'Investment records', route: '/dashboard/investment-records' },
-      { icon: <Clock size={16}/>, label: 'Transaction history', route: '/dashboard/transaction-history' },
-      { icon: <Package size={16}/>, label: 'Packages', route: null, submenu: [
+      { icon: <BarChart2 size={13}/>, label: 'Investment records', route: '/dashboard/investment-records' },
+      { icon: <Clock size={13}/>, label: 'Transaction history', route: '/dashboard/transaction-history' },
+      { icon: <Package size={13}/>, label: 'Packages', route: null, submenu: [
         { label: 'Available Packages', route: '/dashboard/packages' },
         { label: 'My Packages', route: '/dashboard/packages?tab=my' },
       ]},
-      { icon: <ArrowDownCircle size={16}/>, label: 'Withdraw / Deposit', route: null, submenu: [
+      { icon: <ArrowDownCircle size={13}/>, label: 'Withdraw / Deposit', route: null, submenu: [
         { label: 'Deposit', route: '/dashboard/deposit' },
         { label: 'Withdraw', route: '/dashboard/withdraw' },
       ]},
-      { icon: <TrendingUp size={16}/>, label: 'Live Trading', badge: 'New', route: '/dashboard/live-trading' },
-      { icon: <Users size={16}/>, label: 'Copy Trading', badge: 'New', route: null, submenu: [
+      { icon: <TrendingUp size={13}/>, label: 'Live Trading', badge: 'New', route: '/dashboard/live-trading' },
+      { icon: <Users size={13}/>, label: 'Copy Trading', badge: 'New', route: null, submenu: [
         { label: 'Browse Traders', route: '/dashboard/copy-trading' },
         { label: 'My Copy Trades', route: '/dashboard/my-copy-trades' },
       ]},
       
-      { icon: <Crown size={16}/>, label: 'Upgrade to Pro', badge: 'Pro', route: '/dashboard/subscription' },
-      { icon: <Lock size={16}/>, label: 'KYC', route: '/dashboard/kyc' },
-      { icon: <Users size={16}/>, label: 'Refer Users', route: '/dashboard/refer-users' },
-      { icon: <Bell size={16}/>, label: 'Support', route: null, external: null, action: 'smartsupp' },
-      { icon: <Settings size={16}/>, label: 'Settings', route: '/dashboard/settings' },
+      { icon: <Crown size={13}/>, label: 'Upgrade to Pro', badge: 'Pro', route: '/dashboard/subscription' },
+      { icon: <Lock size={13}/>, label: 'KYC', route: '/dashboard/kyc' },
+      { icon: <Users size={13}/>, label: 'Refer Users', route: '/dashboard/refer-users' },
+      { icon: <Bell size={13}/>, label: 'Support', route: null, external: null, action: 'smartsupp' },
+      { icon: <Settings size={13}/>, label: 'Settings', route: '/dashboard/settings' },
     ]
   }
 ];
@@ -168,7 +168,7 @@ export default function DashboardSidebar({ open, onClose }) {
       }}>
         {/* Logo */}
         <div style={{ padding: '16px 16px 12px', minHeight: '55px', boxSizing: 'border-box', display: 'flex', alignItems: 'center', justifyContent: 'space-between', background: 'transparent', borderBottom: `1px solid ${t.subtleBorder}` }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '10px', cursor: 'pointer' }} onClick={() => { navigate('/dashboard/profile'); onClose(); }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '8px', cursor: 'pointer' }} onClick={() => { navigate('/dashboard/profile'); onClose(); }}>
             {/* Logo */}
             <div style={{ width: '45px', height: '45px', flexShrink: 0 }}>
               <svg viewBox="0 0 40 40" fill="none" style={{ width: '100%', height: '100%' }}>
@@ -182,7 +182,7 @@ export default function DashboardSidebar({ open, onClose }) {
               <span style={{ color: t.text, fontSize: '15px', fontWeight: '300', letterSpacing: '0.5px', fontFamily: "'Montserrat', Arial, sans-serif" }}>{user?.firstName || ''} {user?.lastName || ''}</span>
               <div style={{ display: 'flex', alignItems: 'center', gap: '4px', marginTop: '2px' }}>
                 <div style={{ width: '6px', height: '6px', borderRadius: '50%', background: user?.kycStatus === 'approved' ? '#22c55e' : '#ef4444' }}></div>
-                <span style={{ color: user?.kycStatus === 'approved' ? '#22c55e' : '#ef4444', fontSize: '9px', fontWeight: '500' }}>
+                <span style={{ color: user?.kycStatus === 'approved' ? '#22c55e' : '#ef4444', fontSize: '8px', fontWeight: '500' }}>
                   {user?.kycStatus === 'approved' ? 'KYC Verified' : 'KYC Not Verified'}
                 </span>
               </div>
@@ -197,7 +197,7 @@ export default function DashboardSidebar({ open, onClose }) {
         <div style={{ padding: '12px 0', flex: 1 }}>
           {sidebarSections.map((section, si) => (
             <div key={si} style={{ marginBottom: '16px' }}>
-              <div style={{ color: t.subText, fontSize: '9px', fontWeight: '700', letterSpacing: '0.1em', padding: '0 16px', marginBottom: '8px', marginTop: '8px' }}>{section.title}</div>
+              <div style={{ color: t.subText, fontSize: '8px', fontWeight: '700', letterSpacing: '0.1em', padding: '0 16px', marginBottom: '8px', marginTop: '8px' }}>{section.title}</div>
               {section.items.map((item, ii) => (
                 <div key={ii} style={{ padding: '2px 8px' }}>
                   <div style={{
@@ -227,8 +227,8 @@ export default function DashboardSidebar({ open, onClose }) {
                       navigate(item.route); onClose();
                     }
                   }}
-                  style={{ width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '12px 16px', background: 'transparent', border: 'none', cursor: 'pointer', color: isActive(item) && openSubmenu !== si+'-'+ii ? '#6366f1' : t.text, fontSize: '11px', fontWeight: isActive(item) && openSubmenu !== si+'-'+ii ? '600' : '400', textAlign: 'left' }}>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                  style={{ width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '7px 14px', background: 'transparent', border: 'none', cursor: 'pointer', color: isActive(item) && openSubmenu !== si+'-'+ii ? '#6366f1' : t.text, fontSize: '10px', fontWeight: isActive(item) && openSubmenu !== si+'-'+ii ? '600' : '400', textAlign: 'left' }}>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
                       <span style={{ color: '#6366f1' }}>{item.icon}</span>
                       <span>{item.label}</span>
                     </div>
@@ -274,7 +274,7 @@ export default function DashboardSidebar({ open, onClose }) {
         </div>
 
         {/* Language */}
-        <div style={{ padding: '12px 16px', borderTop: `1px solid ${t.subtleBorder}`, display: 'flex', alignItems: 'center', gap: '6px' }}>
+        <div style={{ padding: '7px 14px', borderTop: `1px solid ${t.subtleBorder}`, display: 'flex', alignItems: 'center', gap: '6px' }}>
           <Globe size={11} color={t.mutedText}/>
           <span style={{ color: t.subText, fontSize: '8px' }}>EN ^</span>
         </div>
@@ -291,9 +291,9 @@ export default function DashboardSidebar({ open, onClose }) {
           </div>
           <div style={{ flex: 1, overflowY: 'auto' }}>
             {notifications.length === 0 ? (
-              <div style={{ padding: '30px', textAlign: 'center', color: t.faintText, fontSize: '9px' }}>No notifications yet</div>
+              <div style={{ padding: '30px', textAlign: 'center', color: t.faintText, fontSize: '8px' }}>No notifications yet</div>
             ) : notifications.map((n, i) => (
-              <div key={i} style={{ padding: '12px 16px', borderBottom: `1px solid ${t.tableRowBorder}`, background: n.read ? 'transparent' : 'rgba(99,102,241,0.06)', display: 'flex', gap: '10px' }}>
+              <div key={i} style={{ padding: '7px 14px', borderBottom: `1px solid ${t.tableRowBorder}`, background: n.read ? 'transparent' : 'rgba(99,102,241,0.06)', display: 'flex', gap: '10px' }}>
                 <div style={{ width: '6px', height: '6px', borderRadius: '50%', background: typeColor(n.type), marginTop: '4px', flexShrink: 0 }} />
                 <div>
                   <div style={{ color: t.text, fontSize: '12px', fontWeight: '600', marginBottom: '2px' }}>{n.title}</div>
