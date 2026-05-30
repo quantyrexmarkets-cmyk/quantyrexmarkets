@@ -324,7 +324,7 @@ export default function Dashboard() {
             <DashboardTicker />
             <div style={{ height: '16px' }}></div>
             {/* Welcome Card */}
-            <div style={{ position: 'relative', borderRadius: '16px', overflow: 'hidden', marginBottom: '20px', background: t.cardBg, border: `1px solid ${t.border}`, boxShadow: '0 8px 32px rgba(99,102,241,0.15), inset 0 1px 0 ${t.subtleBorder}', padding: '14px 12px', textAlign: 'center' }}>
+            <div style={{ position: 'relative', borderRadius: '16px', overflow: 'hidden', marginBottom: '20px', background: t.cardBg, border: t.bg === '#e6e6e6' ? '1px solid #d1d5db' : `1px solid ${t.border}`, boxShadow: '0 8px 32px rgba(99,102,241,0.15), inset 0 1px 0 ${t.subtleBorder}', padding: '14px 12px', textAlign: 'center' }}>
 
               {/* Glow effects */}
               <div style={{ position: 'absolute', top: '-40px', right: '-40px', width: '150px', height: '150px', borderRadius: '50%', background: 'rgba(99,102,241,0.2)', filter: 'blur(40px)', pointerEvents: 'none', opacity: 1 }} />
