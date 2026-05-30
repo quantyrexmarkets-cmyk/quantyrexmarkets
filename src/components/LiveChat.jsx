@@ -152,10 +152,10 @@ export default function LiveChat() {
       {/* Chat Window */}
       <div style={{ position: 'fixed', bottom: '20px', right: '20px', zIndex: 9999 }}>
         {open && (
-          <div style={{ position: fullscreen ? 'fixed' : 'absolute', bottom: fullscreen ? 0 : '50px', right: fullscreen ? 0 : 0, top: fullscreen ? 0 : 'auto', left: fullscreen ? 0 : 'auto', width: fullscreen ? '100%' : '280px', height: fullscreen ? '100%' : 'auto', background: '#dedede', border: '1px solid rgba(99,102,241,0.4)', borderRadius: fullscreen ? '0' : '8px', overflow: 'hidden', boxShadow: '0 8px 32px rgba(0,0,0,0.4)', zIndex: 9999 }}>
+          <div style={{ position: fullscreen ? 'fixed' : 'absolute', bottom: fullscreen ? 0 : '50px', right: fullscreen ? 0 : 0, top: fullscreen ? 0 : 'auto', left: fullscreen ? 0 : 'auto', width: fullscreen ? '100%' : '280px', height: fullscreen ? '100%' : 'auto', background: '#dedede', border: '1px solid rgba(99,102,241,0.4)', borderRadius: fullscreen ? '0' : '8px', overflow: 'hidden', boxShadow: '0 8px 32px rgba(0,0,0,0.4)', zIndex: 9999, display: 'flex', flexDirection: 'column' }}>
 
             {/* Header */}
-            <div style={{ background: '#6366f1', padding: '16px 12px', minHeight: '68px', boxSizing: 'border-box', borderRadius: fullscreen ? '0' : '8px 8px 0 0', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+            <div style={{ background: '#6366f1', padding: '16px 12px', minHeight: '68px', flexShrink: 0, boxSizing: 'border-box', borderRadius: fullscreen ? '0' : '8px 8px 0 0', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
                 <div style={{ position: 'relative', flexShrink: 0 }}>
                   <div style={{ width: '38px', height: '38px', borderRadius: '50%', background: 'linear-gradient(135deg, #1e1b4b, #312e81)', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 0 0 2px rgba(255,255,255,0.8), 0 4px 12px rgba(0,0,0,0.3)' }}>
@@ -185,7 +185,7 @@ export default function LiveChat() {
             </div>
 
             {/* Messages */}
-            <div style={{ height: fullscreen ? 'calc(100vh - 115px)' : '220px', overflowY: 'auto', padding: '10px', display: 'flex', flexDirection: 'column', gap: '8px', background: '#dedede' }}>
+            <div style={{ flex: fullscreen ? 1 : 'none', height: fullscreen ? 'auto' : '220px', overflowY: 'auto', padding: '10px', minHeight: 0, display: 'flex', flexDirection: 'column', gap: '8px', background: '#dedede' }}>
               {!chat || !chat.messages || chat.messages.filter(msg => !(msg.sender === 'system' && msg.text?.includes('left'))).length === 0 ? (
                 <div style={{ color: 'rgba(0,0,0,0.3)', fontSize: '9px', textAlign: 'center', marginTop: '80px' }}>
                   Send a message to start chatting
@@ -208,7 +208,7 @@ export default function LiveChat() {
             </div>
 
             {/* Input */}
-            <div style={{ padding: '8px', borderTop: '1px solid rgba(0,0,0,0.1)', display: 'flex', gap: '6px', background: '#dedede', position: fullscreen ? 'fixed' : 'relative', bottom: fullscreen ? 0 : 'auto', left: fullscreen ? 0 : 'auto', right: fullscreen ? 0 : 'auto', zIndex: 10000 }}>
+            <div style={{ padding: '8px', borderTop: '1px solid rgba(0,0,0,0.1)', display: 'flex', gap: '6px', background: '#dedede', flexShrink: 0, position: 'relative', zIndex: 10000 }}>
               <input
                 value={text}
                 onChange={e => setText(e.target.value)}
