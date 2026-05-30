@@ -62,6 +62,7 @@ export default function LiveChat() {
   useEffect(() => {
     if (open) {
       setUnread(0);
+      setFullscreen(true);
       bottomRef.current?.scrollIntoView({ behavior: 'smooth' });
     }
   }, [open, chat]);
