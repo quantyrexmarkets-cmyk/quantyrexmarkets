@@ -117,7 +117,7 @@ export default function LiveMarket() {
         theme: 'dark',
         style: '1',
         locale: 'en',
-        backgroundColor: t.bg === '#f8fafc' ? '#f8fafc' : t.bg === '#111111' ? '#111111' : '#0f172a',
+        backgroundColor: t.bg === '#eef0f4' ? '#eef0f4' : t.bg === '#111111' ? '#111111' : '#0f172a',
         hide_top_toolbar: false,
         save_image: false,
       });
@@ -162,7 +162,7 @@ export default function LiveMarket() {
             { id: 'screener', label: 'Screener', icon: <Bitcoin size={10}/> },
           ].map(tab => (
             <button type="button" key={tab.id} onClick={() => setActiveTab(tab.id)} style={{
-              background: activeTab === tab.id ? (t.bg === '#f8fafc' ? 'rgba(99,102,241,0.1)' : 'rgba(99,102,241,0.15)') : 'transparent',
+              background: activeTab === tab.id ? (t.bg === '#eef0f4' ? 'rgba(99,102,241,0.1)' : 'rgba(99,102,241,0.15)') : 'transparent',
               borderRadius: activeTab === tab.id ? '6px 6px 0 0' : '0',
               padding: '8px 14px', border: 'none',
               borderBottom: activeTab === tab.id ? '2px solid #6366f1' : '2px solid transparent',
