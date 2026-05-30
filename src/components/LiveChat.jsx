@@ -10,6 +10,12 @@ export default function LiveChat() {
   const { user } = useAuth();
   const token = localStorage.getItem('token');
   const [open, setOpen] = useState(false);
+  const [showBubble, setShowBubble] = useState(() => {
+    const dismissed = localStorage.getItem('chatBubbleDismissed');
+    if (!dismissed) return true;
+    // Re-show after 24 hours
+    return (Date.now() - parseInt(dismissed)) > 86400000;
+  });
 
   // Allow external trigger
   useEffect(() => {
@@ -198,15 +204,81 @@ export default function LiveChat() {
           </div>
         )}
 
-        {/* Bubble */}
-        <button type="button" onClick={() => setOpen(!open)} style={{ width: '38px', height: '38px', borderRadius: '50%', background: '#6366f1', border: 'none', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 4px 12px rgba(99,102,241,0.5)', position: 'relative' }}>
-          <svg width="20" height="20" fill="white" viewBox="0 0 24 24"><path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2z"/></svg>
-          {unread > 0 && (
-            <div style={{ position: 'absolute', top: '-4px', right: '-4px', background: '#ef4444', color: 'white', fontSize: '8px', fontWeight: '700', width: '16px', height: '16px', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-              {unread}
+        {/* IUX-style Bubble with Speech Tooltip */}
+        <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+          {!open && showBubble && (
+            <div style={{
+              position: 'relative',
+              background: '#ffffff',
+              borderRadius: '14px',
+              padding: '12px 16px 12px 20px',
+              boxShadow: '0 8px 24px rgba(0,0,0,0.15)',
+              maxWidth: '200px',
+              animation: 'bubbleSlideIn 0.4s ease-out'
+            }}>
+              <button type="button" onClick={(e) => {
+                e.stopPropagation();
+                setShowBubble(false);
+                localStorage.setItem('chatBubbleDismissed', Date.now().toString());
+              }} style={{
+                position: 'absolute', top: '-8px', left: '-8px',
+                background: '#1a1a1a', border: 'none', borderRadius: '50%',
+                width: '22px', height: '22px', cursor: 'pointer',
+                display: 'flex', alignItems: 'center', justifyContent: 'center',
+                padding: 0, boxShadow: '0 2px 6px rgba(0,0,0,0.2)'
+              }}>
+                <svg width="11" height="11" fill="none" stroke="#fff" viewBox="0 0 24 24" strokeWidth="2.5">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12"/>
+                </svg>
+              </button>
+              <div onClick={() => setOpen(true)} style={{ cursor: 'pointer' }}>
+                <div style={{ color: '#111', fontSize: '13px', fontWeight: '700', marginBottom: '2px' }}>
+                  We're Online!
+                </div>
+                <div style={{ color: '#666', fontSize: '11px' }}>
+                  How may I help you today?
+                </div>
+              </div>
+              <div style={{
+                position: 'absolute', right: '-7px', top: '50%',
+                transform: 'translateY(-50%)',
+                width: 0, height: 0,
+                borderTop: '8px solid transparent',
+                borderBottom: '8px solid transparent',
+                borderLeft: '8px solid #ffffff'
+              }} />
             </div>
           )}
-        </button>
+          <button type="button" onClick={() => setOpen(!open)} style={{
+            width: '52px', height: '52px', borderRadius: '50%',
+            background: '#22c55e', border: 'none', cursor: 'pointer',
+            display: 'flex', alignItems: 'center', justifyContent: 'center',
+            boxShadow: '0 6px 20px rgba(34,197,94,0.4)',
+            position: 'relative', flexShrink: 0
+          }}>
+            <svg width="24" height="24" fill="white" viewBox="0 0 24 24">
+              <path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2z"/>
+            </svg>
+            {unread > 0 && (
+              <div style={{
+                position: 'absolute', top: '-4px', right: '-4px',
+                background: '#ef4444', color: 'white',
+                fontSize: '10px', fontWeight: '700',
+                width: '18px', height: '18px', borderRadius: '50%',
+                display: 'flex', alignItems: 'center', justifyContent: 'center',
+                border: '2px solid #fff'
+              }}>
+                {unread}
+              </div>
+            )}
+          </button>
+        </div>
+        <style>{`
+          @keyframes bubbleSlideIn {
+            from { opacity: 0; transform: translateX(10px); }
+            to { opacity: 1; transform: translateX(0); }
+          }
+        `}</style>
       </div>
     </>
   );
