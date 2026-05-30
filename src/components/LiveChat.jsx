@@ -152,7 +152,7 @@ export default function LiveChat() {
       {/* Chat Window */}
       <div style={{ position: 'fixed', bottom: '20px', right: '20px', zIndex: 9999 }}>
         {open && (
-          <div style={{ position: fullscreen ? 'fixed' : 'absolute', bottom: fullscreen ? 0 : '50px', right: fullscreen ? 0 : 0, top: fullscreen ? 0 : 'auto', left: fullscreen ? 0 : 'auto', width: fullscreen ? '100%' : '280px', height: fullscreen ? '100%' : 'auto', background: '#dedede', border: '1px solid rgba(99,102,241,0.4)', borderRadius: fullscreen ? '0' : '8px', overflow: 'hidden', boxShadow: '0 8px 32px rgba(0,0,0,0.4)', zIndex: 9999, display: 'flex', flexDirection: 'column' }}>
+          <div style={{ position: fullscreen ? 'fixed' : 'absolute', bottom: fullscreen ? 0 : '50px', right: fullscreen ? 0 : 0, top: fullscreen ? 'env(safe-area-inset-top, 0px)' : 'auto', left: fullscreen ? 0 : 'auto', width: fullscreen ? '100%' : '280px', height: fullscreen ? '100%' : 'auto', background: '#dedede', border: '1px solid rgba(99,102,241,0.4)', borderRadius: fullscreen ? '0' : '8px', overflow: 'hidden', boxShadow: '0 8px 32px rgba(0,0,0,0.4)', zIndex: 9999, display: 'flex', flexDirection: 'column' }}>
 
             {/* Header */}
             <div style={{ background: '#6366f1', padding: 'env(safe-area-inset-top, 0px) 12px 16px 12px', paddingTop: fullscreen ? 'max(16px, env(safe-area-inset-top, 16px))' : '16px', minHeight: '68px', flexShrink: 0, boxSizing: 'border-box', borderRadius: fullscreen ? '0' : '8px 8px 0 0', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
