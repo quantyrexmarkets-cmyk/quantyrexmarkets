@@ -126,14 +126,18 @@ h1, h2, h3, h4, h5, h6,
 .hero-delay-3 { transition-delay: 0.5s; }
 .hero-delay-4 { transition-delay: 0.7s; }
 
-/* Prevent image download */
+/* Prevent image drag/download but keep interactions */
 img {
   -webkit-user-drag: none;
   -khtml-user-drag: none;
   -moz-user-drag: none;
   -o-user-drag: none;
   user-drag: none;
-  pointer-events: none;
+}
+
+/* But allow clickable images in chat to work */
+a img, button img, .chat-image {
+  pointer-events: auto;
 }
 
 
