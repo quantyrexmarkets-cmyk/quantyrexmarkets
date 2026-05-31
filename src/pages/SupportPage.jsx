@@ -200,7 +200,7 @@ export default function SupportPage() {
                           </div>
                           <div style={{ display: 'flex', flexDirection: 'column', maxWidth: '70%', marginLeft: '4px' }}>
                             <div style={{ background: '#1c1c1c', color: 'white', fontSize: '12px', padding: '10px 14px', borderRadius: '18px 18px 18px 4px', lineHeight: '1.4', wordBreak: 'break-word' }}>
-                              {msg.image ? <a href={msg.image} target='_blank' rel='noopener noreferrer'><img src={msg.image} style={{ maxWidth: '200px', borderRadius: '6px', display: 'block', cursor: 'pointer' }} /></a> : msg.text}
+                              {msg.image ? <a href={msg.image} target='_blank' rel='noopener noreferrer'><img src={msg.image} style={{ maxWidth: '200px', maxHeight: '200px', borderRadius: '6px', display: 'block', cursor: 'pointer', objectFit: 'cover' }} /></a> : msg.text}
                             </div>
                             <div style={{ color: t.faintText, fontSize: '9px', marginTop: '4px', marginLeft: '6px' }}>{new Date(msg.createdAt).toLocaleTimeString([], {hour:'2-digit',minute:'2-digit'})}</div>
                           </div>
@@ -209,7 +209,7 @@ export default function SupportPage() {
                         <>
                           <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', maxWidth: '70%', marginRight: '4px' }}>
                             <div style={{ background: '#3b82f6', color: 'white', fontSize: '12px', padding: msg.image ? '4px' : '10px 14px', borderRadius: '18px 18px 4px 18px', lineHeight: '1.4', wordBreak: 'break-word' }}>
-                              {msg.image ? <a href={msg.image} target='_blank' rel='noopener noreferrer'><img src={msg.image} style={{ maxWidth: '200px', borderRadius: '6px', display: 'block', cursor: 'pointer' }} /></a> : msg.text}
+                              {msg.image ? <a href={msg.image} target='_blank' rel='noopener noreferrer'><img src={msg.image} style={{ maxWidth: '200px', maxHeight: '200px', borderRadius: '6px', display: 'block', cursor: 'pointer', objectFit: 'cover' }} /></a> : msg.text}
                             </div>
                             <div style={{ display: 'flex', alignItems: 'center', gap: '4px', marginTop: '4px', marginRight: '6px' }}>
                               <span style={{ color: t.faintText, fontSize: '9px' }}>{new Date(msg.createdAt).toLocaleTimeString([], {hour:'2-digit',minute:'2-digit'})}</span>
