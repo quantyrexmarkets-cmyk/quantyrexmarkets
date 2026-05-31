@@ -266,7 +266,7 @@ export default function LiveChat() {
             </div>
 
             {/* Input */}
-            <div style={{ padding: '10px', borderTop: '1px solid rgba(0,0,0,0.1)', display: 'flex', gap: '8px', background: '#dedede', flexShrink: 0, position: 'relative', zIndex: 10000, alignItems: 'center' }}>
+            <div style={{ padding: '10px', borderTop: '1px solid rgba(0,0,0,0.1)', display: 'flex', gap: '8px', background: '#dedede', flexShrink: 0, position: 'relative', zIndex: 10000, alignItems: 'flex-end' }}>
               <input type="file" accept="image/*" id="clientImageUpload" style={{ display: 'none' }} onChange={async e => {
                 const file = e.target.files[0]; if (!file) return;
                 setLoading(true);
@@ -285,12 +285,33 @@ export default function LiveChat() {
                   <polyline points='21,15 16,10 5,21'/>
                 </svg>
               </button>
-              <input
+              <textarea
                 value={text}
-                onChange={e => setText(e.target.value)}
-                onKeyDown={e => e.key === 'Enter' && sendMessage()}
+                onChange={e => {
+                  setText(e.target.value);
+                  // Auto-resize
+                  e.target.style.height = 'auto';
+                  e.target.style.height = Math.min(e.target.scrollHeight, 200) + 'px';
+                }}
+                onKeyDown={e => {
+                  if (e.key === 'Enter' && !e.shiftKey) {
+                    e.preventDefault();
+                    sendMessage();
+                    e.target.style.height = 'auto';
+                  }
+                }}
                 placeholder="Type a message..."
-                style={{ flex: 1, background: '#ffffff', border: '1px solid rgba(0,0,0,0.1)', color: '#1f2937', fontSize: '13px', padding: '10px 16px', outline: 'none', borderRadius: '24px' }}
+                rows={1}
+                style={{
+                  flex: 1, background: '#ffffff',
+                  border: '1px solid rgba(0,0,0,0.1)',
+                  color: '#1f2937', fontSize: '13px',
+                  padding: '10px 16px', outline: 'none',
+                  borderRadius: '20px', resize: 'none',
+                  fontFamily: 'inherit', lineHeight: '1.4',
+                  maxHeight: '200px', overflowY: 'auto',
+                  minHeight: '40px', boxSizing: 'border-box'
+                }}
               />
               <button type="button" onClick={sendMessage} disabled={loading} style={{ background: '#6366f1', border: 'none', color: 'white', cursor: 'pointer', width: '40px', height: '40px', borderRadius: '50%', flexShrink: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', opacity: loading ? 0.6 : 1 }}>
                 {loading ? (
