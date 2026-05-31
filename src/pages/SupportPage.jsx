@@ -6,6 +6,7 @@ export default function SupportPage() {
   const { current: t } = useTheme();
   const [contacts, setContacts] = useState([]);
   const [selectedChat, setSelectedChat] = useState(null);
+  const [showInfo, setShowInfo] = useState(false);
   const [adminReply, setAdminReply] = useState('');
   const [adminSending, setAdminSending] = useState(false);
   const bottomRef = useRef(null);
@@ -55,7 +56,7 @@ export default function SupportPage() {
         {contacts.length === 0 && <div style={{ color: t.faintText, fontSize: '11px', padding: '20px 12px' }}>No conversations yet</div>}
         {contacts.map((c, i) => (
           <div key={i} onClick={async () => {
-            setSelectedChat(c);
+            setSelectedChat(c); setShowInfo(false);
             await fetch(`https://quantyrexmarkets-api.vercel.app/api/chat/read/${c._id}`, { method: 'PATCH', headers: { Authorization: `Bearer ${token}` } });
           }} style={{ padding: '12px 14px', cursor: 'pointer', borderBottom: `1px solid ${t.tableRowBorder}`, background: selectedChat?._id === c._id ? 'rgba(99,102,241,0.15)' : 'transparent', borderLeft: selectedChat?._id === c._id ? '3px solid #6366f1' : '3px solid transparent' }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
@@ -92,7 +93,14 @@ export default function SupportPage() {
                   {selectedChat.userInfo?.country && <span style={{ color: t.mutedText }}>• {selectedChat.userInfo.country}</span>}
                 </div>
               </div>
-              <div style={{ marginLeft: 'auto', display: 'flex', gap: '8px' }}>
+              <div style={{ marginLeft: 'auto', display: 'flex', gap: '8px', alignItems: 'center' }}>
+                <button type="button" onClick={() => setShowInfo(!showInfo)} title="View visitor info" style={{ background: showInfo ? '#6366f1' : '#1a1a1a', border: `1px solid ${t.border}`, color: 'white', cursor: 'pointer', borderRadius: '4px', padding: '5px 8px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                  <svg width='14' height='14' fill='none' stroke='currentColor' viewBox='0 0 24 24' strokeWidth='2'>
+                    <circle cx='12' cy='12' r='10'/>
+                    <line x1='12' y1='16' x2='12' y2='12'/>
+                    <line x1='12' y1='8' x2='12.01' y2='8'/>
+                  </svg>
+                </button>
                 {selectedChat.status === 'open' && (
                   <button type="button" onClick={async () => {
                     await fetch(`https://quantyrexmarkets-api.vercel.app/api/chat/resolve/${selectedChat._id}`, { method: 'PATCH', headers: { Authorization: `Bearer ${token}` } });
@@ -102,13 +110,13 @@ export default function SupportPage() {
                 <button type="button" onClick={async () => {
                   if (!window.confirm('Delete?')) return;
                   await fetch(`https://quantyrexmarkets-api.vercel.app/api/chat/delete/${selectedChat._id}`, { method: 'DELETE', headers: { Authorization: `Bearer ${token}` } });
-                  fetchChats(); setSelectedChat(null);
+                  fetchChats(); setSelectedChat(null); setShowInfo(false);
                 }} style={{ background: '#ef4444', border: 'none', color: 'white', fontSize: '9px', padding: '5px 12px', cursor: 'pointer', borderRadius: '4px' }}>Delete</button>
               </div>
             </div>
 
             {/* User Info Panel - hidden on mobile, shown on desktop */}
-            <div style={{ background: '#0a0a0a', borderBottom: `1px solid ${t.subtleBorder}`, padding: '14px 16px', gap: '12px', alignItems: 'flex-start', display: window.innerWidth < 768 ? 'none' : 'flex', flexShrink: 0 }}>
+            <div style={{ background: '#0a0a0a', borderBottom: `1px solid ${t.subtleBorder}`, padding: '14px 16px', gap: '12px', alignItems: 'flex-start', display: showInfo || window.innerWidth >= 768 ? 'flex' : 'none', flexShrink: 0 }}>
               <div style={{ width: '42px', height: '42px', borderRadius: '50%', background: '#4b5563', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '14px', color: 'white', fontWeight: '700', flexShrink: 0 }}>
                 {(selectedChat.name || selectedChat.email || 'U').slice(0,2).toUpperCase()}
               </div>
