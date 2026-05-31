@@ -216,16 +216,55 @@ export default function LiveChat() {
                   Send a message to start chatting
                 </div>
               ) : chat.messages.filter(msg => !(msg.sender === 'system' && msg.text?.includes('left'))).map((msg, i) => (
-                <div key={i} style={{ display: 'flex', justifyContent: msg.sender === 'system' ? 'center' : msg.sender === 'user' ? 'flex-end' : 'flex-start', marginBottom: '4px' }}>
+                <div key={i} style={{ display: 'flex', justifyContent: msg.sender === 'system' ? 'center' : msg.sender === 'user' ? 'flex-end' : 'flex-start', alignItems: 'flex-start', gap: '8px', marginBottom: '4px' }}>
                   {msg.sender === 'system' ? (
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '4px', background: 'rgba(99,102,241,0.08)', border: '1px solid rgba(99,102,241,0.2)', padding: '3px 10px', borderRadius: '10px' }}>
-                      <img src="/support-avatar.jpg" style={{ width: '14px', height: '14px', borderRadius: '50%', objectFit: 'cover' }} />
-                      <span style={{ color: 'rgba(0,0,0,0.5)', fontSize: '8px' }}>{msg.image ? <a href={msg.image} target='_blank' rel='noopener noreferrer'><img src={msg.image} style={{ maxWidth: '200px', maxHeight: '200px', borderRadius: '6px', display: 'block', cursor: 'pointer' }} /></a> : msg.text}</span>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '6px', background: 'rgba(0,0,0,0.05)', padding: '4px 12px', borderRadius: '12px' }}>
+                      <span style={{ color: 'rgba(0,0,0,0.5)', fontSize: '10px' }}>{msg.image ? <a href={msg.image} target='_blank' rel='noopener noreferrer'><img src={msg.image} style={{ maxWidth: '200px', maxHeight: '200px', borderRadius: '6px', display: 'block', cursor: 'pointer' }} /></a> : msg.text}</span>
                     </div>
+                  ) : msg.sender === 'admin' ? (
+                    <>
+                      <div style={{ width: '32px', height: '32px', borderRadius: '50%', background: '#2dd4bf', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, marginTop: '4px' }}>
+                        <svg width='18' height='18' viewBox='0 0 24 24' fill='none' stroke='white' strokeWidth='2'>
+                          <path d='M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2'/>
+                          <circle cx='12' cy='7' r='4'/>
+                        </svg>
+                      </div>
+                      <div style={{ display: 'flex', flexDirection: 'column', maxWidth: '70%', marginLeft: '4px' }}>
+                        <div style={{ background: '#1c1c1c', color: 'white', fontSize: '12px', padding: msg.image ? '4px' : '10px 14px', borderRadius: '18px 18px 18px 4px', lineHeight: '1.4', wordBreak: 'break-word', whiteSpace: 'pre-wrap' }}>
+                          {msg.image ? <a href={msg.image} target='_blank' rel='noopener noreferrer'><img src={msg.image} style={{ maxWidth: '200px', maxHeight: '200px', borderRadius: '6px', display: 'block', cursor: 'pointer' }} /></a> : msg.text}
+                        </div>
+                        <div style={{ color: 'rgba(0,0,0,0.4)', fontSize: '9px', marginTop: '4px', marginLeft: '6px' }}>{new Date(msg.createdAt).toLocaleTimeString([], {hour:'2-digit',minute:'2-digit'})}</div>
+                      </div>
+                    </>
                   ) : (
-                    <div style={{ background: msg.sender === 'user' ? '#6366f1' : '#f3f4f6', color: msg.sender === 'user' ? 'white' : '#1f2937', fontSize: '9px', padding: '6px 10px', borderRadius: msg.sender === 'user' ? '8px 8px 0 8px' : '8px 8px 8px 0', maxWidth: '75%', lineHeight: '1.4', wordBreak: 'break-word', whiteSpace: 'pre-wrap', overflowWrap: 'break-word' }}>
-                      {msg.image ? <a href={msg.image} target='_blank' rel='noopener noreferrer'><img src={msg.image} style={{ maxWidth: '200px', maxHeight: '200px', borderRadius: '6px', display: 'block', cursor: 'pointer' }} /></a> : msg.text}
-                    </div>
+                    <>
+                      <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', maxWidth: '70%', marginRight: '4px' }}>
+                        <div style={{ background: '#3b82f6', color: 'white', fontSize: '12px', padding: msg.image ? '4px' : '10px 14px', borderRadius: '18px 18px 4px 18px', lineHeight: '1.4', wordBreak: 'break-word', whiteSpace: 'pre-wrap' }}>
+                          {msg.image ? <a href={msg.image} target='_blank' rel='noopener noreferrer'><img src={msg.image} style={{ maxWidth: '200px', maxHeight: '200px', borderRadius: '6px', display: 'block', cursor: 'pointer' }} /></a> : msg.text}
+                        </div>
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '4px', marginTop: '4px', marginRight: '6px' }}>
+                          <span style={{ color: 'rgba(0,0,0,0.4)', fontSize: '9px' }}>{new Date(msg.createdAt).toLocaleTimeString([], {hour:'2-digit',minute:'2-digit'})}</span>
+                          <span style={{ display: 'inline-flex', alignItems: 'center', color: msg.read ? '#22c55e' : 'rgba(0,0,0,0.3)' }}>
+                            {msg.read ? (
+                              <svg width='14' height='10' viewBox='0 0 16 11' fill='none'>
+                                <path d='M1 5.5L4.5 9L10 2' stroke='currentColor' strokeWidth='1.8' strokeLinecap='round' strokeLinejoin='round'/>
+                                <path d='M6 5.5L9.5 9L15 2' stroke='currentColor' strokeWidth='1.8' strokeLinecap='round' strokeLinejoin='round'/>
+                              </svg>
+                            ) : (
+                              <svg width='12' height='10' viewBox='0 0 12 11' fill='none'>
+                                <path d='M1 5.5L4.5 9L11 2' stroke='currentColor' strokeWidth='1.8' strokeLinecap='round' strokeLinejoin='round'/>
+                              </svg>
+                            )}
+                          </span>
+                        </div>
+                      </div>
+                      <div style={{ width: '32px', height: '32px', borderRadius: '50%', background: '#bef5e8', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, marginTop: '4px' }}>
+                        <svg width='18' height='18' viewBox='0 0 24 24' fill='none' stroke='#0d9488' strokeWidth='2'>
+                          <path d='M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2'/>
+                          <circle cx='12' cy='7' r='4'/>
+                        </svg>
+                      </div>
+                    </>
                   )}
                 </div>
               ))}
