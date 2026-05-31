@@ -210,7 +210,7 @@ export default function LiveChat() {
             </div>
 
             {/* Messages */}
-            <div style={{ flex: fullscreen ? 1 : 'none', height: fullscreen ? 'auto' : '220px', overflowY: 'auto', padding: '10px', minHeight: 0, overscrollBehavior: 'contain', WebkitOverflowScrolling: 'touch', display: 'flex', flexDirection: 'column', gap: '8px', background: '#dedede' }}>
+            <div style={{ flex: fullscreen ? 1 : 'none', height: fullscreen ? 'auto' : '220px', overflowY: 'auto', padding: '10px', minHeight: 0, overscrollBehavior: 'contain', WebkitOverflowScrolling: 'touch', scrollPaddingBottom: '20px', display: 'flex', flexDirection: 'column', gap: '8px', background: '#dedede' }}>
               {!chat || !chat.messages || chat.messages.filter(msg => !(msg.sender === 'system' && msg.text?.includes('left'))).length === 0 ? (
                 <div style={{ color: 'rgba(0,0,0,0.3)', fontSize: '9px', textAlign: 'center', marginTop: '80px' }}>
                   Send a message to start chatting
