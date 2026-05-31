@@ -233,4 +233,23 @@ router.post('/heartbeat', auth, async (req, res) => {
   }
 });
 
+
+// Admin: delete a specific message from a chat
+router.delete('/message/:chatId/:msgIndex', adminAuth, async (req, res) => {
+  try {
+    const chat = await Contact.findById(req.params.chatId);
+    if (!chat) return res.status(404).json({ message: 'Chat not found' });
+    const idx = parseInt(req.params.msgIndex);
+    if (isNaN(idx) || idx < 0 || idx >= chat.messages.length) {
+      return res.status(400).json({ message: 'Invalid message index' });
+    }
+    chat.messages.splice(idx, 1);
+    chat.updatedAt = Date.now();
+    await chat.save();
+    res.json(chat);
+  } catch (e) {
+    res.status(500).json({ message: 'Server error' });
+  }
+});
+
 module.exports = router;

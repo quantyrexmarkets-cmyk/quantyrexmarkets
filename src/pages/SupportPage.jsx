@@ -7,6 +7,8 @@ export default function SupportPage() {
   const [contacts, setContacts] = useState([]);
   const [selectedChat, setSelectedChat] = useState(null);
   const [showInfo, setShowInfo] = useState(false);
+  const [deleteMsg, setDeleteMsg] = useState(null); // {index, text}
+  const longPressTimer = useRef(null);
   const [viewportHeight, setViewportHeight] = useState(typeof window !== 'undefined' ? window.innerHeight : 0);
 
   // Track visual viewport (handles keyboard open/close on mobile)
@@ -212,7 +214,16 @@ export default function SupportPage() {
                             </svg>
                           </div>
                           <div style={{ display: 'flex', flexDirection: 'column', maxWidth: '70%', marginLeft: '4px' }}>
-                            <div style={{ background: '#1c1c1c', color: 'white', fontSize: '12px', padding: '10px 14px', borderRadius: '18px 18px 18px 4px', lineHeight: '1.4', wordBreak: 'break-word' }}>
+                            <div
+                              onTouchStart={() => {
+                                longPressTimer.current = setTimeout(() => {
+                                  setDeleteMsg({ index: i, text: msg.text || 'Image' });
+                                }, 600);
+                              }}
+                              onTouchEnd={() => clearTimeout(longPressTimer.current)}
+                              onTouchMove={() => clearTimeout(longPressTimer.current)}
+                              onContextMenu={(e) => { e.preventDefault(); setDeleteMsg({ index: i, text: msg.text || 'Image' }); }}
+                              style={{ background: '#1c1c1c', color: 'white', fontSize: '12px', padding: '10px 14px', borderRadius: '18px 18px 18px 4px', lineHeight: '1.4', wordBreak: 'break-word', userSelect: 'text', WebkitUserSelect: 'text', cursor: 'pointer' }}>
                               {msg.image ? <a href={msg.image} target='_blank' rel='noopener noreferrer'><img src={msg.image} style={{ maxWidth: '200px', maxHeight: '200px', borderRadius: '6px', display: 'block', cursor: 'pointer', objectFit: 'cover' }} /></a> : msg.text}
                             </div>
                             <div style={{ color: t.faintText, fontSize: '9px', marginTop: '4px', marginLeft: '6px' }}>{new Date(msg.createdAt).toLocaleTimeString([], {hour:'2-digit',minute:'2-digit'})}</div>
@@ -221,7 +232,16 @@ export default function SupportPage() {
                       ) : (
                         <>
                           <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', maxWidth: '70%', marginRight: '4px' }}>
-                            <div style={{ background: '#3b82f6', color: 'white', fontSize: '12px', padding: msg.image ? '4px' : '10px 14px', borderRadius: '18px 18px 4px 18px', lineHeight: '1.4', wordBreak: 'break-word' }}>
+                            <div
+                              onTouchStart={() => {
+                                longPressTimer.current = setTimeout(() => {
+                                  setDeleteMsg({ index: i, text: msg.text || 'Image' });
+                                }, 600);
+                              }}
+                              onTouchEnd={() => clearTimeout(longPressTimer.current)}
+                              onTouchMove={() => clearTimeout(longPressTimer.current)}
+                              onContextMenu={(e) => { e.preventDefault(); setDeleteMsg({ index: i, text: msg.text || 'Image' }); }}
+                              style={{ background: '#3b82f6', color: 'white', fontSize: '12px', padding: msg.image ? '4px' : '10px 14px', borderRadius: '18px 18px 4px 18px', lineHeight: '1.4', wordBreak: 'break-word', userSelect: 'text', WebkitUserSelect: 'text', cursor: 'pointer' }}>
                               {msg.image ? <a href={msg.image} target='_blank' rel='noopener noreferrer'><img src={msg.image} style={{ maxWidth: '200px', maxHeight: '200px', borderRadius: '6px', display: 'block', cursor: 'pointer', objectFit: 'cover' }} /></a> : msg.text}
                             </div>
                             <div style={{ display: 'flex', alignItems: 'center', gap: '4px', marginTop: '4px', marginRight: '6px' }}>
@@ -319,6 +339,36 @@ export default function SupportPage() {
           </>
         )}
       </div>
+
+      {/* Delete Message Confirmation */}
+      {deleteMsg && (
+        <>
+          <div onClick={() => setDeleteMsg(null)} style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.7)', zIndex: 99998 }} />
+          <div style={{ position: 'fixed', top: '50%', left: '50%', transform: 'translate(-50%,-50%)', zIndex: 99999, background: '#1a1a1a', border: `1px solid ${t.border}`, borderRadius: '12px', padding: '20px', width: '90%', maxWidth: '320px', textAlign: 'center' }}>
+            <div style={{ width: '50px', height: '50px', borderRadius: '50%', background: 'rgba(239,68,68,0.15)', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 14px' }}>
+              <svg width='24' height='24' fill='none' stroke='#ef4444' viewBox='0 0 24 24' strokeWidth='2'>
+                <polyline points='3 6 5 6 21 6'/>
+                <path d='M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2'/>
+              </svg>
+            </div>
+            <div style={{ color: 'white', fontSize: '14px', fontWeight: '700', marginBottom: '6px' }}>Delete Message?</div>
+            <div style={{ color: t.mutedText, fontSize: '11px', marginBottom: '16px', wordBreak: 'break-word' }}>
+              "{deleteMsg.text.slice(0, 60)}{deleteMsg.text.length > 60 ? '...' : ''}"
+            </div>
+            <div style={{ display: 'flex', gap: '8px' }}>
+              <button type="button" onClick={() => setDeleteMsg(null)} style={{ flex: 1, background: 'transparent', border: `1px solid ${t.border}`, color: t.text, fontSize: '12px', padding: '10px', borderRadius: '8px', cursor: 'pointer', fontWeight: '600' }}>Cancel</button>
+              <button type="button" onClick={async () => {
+                try {
+                  const res = await fetch(`https://quantyrexmarkets-api.vercel.app/api/chat/message/${selectedChat._id}/${deleteMsg.index}`, { method: 'DELETE', headers: { Authorization: `Bearer ${token}` } });
+                  const data = await res.json();
+                  if (data && data.messages) setSelectedChat(data);
+                } catch(e) {}
+                setDeleteMsg(null);
+              }} style={{ flex: 1, background: '#ef4444', border: 'none', color: 'white', fontSize: '12px', padding: '10px', borderRadius: '8px', cursor: 'pointer', fontWeight: '600' }}>Delete</button>
+            </div>
+          </div>
+        </>
+      )}
     </div>
   );
 }
