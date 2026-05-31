@@ -213,7 +213,18 @@ export default function SupportPage() {
                             </div>
                             <div style={{ display: 'flex', alignItems: 'center', gap: '4px', marginTop: '4px', marginRight: '6px' }}>
                               <span style={{ color: t.faintText, fontSize: '9px' }}>{new Date(msg.createdAt).toLocaleTimeString([], {hour:'2-digit',minute:'2-digit'})}</span>
-                              <span style={{ color: msg.read ? '#22c55e' : t.mutedText, fontSize: '10px' }}>{msg.read ? '✓✓' : '✓'}</span>
+                              <span style={{ display: 'inline-flex', alignItems: 'center', color: msg.read ? '#22c55e' : t.mutedText }}>
+                                {msg.read ? (
+                                  <svg width='14' height='10' viewBox='0 0 16 11' fill='none'>
+                                    <path d='M1 5.5L4.5 9L10 2' stroke='currentColor' strokeWidth='1.8' strokeLinecap='round' strokeLinejoin='round'/>
+                                    <path d='M6 5.5L9.5 9L15 2' stroke='currentColor' strokeWidth='1.8' strokeLinecap='round' strokeLinejoin='round'/>
+                                  </svg>
+                                ) : (
+                                  <svg width='12' height='10' viewBox='0 0 12 11' fill='none'>
+                                    <path d='M1 5.5L4.5 9L11 2' stroke='currentColor' strokeWidth='1.8' strokeLinecap='round' strokeLinejoin='round'/>
+                                  </svg>
+                                )}
+                              </span>
                             </div>
                           </div>
                           <div style={{ width: '32px', height: '32px', borderRadius: '50%', background: '#bef5e8', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, marginTop: '4px' }}>
