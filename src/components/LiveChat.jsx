@@ -266,15 +266,33 @@ export default function LiveChat() {
             </div>
 
             {/* Input */}
-            <div style={{ padding: '8px', borderTop: '1px solid rgba(0,0,0,0.1)', display: 'flex', gap: '6px', background: '#dedede', flexShrink: 0, position: 'relative', zIndex: 10000 }}>
+            <div style={{ padding: '10px', borderTop: '1px solid rgba(0,0,0,0.1)', display: 'flex', gap: '8px', background: '#dedede', flexShrink: 0, position: 'relative', zIndex: 10000, alignItems: 'center' }}>
+              <input type="file" accept="image/*" id="clientImageUpload" style={{ display: 'none' }} onChange={async e => {
+                const file = e.target.files[0]; if (!file) return;
+                setLoading(true);
+                const fd = new FormData(); fd.append('image', file);
+                try {
+                  const res = await fetch(`${API}/send-image`, { method: 'POST', headers: { Authorization: `Bearer ${token}` }, body: fd });
+                  const data = await res.json();
+                  if (data.chat) setChat(data.chat);
+                } catch(err) {}
+                setLoading(false); e.target.value = '';
+              }} />
+              <button type="button" onClick={() => document.getElementById('clientImageUpload').click()} style={{ background: '#ffffff', border: '1px solid rgba(0,0,0,0.1)', color: '#6366f1', padding: '8px 10px', borderRadius: '8px', cursor: 'pointer', flexShrink: 0, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                <svg width='18' height='18' fill='none' stroke='currentColor' viewBox='0 0 24 24' strokeWidth='2'>
+                  <rect x='3' y='3' width='18' height='18' rx='2'/>
+                  <circle cx='8.5' cy='8.5' r='1.5'/>
+                  <polyline points='21,15 16,10 5,21'/>
+                </svg>
+              </button>
               <input
                 value={text}
                 onChange={e => setText(e.target.value)}
                 onKeyDown={e => e.key === 'Enter' && sendMessage()}
                 placeholder="Type a message..."
-                style={{ flex: 1, background: '#f3f4f6', border: '1px solid #6366f1', color: '#1f2937', fontSize: '9px', padding: '6px 8px', outline: 'none', borderRadius: '4px' }}
+                style={{ flex: 1, background: '#ffffff', border: '1px solid rgba(0,0,0,0.1)', color: '#1f2937', fontSize: '13px', padding: '10px 14px', outline: 'none', borderRadius: '8px' }}
               />
-              <button type="button" onClick={sendMessage} disabled={loading} style={{ background: '#6366f1', border: 'none', color: 'white', fontSize: '9px', padding: '6px 10px', cursor: 'pointer', borderRadius: '4px', fontWeight: '600' }}>
+              <button type="button" onClick={sendMessage} disabled={loading} style={{ background: '#6366f1', border: 'none', color: 'white', fontSize: '12px', padding: '10px 16px', cursor: 'pointer', borderRadius: '8px', fontWeight: '600', flexShrink: 0 }}>
                 {loading ? '...' : 'Send'}
               </button>
             </div>
