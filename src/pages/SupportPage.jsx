@@ -23,6 +23,11 @@ export default function SupportPage() {
         }
       }).catch(() => {});
 
+  useEffect(() => {
+    document.body.style.overflow = 'hidden';
+    return () => { document.body.style.overflow = ''; };
+  }, []);
+
   useEffect(() => { fetchChats(); const i = setInterval(fetchChats, 3000); return () => clearInterval(i); }, [selectedChat]);
   useEffect(() => { bottomRef.current?.scrollIntoView({ behavior: 'smooth' }); }, [selectedChat?.messages]);
 
@@ -39,7 +44,7 @@ export default function SupportPage() {
   };
 
   return (
-    <div style={{ display: 'flex', height: '100vh', width: '100vw', background: '#000', overflow: 'hidden', fontFamily: 'sans-serif' }}>
+    <div style={{ display: 'flex', height: '100dvh', width: '100vw', background: '#000', overflow: 'hidden', fontFamily: 'sans-serif' }}>
       {/* Sidebar */}
       <div style={{ width: selectedChat ? '0px' : '100%', maxWidth: '280px', flexShrink: 0, background: '#0a0a0a', borderRight: `1px solid ${t.subtleBorder}`, overflowY: 'auto', transition: 'width 0.2s', overflow: 'hidden' }}>
         <div style={{ padding: '16px 12px', display: 'flex', alignItems: 'center', gap: '10px', borderBottom: `1px solid ${t.subtleBorder}` }}>
@@ -77,12 +82,15 @@ export default function SupportPage() {
         ) : (
           <>
             {/* Header */}
-            <div style={{ background: '#0a0a0a', padding: '12px 16px', borderBottom: `1px solid ${t.subtleBorder}`, display: 'flex', alignItems: 'center', gap: '10px' }}>
+            <div style={{ background: '#0a0a0a', padding: '12px 16px', paddingTop: 'max(12px, env(safe-area-inset-top, 12px))', borderBottom: `1px solid ${t.subtleBorder}`, display: 'flex', alignItems: 'center', gap: '10px', flexShrink: 0, position: 'sticky', top: 0, zIndex: 10 }}>
               <button type="button" onClick={() => setSelectedChat(null)} style={{ background: 'none', border: 'none', color: t.text, cursor: 'pointer', fontSize: '18px', padding: '0' }}>←</button>
               <div style={{ width: '36px', height: '36px', borderRadius: '50%', background: '#4b5563', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '12px', color: 'white', fontWeight: '700' }}>{(selectedChat.name || selectedChat.email || 'U').slice(0,2).toUpperCase()}</div>
-              <div>
-                <div style={{ color: 'white', fontSize: '12px', fontWeight: '700' }}>{selectedChat.name || selectedChat.email}</div>
-                <div style={{ color: selectedChat.visitorOnline ? '#22c55e' : t.faintText, fontSize: '9px' }}>{selectedChat.visitorOnline ? '● Online' : '○ Offline'}</div>
+              <div style={{ flex: 1, minWidth: 0, overflow: 'hidden' }}>
+                <div style={{ color: 'white', fontSize: '12px', fontWeight: '700', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{selectedChat.name || selectedChat.email}</div>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '9px' }}>
+                  <span style={{ color: selectedChat.visitorOnline ? '#22c55e' : t.faintText }}>{selectedChat.visitorOnline ? '● Online' : '○ Offline'}</span>
+                  {selectedChat.userInfo?.country && <span style={{ color: t.mutedText }}>• {selectedChat.userInfo.country}</span>}
+                </div>
               </div>
               <div style={{ marginLeft: 'auto', display: 'flex', gap: '8px' }}>
                 {selectedChat.status === 'open' && (
@@ -99,8 +107,8 @@ export default function SupportPage() {
               </div>
             </div>
 
-            {/* User Info Panel */}
-            <div style={{ background: '#0a0a0a', borderBottom: `1px solid ${t.subtleBorder}`, padding: '14px 16px', display: 'flex', gap: '12px', alignItems: 'flex-start' }}>
+            {/* User Info Panel - hidden on mobile, shown on desktop */}
+            <div style={{ background: '#0a0a0a', borderBottom: `1px solid ${t.subtleBorder}`, padding: '14px 16px', gap: '12px', alignItems: 'flex-start', display: window.innerWidth < 768 ? 'none' : 'flex', flexShrink: 0 }}>
               <div style={{ width: '42px', height: '42px', borderRadius: '50%', background: '#4b5563', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '14px', color: 'white', fontWeight: '700', flexShrink: 0 }}>
                 {(selectedChat.name || selectedChat.email || 'U').slice(0,2).toUpperCase()}
               </div>
@@ -142,7 +150,7 @@ export default function SupportPage() {
             </div>
 
             {/* Messages */}
-            <div style={{ flex: 1, overflowY: 'auto', padding: '16px', display: 'flex', flexDirection: 'column', gap: '8px' }}>
+            <div style={{ flex: 1, overflowY: 'auto', padding: '16px', display: 'flex', flexDirection: 'column', gap: '8px', minHeight: 0, overscrollBehavior: 'contain', WebkitOverflowScrolling: 'touch' }}>
               {selectedChat.messages?.map((msg, i) => {
                 const msgDate = new Date(msg.createdAt).toDateString();
                 const prevDate = i > 0 ? new Date(selectedChat.messages[i-1].createdAt).toDateString() : null;
@@ -189,7 +197,7 @@ export default function SupportPage() {
 
             {/* Input */}
             {selectedChat.status === 'open' && (
-              <div style={{ padding: '12px 16px', borderTop: '1px solid rgba(255,255,255,0.06)', background: '#0a0a0a', display: 'flex', gap: '8px', alignItems: 'center' }}>
+              <div style={{ padding: '12px 16px', paddingBottom: 'max(12px, env(safe-area-inset-bottom, 12px))', borderTop: '1px solid rgba(255,255,255,0.06)', background: '#0a0a0a', display: 'flex', gap: '8px', alignItems: 'center', flexShrink: 0 }}>
                 <input type="file" accept="image/*" id="supportImageUpload" style={{ display: 'none' }} onChange={async e => {
                   const file = e.target.files[0]; if (!file) return;
                   setAdminSending(true);
