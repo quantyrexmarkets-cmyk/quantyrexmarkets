@@ -207,14 +207,20 @@ export default function SupportPage() {
                         </>
                       ) : (
                         <>
-                          <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: '2px', maxWidth: '65%' }}>
-                            <div style={{ background: '#4f46e5', color: 'white', fontSize: '11px', padding: msg.image ? '4px' : '8px 12px', borderRadius: '8px 8px 0 8px', lineHeight: '1.5', wordBreak: 'break-word' }}>
+                          <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', maxWidth: '70%', marginRight: '4px' }}>
+                            <div style={{ background: '#3b82f6', color: 'white', fontSize: '12px', padding: msg.image ? '4px' : '10px 14px', borderRadius: '18px 18px 4px 18px', lineHeight: '1.4', wordBreak: 'break-word' }}>
                               {msg.image ? <a href={msg.image} target='_blank' rel='noopener noreferrer'><img src={msg.image} style={{ maxWidth: '200px', borderRadius: '6px', display: 'block', cursor: 'pointer' }} /></a> : msg.text}
                             </div>
-                            <div style={{ display: 'flex', alignItems: 'center', gap: '3px' }}>
-                              <span style={{ color: t.faintText, fontSize: '8px' }}>{new Date(msg.createdAt).toLocaleTimeString([], {hour:'2-digit',minute:'2-digit'})}</span>
-                              <span style={{ color: msg.read ? '#22c55e' : t.mutedText, fontSize: '9px' }}>{msg.read ? '✓✓' : '✓'}</span>
+                            <div style={{ display: 'flex', alignItems: 'center', gap: '4px', marginTop: '4px', marginRight: '6px' }}>
+                              <span style={{ color: t.faintText, fontSize: '9px' }}>{new Date(msg.createdAt).toLocaleTimeString([], {hour:'2-digit',minute:'2-digit'})}</span>
+                              <span style={{ color: msg.read ? '#22c55e' : t.mutedText, fontSize: '10px' }}>{msg.read ? '✓✓' : '✓'}</span>
                             </div>
+                          </div>
+                          <div style={{ width: '32px', height: '32px', borderRadius: '50%', background: '#bef5e8', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, marginTop: '4px' }}>
+                            <svg width='18' height='18' viewBox='0 0 24 24' fill='none' stroke='#0d9488' strokeWidth='2'>
+                              <path d='M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2'/>
+                              <circle cx='12' cy='7' r='4'/>
+                            </svg>
                           </div>
                         </>
                       )}
