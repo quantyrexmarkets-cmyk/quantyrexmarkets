@@ -257,7 +257,7 @@ export default function SupportPage() {
 
             {/* Input */}
             {selectedChat.status === 'open' && (
-              <div style={{ padding: '12px 16px', paddingBottom: 'max(12px, env(safe-area-inset-bottom, 12px))', borderTop: '1px solid rgba(255,255,255,0.06)', background: '#0a0a0a', display: 'flex', gap: '8px', alignItems: 'center', flexShrink: 0 }}>
+              <div style={{ padding: '12px 16px', paddingBottom: 'max(12px, env(safe-area-inset-bottom, 12px))', borderTop: '1px solid rgba(255,255,255,0.06)', background: '#0a0a0a', display: 'flex', gap: '8px', alignItems: 'flex-end', flexShrink: 0 }}>
                 <input type="file" accept="image/*" id="supportImageUpload" style={{ display: 'none' }} onChange={async e => {
                   const file = e.target.files[0]; if (!file) return;
                   setAdminSending(true);
@@ -268,11 +268,52 @@ export default function SupportPage() {
                   } catch(e) {}
                   setAdminSending(false); e.target.value = '';
                 }} />
-                <button type="button" onClick={() => document.getElementById('supportImageUpload').click()} style={{ background: '#1a1a1a', border: `1px solid ${t.border}`, color: t.text, padding: '8px 10px', borderRadius: '6px', cursor: 'pointer', flexShrink: 0 }}>
+                <button type="button" onClick={() => document.getElementById('supportImageUpload').click()} style={{ background: '#1a1a1a', border: `1px solid ${t.border}`, color: t.text, width: '40px', height: '40px', borderRadius: '50%', cursor: 'pointer', flexShrink: 0, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                   <svg width='16' height='16' fill='none' stroke='currentColor' viewBox='0 0 24 24' strokeWidth='2'><rect x='3' y='3' width='18' height='18' rx='2'/><circle cx='8.5' cy='8.5' r='1.5'/><polyline points='21,15 16,10 5,21'/></svg>
                 </button>
-                <input value={adminReply || ''} onChange={e => setAdminReply(e.target.value)} onKeyDown={e => { if (e.key === 'Enter') sendReply(); }} placeholder="Type a message..." style={{ flex: 1, background: '#111', border: `1px solid ${t.border}`, color: t.text, fontSize: '12px', padding: '10px 14px', outline: 'none', borderRadius: '6px' }} />
-                <button type="button" onClick={sendReply} disabled={adminSending} style={{ background: adminSending ? t.subtleBg : '#6366f1', border: 'none', color: 'white', fontSize: '11px', padding: '10px 16px', cursor: 'pointer', borderRadius: '6px', fontWeight: '600' }}>{adminSending ? '...' : 'Send'}</button>
+                <textarea
+                  value={adminReply || ''}
+                  onChange={e => {
+                    setAdminReply(e.target.value);
+                    e.target.style.height = 'auto';
+                    e.target.style.height = Math.min(e.target.scrollHeight, 140) + 'px';
+                  }}
+                  onKeyDown={e => {
+                    const isMobile = /Mobi|Android|iPhone|iPad/i.test(navigator.userAgent);
+                    if (e.key === 'Enter' && !e.shiftKey && !isMobile) {
+                      e.preventDefault();
+                      sendReply();
+                      e.target.style.height = 'auto';
+                    }
+                  }}
+                  placeholder="Type a message..."
+                  rows={1}
+                  style={{
+                    flex: 1, background: '#111',
+                    border: `1px solid ${t.border}`,
+                    color: t.text, fontSize: '13px',
+                    padding: '10px 16px', outline: 'none',
+                    borderRadius: '20px', resize: 'none',
+                    fontFamily: 'inherit', lineHeight: '1.4',
+                    maxHeight: '140px', overflowY: 'auto',
+                    minHeight: '40px', boxSizing: 'border-box',
+                    userSelect: 'text', WebkitUserSelect: 'text'
+                  }}
+                />
+                <button type="button" onClick={sendReply} disabled={adminSending} style={{ background: '#6366f1', border: 'none', color: 'white', cursor: 'pointer', width: '40px', height: '40px', borderRadius: '50%', flexShrink: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', opacity: adminSending ? 0.6 : 1 }}>
+                  {adminSending ? (
+                    <svg width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='currentColor' strokeWidth='2.5'>
+                      <circle cx='12' cy='12' r='10' opacity='0.3'/>
+                      <path d='M12 2a10 10 0 0 1 10 10' strokeLinecap='round'>
+                        <animateTransform attributeName='transform' type='rotate' from='0 12 12' to='360 12 12' dur='0.8s' repeatCount='indefinite'/>
+                      </path>
+                    </svg>
+                  ) : (
+                    <svg width='18' height='18' viewBox='0 0 24 24' fill='currentColor'>
+                      <path d='M2.01 21L23 12 2.01 3 2 10l15 2-15 2z'/>
+                    </svg>
+                  )}
+                </button>
               </div>
             )}
           </>

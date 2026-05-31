@@ -294,7 +294,9 @@ export default function LiveChat() {
                   e.target.style.height = Math.min(e.target.scrollHeight, 140) + 'px';
                 }}
                 onKeyDown={e => {
-                  if (e.key === 'Enter' && !e.shiftKey) {
+                  // Only auto-send on desktop (Ctrl/Cmd+Enter), mobile Enter = newline
+                  const isMobile = /Mobi|Android|iPhone|iPad/i.test(navigator.userAgent);
+                  if (e.key === 'Enter' && !e.shiftKey && !isMobile) {
                     e.preventDefault();
                     sendMessage();
                     e.target.style.height = 'auto';
