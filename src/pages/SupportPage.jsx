@@ -49,7 +49,16 @@ export default function SupportPage() {
   }, []);
 
   useEffect(() => { fetchChats(); const i = setInterval(fetchChats, 3000); return () => clearInterval(i); }, [selectedChat]);
-  useEffect(() => { bottomRef.current?.scrollIntoView({ behavior: 'smooth' }); }, [selectedChat?.messages]);
+  useEffect(() => {
+    if (!bottomRef.current) return;
+    const container = bottomRef.current.parentElement;
+    if (!container) return;
+    // Only auto-scroll if user is within 100px of the bottom
+    const isNearBottom = container.scrollHeight - container.scrollTop - container.clientHeight < 100;
+    if (isNearBottom) {
+      bottomRef.current.scrollIntoView({ behavior: 'smooth' });
+    }
+  }, [selectedChat?.messages]);
 
   const sendReply = async () => {
     if (!adminReply?.trim() || adminSending) return;
