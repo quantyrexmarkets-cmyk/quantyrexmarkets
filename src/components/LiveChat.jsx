@@ -278,7 +278,7 @@ export default function LiveChat() {
                 } catch(err) {}
                 setLoading(false); e.target.value = '';
               }} />
-              <button type="button" onClick={() => document.getElementById('clientImageUpload').click()} style={{ background: '#ffffff', border: '1px solid rgba(0,0,0,0.1)', color: '#6366f1', padding: '8px 10px', borderRadius: '8px', cursor: 'pointer', flexShrink: 0, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+              <button type="button" onClick={() => document.getElementById('clientImageUpload').click()} style={{ background: '#ffffff', border: '1px solid rgba(0,0,0,0.1)', color: '#6366f1', width: '40px', height: '40px', borderRadius: '50%', cursor: 'pointer', flexShrink: 0, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                 <svg width='18' height='18' fill='none' stroke='currentColor' viewBox='0 0 24 24' strokeWidth='2'>
                   <rect x='3' y='3' width='18' height='18' rx='2'/>
                   <circle cx='8.5' cy='8.5' r='1.5'/>
@@ -290,10 +290,21 @@ export default function LiveChat() {
                 onChange={e => setText(e.target.value)}
                 onKeyDown={e => e.key === 'Enter' && sendMessage()}
                 placeholder="Type a message..."
-                style={{ flex: 1, background: '#ffffff', border: '1px solid rgba(0,0,0,0.1)', color: '#1f2937', fontSize: '13px', padding: '10px 14px', outline: 'none', borderRadius: '8px' }}
+                style={{ flex: 1, background: '#ffffff', border: '1px solid rgba(0,0,0,0.1)', color: '#1f2937', fontSize: '13px', padding: '10px 16px', outline: 'none', borderRadius: '24px' }}
               />
-              <button type="button" onClick={sendMessage} disabled={loading} style={{ background: '#6366f1', border: 'none', color: 'white', fontSize: '12px', padding: '10px 16px', cursor: 'pointer', borderRadius: '8px', fontWeight: '600', flexShrink: 0 }}>
-                {loading ? '...' : 'Send'}
+              <button type="button" onClick={sendMessage} disabled={loading} style={{ background: '#6366f1', border: 'none', color: 'white', cursor: 'pointer', width: '40px', height: '40px', borderRadius: '50%', flexShrink: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', opacity: loading ? 0.6 : 1 }}>
+                {loading ? (
+                  <svg width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='currentColor' strokeWidth='2.5'>
+                    <circle cx='12' cy='12' r='10' opacity='0.3'/>
+                    <path d='M12 2a10 10 0 0 1 10 10' strokeLinecap='round'>
+                      <animateTransform attributeName='transform' type='rotate' from='0 12 12' to='360 12 12' dur='0.8s' repeatCount='indefinite'/>
+                    </path>
+                  </svg>
+                ) : (
+                  <svg width='18' height='18' viewBox='0 0 24 24' fill='currentColor'>
+                    <path d='M2.01 21L23 12 2.01 3 2 10l15 2-15 2z'/>
+                  </svg>
+                )}
               </button>
             </div>
           </div>
