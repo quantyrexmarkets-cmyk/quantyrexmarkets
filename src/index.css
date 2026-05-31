@@ -153,3 +153,19 @@ body.light-mode .dashboard-root {
 [data-theme="white"] * {
   box-shadow: none !important;
 }
+
+/* Allow text selection in chat input and messages */
+textarea, input[type="text"], input:not([type]), [contenteditable] {
+  -webkit-user-select: text !important;
+  -moz-user-select: text !important;
+  -ms-user-select: text !important;
+  user-select: text !important;
+  -webkit-touch-callout: default !important;
+}
+
+/* Chat messages should be selectable */
+[data-selectable="true"] {
+  -webkit-user-select: text !important;
+  user-select: text !important;
+  -webkit-touch-callout: default !important;
+}
