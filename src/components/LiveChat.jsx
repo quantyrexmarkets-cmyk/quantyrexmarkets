@@ -223,14 +223,19 @@ export default function LiveChat() {
                     </div>
                   ) : msg.sender === 'admin' ? (
                     <>
-                      <div style={{ width: '32px', height: '32px', borderRadius: '50%', background: '#2dd4bf', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, marginTop: '4px' }}>
-                        <svg width='18' height='18' viewBox='0 0 24 24' fill='none' stroke='white' strokeWidth='2'>
-                          <path d='M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2'/>
-                          <circle cx='12' cy='7' r='4'/>
+                      <div style={{ width: '32px', height: '32px', borderRadius: '50%', background: 'linear-gradient(135deg, #1e1b4b, #312e81)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, marginTop: '4px', boxShadow: '0 0 0 2px rgba(255,255,255,0.8)' }}>
+                        <svg viewBox="0 0 40 40" fill="none" style={{ width: '22px', height: '22px' }}>
+                          <path d="M20 3L5 11V23L20 37L35 23V11L20 3Z" fill="#111827" stroke="#818cf8" strokeWidth="1.5"/>
+                          <path d="M20 8L9 14V22L20 32L31 22V14L20 8Z" fill="#111827" stroke="#818cf8" strokeWidth="1.2"/>
+                          <path d="M20 13L13 17V22L20 27L27 22V17L20 13Z" fill="#a5b4fc" stroke="#a5b4fc" strokeWidth="1"/>
+                          <path d="M13 22C13 17.582 16.134 14 20 14C23.866 14 27 17.582 27 22" stroke="white" strokeWidth="2" fill="none" strokeLinecap="round"/>
+                          <rect x="11" y="22" width="3" height="5" rx="1.5" fill="white"/>
+                          <rect x="26" y="22" width="3" height="5" rx="1.5" fill="white"/>
+                          <path d="M29 26.5C29 28 28 29.5 26.5 30L24 30.5" stroke="white" strokeWidth="1.8" fill="none" strokeLinecap="round"/>
                         </svg>
                       </div>
                       <div style={{ display: 'flex', flexDirection: 'column', maxWidth: '70%', marginLeft: '4px' }}>
-                        <div style={{ background: '#ffffff', color: '#1a1a1a', fontSize: '12px', padding: msg.image ? '4px' : '10px 14px', borderRadius: '18px 18px 18px 4px', lineHeight: '1.4', wordBreak: 'break-word', whiteSpace: 'pre-wrap', boxShadow: '0 1px 2px rgba(0,0,0,0.08)' }}>
+                        <div style={{ background: '#e3e3e3', color: '#1a1a1a', fontSize: '12px', padding: msg.image ? '4px' : '10px 14px', borderRadius: '18px 18px 18px 4px', lineHeight: '1.4', wordBreak: 'break-word', whiteSpace: 'pre-wrap' }}>
                           {msg.image ? <a href={msg.image} target='_blank' rel='noopener noreferrer'><img src={msg.image} style={{ maxWidth: '200px', maxHeight: '200px', borderRadius: '6px', display: 'block', cursor: 'pointer' }} /></a> : msg.text}
                         </div>
                         <div style={{ color: 'rgba(0,0,0,0.4)', fontSize: '9px', marginTop: '4px', marginLeft: '6px' }}>{new Date(msg.createdAt).toLocaleTimeString([], {hour:'2-digit',minute:'2-digit'})}</div>
@@ -244,18 +249,7 @@ export default function LiveChat() {
                         </div>
                         <div style={{ display: 'flex', alignItems: 'center', gap: '4px', marginTop: '4px', marginRight: '6px' }}>
                           <span style={{ color: 'rgba(0,0,0,0.4)', fontSize: '9px' }}>{new Date(msg.createdAt).toLocaleTimeString([], {hour:'2-digit',minute:'2-digit'})}</span>
-                          <span style={{ display: 'inline-flex', alignItems: 'center', color: msg.read ? '#22c55e' : 'rgba(0,0,0,0.3)' }}>
-                            {msg.read ? (
-                              <svg width='14' height='10' viewBox='0 0 16 11' fill='none'>
-                                <path d='M1 5.5L4.5 9L10 2' stroke='currentColor' strokeWidth='1.8' strokeLinecap='round' strokeLinejoin='round'/>
-                                <path d='M6 5.5L9.5 9L15 2' stroke='currentColor' strokeWidth='1.8' strokeLinecap='round' strokeLinejoin='round'/>
-                              </svg>
-                            ) : (
-                              <svg width='12' height='10' viewBox='0 0 12 11' fill='none'>
-                                <path d='M1 5.5L4.5 9L11 2' stroke='currentColor' strokeWidth='1.8' strokeLinecap='round' strokeLinejoin='round'/>
-                              </svg>
-                            )}
-                          </span>
+                          
                         </div>
                       </div>
                       <div style={{ width: '32px', height: '32px', borderRadius: '50%', background: '#bef5e8', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, marginTop: '4px' }}>
