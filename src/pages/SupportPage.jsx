@@ -172,12 +172,12 @@ export default function SupportPage() {
                         </span>
                       </div>
                     )}
-                    <div style={{ display: 'flex', justifyContent: msg.sender === 'system' ? 'center' : msg.sender === 'admin' ? 'flex-end' : 'flex-start', alignItems: 'center', gap: '8px' }}>
+                    <div style={{ display: 'flex', justifyContent: msg.sender === 'system' ? 'center' : msg.sender === 'admin' ? 'flex-end' : 'flex-start', alignItems: 'flex-start', gap: '8px' }}>
                       {msg.sender === 'system' ? (
                         <div style={{ background: t.subtleBorder, color: t.mutedText, fontSize: '9px', padding: '4px 12px', borderRadius: '10px' }}>{msg.text} <span style={{ color: t.faintText }}>{new Date(msg.createdAt).toLocaleTimeString([], {hour:'2-digit',minute:'2-digit'})}</span></div>
                       ) : msg.sender === 'user' ? (
                         <>
-                          <div style={{ width: '32px', height: '32px', borderRadius: '50%', background: '#2dd4bf', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+                          <div style={{ width: '32px', height: '32px', borderRadius: '50%', background: '#2dd4bf', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, marginTop: '4px' }}>
                             <svg width='18' height='18' viewBox='0 0 24 24' fill='none' stroke='white' strokeWidth='2'>
                               <path d='M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2'/>
                               <circle cx='12' cy='7' r='4'/>
