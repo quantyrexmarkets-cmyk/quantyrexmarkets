@@ -60,7 +60,7 @@ export default function SupportPage() {
   };
 
   return (
-    <div style={{ display: 'flex', height: `${viewportHeight}px`, width: '100vw', background: '#000', overflow: 'hidden', fontFamily: 'sans-serif' }}>
+    <div style={{ display: 'flex', height: `${viewportHeight}px`, maxHeight: `${viewportHeight}px`, width: '100vw', background: '#000', overflow: 'hidden', fontFamily: 'sans-serif' }}>
       {/* Sidebar */}
       <div style={{ width: selectedChat ? '0px' : '100%', maxWidth: '280px', flexShrink: 0, background: '#0a0a0a', borderRight: `1px solid ${t.subtleBorder}`, overflowY: 'auto', transition: 'width 0.2s', overflow: 'hidden' }}>
         <div style={{ padding: '16px 12px', display: 'flex', alignItems: 'center', gap: '10px', borderBottom: `1px solid ${t.subtleBorder}` }}>
@@ -92,13 +92,13 @@ export default function SupportPage() {
       </div>
 
       {/* Chat area */}
-      <div style={{ flex: 1, display: 'flex', flexDirection: 'column', background: '#000', minWidth: 0 }}>
+      <div style={{ flex: 1, display: 'flex', flexDirection: 'column', background: '#000', minWidth: 0, minHeight: 0, maxHeight: '100%', overflow: 'hidden' }}>
         {!selectedChat ? (
           <div style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', color: t.faintText, fontSize: '12px' }}>Select a conversation</div>
         ) : (
           <>
             {/* Header */}
-            <div style={{ background: '#0a0a0a', padding: '12px 16px', paddingTop: 'max(12px, env(safe-area-inset-top, 12px))', borderBottom: `1px solid ${t.subtleBorder}`, display: 'flex', alignItems: 'center', gap: '10px', flexShrink: 0, position: 'sticky', top: 0, zIndex: 10 }}>
+            <div style={{ background: '#0a0a0a', padding: '12px 16px', paddingTop: 'max(12px, env(safe-area-inset-top, 12px))', borderBottom: `1px solid ${t.subtleBorder}`, display: 'flex', alignItems: 'center', gap: '10px', flexShrink: 0 }}>
               <button type="button" onClick={() => setSelectedChat(null)} style={{ background: 'none', border: 'none', color: t.text, cursor: 'pointer', fontSize: '18px', padding: '0' }}>←</button>
               <div style={{ width: '36px', height: '36px', borderRadius: '50%', background: '#4b5563', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '12px', color: 'white', fontWeight: '700' }}>{(selectedChat.name || selectedChat.email || 'U').slice(0,2).toUpperCase()}</div>
               <div style={{ flex: 1, minWidth: 0, overflow: 'hidden' }}>
