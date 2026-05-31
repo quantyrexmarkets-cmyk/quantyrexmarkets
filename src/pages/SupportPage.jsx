@@ -184,10 +184,10 @@ export default function SupportPage() {
                             </svg>
                           </div>
                           <div style={{ display: 'flex', flexDirection: 'column', maxWidth: '70%' }}>
-                            <div style={{ position: 'relative', background: '#1c1c1c', color: 'white', fontSize: '12px', padding: '10px 14px', borderRadius: '16px 16px 16px 4px', lineHeight: '1.4', wordBreak: 'break-word' }}>
+                            <div style={{ position: 'relative', background: '#1c1c1c', color: 'white', fontSize: '12px', padding: '10px 14px', borderRadius: '14px 14px 14px 14px', lineHeight: '1.4', wordBreak: 'break-word', marginLeft: '6px' }}>
                               {msg.image ? <a href={msg.image} target='_blank' rel='noopener noreferrer'><img src={msg.image} style={{ maxWidth: '200px', borderRadius: '6px', display: 'block', cursor: 'pointer' }} /></a> : msg.text}
-                              {/* Speech tail */}
-                              <div style={{ position: 'absolute', bottom: 0, left: '-6px', width: 0, height: 0, borderTop: '8px solid #1c1c1c', borderLeft: '6px solid transparent' }}></div>
+                              {/* Speech tail pointing left toward avatar */}
+                              <div style={{ position: 'absolute', left: '-6px', top: '12px', width: 0, height: 0, borderTop: '6px solid transparent', borderBottom: '6px solid transparent', borderRight: '8px solid #1c1c1c' }}></div>
                             </div>
                             <div style={{ color: t.faintText, fontSize: '9px', marginTop: '4px', marginLeft: '6px' }}>{new Date(msg.createdAt).toLocaleTimeString([], {hour:'2-digit',minute:'2-digit'})}</div>
                           </div>
