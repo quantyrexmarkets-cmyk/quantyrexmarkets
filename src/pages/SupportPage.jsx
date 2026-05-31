@@ -60,7 +60,7 @@ export default function SupportPage() {
   };
 
   return (
-    <div style={{ display: 'flex', height: `${viewportHeight}px`, maxHeight: `${viewportHeight}px`, width: '100vw', background: '#000', overflow: 'hidden', fontFamily: 'sans-serif' }}>
+    <div style={{ display: 'flex', height: '100dvh', width: '100vw', background: '#000', overflow: 'hidden', fontFamily: 'sans-serif' }}>
       {/* Sidebar */}
       <div style={{ width: selectedChat ? '0px' : '100%', maxWidth: '280px', flexShrink: 0, background: '#0a0a0a', borderRight: `1px solid ${t.subtleBorder}`, overflowY: 'auto', transition: 'width 0.2s', overflow: 'hidden' }}>
         <div style={{ padding: '16px 12px', display: 'flex', alignItems: 'center', gap: '10px', borderBottom: `1px solid ${t.subtleBorder}` }}>
@@ -241,7 +241,7 @@ export default function SupportPage() {
                 <button type="button" onClick={() => document.getElementById('supportImageUpload').click()} style={{ background: '#1a1a1a', border: `1px solid ${t.border}`, color: t.text, padding: '8px 10px', borderRadius: '6px', cursor: 'pointer', flexShrink: 0 }}>
                   <svg width='16' height='16' fill='none' stroke='currentColor' viewBox='0 0 24 24' strokeWidth='2'><rect x='3' y='3' width='18' height='18' rx='2'/><circle cx='8.5' cy='8.5' r='1.5'/><polyline points='21,15 16,10 5,21'/></svg>
                 </button>
-                <input value={adminReply || ''} onChange={e => setAdminReply(e.target.value)} onFocus={(e) => { setTimeout(() => e.target.scrollIntoView({ block: 'center', behavior: 'smooth' }), 300); }} onKeyDown={e => { if (e.key === 'Enter') sendReply(); }} placeholder="Type a message..." style={{ flex: 1, background: '#111', border: `1px solid ${t.border}`, color: t.text, fontSize: '12px', padding: '10px 14px', outline: 'none', borderRadius: '6px' }} />
+                <input value={adminReply || ''} onChange={e => setAdminReply(e.target.value)} onKeyDown={e => { if (e.key === 'Enter') sendReply(); }} placeholder="Type a message..." style={{ flex: 1, background: '#111', border: `1px solid ${t.border}`, color: t.text, fontSize: '12px', padding: '10px 14px', outline: 'none', borderRadius: '6px' }} />
                 <button type="button" onClick={sendReply} disabled={adminSending} style={{ background: adminSending ? t.subtleBg : '#6366f1', border: 'none', color: 'white', fontSize: '11px', padding: '10px 16px', cursor: 'pointer', borderRadius: '6px', fontWeight: '600' }}>{adminSending ? '...' : 'Send'}</button>
               </div>
             )}
