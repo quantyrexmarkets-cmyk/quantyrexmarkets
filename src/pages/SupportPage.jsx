@@ -41,7 +41,11 @@ export default function SupportPage() {
 
   useEffect(() => {
     document.body.style.overflow = 'hidden';
-    return () => { document.body.style.overflow = ''; };
+    document.body.style.overscrollBehavior = 'none';
+    return () => {
+      document.body.style.overflow = '';
+      document.body.style.overscrollBehavior = '';
+    };
   }, []);
 
   useEffect(() => { fetchChats(); const i = setInterval(fetchChats, 3000); return () => clearInterval(i); }, [selectedChat]);
@@ -173,7 +177,7 @@ export default function SupportPage() {
             </div>
 
             {/* Messages */}
-            <div style={{ flex: 1, overflowY: 'auto', padding: '16px', display: 'flex', flexDirection: 'column', gap: '8px', minHeight: 0, overscrollBehavior: 'contain', WebkitOverflowScrolling: 'touch' }}>
+            <div style={{ flex: 1, overflowY: 'auto', overflowX: 'hidden', padding: '16px', display: 'flex', flexDirection: 'column', gap: '8px', minHeight: 0, overscrollBehavior: 'contain', WebkitOverflowScrolling: 'touch', touchAction: 'pan-y' }}>
               {selectedChat.messages?.map((msg, i) => {
                 const msgDate = new Date(msg.createdAt).toDateString();
                 const prevDate = i > 0 ? new Date(selectedChat.messages[i-1].createdAt).toDateString() : null;
