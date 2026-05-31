@@ -235,7 +235,7 @@ export default function LiveChat() {
                         </svg>
                       </div>
                       <div style={{ display: 'flex', flexDirection: 'column', maxWidth: '70%', marginLeft: '4px' }}>
-                        <div style={{ background: '#ffffff', color: '#1a1a1a', fontSize: '12px', padding: msg.image ? '4px' : '10px 14px', borderRadius: '18px 18px 18px 4px', lineHeight: '1.4', wordBreak: 'break-word', whiteSpace: 'pre-wrap', boxShadow: '0 1px 1px rgba(0,0,0,0.08)' }}>
+                        <div style={{ background: '#ffffff', color: '#1a1a1a', fontSize: '12px', padding: msg.image ? '4px' : '10px 14px', borderRadius: '18px 18px 18px 4px', lineHeight: '1.4', wordBreak: 'break-word', whiteSpace: 'pre-wrap', boxShadow: '0 1px 1px rgba(0,0,0,0.08)', userSelect: 'text', WebkitUserSelect: 'text' }}>
                           {msg.image ? <a href={msg.image} target='_blank' rel='noopener noreferrer'><img src={msg.image} style={{ maxWidth: '200px', maxHeight: '200px', borderRadius: '6px', display: 'block', cursor: 'pointer' }} /></a> : msg.text}
                         </div>
                         <div style={{ color: 'rgba(0,0,0,0.4)', fontSize: '9px', marginTop: '4px', marginLeft: '6px' }}>{new Date(msg.createdAt).toLocaleTimeString([], {hour:'2-digit',minute:'2-digit'})}</div>
@@ -244,7 +244,7 @@ export default function LiveChat() {
                   ) : (
                     <>
                       <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', maxWidth: '70%', marginRight: '4px' }}>
-                        <div style={{ background: '#3b82f6', color: 'white', fontSize: '12px', padding: msg.image ? '4px' : '10px 14px', borderRadius: '18px 18px 4px 18px', lineHeight: '1.4', wordBreak: 'break-word', whiteSpace: 'pre-wrap' }}>
+                        <div style={{ background: '#3b82f6', color: 'white', fontSize: '12px', padding: msg.image ? '4px' : '10px 14px', borderRadius: '18px 18px 4px 18px', lineHeight: '1.4', wordBreak: 'break-word', whiteSpace: 'pre-wrap', userSelect: 'text', WebkitUserSelect: 'text' }}>
                           {msg.image ? <a href={msg.image} target='_blank' rel='noopener noreferrer'><img src={msg.image} style={{ maxWidth: '200px', maxHeight: '200px', borderRadius: '6px', display: 'block', cursor: 'pointer' }} /></a> : msg.text}
                         </div>
                         <div style={{ display: 'flex', alignItems: 'center', gap: '4px', marginTop: '4px', marginRight: '6px' }}>
@@ -291,7 +291,7 @@ export default function LiveChat() {
                   setText(e.target.value);
                   // Auto-resize
                   e.target.style.height = 'auto';
-                  e.target.style.height = Math.min(e.target.scrollHeight, 200) + 'px';
+                  e.target.style.height = Math.min(e.target.scrollHeight, 140) + 'px';
                 }}
                 onKeyDown={e => {
                   if (e.key === 'Enter' && !e.shiftKey) {
@@ -309,8 +309,9 @@ export default function LiveChat() {
                   padding: '10px 16px', outline: 'none',
                   borderRadius: '20px', resize: 'none',
                   fontFamily: 'inherit', lineHeight: '1.4',
-                  maxHeight: '200px', overflowY: 'auto',
-                  minHeight: '40px', boxSizing: 'border-box'
+                  maxHeight: '140px', overflowY: 'auto',
+                  minHeight: '40px', boxSizing: 'border-box',
+                  userSelect: 'text', WebkitUserSelect: 'text', touchAction: 'auto'
                 }}
               />
               <button type="button" onClick={sendMessage} disabled={loading} style={{ background: '#6366f1', border: 'none', color: 'white', cursor: 'pointer', width: '40px', height: '40px', borderRadius: '50%', flexShrink: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', opacity: loading ? 0.6 : 1 }}>
