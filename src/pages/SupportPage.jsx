@@ -172,7 +172,7 @@ export default function SupportPage() {
                         </span>
                       </div>
                     )}
-                    <div style={{ display: 'flex', justifyContent: msg.sender === 'system' ? 'center' : msg.sender === 'admin' ? 'flex-end' : 'flex-start', alignItems: 'flex-end', gap: '6px' }}>
+                    <div style={{ display: 'flex', justifyContent: msg.sender === 'system' ? 'center' : msg.sender === 'admin' ? 'flex-end' : 'flex-start', alignItems: 'center', gap: '8px' }}>
                       {msg.sender === 'system' ? (
                         <div style={{ background: t.subtleBorder, color: t.mutedText, fontSize: '9px', padding: '4px 12px', borderRadius: '10px' }}>{msg.text} <span style={{ color: t.faintText }}>{new Date(msg.createdAt).toLocaleTimeString([], {hour:'2-digit',minute:'2-digit'})}</span></div>
                       ) : msg.sender === 'user' ? (
