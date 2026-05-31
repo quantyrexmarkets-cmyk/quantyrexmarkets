@@ -7,6 +7,21 @@ export default function SupportPage() {
   const [contacts, setContacts] = useState([]);
   const [selectedChat, setSelectedChat] = useState(null);
   const [showInfo, setShowInfo] = useState(false);
+  const [viewportHeight, setViewportHeight] = useState(typeof window !== 'undefined' ? window.innerHeight : 0);
+
+  // Track visual viewport (handles keyboard open/close on mobile)
+  useEffect(() => {
+    const vv = window.visualViewport;
+    if (!vv) return;
+    const handleResize = () => setViewportHeight(vv.height);
+    vv.addEventListener('resize', handleResize);
+    vv.addEventListener('scroll', handleResize);
+    handleResize();
+    return () => {
+      vv.removeEventListener('resize', handleResize);
+      vv.removeEventListener('scroll', handleResize);
+    };
+  }, []);
   const [adminReply, setAdminReply] = useState('');
   const [adminSending, setAdminSending] = useState(false);
   const bottomRef = useRef(null);
@@ -45,7 +60,7 @@ export default function SupportPage() {
   };
 
   return (
-    <div style={{ display: 'flex', height: '100dvh', width: '100vw', background: '#000', overflow: 'hidden', fontFamily: 'sans-serif' }}>
+    <div style={{ display: 'flex', height: `${viewportHeight}px`, width: '100vw', background: '#000', overflow: 'hidden', fontFamily: 'sans-serif' }}>
       {/* Sidebar */}
       <div style={{ width: selectedChat ? '0px' : '100%', maxWidth: '280px', flexShrink: 0, background: '#0a0a0a', borderRight: `1px solid ${t.subtleBorder}`, overflowY: 'auto', transition: 'width 0.2s', overflow: 'hidden' }}>
         <div style={{ padding: '16px 12px', display: 'flex', alignItems: 'center', gap: '10px', borderBottom: `1px solid ${t.subtleBorder}` }}>
