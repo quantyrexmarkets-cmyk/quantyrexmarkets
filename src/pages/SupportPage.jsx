@@ -177,10 +177,19 @@ export default function SupportPage() {
                         <div style={{ background: t.subtleBorder, color: t.mutedText, fontSize: '9px', padding: '4px 12px', borderRadius: '10px' }}>{msg.text} <span style={{ color: t.faintText }}>{new Date(msg.createdAt).toLocaleTimeString([], {hour:'2-digit',minute:'2-digit'})}</span></div>
                       ) : msg.sender === 'user' ? (
                         <>
-                          <div style={{ width: '26px', height: '26px', borderRadius: '50%', background: '#4b5563', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '9px', color: 'white', fontWeight: '700', flexShrink: 0 }}>{initials}</div>
-                          <div style={{ background: '#1c1c1c', color: 'white', fontSize: '11px', padding: '8px 12px', borderRadius: '8px 8px 8px 0', maxWidth: '65%', lineHeight: '1.5', wordBreak: 'break-word' }}>
-                            {msg.image ? <a href={msg.image} target='_blank' rel='noopener noreferrer'><img src={msg.image} style={{ maxWidth: '200px', borderRadius: '6px', display: 'block', cursor: 'pointer' }} /></a> : msg.text}
-                            <div style={{ color: t.faintText, fontSize: '8px', marginTop: '3px' }}>{new Date(msg.createdAt).toLocaleTimeString([], {hour:'2-digit',minute:'2-digit'})}</div>
+                          <div style={{ width: '32px', height: '32px', borderRadius: '50%', background: '#2dd4bf', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+                            <svg width='18' height='18' viewBox='0 0 24 24' fill='none' stroke='white' strokeWidth='2'>
+                              <path d='M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2'/>
+                              <circle cx='12' cy='7' r='4'/>
+                            </svg>
+                          </div>
+                          <div style={{ display: 'flex', flexDirection: 'column', maxWidth: '70%' }}>
+                            <div style={{ position: 'relative', background: '#1c1c1c', color: 'white', fontSize: '12px', padding: '10px 14px', borderRadius: '16px 16px 16px 4px', lineHeight: '1.4', wordBreak: 'break-word' }}>
+                              {msg.image ? <a href={msg.image} target='_blank' rel='noopener noreferrer'><img src={msg.image} style={{ maxWidth: '200px', borderRadius: '6px', display: 'block', cursor: 'pointer' }} /></a> : msg.text}
+                              {/* Speech tail */}
+                              <div style={{ position: 'absolute', bottom: 0, left: '-6px', width: 0, height: 0, borderTop: '8px solid #1c1c1c', borderLeft: '6px solid transparent' }}></div>
+                            </div>
+                            <div style={{ color: t.faintText, fontSize: '9px', marginTop: '4px', marginLeft: '6px' }}>{new Date(msg.createdAt).toLocaleTimeString([], {hour:'2-digit',minute:'2-digit'})}</div>
                           </div>
                         </>
                       ) : (
