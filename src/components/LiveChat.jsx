@@ -70,6 +70,24 @@ export default function LiveChat() {
     }
   }, [open, chat]);
 
+  // Track visual viewport (handles keyboard open/close on mobile)
+  const [viewportHeight, setViewportHeight] = useState(typeof window !== 'undefined' ? window.innerHeight : 0);
+  useEffect(() => {
+    if (!open || !fullscreen) return;
+    const vv = window.visualViewport;
+    if (!vv) return;
+    const handleResize = () => {
+      setViewportHeight(vv.height);
+    };
+    vv.addEventListener('resize', handleResize);
+    vv.addEventListener('scroll', handleResize);
+    handleResize();
+    return () => {
+      vv.removeEventListener('resize', handleResize);
+      vv.removeEventListener('scroll', handleResize);
+    };
+  }, [open, fullscreen]);
+
   // Lock body scroll when fullscreen chat is open
   useEffect(() => {
     if (open && fullscreen) {
@@ -159,7 +177,7 @@ export default function LiveChat() {
       {/* Chat Window */}
       <div style={{ position: 'fixed', bottom: '20px', right: '20px', zIndex: 9999 }}>
         {open && (
-          <div style={{ position: fullscreen ? 'fixed' : 'absolute', bottom: fullscreen ? 0 : '50px', right: fullscreen ? 0 : 0, top: fullscreen ? 0 : 'auto', left: fullscreen ? 0 : 'auto', width: fullscreen ? '100vw' : '280px', height: fullscreen ? '100dvh' : 'auto', maxHeight: fullscreen ? '100dvh' : 'none', paddingTop: fullscreen ? 'env(safe-area-inset-top, 0px)' : 0, paddingBottom: fullscreen ? 'env(safe-area-inset-bottom, 0px)' : 0, boxSizing: 'border-box', background: '#dedede', border: fullscreen ? 'none' : '1px solid rgba(99,102,241,0.4)', borderRadius: fullscreen ? '0' : '8px', overflow: 'hidden', boxShadow: fullscreen ? 'none' : '0 8px 32px rgba(0,0,0,0.4)', zIndex: 9999, display: 'flex', flexDirection: 'column' }}>
+          <div style={{ position: fullscreen ? 'fixed' : 'absolute', bottom: fullscreen ? 0 : '50px', right: fullscreen ? 0 : 0, top: fullscreen ? 0 : 'auto', left: fullscreen ? 0 : 'auto', width: fullscreen ? '100vw' : '280px', height: fullscreen ? `${viewportHeight}px` : 'auto', maxHeight: fullscreen ? `${viewportHeight}px` : 'none', paddingTop: fullscreen ? 'env(safe-area-inset-top, 0px)' : 0, paddingBottom: fullscreen ? 'env(safe-area-inset-bottom, 0px)' : 0, boxSizing: 'border-box', background: '#dedede', border: fullscreen ? 'none' : '1px solid rgba(99,102,241,0.4)', borderRadius: fullscreen ? '0' : '8px', overflow: 'hidden', boxShadow: fullscreen ? 'none' : '0 8px 32px rgba(0,0,0,0.4)', zIndex: 9999, display: 'flex', flexDirection: 'column' }}>
 
             {/* Header */}
             <div style={{ background: '#6366f1', padding: 'env(safe-area-inset-top, 0px) 12px 16px 12px', paddingTop: fullscreen ? 'max(16px, env(safe-area-inset-top, 16px))' : '16px', minHeight: '68px', flexShrink: 0, boxSizing: 'border-box', borderRadius: fullscreen ? '0' : '8px 8px 0 0', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
