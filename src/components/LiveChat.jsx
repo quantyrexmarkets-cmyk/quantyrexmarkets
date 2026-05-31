@@ -16,7 +16,7 @@ export default function LiveChat() {
 
   // Allow external trigger
   useEffect(() => {
-    const handler = () => setOpen(true);
+    const handler = () => { setOpen(true); setShowBubble(false); };
     window.addEventListener('openLiveChat', handler);
     return () => window.removeEventListener('openLiveChat', handler);
   }, []);
@@ -205,7 +205,7 @@ export default function LiveChat() {
               </div>
               <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
                 <button type="button" onClick={() => setFullscreen(!fullscreen)} style={{ background: 'none', border: 'none', color: 'white', cursor: 'pointer', fontSize: '12px' }}>{fullscreen ? <svg width='12' height='12' fill='none' stroke='white' viewBox='0 0 24 24' strokeWidth='2'><path d='M8 3v3a2 2 0 0 1-2 2H3m18 0h-3a2 2 0 0 1-2-2V3m0 18v-3a2 2 0 0 1 2-2h3M3 16h3a2 2 0 0 1 2 2v3'/></svg> : <svg width='12' height='12' fill='none' stroke='white' viewBox='0 0 24 24' strokeWidth='2'><path d='M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7'/></svg>}</button>
-                <button type="button" onClick={() => { setOpen(false); setFullscreen(false); }} style={{ background: 'none', border: 'none', color: 'white', cursor: 'pointer', fontSize: '14px' }}>×</button>
+                <button type="button" onClick={() => { setOpen(false); setFullscreen(false); setViewportHeight(window.innerHeight); }} style={{ background: 'none', border: 'none', color: 'white', cursor: 'pointer', fontSize: '14px' }}>×</button>
               </div>
             </div>
 
@@ -279,7 +279,7 @@ export default function LiveChat() {
                   <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12"/>
                 </svg>
               </button>
-              <div onClick={() => setOpen(true)} style={{ cursor: 'pointer' }}>
+              <div onClick={() => { setOpen(true); setShowBubble(false); }} style={{ cursor: 'pointer' }}>
                 <div style={{ color: '#111', fontSize: '12px', fontWeight: '700', marginBottom: '2px', lineHeight: '1.3' }}>
                   We're Online!
                 </div>
@@ -297,7 +297,7 @@ export default function LiveChat() {
               }} />
             </div>
           )}
-          <button type="button" onClick={() => setOpen(!open)} style={{
+          <button type="button" onClick={() => { if (open) { setOpen(false); setFullscreen(false); } else { setOpen(true); } }} style={{
             width: '52px', height: '52px', borderRadius: '50%',
             background: '#16a34a', border: 'none', cursor: 'pointer',
             display: 'flex', alignItems: 'center', justifyContent: 'center',
