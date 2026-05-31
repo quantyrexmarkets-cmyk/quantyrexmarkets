@@ -16,7 +16,7 @@ router.post('/send', auth, async (req, res) => {
     if (!chat) {
       chat = new Contact({
         userId: req.user.id,
-        name: req.user.firstName,
+        name: ((req.user.firstName || '') + ' ' + (req.user.lastName || '')).trim() || req.user.email,
         email: req.user.email,
         messages: [],
         unreadAdmin: 0,
@@ -28,6 +28,9 @@ router.post('/send', auth, async (req, res) => {
     chat.messages.push({ sender: 'user', text });
     chat.unreadAdmin += 1;
     chat.visitorOnline = true;
+    chat.lastSeen = Date.now();
+    // Update name in case user updated profile
+    chat.name = ((req.user.firstName || '') + ' ' + (req.user.lastName || '')).trim() || req.user.email;
     if (userInfo) { chat.userInfo = userInfo; console.log('userInfo saved:', JSON.stringify(userInfo)); }
     chat.updatedAt = Date.now();
     await chat.save();
@@ -47,6 +50,7 @@ router.get('/my', auth, async (req, res) => {
     if (!chat) return res.json(null);
     chat.unreadUser = 0;
     chat.visitorOnline = true;
+    chat.lastSeen = Date.now();
     // Mark admin messages as read
     chat.messages.forEach(m => { if (m.sender === 'admin') m.read = true; });
     await chat.save();
@@ -74,11 +78,17 @@ router.post('/visitor-left', auth, async (req, res) => {
   }
 });
 
-// Admin: get all chats
+// Admin: get all chats (with dynamic online status)
 router.get('/all', adminAuth, async (req, res) => {
   try {
-    const chats = await Contact.find().sort({ updatedAt: -1 });
-    res.json(chats);
+    const chats = await Contact.find().sort({ updatedAt: -1 }).lean();
+    const ONLINE_THRESHOLD = 45 * 1000; // 45 seconds
+    const now = Date.now();
+    const result = chats.map(c => ({
+      ...c,
+      visitorOnline: c.lastSeen && (now - new Date(c.lastSeen).getTime()) < ONLINE_THRESHOLD
+    }));
+    res.json(result);
   } catch (e) {
     res.status(500).json({ message: 'Server error' });
   }
@@ -100,7 +110,7 @@ router.post('/send-image', auth, uploadUserMem.single('image'), async (req, res)
     if (!chat) {
       chat = new Contact({
         userId: req.user.id,
-        name: req.user.firstName,
+        name: ((req.user.firstName || '') + ' ' + (req.user.lastName || '')).trim() || req.user.email,
         email: req.user.email,
         messages: [],
         unreadAdmin: 0,
@@ -204,6 +214,21 @@ router.post('/reply-image/:chatId', adminAuth, uploadMem.single('image'), async 
     res.json(chat);
   } catch (e) {
     console.error(e);
+    res.status(500).json({ message: 'Server error' });
+  }
+});
+
+
+// User: heartbeat to keep online status
+router.post('/heartbeat', auth, async (req, res) => {
+  try {
+    const chat = await Contact.findOne({ userId: req.user.id, status: 'open' });
+    if (!chat) return res.json({ ok: false });
+    chat.lastSeen = Date.now();
+    chat.visitorOnline = true;
+    await chat.save();
+    res.json({ ok: true });
+  } catch (e) {
     res.status(500).json({ message: 'Server error' });
   }
 });

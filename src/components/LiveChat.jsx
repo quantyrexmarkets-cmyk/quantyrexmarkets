@@ -44,20 +44,19 @@ export default function LiveChat() {
     return () => clearInterval(interval);
   }, [token, open]);
 
-  // Send visitor left when closing chat or leaving page
+  // Heartbeat - keep user marked online while chat is open
   useEffect(() => {
-    const handleLeave = () => {
-      if (token) {
-        fetch(`${API}/visitor-left`, {
-          method: 'POST',
-          headers: { Authorization: `Bearer ${token}` },
-          keepalive: true
-        });
-      }
+    if (!open || !token) return;
+    const sendHeartbeat = () => {
+      fetch(`${API}/heartbeat`, {
+        method: 'POST',
+        headers: { Authorization: `Bearer ${token}` }
+      }).catch(() => {});
     };
-    window.addEventListener('beforeunload', handleLeave);
-    return () => window.removeEventListener('beforeunload', handleLeave);
-  }, [token]);
+    sendHeartbeat();
+    const interval = setInterval(sendHeartbeat, 20000); // every 20s
+    return () => clearInterval(interval);
+  }, [open, token]);
 
   useEffect(() => {
     if (open) {

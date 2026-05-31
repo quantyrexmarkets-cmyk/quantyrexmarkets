@@ -24,6 +24,7 @@ const ContactSchema = new mongoose.Schema({
   },
   adminJoined: { type: Boolean, default: false },
   visitorOnline: { type: Boolean, default: false },
+  lastSeen: { type: Date, default: Date.now },
   createdAt: { type: Date, default: Date.now },
   updatedAt: { type: Date, default: Date.now }
 });
