@@ -235,7 +235,7 @@ export default function LiveChat() {
                         </svg>
                       </div>
                       <div style={{ display: 'flex', flexDirection: 'column', maxWidth: '70%', marginLeft: '4px' }}>
-                        <div style={{ background: '#e3e3e3', color: '#1a1a1a', fontSize: '12px', padding: msg.image ? '4px' : '10px 14px', borderRadius: '18px 18px 18px 4px', lineHeight: '1.4', wordBreak: 'break-word', whiteSpace: 'pre-wrap' }}>
+                        <div style={{ background: '#ffffff', color: '#1a1a1a', fontSize: '12px', padding: msg.image ? '4px' : '10px 14px', borderRadius: '18px 18px 18px 4px', lineHeight: '1.4', wordBreak: 'break-word', whiteSpace: 'pre-wrap', boxShadow: '0 1px 1px rgba(0,0,0,0.08)' }}>
                           {msg.image ? <a href={msg.image} target='_blank' rel='noopener noreferrer'><img src={msg.image} style={{ maxWidth: '200px', maxHeight: '200px', borderRadius: '6px', display: 'block', cursor: 'pointer' }} /></a> : msg.text}
                         </div>
                         <div style={{ color: 'rgba(0,0,0,0.4)', fontSize: '9px', marginTop: '4px', marginLeft: '6px' }}>{new Date(msg.createdAt).toLocaleTimeString([], {hour:'2-digit',minute:'2-digit'})}</div>
