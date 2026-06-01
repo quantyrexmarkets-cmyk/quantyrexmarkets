@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useTheme } from '../context/ThemeContext';
+import { installer, subscribeToPush } from '../utils/pwa';
 
 export default function SupportPage() {
   const { current: t } = useTheme();
@@ -25,6 +26,7 @@ export default function SupportPage() {
     };
   }, []);
   const [adminReply, setAdminReply] = useState('');
+  const [canInstall, setCanInstall] = useState(installer.canInstall());
   const [adminSending, setAdminSending] = useState(false);
   const bottomRef = useRef(null);
   const navigate = useNavigate();
@@ -73,6 +75,20 @@ export default function SupportPage() {
     } catch(e) {}
     setAdminSending(false);
   };
+
+  // PWA manifest route switch
+  useEffect(() => {
+    let el = document.querySelector('link[rel="manifest"]');
+    if (el) el.setAttribute('href', '/manifest-support.json?v=20250601c');
+    document.title = 'Quantyrex Support';
+  }, []);
+
+  // Listen for install prompt
+  useEffect(() => {
+    const handler = () => setCanInstall(true);
+    window.addEventListener('pwa-installable', handler);
+    return () => window.removeEventListener('pwa-installable', handler);
+  }, []);
 
   return (
     <div style={{ display: 'flex', height: '100dvh', width: '100vw', background: '#000', overflow: 'hidden', fontFamily: 'sans-serif' }}>

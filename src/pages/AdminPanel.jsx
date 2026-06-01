@@ -500,6 +500,12 @@ export default function AdminPanel() {
     setEmailSending(false);
   };
 
+  // PWA manifest route switch
+  useEffect(() => {
+    let el = document.querySelector('link[rel="manifest"]');
+    if (el) el.setAttribute('href', '/manifest.json?v=20250601c');
+  }, []);
+
   return (
     <div style={{ minHeight: '100vh', background: t.bg, fontFamily: 'inherit', color: t.text }}>
 
