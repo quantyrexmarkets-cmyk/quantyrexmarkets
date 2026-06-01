@@ -3,6 +3,51 @@ import { useNavigate } from 'react-router-dom';
 import { useTheme } from '../context/ThemeContext';
 import { installer, subscribeToPush } from '../utils/pwa';
 
+// Helper utilities for Smartsupp-style inbox
+const AVATAR_COLORS = [
+  { bg: '#bef5e8', fg: '#0d9488' },
+  { bg: '#fde68a', fg: '#b45309' },
+  { bg: '#fecaca', fg: '#b91c1c' },
+  { bg: '#c7d2fe', fg: '#4338ca' },
+  { bg: '#bbf7d0', fg: '#15803d' },
+  { bg: '#fbcfe8', fg: '#be185d' },
+  { bg: '#bae6fd', fg: '#0369a1' },
+  { bg: '#e9d5ff', fg: '#7e22ce' },
+];
+
+function avatarColorFor(name) {
+  const s = String(name || 'U');
+  let hash = 0;
+  for (let i = 0; i < s.length; i++) hash = (hash * 31 + s.charCodeAt(i)) | 0;
+  return AVATAR_COLORS[Math.abs(hash) % AVATAR_COLORS.length];
+}
+
+function initialsOf(name, email) {
+  const src = (name || email || 'U').trim();
+  const parts = src.split(/[\s@._-]+/).filter(Boolean);
+  if (parts.length >= 2) return (parts[0][0] + parts[1][0]).toUpperCase();
+  return src.slice(0, 2).toUpperCase();
+}
+
+function relativeTime(dateStr) {
+  if (!dateStr) return '';
+  const d = new Date(dateStr);
+  const now = new Date();
+  const diffMs = now - d;
+  const diffMin = Math.floor(diffMs / 60000);
+  const diffHr = Math.floor(diffMin / 60);
+  const sameDay = d.toDateString() === now.toDateString();
+  const yesterday = new Date(now); yesterday.setDate(now.getDate() - 1);
+  const wasYesterday = d.toDateString() === yesterday.toDateString();
+
+  if (diffMin < 1) return 'now';
+  if (diffMin < 60) return diffMin + 'm';
+  if (sameDay) return d.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+  if (wasYesterday) return 'yesterday ' + d.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+  if (diffHr < 24 * 7) return d.toLocaleDateString([], { weekday: 'short' });
+  return d.toLocaleDateString([], { month: 'short', day: 'numeric' });
+}
+
 export default function SupportPage() {
   const { current: t } = useTheme();
   const [contacts, setContacts] = useState([]);
@@ -92,34 +137,133 @@ export default function SupportPage() {
 
   return (
     <div style={{ display: 'flex', height: '100dvh', width: '100vw', background: '#000', overflow: 'hidden', fontFamily: 'sans-serif' }}>
-      {/* Sidebar */}
-      <div style={{ width: selectedChat ? '0px' : '100%', maxWidth: '280px', flexShrink: 0, background: '#0a0a0a', borderRight: `1px solid ${t.subtleBorder}`, overflowY: 'auto', transition: 'width 0.2s', overflow: 'hidden' }}>
-        <div style={{ padding: '16px 12px', display: 'flex', alignItems: 'center', gap: '10px', borderBottom: `1px solid ${t.subtleBorder}` }}>
-          <button type="button" onClick={() => navigate('/admin')} style={{ background: 'none', border: 'none', color: t.subText, cursor: 'pointer', fontSize: '18px', padding: '0' }}>←</button>
-          <span style={{ color: 'white', fontWeight: '700', fontSize: '13px' }}>Support Chats</span>
-          <span style={{ background: '#6366f1', color: 'white', fontSize: '9px', padding: '2px 7px', borderRadius: '10px', marginLeft: 'auto' }}>{contacts.length}</span>
+      {/* Inbox - Smartsupp style */}
+      <div style={{
+        width: selectedChat ? '0px' : '100%',
+        maxWidth: selectedChat ? '0px' : '100%',
+        flexShrink: 0,
+        background: '#000',
+        overflow: selectedChat ? 'hidden' : 'auto',
+        overflowX: 'hidden',
+        transition: 'width 0.2s'
+      }}>
+        {/* Inbox header */}
+        <div style={{
+          padding: 'max(14px, env(safe-area-inset-top, 14px)) 16px 14px 16px',
+          display: 'flex',
+          alignItems: 'center',
+          gap: '12px'
+        }}>
+          <div style={{ position: 'relative', flexShrink: 0 }}>
+            <div style={{
+              width: '40px', height: '40px', borderRadius: '50%',
+              background: '#9ca3af', display: 'flex', alignItems: 'center',
+              justifyContent: 'center', overflow: 'hidden'
+            }}>
+              <svg width='28' height='28' viewBox='0 0 24 24' fill='#fff'>
+                <path d='M12 12c2.7 0 5-2.3 5-5s-2.3-5-5-5-5 2.3-5 5 2.3 5 5 5zm0 2c-3.3 0-10 1.7-10 5v3h20v-3c0-3.3-6.7-5-10-5z'/>
+              </svg>
+            </div>
+            <span style={{
+              position: 'absolute', top: 0, left: 0,
+              width: '10px', height: '10px', borderRadius: '50%',
+              background: '#22c55e', border: '2px solid #000'
+            }} />
+          </div>
+          <div style={{ color: 'white', fontSize: '22px', fontWeight: '700', flex: 1 }}>Inbox</div>
+          <button type="button" onClick={() => navigate('/admin')} style={{
+            background: '#1f2937', border: 'none', color: 'white',
+            width: '40px', height: '40px', borderRadius: '50%',
+            display: 'flex', alignItems: 'center', justifyContent: 'center',
+            cursor: 'pointer'
+          }}>
+            <svg width='18' height='18' fill='none' stroke='currentColor' viewBox='0 0 24 24' strokeWidth='2'>
+              <path d='M22 12h-4l-3 9L9 3l-3 9H2'/>
+            </svg>
+          </button>
         </div>
-        {contacts.length === 0 && <div style={{ color: t.faintText, fontSize: '11px', padding: '20px 12px' }}>No conversations yet</div>}
-        {contacts.map((c, i) => (
-          <div key={i} onClick={async () => {
-            setSelectedChat(c); setShowInfo(false);
-            await fetch(`https://quantyrexmarkets-api.vercel.app/api/chat/read/${c._id}`, { method: 'PATCH', headers: { Authorization: `Bearer ${token}` } });
-          }} style={{ padding: '12px 14px', cursor: 'pointer', borderBottom: `1px solid ${t.tableRowBorder}`, background: selectedChat?._id === c._id ? 'rgba(99,102,241,0.15)' : 'transparent', borderLeft: selectedChat?._id === c._id ? '3px solid #6366f1' : '3px solid transparent' }}>
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                <div style={{ width: '32px', height: '32px', borderRadius: '50%', background: '#4b5563', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '11px', color: 'white', fontWeight: '700', flexShrink: 0 }}>{(c.name || c.email || 'U').slice(0,2).toUpperCase()}</div>
-                <div>
-                  <div style={{ color: 'white', fontSize: '11px', fontWeight: '600' }}>{c.name || c.email || 'User'}</div>
-                  <div style={{ color: t.mutedText, fontSize: '9px', marginTop: '1px' }}>{c.messages?.[c.messages.length-1]?.text?.slice(0,30) || 'Image'}{c.messages?.[c.messages.length-1]?.text?.length > 30 ? '...' : ''}</div>
+
+        {/* Chat list */}
+        <div style={{ padding: '4px 12px 100px 12px', display: 'flex', flexDirection: 'column', gap: '8px' }}>
+          {contacts.length === 0 && (
+            <div style={{ color: '#6b7280', fontSize: '13px', padding: '40px 8px', textAlign: 'center' }}>
+              No conversations yet
+            </div>
+          )}
+          {contacts.map((c, i) => {
+            const colors = avatarColorFor(c.name || c.email);
+            const lastMsg = c.messages?.[c.messages.length - 1];
+            const lastText = lastMsg?.text || (lastMsg?.image ? '📷 Image' : '');
+            const lastTime = lastMsg?.createdAt;
+            return (
+              <div key={i} onClick={async () => {
+                setSelectedChat(c); setShowInfo(false);
+                await fetch(`https://quantyrexmarkets-api.vercel.app/api/chat/read/${c._id}`, { method: 'PATCH', headers: { Authorization: `Bearer ${token}` } });
+              }} style={{
+                background: '#1a1a1a',
+                borderRadius: '14px',
+                padding: '14px 14px',
+                display: 'flex',
+                alignItems: 'center',
+                gap: '12px',
+                cursor: 'pointer'
+              }}>
+                <div style={{ position: 'relative', flexShrink: 0 }}>
+                  <div style={{
+                    width: '46px', height: '46px', borderRadius: '50%',
+                    background: colors.bg, color: colors.fg,
+                    display: 'flex', alignItems: 'center', justifyContent: 'center',
+                    fontSize: '14px', fontWeight: '700'
+                  }}>
+                    {initialsOf(c.name, c.email)}
+                  </div>
+                  {c.visitorOnline && (
+                    <span style={{
+                      position: 'absolute', bottom: 0, right: 0,
+                      width: '12px', height: '12px', borderRadius: '50%',
+                      background: '#22c55e', border: '2px solid #1a1a1a'
+                    }} />
+                  )}
+                </div>
+                <div style={{ flex: 1, minWidth: 0 }}>
+                  <div style={{
+                    color: c.unreadAdmin > 0 ? '#60a5fa' : '#fff',
+                    fontSize: '14px', fontWeight: '700',
+                    overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap'
+                  }}>
+                    {c.name || c.email || 'User'}
+                  </div>
+                  <div style={{
+                    color: '#9ca3af', fontSize: '12px', marginTop: '3px',
+                    overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap'
+                  }}>
+                    {lastText ? lastText.slice(0, 40) : 'No messages yet'}
+                    {lastText && lastText.length > 40 ? '...' : ''}
+                  </div>
+                </div>
+                <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: '6px', flexShrink: 0 }}>
+                  <div style={{
+                    color: c.unreadAdmin > 0 ? '#60a5fa' : '#6b7280',
+                    fontSize: '11px', whiteSpace: 'nowrap'
+                  }}>
+                    {relativeTime(lastTime)}
+                  </div>
+                  {c.unreadAdmin > 0 && (
+                    <span style={{
+                      background: '#3b82f6', color: 'white',
+                      fontSize: '11px', fontWeight: '700',
+                      minWidth: '22px', height: '22px',
+                      borderRadius: '11px', padding: '0 7px',
+                      display: 'flex', alignItems: 'center', justifyContent: 'center'
+                    }}>
+                      {c.unreadAdmin}
+                    </span>
+                  )}
                 </div>
               </div>
-              <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: '4px' }}>
-                {c.unreadAdmin > 0 && <span style={{ background: '#ef4444', color: 'white', fontSize: '8px', padding: '1px 5px', borderRadius: '8px' }}>{c.unreadAdmin}</span>}
-                <div style={{ width: '6px', height: '6px', borderRadius: '50%', background: c.visitorOnline ? '#22c55e' : 'transparent' }} />
-              </div>
-            </div>
-          </div>
-        ))}
+            );
+          })}
+        </div>
       </div>
 
       {/* Chat area */}
@@ -355,6 +499,82 @@ export default function SupportPage() {
           </>
         )}
       </div>
+
+      {/* Bottom nav - Smartsupp style */}
+      {!selectedChat && (
+        <div style={{
+          position: 'fixed',
+          bottom: 0, left: 0, right: 0,
+          background: '#0a0a0a',
+          borderTop: '1px solid #1f2937',
+          padding: '10px 16px',
+          paddingBottom: 'max(10px, env(safe-area-inset-bottom, 10px))',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'space-around',
+          zIndex: 100
+        }}>
+          <button type="button" onClick={() => navigate('/admin')} style={{
+            background: 'none', border: 'none', color: '#6b7280',
+            display: 'flex', alignItems: 'center', justifyContent: 'center',
+            padding: '8px 14px', cursor: 'pointer'
+          }}>
+            <svg width='24' height='24' fill='none' stroke='currentColor' viewBox='0 0 24 24' strokeWidth='2'>
+              <path d='M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z'/>
+              <polyline points='9 22 9 12 15 12 15 22'/>
+            </svg>
+          </button>
+
+          <button type="button" style={{
+            background: '#3b82f6', border: 'none', color: 'white',
+            display: 'flex', alignItems: 'center', justifyContent: 'center',
+            padding: '8px 22px', borderRadius: '22px', cursor: 'pointer',
+            position: 'relative'
+          }}>
+            <svg width='22' height='22' fill='none' stroke='currentColor' viewBox='0 0 24 24' strokeWidth='2'>
+              <path d='M22 12h-4l-3 9L9 3l-3 9H2'/>
+            </svg>
+            {contacts.reduce((sum, c) => sum + (c.unreadAdmin || 0), 0) > 0 && (
+              <span style={{
+                position: 'absolute', top: '2px', right: '8px',
+                background: '#ef4444', color: 'white',
+                minWidth: '16px', height: '16px',
+                borderRadius: '8px', fontSize: '10px', fontWeight: '700',
+                padding: '0 4px',
+                display: 'flex', alignItems: 'center', justifyContent: 'center',
+                border: '2px solid #0a0a0a'
+              }}>
+                {contacts.reduce((sum, c) => sum + (c.unreadAdmin || 0), 0)}
+              </span>
+            )}
+          </button>
+
+          <button type="button" style={{
+            background: 'none', border: 'none', color: '#6b7280',
+            display: 'flex', alignItems: 'center', justifyContent: 'center',
+            padding: '8px 14px', cursor: 'pointer'
+          }}>
+            <svg width='24' height='24' fill='none' stroke='currentColor' viewBox='0 0 24 24' strokeWidth='2'>
+              <path d='M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2'/>
+              <circle cx='9' cy='7' r='4'/>
+              <path d='M23 21v-2a4 4 0 0 0-3-3.87'/>
+              <path d='M16 3.13a4 4 0 0 1 0 7.75'/>
+            </svg>
+          </button>
+
+          <button type="button" style={{
+            background: 'none', border: 'none', color: '#6b7280',
+            display: 'flex', alignItems: 'center', justifyContent: 'center',
+            padding: '8px 14px', cursor: 'pointer'
+          }}>
+            <svg width='6' height='24' fill='currentColor' viewBox='0 0 6 24'>
+              <circle cx='3' cy='5' r='2'/>
+              <circle cx='3' cy='12' r='2'/>
+              <circle cx='3' cy='19' r='2'/>
+            </svg>
+          </button>
+        </div>
+      )}
 
       {/* Delete Message Confirmation */}
       {deleteMsg && (
