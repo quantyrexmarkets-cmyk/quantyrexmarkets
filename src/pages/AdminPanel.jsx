@@ -506,7 +506,7 @@ export default function AdminPanel() {
       {/* Header */}
       <div style={{ background: t.cardBg, padding: '10px 16px', display: 'flex', alignItems: 'center', gap: '10px', borderBottom: `1px solid ${t.border}` }}>
         <span style={{ color: 'white', fontSize: '8px', fontWeight: '800' }}>QUANTYREX <span style={{ color: '#6366f1' }}>MARKETS</span></span>
-        <span style={{ color: t.faintText, fontSize: '8px' }}>/ Admin Panel</span>
+
         <div style={{ marginLeft: 'auto', display: 'flex', gap: '8px' }}>
           <button type="button" onClick={() => navigate('/dashboard')} style={{ background: 'none', border: `1px solid ${t.border}`, color: t.text, fontSize: '9px', padding: '4px 10px', cursor: 'pointer' }}>Dashboard</button>
           {canInstall && (
