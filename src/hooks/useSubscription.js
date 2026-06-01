@@ -30,7 +30,11 @@ export function useSubscription() {
       return false;
     }
     if (!status?.active) {
-      toast.warning(`Pro subscription required to ${actionName}`);
+      window.dispatchEvent(new CustomEvent('show-status', { detail: {
+        type: 'warning',
+        title: 'Pro Subscription Required',
+        message: `A Pro subscription is required to ${actionName}.`
+      }}));
       setTimeout(() => navigate('/dashboard/subscription'), 800);
       return false;
     }
@@ -40,7 +44,11 @@ export function useSubscription() {
   // Returns true if API response indicates subscription required
   const handleApiError = useCallback((err) => {
     if (err?.requiresSubscription || err?.message?.includes('subscription required')) {
-      toast.warning('Pro subscription required');
+      window.dispatchEvent(new CustomEvent('show-status', { detail: {
+        type: 'warning',
+        title: 'Pro Subscription Required',
+        message: 'A Pro subscription is required to continue.'
+      }}));
       setTimeout(() => navigate('/dashboard/subscription'), 800);
       return true;
     }

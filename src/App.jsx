@@ -68,6 +68,7 @@ import ForgotPassword from "./pages/ForgotPassword";
 import LoadingScreen from "./components/LoadingScreen";
 import LiveChat from "./components/LiveChat";
 import { ToastContainer } from 'react-toastify';
+import StatusPopup from './components/StatusPopup';
 import 'react-toastify/dist/ReactToastify.css';
 
 const AdminRoute = ({ children }) => {
@@ -119,9 +120,27 @@ function HomePage() {
 }
 
 function App() {
+  const [statusPopup, setStatusPopup] = useState(null);
+
+  useEffect(() => {
+    const handler = (e) => {
+      setStatusPopup(e.detail);
+    };
+    window.addEventListener('show-status', handler);
+    return () => window.removeEventListener('show-status', handler);
+  }, []);
+
   return (
     <>
     <BrowserRouter>
+      <StatusPopup
+        show={!!statusPopup}
+        type={statusPopup?.type || 'warning'}
+        title={statusPopup?.title || ''}
+        message={statusPopup?.message || ''}
+        onClose={() => setStatusPopup(null)}
+        autoClose={statusPopup?.autoClose ?? 3500}
+      />
       <ToastContainer
         position="top-center"
         autoClose={4000}
