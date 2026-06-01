@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { useAuth } from "./context/AuthContext";
 import { Navigate } from "react-router-dom";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
@@ -68,7 +68,6 @@ import ForgotPassword from "./pages/ForgotPassword";
 import LoadingScreen from "./components/LoadingScreen";
 import LiveChat from "./components/LiveChat";
 import { ToastContainer } from 'react-toastify';
-import { useState, useEffect } from 'react';
 import StatusPopup from './components/StatusPopup';
 import 'react-toastify/dist/ReactToastify.css';
 
