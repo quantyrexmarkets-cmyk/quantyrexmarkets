@@ -194,10 +194,10 @@ export default function DashboardSidebar({ open, onClose }) {
         </div>
 
         {/* Menu */}
-        <div style={{ padding: '12px 0', flex: 1 }}>
+        <div style={{ padding: '8px 0 20px', flex: 1 }}>
           {sidebarSections.map((section, si) => (
             <div key={si} style={{ marginBottom: '16px' }}>
-              <div style={{ color: t.subText, fontSize: '8px', fontWeight: '700', letterSpacing: '0.1em', padding: '0 16px', marginBottom: '8px', marginTop: '8px' }}>{section.title}</div>
+              <div style={{ color: t.subText, fontSize: '10px', fontWeight: '700', letterSpacing: '0.12em', padding: '0 18px', marginBottom: '10px', marginTop: '14px', textTransform: 'uppercase' }}>{section.title}</div>
               {section.items.map((item, ii) => (
                 <div key={ii} style={{ padding: 0 }}>
                   <div style={{
@@ -219,13 +219,13 @@ export default function DashboardSidebar({ open, onClose }) {
                       navigate(item.route); onClose();
                     }
                   }}
-                  style={{ width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '7px 14px', background: 'transparent', border: 'none', cursor: 'pointer', color: isActive(item) && openSubmenu !== si+'-'+ii ? '#6366f1' : t.text, fontSize: '10px', fontWeight: isActive(item) && openSubmenu !== si+'-'+ii ? '600' : '400', textAlign: 'left' }}>
+                  style={{ width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '12px 18px', background: 'transparent', border: 'none', cursor: 'pointer', color: isActive(item) && openSubmenu !== si+'-'+ii ? '#6366f1' : t.text, fontSize: '13px', fontWeight: isActive(item) && openSubmenu !== si+'-'+ii ? '600' : '500', textAlign: 'left', gap: '10px' }}>
                     <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
                       <span style={{ color: '#6366f1' }}>{item.icon}</span>
                       <span>{item.label}</span>
                     </div>
                     <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
-                      {item.badge && <span style={{ background: '#ef4444', color: t.text, fontSize: '8px', padding: '2px 5px', borderRadius: '2px', fontWeight: '700' }}>{item.badge}</span>}
+                      {item.badge && <span style={{ background: '#ef4444', color: '#fff', fontSize: '9px', padding: '2px 7px', borderRadius: '10px', fontWeight: '700', letterSpacing: '0.04em' }}>{item.badge}</span>}
                       <ChevronRight size={10} color={t.mutedText} style={{ transform: openSubmenu === si+'-'+ii ? 'rotate(90deg)' : 'rotate(0deg)', transition: 'transform 0.2s' }}/>
                     </div>
                   </button>
@@ -236,7 +236,7 @@ export default function DashboardSidebar({ open, onClose }) {
                       return (
                         <button type="button" key={si2} onClick={() => { navigate(sub.route); onClose(); }}
                           style={{
-                            width: '100%', padding: '9px 14px', marginBottom: '2px',
+                            width: '100%', padding: '10px 18px', marginBottom: '2px', fontSize: '12px',
                             background: subActive
                               ? t.bg === '#e6e6e6' ? 'rgba(99,102,241,0.1)' : 'rgba(99,102,241,0.18)'
                               : 'transparent',
@@ -266,7 +266,7 @@ export default function DashboardSidebar({ open, onClose }) {
         </div>
 
         {/* Language */}
-        <div style={{ padding: '7px 14px', borderTop: `1px solid ${t.subtleBorder}`, display: 'flex', alignItems: 'center', gap: '6px' }}>
+        <div style={{ padding: '12px 18px', borderTop: `1px solid ${t.subtleBorder}`, display: 'flex', alignItems: 'center', gap: '8px' }}>
           <Globe size={11} color={t.mutedText}/>
           <span style={{ color: t.subText, fontSize: '8px' }}>EN ^</span>
         </div>
