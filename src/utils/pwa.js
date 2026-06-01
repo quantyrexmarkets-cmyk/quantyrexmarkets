@@ -1,7 +1,6 @@
 const VAPID_PUBLIC_KEY = import.meta.env.VITE_VAPID_PUBLIC_KEY || '';
 const API_URL = import.meta.env.VITE_API_URL || 'https://quantyrexmarkets-api.vercel.app/api';
 
-// Register service worker
 export async function registerServiceWorker() {
   if (!('serviceWorker' in navigator)) return null;
   try {
@@ -14,7 +13,6 @@ export async function registerServiceWorker() {
   }
 }
 
-// Convert VAPID key
 function urlBase64ToUint8Array(base64String) {
   const padding = '='.repeat((4 - (base64String.length % 4)) % 4);
   const base64 = (base64String + padding).replace(/-/g, '+').replace(/_/g, '/');
@@ -22,49 +20,50 @@ function urlBase64ToUint8Array(base64String) {
   return Uint8Array.from([...rawData].map(c => c.charCodeAt(0)));
 }
 
-// Subscribe to push notifications (admin only)
 export async function subscribeToPush() {
   if (!VAPID_PUBLIC_KEY) {
     console.warn('[PWA] No VAPID public key');
     return null;
   }
 
-  const reg = await navigator.serviceWorker.ready;
+  try {
+    const reg = await navigator.serviceWorker.ready;
+    let subscription = await reg.pushManager.getSubscription();
 
-  // Check existing subscription
-  let subscription = await reg.pushManager.getSubscription();
+    if (!subscription) {
+      const permission = await Notification.requestPermission();
+      if (permission !== 'granted') return null;
 
-  if (!subscription) {
-    // Ask for permission
-    const permission = await Notification.requestPermission();
-    if (permission !== 'granted') return null;
+      subscription = await reg.pushManager.subscribe({
+        userVisibleOnly: true,
+        applicationServerKey: urlBase64ToUint8Array(VAPID_PUBLIC_KEY)
+      });
+    }
 
-    subscription = await reg.pushManager.subscribe({
-      userVisibleOnly: true,
-      applicationServerKey: urlBase64ToUint8Array(VAPID_PUBLIC_KEY)
+    const token = localStorage.getItem('token');
+    await fetch(`${API_URL}/push/subscribe`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
+      body: JSON.stringify({ subscription })
     });
+
+    return subscription;
+  } catch (err) {
+    console.error('[PWA] Subscribe failed:', err);
+    return null;
   }
-
-  // Send to backend
-  const token = localStorage.getItem('token');
-  await fetch(`${API_URL}/push/subscribe`, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
-    body: JSON.stringify({ subscription })
-  });
-
-  return subscription;
 }
 
-// Check if app is installable / install
-export function setupInstallPrompt() {
+function setupInstallPrompt() {
   let deferredPrompt = null;
 
-  window.addEventListener('beforeinstallprompt', (e) => {
-    e.preventDefault();
-    deferredPrompt = e;
-    window.dispatchEvent(new CustomEvent('pwa-installable'));
-  });
+  if (typeof window !== 'undefined') {
+    window.addEventListener('beforeinstallprompt', (e) => {
+      e.preventDefault();
+      deferredPrompt = e;
+      window.dispatchEvent(new CustomEvent('pwa-installable'));
+    });
+  }
 
   return {
     canInstall: () => !!deferredPrompt,
