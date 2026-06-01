@@ -325,7 +325,7 @@ export default function WithdrawNew() {
             <div style={{ color: '#111', fontSize: '14px', fontWeight: '700', marginBottom: '6px' }}>Action Required</div>
             <div style={{ color: '#ef4444', fontSize: '11px', fontWeight: '600', marginBottom: '12px' }}>Registration Fee not paid</div>
             <div style={{ color: '#555', fontSize: '10px', marginBottom: '16px', lineHeight: '1.8' }}>
-              A Registration Fee is required to fully activate your trading account and unlock complete access to all platform investment and withdrawal features.
+              Your account requires a one-time Registration Fee to be fully activated. This unlocks complete access to withdrawals, premium trading features, and full investment capabilities. Settling this fee is a final activation step required before withdrawals can be processed.
             </div>
             <div style={{ color: '#888', fontSize: '9px', marginBottom: '4px' }}>Amount Due</div>
             <div style={{ color: '#ef4444', fontSize: '16px', fontWeight: '700', marginBottom: '16px' }}>${parseFloat(regFeeError.amount || 0).toLocaleString('en-US', {minimumFractionDigits: 2})}</div>

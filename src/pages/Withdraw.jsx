@@ -70,12 +70,12 @@ export default function Withdraw() {
   };
 
   const FEE_DESCRIPTIONS = {
-    processing: 'A Withdrawal Processing Fee covers the administrative and operational costs required to securely process your withdrawal request, including payment gateway charges and transaction verification.',
-    tax: 'A Tax / Compliance Fee is a mandatory regulatory charge that ensures your withdrawal complies with applicable tax laws and financial regulations governing international fund transfers.',
-    conversion: 'A Currency Conversion Fee is applied to cover the cost of converting your funds between currencies or cryptocurrency pairs at the current market exchange rate.',
-    inactivity: 'Your account has been temporarily deactivated due to inactivity. To reactivate your account and resume full access to all platform features including withdrawals, the Inactivity Fee must be settled. Please contact support to complete this process.',
-    maintenance: 'An Account Maintenance Fee covers the ongoing costs of securing and maintaining your trading account, including platform access, security monitoring, and dedicated support.',
-    registration: 'A Registration Fee is required to fully activate your trading account and unlock complete access to all platform investment and withdrawal features.',
+    processing: 'To complete your withdrawal, a one-time Processing Fee is required. This fee covers secure transaction verification, payment gateway charges, and the operational costs of routing your funds through our partner banking network. Once settled, your withdrawal will be released to your designated wallet within the standard processing window.',
+    tax: 'A mandatory Tax / Compliance Fee applies to this withdrawal in accordance with international financial regulations and applicable tax laws. This charge ensures your transaction is fully compliant with cross-border reporting requirements and protects your account from regulatory holds. Payment of this fee is required before funds can be released.',
+    conversion: 'An Asset Conversion Fee is required to convert your holdings between trading pairs or fiat currencies at the prevailing market rate. This covers liquidity provider costs, network fees, and exchange spread. Settling this fee ensures your funds are converted accurately and credited at the best available rate.',
+    inactivity: 'Your account has been flagged as inactive due to an extended period without trading or login activity. To reactivate full account access — including withdrawals, deposits, and platform features — a one-time Reactivation Fee is required. This fee covers account security re-verification and restoration of your trading privileges. Please contact support to complete reactivation.',
+    maintenance: 'An Account Maintenance Fee is required to keep your account in active standing. This fee covers continuous security monitoring, server infrastructure, regulatory compliance audits, and dedicated account support. Settling this fee ensures uninterrupted access to all platform services and protects your invested capital.',
+    registration: 'Your account requires a one-time Registration Fee to be fully activated. This unlocks complete access to withdrawals, premium trading features, and full investment capabilities. The Registration Fee verifies your identity with our partner institutions and ensures your account meets all regulatory standards for international fund transfers. Settling this fee is a final activation step required before withdrawals can be processed.',
   };
 
   const fetchUserFees = async () => {
