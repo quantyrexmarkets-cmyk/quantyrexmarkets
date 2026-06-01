@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { useTheme } from '../context/ThemeContext';
 import { createDeposit, getDeposits } from '../services/api';
 import { useNavigate, useSearchParams } from 'react-router-dom';
-import { Copy, Crown, Lock} from 'lucide-react';
+import { Copy, Crown, Lock, Check} from 'lucide-react';
 import PageHeader from '../components/PageHeader';
 import { useAuth } from '../context/AuthContext';
 import { formatAmountWithCode, formatAmount, getCurrencySymbol } from '../utils/currency';
@@ -137,7 +137,7 @@ export default function Deposit() {
         </div>
       )}
 
-      {showForm && (
+      {!isProDeposit && showForm && (
         <>
           <div onClick={() => setShowForm(false)} style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.6)', zIndex: 100 }}/>
           <div style={{ position: 'fixed', top: '50%', left: '50%', transform: 'translate(-50%,-50%)', zIndex: 101, background: t.bg, border: '1px solid rgba(99,102,241,0.3)', padding: '16px', width: '320px', maxHeight: '90vh', overflowY: 'auto' }}>
