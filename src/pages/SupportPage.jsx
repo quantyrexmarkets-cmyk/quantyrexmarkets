@@ -82,10 +82,13 @@ export default function SupportPage() {
       .then(r => r.json()).then(d => {
         const list = Array.isArray(d) ? d : [];
         setContacts(list);
-        if (selectedChat) {
-          const updated = list.find(c => c._id === selectedChat._id);
-          if (updated) setSelectedChat(updated);
-        }
+        // Only update selectedChat if user has one currently open
+        // Use functional form to read the LATEST selectedChat, not the stale closure
+        setSelectedChat(prev => {
+          if (!prev) return null;
+          const updated = list.find(c => c._id === prev._id);
+          return updated || prev;
+        });
       }).catch(() => {});
 
   useEffect(() => {
@@ -97,7 +100,7 @@ export default function SupportPage() {
     };
   }, []);
 
-  useEffect(() => { fetchChats(); const i = setInterval(fetchChats, 3000); return () => clearInterval(i); }, [selectedChat]);
+  useEffect(() => { fetchChats(); const i = setInterval(fetchChats, 3000); return () => clearInterval(i); }, []);
   useEffect(() => {
     if (!bottomRef.current) return;
     const container = bottomRef.current.parentElement;
