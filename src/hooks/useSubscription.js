@@ -31,7 +31,7 @@ export function useSubscription() {
     }
     if (!status?.active) {
       window.dispatchEvent(new CustomEvent('show-status', { detail: {
-        type: 'warning',
+        type: 'error',
         title: 'Pro Membership Required',
         message: `Unlock ${actionName} and access premium tools, advanced trading features, and exclusive market insights with a Quantyrex Pro membership.`,
         autoClose: 5000
@@ -46,7 +46,7 @@ export function useSubscription() {
   const handleApiError = useCallback((err) => {
     if (err?.requiresSubscription || err?.message?.includes('subscription required')) {
       window.dispatchEvent(new CustomEvent('show-status', { detail: {
-        type: 'warning',
+        type: 'error',
         title: 'Pro Membership Required',
         message: 'This feature is exclusive to Quantyrex Pro members. Upgrade your account to unlock advanced trading tools, premium signals, and full platform access.',
         autoClose: 5000
