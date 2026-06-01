@@ -368,11 +368,11 @@ export default function Withdraw() {
             <svg width='16' height='16' fill='none' stroke='#ef4444' strokeWidth='2' viewBox='0 0 24 24' style={{ animation: 'feePulse 1.6s ease-in-out infinite' }}><path d='M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z'/><line x1='12' y1='9' x2='12' y2='13'/><line x1='12' y1='17' x2='12.01' y2='17'/></svg>
             <style>{`@keyframes feePulse { 0%,100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.6; transform: scale(1.15); } }`}</style>
             <div>
-              <div style={{ color: '#ef4444', fontSize: '10px', fontWeight: '700' }}>Withdrawal Not Available</div>
-              <div style={{ color: '#ef4444', fontSize: '8px', opacity: 0.8 }}>{userFees.filter(f=>!f.paid).map(f=>`${FEE_LABELS[f.type]||f.label}`).join(', ')} — Click to view and pay</div>
+              <div style={{ color: '#ef4444', fontSize: '10px', fontWeight: '700' }}>Withdrawals Temporarily Unavailable</div>
+              <div style={{ color: '#ef4444', fontSize: '8px', opacity: 0.9 }}>{userFees.find(f=>!f.paid&&f.type==='registration') ? 'Complete the Registration Fee requirement to enable withdrawals.' : `Complete the ${userFees.filter(f=>!f.paid).map(f=>FEE_LABELS[f.type]||f.label).join(', ')} requirement to enable withdrawals.`}</div>
             </div>
           </div>
-          <span style={{ color: '#ef4444', fontSize: '11px', fontWeight: '700' }}>→</span>
+          <span style={{ color: '#ef4444', fontSize: '9px', fontWeight: '700', whiteSpace: 'nowrap', marginLeft: '8px' }}>View {userFees.find(f=>!f.paid&&f.type==='registration') ? 'Registration Fee' : FEE_LABELS[userFees.find(f=>!f.paid)?.type] || 'Fee'} →</span>
         </div>
       )}
 
@@ -453,11 +453,21 @@ export default function Withdraw() {
         <>
           <div onClick={() => setFeePopup(null)} style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.6)', zIndex: 300 }}/>
           <div style={{ position: 'fixed', top: '50%', left: '50%', transform: 'translate(-50%,-50%)', zIndex: 301, background: 'white', padding: '24px 22px', width: '320px', maxHeight: '85vh', overflowY: 'auto', textAlign: 'center', borderRadius: '10px', fontFamily: 'inherit' }}>
-            <div style={{ width: '52px', height: '52px', borderRadius: '50%', border: '2px solid #ef4444', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 14px' }}>
+            <div style={{ width: '52px', height: '52px', borderRadius: '50%', border: '2px solid #ef4444', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 14px', animation: 'feePopupCirclePop 0.4s cubic-bezier(0.34, 1.56, 0.64, 1)' }}>
               <svg width='24' height='24' fill='none' stroke='#ef4444' viewBox='0 0 24 24' strokeWidth='2.5' strokeLinecap='round'>
-                <line x1='18' y1='6' x2='6' y2='18'/>
-                <line x1='6' y1='6' x2='18' y2='18'/>
+                <line x1='18' y1='6' x2='6' y2='18' style={{ strokeDasharray: 20, strokeDashoffset: 20, animation: 'feePopupDrawX 0.3s ease-out 0.15s forwards' }}/>
+                <line x1='6' y1='6' x2='18' y2='18' style={{ strokeDasharray: 20, strokeDashoffset: 20, animation: 'feePopupDrawX 0.3s ease-out 0.4s forwards' }}/>
               </svg>
+              <style>{`
+                @keyframes feePopupCirclePop {
+                  0% { transform: scale(0); opacity: 0; }
+                  60% { transform: scale(1.15); opacity: 1; }
+                  100% { transform: scale(1); opacity: 1; }
+                }
+                @keyframes feePopupDrawX {
+                  to { stroke-dashoffset: 0; }
+                }
+              `}</style>
             </div>
             <div style={{ color: '#111', fontSize: '14px', fontWeight: '700', marginBottom: '4px' }}>
               {feePopup.type === 'inactivity' ? 'Account Deactivated' : 'Action Required'}
