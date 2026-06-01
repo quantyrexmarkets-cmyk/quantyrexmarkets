@@ -40,8 +40,9 @@
       "url": "/admin/support",
       "icons": [
         {
-          "src": "/quantyrex-icon.svg",
-          "sizes": "any"
+          "src": "/icon-192.png",
+          "sizes": "192x192",
+          "type": "image/png"
         }
       ]
     },
@@ -50,8 +51,9 @@
       "url": "/admin",
       "icons": [
         {
-          "src": "/quantyrex-icon.svg",
-          "sizes": "any"
+          "src": "/icon-192.png",
+          "sizes": "192x192",
+          "type": "image/png"
         }
       ]
     }
