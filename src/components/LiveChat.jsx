@@ -65,7 +65,16 @@ export default function LiveChat() {
       if (window.innerWidth < 768) {
         setFullscreen(true);
       }
-      bottomRef.current?.scrollIntoView({ behavior: 'smooth' });
+      // Only auto-scroll if user is near the bottom (avoid disrupting scroll-up reading)
+      if (bottomRef.current) {
+        const container = bottomRef.current.parentElement;
+        if (container) {
+          const isNearBottom = container.scrollHeight - container.scrollTop - container.clientHeight < 100;
+          if (isNearBottom) {
+            bottomRef.current.scrollIntoView({ behavior: 'smooth' });
+          }
+        }
+      }
     }
   }, [open, chat]);
 
