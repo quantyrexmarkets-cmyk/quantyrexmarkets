@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { useTheme } from '../context/ThemeContext';
 import { createDeposit, getDeposits } from '../services/api';
 import { useNavigate, useSearchParams } from 'react-router-dom';
-import { Copy, Crown } from 'lucide-react';
+import { Copy, Crown, Lock} from 'lucide-react';
 import PageHeader from '../components/PageHeader';
 import { useAuth } from '../context/AuthContext';
 import { formatAmountWithCode, formatAmount, getCurrencySymbol } from '../utils/currency';
@@ -142,7 +142,10 @@ export default function Deposit() {
           <div onClick={() => setShowForm(false)} style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.6)', zIndex: 100 }}/>
           <div style={{ position: 'fixed', top: '50%', left: '50%', transform: 'translate(-50%,-50%)', zIndex: 101, background: t.bg, border: '1px solid rgba(99,102,241,0.3)', padding: '16px', width: '320px', maxHeight: '90vh', overflowY: 'auto' }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '14px' }}>
-              <span style={{ color: t.text, fontSize: '11px', fontWeight: '700' }}>Deposit Funds</span>
+              <span style={{ color: t.text, fontSize: '12px', fontWeight: '700', display: 'flex', alignItems: 'center', gap: '6px' }}>
+                {isProDeposit && <Crown size={14} color="#818cf8"/>}
+                {isProDeposit ? 'Activate Pro Subscription' : 'Deposit Funds'}
+              </span>
               <button type="button" onClick={() => setShowForm(false)} style={{ background: 'none', border: 'none', color: t.subText, cursor: 'pointer', fontSize: '16px' }}>×</button>
             </div>
 
@@ -158,8 +161,29 @@ export default function Deposit() {
                   </select>
                 </div>
                 <div style={{ marginBottom: '12px' }}>
-                  <label style={labelStyle}>Amount (USD)</label>
-                  <input value={amount} onChange={e => setAmount(e.target.value)} placeholder={`Min. ${getCurrencySymbol(user?.currency)}10.00`} style={inputStyle}/>
+                  <label style={labelStyle}>{isProDeposit ? 'Pro Subscription Amount' : 'Amount (USD)'}</label>
+                  <input
+                    value={amount}
+                    onChange={e => !isProDeposit && setAmount(e.target.value)}
+                    readOnly={isProDeposit}
+                    placeholder={`Min. ${getCurrencySymbol(user?.currency)}10.00`}
+                    style={{
+                      ...inputStyle,
+                      ...(isProDeposit ? {
+                        background: 'rgba(99,102,241,0.08)',
+                        border: '1px solid rgba(99,102,241,0.4)',
+                        color: '#818cf8',
+                        fontWeight: '700',
+                        fontSize: '12px',
+                        cursor: 'not-allowed'
+                      } : {})
+                    }}
+                  />
+                  {isProDeposit && (
+                    <div style={{ color: t.faintText, fontSize: '7px', marginTop: '3px', display: 'flex', alignItems: 'center', gap: '4px' }}>
+                      <Lock size={7}/> Fixed price · 365 days full access
+                    </div>
+                  )}
                 </div>
                 <div style={{ marginBottom: '16px' }}>
                   <label style={labelStyle}>Payment Proof</label>
@@ -172,9 +196,30 @@ export default function Deposit() {
                   </div>
                 </div>
                 {error && <div style={{ color: '#ef4444', fontSize: '8px', marginBottom: '8px' }}>{error}</div>}
-                <button type="button" onClick={handleSubmit} disabled={submitting} style={{ width: '100%', padding: '9px', background: submitting ? '#4b4e9b' : '#22c55e', border: 'none', color: 'white', fontSize: '9px', fontWeight: '700', cursor: submitting ? 'not-allowed' : 'pointer' }}>
-                  {submitting ? 'Submitting...' : 'Submit Deposit'}
+                <button type="button" onClick={handleSubmit} disabled={submitting} style={{
+                  width: '100%',
+                  padding: '11px',
+                  background: submitting ? '#4b4e9b' : (isProDeposit ? 'linear-gradient(135deg, #6366f1, #4f46e5)' : '#22c55e'),
+                  border: 'none',
+                  color: 'white',
+                  fontSize: '10px',
+                  fontWeight: '700',
+                  letterSpacing: '0.8px',
+                  cursor: submitting ? 'not-allowed' : 'pointer',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  gap: '6px',
+                  boxShadow: isProDeposit && !submitting ? '0 4px 12px rgba(99,102,241,0.35)' : 'none'
+                }}>
+                  {isProDeposit && !submitting && <Crown size={12}/>}
+                  {submitting ? 'Submitting...' : (isProDeposit ? 'ACTIVATE PRO NOW' : 'Submit Deposit')}
                 </button>
+                {isProDeposit && !submitting && (
+                  <div style={{ color: t.faintText, fontSize: '7px', marginTop: '6px', textAlign: 'center', lineHeight: '1.5' }}>
+                    Your Pro subscription activates automatically once the deposit is approved.
+                  </div>
+                )}
               </div>
 
               {/* QR Panel */}
