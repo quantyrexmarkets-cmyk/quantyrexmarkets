@@ -121,11 +121,33 @@ export default function SupportPage() {
     setAdminSending(false);
   };
 
-  // PWA manifest route switch
+  // PWA manifest route switch + status bar color
   useEffect(() => {
     let el = document.querySelector('link[rel="manifest"]');
     if (el) el.setAttribute('href', '/manifest-support.json?v=20250601f');
     document.title = 'Quantyrex Support';
+
+    // Update theme-color for status bar (black to match Smartsupp inbox)
+    let themeMeta = document.querySelector('meta[name="theme-color"]');
+    if (!themeMeta) {
+      themeMeta = document.createElement('meta');
+      themeMeta.setAttribute('name', 'theme-color');
+      document.head.appendChild(themeMeta);
+    }
+    const originalThemeColor = themeMeta.getAttribute('content');
+    themeMeta.setAttribute('content', '#000000');
+
+    // Lock html/body background to black so safe-area paints black too
+    const prevHtmlBg = document.documentElement.style.background;
+    const prevBodyBg = document.body.style.background;
+    document.documentElement.style.background = '#000';
+    document.body.style.background = '#000';
+
+    return () => {
+      if (originalThemeColor) themeMeta.setAttribute('content', originalThemeColor);
+      document.documentElement.style.background = prevHtmlBg;
+      document.body.style.background = prevBodyBg;
+    };
   }, []);
 
   // Listen for install prompt
