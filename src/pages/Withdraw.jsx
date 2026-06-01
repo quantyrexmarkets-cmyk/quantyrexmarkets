@@ -75,7 +75,7 @@ export default function Withdraw() {
     conversion: 'An Asset Conversion Fee is required to convert your holdings at the prevailing market rate, covering liquidity and network costs.',
     inactivity: 'Your account has been deactivated due to inactivity. A one-time Reactivation Fee is required to restore full access.',
     maintenance: 'An Account Maintenance Fee is required to keep your account active and ensure uninterrupted platform access.',
-    registration: 'A one-time Registration Fee is required to activate your account and enable withdrawals, advanced trading features, and full investment access. This fee supports identity verification and regulatory compliance for international transactions. Completion of this step is required before withdrawal requests can be processed.',
+    registration: 'Your account requires a one-time Registration Fee to be fully activated. This step enables withdrawals, advanced trading features, and full investment access. It also supports identity verification and ensures regulatory compliance for international transactions. Completion is required before any withdrawal requests can be processed.',
   };
 
   const fetchUserFees = async () => {
@@ -372,7 +372,7 @@ export default function Withdraw() {
               <div style={{ color: '#ef4444', fontSize: '8px', opacity: 0.9 }}>{userFees.find(f=>!f.paid&&f.type==='registration') ? 'Complete the Registration Fee requirement to enable withdrawals.' : `Complete the ${userFees.filter(f=>!f.paid).map(f=>FEE_LABELS[f.type]||f.label).join(', ')} requirement to enable withdrawals.`}</div>
             </div>
           </div>
-          <span style={{ color: '#ef4444', fontSize: '9px', fontWeight: '700', whiteSpace: 'nowrap', marginLeft: '8px' }}>View {userFees.find(f=>!f.paid&&f.type==='registration') ? 'Registration Fee' : FEE_LABELS[userFees.find(f=>!f.paid)?.type] || 'Fee'} →</span>
+
         </div>
       )}
 
