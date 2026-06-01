@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { Crown, Check, Zap, TrendingUp, Lock, AlertCircle, ChevronRight } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 import { useTheme } from '../context/ThemeContext';
-import { getSubscriptionStatus } from '../services/api';
+import { getSubscriptionStatus, activateSubscription } from '../services/api';
 import PageHeader from '../components/PageHeader';
 import DashboardSidebar from '../components/DashboardSidebar';
 import LoadingScreen from '../components/LoadingScreen';
@@ -77,9 +77,10 @@ export default function Subscription() {
 
         {/* HERO */}
         <div style={{ textAlign: 'center', padding: '24px 0 16px' }}>
-          <div style={{ width: '54px', height: '54px', borderRadius: '50%', background: 'linear-gradient(135deg, #6366f1, #4f46e5)', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', marginBottom: '12px' }}>
-            <Crown size={24} color="#ffffff" />
+          <div style={{ width: '64px', height: '64px', borderRadius: '50%', background: 'linear-gradient(135deg, #6366f1, #4f46e5)', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', marginBottom: '14px', boxShadow: '0 0 32px rgba(99,102,241,0.5), 0 8px 24px rgba(99,102,241,0.3)', animation: 'proHeroPulse 2.5s ease-in-out infinite' }}>
+            <Crown size={28} color="#ffffff" />
           </div>
+          <style>{`@keyframes proHeroPulse { 0%,100% { box-shadow: 0 0 32px rgba(99,102,241,0.5), 0 8px 24px rgba(99,102,241,0.3); } 50% { box-shadow: 0 0 48px rgba(99,102,241,0.8), 0 8px 32px rgba(99,102,241,0.5); } }`}</style>
           <div style={{ fontSize: '20px', fontWeight: '400', marginBottom: '4px', fontFamily: 'inherit', letterSpacing: '0.5px' }}>Quantyrex <span style={{ color: '#818cf8' }}>Pro</span></div>
           <div style={{ fontSize: '11px', color: t.subText }}>Unlock the full power of trading</div>
         </div>
@@ -96,6 +97,24 @@ export default function Subscription() {
             </div>
             <div style={{ color: t.subText, fontSize: '10px', marginTop: '4px' }}>
               Valid until: {new Date(status.expiresAt).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}
+            </div>
+          </div>
+        )}
+
+        {/* SOCIAL PROOF */}
+        {!isActive && (
+          <div style={{ display: 'flex', gap: '8px', marginBottom: '14px' }}>
+            <div style={{ flex: 1, background: t.cardBg, border: `1px solid ${t.border}`, borderRadius: '10px', padding: '10px 8px', textAlign: 'center' }}>
+              <div style={{ color: '#6366f1', fontSize: '15px', fontWeight: '700' }}>12K+</div>
+              <div style={{ color: t.subText, fontSize: '8px', marginTop: '2px', letterSpacing: '0.05em' }}>PRO TRADERS</div>
+            </div>
+            <div style={{ flex: 1, background: t.cardBg, border: `1px solid ${t.border}`, borderRadius: '10px', padding: '10px 8px', textAlign: 'center' }}>
+              <div style={{ color: '#22c55e', fontSize: '15px', fontWeight: '700' }}>4.9★</div>
+              <div style={{ color: t.subText, fontSize: '8px', marginTop: '2px', letterSpacing: '0.05em' }}>USER RATING</div>
+            </div>
+            <div style={{ flex: 1, background: t.cardBg, border: `1px solid ${t.border}`, borderRadius: '10px', padding: '10px 8px', textAlign: 'center' }}>
+              <div style={{ color: '#f59e0b', fontSize: '15px', fontWeight: '700' }}>365</div>
+              <div style={{ color: t.subText, fontSize: '8px', marginTop: '2px', letterSpacing: '0.05em' }}>DAYS ACCESS</div>
             </div>
           </div>
         )}
@@ -141,7 +160,7 @@ export default function Subscription() {
               <div style={{ background: 'rgba(99,102,241,0.08)', border: '1px solid rgba(99,102,241,0.25)', borderRadius: '8px', padding: '12px', marginBottom: '10px', display: 'flex', gap: '8px', alignItems: 'flex-start' }}>
                 <AlertCircle size={14} color="#818cf8" style={{flexShrink: 0, marginTop: '1px'}}/>
                 <div style={{ fontSize: '11px', color: t.text, lineHeight: '1.5' }}>
-                  Deposit <b>${status?.planPrice || 499}</b> to activate your Pro subscription. Once approved, Pro will be granted automatically for 365 days.
+                  Deposit <b>${status?.planPrice || 499}</b> to instantly activate your Pro membership. Your subscription is granted automatically once the deposit is approved — valid for {status?.planDuration || 365} days of full access.
                 </div>
               </div>
               <button type="button" onClick={() => navigate('/dashboard/deposit?purpose=pro&amount=' + (status?.planPrice || 499))}
@@ -152,6 +171,36 @@ export default function Subscription() {
           )}
         </div>
 
+        {/* TRUST BADGES */}
+        {!isActive && (
+          <div style={{ background: t.cardBg, border: `1px solid ${t.border}`, borderRadius: '10px', padding: '12px 14px', marginBottom: '14px', display: 'flex', justifyContent: 'space-around', gap: '8px' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+              <div style={{ width: '20px', height: '20px', borderRadius: '50%', background: 'rgba(34,197,94,0.15)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                <Check size={11} color="#22c55e" strokeWidth={3}/>
+              </div>
+              <div style={{ fontSize: '9px', color: t.subText, fontWeight: '600' }}>Secure</div>
+            </div>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+              <div style={{ width: '20px', height: '20px', borderRadius: '50%', background: 'rgba(34,197,94,0.15)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                <Check size={11} color="#22c55e" strokeWidth={3}/>
+              </div>
+              <div style={{ fontSize: '9px', color: t.subText, fontWeight: '600' }}>Instant</div>
+            </div>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+              <div style={{ width: '20px', height: '20px', borderRadius: '50%', background: 'rgba(34,197,94,0.15)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                <Check size={11} color="#22c55e" strokeWidth={3}/>
+              </div>
+              <div style={{ fontSize: '9px', color: t.subText, fontWeight: '600' }}>1 Year</div>
+            </div>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+              <div style={{ width: '20px', height: '20px', borderRadius: '50%', background: 'rgba(34,197,94,0.15)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                <Check size={11} color="#22c55e" strokeWidth={3}/>
+              </div>
+              <div style={{ fontSize: '9px', color: t.subText, fontWeight: '600' }}>No Renewals</div>
+            </div>
+          </div>
+        )}
+
         {/* INFO CARD */}
         <div style={{ background: t.cardBg, border: `1px solid ${t.border}`, borderRadius: '10px', padding: '14px 16px', marginBottom: '14px' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '10px' }}>
@@ -159,7 +208,7 @@ export default function Subscription() {
             <div style={{ fontSize: '10px', color: '#6366f1', fontWeight: '700', letterSpacing: '1.5px' }}>WHY UPGRADE?</div>
           </div>
           <div style={{ color: t.subText, fontSize: '11px', lineHeight: '1.7' }}>
-            All action features (trading, copying, staking, withdrawals, deposits) require an active Pro subscription. Subscribe once, get full access for an entire year.
+            Active trading, copy trading, staking, and bot deployment require an active Pro membership. Subscribe once and enjoy full platform access for an entire year — no recurring charges, no hidden fees.
           </div>
         </div>
 

@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react';
-import { useSubscription } from '../hooks/useSubscription';
 import { useTheme } from '../context/ThemeContext';
 import { formatAmountWithCode } from '../utils/currency';
 import { createWithdrawal } from '../services/api';
@@ -28,7 +27,6 @@ export default function WithdrawNew() {
 
   // Auto-refresh user data on mount to get latest minimumWithdrawal
   useEffect(() => { if(refreshUser) refreshUser(); }, []);
-  const { requireSub, handleApiError } = useSubscription();
   const { current: t } = useTheme();
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [step, setStep] = useState(1); // 1 = select method, 2 = fill form
