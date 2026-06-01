@@ -196,20 +196,11 @@ export default function SupportPage() {
             }} />
           </div>
           <div style={{ color: 'white', fontSize: '22px', fontWeight: '700', flex: 1 }}>Inbox</div>
-          <button type="button" onClick={() => navigate('/admin')} style={{
-            background: '#1f2937', border: 'none', color: 'white',
-            width: '40px', height: '40px', borderRadius: '50%',
-            display: 'flex', alignItems: 'center', justifyContent: 'center',
-            cursor: 'pointer'
-          }}>
-            <svg width='18' height='18' fill='none' stroke='currentColor' viewBox='0 0 24 24' strokeWidth='2'>
-              <path d='M22 12h-4l-3 9L9 3l-3 9H2'/>
-            </svg>
-          </button>
+
         </div>
 
         {/* Chat list */}
-        <div style={{ padding: '4px 12px 100px 12px', display: 'flex', flexDirection: 'column', gap: '8px' }}>
+        <div style={{ padding: '4px 12px 24px 12px', display: 'flex', flexDirection: 'column', gap: '8px' }}>
           {contacts.length === 0 && (
             <div style={{ color: '#6b7280', fontSize: '13px', padding: '40px 8px', textAlign: 'center' }}>
               No conversations yet
@@ -525,21 +516,7 @@ export default function SupportPage() {
         )}
       </div>
 
-      {/* Bottom nav - Smartsupp style */}
-      {!selectedChat && (
-        <div style={{
-          position: 'fixed',
-          bottom: 0, left: 0, right: 0,
-          background: '#0a0a0a',
-          borderTop: '1px solid #1f2937',
-          padding: '10px 16px',
-          paddingBottom: 'max(10px, env(safe-area-inset-bottom, 10px))',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'space-around',
-          zIndex: 100
-        }}>
-          <button type="button" onClick={() => navigate('/admin')} style={{
+      style={{
             background: 'none', border: 'none', color: '#6b7280',
             display: 'flex', alignItems: 'center', justifyContent: 'center',
             padding: '8px 14px', cursor: 'pointer'
