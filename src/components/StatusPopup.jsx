@@ -10,6 +10,23 @@ export default function StatusPopup({ show, type = 'success', title, message, on
 
   if (!show) return null;
 
+  // Inject keyframes once
+  if (typeof document !== 'undefined' && !document.getElementById('status-popup-keyframes')) {
+    const style = document.createElement('style');
+    style.id = 'status-popup-keyframes';
+    style.textContent = `
+      @keyframes statusPopupDrawX {
+        to { stroke-dashoffset: 0; }
+      }
+      @keyframes statusPopupCirclePop {
+        0% { transform: scale(0); opacity: 0; }
+        60% { transform: scale(1.15); opacity: 1; }
+        100% { transform: scale(1); opacity: 1; }
+      }
+    `;
+    document.head.appendChild(style);
+  }
+
   const color = type === 'success' ? '#22c55e' : type === 'error' ? '#ef4444' : '#f59e0b';
 
   return (
@@ -23,17 +40,30 @@ export default function StatusPopup({ show, type = 'success', title, message, on
         <div style={{
           width: '52px', height: '52px', borderRadius: '50%',
           border: `2px solid ${color}`, display: 'flex',
-          alignItems: 'center', justifyContent: 'center', margin: '0 auto 14px'
+          alignItems: 'center', justifyContent: 'center', margin: '0 auto 14px',
+          animation: 'statusPopupCirclePop 0.35s cubic-bezier(0.34, 1.56, 0.64, 1)'
         }}>
           {type === 'success' && (
-            <svg width='24' height='24' viewBox='0 0 24 24' fill='none' stroke={color} strokeWidth='2.5'>
-              <polyline points='20 6 9 17 4 12'/>
+            <svg width='24' height='24' viewBox='0 0 24 24' fill='none' stroke={color} strokeWidth='2.5' strokeLinecap='round' strokeLinejoin='round'>
+              <polyline points='20 6 9 17 4 12' style={{
+                strokeDasharray: 30,
+                strokeDashoffset: 30,
+                animation: 'statusPopupDrawX 0.4s ease-out 0.1s forwards'
+              }}/>
             </svg>
           )}
           {type === 'error' && (
-            <svg width='24' height='24' viewBox='0 0 24 24' fill='none' stroke={color} strokeWidth='2.5'>
-              <line x1='18' y1='6' x2='6' y2='18'/>
-              <line x1='6' y1='6' x2='18' y2='18'/>
+            <svg width='24' height='24' viewBox='0 0 24 24' fill='none' stroke={color} strokeWidth='2.5' strokeLinecap='round'>
+              <line x1='18' y1='6' x2='6' y2='18' style={{
+                strokeDasharray: 20,
+                strokeDashoffset: 20,
+                animation: 'statusPopupDrawX 0.3s ease-out 0.1s forwards'
+              }}/>
+              <line x1='6' y1='6' x2='18' y2='18' style={{
+                strokeDasharray: 20,
+                strokeDashoffset: 20,
+                animation: 'statusPopupDrawX 0.3s ease-out 0.35s forwards'
+              }}/>
             </svg>
           )}
           {type === 'warning' && (
