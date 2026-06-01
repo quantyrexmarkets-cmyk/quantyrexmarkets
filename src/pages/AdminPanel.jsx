@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { useTheme } from '../context/ThemeContext';
 import { Eye, Mail, Lock, Unlock, Ban, TrendingUp, TrendingDown, Trash2, Send, X, Download, Users, CheckCircle, XCircle, ArrowUpCircle, RotateCcw, DollarSign, MessageSquare, ShieldCheck, ShieldOff, Package, CreditCard, Settings } from 'lucide-react';
+import { installer, subscribeToPush } from '../utils/pwa';
 
 const BASE_URL = (import.meta.env.VITE_API_URL || (import.meta.env.VITE_API_URL || 'https://quantyrexmarkets-api.vercel.app/api'));
 const getToken = () => localStorage.getItem('token');
@@ -43,6 +44,16 @@ export default function AdminPanel() {
   const [tradeEdit, setTradeEdit] = useState({});
   const [msgInput, setMsgInput] = useState({});
   const [msg, setMsg] = useState('');
+  const [canInstall, setCanInstall] = useState(installer.canInstall());
+  const [notifEnabled, setNotifEnabled] = useState(
+    typeof Notification !== 'undefined' && Notification.permission === 'granted'
+  );
+
+  useEffect(() => {
+    const handler = () => setCanInstall(true);
+    window.addEventListener('pwa-installable', handler);
+    return () => window.removeEventListener('pwa-installable', handler);
+  }, []);
   const [resetLink, setResetLink] = useState('');
   const [userBots, setUserBots] = useState([]);
   const [userInvestments, setUserInvestments] = useState([]);
@@ -498,6 +509,20 @@ export default function AdminPanel() {
         <span style={{ color: t.faintText, fontSize: '8px' }}>/ Admin Panel</span>
         <div style={{ marginLeft: 'auto', display: 'flex', gap: '8px' }}>
           <button type="button" onClick={() => navigate('/dashboard')} style={{ background: 'none', border: `1px solid ${t.border}`, color: t.text, fontSize: '9px', padding: '4px 10px', cursor: 'pointer' }}>Dashboard</button>
+          {canInstall && (
+            <button type="button" onClick={async () => { const ok = await installer.install(); if (ok) setCanInstall(false); }} style={{ background: '#6366f1', border: 'none', color: 'white', fontSize: '9px', padding: '4px 10px', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '4px' }}>
+              <svg width='11' height='11' viewBox='0 0 24 24' fill='none' stroke='currentColor' strokeWidth='2'><path d='M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3'/></svg>
+              Install
+            </button>
+          )}
+          <button type="button" onClick={async () => {
+            const sub = await subscribeToPush();
+            if (sub) { setNotifEnabled(true); setMsg('Notifications enabled!'); setTimeout(() => setMsg(''), 3000); }
+            else { setMsg('Permission denied'); setTimeout(() => setMsg(''), 3000); }
+          }} style={{ background: notifEnabled ? '#22c55e' : 'transparent', border: notifEnabled ? 'none' : `1px solid ${t.border}`, color: notifEnabled ? 'white' : t.text, fontSize: '9px', padding: '4px 10px', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '4px' }} title={notifEnabled ? 'Notifications on' : 'Enable notifications'}>
+            <svg width='11' height='11' viewBox='0 0 24 24' fill='none' stroke='currentColor' strokeWidth='2'><path d='M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9'/><path d='M13.73 21a2 2 0 0 1-3.46 0'/></svg>
+            {notifEnabled ? 'On' : 'Notify'}
+          </button>
           <button type="button" onClick={logout} style={{ background: '#ef4444', border: 'none', color: 'white', fontSize: '9px', padding: '4px 10px', cursor: 'pointer' }}>Logout</button>
         </div>
       </div>

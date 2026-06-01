@@ -1,0 +1,43 @@
+{
+  "name": "Quantyrex Markets Admin",
+  "short_name": "QM Admin",
+  "description": "Quantyrex Markets - Admin Support Panel",
+  "start_url": "/admin",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#0f172a",
+  "theme_color": "#6366f1",
+  "icons": [
+    {
+      "src": "/quantyrex-icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Support Chats",
+      "url": "/admin/support",
+      "icons": [{ "src": "/quantyrex-icon.svg", "sizes": "any" }]
+    },
+    {
+      "name": "Dashboard",
+      "url": "/admin",
+      "icons": [{ "src": "/quantyrex-icon.svg", "sizes": "any" }]
+    }
+  ]
+}

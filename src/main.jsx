@@ -1,3 +1,4 @@
+import { registerServiceWorker } from './utils/pwa';
 import { StrictMode, Component } from 'react'
 import { createRoot } from 'react-dom/client'
 import './index.css'
@@ -38,3 +39,5 @@ createRoot(document.getElementById('root')).render(
 if (localStorage.getItem('theme') === 'light') {
   document.body.classList.add('light-mode');
 }
+
+registerServiceWorker();
