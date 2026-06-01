@@ -79,7 +79,7 @@ export default function SupportPage() {
   // PWA manifest route switch
   useEffect(() => {
     let el = document.querySelector('link[rel="manifest"]');
-    if (el) el.setAttribute('href', '/manifest-support.json?v=20250601d');
+    if (el) el.setAttribute('href', '/manifest-support.json?v=20250601e');
     document.title = 'Quantyrex Support';
   }, []);
 
