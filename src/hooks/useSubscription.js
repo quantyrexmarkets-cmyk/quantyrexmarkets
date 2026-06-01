@@ -26,7 +26,7 @@ export function useSubscription() {
   // Returns true if user can proceed, false if redirected
   const requireSub = useCallback((actionName = 'this action') => {
     if (loading) {
-      toast.info('Checking subscription...');
+      // Silently block - no toast noise while subscription status loads
       return false;
     }
     if (!status?.active) {
