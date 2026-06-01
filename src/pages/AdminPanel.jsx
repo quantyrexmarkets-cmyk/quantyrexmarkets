@@ -195,7 +195,7 @@ export default function AdminPanel() {
 
   // CSV Export
   const exportCSV = (data, filename) => {
-    if (!data.length) return;
+    if (!data || !Array.isArray(data) || !data.length) return;
     const keys = Object.keys(data[0]).filter(k => !['__v','proofImage','bankDetails'].includes(k));
     const csv = [keys.join(','), ...data.map(row => keys.map(k => JSON.stringify(row[k] ?? '')).join(','))].join('\n');
     const blob = new Blob([csv], { type: 'text/csv' });
@@ -211,9 +211,9 @@ export default function AdminPanel() {
 
   useEffect(() => {
     if (tab === 'users') api('/users').then(d => setUsers(Array.isArray(d) ? d : d.users || []));
-    if (tab === 'deposits') api('/deposits').then(setDeposits);
-    if (tab === 'withdrawals') api('/withdrawals').then(setWithdrawals);
-    if (tab === 'kyc') api('/kyc').then(setKyc);
+    if (tab === 'deposits') api('/deposits').then(d => setDeposits(Array.isArray(d) ? d : []));
+    if (tab === 'withdrawals') api('/withdrawals').then(d => setWithdrawals(Array.isArray(d) ? d : []));
+    if (tab === 'kyc') api('/kyc').then(d => setKyc(Array.isArray(d) ? d : []));
     if (tab === 'trades') api('/trades').then(setTrades);
     if (tab === 'contacts') {
       const fetchChats = () => fetch('https://quantyrexmarkets-api.vercel.app/api/chat/all', { headers: { Authorization: `Bearer ${localStorage.getItem('token')}` } }).then(r => r.json()).then(d => setContacts(Array.isArray(d) ? d : []));
@@ -256,7 +256,7 @@ export default function AdminPanel() {
   const approveDeposit = async (id, status) => {
     if (!window.confirm(`Are you sure you want to ${status} this deposit?`)) return;
     await api(`/deposits/${id}`, 'PUT', { status });
-    api('/deposits').then(setDeposits);
+    api('/deposits').then(d => setDeposits(Array.isArray(d) ? d : []));
     api('/stats').then(setStats);
     showMsg(`Deposit ${status}`);
   };
@@ -271,7 +271,7 @@ export default function AdminPanel() {
   const approveWithdrawal = async (id, status) => {
     if (!window.confirm(`Are you sure you want to ${status} this withdrawal?`)) return;
     await api(`/withdrawals/${id}`, 'PUT', { status });
-    api('/withdrawals').then(setWithdrawals);
+    api('/withdrawals').then(d => setWithdrawals(Array.isArray(d) ? d : []));
     api('/stats').then(setStats);
     showMsg(`Withdrawal ${status}`);
   };
@@ -279,7 +279,7 @@ export default function AdminPanel() {
   const approveKyc = async (id, status) => {
     if (!window.confirm(`Are you sure you want to ${status} this KYC?`)) return;
     await api(`/kyc/${id}`, 'PUT', { status });
-    api('/kyc').then(setKyc);
+    api('/kyc').then(d => setKyc(Array.isArray(d) ? d : []));
     api('/stats').then(setStats);
     showMsg(`KYC ${status}`);
   };
