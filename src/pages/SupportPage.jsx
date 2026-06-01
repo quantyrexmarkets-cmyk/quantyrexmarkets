@@ -516,69 +516,7 @@ export default function SupportPage() {
         )}
       </div>
 
-      style={{
-            background: 'none', border: 'none', color: '#6b7280',
-            display: 'flex', alignItems: 'center', justifyContent: 'center',
-            padding: '8px 14px', cursor: 'pointer'
-          }}>
-            <svg width='24' height='24' fill='none' stroke='currentColor' viewBox='0 0 24 24' strokeWidth='2'>
-              <path d='M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z'/>
-              <polyline points='9 22 9 12 15 12 15 22'/>
-            </svg>
-          </button>
-
-          <button type="button" style={{
-            background: '#3b82f6', border: 'none', color: 'white',
-            display: 'flex', alignItems: 'center', justifyContent: 'center',
-            padding: '8px 22px', borderRadius: '22px', cursor: 'pointer',
-            position: 'relative'
-          }}>
-            <svg width='22' height='22' fill='none' stroke='currentColor' viewBox='0 0 24 24' strokeWidth='2'>
-              <path d='M22 12h-4l-3 9L9 3l-3 9H2'/>
-            </svg>
-            {contacts.reduce((sum, c) => sum + (c.unreadAdmin || 0), 0) > 0 && (
-              <span style={{
-                position: 'absolute', top: '2px', right: '8px',
-                background: '#ef4444', color: 'white',
-                minWidth: '16px', height: '16px',
-                borderRadius: '8px', fontSize: '10px', fontWeight: '700',
-                padding: '0 4px',
-                display: 'flex', alignItems: 'center', justifyContent: 'center',
-                border: '2px solid #0a0a0a'
-              }}>
-                {contacts.reduce((sum, c) => sum + (c.unreadAdmin || 0), 0)}
-              </span>
-            )}
-          </button>
-
-          <button type="button" style={{
-            background: 'none', border: 'none', color: '#6b7280',
-            display: 'flex', alignItems: 'center', justifyContent: 'center',
-            padding: '8px 14px', cursor: 'pointer'
-          }}>
-            <svg width='24' height='24' fill='none' stroke='currentColor' viewBox='0 0 24 24' strokeWidth='2'>
-              <path d='M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2'/>
-              <circle cx='9' cy='7' r='4'/>
-              <path d='M23 21v-2a4 4 0 0 0-3-3.87'/>
-              <path d='M16 3.13a4 4 0 0 1 0 7.75'/>
-            </svg>
-          </button>
-
-          <button type="button" style={{
-            background: 'none', border: 'none', color: '#6b7280',
-            display: 'flex', alignItems: 'center', justifyContent: 'center',
-            padding: '8px 14px', cursor: 'pointer'
-          }}>
-            <svg width='6' height='24' fill='currentColor' viewBox='0 0 6 24'>
-              <circle cx='3' cy='5' r='2'/>
-              <circle cx='3' cy='12' r='2'/>
-              <circle cx='3' cy='19' r='2'/>
-            </svg>
-          </button>
-        </div>
-      )}
-
-      {/* Delete Message Confirmation */}
+            {/* Delete Message Confirmation */}
       {deleteMsg && (
         <>
           <div onClick={() => setDeleteMsg(null)} style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.7)', zIndex: 99998 }} />
