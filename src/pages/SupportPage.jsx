@@ -172,6 +172,13 @@ export default function SupportPage() {
         overflowX: 'hidden',
         transition: 'width 0.2s'
       }}>
+        {/* Status bar guard - covers any browser theme-color bleed */}
+        <div style={{
+          position: 'fixed', top: 0, left: 0, right: 0,
+          height: 'env(safe-area-inset-top, 0px)',
+          background: '#000', zIndex: 200
+        }} />
+
         {/* Inbox header */}
         <div style={{
           padding: 'max(14px, env(safe-area-inset-top, 14px)) 16px 14px 16px',
@@ -244,17 +251,28 @@ export default function SupportPage() {
                 <div style={{ flex: 1, minWidth: 0 }}>
                   <div style={{
                     color: c.unreadAdmin > 0 ? '#60a5fa' : '#fff',
-                    fontSize: '14px', fontWeight: '700',
+                    fontSize: '13px', fontWeight: '600',
                     overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap'
                   }}>
                     {c.name || c.email || 'User'}
                   </div>
                   <div style={{
-                    color: '#9ca3af', fontSize: '12px', marginTop: '3px',
+                    display: 'flex', alignItems: 'center', gap: '6px',
+                    fontSize: '11px', marginTop: '3px',
                     overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap'
                   }}>
-                    {lastText ? lastText.slice(0, 40) : 'No messages yet'}
-                    {lastText && lastText.length > 40 ? '...' : ''}
+                    <span style={{ color: c.visitorOnline ? '#22c55e' : '#6b7280', flexShrink: 0 }}>
+                      {c.visitorOnline ? '● Online' : '○ Offline'}
+                    </span>
+                    <span style={{ color: '#6b7280', flexShrink: 0 }}>•</span>
+                    <span style={{
+                      color: '#9ca3af',
+                      overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap',
+                      minWidth: 0, flex: 1
+                    }}>
+                      {lastText ? lastText.slice(0, 30) : 'No messages yet'}
+                      {lastText && lastText.length > 30 ? '...' : ''}
+                    </span>
                   </div>
                 </div>
                 <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: '6px', flexShrink: 0 }}>
