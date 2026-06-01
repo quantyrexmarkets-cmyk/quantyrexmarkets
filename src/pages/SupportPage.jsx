@@ -175,8 +175,8 @@ export default function SupportPage() {
         {/* Status bar guard - covers any browser theme-color bleed */}
         <div style={{
           position: 'fixed', top: 0, left: 0, right: 0,
-          height: 'env(safe-area-inset-top, 0px)',
-          background: '#000', zIndex: 200
+          height: 'calc(env(safe-area-inset-top, 0px) + 4px)',
+          background: '#000', zIndex: 9999, pointerEvents: 'none'
         }} />
 
         {/* Inbox header */}
