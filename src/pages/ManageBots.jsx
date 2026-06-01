@@ -47,6 +47,7 @@ export default function ManageBots() {
   }, []);
 
   const subscribe = async (bot) => {
+    if (!requireSub('manage trading bots')) return;
     setSubscribing(bot.name); setError('');
     try {
       const res = await fetch(`${BASE_URL}/bots`, {
@@ -66,6 +67,7 @@ export default function ManageBots() {
   };
 
   const cancelBot = async (botId) => {
+    if (!requireSub('cancel a trading bot')) return;
     try {
       const res = await fetch(`${BASE_URL}/bots/${botId}`, { method: 'DELETE', headers: headers() }).then(r => r.json());
       if (res.success) {

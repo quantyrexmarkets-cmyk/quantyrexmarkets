@@ -56,6 +56,7 @@ export default function Stake() {
   }, []);
 
   const handleSubmit = async () => {
+    if (!requireSub('create a stake')) return;
     if (!selectedPlan) { setError('Please select a staking plan.'); return; }
     if (!amount || isNaN(amount) || Number(amount) <= 0) { setError('Please enter a valid amount.'); return; }
     if (Number(amount) < selectedPlan.min) { setError(`Minimum stake for ${selectedPlan.name} is $${selectedPlan.min}`); return; }

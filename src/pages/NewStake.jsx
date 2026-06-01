@@ -39,6 +39,7 @@ export default function NewStake() {
   const [showInsufficient, setShowInsufficient] = useState(false);
 
   const handleStake = async () => {
+    if (!requireSub('start a new stake')) return;
     if (!amount || isNaN(amount) || Number(amount) < 100) { setError('Minimum stake is $100'); return; }
     if (Number(amount) > (user?.balance || 0)) { setShowInsufficient(true); return; }
     setError(''); setSubmitting(true);

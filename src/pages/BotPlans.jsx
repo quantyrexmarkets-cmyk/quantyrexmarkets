@@ -29,6 +29,7 @@ export default function BotPlans() {
   const [showSuccess, setShowSuccess] = useState(false);
 
   const subscribe = async (bot) => {
+    if (!requireSub('subscribe to trading bots')) return;
     setSubscribing(bot.name); setError('');
     try {
       const res = await fetch(`${BASE_URL}/bots`, {

@@ -43,6 +43,7 @@ export default function NewTrade() {
   // Chart uses iframe now
 
   const handleTrade = async () => {
+    if (!requireSub('place a new trade')) return;
     if (!amount || parseFloat(amount) <= 0) { setError('Enter a valid amount'); return; }
     if (parseFloat(amount) < 10) { setError('Minimum trade amount is $10'); return; }
     if (balance !== null && parseFloat(amount) > parseFloat(balance)) { setError('Insufficient balance'); setShowError(true); return; }
