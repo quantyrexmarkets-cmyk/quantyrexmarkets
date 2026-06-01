@@ -107,7 +107,6 @@ export default function Withdraw() {
   };
 
   const handlePayFee = async (fee) => {
-    if (!requireSub('withdraw funds')) return;
     setPayingFee(true);
     try {
       const token = localStorage.getItem('token');
