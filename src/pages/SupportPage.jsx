@@ -138,7 +138,7 @@ export default function SupportPage() {
       document.head.appendChild(themeMeta);
     }
     const originalThemeColor = themeMeta.getAttribute('content');
-    themeMeta.setAttribute('content', '#000000');
+    themeMeta.setAttribute('content', '#ffffff');
 
     // Lock html/body background to black so safe-area paints black too
     const prevHtmlBg = document.documentElement.style.background;
