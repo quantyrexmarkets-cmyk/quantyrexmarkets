@@ -164,8 +164,8 @@ export default function Subscription() {
                 </div>
               </div>
               <button type="button" onClick={() => navigate('/dashboard/deposit?purpose=pro&amount=' + (status?.planPrice || 499))}
-                style={{ width: '100%', padding: '15px', background: 'linear-gradient(135deg, #6366f1, #4f46e5)', border: 'none', borderRadius: '8px', color: '#ffffff', fontSize: '12px', fontWeight: '700', cursor: 'pointer', letterSpacing: '1.2px', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px', boxShadow: '0 4px 12px rgba(99,102,241,0.4)' }}>
-                <Crown size={14}/> DEPOSIT ${status?.planPrice || 499} TO SUBSCRIBE
+                style={{ width: '100%', maxWidth: '320px', margin: '0 auto', padding: '13px 20px', background: 'linear-gradient(135deg, #7c3aed, #6366f1)', border: 'none', borderRadius: '12px', color: '#ffffff', fontSize: '14px', fontWeight: '600', cursor: 'pointer', letterSpacing: '0.3px', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px', boxShadow: '0 6px 20px rgba(124,58,237,0.35)', fontFamily: 'inherit' }}>
+                <Crown size={16}/> Upgrade for ${status?.planPrice || 499}
               </button>
             </>
           )}
