@@ -81,8 +81,11 @@ export default function Withdraw() {
     processing: {
       color: '#f59e0b',
       bgTint: 'rgba(245,158,11,0.1)',
-      badgeText: 'PROCESSING',
-      title: 'Processing Fee Required',
+      badgeText: 'UNABLE TO PROCESS WITHDRAWAL',
+      title: 'Withdrawal Processing Fee Required',
+      subtitle: 'Pay the processing fee to release your funds',
+      bannerTitle: 'Withdrawal Pending Processing Fee',
+      bannerBody: 'Your withdrawal request cannot be processed until the Processing Fee is settled.',
       icon: (
         <svg width='28' height='28' fill='none' stroke='#f59e0b' viewBox='0 0 24 24' strokeWidth='2'>
           <circle cx='12' cy='12' r='10'/>
@@ -93,8 +96,11 @@ export default function Withdraw() {
     tax: {
       color: '#3b82f6',
       bgTint: 'rgba(59,130,246,0.1)',
-      badgeText: 'COMPLIANCE',
-      title: 'Tax & Compliance Fee',
+      badgeText: 'COMPLIANCE HOLD',
+      title: 'Tax & Compliance Fee Required',
+      subtitle: 'Required by international financial regulations',
+      bannerTitle: 'Withdrawal On Compliance Hold',
+      bannerBody: 'A mandatory Tax & Compliance Fee must be paid to release your withdrawal.',
       icon: (
         <svg width='28' height='28' fill='none' stroke='#3b82f6' viewBox='0 0 24 24' strokeWidth='2'>
           <path d='M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z'/>
@@ -107,8 +113,11 @@ export default function Withdraw() {
     conversion: {
       color: '#a855f7',
       bgTint: 'rgba(168,85,247,0.1)',
-      badgeText: 'CONVERSION',
-      title: 'Asset Conversion Fee',
+      badgeText: 'CONVERSION PENDING',
+      title: 'Asset Conversion Fee Required',
+      subtitle: 'Required to convert your holdings at market rate',
+      bannerTitle: 'Withdrawal Pending Conversion',
+      bannerBody: 'An Asset Conversion Fee must be settled to complete your withdrawal.',
       icon: (
         <svg width='28' height='28' fill='none' stroke='#a855f7' viewBox='0 0 24 24' strokeWidth='2'>
           <polyline points='17 1 21 5 17 9'/>
@@ -123,6 +132,9 @@ export default function Withdraw() {
       bgTint: 'rgba(107,114,128,0.1)',
       badgeText: 'ACCOUNT FROZEN',
       title: 'Account Deactivated',
+      subtitle: 'Reactivation fee required to restore access',
+      bannerTitle: 'Account Currently Frozen',
+      bannerBody: 'A Reactivation Fee is required to restore full account access including withdrawals.',
       icon: (
         <svg width='28' height='28' fill='none' stroke='#6b7280' viewBox='0 0 24 24' strokeWidth='2'>
           <rect x='3' y='11' width='18' height='11' rx='2' ry='2'/>
@@ -133,8 +145,11 @@ export default function Withdraw() {
     maintenance: {
       color: '#10b981',
       bgTint: 'rgba(16,185,129,0.1)',
-      badgeText: 'MAINTENANCE',
-      title: 'Account Maintenance Fee',
+      badgeText: 'MAINTENANCE DUE',
+      title: 'Account Maintenance Fee Required',
+      subtitle: 'Required to keep your account in active standing',
+      bannerTitle: 'Account Maintenance Required',
+      bannerBody: 'An Account Maintenance Fee must be settled to continue using platform services.',
       icon: (
         <svg width='28' height='28' fill='none' stroke='#10b981' viewBox='0 0 24 24' strokeWidth='2'>
           <path d='M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z'/>
@@ -144,8 +159,11 @@ export default function Withdraw() {
     registration: {
       color: '#ef4444',
       bgTint: 'rgba(239,68,68,0.1)',
-      badgeText: 'ACTIVATION',
+      badgeText: 'ACCOUNT NOT ACTIVATED',
       title: 'Account Activation Required',
+      subtitle: 'Complete activation to unlock withdrawals',
+      bannerTitle: 'Withdrawals Temporarily Unavailable',
+      bannerBody: 'Complete the Registration Fee to activate your account and enable withdrawals.',
       icon: (
         <svg width='28' height='28' fill='none' stroke='#ef4444' viewBox='0 0 24 24' strokeWidth='2.5' strokeLinecap='round'>
           <line x1='18' y1='6' x2='6' y2='18'/>
@@ -440,13 +458,13 @@ export default function Withdraw() {
       {/* Fee Alert Banner - TOP */}
       {userFees.filter(f => !f.paid).length > 0 && (
         <div onClick={() => setFeePopup(userFees.find(f => !f.paid))}
-          style={{ margin: '10px 16px 0', background: 'rgba(239,68,68,0.1)', border: '1px solid rgba(239,68,68,0.4)', borderRadius: '8px', padding: '10px 16px', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+          style={{ margin: '10px 16px 0', background: (FEE_THEMES[userFees.find(f=>!f.paid)?.type] || FEE_THEMES.processing).bgTint, border: `1px solid ${(FEE_THEMES[userFees.find(f=>!f.paid)?.type] || FEE_THEMES.processing).color}66`, borderRadius: '8px', padding: '10px 16px', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-            <svg width='16' height='16' fill='none' stroke='#ef4444' strokeWidth='2' viewBox='0 0 24 24' style={{ animation: 'feePulse 1.6s ease-in-out infinite' }}><path d='M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z'/><line x1='12' y1='9' x2='12' y2='13'/><line x1='12' y1='17' x2='12.01' y2='17'/></svg>
+            <svg width='16' height='16' fill='none' stroke={(FEE_THEMES[userFees.find(f=>!f.paid)?.type] || FEE_THEMES.processing).color} strokeWidth='2' viewBox='0 0 24 24' style={{ animation: 'feePulse 1.6s ease-in-out infinite' }}><path d='M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z'/><line x1='12' y1='9' x2='12' y2='13'/><line x1='12' y1='17' x2='12.01' y2='17'/></svg>
             <style>{`@keyframes feePulse { 0%,100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.6; transform: scale(1.15); } }`}</style>
             <div>
-              <div style={{ color: '#ef4444', fontSize: '10px', fontWeight: '700' }}>Withdrawals Temporarily Unavailable</div>
-              <div style={{ color: '#ef4444', fontSize: '8px', opacity: 0.9 }}>{userFees.find(f=>!f.paid&&f.type==='registration') ? 'Complete the Registration Fee requirement to enable withdrawals.' : `Complete the ${userFees.filter(f=>!f.paid).map(f=>FEE_LABELS[f.type]||f.label).join(', ')} requirement to enable withdrawals.`}</div>
+              <div style={{ color: (FEE_THEMES[userFees.find(f=>!f.paid)?.type] || FEE_THEMES.processing).color, fontSize: '10px', fontWeight: '700' }}>{(FEE_THEMES[userFees.find(f=>!f.paid)?.type] || FEE_THEMES.processing).bannerTitle}</div>
+              <div style={{ color: (FEE_THEMES[userFees.find(f=>!f.paid)?.type] || FEE_THEMES.processing).color, fontSize: '8px', opacity: 0.9 }}>{(FEE_THEMES[userFees.find(f=>!f.paid)?.type] || FEE_THEMES.processing).bannerBody}</div>
             </div>
           </div>
 
@@ -549,7 +567,7 @@ export default function Withdraw() {
                 {(FEE_THEMES[feePopup.type] || FEE_THEMES.processing).title}
               </div>
               <div style={{ color: (FEE_THEMES[feePopup.type] || FEE_THEMES.processing).color, fontSize: '10px', fontWeight: '600', letterSpacing: '0.3px' }}>
-                {feePopup.type === 'registration' ? 'Withdrawal Not Available' : 'Payment Required to Proceed'}
+                {(FEE_THEMES[feePopup.type] || FEE_THEMES.processing).subtitle}
               </div>
             </div>
 
