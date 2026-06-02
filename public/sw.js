@@ -64,7 +64,7 @@ self.addEventListener('push', function(event) {
       badge: NOTIFICATION_BADGE,
       tag: tag,
       renotify: true,
-      requireInteraction: false,
+      requireInteraction: true,
       silent: false,
       vibrate: [80, 40, 80],
       timestamp: Date.now(),
