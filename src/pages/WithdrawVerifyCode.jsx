@@ -281,13 +281,27 @@ export default function WithdrawVerifyCode() {
                 UPGRADE BENEFITS
               </div>
               {[
-                { icon: '💰', text: 'Higher withdrawal limits' },
-                { icon: '⚡', text: 'Priority transaction processing' },
-                { icon: '🛡️', text: 'Enhanced account security' },
-                { icon: '🎯', text: 'Premium support access' }
+                {
+                  text: 'Higher withdrawal limits',
+                  svg: <svg width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='#22c55e' strokeWidth='2' strokeLinecap='round' strokeLinejoin='round'><line x1='12' y1='1' x2='12' y2='23'/><path d='M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6'/></svg>
+                },
+                {
+                  text: 'Priority transaction processing',
+                  svg: <svg width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='#f59e0b' strokeWidth='2' strokeLinecap='round' strokeLinejoin='round'><polygon points='13 2 3 14 12 14 11 22 21 10 12 10 13 2'/></svg>
+                },
+                {
+                  text: 'Enhanced account security',
+                  svg: <svg width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='#3b82f6' strokeWidth='2' strokeLinecap='round' strokeLinejoin='round'><path d='M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z'/></svg>
+                },
+                {
+                  text: 'Premium support access',
+                  svg: <svg width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='#818cf8' strokeWidth='2' strokeLinecap='round' strokeLinejoin='round'><circle cx='12' cy='12' r='10'/><circle cx='12' cy='12' r='4'/><line x1='4.93' y1='4.93' x2='9.17' y2='9.17'/><line x1='14.83' y1='14.83' x2='19.07' y2='19.07'/><line x1='14.83' y1='9.17' x2='19.07' y2='4.93'/><line x1='4.93' y1='19.07' x2='9.17' y2='14.83'/></svg>
+                }
               ].map((b, i) => (
-                <div key={i} style={{ display: 'flex', alignItems: 'center', gap: '10px', padding: '5px 0', color: '#e2e8f0', fontSize: '11px' }}>
-                  <span style={{ fontSize: '14px' }}>{b.icon}</span>
+                <div key={i} style={{ display: 'flex', alignItems: 'center', gap: '10px', padding: '6px 0', color: '#e2e8f0', fontSize: '11px' }}>
+                  <span style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', width: '24px', height: '24px', borderRadius: '6px', background: 'rgba(99,102,241,0.1)', flexShrink: 0 }}>
+                    {b.svg}
+                  </span>
                   {b.text}
                 </div>
               ))}
