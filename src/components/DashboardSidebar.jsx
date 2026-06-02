@@ -167,7 +167,7 @@ export default function DashboardSidebar({ open, onClose }) {
         display: 'flex', flexDirection: 'column', borderRight: `1px solid ${t.sidebarBorder}`, overflowY: 'auto'
       }}>
         {/* Logo */}
-        <div style={{ padding: '16px 16px 12px', minHeight: '55px', boxSizing: 'border-box', display: 'flex', alignItems: 'center', justifyContent: 'space-between', background: 'transparent', borderBottom: `1px solid ${t.subtleBorder}` }}>
+        <div style={{ padding: '10px 14px', minHeight: '48px', boxSizing: 'border-box', display: 'flex', alignItems: 'center', justifyContent: 'space-between', background: 'transparent', borderBottom: `1px solid ${t.subtleBorder}` }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '8px', cursor: 'pointer' }} onClick={() => { navigate('/dashboard/profile'); onClose(); }}>
             {/* Logo */}
             <div style={{ width: '45px', height: '45px', flexShrink: 0 }}>
@@ -197,7 +197,7 @@ export default function DashboardSidebar({ open, onClose }) {
         <div style={{ padding: '8px 0 20px', flex: 1 }}>
           {sidebarSections.map((section, si) => (
             <div key={si} style={{ marginBottom: '16px' }}>
-              <div style={{ color: t.subText, fontSize: '10px', fontWeight: '700', letterSpacing: '0.12em', padding: '0 18px', marginBottom: '10px', marginTop: '14px', textTransform: 'uppercase' }}>{section.title}</div>
+              <div style={{ color: t.subText, fontSize: '9px', fontWeight: '700', letterSpacing: '0.1em', padding: '0 16px', marginBottom: '6px', marginTop: '10px', textTransform: 'uppercase' }}>{section.title}</div>
               {section.items.map((item, ii) => (
                 <div key={ii} style={{ padding: 0 }}>
                   <div style={{
@@ -219,13 +219,13 @@ export default function DashboardSidebar({ open, onClose }) {
                       navigate(item.route); onClose();
                     }
                   }}
-                  style={{ width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '12px 18px', background: 'transparent', border: 'none', cursor: 'pointer', color: isActive(item) && openSubmenu !== si+'-'+ii ? '#6366f1' : t.text, fontSize: '13px', fontWeight: isActive(item) && openSubmenu !== si+'-'+ii ? '600' : '500', textAlign: 'left', gap: '10px' }}>
+                  style={{ width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '10px 16px', background: 'transparent', border: 'none', cursor: 'pointer', color: isActive(item) && openSubmenu !== si+'-'+ii ? '#6366f1' : t.text, fontSize: '12px', fontWeight: isActive(item) && openSubmenu !== si+'-'+ii ? '600' : '400', textAlign: 'left', gap: '10px' }}>
                     <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
                       <span style={{ color: '#6366f1' }}>{item.icon}</span>
                       <span>{item.label}</span>
                     </div>
                     <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
-                      {item.badge && <span style={{ background: '#ef4444', color: '#fff', fontSize: '9px', padding: '2px 7px', borderRadius: '10px', fontWeight: '700', letterSpacing: '0.04em' }}>{item.badge}</span>}
+                      {item.badge && <span style={{ background: '#ef4444', color: '#fff', fontSize: '8px', padding: '2px 6px', borderRadius: '8px', fontWeight: '700' }}>{item.badge}</span>}
                       <ChevronRight size={10} color={t.mutedText} style={{ transform: openSubmenu === si+'-'+ii ? 'rotate(90deg)' : 'rotate(0deg)', transition: 'transform 0.2s' }}/>
                     </div>
                   </button>
@@ -236,7 +236,7 @@ export default function DashboardSidebar({ open, onClose }) {
                       return (
                         <button type="button" key={si2} onClick={() => { navigate(sub.route); onClose(); }}
                           style={{
-                            width: '100%', padding: '10px 18px', marginBottom: '2px', fontSize: '12px',
+                            width: '100%', padding: '8px 16px', marginBottom: '2px', fontSize: '11px',
                             background: subActive
                               ? t.bg === '#e6e6e6' ? 'rgba(99,102,241,0.1)' : 'rgba(99,102,241,0.18)'
                               : 'transparent',
@@ -275,7 +275,7 @@ export default function DashboardSidebar({ open, onClose }) {
       {notifOpen && (
         <div ref={notifRef} style={{ position: 'fixed', top: 0, left: '240px', width: '280px', height: '100vh', background: t.cardBg, borderRight: `1px solid ${t.border}`, zIndex: 9999, display: 'flex', flexDirection: 'column' }}>
           <div style={{ padding: '14px 16px', borderBottom: `1px solid ${t.border}`, display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-            <span style={{ color: t.text, fontSize: '13px', fontWeight: '700' }}>Notifications</span>
+            <span style={{ color: t.text, fontSize: '12px', fontWeight: '600' }}>Notifications</span>
             <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
               {unread > 0 && <button type="button" onClick={markAllRead} style={{ background: 'none', border: 'none', color: '#6366f1', fontSize: '8px', cursor: 'pointer' }}>Mark all read</button>}
               <button type="button" onClick={() => setNotifOpen(false)} style={{ background: 'none', border: 'none', color: t.subText, fontSize: '16px', cursor: 'pointer' }}>×</button>
