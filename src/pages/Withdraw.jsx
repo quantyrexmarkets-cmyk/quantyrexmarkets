@@ -76,6 +76,86 @@ export default function Withdraw() {
     registration: 'Your account requires a one-time Registration Fee to be fully activated. This step enables withdrawals, advanced trading features, and full investment access. It also supports identity verification and ensures regulatory compliance for international transactions. Completion is required before any withdrawal requests can be processed.',
   };
 
+  // Distinct visual theme per fee type
+  const FEE_THEMES = {
+    processing: {
+      color: '#f59e0b',
+      bgTint: 'rgba(245,158,11,0.1)',
+      badgeText: 'PROCESSING',
+      title: 'Processing Fee Required',
+      icon: (
+        <svg width='28' height='28' fill='none' stroke='#f59e0b' viewBox='0 0 24 24' strokeWidth='2'>
+          <circle cx='12' cy='12' r='10'/>
+          <polyline points='12 6 12 12 16 14'/>
+        </svg>
+      )
+    },
+    tax: {
+      color: '#3b82f6',
+      bgTint: 'rgba(59,130,246,0.1)',
+      badgeText: 'COMPLIANCE',
+      title: 'Tax & Compliance Fee',
+      icon: (
+        <svg width='28' height='28' fill='none' stroke='#3b82f6' viewBox='0 0 24 24' strokeWidth='2'>
+          <path d='M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z'/>
+          <polyline points='14 2 14 8 20 8'/>
+          <line x1='9' y1='15' x2='15' y2='15'/>
+          <line x1='9' y1='11' x2='15' y2='11'/>
+        </svg>
+      )
+    },
+    conversion: {
+      color: '#a855f7',
+      bgTint: 'rgba(168,85,247,0.1)',
+      badgeText: 'CONVERSION',
+      title: 'Asset Conversion Fee',
+      icon: (
+        <svg width='28' height='28' fill='none' stroke='#a855f7' viewBox='0 0 24 24' strokeWidth='2'>
+          <polyline points='17 1 21 5 17 9'/>
+          <path d='M3 11V9a4 4 0 0 1 4-4h14'/>
+          <polyline points='7 23 3 19 7 15'/>
+          <path d='M21 13v2a4 4 0 0 1-4 4H3'/>
+        </svg>
+      )
+    },
+    inactivity: {
+      color: '#6b7280',
+      bgTint: 'rgba(107,114,128,0.1)',
+      badgeText: 'ACCOUNT FROZEN',
+      title: 'Account Deactivated',
+      icon: (
+        <svg width='28' height='28' fill='none' stroke='#6b7280' viewBox='0 0 24 24' strokeWidth='2'>
+          <rect x='3' y='11' width='18' height='11' rx='2' ry='2'/>
+          <path d='M7 11V7a5 5 0 0 1 10 0v4'/>
+        </svg>
+      )
+    },
+    maintenance: {
+      color: '#10b981',
+      bgTint: 'rgba(16,185,129,0.1)',
+      badgeText: 'MAINTENANCE',
+      title: 'Account Maintenance Fee',
+      icon: (
+        <svg width='28' height='28' fill='none' stroke='#10b981' viewBox='0 0 24 24' strokeWidth='2'>
+          <path d='M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z'/>
+        </svg>
+      )
+    },
+    registration: {
+      color: '#ef4444',
+      bgTint: 'rgba(239,68,68,0.1)',
+      badgeText: 'ACTIVATION',
+      title: 'Account Activation Required',
+      icon: (
+        <svg width='28' height='28' fill='none' stroke='#ef4444' viewBox='0 0 24 24' strokeWidth='2.5' strokeLinecap='round'>
+          <line x1='18' y1='6' x2='6' y2='18'/>
+          <line x1='6' y1='6' x2='18' y2='18'/>
+        </svg>
+      )
+    }
+  };
+
+
   const fetchUserFees = async () => {
     try {
       const token = localStorage.getItem('token');
@@ -449,44 +529,48 @@ export default function Withdraw() {
       {feePopup && (
         <>
           <div onClick={() => setFeePopup(null)} style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.6)', zIndex: 300 }}/>
-          <div style={{ position: 'fixed', top: '50%', left: '50%', transform: 'translate(-50%,-50%)', zIndex: 301, background: 'white', padding: '24px 22px', width: '320px', maxHeight: '85vh', overflowY: 'auto', textAlign: 'center', borderRadius: '10px', fontFamily: 'inherit' }}>
-            <div style={{ width: '52px', height: '52px', borderRadius: '50%', border: '2px solid #ef4444', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 14px', animation: 'feePopupCirclePop 0.4s cubic-bezier(0.34, 1.56, 0.64, 1)' }}>
-              <svg width='24' height='24' fill='none' stroke='#ef4444' viewBox='0 0 24 24' strokeWidth='2.5' strokeLinecap='round'>
-                <line x1='18' y1='6' x2='6' y2='18' style={{ strokeDasharray: 20, strokeDashoffset: 20, animation: 'feePopupDrawX 0.3s ease-out 0.15s forwards' }}/>
-                <line x1='6' y1='6' x2='18' y2='18' style={{ strokeDasharray: 20, strokeDashoffset: 20, animation: 'feePopupDrawX 0.3s ease-out 0.4s forwards' }}/>
-              </svg>
-              <style>{`
-                @keyframes feePopupCirclePop {
-                  0% { transform: scale(0); opacity: 0; }
-                  60% { transform: scale(1.15); opacity: 1; }
-                  100% { transform: scale(1); opacity: 1; }
-                }
-                @keyframes feePopupDrawX {
-                  to { stroke-dashoffset: 0; }
-                }
-              `}</style>
-            </div>
-            <div style={{ color: '#111', fontSize: '14px', fontWeight: '700', marginBottom: '4px' }}>
-              {feePopup.type === 'inactivity' ? 'Account Deactivated' : 'Action Required'}
-            </div>
-            <div style={{ color: '#ef4444', fontSize: '11px', fontWeight: '600', marginBottom: '12px' }}>
-              {feePopup.type === 'inactivity' ? 'Inactivity Fee Required' : feePopup.type === 'registration' ? 'Withdrawal Not Available' : `${FEE_LABELS[feePopup.type] || feePopup.label} Not Settled`}
-            </div>
-            <div style={{ color: '#555', fontSize: '11px', marginBottom: '14px', lineHeight: '1.55' }}>
-              {FEE_DESCRIPTIONS[feePopup.type] || FEE_DESCRIPTIONS.processing}
+          <div style={{ position: 'fixed', top: '50%', left: '50%', transform: 'translate(-50%,-50%)', zIndex: 301, background: 'white', width: '320px', maxHeight: '85vh', overflowY: 'auto', borderRadius: '14px', fontFamily: 'inherit', overflow: 'hidden' }}>
+            {/* Themed header strip */}
+            <div style={{ background: (FEE_THEMES[feePopup.type] || FEE_THEMES.processing).bgTint, padding: '20px 22px 16px', textAlign: 'center', borderBottom: `1px solid ${(FEE_THEMES[feePopup.type] || FEE_THEMES.processing).color}20` }}>
+              <div style={{ display: 'inline-block', background: (FEE_THEMES[feePopup.type] || FEE_THEMES.processing).color, color: 'white', fontSize: '9px', fontWeight: '700', letterSpacing: '1.2px', padding: '3px 10px', borderRadius: '12px', marginBottom: '10px' }}>
+                {(FEE_THEMES[feePopup.type] || FEE_THEMES.processing).badgeText}
+              </div>
+              <div style={{ width: '60px', height: '60px', borderRadius: '50%', background: 'white', border: `2px solid ${(FEE_THEMES[feePopup.type] || FEE_THEMES.processing).color}`, display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 10px', animation: 'feePopupCirclePop 0.4s cubic-bezier(0.34, 1.56, 0.64, 1)' }}>
+                {(FEE_THEMES[feePopup.type] || FEE_THEMES.processing).icon}
+                <style>{`
+                  @keyframes feePopupCirclePop {
+                    0% { transform: scale(0); opacity: 0; }
+                    60% { transform: scale(1.15); opacity: 1; }
+                    100% { transform: scale(1); opacity: 1; }
+                  }
+                `}</style>
+              </div>
+              <div style={{ color: '#111', fontSize: '15px', fontWeight: '700', marginBottom: '2px' }}>
+                {(FEE_THEMES[feePopup.type] || FEE_THEMES.processing).title}
+              </div>
+              <div style={{ color: (FEE_THEMES[feePopup.type] || FEE_THEMES.processing).color, fontSize: '10px', fontWeight: '600', letterSpacing: '0.3px' }}>
+                {feePopup.type === 'registration' ? 'Withdrawal Not Available' : 'Payment Required to Proceed'}
+              </div>
             </div>
 
-            <div style={{ color: '#ef4444', fontSize: '10px', fontWeight: '600', marginBottom: '18px', lineHeight: '1.55' }}>
-              Dear Investor, you cannot perform this action until the required payment is settled. Please contact support to proceed.
+            {/* Body */}
+            <div style={{ padding: '16px 22px 20px', textAlign: 'center' }}>
+              <div style={{ color: '#555', fontSize: '11px', marginBottom: '14px', lineHeight: '1.55' }}>
+                {FEE_DESCRIPTIONS[feePopup.type] || FEE_DESCRIPTIONS.processing}
+              </div>
+
+              <div style={{ color: (FEE_THEMES[feePopup.type] || FEE_THEMES.processing).color, fontSize: '10px', fontWeight: '600', marginBottom: '16px', lineHeight: '1.55', padding: '10px 12px', background: (FEE_THEMES[feePopup.type] || FEE_THEMES.processing).bgTint, borderRadius: '8px' }}>
+                Dear Investor, you cannot perform this action until the required payment is settled. Please contact support to proceed.
+              </div>
+              <button type="button" onClick={() => { setFeePopup(null); window.dispatchEvent(new Event('openLiveChat')); }}
+                style={{ width: '100%', padding: '11px', background: (FEE_THEMES[feePopup.type] || FEE_THEMES.processing).color, border: 'none', color: 'white', fontSize: '12px', fontWeight: '600', cursor: 'pointer', marginBottom: '8px', borderRadius: '10px' }}>
+                Contact Support
+              </button>
+              <button type="button" onClick={() => setFeePopup(null)}
+                style={{ width: '100%', padding: '10px', background: 'transparent', border: '1px solid #e2e8f0', color: '#888', fontSize: '11px', cursor: 'pointer', borderRadius: '10px' }}>
+                Close
+              </button>
             </div>
-            <button type="button" onClick={() => { setFeePopup(null); window.dispatchEvent(new Event('openLiveChat')); }}
-              style={{ width: '100%', padding: '11px', background: '#6366f1', border: 'none', color: 'white', fontSize: '11px', fontWeight: '600', cursor: 'pointer', marginBottom: '8px' }}>
-              Contact Support
-            </button>
-            <button type="button" onClick={() => setFeePopup(null)}
-              style={{ width: '100%', padding: '11px', background: 'transparent', border: '1px solid #e2e8f0', color: '#888', fontSize: '11px', cursor: 'pointer' }}>
-              Close
-            </button>
           </div>
         </>
       )}
