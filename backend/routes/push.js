@@ -43,9 +43,9 @@ router.post('/send-admin', async (req, res) => {
 });
 
 module.exports = router;
-module.exports.sendAdminPush = async ({ title, body, url }) => {
+module.exports.sendAdminPush = async ({ title, body, url, chatId }) => {
   const subs = await PushSubscription.find();
-  const payload = JSON.stringify({ title, body, url: url || '/admin' });
+  const payload = JSON.stringify({ title, body, url: url || '/admin', chatId });
   await Promise.all(subs.map(s =>
     webpush.sendNotification(s.subscription, payload).catch(e => {
       if (e.statusCode === 410) PushSubscription.findByIdAndDelete(s._id);

@@ -160,6 +160,25 @@ export default function SupportPage() {
     return () => window.removeEventListener('pwa-installable', handler);
   }, []);
 
+    // Listen for chat-open events from notification clicks
+  useEffect(() => {
+    if (!('serviceWorker' in navigator)) return;
+    const handler = (event) => {
+      if (event.data?.type === 'open-chat' && event.data.chatId) {
+        const chat = contacts.find(c => String(c._id) === event.data.chatId);
+        if (chat) {
+          setSelectedChat(chat);
+          fetch(`https://quantyrexmarkets-api.vercel.app/api/chat/read/${chat._id}`, {
+            method: 'PATCH',
+            headers: { Authorization: `Bearer ${token}` }
+          }).catch(() => {});
+        }
+      }
+    };
+    navigator.serviceWorker.addEventListener('message', handler);
+    return () => navigator.serviceWorker.removeEventListener('message', handler);
+  }, [contacts, token]);
+
   // Auto-subscribe to push notifications when admin opens support page
   useEffect(() => {
     (async () => {

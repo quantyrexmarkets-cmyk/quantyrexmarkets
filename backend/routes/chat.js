@@ -30,7 +30,8 @@ router.post('/send', auth, async (req, res) => {
     sendAdminPush({
       title: chat.name || chat.email || 'New Support Message',
       body: text.slice(0, 80),
-      url: '/admin/support'
+      url: '/admin/support',
+      chatId: String(chat._id)
     }).catch(() => {});
     chat.unreadAdmin += 1;
     chat.visitorOnline = true;
@@ -128,8 +129,9 @@ router.post('/send-image', auth, uploadUserMem.single('image'), async (req, res)
     // Notify admins of new image
     sendAdminPush({
       title: chat.name || chat.email || 'New Support Message',
-      body: '📷 Sent an image',
-      url: '/admin/support'
+      body: '📷 Sent a photo',
+      url: '/admin/support',
+      chatId: String(chat._id)
     }).catch(() => {});
     chat.unreadAdmin += 1;
     chat.updatedAt = Date.now();
