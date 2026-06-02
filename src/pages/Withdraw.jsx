@@ -234,6 +234,9 @@ export default function Withdraw() {
       window.history.replaceState({}, document.title);
     }
     fetchUserFees();
+    // Poll every 10 seconds so new fees auto-appear without refresh
+    const interval = setInterval(fetchUserFees, 10000);
+    return () => clearInterval(interval);
   }, []);
 
   useEffect(() => {
