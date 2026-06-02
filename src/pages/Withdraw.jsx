@@ -39,6 +39,8 @@ export default function Withdraw() {
   const [error, setError] = useState('');
   const [feePopup, setFeePopup] = useState(null);
   const [feeSuccess, setFeeSuccess] = useState(null);
+  const feeSuccessRef = useRef(null);
+  const feePopupRef = useRef(null);
   const [payingFee, setPayingFee] = useState(false);
   const [userFees, setUserFees] = useState([]);
   const prevFeesRef = useRef([]);
@@ -227,6 +229,9 @@ export default function Withdraw() {
     }
     setPayingFee(false);
   };
+
+  useEffect(() => { feeSuccessRef.current = feeSuccess; }, [feeSuccess]);
+  useEffect(() => { feePopupRef.current = feePopup; }, [feePopup]);
 
   useEffect(() => {
     if (location.state?.success) {
