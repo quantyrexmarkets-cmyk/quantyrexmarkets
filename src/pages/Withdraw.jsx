@@ -192,13 +192,32 @@ export default function Withdraw() {
         setUserFees(data.fees);
         prevFeesRef.current = data.fees;
 
+        // Don't interrupt if user is viewing success popup
+        if (feeSuccessRef.current) return;
+        // Don't reopen if popup is already showing for the same fee
+        if (feePopupRef.current && currentUnpaid && String(feePopupRef.current._id) === String(currentUnpaid._id)) return;
+
+        // Detect newly-paid fees by comparing previous unpaid IDs to now
+        const newlyPaid = prevFees.find(pf =>
+          !pf.paid &&
+          pf.type !== 'registration' &&
+          data.fees.some(nf => String(nf._id) === String(pf._id) && nf.paid)
+        );
+
         if (currentUnpaid) {
           const isNewFee = !prevUnpaidIds.includes(String(currentUnpaid._id));
-          if (isNewFee && lastPaid && prevFees.length > 0) {
-            setFeeSuccess({ paidFee: lastPaid, nextFee: currentUnpaid });
-          } else {
+          // Case A: Admin marked a fee paid AND a new fee is now unpaid
+          if (newlyPaid && isNewFee && prevFees.length > 0) {
+            setFeeSuccess({ paidFee: newlyPaid, nextFee: currentUnpaid });
+          }
+          // Case B: Brand new fee added (no prior payment)
+          else if (isNewFee && prevFees.length > 0) {
             setFeePopup(currentUnpaid);
           }
+        } else if (newlyPaid && prevFees.length > 0) {
+          // Case C: Admin marked the LAST fee paid - show all-paid success
+          setFeeSuccess({ paidFee: newlyPaid, nextFee: null, allPaid: true });
+          setUserFees([]);
         }
       }
     } catch {}
