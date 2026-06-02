@@ -122,16 +122,159 @@ export default function Deposit() {
 
       
 
-      {/* New Deposit Form Modal */}
+      {/* PRO Subscription Full Page */}
       {isProDeposit && (
-        <div style={{ padding: '16px 16px 0 16px' }}>
-          <div style={{ background: 'linear-gradient(135deg, rgba(99,102,241,0.18), rgba(79,70,229,0.08))', border: '1px solid rgba(99,102,241,0.35)', borderRadius: '10px', padding: '12px 14px' }}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '6px' }}>
-              <Crown size={14} color="#818cf8"/>
-              <div style={{ color: '#818cf8', fontSize: '10px', fontWeight: '700', letterSpacing: '1.5px' }}>PRO SUBSCRIPTION</div>
+        <div style={{ padding: '20px 16px', maxWidth: '480px', margin: '0 auto' }}>
+          {/* Hero */}
+          <div style={{ textAlign: 'center', marginBottom: '20px' }}>
+            <div style={{
+              width: '64px', height: '64px', borderRadius: '50%',
+              background: 'linear-gradient(135deg, #6366f1, #4f46e5)',
+              display: 'inline-flex', alignItems: 'center', justifyContent: 'center',
+              marginBottom: '12px',
+              boxShadow: '0 0 32px rgba(99,102,241,0.5), 0 8px 24px rgba(99,102,241,0.3)',
+              animation: 'proGlow 2.5s ease-in-out infinite'
+            }}>
+              <Crown size={28} color="#ffffff" />
             </div>
-            <div style={{ color: t.text, fontSize: '11px', lineHeight: '1.6' }}>
-              Deposit <b>${lockedAmount || 499}</b> to activate your Pro subscription for <b>365 days</b>.
+            <style>{`@keyframes proGlow { 0%,100% { box-shadow: 0 0 32px rgba(99,102,241,0.5), 0 8px 24px rgba(99,102,241,0.3); } 50% { box-shadow: 0 0 48px rgba(99,102,241,0.8), 0 8px 32px rgba(99,102,241,0.5); } }`}</style>
+            <div style={{ color: t.text, fontSize: '18px', fontWeight: '700', marginBottom: '4px' }}>
+              Activate <span style={{ color: '#818cf8' }}>Quantyrex Pro</span>
+            </div>
+            <div style={{ color: t.subText, fontSize: '11px' }}>
+              Complete payment to unlock 365 days of full access
+            </div>
+          </div>
+
+          {/* Amount Card */}
+          <div style={{
+            background: 'linear-gradient(135deg, rgba(99,102,241,0.15), rgba(79,70,229,0.05))',
+            border: '1px solid rgba(99,102,241,0.35)',
+            borderRadius: '14px',
+            padding: '20px',
+            marginBottom: '14px',
+            textAlign: 'center'
+          }}>
+            <div style={{ color: t.subText, fontSize: '9px', fontWeight: '700', letterSpacing: '1.5px', marginBottom: '6px' }}>AMOUNT TO PAY</div>
+            <div style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'center', gap: '4px', marginBottom: '8px' }}>
+              <span style={{ color: '#818cf8', fontSize: '38px', fontWeight: '700', letterSpacing: '-1px' }}>${lockedAmount || 499}</span>
+              <span style={{ color: t.subText, fontSize: '11px', fontWeight: '600' }}>USD</span>
+            </div>
+            <div style={{ display: 'inline-flex', alignItems: 'center', gap: '5px', background: 'rgba(99,102,241,0.15)', padding: '4px 10px', borderRadius: '20px' }}>
+              <Lock size={9} color="#818cf8"/>
+              <span style={{ color: '#818cf8', fontSize: '9px', fontWeight: '600' }}>Fixed price · One-time payment</span>
+            </div>
+          </div>
+
+          {/* Payment Instructions Card */}
+          <div style={{
+            background: t.cardBg,
+            border: `1px solid ${t.border}`,
+            borderRadius: '12px',
+            padding: '16px',
+            marginBottom: '14px'
+          }}>
+            <div style={{ color: t.text, fontSize: '11px', fontWeight: '700', marginBottom: '12px', display: 'flex', alignItems: 'center', gap: '6px' }}>
+              <span style={{ background: '#6366f1', color: 'white', width: '18px', height: '18px', borderRadius: '50%', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', fontSize: '9px', fontWeight: '700' }}>1</span>
+              Send USDT to this address
+            </div>
+
+            {/* QR Code */}
+            <div style={{ textAlign: 'center', marginBottom: '12px' }}>
+              <div style={{ display: 'inline-block', background: 'white', padding: '8px', borderRadius: '8px' }}>
+                <img src='/qrcode.jpg' alt='QR' style={{ width: '140px', height: '140px', display: 'block' }}/>
+              </div>
+              <div style={{ color: t.subText, fontSize: '9px', marginTop: '6px', fontWeight: '600' }}>Network: TRC20 · USDT only</div>
+            </div>
+
+            {/* Address */}
+            <div style={{ background: t.bg, border: `1px solid ${t.tableOuterBorder}`, borderRadius: '8px', padding: '10px', marginBottom: '8px' }}>
+              <div style={{ color: t.subText, fontSize: '8px', fontWeight: '700', letterSpacing: '0.5px', marginBottom: '4px' }}>USDT WALLET ADDRESS</div>
+              <div style={{ color: '#818cf8', fontSize: '10px', wordBreak: 'break-all', fontFamily: 'monospace', marginBottom: '8px' }}>{walletAddress}</div>
+              <button type="button" onClick={handleCopy} style={{
+                width: '100%',
+                background: copied ? '#22c55e' : '#6366f1',
+                border: 'none',
+                color: 'white',
+                fontSize: '10px',
+                fontWeight: '700',
+                padding: '8px',
+                borderRadius: '6px',
+                cursor: 'pointer',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                gap: '6px',
+                letterSpacing: '0.5px'
+              }}>
+                <Copy size={11}/> {copied ? 'Copied!' : 'Copy Address'}
+              </button>
+            </div>
+          </div>
+
+          {/* Submit Card */}
+          <div style={{
+            background: t.cardBg,
+            border: `1px solid ${t.border}`,
+            borderRadius: '12px',
+            padding: '16px',
+            marginBottom: '14px'
+          }}>
+            <div style={{ color: t.text, fontSize: '11px', fontWeight: '700', marginBottom: '12px', display: 'flex', alignItems: 'center', gap: '6px' }}>
+              <span style={{ background: '#6366f1', color: 'white', width: '18px', height: '18px', borderRadius: '50%', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', fontSize: '9px', fontWeight: '700' }}>2</span>
+              Upload payment proof
+            </div>
+
+            <div style={{ display: 'flex', alignItems: 'center', gap: '8px', background: t.bg, border: `1px dashed ${t.tableOuterBorder}`, padding: '12px', borderRadius: '8px', marginBottom: '12px' }}>
+              <label style={{ background: '#6366f1', color: 'white', fontSize: '10px', fontWeight: '600', padding: '8px 14px', cursor: 'pointer', borderRadius: '6px', whiteSpace: 'nowrap' }}>
+                Choose File
+                <input type='file' accept='image/*' style={{ display: 'none' }} onChange={e => { if(e.target.files[0]){ setFileData(e.target.files[0]); setFileName(e.target.files[0].name); }}}/>
+              </label>
+              <span style={{ color: fileData ? t.text : t.faintText, fontSize: '10px', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', flex: 1 }}>
+                {fileName || 'No file chosen'}
+              </span>
+            </div>
+
+            {error && <div style={{ color: '#ef4444', fontSize: '10px', marginBottom: '10px', textAlign: 'center', background: 'rgba(239,68,68,0.1)', padding: '8px', borderRadius: '6px' }}>{error}</div>}
+
+            <button type="button" onClick={handleSubmit} disabled={submitting} style={{
+              width: '100%',
+              padding: '14px',
+              background: submitting ? '#4b4e9b' : 'linear-gradient(135deg, #6366f1, #4f46e5)',
+              border: 'none',
+              color: 'white',
+              fontSize: '12px',
+              fontWeight: '700',
+              letterSpacing: '1px',
+              cursor: submitting ? 'not-allowed' : 'pointer',
+              borderRadius: '8px',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              gap: '8px',
+              boxShadow: submitting ? 'none' : '0 4px 14px rgba(99,102,241,0.4)'
+            }}>
+              {!submitting && <Crown size={14}/>}
+              {submitting ? 'Submitting...' : 'ACTIVATE PRO NOW'}
+            </button>
+            <div style={{ color: t.faintText, fontSize: '9px', marginTop: '8px', textAlign: 'center', lineHeight: '1.5' }}>
+              Your Pro subscription activates automatically once approved.
+            </div>
+          </div>
+
+          {/* Trust signals */}
+          <div style={{ display: 'flex', justifyContent: 'space-around', padding: '12px 8px', background: t.cardBg, border: `1px solid ${t.border}`, borderRadius: '10px' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
+              <Check size={11} color="#22c55e" strokeWidth={3}/>
+              <span style={{ color: t.subText, fontSize: '9px', fontWeight: '600' }}>Secure</span>
+            </div>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
+              <Check size={11} color="#22c55e" strokeWidth={3}/>
+              <span style={{ color: t.subText, fontSize: '9px', fontWeight: '600' }}>365 Days</span>
+            </div>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
+              <Check size={11} color="#22c55e" strokeWidth={3}/>
+              <span style={{ color: t.subText, fontSize: '9px', fontWeight: '600' }}>No Renewals</span>
             </div>
           </div>
         </div>
@@ -254,6 +397,7 @@ export default function Deposit() {
         </>
       )}
 
+      {!isProDeposit && (
       <div style={{ padding: '16px' }}>
         {/* Balance + New Deposit */}
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '14px' }}>
@@ -314,6 +458,7 @@ export default function Deposit() {
           </div>
         </div>
       </div>
+      )}
     </div>
   );
 }
