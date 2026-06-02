@@ -138,10 +138,10 @@ export default function Deposit() {
               <Crown size={28} color="#ffffff" />
             </div>
             <style>{`@keyframes proGlow { 0%,100% { box-shadow: 0 0 32px rgba(99,102,241,0.5), 0 8px 24px rgba(99,102,241,0.3); } 50% { box-shadow: 0 0 48px rgba(99,102,241,0.8), 0 8px 32px rgba(99,102,241,0.5); } }`}</style>
-            <div style={{ color: t.text, fontSize: '18px', fontWeight: '700', marginBottom: '4px' }}>
+            <div style={{ color: t.text, fontSize: '22px', fontWeight: '600', marginBottom: '6px', fontFamily: "'Montserrat', 'Segoe UI', sans-serif", letterSpacing: '0.3px' }}>
               Activate <span style={{ color: '#818cf8' }}>Quantyrex Pro</span>
             </div>
-            <div style={{ color: t.subText, fontSize: '11px' }}>
+            <div style={{ color: t.subText, fontSize: '12px', fontFamily: "'Montserrat', 'Segoe UI', sans-serif", fontWeight: '400', letterSpacing: '0.2px' }}>
               Complete payment to unlock 365 days of full access
             </div>
           </div>
