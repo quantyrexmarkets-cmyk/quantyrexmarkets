@@ -74,11 +74,7 @@ self.addEventListener('push', function(event) {
         chatId: chatId,
         unreadCount: unreadCount,
         messages: messages
-      },
-      actions: [
-        { action: 'reply', title: '💬 Reply' },
-        { action: 'mark-read', title: '✓ Mark read' }
-      ]
+      }
     };
 
     // Try to set app badge if supported (shows number on PWA icon)
@@ -100,18 +96,6 @@ self.addEventListener('notificationclick', function(event) {
   const url = data.url || '/admin/support';
 
   event.notification.close();
-
-  // "Mark read" action just dismisses
-  if (action === 'mark-read') {
-    if ('setAppBadge' in self.navigator) {
-      try {
-        const count = data.unreadCount || 0;
-        if (count > 0) self.navigator.setAppBadge(Math.max(0, count - 1));
-        else self.navigator.clearAppBadge();
-      } catch (e) {}
-    }
-    return;
-  }
 
   // For 'reply', 'view', or no action (body tap) — open the chat
   event.waitUntil((async () => {
