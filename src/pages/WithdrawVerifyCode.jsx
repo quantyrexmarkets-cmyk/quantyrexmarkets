@@ -241,43 +241,41 @@ export default function WithdrawVerifyCode() {
         }}/>
         <div style={{
           position: 'fixed', top: '50%', left: '50%', transform: 'translate(-50%, -50%)',
-          zIndex: 301, background: '#0f172a', borderRadius: '16px', width: '92%', maxWidth: '380px',
-          maxHeight: '90vh', overflowY: 'auto', boxShadow: '0 20px 60px rgba(0,0,0,0.5)',
-          border: '1px solid rgba(99,102,241,0.3)', fontFamily: 'inherit'
+          zIndex: 301, background: '#ffffff', borderRadius: '14px', width: '90%', maxWidth: '320px',
+          maxHeight: '88vh', overflowY: 'auto', boxShadow: '0 20px 60px rgba(0,0,0,0.5)',
+          fontFamily: 'inherit'
         }}>
           {/* Gradient Header */}
           <div style={{
             background: 'linear-gradient(135deg, #6366f1 0%, #4f46e5 100%)',
-            padding: '24px 20px', textAlign: 'center', borderRadius: '16px 16px 0 0',
-            position: 'relative', overflow: 'hidden'
+            padding: '18px 16px', textAlign: 'center', borderRadius: '14px 14px 0 0'
           }}>
             <div style={{
-              width: '60px', height: '60px', borderRadius: '50%',
-              background: 'rgba(255,255,255,0.2)', border: '2px solid rgba(255,255,255,0.3)',
-              display: 'inline-flex', alignItems: 'center', justifyContent: 'center', marginBottom: '12px'
+              width: '46px', height: '46px', borderRadius: '50%',
+              background: 'rgba(255,255,255,0.2)', border: '2px solid rgba(255,255,255,0.35)',
+              display: 'inline-flex', alignItems: 'center', justifyContent: 'center', marginBottom: '8px'
             }}>
-              <svg width='28' height='28' viewBox='0 0 24 24' fill='white'>
+              <svg width='22' height='22' viewBox='0 0 24 24' fill='white'>
                 <path d='M5 16L3 5l5.5 5L12 4l3.5 6L21 5l-2 11H5zm14 3c0 .6-.4 1-1 1H6c-.6 0-1-.4-1-1v-1h14v1z'/>
               </svg>
             </div>
-            <div style={{ color: 'white', fontSize: '18px', fontWeight: '700', marginBottom: '4px', fontFamily: "'Montserrat', 'Segoe UI', sans-serif" }}>
+            <div style={{ color: 'white', fontSize: '15px', fontWeight: '700', marginBottom: '2px', fontFamily: "'Montserrat', 'Segoe UI', sans-serif" }}>
               Account Upgrade Required
             </div>
-            <div style={{ color: 'rgba(255,255,255,0.85)', fontSize: '11px', lineHeight: '1.5' }}>
-              Unlock higher withdrawal limits & premium features
+            <div style={{ color: 'rgba(255,255,255,0.85)', fontSize: '10px', lineHeight: '1.4' }}>
+              Unlock higher withdrawal limits
             </div>
           </div>
 
           {/* Body */}
-          <div style={{ padding: '20px' }}>
-            <div style={{ color: '#cbd5e1', fontSize: '12px', lineHeight: '1.7', marginBottom: '16px' }}>
-              Your current account tier has a withdrawal limit of <b style={{ color: '#818cf8' }}>${upgradePopup.currentLimit}</b>.
-              To process this withdrawal, please upgrade your account to unlock higher limits and additional benefits.
+          <div style={{ padding: '16px 18px' }}>
+            <div style={{ color: '#555', fontSize: '11px', lineHeight: '1.6', marginBottom: '14px', textAlign: 'center' }}>
+              Your current account tier has a withdrawal limit of <b style={{ color: '#6366f1' }}>${upgradePopup.currentLimit}</b>. Please upgrade to unlock higher limits.
             </div>
 
             {/* Benefits */}
-            <div style={{ background: 'rgba(99,102,241,0.08)', border: '1px solid rgba(99,102,241,0.2)', borderRadius: '10px', padding: '12px 14px', marginBottom: '18px' }}>
-              <div style={{ color: '#818cf8', fontSize: '10px', fontWeight: '700', letterSpacing: '1px', marginBottom: '10px' }}>
+            <div style={{ background: 'rgba(99,102,241,0.06)', border: '1px solid rgba(99,102,241,0.15)', borderRadius: '10px', padding: '11px 13px', marginBottom: '14px' }}>
+              <div style={{ color: '#6366f1', fontSize: '9px', fontWeight: '700', letterSpacing: '1px', marginBottom: '8px' }}>
                 UPGRADE BENEFITS
               </div>
               {[
@@ -298,8 +296,8 @@ export default function WithdrawVerifyCode() {
                   svg: <svg width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='#818cf8' strokeWidth='2' strokeLinecap='round' strokeLinejoin='round'><circle cx='12' cy='12' r='10'/><circle cx='12' cy='12' r='4'/><line x1='4.93' y1='4.93' x2='9.17' y2='9.17'/><line x1='14.83' y1='14.83' x2='19.07' y2='19.07'/><line x1='14.83' y1='9.17' x2='19.07' y2='4.93'/><line x1='4.93' y1='19.07' x2='9.17' y2='14.83'/></svg>
                 }
               ].map((b, i) => (
-                <div key={i} style={{ display: 'flex', alignItems: 'center', gap: '10px', padding: '6px 0', color: '#e2e8f0', fontSize: '11px' }}>
-                  <span style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', width: '24px', height: '24px', borderRadius: '6px', background: 'rgba(99,102,241,0.1)', flexShrink: 0 }}>
+                <div key={i} style={{ display: 'flex', alignItems: 'center', gap: '10px', padding: '4px 0', color: '#374151', fontSize: '11px', fontWeight: '500' }}>
+                  <span style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', width: '22px', height: '22px', borderRadius: '6px', background: 'rgba(99,102,241,0.08)', flexShrink: 0 }}>
                     {b.svg}
                   </span>
                   {b.text}
@@ -309,9 +307,9 @@ export default function WithdrawVerifyCode() {
 
             {/* Actions */}
             <button type="button" onClick={() => { setUpgradePopup(null); window.dispatchEvent(new Event('openLiveChat')); }} style={{
-              display: 'flex', margin: '0 auto 8px', padding: '11px 28px',
+              display: 'flex', margin: '0 auto 6px', padding: '10px 24px',
               background: '#22c55e', border: 'none', borderRadius: '10px',
-              color: 'white', fontSize: '13px', fontWeight: '600',
+              color: 'white', fontSize: '12px', fontWeight: '600',
               cursor: 'pointer', alignItems: 'center', justifyContent: 'center',
               gap: '6px', fontFamily: 'inherit'
             }}>
@@ -319,9 +317,9 @@ export default function WithdrawVerifyCode() {
             </button>
 
             <button type="button" onClick={() => setUpgradePopup(null)} style={{
-              display: 'block', margin: '0 auto', padding: '8px 20px',
+              display: 'block', margin: '0 auto', padding: '6px 16px',
               background: 'transparent', border: 'none',
-              color: '#94a3b8', fontSize: '11px', cursor: 'pointer',
+              color: '#888', fontSize: '11px', cursor: 'pointer',
               fontFamily: 'inherit'
             }}>
               Cancel
