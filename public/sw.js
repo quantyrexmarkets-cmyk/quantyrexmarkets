@@ -66,7 +66,7 @@ self.addEventListener('push', function(event) {
       renotify: true,
       requireInteraction: true,
       silent: false,
-      vibrate: [80, 40, 80],
+      vibrate: [200, 100, 200, 100, 200],
       timestamp: Date.now(),
       data: {
         url: url,

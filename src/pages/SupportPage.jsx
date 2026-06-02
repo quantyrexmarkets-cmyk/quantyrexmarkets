@@ -51,6 +51,9 @@ function relativeTime(dateStr) {
 export default function SupportPage() {
   const { current: t } = useTheme();
   const [contacts, setContacts] = useState([]);
+  const notificationAudio = useRef(null);
+  const prevContactsRef = useRef([]);
+
   const [selectedChat, setSelectedChat] = useState(null);
   const [showInfo, setShowInfo] = useState(false);
   const [deleteMsg, setDeleteMsg] = useState(null); // {index, text}
@@ -179,6 +182,28 @@ export default function SupportPage() {
     return () => navigator.serviceWorker.removeEventListener('message', handler);
   }, [contacts, token]);
 
+  // Play notification sound when new message arrives (when app is open)
+  useEffect(() => {
+    const prev = prevContactsRef.current;
+    const prevTotal = prev.reduce((sum, c) => sum + (c.unreadAdmin || 0), 0);
+    const newTotal = contacts.reduce((sum, c) => sum + (c.unreadAdmin || 0), 0);
+
+    // Only play if total unread increased (not on initial load)
+    if (prev.length > 0 && newTotal > prevTotal) {
+      try {
+        if (notificationAudio.current) {
+          notificationAudio.current.currentTime = 0;
+          notificationAudio.current.play().catch(() => {});
+        }
+        // Also vibrate the device if supported
+        if (navigator.vibrate) {
+          navigator.vibrate([200, 100, 200]);
+        }
+      } catch (e) {}
+    }
+    prevContactsRef.current = contacts;
+  }, [contacts]);
+
   // Auto-subscribe to push notifications when admin opens support page
   useEffect(() => {
     (async () => {
@@ -194,7 +219,12 @@ export default function SupportPage() {
   }, []);
 
   return (
-    <div style={{ display: 'flex', height: '100dvh', width: '100vw', background: '#000', overflow: 'hidden', fontFamily: 'sans-serif' }}>
+    <>
+    <audio ref={notificationAudio} preload="auto">
+      <source src="/notification.mp3" type="audio/mpeg" />
+      <source src="/notification.wav" type="audio/wav" />
+    </audio>
+        <div style={{ display: 'flex', height: '100dvh', width: '100vw', background: '#000', overflow: 'hidden', fontFamily: 'sans-serif' }}>
       {/* Inbox - Smartsupp style */}
       <div style={{
         width: selectedChat ? '0px' : '100%',
@@ -597,5 +627,6 @@ export default function SupportPage() {
         </>
       )}
     </div>
+    </>
   );
 }
