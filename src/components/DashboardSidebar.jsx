@@ -167,7 +167,7 @@ export default function DashboardSidebar({ open, onClose }) {
         display: 'flex', flexDirection: 'column', borderRight: `1px solid ${t.sidebarBorder}`, overflowY: 'auto'
       }}>
         {/* Logo */}
-        <div style={{ padding: '10px 14px', minHeight: '48px', boxSizing: 'border-box', display: 'flex', alignItems: 'center', justifyContent: 'space-between', background: 'transparent', borderBottom: `1px solid ${t.subtleBorder}` }}>
+        <div style={{ padding: '20px 14px 16px', minHeight: '60px', boxSizing: 'border-box', display: 'flex', alignItems: 'center', justifyContent: 'space-between', background: 'transparent', borderBottom: `1px solid ${t.subtleBorder}` }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '8px', cursor: 'pointer' }} onClick={() => { navigate('/dashboard/profile'); onClose(); }}>
             {/* Logo */}
             <div style={{ width: '45px', height: '45px', flexShrink: 0 }}>
