@@ -1,6 +1,6 @@
 // Service Worker version - bump to force update
 const SW_VERSION = 'v4-20250603';
-const NOTIFICATION_BADGE = '/support-icon-192.png';
+const NOTIFICATION_BADGE = '/notification-badge.png';
 const NOTIFICATION_ICON = '/support-icon-512.png';
 
 self.addEventListener('install', (event) => {
