@@ -99,10 +99,10 @@ self.addEventListener('notificationclick', function(event) {
   const data = event.notification.data || {};
   const url = data.url || '/admin/support';
 
-  // "Mark read" action just dismisses, doesn't open
+  event.notification.close();
+
+  // "Mark read" action just dismisses
   if (action === 'mark-read') {
-    event.notification.close();
-    // Decrement app badge
     if ('setAppBadge' in self.navigator) {
       try {
         const count = data.unreadCount || 0;
@@ -113,8 +113,7 @@ self.addEventListener('notificationclick', function(event) {
     return;
   }
 
-  event.notification.close();
-
+  // For 'reply', 'view', or no action (body tap) — open the chat
   event.waitUntil((async () => {
     const clientList = await self.clients.matchAll({ type: 'window', includeUncontrolled: true });
 
@@ -122,15 +121,21 @@ self.addEventListener('notificationclick', function(event) {
     for (const client of clientList) {
       if (client.url.includes('/admin/support')) {
         await client.focus();
-        // Tell the page to open this specific chat
-        client.postMessage({ type: 'open-chat', chatId: data.chatId, url: url });
+        // Tell the page to open this specific chat (and focus input if reply)
+        client.postMessage({
+          type: 'open-chat',
+          chatId: data.chatId,
+          url: url,
+          focusInput: action === 'reply'
+        });
         return;
       }
     }
 
     // Otherwise open new window
     if (self.clients.openWindow) {
-      return self.clients.openWindow(url);
+      const w = await self.clients.openWindow(url + (action === 'reply' ? '?reply=1' : ''));
+      return w;
     }
   })());
 

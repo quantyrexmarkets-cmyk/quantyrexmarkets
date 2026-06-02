@@ -175,6 +175,13 @@ export default function SupportPage() {
             method: 'PATCH',
             headers: { Authorization: `Bearer ${token}` }
           }).catch(() => {});
+          // If user clicked Reply action, focus the textarea
+          if (event.data.focusInput) {
+            setTimeout(() => {
+              const textarea = document.querySelector('textarea[placeholder*="message"]');
+              if (textarea) textarea.focus();
+            }, 300);
+          }
         }
       }
     };
