@@ -72,7 +72,8 @@ export default function WithdrawVerifyCode() {
         setError(res.message || 'Invalid withdrawal code. Please try again.');
       }
     } catch (e) {
-      setError('Network error. Please try again.');
+      // Show real error message if backend provided one
+      setError(e?.message || 'Network error. Please try again.');
     }
     setLoading(false);
   };
