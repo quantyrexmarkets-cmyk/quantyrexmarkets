@@ -164,7 +164,7 @@ export default function Subscription() {
                 </div>
               </div>
               <button type="button" onClick={() => navigate('/dashboard/deposit?purpose=pro&amount=' + (status?.planPrice || 499))}
-                style={{ width: '100%', padding: '11px', background: '#22c55e', border: 'none', borderRadius: '10px', color: '#ffffff', fontSize: '13px', fontWeight: '600', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '6px', fontFamily: 'inherit' }}>
+                style={{ display: 'flex', margin: '0 auto', padding: '10px 24px', background: '#22c55e', border: 'none', borderRadius: '10px', color: '#ffffff', fontSize: '13px', fontWeight: '600', cursor: 'pointer', alignItems: 'center', justifyContent: 'center', gap: '6px', fontFamily: 'inherit' }}>
                 <Crown size={14}/> Deposit ${status?.planPrice || 499} to Activate Pro
               </button>
             </>

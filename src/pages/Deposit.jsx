@@ -238,8 +238,9 @@ export default function Deposit() {
             {error && <div style={{ color: '#ef4444', fontSize: '10px', marginBottom: '10px', textAlign: 'center', background: 'rgba(239,68,68,0.1)', padding: '8px', borderRadius: '6px' }}>{error}</div>}
 
             <button type="button" onClick={handleSubmit} disabled={submitting} style={{
-              width: '100%',
-              padding: '11px',
+              display: 'flex',
+              margin: '0 auto',
+              padding: '10px 24px',
               background: submitting ? '#16a34a' : '#22c55e',
               border: 'none',
               color: 'white',
@@ -247,7 +248,6 @@ export default function Deposit() {
               fontWeight: '600',
               cursor: submitting ? 'not-allowed' : 'pointer',
               borderRadius: '10px',
-              display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
               gap: '6px',
