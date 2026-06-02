@@ -26,6 +26,12 @@ router.post('/send', auth, async (req, res) => {
     }
 
     chat.messages.push({ sender: 'user', text });
+    // Notify admins of new message
+    sendAdminPush({
+      title: chat.name || chat.email || 'New Support Message',
+      body: text.slice(0, 80),
+      url: '/admin/support'
+    }).catch(() => {});
     chat.unreadAdmin += 1;
     chat.visitorOnline = true;
     chat.lastSeen = Date.now();
@@ -119,6 +125,12 @@ router.post('/send-image', auth, uploadUserMem.single('image'), async (req, res)
     }
 
     chat.messages.push({ sender: 'user', text: '', image: url });
+    // Notify admins of new image
+    sendAdminPush({
+      title: chat.name || chat.email || 'New Support Message',
+      body: '📷 Sent an image',
+      url: '/admin/support'
+    }).catch(() => {});
     chat.unreadAdmin += 1;
     chat.updatedAt = Date.now();
     await chat.save();

@@ -160,6 +160,20 @@ export default function SupportPage() {
     return () => window.removeEventListener('pwa-installable', handler);
   }, []);
 
+  // Auto-subscribe to push notifications when admin opens support page
+  useEffect(() => {
+    (async () => {
+      try {
+        const { registerServiceWorker } = await import('../utils/pwa');
+        await registerServiceWorker();
+        await subscribeToPush();
+        console.log('[Support] Push subscription active');
+      } catch (e) {
+        console.log('[Support] Push subscribe skipped:', e.message);
+      }
+    })();
+  }, []);
+
   return (
     <div style={{ display: 'flex', height: '100dvh', width: '100vw', background: '#000', overflow: 'hidden', fontFamily: 'sans-serif' }}>
       {/* Inbox - Smartsupp style */}
