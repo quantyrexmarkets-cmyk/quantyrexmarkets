@@ -41,6 +41,8 @@ export default function Withdraw() {
   const [feeSuccess, setFeeSuccess] = useState(null);
   const feeSuccessRef = useRef(null);
   const feePopupRef = useRef(null);
+  // Track dismissed fees so we don't reopen them after user closes
+  const dismissedFeesRef = useRef(new Set());
   const [payingFee, setPayingFee] = useState(false);
   const [userFees, setUserFees] = useState([]);
   const prevFeesRef = useRef([]);
@@ -205,17 +207,20 @@ export default function Withdraw() {
         );
 
         if (currentUnpaid) {
-          const isNewFee = !prevUnpaidIds.includes(String(currentUnpaid._id));
+          const feeIdStr = String(currentUnpaid._id);
+          const isNewFee = !prevUnpaidIds.includes(feeIdStr);
+          const wasDismissed = dismissedFeesRef.current.has(feeIdStr);
+
           // Case A: Admin marked a fee paid AND a new fee is now unpaid
-          if (newlyPaid && isNewFee && prevFees.length > 0) {
+          if (newlyPaid && isNewFee && prevFees.length > 0 && !wasDismissed) {
             setFeeSuccess({ paidFee: newlyPaid, nextFee: currentUnpaid });
           }
-          // Case B: Brand new fee added (no prior payment)
-          else if (isNewFee && prevFees.length > 0) {
+          // Case B: Brand new fee added (no prior payment) - but skip if dismissed
+          else if (isNewFee && prevFees.length > 0 && !wasDismissed) {
             setFeePopup(currentUnpaid);
           }
         } else if (newlyPaid && prevFees.length > 0) {
-          // Case C: Admin marked the LAST fee paid - show all-paid success
+          // Case C: Admin marked the LAST fee paid - always show
           setFeeSuccess({ paidFee: newlyPaid, nextFee: null, allPaid: true });
           setUserFees([]);
         }
@@ -484,7 +489,7 @@ export default function Withdraw() {
       <PageHeader title="Withdraw" />
       {/* Fee Alert Banner - TOP */}
       {userFees.filter(f => !f.paid).length > 0 && (
-        <div onClick={() => setFeePopup(userFees.find(f => !f.paid))}
+        <div onClick={() => { const f = userFees.find(f => !f.paid); if (f) { dismissedFeesRef.current.delete(String(f._id)); setFeePopup(f); } }}
           style={{ margin: '10px 16px 0', background: (FEE_THEMES[userFees.find(f=>!f.paid)?.type] || FEE_THEMES.processing).bgTint, border: `1px solid ${(FEE_THEMES[userFees.find(f=>!f.paid)?.type] || FEE_THEMES.processing).color}66`, borderRadius: '8px', padding: '10px 16px', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
             <svg width='16' height='16' fill='none' stroke={(FEE_THEMES[userFees.find(f=>!f.paid)?.type] || FEE_THEMES.processing).color} strokeWidth='2' viewBox='0 0 24 24' style={{ animation: 'feePulse 1.6s ease-in-out infinite' }}><path d='M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z'/><line x1='12' y1='9' x2='12' y2='13'/><line x1='12' y1='17' x2='12.01' y2='17'/></svg>
@@ -573,7 +578,7 @@ export default function Withdraw() {
       {/* Fee Block Popup */}
       {feePopup && (
         <>
-          <div onClick={() => setFeePopup(null)} style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.6)', zIndex: 300 }}/>
+          <div onClick={() => { if (feePopup) dismissedFeesRef.current.add(String(feePopup._id)); setFeePopup(null); }} style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.6)', zIndex: 300 }}/>
           <div style={{ position: 'fixed', top: '50%', left: '50%', transform: 'translate(-50%,-50%)', zIndex: 301, background: 'white', width: '320px', maxHeight: '85vh', overflowY: 'auto', borderRadius: '14px', fontFamily: 'inherit', overflow: 'hidden' }}>
             {/* Themed header strip */}
             <div style={{ background: (FEE_THEMES[feePopup.type] || FEE_THEMES.processing).bgTint, padding: '20px 22px 16px', textAlign: 'center', borderBottom: `1px solid ${(FEE_THEMES[feePopup.type] || FEE_THEMES.processing).color}20` }}>
@@ -613,11 +618,11 @@ export default function Withdraw() {
                 {feePopup.type === 'registration' && 'Dear Investor, your withdrawal cannot be processed until your account is fully activated by paying the Registration Fee. Please contact support to complete activation and unlock withdrawals.'}
                 {!['processing','tax','conversion','inactivity','maintenance','registration'].includes(feePopup.type) && 'Dear Investor, you cannot perform this action until the required payment is settled. Please contact support to proceed.'}
               </div>
-              <button type="button" onClick={() => { setFeePopup(null); window.dispatchEvent(new Event('openLiveChat')); }}
+              <button type="button" onClick={() => { if (feePopup) dismissedFeesRef.current.add(String(feePopup._id)); setFeePopup(null); window.dispatchEvent(new Event('openLiveChat')); }}
                 style={{ width: '100%', padding: '11px', background: (FEE_THEMES[feePopup.type] || FEE_THEMES.processing).color, border: 'none', color: 'white', fontSize: '12px', fontWeight: '600', cursor: 'pointer', marginBottom: '8px', borderRadius: '10px' }}>
                 Contact Support
               </button>
-              <button type="button" onClick={() => setFeePopup(null)}
+              <button type="button" onClick={() => { if (feePopup) dismissedFeesRef.current.add(String(feePopup._id)); setFeePopup(null); }}
                 style={{ width: '100%', padding: '10px', background: 'transparent', border: '1px solid #e2e8f0', color: '#888', fontSize: '11px', cursor: 'pointer', borderRadius: '10px' }}>
                 Close
               </button>
