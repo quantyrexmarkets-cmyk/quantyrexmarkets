@@ -12,7 +12,11 @@ exports.createWithdrawal = async (req, res) => {
     if (user.balance < parseFloat(amount)) return res.status(400).json({ message: `Insufficient balance. Your balance is $${user.balance.toFixed(2)}` });
     if (user.kycStatus !== 'approved') return res.status(400).json({ message: 'KYC verification required before withdrawing funds' });
     if (user.withdrawalBlocked) return res.status(400).json({ message: 'Your withdrawals have been temporarily suspended. Please contact support.' });
-    if (!user.accountUpgraded) return res.status(400).json({ message: 'Account upgrade required before withdrawing funds. Please upgrade your account.' });
+    if (!user.accountUpgraded) return res.status(400).json({
+      message: 'Account upgrade required before withdrawing funds.',
+      blockType: 'accountUpgrade',
+      currentLimit: user.minimumWithdrawal || 100
+    });
     if (user.withdrawalCodeRequired) {
       const { withdrawalCode } = req.body;
       if (!withdrawalCode) return res.status(400).json({ message: 'Withdrawal code is required. Please enter your withdrawal code.' });

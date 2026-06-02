@@ -12,7 +12,8 @@ export default function WithdrawVerifyCode() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [code, setCode] = useState('');
   const [error, setError] = useState('');
-  const [feePopup, setFeePopup] = useState(null); // current fee blocking withdrawal
+  const [feePopup, setFeePopup] = useState(null);
+  const [upgradePopup, setUpgradePopup] = useState(null); // current fee blocking withdrawal
   const [feeSuccess, setFeeSuccess] = useState(null); // just paid fee, next fee info
   const [payingFee, setPayingFee] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -68,6 +69,9 @@ export default function WithdrawVerifyCode() {
         navigate('/dashboard/withdraw', { state: { success: true } });
       } else if (res.blockType === 'pendingFees' && res.fees?.length > 0) {
         setFeePopup(res.fees[0]);
+      } else if (res.blockType === 'accountUpgrade') {
+        setUpgradePopup({ currentLimit: res.currentLimit || 100 });
+        setError('');
       } else {
         setError(res.message || 'Invalid withdrawal code. Please try again.');
       }
@@ -220,6 +224,89 @@ export default function WithdrawVerifyCode() {
           </div>
         </>
       )}
+
+    {upgradePopup && (
+      <>
+        <div onClick={() => setUpgradePopup(null)} style={{
+          position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.7)', zIndex: 300, backdropFilter: 'blur(4px)'
+        }}/>
+        <div style={{
+          position: 'fixed', top: '50%', left: '50%', transform: 'translate(-50%, -50%)',
+          zIndex: 301, background: '#0f172a', borderRadius: '16px', width: '92%', maxWidth: '380px',
+          maxHeight: '90vh', overflowY: 'auto', boxShadow: '0 20px 60px rgba(0,0,0,0.5)',
+          border: '1px solid rgba(99,102,241,0.3)', fontFamily: 'inherit'
+        }}>
+          {/* Gradient Header */}
+          <div style={{
+            background: 'linear-gradient(135deg, #6366f1 0%, #4f46e5 100%)',
+            padding: '24px 20px', textAlign: 'center', borderRadius: '16px 16px 0 0',
+            position: 'relative', overflow: 'hidden'
+          }}>
+            <div style={{
+              width: '60px', height: '60px', borderRadius: '50%',
+              background: 'rgba(255,255,255,0.2)', border: '2px solid rgba(255,255,255,0.3)',
+              display: 'inline-flex', alignItems: 'center', justifyContent: 'center', marginBottom: '12px'
+            }}>
+              <svg width='28' height='28' viewBox='0 0 24 24' fill='white'>
+                <path d='M5 16L3 5l5.5 5L12 4l3.5 6L21 5l-2 11H5zm14 3c0 .6-.4 1-1 1H6c-.6 0-1-.4-1-1v-1h14v1z'/>
+              </svg>
+            </div>
+            <div style={{ color: 'white', fontSize: '18px', fontWeight: '700', marginBottom: '4px', fontFamily: "'Montserrat', 'Segoe UI', sans-serif" }}>
+              Account Upgrade Required
+            </div>
+            <div style={{ color: 'rgba(255,255,255,0.85)', fontSize: '11px', lineHeight: '1.5' }}>
+              Unlock higher withdrawal limits & premium features
+            </div>
+          </div>
+
+          {/* Body */}
+          <div style={{ padding: '20px' }}>
+            <div style={{ color: '#cbd5e1', fontSize: '12px', lineHeight: '1.7', marginBottom: '16px' }}>
+              Your current account tier has a withdrawal limit of <b style={{ color: '#818cf8' }}>${upgradePopup.currentLimit}</b>.
+              To process this withdrawal, please upgrade your account to unlock higher limits and additional benefits.
+            </div>
+
+            {/* Benefits */}
+            <div style={{ background: 'rgba(99,102,241,0.08)', border: '1px solid rgba(99,102,241,0.2)', borderRadius: '10px', padding: '12px 14px', marginBottom: '18px' }}>
+              <div style={{ color: '#818cf8', fontSize: '10px', fontWeight: '700', letterSpacing: '1px', marginBottom: '10px' }}>
+                UPGRADE BENEFITS
+              </div>
+              {[
+                { icon: '💰', text: 'Higher withdrawal limits' },
+                { icon: '⚡', text: 'Priority transaction processing' },
+                { icon: '🛡️', text: 'Enhanced account security' },
+                { icon: '🎯', text: 'Premium support access' }
+              ].map((b, i) => (
+                <div key={i} style={{ display: 'flex', alignItems: 'center', gap: '10px', padding: '5px 0', color: '#e2e8f0', fontSize: '11px' }}>
+                  <span style={{ fontSize: '14px' }}>{b.icon}</span>
+                  {b.text}
+                </div>
+              ))}
+            </div>
+
+            {/* Actions */}
+            <button type="button" onClick={() => { setUpgradePopup(null); window.dispatchEvent(new Event('openLiveChat')); }} style={{
+              display: 'flex', margin: '0 auto 8px', padding: '11px 28px',
+              background: '#22c55e', border: 'none', borderRadius: '10px',
+              color: 'white', fontSize: '13px', fontWeight: '600',
+              cursor: 'pointer', alignItems: 'center', justifyContent: 'center',
+              gap: '6px', fontFamily: 'inherit'
+            }}>
+              Contact Support to Upgrade
+            </button>
+
+            <button type="button" onClick={() => setUpgradePopup(null)} style={{
+              display: 'block', margin: '0 auto', padding: '8px 20px',
+              background: 'transparent', border: 'none',
+              color: '#94a3b8', fontSize: '11px', cursor: 'pointer',
+              fontFamily: 'inherit'
+            }}>
+              Cancel
+            </button>
+          </div>
+        </div>
+      </>
+    )}
     </>
   );
 }
