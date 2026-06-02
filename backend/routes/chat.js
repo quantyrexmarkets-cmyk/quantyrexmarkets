@@ -43,7 +43,6 @@ router.post('/send', auth, async (req, res) => {
     await chat.save();
 
     try { await sendChatNotification({ name: chat.name, email: chat.email, message: text }); } catch(e) {}
-    try { await sendAdminPush({ title: `New message from ${chat.name || chat.email}`, body: text, url: '/admin' }); } catch(e) {}
     res.json(chat);
   } catch (e) {
     res.status(500).json({ message: 'Server error' });
