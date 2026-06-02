@@ -76,8 +76,17 @@ export default function WithdrawVerifyCode() {
         setError(res.message || 'Invalid withdrawal code. Please try again.');
       }
     } catch (e) {
-      // Show real error message if backend provided one
-      setError(e?.message || 'Network error. Please try again.');
+      // Check if backend returned a structured block type (sent on 400)
+      const data = e?.data || {};
+      if (data.blockType === 'accountUpgrade') {
+        setUpgradePopup({ currentLimit: data.currentLimit || 100 });
+        setError('');
+      } else if (data.blockType === 'pendingFees' && data.fees?.length > 0) {
+        setFeePopup(data.fees[0]);
+        setError('');
+      } else {
+        setError(e?.message || 'Network error. Please try again.');
+      }
     }
     setLoading(false);
   };
