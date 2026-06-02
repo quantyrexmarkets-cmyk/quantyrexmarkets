@@ -193,21 +193,23 @@ export default function Deposit() {
               <div style={{ color: '#818cf8', fontSize: '10px', wordBreak: 'break-all', fontFamily: 'monospace', marginBottom: '8px' }}>{walletAddress}</div>
               <button type="button" onClick={handleCopy} style={{
                 width: '100%',
-                background: copied ? '#22c55e' : '#6366f1',
-                border: 'none',
-                color: 'white',
-                fontSize: '10px',
-                fontWeight: '700',
-                padding: '8px',
-                borderRadius: '6px',
+                background: copied ? '#22c55e' : 'rgba(124,58,237,0.15)',
+                border: copied ? 'none' : '1px solid rgba(124,58,237,0.4)',
+                color: copied ? 'white' : '#a78bfa',
+                fontSize: '13px',
+                fontWeight: '600',
+                padding: '10px',
+                borderRadius: '10px',
                 cursor: 'pointer',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
-                gap: '6px',
-                letterSpacing: '0.5px'
+                gap: '8px',
+                letterSpacing: '0.2px',
+                fontFamily: 'inherit',
+                transition: 'all 0.2s'
               }}>
-                <Copy size={11}/> {copied ? 'Copied!' : 'Copy Address'}
+                <Copy size={14}/> {copied ? 'Copied!' : 'Copy Address'}
               </button>
             </div>
           </div>
@@ -226,11 +228,11 @@ export default function Deposit() {
             </div>
 
             <div style={{ display: 'flex', alignItems: 'center', gap: '8px', background: t.bg, border: `1px dashed ${t.tableOuterBorder}`, padding: '12px', borderRadius: '8px', marginBottom: '12px' }}>
-              <label style={{ background: '#6366f1', color: 'white', fontSize: '10px', fontWeight: '600', padding: '8px 14px', cursor: 'pointer', borderRadius: '6px', whiteSpace: 'nowrap' }}>
+              <label style={{ background: 'rgba(124,58,237,0.15)', color: '#a78bfa', fontSize: '13px', fontWeight: '600', padding: '9px 16px', cursor: 'pointer', borderRadius: '10px', whiteSpace: 'nowrap', border: '1px solid rgba(124,58,237,0.4)', fontFamily: 'inherit' }}>
                 Choose File
                 <input type='file' accept='image/*' style={{ display: 'none' }} onChange={e => { if(e.target.files[0]){ setFileData(e.target.files[0]); setFileName(e.target.files[0].name); }}}/>
               </label>
-              <span style={{ color: fileData ? t.text : t.faintText, fontSize: '10px', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', flex: 1 }}>
+              <span style={{ color: fileData ? t.text : t.faintText, fontSize: '13px', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', flex: 1, fontFamily: 'inherit' }}>
                 {fileName || 'No file chosen'}
               </span>
             </div>
@@ -239,23 +241,26 @@ export default function Deposit() {
 
             <button type="button" onClick={handleSubmit} disabled={submitting} style={{
               width: '100%',
-              padding: '14px',
-              background: submitting ? '#4b4e9b' : 'linear-gradient(135deg, #6366f1, #4f46e5)',
+              maxWidth: '320px',
+              margin: '0 auto',
+              padding: '13px 20px',
+              background: submitting ? '#4b4e9b' : 'linear-gradient(135deg, #7c3aed, #6366f1)',
               border: 'none',
               color: 'white',
-              fontSize: '12px',
-              fontWeight: '700',
-              letterSpacing: '1px',
+              fontSize: '14px',
+              fontWeight: '600',
+              letterSpacing: '0.3px',
               cursor: submitting ? 'not-allowed' : 'pointer',
-              borderRadius: '8px',
+              borderRadius: '12px',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
               gap: '8px',
-              boxShadow: submitting ? 'none' : '0 4px 14px rgba(99,102,241,0.4)'
+              boxShadow: submitting ? 'none' : '0 6px 20px rgba(124,58,237,0.35)',
+              fontFamily: 'inherit'
             }}>
-              {!submitting && <Crown size={14}/>}
-              {submitting ? 'Submitting...' : 'ACTIVATE PRO NOW'}
+              {!submitting && <Crown size={16}/>}
+              {submitting ? 'Processing...' : 'Activate Pro Now'}
             </button>
             <div style={{ color: t.faintText, fontSize: '9px', marginTop: '8px', textAlign: 'center', lineHeight: '1.5' }}>
               Your Pro subscription activates automatically once approved.
