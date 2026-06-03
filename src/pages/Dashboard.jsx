@@ -10,6 +10,7 @@ import BTCChart from '../components/BTCChart';
 import CryptoNews from '../components/CryptoNews';
 import DashboardTicker from '../components/DashboardTicker';
 import { User, LayoutDashboard, Wallet, Bot, Package, BarChart2, Lock, RefreshCw, CreditCard, TrendingUp, ArrowDownCircle, Clock, DollarSign, Menu, Users, Settings, LogOut } from 'lucide-react';
+import { useCurrency } from '../context/CurrencyContext';
 
 const navItems = [
   { icon: <User size={12} />, label: 'Profile', route: '/dashboard/profile' },
@@ -105,6 +106,7 @@ function TrendyStocks() {
 }
 
 export default function Dashboard() {
+  const { format, toUSD, symbol: currencySymbol, code: currencyCode } = useCurrency();
   const navigate = useNavigate();
   const { user } = useAuth();
   const { current: t } = useTheme();
@@ -504,14 +506,14 @@ export default function Dashboard() {
                 if (tradeAccount === '---') { setTradeError('Select account'); return; }
                 if (tradeMarket === '---') { setTradeError('Select market'); return; }
                 if (tradeDuration === '---') { setTradeError('Select duration'); return; }
-                if (!amount || Number(amount) < 10) { setTradeError('Min amount $10'); return; }
+                if (!amount || Number(amount) < 10) { setTradeError(`Min amount ${format(10)}`); return; }
                 setTradeError(''); setTradeType('Buy'); setTradeSuccess(true);
               }} style={{ flex: 1, padding: '10px', background: '#6366f1', border: 'none', color: 'white', fontSize: '11px', fontWeight: '700', }}>Buy</button>
               <button type="button" onClick={() => {
                 if (tradeAccount === '---') { setTradeError('Select account'); return; }
                 if (tradeMarket === '---') { setTradeError('Select market'); return; }
                 if (tradeDuration === '---') { setTradeError('Select duration'); return; }
-                if (!amount || Number(amount) < 10) { setTradeError('Min amount $10'); return; }
+                if (!amount || Number(amount) < 10) { setTradeError(`Min amount ${format(10)}`); return; }
                 setTradeError(''); setTradeType('Sell'); setTradeSuccess(true);
               }} style={{ flex: 1, padding: '10px', background: '#ef4444', border: 'none', color: 'white', fontSize: '11px', fontWeight: '700', }}>Sell</button>
             </div>

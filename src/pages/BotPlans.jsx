@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { formatAmount } from '../utils/currency';
 import PageHeader from '../components/PageHeader';
+import { useCurrency } from '../context/CurrencyContext';
 
 const bots = [
   { name: 'STARTER BOT',  amount: 500,   dailyRate: '10%', duration: '7 days',   days: 7,   color: '#e67e22' },
@@ -19,6 +20,7 @@ const BASE_URL = (import.meta.env.VITE_API_URL || (import.meta.env.VITE_API_URL 
 const headers = () => ({ 'Content-Type': 'application/json', 'Authorization': `Bearer ${localStorage.getItem('token')}` });
 
 export default function BotPlans() {
+  const { format, toUSD, symbol: currencySymbol, code: currencyCode } = useCurrency();
   const { current: t } = useTheme();
   const navigate = useNavigate();
   const { user } = useAuth();
@@ -80,12 +82,12 @@ export default function BotPlans() {
             return (
               <div key={i} style={{ background: t.cardBg, border: '1px solid rgba(99,102,241,0.3)', padding: '12px', position: 'relative' }}>
                 <div style={{ color: bot.color, fontSize: '9px', fontWeight: '800', marginBottom: '4px' }}>{bot.name}</div>
-                <div style={{ color: bot.color, fontSize: '10px', fontWeight: '800', marginBottom: '2px' }}>${bot.amount.toLocaleString()}</div>
+                <div style={{ color: bot.color, fontSize: '10px', fontWeight: '800', marginBottom: '2px' }}>{format(bot.amount)}</div>
                 {[
                   ['Daily Return', bot.dailyRate, '#22c55e'],
                   ['Duration', bot.duration, 'white'],
-                  ['Daily Profit', `+$${dailyProfit}`, '#22c55e'],
-                  ['Total Profit', `+$${totalProfit}`, '#f59e0b'],
+                  ['Daily Profit', `+${format(dailyProfit)}`, '#22c55e'],
+                  ['Total Profit', `+${format(totalProfit)}`, '#f59e0b'],
                 ].map(([l,v,c]) => (
                   <div key={l} style={{ display: 'flex', justifyContent: 'space-between', padding: '4px 0', borderBottom: `1px solid ${t.tableRowBorder}` }}>
                     <span style={{ color: t.mutedText, fontSize: '8px' }}>{l}</span>
@@ -93,7 +95,7 @@ export default function BotPlans() {
                   </div>
                 ))}
                 <button type="button"
-                  onClick={() => canAfford ? setConfirmBot(bot) : setError(`Insufficient balance. You need $${bot.amount.toLocaleString()}.`)}
+                  onClick={() => canAfford ? setConfirmBot(bot) : setError(`Insufficient balance. You need ${format(bot.amount)}.`)}
                   style={{ width: '100%', marginTop: '12px', padding: '8px', background: canAfford ? bot.color : t.subtleBg, border: 'none', color: canAfford ? 'white' : t.faintText, fontSize: '9px', fontWeight: '700', cursor: canAfford ? 'pointer' : 'not-allowed' }}>
                   {canAfford ? 'Subscribe Now' : 'Insufficient Balance'}
                 </button>

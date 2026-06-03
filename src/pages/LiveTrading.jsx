@@ -10,6 +10,7 @@ import StatusPopup from '../components/StatusPopup';
 import PageHeader from '../components/PageHeader';
 import DashboardSidebar from '../components/DashboardSidebar';
 import { toast } from 'react-toastify';
+import { useCurrency } from '../context/CurrencyContext';
 
 // Trading symbols (Binance pair → display)
 const SYMBOLS = [
@@ -36,6 +37,7 @@ const DURATIONS = ['30 seconds', '1 minute', '2 minutes', '5 minutes', '10 minut
 const LEVERAGES = ['1x', '2x', '5x', '10x', '20x', '50x', '100x'];
 
 export default function LiveTrading() {
+  const { format, toUSD, symbol: currencySymbol, code: currencyCode } = useCurrency();
   const navigate = useNavigate();
   const { user } = useAuth();
   const { requireSub, handleApiError } = useSubscription();
@@ -227,7 +229,7 @@ export default function LiveTrading() {
   const handleTrade = async () => {
     if (!requireSub('execute trade')) return;
     if (!amount || parseFloat(amount) < 10) {
-      setPopup({ show: true, type: 'error', title: 'Invalid Amount', message: 'Minimum trade amount is $10' });
+      setPopup({ show: true, type: 'error', title: 'Invalid Amount', message: `Minimum trade amount is ${format(10)}` });
       return;
     }
     setSubmitting(true);
@@ -252,7 +254,7 @@ export default function LiveTrading() {
         return;
       }
       if (res?.trade) {
-        setPopup({ show: true, type: 'success', title: 'Trade Executed!', message: `${tradeType} ${symbol.label} for $${amount}` });
+        setPopup({ show: true, type: 'success', title: 'Trade Executed!', message: `${tradeType} ${symbol.label} for ${format(amount)}` });
         setAmount('');
         setStopLoss('');
         setTakeProfit('');
@@ -418,9 +420,9 @@ export default function LiveTrading() {
             {/* Amount input */}
             <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '4px' }}>
               <span style={{ color: t.subText, fontSize: '10px' }}>Amount (USD)</span>
-              <span style={{ color: '#818cf8', fontSize: '10px', fontWeight: '400' }}>Bal: ${user?.balance?.toLocaleString() || '0'}</span>
+              <span style={{ color: '#818cf8', fontSize: '10px', fontWeight: '400' }}>Bal: {format(user?.balance || 0)}</span>
             </div>
-            <input type="number" value={amount} onChange={e => setAmount(e.target.value)} placeholder="Min $10"
+            <input type="number" value={amount} onChange={e => setAmount(e.target.value)} placeholder={`Min ${format(10)}`}
               style={{ width: '100%', padding: '11px 12px', background: t.inputBg, border: `1px solid ${t.border}`,
                 borderRadius: '6px', color: t.text, fontSize: '12px', outline: 'none', boxSizing: 'border-box', marginBottom: '12px' }} />
 
@@ -466,7 +468,7 @@ export default function LiveTrading() {
                 border: 'none', borderRadius: '8px', color: '#ffffff', fontSize: '13px', fontWeight: '500',
                 cursor: submitting ? 'wait' : 'pointer', letterSpacing: '0.5px',
                 opacity: submitting ? 0.7 : 1 }}>
-              {submitting ? 'Executing...' : `${tradeType} ${symbol.display} · $${amount || '0'}`}
+              {submitting ? 'Executing...' : `${tradeType} ${symbol.display} · ${format(amount || 0)}`}
             </button>
           </>
         )}
@@ -490,7 +492,7 @@ export default function LiveTrading() {
                       <span style={{ color: t.text, fontSize: '11px', fontWeight: '400' }}>{tr.symbol}</span>
                       <span style={{ color: t.subText, fontSize: '9px' }}>{tr.leverage}</span>
                     </div>
-                    <span style={{ color: t.text, fontSize: '11px', fontWeight: '400' }}>${tr.amount}</span>
+                    <span style={{ color: t.text, fontSize: '11px', fontWeight: '400' }}>{format(tr.amount)}</span>
                   </div>
                   <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '10px', color: t.subText }}>
                     <span>Entry: ${tr.openPrice?.toFixed(2)}</span>
@@ -520,7 +522,7 @@ export default function LiveTrading() {
                     </div>
                   </div>
                   <div style={{ textAlign: 'right' }}>
-                    <div style={{ fontSize: '11px', fontWeight: '400' }}>${tr.amount}</div>
+                    <div style={{ fontSize: '11px', fontWeight: '400' }}>{format(tr.amount)}</div>
                     <div style={{ fontSize: '9px', color: tr.status === 'closed' ? (tr.result > 0 ? '#22c55e' : '#ef4444') : '#f59e0b', marginTop: '2px', fontWeight: '400' }}>
                       {tr.status === 'closed' ? (tr.result > 0 ? `+$${tr.result.toFixed(2)}` : `$${tr.result.toFixed(2)}`) : tr.status.toUpperCase()}
                     </div>

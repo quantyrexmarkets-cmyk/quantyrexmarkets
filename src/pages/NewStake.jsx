@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { formatAmount, getCurrencySymbol } from '../utils/currency';
 import PageHeader from '../components/PageHeader';
+import { useCurrency } from '../context/CurrencyContext';
 
 const cryptoPlans = [
   { name: 'Bitcoin',    symbol: 'BTC',  roi: '28.75%', color: '#f7931a', bg: '#f7931a', logo: 'https://assets.coingecko.com/coins/images/1/large/bitcoin.png' },
@@ -26,6 +27,7 @@ const cryptoPlans = [
 ];
 
 export default function NewStake() {
+  const { format, toUSD, symbol: currencySymbol, code: currencyCode } = useCurrency();
   const navigate = useNavigate();
   const { user } = useAuth();
   const { requireSub, handleApiError } = useSubscription();
@@ -40,7 +42,7 @@ export default function NewStake() {
 
   const handleStake = async () => {
     if (!requireSub('start a new stake')) return;
-    if (!amount || isNaN(amount) || Number(amount) < 100) { setError('Minimum stake is $100'); return; }
+    if (!amount || isNaN(amount) || Number(amount) < 100) { setError(`Minimum stake is ${format(100)}`); return; }
     if (Number(amount) > (user?.balance || 0)) { setShowInsufficient(true); return; }
     setError(''); setSubmitting(true);
     try {
@@ -92,7 +94,7 @@ export default function NewStake() {
               <svg width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='#ef4444' strokeWidth='2.5' strokeLinecap='round' strokeLinejoin='round'><line x1='12' y1='8' x2='12' y2='12'/><line x1='12' y1='16' x2='12.01' y2='16'/><circle cx='12' cy='12' r='10'/></svg>
             </div>
             <div style={{ color: '#111', fontSize: '14px', fontWeight: '700', marginBottom: '8px' }}>Insufficient Balance</div>
-            <div style={{ color: '#555', fontSize: '9px', marginBottom: '6px', lineHeight: '1.6' }}>You don't have enough balance to stake <strong>${amount}</strong>.</div>
+            <div style={{ color: '#555', fontSize: '9px', marginBottom: '6px', lineHeight: '1.6' }}>You don't have enough balance to stake <strong>{format(amount)}</strong>.</div>
             <div style={{ color: '#555', fontSize: '9px', marginBottom: '20px' }}>Available: <strong style={{ color: '#22c55e' }}>{formatAmount(user?.balance || 0, user?.currency)}</strong></div>
             <div style={{ display: 'flex', gap: '8px' }}>
               <button type="button" onClick={() => setShowInsufficient(false)} style={{ flex: 1, padding: '8px', background: t.subtleBg, border: `1px solid ${t.border}`, color: t.text, fontSize: '9px', cursor: 'pointer' }}>Cancel</button>
@@ -152,7 +154,7 @@ export default function NewStake() {
               <input
                 value={amount}
                 onChange={e => setAmount(e.target.value)}
-                placeholder="Min. $100.00"
+                placeholder={`Min. ${format(100)}`}
                 style={{ width: '100%', background: t.bg, border: `1px solid ${t.border}`, color: t.text, fontSize: '11px', padding: '10px 12px', outline: 'none', boxSizing: 'border-box', marginBottom: '6px' }}
               />
 
@@ -184,15 +186,15 @@ export default function NewStake() {
                   <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '8px' }}>
                     <div>
                       <div style={{ color: t.subText, fontSize: '7px', marginBottom: '3px' }}>Daily Profit</div>
-                      <div style={{ color: '#22c55e', fontSize: '13px', fontWeight: '800' }}>+${(Number(amount) * parseFloat(selected.roi) / 100 / 30).toFixed(2)}</div>
+                      <div style={{ color: '#22c55e', fontSize: '13px', fontWeight: '800' }}>+{format(Number(amount) * parseFloat(selected.roi) / 100 / 30)}</div>
                     </div>
                     <div>
                       <div style={{ color: t.subText, fontSize: '7px', marginBottom: '3px' }}>Total Profit ({duration}d)</div>
-                      <div style={{ color: '#f59e0b', fontSize: '13px', fontWeight: '800' }}>+${(Number(amount) * parseFloat(selected.roi) / 100 / 30 * duration).toFixed(2)}</div>
+                      <div style={{ color: '#f59e0b', fontSize: '13px', fontWeight: '800' }}>+{format(Number(amount) * parseFloat(selected.roi) / 100 / 30 * duration)}</div>
                     </div>
                     <div>
                       <div style={{ color: t.subText, fontSize: '7px', marginBottom: '3px' }}>Total Return</div>
-                      <div style={{ color: t.text, fontSize: '11px', fontWeight: '700' }}>${(Number(amount) + Number(amount) * parseFloat(selected.roi) / 100 / 30 * duration).toFixed(2)}</div>
+                      <div style={{ color: t.text, fontSize: '11px', fontWeight: '700' }}>{format(Number(amount) + Number(amount) * parseFloat(selected.roi) / 100 / 30 * duration)}</div>
                     </div>
                     <div>
                       <div style={{ color: t.subText, fontSize: '7px', marginBottom: '3px' }}>ROI Rate</div>

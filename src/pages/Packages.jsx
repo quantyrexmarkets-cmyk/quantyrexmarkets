@@ -6,6 +6,7 @@ import { CheckCircle, X, AlertCircle, Zap, TrendingUp, Award, Crown, Rocket, Sta
 import { joinPlan, getInvestments } from '../services/api';
 import { useAuth } from '../context/AuthContext';
 import { formatAmountWithCode, formatAmount, getCurrencySymbol } from '../utils/currency';
+import { useCurrency } from '../context/CurrencyContext';
 
 const plans = [
   { name: 'BRONZE',   roi: '10% Daily', price: '$500',     min: 500,    max: 4999,    rate: '10% Daily',  duration: '7',  defaultAmt: '500'    },
@@ -17,6 +18,7 @@ const plans = [
 ];
 
 export default function Packages() {
+  const { format, toUSD, symbol: currencySymbol, code: currencyCode } = useCurrency();
   const navigate = useNavigate();
   const location = useLocation();
   const urlTab = new URLSearchParams(location.search).get('tab');
@@ -226,7 +228,7 @@ export default function Packages() {
                     ) : paged.map((inv, i) => (
                       <div key={i} style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr 1fr 1fr 1fr 1fr', padding: '8px 6px', borderBottom: `1px solid ${t.tableRowBorder}`, background: i%2===0?'transparent':t.tableAltRow }}>
                         <span style={{ color: '#6366f1', fontSize: '8px', fontWeight: '700' }}>{inv.plan}</span>
-                        <span style={{ color: t.text, fontSize: '8px' }}>${parseFloat(inv.amount).toLocaleString()}</span>
+                        <span style={{ color: t.text, fontSize: '8px' }}>{format(inv.amount)}</span>
                         <span style={{ color: '#22c55e', fontSize: '8px' }}>{inv.roi}</span>
                         <span style={{ color: '#f59e0b', fontSize: '8px', fontWeight: '700' }}>+{formatAmount(inv.earned || inv.profit || 0, user?.currency)}</span>
                         <span style={{ color: '#f59e0b', fontSize: '8px', fontWeight: '700' }}>+{formatAmount(inv.earned || inv.profit || 0, user?.currency)}</span>
@@ -268,7 +270,7 @@ export default function Packages() {
                   </div>
                 </div>
                 <div style={{ color: t.text, fontSize: '11px', fontWeight: '800', marginBottom: '4px' }}>{plan.name}</div>
-                <div style={{ color: '#6366f1', fontSize: '10px', fontWeight: '700', marginBottom: '10px' }}>{plan.price}</div>
+                <div style={{ color: '#6366f1', fontSize: '10px', fontWeight: '700', marginBottom: '10px' }}>{format(plan.min)}</div>
                 <div style={{ marginBottom: '10px' }}>
                   <div style={{ color: t.subText, fontSize: '7px', marginBottom: '2px' }}>Minimum: ${plan.min.toLocaleString()}</div>
                   <div style={{ color: t.subText, fontSize: '7px', marginBottom: '2px' }}>Maximum: ${plan.max ? plan.max.toLocaleString() : 'Unlimited'}</div>

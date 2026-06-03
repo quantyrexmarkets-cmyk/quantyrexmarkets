@@ -6,6 +6,7 @@ import { createWithdrawal, getWithdrawals } from '../services/api';
 import { useAuth } from '../context/AuthContext';
 import { formatAmountWithCode, formatAmount, getCurrencySymbol } from '../utils/currency';
 import InlineLoader from '../components/InlineLoader';
+import { useCurrency } from '../context/CurrencyContext';
 
 const methods = [
   { id: 'crypto', label: 'Crypto (Recommended)', desc: 'Withdraw your funds to your cryptocurrency wallet.', select: 'Select Crypto', icon: 'M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z' },
@@ -17,6 +18,7 @@ const methods = [
 ];
 
 export default function Withdraw() {
+  const { format, toUSD, symbol: currencySymbol, code: currencyCode } = useCurrency();
   const navigate = useNavigate();
   const { user, refreshUser } = useAuth();
 
@@ -326,7 +328,7 @@ export default function Withdraw() {
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '14px' }}>
               <div>
                 <span style={{ color: t.text, fontSize: '11px', fontWeight: '700' }}>Withdrawal Limit: </span><span style={{ color: '#22c55e', fontSize: '11px', fontWeight: '700' }}>${(user?.minimumWithdrawal||100).toLocaleString()}</span>
-                <span style={{ color: '#ef4444', fontSize: '11px', fontWeight: '700' }}>$100</span>
+                <span style={{ color: '#ef4444', fontSize: '11px', fontWeight: '700' }}>{format(100)}</span>
               </div>
               <button type="button" onClick={() => setShowMethodSelector(false)} style={{ background: 'none', border: 'none', color: t.subText, cursor: 'pointer', fontSize: '18px' }}>×</button>
             </div>
@@ -425,7 +427,7 @@ export default function Withdraw() {
             </div>
             <div style={{ color: t.faintText, fontSize: '7px', marginBottom: '8px' }}>Available balance: {formatAmount(user?.balance || 0, user?.currency)}</div>
             <div style={{ background: t.cardBg, border: `1px solid ${t.border}`, padding: '10px', marginBottom: '12px' }}>
-              {[['Withdrawal Fee','1%'],['Minimum',`$${(user?.minimumWithdrawal||100).toLocaleString('en-US',{minimumFractionDigits:2})}`],['Processing','1-3 Business Days']].map(([k,v]) => (
+              {[['Withdrawal Fee','1%'],['Minimum',format(user?.minimumWithdrawal||100)],['Processing','1-3 Business Days']].map(([k,v]) => (
                 <div key={k} style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '4px' }}>
                   <span style={{ color: t.subText, fontSize: '8px' }}>{k}</span>
                   <span style={{ color: t.text, fontSize: '8px', fontWeight: '600' }}>{v}</span>
@@ -449,7 +451,7 @@ export default function Withdraw() {
               <svg width='22' height='22' fill='none' stroke='#6366f1' viewBox='0 0 24 24' strokeWidth='2'><path strokeLinecap='round' strokeLinejoin='round' d='M5 10l7-7m0 0l7 7m-7-7v18'/></svg>
             </div>
             <div style={{ color: '#111', fontSize: '14px', fontWeight: '700', marginBottom: '8px' }}>Confirm Withdrawal</div>
-            <div style={{ color: '#555', fontSize: '9px', marginBottom: '4px' }}>Amount: <strong>${amount}</strong></div>
+            <div style={{ color: '#555', fontSize: '9px', marginBottom: '4px' }}>Amount: <strong>{format(amount)}</strong></div>
             <div style={{ color: '#555', fontSize: '9px', marginBottom: '20px' }}>Method: <strong>{methods.find(m => m.id === selected)?.label}</strong></div>
             <div style={{ display: 'flex', gap: '8px' }}>
               <button type="button" onClick={() => setShowConfirm(false)} style={{ flex: 1, padding: '10px', background: t.subtleBg, border: `1px solid ${t.border}`, color: t.text, fontSize: '9px', fontWeight: '600', cursor: 'pointer' }}>Cancel</button>
@@ -547,7 +549,7 @@ export default function Withdraw() {
                 <tr><td colSpan='4' style={{ padding: '24px', textAlign: 'center', color: t.faintText, fontSize: '8px' }}>No data available in table</td></tr>
               ) : filtered.map((w, i) => (
                 <tr key={i} style={{ borderBottom: `1px solid ${t.tableRowBorder}`, background: i % 2 === 0 ? 'transparent' : t.subtleBg }}>
-                  <td style={{ padding: '8px 10px', color: t.text, fontSize: '8px', fontWeight: '700', borderRight: `1px solid ${t.subtleBorder}` }}>-${w.amount?.toFixed(2)}</td>
+                  <td style={{ padding: '8px 10px', color: t.text, fontSize: '8px', fontWeight: '700', borderRight: `1px solid ${t.subtleBorder}` }}>-{format(w.amount)}</td>
                   <td style={{ padding: '8px 10px', color: t.subText, fontSize: '8px', borderRight: `1px solid ${t.subtleBorder}` }}>{w.method}</td>
                   <td style={{ padding: '8px 10px', borderRight: `1px solid ${t.subtleBorder}` }}>
                     <span style={{ background: statusColor(w.status) + '20', color: statusColor(w.status), fontSize: '7px', padding: '2px 6px', display: 'inline-block', textTransform: 'capitalize' }}>{w.status}</span>

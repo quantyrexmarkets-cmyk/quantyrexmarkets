@@ -6,6 +6,7 @@ import { useAuth } from '../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
 import PageHeader from '../components/PageHeader';
 import { createTrade } from '../services/api';
+import { useCurrency } from '../context/CurrencyContext';
 
 const SYMBOLS = [
   { label: 'BTC/USD', tv: 'BINANCE:BTCUSDT' },
@@ -19,6 +20,7 @@ const SYMBOLS = [
 const DURATIONS = ['30 seconds','1 minute','2 minutes','5 minutes','10 minutes','15 minutes','30 minutes','1 hour'];
 
 export default function NewTrade() {
+  const { format, toUSD, symbol: currencySymbol, code: currencyCode } = useCurrency();
   const { current: t } = useTheme();
   const { user } = useAuth();
   const { requireSub, handleApiError } = useSubscription();
@@ -45,7 +47,7 @@ export default function NewTrade() {
   const handleTrade = async () => {
     if (!requireSub('place a new trade')) return;
     if (!amount || parseFloat(amount) <= 0) { setError('Enter a valid amount'); return; }
-    if (parseFloat(amount) < 10) { setError('Minimum trade amount is $10'); return; }
+    if (parseFloat(amount) < 10) { setError(`Minimum trade amount is ${format(10)}`); return; }
     if (balance !== null && parseFloat(amount) > parseFloat(balance)) { setError('Insufficient balance'); setShowError(true); return; }
     setSubmitting(true); setError(''); setMsg('');
     try {
@@ -99,7 +101,7 @@ export default function NewTrade() {
         {/* Amount */}
         <div>
           <div style={{ color: t.dimText, fontSize: '8px', marginBottom: '6px' }}>Amount (USD)</div>
-          <input value={amount} onChange={e => setAmount(e.target.value)} placeholder='Min. $10.00'
+          <input value={amount} onChange={e => setAmount(e.target.value)} placeholder={`Min. ${format(10)}`}
             style={{ width: '100%', background: t.inputBg, border: `1px solid ${direction === 'buy' ? 'rgba(34,197,94,0.4)' : 'rgba(239,68,68,0.4)'}`, color: t.text, fontSize: '11px', fontWeight: '700', padding: '8px 10px', outline: 'none', boxSizing: 'border-box' }} />
         </div>
 

@@ -8,8 +8,10 @@ import PageHeader from '../components/PageHeader';
 import DashboardSidebar from '../components/DashboardSidebar';
 import LoadingScreen from '../components/LoadingScreen';
 import { toast } from 'react-toastify';
+import { useCurrency } from '../context/CurrencyContext';
 
 export default function Subscription() {
+  const { format, toUSD, symbol: currencySymbol, code: currencyCode } = useCurrency();
   const navigate = useNavigate();
   const { user } = useAuth();
   const { current: t } = useTheme();
@@ -132,7 +134,7 @@ export default function Subscription() {
           <div style={{ color: t.subText, fontSize: '10px', marginBottom: '18px' }}>1 Year Full Access · {status?.planDuration || 365} days</div>
 
           <div style={{ display: 'flex', alignItems: 'baseline', gap: '6px', marginBottom: '4px' }}>
-            <div style={{ fontSize: '36px', fontWeight: '700', color: t.text, letterSpacing: '-1px' }}>${status?.planPrice || 499}</div>
+            <div style={{ fontSize: '36px', fontWeight: '700', color: t.text, letterSpacing: '-1px' }}>{format(status?.planPrice || 499)}</div>
             <div style={{ fontSize: '11px', color: t.subText, fontWeight: '600' }}>USD</div>
           </div>
           <div style={{ fontSize: '10px', color: t.subText, marginBottom: '22px' }}>One-time payment · Valid for {status?.planDuration || 365} days</div>
@@ -160,12 +162,12 @@ export default function Subscription() {
               <div style={{ background: 'rgba(99,102,241,0.08)', border: '1px solid rgba(99,102,241,0.25)', borderRadius: '8px', padding: '12px', marginBottom: '10px', display: 'flex', gap: '8px', alignItems: 'flex-start' }}>
                 <AlertCircle size={14} color="#818cf8" style={{flexShrink: 0, marginTop: '1px'}}/>
                 <div style={{ fontSize: '11px', color: t.text, lineHeight: '1.5' }}>
-                  Deposit <b>${status?.planPrice || 499}</b> to instantly activate your Pro membership. Your subscription is granted automatically once the deposit is approved — valid for {status?.planDuration || 365} days of full access.
+                  Deposit <b>{format(status?.planPrice || 499)}</b> to instantly activate your Pro membership. Your subscription is granted automatically once the deposit is approved — valid for {status?.planDuration || 365} days of full access.
                 </div>
               </div>
               <button type="button" onClick={() => navigate('/dashboard/deposit?purpose=pro&amount=' + (status?.planPrice || 499))}
                 style={{ display: 'flex', margin: '0 auto', padding: '10px 24px', background: '#22c55e', border: 'none', borderRadius: '10px', color: '#ffffff', fontSize: '13px', fontWeight: '600', cursor: 'pointer', alignItems: 'center', justifyContent: 'center', gap: '6px', fontFamily: 'inherit' }}>
-                <Crown size={14}/> Deposit ${status?.planPrice || 499} to Activate Pro
+                <Crown size={14}/> Deposit {format(status?.planPrice || 499)} to Activate Pro
               </button>
             </>
           )}

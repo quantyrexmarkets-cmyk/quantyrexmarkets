@@ -6,6 +6,7 @@ import { MapPin, Users, FlaskConical, Heart, CheckCircle2, AlertTriangle, Trendi
 import PageHeader from '../components/PageHeader';
 import { getDashboard, startCopyTrade } from '../services/api';
 import { formatAmountWithCode, getCurrencySymbol } from '../utils/currency';
+import { useCurrency } from '../context/CurrencyContext';
 
 const DURATIONS = [
   { label: '30 Days', value: 30, desc: 'Short term' },
@@ -15,6 +16,7 @@ const DURATIONS = [
 ];
 
 export default function CopyTradingSetup() {
+  const { format, toUSD, symbol: currencySymbol, code: currencyCode } = useCurrency();
   const { state } = useLocation();
   const navigate = useNavigate();
   const { requireSub, handleApiError } = useSubscription();
@@ -55,7 +57,7 @@ export default function CopyTradingSetup() {
     if (!requireSub('start copy trading')) return;
     setError('');
     if (!amount || isNaN(amount) || Number(amount) <= 0) { setError('Please enter a valid amount.'); return; }
-    if (Number(amount) < 10) { setError('Minimum investment is $10.'); return; }
+    if (Number(amount) < 10) { setError(`Minimum investment is ${format(10)}.`); return; }
     if (Number(amount) > balance) { setError('Insufficient balance. Please deposit funds.'); return; }
     if (!agreed) { setError('Please agree to the terms before proceeding.'); return; }
     setLoading(true);
@@ -70,7 +72,7 @@ export default function CopyTradingSetup() {
   if (!trader) return null;
 
   if (success) return (
-    <div style={{ minHeight: '100vh', background: t.bg, display: 'flex', flexDirection: 'column', fontFamily: "'Segoe UI', sans-serif", color: t.text, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: '24px' }}>
+    <div style={{ minHeight: '100vh', background: t.bg, fontFamily: "'Segoe UI', sans-serif", color: t.text, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: '24px' }}>
       <div style={{ width: '72px', height: '72px', background: 'rgba(34,197,94,0.15)', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '16px', border: '2px solid rgba(34,197,94,0.3)' }}>
         <CheckCircle2 size={36} color="#22c55e" />
       </div>

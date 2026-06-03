@@ -7,6 +7,7 @@ import { formatAmount } from '../utils/currency';
 import PageHeader from '../components/PageHeader';
 import { Bot, TrendingUp } from 'lucide-react';
 import InlineLoader from '../components/InlineLoader';
+import { useCurrency } from '../context/CurrencyContext';
 
 const bots = [
   { name: 'STARTER BOT',  amount: 500,   dailyRate: '10%', duration: '7 days',   days: 7,   color: '#818cf8' },
@@ -22,6 +23,7 @@ const getToken = () => localStorage.getItem('token');
 const headers = () => ({ 'Content-Type': 'application/json', 'Authorization': `Bearer ${getToken()}` });
 
 export default function ManageBots() {
+  const { format, toUSD, symbol: currencySymbol, code: currencyCode } = useCurrency();
   const navigate = useNavigate();
   const { user } = useAuth();
   const { requireSub, handleApiError } = useSubscription();
@@ -193,12 +195,12 @@ export default function ManageBots() {
                 return (
                   <div key={i} style={{ background: t.cardBg, border: t.bg === '#e6e6e6' ? `1px solid ${t.border}` : '1px solid rgba(99,102,241,0.3)', padding: '12px', position: 'relative' }}>
                     <div style={{ color: '#818cf8', fontSize: '9px', fontWeight: '800', marginBottom: '2px' }}>{bot.name}</div>
-                    <div style={{ color: t.text, fontSize: '14px', fontWeight: '900', marginBottom: '8px' }}>${bot.amount.toLocaleString()}</div>
+                    <div style={{ color: t.text, fontSize: '14px', fontWeight: '900', marginBottom: '8px' }}>{format(bot.amount)}</div>
                     {[
                       ['Daily Return', bot.dailyRate, '#22c55e'],
                       ['Duration', bot.duration, 'white'],
-                      ['Daily Profit', `+$${dailyProfit}`, '#22c55e'],
-                      ['Total Profit', `+$${totalProfit}`, '#f59e0b'],
+                      ['Daily Profit', `+${format(dailyProfit)}`, '#22c55e'],
+                      ['Total Profit', `+${format(totalProfit)}`, '#f59e0b'],
                     ].map(([l,v,c]) => (
                       <div key={l} style={{ display: 'flex', justifyContent: 'space-between', padding: '3px 0', borderBottom: `1px solid ${t.tableRowBorder}` }}>
                         <span style={{ color: t.subText, fontSize: '7px' }}>{l}</span>
@@ -206,7 +208,7 @@ export default function ManageBots() {
                       </div>
                     ))}
                     <button type="button"
-                      onClick={() => canAfford ? setConfirmBot(bot) : (setError(`Insufficient balance. You need $${bot.amount.toLocaleString()}.`), setShowInsufficient && setShowInsufficient(true))}
+                      onClick={() => canAfford ? setConfirmBot(bot) : (setError(`Insufficient balance. You need ${format(bot.amount)}.`), setShowInsufficient && setShowInsufficient(true))}
                       disabled={isSubscribing}
                       style={{ width: '100%', marginTop: '10px', padding: '7px', background: canAfford ? '#6366f1' : t.subtleBg, border: 'none', color: canAfford ? 'white' : t.faintText, fontSize: '8px', fontWeight: '700', cursor: canAfford ? 'pointer' : 'not-allowed' }}>
                       {isSubscribing ? 'Activating...' : canAfford ? 'Subscribe Now' : 'Insufficient Balance'}
