@@ -6,6 +6,7 @@ import './styles/themes.css'
 import App from './App.jsx'
 import { ThemeProvider } from './context/ThemeContext';
 import { AuthProvider } from './context/AuthContext.jsx'
+import { CurrencyProvider } from './context/CurrencyContext.jsx'
 
 class ErrorBoundary extends Component {
   constructor(props) { super(props); this.state = { error: null }; }
