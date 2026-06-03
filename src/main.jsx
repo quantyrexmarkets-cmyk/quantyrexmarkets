@@ -28,8 +28,10 @@ createRoot(document.getElementById('root')).render(
     <ErrorBoundary>
       <ThemeProvider>
     <AuthProvider>
+    <CurrencyProvider>
         <App />
-      </AuthProvider>
+      </CurrencyProvider>
+  </AuthProvider>
     </ThemeProvider>
     </ErrorBoundary>
   </StrictMode>,
