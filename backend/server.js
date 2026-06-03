@@ -56,7 +56,18 @@ app.use(express.urlencoded({ extended: true }));
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 app.use("/api/traders", require("./routes/traders"));
 
-const globalLimiter = rateLimit({ windowMs: 15 * 60 * 1000, max: 300, skipSuccessfulRequests: true, standardHeaders: true, legacyHeaders: false, message: { message: 'Too many requests, please try again later.' } });
+const globalLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000,
+  max: 300,
+  skipSuccessfulRequests: true,
+  standardHeaders: true,
+  legacyHeaders: false,
+  skip: (req) => {
+    const p = req.path || '';
+    return p.includes('/verify-email') || p.includes('/resend-verification') || p.includes('/verify');
+  },
+  message: { message: 'Too many requests, please try again later.' }
+});
 const authLimiter = rateLimit({ windowMs: 15 * 60 * 1000, max: 30, skipSuccessfulRequests: true, standardHeaders: true, legacyHeaders: false, message: { message: 'Too many login attempts, please try again in 15 minutes.' } });
 const adminLimiter = rateLimit({ windowMs: 15 * 60 * 1000, max: 50, message: { message: 'Too many admin requests.' } });
 
