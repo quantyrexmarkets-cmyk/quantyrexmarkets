@@ -3,6 +3,7 @@ import InlineLoader from '../components/InlineLoader';
 import { useParams, useNavigate, useLocation } from 'react-router-dom';
 import { useTheme } from '../context/ThemeContext';
 import { ArrowLeft, Mail, Lock, Unlock, Ban, CheckCircle, ArrowUpCircle, RotateCcw, Trash2, DollarSign, Send, X, Shield, TrendingUp, Crown, Clock } from 'lucide-react';
+import { formatAmountWithUSD } from '../utils/currency';
 const BASE_URL = (import.meta.env.VITE_API_URL || (import.meta.env.VITE_API_URL || 'https://quantyrexmarkets-api.vercel.app/api'));
 const getToken = () => localStorage.getItem('token');
 const headers = () => ({ 'Content-Type': 'application/json', 'Authorization': `Bearer ${getToken()}` });
@@ -161,7 +162,7 @@ export default function AdminManageUser() {
       <div style={{ maxWidth:'600px', margin:'0 auto', padding:'16px' }}>
         <div style={{ display:'flex', gap:'6px', flexWrap:'wrap', marginBottom:'16px' }}>
           <span style={{ padding:'4px 10px', borderRadius:'20px', fontSize:'9px', fontWeight:'600', color:user.isBlocked?'#ef4444':'#22c55e', border:'1px solid '+(user.isBlocked?'#ef4444':'#22c55e') }}>{user.isBlocked?'● Blocked':'● Active'}</span>
-          <span style={{ padding:'4px 10px', borderRadius:'20px', fontSize:'9px', fontWeight:'600', color:'#6366f1', border:'1px solid #6366f1' }}>Balance: ${parseFloat(user.balance||0).toLocaleString('en-US',{minimumFractionDigits:2})}</span>
+          <span style={{ padding:'4px 10px', borderRadius:'20px', fontSize:'9px', fontWeight:'600', color:'#6366f1', border:'1px solid #6366f1' }}>Balance: {formatAmountWithUSD(user.balance||0, user.currency)})}</span>
           <span style={{ padding:'4px 10px', borderRadius:'20px', fontSize:'9px', fontWeight:'600', color:user.accountUpgraded?'#22c55e':'#64748b', border:'1px solid '+(user.accountUpgraded?'#22c55e':'#64748b') }}>{user.accountUpgraded?'Upgraded':'Standard'}</span>
         </div>
         <S title="Balance" t={t}>

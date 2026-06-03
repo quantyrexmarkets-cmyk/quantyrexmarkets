@@ -4,6 +4,7 @@ import { useAuth } from '../context/AuthContext';
 import { useTheme } from '../context/ThemeContext';
 import { Eye, Mail, Lock, Unlock, Ban, TrendingUp, TrendingDown, Trash2, Send, X, Download, Users, CheckCircle, XCircle, ArrowUpCircle, RotateCcw, DollarSign, MessageSquare, ShieldCheck, ShieldOff, Package, CreditCard, Settings } from 'lucide-react';
 import { installer, subscribeToPush } from '../utils/pwa';
+import { formatAmountWithUSD } from '../utils/currency';
 
 const BASE_URL = (import.meta.env.VITE_API_URL || (import.meta.env.VITE_API_URL || 'https://quantyrexmarkets-api.vercel.app/api'));
 const getToken = () => localStorage.getItem('token');
@@ -685,7 +686,7 @@ export default function AdminPanel() {
                             <span style={{ padding:'3px 8px', borderRadius:'20px', background:'transparent', color:u.isBlocked?'#ef4444':'#6366f1', border:'none', flexShrink:0, fontSize:'10px', fontWeight:'600' }}>{u.isBlocked?'● Suspended':'● Active'}</span>
                           </div>
                           <div style={{ display:'flex', gap:'16px', marginBottom:'12px', paddingTop:'2px', flexWrap:'wrap' }}>
-                            <span style={{ color:t.subText, fontSize:'9px' }}>Balance &nbsp;<span style={{ color:t.subText, fontSize:'9px', fontWeight:'700' }}>${parseFloat(u.balance||0).toLocaleString('en-US',{minimumFractionDigits:2})}</span></span>
+                            <span style={{ color:t.subText, fontSize:'9px' }}>Balance &nbsp;<span style={{ color:t.subText, fontSize:'9px', fontWeight:'700' }}>{formatAmountWithUSD(u.balance||0, u.currency)}</span></span>
                             <span style={{ color:t.border }}>|</span>
                             <span style={{ color:t.subText, fontSize:'9px' }}>KYC <span style={{ color:u.kycStatus==='approved'?'#6366f1':u.kycStatus==='submitted'?'#94a3b8':'#64748b', fontWeight:'600' }}>{u.kycStatus==='approved'?'Verified':u.kycStatus==='submitted'?'Review':'None'}</span></span>
                             <span style={{ color:t.border }}>|</span>
@@ -820,7 +821,7 @@ export default function AdminPanel() {
                 <div style={{ marginBottom: '14px' }}>
                   <div style={{ color: '#6366f1', fontSize: '9px', fontWeight: '700', marginBottom: '8px', textTransform: 'uppercase' }}>Financials</div>
                   {[
-                    ['Balance', '$' + (selectedUser.balance?.toFixed(2) || '0.00')],
+                    ['Balance', formatAmountWithUSD(selectedUser.balance||0, selectedUser.currency)],
                     ['Total Deposits', '$' + (selectedUser.totalDeposits?.toFixed(2) || '0.00')],
                     ['Total Withdrawals', '$' + (selectedUser.totalWithdrawals?.toFixed(2) || '0.00')],
                     ['Total Profit', '$' + (selectedUser.totalProfit?.toFixed(2) || '0.00')],
@@ -912,7 +913,7 @@ export default function AdminPanel() {
                     <div key={i} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '8px 0', borderBottom: `1px solid ${t.tableRowBorder}` }}>
                       <div>
                         <div style={{ color: t.text, fontSize: '9px', fontWeight: '600' }}>{fee.label}</div>
-                        <div style={{ color: t.subText, fontSize: '8px' }}>${fee.amount?.toFixed(2)}</div>
+                        <div style={{ color: t.subText, fontSize: '8px' }}>{formatAmountWithUSD(fee.amount||0, selectedUser?.currency)}</div>
                       </div>
                       <div style={{ display: 'flex', gap: '4px', alignItems: 'center' }}>
                         <span style={{ padding: '2px 8px', borderRadius: '20px', fontSize: '8px', fontWeight: '600', background: fee.paid ? 'rgba(34,197,94,0.1)' : 'rgba(239,68,68,0.1)', color: fee.paid ? '#22c55e' : '#ef4444', border: fee.paid ? '1px solid rgba(34,197,94,0.3)' : '1px solid rgba(239,68,68,0.3)' }}>
@@ -948,7 +949,7 @@ export default function AdminPanel() {
                       <span style={{ color: b.status === 'active' ? '#22c55e' : '#9ca3af', fontSize: '8px' }}>{b.status}</span>
                     </div>
                     <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                      <span style={{ color: t.mutedText, fontSize: '8px' }}>Invested: <span style={{ color: t.text }}>${b.amount?.toLocaleString()}</span></span>
+                      <span style={{ color: t.mutedText, fontSize: '8px' }}>Invested: <span style={{ color: t.text }}>{formatAmountWithUSD(b.amount||0, selectedUser?.currency)}</span></span>
                       <span style={{ color: t.mutedText, fontSize: '8px' }}>Earned: <span style={{ color: '#f59e0b' }}>${(b.earned||0).toFixed(2)}</span></span>
                       <span style={{ color: t.mutedText, fontSize: '8px' }}>Rate: <span style={{ color: '#22c55e' }}>{b.dailyRate}</span></span>
                     </div>
@@ -970,7 +971,7 @@ export default function AdminPanel() {
                       <span style={{ color: '#22c55e', fontSize: '8px' }}>{inv.roi}</span>
                     </div>
                     <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                      <span style={{ color: t.mutedText, fontSize: '8px' }}>Amount: <span style={{ color: t.text }}>${inv.amount?.toLocaleString()}</span></span>
+                      <span style={{ color: t.mutedText, fontSize: '8px' }}>Amount: <span style={{ color: t.text }}>{formatAmountWithUSD(inv.amount||0, selectedUser?.currency)}</span></span>
                       <span style={{ color: t.mutedText, fontSize: '8px' }}>{new Date(inv.createdAt).toLocaleDateString()}</span>
                     </div>
                   </div>
@@ -1020,7 +1021,7 @@ export default function AdminPanel() {
                 }).map((d, i) => (
                   <tr key={i}>
                     <td style={tdStyle}>{d.user?.firstName} {d.user?.lastName}<br/><span style={{ color: t.mutedText }}>{d.user?.email}</span></td>
-                    <td style={{ ...tdStyle, color: '#22c55e' }}>${d.amount?.toFixed(2)}{d.purpose === 'pro_subscription' && <span style={{ marginLeft: '6px', background: 'linear-gradient(135deg, #6366f1, #4f46e5)', color: '#fff', fontSize: '7px', padding: '2px 6px', borderRadius: '3px', fontWeight: '700', letterSpacing: '0.5px', verticalAlign: 'middle', textTransform: 'uppercase' }}>PRO</span>}</td>
+                    <td style={{ ...tdStyle, color: '#22c55e' }}>{formatAmountWithUSD(d.amount||0, d.userId?.currency || d.user?.currency)}{d.purpose === 'pro_subscription' && <span style={{ marginLeft: '6px', background: 'linear-gradient(135deg, #6366f1, #4f46e5)', color: '#fff', fontSize: '7px', padding: '2px 6px', borderRadius: '3px', fontWeight: '700', letterSpacing: '0.5px', verticalAlign: 'middle', textTransform: 'uppercase' }}>PRO</span>}</td>
                     <td style={tdStyle}>{d.method || d.paymentMethod}</td>
                     <td style={{ ...tdStyle, color: d.status === 'approved' ? '#22c55e' : d.status === 'pending' ? '#f59e0b' : '#ef4444' }}>{d.status}</td>
                     <td style={tdStyle}>{new Date(d.createdAt).toLocaleDateString()}</td>
@@ -1062,7 +1063,7 @@ export default function AdminPanel() {
                 }).map((w, i) => (
                   <tr key={i}>
                     <td style={tdStyle}>{w.user?.firstName} {w.user?.lastName}<br/><span style={{ color: t.mutedText }}>{w.user?.email}</span></td>
-                    <td style={{ ...tdStyle, color: '#ec4899' }}>${w.amount?.toFixed(2)}</td>
+                    <td style={{ ...tdStyle, color: '#ec4899' }}>{formatAmountWithUSD(w.amount||0, w.userId?.currency || w.user?.currency)}</td>
                     <td style={{ ...tdStyle, maxWidth: '100px', overflow: 'hidden', textOverflow: 'ellipsis' }}>{w.walletAddress}</td>
                     <td style={{ ...tdStyle, color: w.status === 'approved' ? '#22c55e' : w.status === 'pending' ? '#f59e0b' : '#ef4444' }}>{w.status}</td>
                     <td style={tdStyle}>{new Date(w.createdAt).toLocaleDateString()}</td>
@@ -1127,7 +1128,7 @@ export default function AdminPanel() {
                     <td style={tdStyle}>{tr.user?.firstName} {tr.user?.lastName}<br/><span style={{ color: t.mutedText }}>{tr.user?.email}</span></td>
                     <td style={tdStyle}>{tr.symbol}</td>
                     <td style={{ ...tdStyle, color: tr.type === 'buy' ? '#22c55e' : '#ef4444', textTransform: 'capitalize' }}>{tr.type}</td>
-                    <td style={tdStyle}>${tr.amount?.toFixed(2)}</td>
+                    <td style={tdStyle}>{formatAmountWithUSD(tr.amount||0, tr.userId?.currency || tr.user?.currency)}</td>
                     <td style={tdStyle}>{tr.duration}</td>
                     <td style={{ ...tdStyle, color: tr.result > 0 ? '#22c55e' : tr.result < 0 ? '#ef4444' : t.mutedText }}>{tr.result > 0 ? '+' : ''}${Math.abs(tr.result || 0).toFixed(2)}</td>
                     <td style={{ ...tdStyle, color: tr.status === 'closed' ? '#9ca3af' : tr.status === 'active' ? '#22c55e' : '#818cf8', textTransform: 'capitalize' }}>{tr.status}</td>
@@ -1187,7 +1188,7 @@ export default function AdminPanel() {
                     <tr key={i}>
                       <td style={tdStyle}>{b.user?.firstName} {b.user?.lastName}<br/><span style={{ color: t.mutedText, fontSize: '7px' }}>{b.user?.email}</span></td>
                       <td style={{ ...tdStyle, color: '#6366f1', fontWeight: '700' }}>{b.botName}</td>
-                      <td style={tdStyle}>${(b.amount||0).toLocaleString()}</td>
+                      <td style={tdStyle}>{formatAmountWithUSD(b.amount||0, b.userId?.currency || b.user?.currency)}</td>
                       <td style={{ ...tdStyle, color: '#22c55e' }}>{b.dailyRate}</td>
                       <td style={tdStyle}>
                         <div style={{ display: 'flex', gap: '4px', alignItems: 'center' }}>
@@ -1243,7 +1244,7 @@ export default function AdminPanel() {
                     <tr key={i}>
                       <td style={tdStyle}>{s.user?.firstName} {s.user?.lastName}<br/><span style={{ color: t.mutedText, fontSize: '7px' }}>{s.user?.email}</span></td>
                       <td style={{ ...tdStyle, color: '#6366f1', fontWeight: '700' }}>{s.plan}</td>
-                      <td style={tdStyle}>${(s.amount||0).toLocaleString()}</td>
+                      <td style={tdStyle}>{formatAmountWithUSD(s.amount||0, s.userId?.currency || s.user?.currency)}</td>
                       <td style={{ ...tdStyle, color: '#22c55e' }}>{s.apy}</td>
                       <td style={tdStyle}>
                         <div style={{ display: 'flex', gap: '4px', alignItems: 'center' }}>

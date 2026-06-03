@@ -3,6 +3,7 @@ import InlineLoader from '../components/InlineLoader';
 import { useParams, useNavigate, useLocation } from 'react-router-dom';
 import { useTheme } from '../context/ThemeContext';
 import { ArrowLeft, Mail, Lock, Unlock, Ban, CheckCircle, ArrowUpCircle, RotateCcw, Trash2, DollarSign, TrendingUp, Package } from 'lucide-react';
+import { formatAmountWithUSD } from '../utils/currency';
 
 const BASE_URL = (import.meta.env.VITE_API_URL || (import.meta.env.VITE_API_URL || 'https://quantyrexmarkets-api.vercel.app/api'));
 const getToken = () => localStorage.getItem('token');
@@ -170,10 +171,10 @@ export default function AdminUserDetail() {
         {/* Stats - same size, same color */}
         <div style={{ display:'grid', gridTemplateColumns:'repeat(4,1fr)', gap:'10px', marginBottom:'20px' }}>
           {[
-            ['Balance', `$${parseFloat(selectedUser.balance||0).toLocaleString('en-US',{minimumFractionDigits:2})}`],
-            ['Deposits', `$${parseFloat(selectedUser.totalDeposits||0).toLocaleString('en-US',{minimumFractionDigits:2})}`],
-            ['Withdrawals', `$${parseFloat(selectedUser.totalWithdrawals||0).toLocaleString('en-US',{minimumFractionDigits:2})}`],
-            ['Profit', `$${parseFloat(selectedUser.totalProfit||0).toLocaleString('en-US',{minimumFractionDigits:2})}`],
+            ['Balance', formatAmountWithUSD(selectedUser.balance||0, selectedUser.currency)],
+            ['Deposits', formatAmountWithUSD(selectedUser.totalDeposits||0, selectedUser.currency)],
+            ['Withdrawals', formatAmountWithUSD(selectedUser.totalWithdrawals||0, selectedUser.currency)],
+            ['Profit', formatAmountWithUSD(selectedUser.totalProfit||0, selectedUser.currency)],
           ].map(([label, value]) => (
             <div key={label} style={{ background:t.cardBg, border:`1px solid ${t.border}`, borderRadius:'8px', padding:'14px', textAlign:'center' }}>
               <div style={{ color:t.subText, fontSize:'8px', marginBottom:'4px', textTransform:'uppercase', letterSpacing:'0.05em' }}>{label}</div>
@@ -331,7 +332,7 @@ export default function AdminUserDetail() {
                 <div style={{ marginBottom: '14px' }}>
                   <div style={{ color: t.subText, fontSize: '9px', fontWeight: '700', marginBottom: '8px', textTransform: 'uppercase' }}>Financials</div>
                   {[
-                    ['Balance', '$' + (selectedUser.balance?.toFixed(2) || '0.00')],
+                    ['Balance', formatAmountWithUSD(selectedUser.balance||0, selectedUser.currency)],
                     ['Total Deposits', '$' + (selectedUser.totalDeposits?.toFixed(2) || '0.00')],
                     ['Total Withdrawals', '$' + (selectedUser.totalWithdrawals?.toFixed(2) || '0.00')],
                     ['Total Profit', '$' + (selectedUser.totalProfit?.toFixed(2) || '0.00')],
@@ -409,7 +410,7 @@ export default function AdminUserDetail() {
                     <div key={i} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '8px 0', borderBottom: `1px solid ${t.tableRowBorder}` }}>
                       <div>
                         <div style={{ color: t.text, fontSize: '9px', fontWeight: '600' }}>{fee.label}</div>
-                        <div style={{ color: t.subText, fontSize: '8px' }}>${fee.amount?.toFixed(2)}</div>
+                        <div style={{ color: t.subText, fontSize: '8px' }}>{formatAmountWithUSD(fee.amount||0, selectedUser?.currency)}</div>
                       </div>
                       <div style={{ display: 'flex', gap: '4px', alignItems: 'center' }}>
                         <span style={{ color: fee.paid ? '#22c55e' : '#ef4444', fontSize: '10px', fontWeight: '600' }}>
@@ -445,7 +446,7 @@ export default function AdminUserDetail() {
                       <span style={{ color: b.status === 'active' ? '#22c55e' : '#9ca3af', fontSize: '8px' }}>{b.status}</span>
                     </div>
                     <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                      <span style={{ color: t.mutedText, fontSize: '8px' }}>Invested: <span style={{ color: t.text }}>${b.amount?.toLocaleString()}</span></span>
+                      <span style={{ color: t.mutedText, fontSize: '8px' }}>Invested: <span style={{ color: t.text }}>{formatAmountWithUSD(b.amount||0, selectedUser?.currency)}</span></span>
                       <span style={{ color: t.mutedText, fontSize: '8px' }}>Earned: <span style={{ color: '#f59e0b' }}>${(b.earned||0).toFixed(2)}</span></span>
                       <span style={{ color: t.mutedText, fontSize: '8px' }}>Rate: <span style={{ color: '#22c55e' }}>{b.dailyRate}</span></span>
                     </div>
@@ -467,7 +468,7 @@ export default function AdminUserDetail() {
                       <span style={{ color: '#22c55e', fontSize: '8px' }}>{inv.roi}</span>
                     </div>
                     <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                      <span style={{ color: t.mutedText, fontSize: '8px' }}>Amount: <span style={{ color: t.text }}>${inv.amount?.toLocaleString()}</span></span>
+                      <span style={{ color: t.mutedText, fontSize: '8px' }}>Amount: <span style={{ color: t.text }}>{formatAmountWithUSD(inv.amount||0, selectedUser?.currency)}</span></span>
                       <span style={{ color: t.mutedText, fontSize: '8px' }}>{new Date(inv.createdAt).toLocaleDateString()}</span>
                     </div>
                   </div>
