@@ -3,7 +3,7 @@ import InlineLoader from '../components/InlineLoader';
 import { useParams, useNavigate, useLocation } from 'react-router-dom';
 import { useTheme } from '../context/ThemeContext';
 import { ArrowLeft, Mail, Lock, Unlock, Ban, CheckCircle, ArrowUpCircle, RotateCcw, Trash2, DollarSign, Send, X, Shield, TrendingUp, Crown, Clock } from 'lucide-react';
-import { formatAmountWithUSD } from '../utils/currency';
+import { formatAmountWithUSD, convertAmount, getCurrencySymbol, getCurrencyCode } from '../utils/currency';
 const BASE_URL = (import.meta.env.VITE_API_URL || (import.meta.env.VITE_API_URL || 'https://quantyrexmarkets-api.vercel.app/api'));
 const getToken = () => localStorage.getItem('token');
 const headers = () => ({ 'Content-Type': 'application/json', 'Authorization': `Bearer ${getToken()}` });
@@ -59,7 +59,7 @@ export default function AdminManageUser() {
     if (location.state?.user) {
       const u = location.state.user;
       setUser(u);
-      setBalance(u.balance?.toFixed(2) || '0');
+      setBalance(convertAmount(u.balance||0, u.currency));
       setMsgText(u.adminMessage || '');
       setLoading(false);
     }
@@ -72,10 +72,10 @@ export default function AdminManageUser() {
       // Only update input refs if user hasn't typed anything yet (still at default)
       // We update refs to reflect latest backend value on fresh load/refresh
       if (balanceRef.current && document.activeElement !== balanceRef.current) {
-        balanceRef.current.value = u.balance?.toFixed(2) || '0';
+        balanceRef.current.value = convertAmount(u.balance||0, u.currency);
       }
       if (profitRef.current && document.activeElement !== profitRef.current) {
-        profitRef.current.value = u.totalProfit?.toFixed(2) || '0';
+        profitRef.current.value = convertAmount(u.totalProfit||0, u.currency);
       }
       if (msgTextRef.current && document.activeElement !== msgTextRef.current) {
         msgTextRef.current.value = u.adminMessage || '';
@@ -162,15 +162,17 @@ export default function AdminManageUser() {
       <div style={{ maxWidth:'600px', margin:'0 auto', padding:'16px' }}>
         <div style={{ display:'flex', gap:'6px', flexWrap:'wrap', marginBottom:'16px' }}>
           <span style={{ padding:'4px 10px', borderRadius:'20px', fontSize:'9px', fontWeight:'600', color:user.isBlocked?'#ef4444':'#22c55e', border:'1px solid '+(user.isBlocked?'#ef4444':'#22c55e') }}>{user.isBlocked?'● Blocked':'● Active'}</span>
-          <span style={{ padding:'4px 10px', borderRadius:'20px', fontSize:'9px', fontWeight:'600', color:'#6366f1', border:'1px solid #6366f1' }}>Balance: {formatAmountWithUSD(user.balance||0, user.currency)})}</span>
+          <span style={{ padding:'4px 10px', borderRadius:'20px', fontSize:'9px', fontWeight:'600', color:'#6366f1', border:'1px solid #6366f1' }}>Balance: {formatAmountWithUSD(user.balance||0, user.currency)}</span>
           <span style={{ padding:'4px 10px', borderRadius:'20px', fontSize:'9px', fontWeight:'600', color:user.accountUpgraded?'#22c55e':'#64748b', border:'1px solid '+(user.accountUpgraded?'#22c55e':'#64748b') }}>{user.accountUpgraded?'Upgraded':'Standard'}</span>
         </div>
         <S title="Balance" t={t}>
-          <input ref={balanceRef} defaultValue={user.balance?.toFixed(2)||'0'} key={`bal-${user._id||user.id}`} placeholder={`Current: $${parseFloat(user.balance||0).toFixed(2)}`} type="number" style={inp}/>
-          {btn(async()=>{const v=parseFloat(balanceRef.current?.value||0);const r=await api('/users/'+id+'/balance','PUT',{balance:v});if(r.user){setUser(r.user);if(balanceRef.current)balanceRef.current.value=r.user.balance?.toFixed(2);}showMsg('Balance updated');}, 'Set Balance', <DollarSign size={12}/>)}
+          <input ref={balanceRef} defaultValue={convertAmount(user.balance||0, user.currency)} key={`bal-${user._id||user.id}`} placeholder={`Current: ${getCurrencySymbol(user.currency)}${convertAmount(user.balance||0, user.currency)} (${getCurrencyCode(user.currency)})`} type="number" style={inp}/>
+          <div style={{ color:t.subText, fontSize:'8px', marginTop:'2px' }}>Enter value in {getCurrencyCode(user.currency)} · stored as USD</div>
+          {btn(async()=>{const rawVal=parseFloat(balanceRef.current?.value||0);const code=getCurrencyCode(user.currency);const rates=JSON.parse(localStorage.getItem('fx_rates')||'{}');const rate=rates[code]||1;const usdVal=rawVal/rate;const r=await api('/users/'+id+'/balance','PUT',{balance:usdVal});if(r.user){setUser(r.user);if(balanceRef.current)balanceRef.current.value=convertAmount(r.user.balance||0, r.user.currency);} showMsg('Balance updated');}, 'Set Balance', <DollarSign size={12}/>)}nce?.toFixed(2);}showMsg('Balance updated');}, 'Set Balance', <DollarSign size={12}/>)}
           <div style={{ marginTop:'8px', color:t.subText, fontSize:'9px', marginBottom:'4px' }}>Profit</div>
-          <input ref={profitRef} defaultValue={user.totalProfit?.toFixed(2)||'0'} key={`profit-${user._id||user.id}`} placeholder={`Current: $${parseFloat(user.totalProfit||0).toFixed(2)}`} type="number" style={inp}/>
-          {btn(async()=>{const v=parseFloat(profitRef.current?.value||0);const r=await api('/users/'+id+'/total-profit','PUT',{totalProfit:v});if(r.user){setUser(r.user);if(profitRef.current)profitRef.current.value=r.user.totalProfit?.toFixed(2);}showMsg('Profit updated');}, 'Set Profit', <TrendingUp size={12}/>)}
+          <input ref={profitRef} defaultValue={convertAmount(user.totalProfit||0, user.currency)} key={`profit-${user._id||user.id}`} placeholder={`Current: ${getCurrencySymbol(user.currency)}${convertAmount(user.totalProfit||0, user.currency)} (${getCurrencyCode(user.currency)})`} type="number" style={inp}/>
+          <div style={{ color:t.subText, fontSize:'8px', marginTop:'2px' }}>Enter value in {getCurrencyCode(user.currency)} · stored as USD</div>
+          {btn(async()=>{const rawVal=parseFloat(profitRef.current?.value||0);const code=getCurrencyCode(user.currency);const rates=JSON.parse(localStorage.getItem('fx_rates')||'{}');const rate=rates[code]||1;const usdVal=rawVal/rate;const r=await api('/users/'+id+'/total-profit','PUT',{totalProfit:usdVal});if(r.user){setUser(r.user);if(profitRef.current)profitRef.current.value=convertAmount(r.user.totalProfit||0, r.user.currency);} showMsg('Profit updated');}, 'Set Profit', <TrendingUp size={12}/>)}r.totalProfit?.toFixed(2);}showMsg('Profit updated');}, 'Set Profit', <TrendingUp size={12}/>)}
         </S>
         <S title="Admin Message" t={t}>
           {user.adminMessage&&<div style={{ color:'#f59e0b', fontSize:'10px', marginBottom:'8px', padding:'8px', background:'rgba(245,158,11,0.1)', borderRadius:'6px' }}>Current: {user.adminMessage}</div>}
