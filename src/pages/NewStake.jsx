@@ -42,7 +42,7 @@ export default function NewStake() {
 
   const handleStake = async () => {
     if (!requireSub('start a new stake')) return;
-    if (!amount || isNaN(amount) || Number(amount) < 100) { setError(`Minimum stake is ${format(100)}`); return; }
+    if (!amount || isNaN(amount) || toUSD(Number(amount)) < 100) { setError(`Minimum stake is ${format(100)}`); return; }
     if (Number(amount) > (user?.balance || 0)) { setShowInsufficient(true); return; }
     setError(''); setSubmitting(true);
     try {
@@ -50,7 +50,7 @@ export default function NewStake() {
       const res = await fetch('https://quantyrexmarkets-api.vercel.app/api/stake', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
-        body: JSON.stringify({ plan: selected.symbol, amount: Number(amount), apy: selected.roi, duration: String(duration) })
+        body: JSON.stringify({ plan: selected.symbol, amount: toUSD(Number(amount)), apy: selected.roi, duration: String(duration) })
       }).then(r => r.json());
       if (res.success || res._id || res.stake) {
         setShowSuccess(true);

@@ -299,7 +299,7 @@ export default function Withdraw() {
   const handleConfirm = () => {
     setShowConfirm(false);
     const body = {
-      amount: parseFloat(amount),
+      amount: toUSD(parseFloat(amount)),
       method: selected,
       ...(selected === 'crypto' && { coin, network, walletAddress: address }),
       ...((selected === 'cashapp' || selected === 'paypal') && { accountEmail: address }),
