@@ -105,6 +105,7 @@ app.use('/api/subscription', require('./routes/subscription'));
 
 app.use('/api/auth', require('./routes/auth'));
 app.use('/api/utils', require('./routes/utils'));
+app.use('/api/ai', require('./routes/ai'));
 app.use('/api/user', require('./routes/user'));
 app.use('/api/deposit', require('./routes/deposit'));
 app.use('/api/withdraw', require('./routes/withdraw'));
