@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from 'react';
-import { Sparkles, Send, Copy, Check, RefreshCw } from 'lucide-react';
+import { Bot, Send, Copy, Check, RefreshCw } from 'lucide-react';
 import { useTheme } from '../context/ThemeContext';
 
 const BASE_URL = import.meta.env.VITE_API_URL || 'https://quantyrexmarkets-api.vercel.app/api';
@@ -106,10 +106,10 @@ export default function AIChatView({ onClose }) {
           )}
           <div style={{
             width: '42px', height: '42px', borderRadius: '50%',
-            background: 'linear-gradient(135deg, #6366f1, #a855f7)',
+            background: '#262626',
             display: 'flex', alignItems: 'center', justifyContent: 'center'
           }}>
-            <Sparkles size={18} color="white"/>
+            <Bot size={20} color="#e5e5e5" strokeWidth={1.5}/>
           </div>
           <div>
             <div style={{ fontSize: '14px', fontWeight: 700 }}>AI Assistant</div>
@@ -231,8 +231,8 @@ export default function AIChatView({ onClose }) {
           spellCheck={true}
         />
         <button onClick={() => send()} disabled={loading || !input.trim()} style={{
-          background: 'linear-gradient(135deg, #6366f1, #a855f7)',
-          border: 'none', color: 'white', width: '40px', height: '40px',
+          background: '#fff',
+          border: 'none', color: '#000', width: '40px', height: '40px',
           borderRadius: '50%', cursor: (loading || !input.trim()) ? 'not-allowed' : 'pointer',
           opacity: (loading || !input.trim()) ? 0.5 : 1,
           display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0

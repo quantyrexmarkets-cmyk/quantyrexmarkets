@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useTheme } from '../context/ThemeContext';
 import { installer, subscribeToPush } from '../utils/pwa';
-import { Copy, Check, X, Sparkles } from 'lucide-react';
+import { Copy, Check, X, Bot } from 'lucide-react';
 import AIChatView from '../components/AIChatView';
 
 const copyToClipboard = async (text) => {
@@ -307,33 +307,36 @@ export default function SupportPage() {
               No conversations yet
             </div>
           )}
-          {/* Pinned AI Assistant — virtual contact */}
+          {/* Pinned AI Assistant — minimal virtual contact */}
           <div onClick={() => { setSelectedChat({ _id: '__ai__', name: 'AI Assistant', isAI: true }); setShowInfo(false); }} style={{
-            background: 'linear-gradient(135deg, rgba(99,102,241,0.12), rgba(168,85,247,0.08))',
-            border: '1px solid rgba(168,85,247,0.25)',
+            background: '#1a1a1a',
             borderRadius: '14px',
             padding: '14px',
             display: 'flex',
             alignItems: 'center',
             gap: '12px',
-            cursor: 'pointer',
-            marginBottom: '8px'
+            cursor: 'pointer'
           }}>
-            <div style={{
-              width: '46px', height: '46px', borderRadius: '50%',
-              background: 'linear-gradient(135deg, #6366f1, #a855f7)',
-              display: 'flex', alignItems: 'center', justifyContent: 'center',
-              flexShrink: 0
-            }}>
-              <Sparkles size={20} color="white"/>
+            <div style={{ position: 'relative', flexShrink: 0 }}>
+              <div style={{
+                width: '46px', height: '46px', borderRadius: '50%',
+                background: '#262626',
+                display: 'flex', alignItems: 'center', justifyContent: 'center'
+              }}>
+                <Bot size={22} color="#e5e5e5" strokeWidth={1.5}/>
+              </div>
+              <span style={{
+                position: 'absolute', bottom: 0, right: 0,
+                width: '12px', height: '12px', borderRadius: '50%',
+                background: '#22c55e', border: '2px solid #1a1a1a'
+              }} />
             </div>
             <div style={{ flex: 1, minWidth: 0 }}>
-              <div style={{ color: '#fff', fontSize: '13px', fontWeight: 700, display: 'flex', alignItems: 'center', gap: '6px' }}>
+              <div style={{ color: '#fff', fontSize: '13px', fontWeight: 600 }}>
                 AI Assistant
-                <span style={{ fontSize: '8px', background: 'rgba(168,85,247,0.25)', color: '#d8b4fe', padding: '2px 6px', borderRadius: '8px', fontWeight: 600, letterSpacing: '0.5px' }}>AI</span>
               </div>
-              <div style={{ fontSize: '11px', marginTop: '3px', color: '#22c55e', display: 'flex', alignItems: 'center', gap: '4px' }}>
-                ● Always online · Llama 3.3
+              <div style={{ fontSize: '11px', marginTop: '3px', color: '#6b7280' }}>
+                ● Online
               </div>
             </div>
           </div>
