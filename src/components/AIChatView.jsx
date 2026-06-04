@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from 'react';
-import { Bot, Send, Copy, Check, RefreshCw } from 'lucide-react';
+import { Bot, Send, Copy, Check, RefreshCw, Zap } from 'lucide-react';
 import { useTheme } from '../context/ThemeContext';
 
 const BASE_URL = import.meta.env.VITE_API_URL || 'https://quantyrexmarkets-api.vercel.app/api';
@@ -27,6 +27,7 @@ export default function AIChatView({ onClose }) {
   const [input, setInput] = useState('');
   const [loading, setLoading] = useState(false);
   const [copiedIdx, setCopiedIdx] = useState(null);
+  const [showPrompts, setShowPrompts] = useState(false);
   const scrollRef = useRef(null);
   const bottomRef = useRef(null);
 
@@ -172,24 +173,28 @@ export default function AIChatView({ onClose }) {
         <div ref={bottomRef}/>
       </div>
 
-      {/* Quick prompts */}
-      <div style={{
-        padding: '8px 12px',
-        borderTop: '1px solid rgba(255,255,255,0.06)',
-        display: 'flex', gap: '6px', overflowX: 'auto', flexShrink: 0,
-        background: '#0a0a0a'
-      }}>
-        {QUICK_PROMPTS.map(p => (
-          <button key={p.label} onClick={() => send(p.text)} disabled={loading} style={{
-            background: '#1c1c1c', border: '1px solid rgba(255,255,255,0.08)',
-            color: t.text, padding: '7px 11px', borderRadius: '16px',
-            fontSize: '10px', cursor: loading ? 'wait' : 'pointer',
-            whiteSpace: 'nowrap', flexShrink: 0
-          }}>
-            {p.label}
-          </button>
-        ))}
-      </div>
+      {/* Quick prompts popover (only when toggled) */}
+      {showPrompts && (
+        <div style={{
+          position: 'relative',
+          padding: '10px 12px',
+          borderTop: '1px solid rgba(255,255,255,0.06)',
+          background: '#0a0a0a',
+          display: 'flex', flexWrap: 'wrap', gap: '6px',
+          flexShrink: 0
+        }}>
+          {QUICK_PROMPTS.map(p => (
+            <button key={p.label} onClick={() => { send(p.text); setShowPrompts(false); }} disabled={loading} style={{
+              background: '#1c1c1c', border: '1px solid rgba(255,255,255,0.08)',
+              color: t.text, padding: '7px 11px', borderRadius: '16px',
+              fontSize: '10px', cursor: loading ? 'wait' : 'pointer',
+              whiteSpace: 'nowrap'
+            }}>
+              {p.label}
+            </button>
+          ))}
+        </div>
+      )}
 
       {/* Input */}
       <div style={{
@@ -199,6 +204,21 @@ export default function AIChatView({ onClose }) {
         background: '#0a0a0a',
         display: 'flex', gap: '8px', alignItems: 'flex-end', flexShrink: 0
       }}>
+        <button
+          onClick={() => setShowPrompts(s => !s)}
+          title="Quick prompts"
+          style={{
+            background: showPrompts ? '#262626' : 'transparent',
+            border: `1px solid ${showPrompts ? '#404040' : 'rgba(255,255,255,0.1)'}`,
+            color: showPrompts ? '#fff' : t.faintText,
+            width: '40px', height: '40px',
+            borderRadius: '50%',
+            cursor: 'pointer',
+            display: 'flex', alignItems: 'center', justifyContent: 'center',
+            flexShrink: 0
+          }}>
+          <Zap size={16} strokeWidth={2}/>
+        </button>
         <textarea
           value={input}
           onChange={e => {
