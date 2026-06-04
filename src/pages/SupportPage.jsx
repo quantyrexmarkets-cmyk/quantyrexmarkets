@@ -3,6 +3,27 @@ import { useNavigate } from 'react-router-dom';
 import { useTheme } from '../context/ThemeContext';
 import { installer, subscribeToPush } from '../utils/pwa';
 
+const copyToClipboard = async (text) => {
+  try {
+    if (navigator.clipboard && window.isSecureContext) {
+      await navigator.clipboard.writeText(text);
+    } else {
+      const ta = document.createElement('textarea');
+      ta.value = text;
+      ta.style.position = 'fixed';
+      ta.style.left = '-9999px';
+      document.body.appendChild(ta);
+      ta.select();
+      document.execCommand('copy');
+      document.body.removeChild(ta);
+    }
+    return true;
+  } catch (e) {
+    return false;
+  }
+};
+
+
 // Helper utilities for Smartsupp-style inbox
 const AVATAR_COLORS = [
   { bg: '#bef5e8', fg: '#0d9488' },
@@ -56,7 +77,8 @@ export default function SupportPage() {
 
   const [selectedChat, setSelectedChat] = useState(null);
   const [showInfo, setShowInfo] = useState(false);
-  const [deleteMsg, setDeleteMsg] = useState(null); // {index, text}
+  const [deleteMsg, setDeleteMsg] = useState(null);
+  const [copiedIdx, setCopiedIdx] = useState(null); // {index, text}
   const longPressTimer = useRef(null);
   const [viewportHeight, setViewportHeight] = useState(typeof window !== 'undefined' ? window.innerHeight : 0);
 
@@ -483,7 +505,10 @@ export default function SupportPage() {
                               style={{ background: '#1c1c1c', color: 'white', fontSize: '12px', padding: '10px 14px', borderRadius: '18px 18px 18px 4px', lineHeight: '1.4', wordBreak: 'break-word', userSelect: 'text', WebkitUserSelect: 'text', WebkitTouchCallout: 'default', cursor: 'pointer' }}>
                               {msg.image ? <a href={msg.image} target='_blank' rel='noopener noreferrer'><img src={msg.image} style={{ maxWidth: '200px', maxHeight: '200px', borderRadius: '6px', display: 'block', cursor: 'pointer', objectFit: 'cover' }} /></a> : msg.text}
                             </div>
-                            <div style={{ color: t.faintText, fontSize: '9px', marginTop: '4px', marginLeft: '6px' }}>{new Date(msg.createdAt).toLocaleTimeString([], {hour:'2-digit',minute:'2-digit'})}</div>
+                            <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginTop: '4px', marginLeft: '6px' }}>
+                              <span style={{ color: t.faintText, fontSize: '9px' }}>{new Date(msg.createdAt).toLocaleTimeString([], {hour:'2-digit',minute:'2-digit'})}</span>
+                              {msg.text && <button type="button" onClick={async () => { const ok = await copyToClipboard(msg.text); if(ok) { setCopiedIdx('r'+i); setTimeout(() => setCopiedIdx(null), 1200); } }} style={{ background: 'transparent', border: 'none', color: copiedIdx==='r'+i?'#22c55e':t.faintText, fontSize: '9px', cursor: 'pointer', padding: '0', display: 'inline-flex', alignItems: 'center', gap: '3px' }}>{copiedIdx==='r'+i?'✓ Copied':'⧉ Copy'}</button>}
+                            </div>
                           </div>
                         </>
                       ) : (
@@ -494,7 +519,8 @@ export default function SupportPage() {
                               style={{ background: '#3b82f6', color: 'white', fontSize: '12px', padding: msg.image ? '4px' : '10px 14px', borderRadius: '18px 18px 4px 18px', lineHeight: '1.4', wordBreak: 'break-word', userSelect: 'text', WebkitUserSelect: 'text', WebkitTouchCallout: 'default', cursor: 'pointer' }}>
                               {msg.image ? <a href={msg.image} target='_blank' rel='noopener noreferrer'><img src={msg.image} style={{ maxWidth: '200px', maxHeight: '200px', borderRadius: '6px', display: 'block', cursor: 'pointer', objectFit: 'cover' }} /></a> : msg.text}
                             </div>
-                            <div style={{ display: 'flex', alignItems: 'center', gap: '4px', marginTop: '4px', marginRight: '6px' }}>
+                            <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginTop: '4px', marginRight: '6px' }}>
+                              {msg.text && <button type="button" onClick={async () => { const ok = await copyToClipboard(msg.text); if(ok) { setCopiedIdx('s'+i); setTimeout(() => setCopiedIdx(null), 1200); } }} style={{ background: 'transparent', border: 'none', color: copiedIdx==='s'+i?'#22c55e':t.faintText, fontSize: '9px', cursor: 'pointer', padding: '0', display: 'inline-flex', alignItems: 'center', gap: '3px' }}>{copiedIdx==='s'+i?'✓ Copied':'⧉ Copy'}</button>}
                               <span style={{ color: t.faintText, fontSize: '9px' }}>{new Date(msg.createdAt).toLocaleTimeString([], {hour:'2-digit',minute:'2-digit'})}</span>
                               <span style={{ display: 'inline-flex', alignItems: 'center', color: msg.read ? '#22c55e' : t.mutedText }}>
                                 {msg.read ? (
