@@ -5,8 +5,10 @@ import { formatAmountWithCode } from '../utils/currency';
 import { createDeposit } from '../services/api';
 import { useNavigate } from 'react-router-dom';
 import PageHeader from '../components/PageHeader';
+import { useCurrency } from '../context/CurrencyContext';
 
 export default function DepositFunds() {
+  const { toUSD } = useCurrency();
   const navigate = useNavigate();
   const { current: t } = useTheme();
   const [amount, setAmount] = useState('100.00');
@@ -36,7 +38,7 @@ export default function DepositFunds() {
     setError('');
     try {
       const formData = new FormData();
-      formData.append('amount', amount);
+      formData.append('amount', toUSD(Number(amount)));
       formData.append('method', method);
       formData.append('proof', fileData);
       const res = await createDeposit(formData);

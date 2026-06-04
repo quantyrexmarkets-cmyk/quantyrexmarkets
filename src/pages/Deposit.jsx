@@ -7,8 +7,10 @@ import PageHeader from '../components/PageHeader';
 import { useAuth } from '../context/AuthContext';
 import { formatAmountWithCode, formatAmount, getCurrencySymbol } from '../utils/currency';
 import InlineLoader from '../components/InlineLoader';
+import { useCurrency } from '../context/CurrencyContext';
 
 export default function Deposit() {
+  const { toUSD } = useCurrency();
   const navigate = useNavigate();
   const { user } = useAuth();
   const { current: t } = useTheme();
@@ -77,7 +79,7 @@ export default function Deposit() {
     setSubmitting(true);
     try {
       const formData = new FormData();
-      formData.append('amount', Number(amount));
+      formData.append('amount', toUSD(Number(amount)));
       formData.append('method', depositMethod);
       formData.append('purpose', isProDeposit ? 'pro_subscription' : 'general');
       formData.append('proof', fileData);
