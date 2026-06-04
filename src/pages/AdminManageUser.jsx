@@ -235,17 +235,103 @@ export default function AdminManageUser() {
           </div>
         </S>
         <S title="Registration Fee" t={t}>
-          <div style={{ color:t.subText, fontSize:'10px', marginBottom:'8px' }}>Status: <span style={{ color:user.registrationFeeRequired?(user.registrationFeePaid?'#22c55e':'#ef4444'):'#64748b', fontWeight:'600' }}>{user.registrationFeeRequired?(user.registrationFeePaid?'Paid':'Unpaid $'+user.registrationFeeAmount):'Not Required'}</span></div>
-          <div style={{ display:'flex', gap:'6px' }}>
-            <input ref={regFeeRef} defaultValue="" placeholder="Amount" type="number" style={{ flex:1, background:t.inputBg, border:`1px solid ${t.border}`, color:t.text, fontSize:'11px', padding:'7px 10px', outline:'none', borderRadius:'6px' }}/>
-            <button type="button" disabled={clicked==='regfee-set'} onClick={async()=>{const v=parseFloat(regFeeRef.current?.value||0);if(!v)return showMsg('Enter amount');setClicked('regfee-set');try{const r=await api('/users/'+id+'/registration-fee','PUT',{required:true,amount:v});setUser(r.user);showMsg('Set');if(regFeeRef.current)regFeeRef.current.value='';}finally{setTimeout(()=>setClicked(''),500);}}} style={{ padding:'7px 12px', background:clicked==='regfee-set'?'rgba(99,102,241,0.15)':'transparent', border:'1.5px solid '+(clicked==='regfee-set'?'#6366f1':t.tableDivider), color:clicked==='regfee-set'?'#6366f1':t.text, fontSize:'10px', fontWeight:'600', cursor:clicked==='regfee-set'?'wait':'pointer', borderRadius:'6px', minWidth:'40px' }}>{clicked==='regfee-set'?(<><span style={{animation:'dotPulse 1.4s infinite',animationDelay:'0s'}}>.</span><span style={{animation:'dotPulse 1.4s infinite',animationDelay:'0.2s'}}>.</span><span style={{animation:'dotPulse 1.4s infinite',animationDelay:'0.4s'}}>.</span></>):'Set'}</button>
-            <button type="button" disabled={clicked==='regfee-rm'} onClick={async()=>{setClicked('regfee-rm');try{const r=await api('/users/'+id+'/registration-fee','PUT',{required:false,amount:0});setUser(r.user);showMsg('Removed');}finally{setTimeout(()=>setClicked(''),500);}}} style={{ padding:'7px 12px', background:clicked==='regfee-rm'?'rgba(239,68,68,0.15)':'transparent', border:'1.5px solid '+(clicked==='regfee-rm'?'#ef4444':t.tableDivider), color:'#ef4444', fontSize:'10px', fontWeight:'600', cursor:clicked==='regfee-rm'?'wait':'pointer', borderRadius:'6px', minWidth:'55px' }}>{clicked==='regfee-rm'?(<><span style={{animation:'dotPulse 1.4s infinite',animationDelay:'0s'}}>.</span><span style={{animation:'dotPulse 1.4s infinite',animationDelay:'0.2s'}}>.</span><span style={{animation:'dotPulse 1.4s infinite',animationDelay:'0.4s'}}>.</span></>):'Remove'}</button>
+          <div style={{ color:t.subText, fontSize:'10px', marginBottom:'10px' }}>
+            Status: <span style={{ color:user.registrationFeeRequired?(user.registrationFeePaid?'#22c55e':'#ef4444'):'#64748b', fontWeight:'600' }}>
+              {user.registrationFeeRequired
+                ? (user.registrationFeePaid
+                    ? `✓ Paid · ${formatAmountWithUSD(user.registrationFeeAmount||0, user.currency)}`
+                    : '⚠ Required · Awaiting Payment')
+                : 'Not Required'}
+            </span>
           </div>
-        
-          <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:'6px', marginTop:'8px' }}>
-            <button type="button" disabled={clicked==='regfee-paid' || !user.registrationFeeRequired || user.registrationFeePaid} onClick={async()=>{setClicked('regfee-paid');try{const r=await api('/users/'+id+'/registration-fee/mark-paid','PUT');if(r.user)setUser(r.user);showMsg('Marked as paid');}catch(e){showMsg('Failed: '+e.message);}finally{setTimeout(()=>setClicked(''),500);}}} style={{ padding:'8px 12px', background:clicked==='regfee-paid'?'rgba(34,197,94,0.15)':'transparent', border:'1.5px solid '+(clicked==='regfee-paid'?'#22c55e':'rgba(34,197,94,0.4)'), color:user.registrationFeePaid?t.faintText:'#22c55e', fontSize:'10px', fontWeight:'600', cursor:(!user.registrationFeeRequired||user.registrationFeePaid)?'not-allowed':(clicked==='regfee-paid'?'wait':'pointer'), borderRadius:'6px', opacity:(!user.registrationFeeRequired||user.registrationFeePaid)?0.5:1, display:'flex', alignItems:'center', justifyContent:'center', gap:'5px' }}>{clicked==='regfee-paid'?(<><span style={{animation:'dotPulse 1.4s infinite',animationDelay:'0s'}}>.</span><span style={{animation:'dotPulse 1.4s infinite',animationDelay:'0.2s'}}>.</span><span style={{animation:'dotPulse 1.4s infinite',animationDelay:'0.4s'}}>.</span></>):(<><CheckCircle size={11}/> Mark Paid</>)}</button>
-            <button type="button" disabled={clicked==='regfee-revoke' || !user.registrationFeeRequired} onClick={async()=>{if(!window.confirm('Revoke registration fee requirement entirely?'))return;setClicked('regfee-revoke');try{const r=await api('/users/'+id+'/registration-fee/revoke','PUT');if(r.user)setUser(r.user);showMsg('Requirement revoked');}catch(e){showMsg('Failed: '+e.message);}finally{setTimeout(()=>setClicked(''),500);}}} style={{ padding:'8px 12px', background:clicked==='regfee-revoke'?'rgba(239,68,68,0.15)':'transparent', border:'1.5px solid '+(clicked==='regfee-revoke'?'#ef4444':'rgba(239,68,68,0.4)'), color:'#ef4444', fontSize:'10px', fontWeight:'600', cursor:(!user.registrationFeeRequired)?'not-allowed':(clicked==='regfee-revoke'?'wait':'pointer'), borderRadius:'6px', opacity:(!user.registrationFeeRequired)?0.5:1, display:'flex', alignItems:'center', justifyContent:'center', gap:'5px' }}>{clicked==='regfee-revoke'?(<><span style={{animation:'dotPulse 1.4s infinite',animationDelay:'0s'}}>.</span><span style={{animation:'dotPulse 1.4s infinite',animationDelay:'0.2s'}}>.</span><span style={{animation:'dotPulse 1.4s infinite',animationDelay:'0.4s'}}>.</span></>):(<><X size={11}/> Revoke</>)}</button>
-          </div>
+
+          {/* Stage 1: Toggle fee requirement (no amount needed) */}
+          {!user.registrationFeeRequired && (
+            <>
+              <div style={{ color:t.subText, fontSize:'9px', marginBottom:'8px', lineHeight:'1.5' }}>
+                Activate fee requirement. User will be prompted to contact support to complete payment.
+              </div>
+              <button type="button" disabled={clicked==='regfee-add'} onClick={async()=>{
+                setClicked('regfee-add');
+                try{
+                  const r = await api('/users/'+id+'/registration-fee','PUT',{required:true, amount:0});
+                  if(r.user) setUser(r.user);
+                  showMsg('Fee requirement activated · user notified');
+                } catch(e) {
+                  showMsg('Failed: '+(e.message||'error'));
+                } finally {
+                  setTimeout(()=>setClicked(''),500);
+                }
+              }} style={{ width:'100%', padding:'9px', background:clicked==='regfee-add'?'rgba(99,102,241,0.15)':'#6366f1', border:'1.5px solid #6366f1', color:clicked==='regfee-add'?'#6366f1':'white', fontSize:'10px', fontWeight:'700', cursor:clicked==='regfee-add'?'wait':'pointer', borderRadius:'6px' }}>
+                {clicked==='regfee-add'?'Activating...':'+ Add Registration Fee Requirement'}
+              </button>
+            </>
+          )}
+
+          {/* Stage 2: Fee required, awaiting payment — approve with actual amount */}
+          {user.registrationFeeRequired && !user.registrationFeePaid && (
+            <>
+              <div style={{ color:t.subText, fontSize:'9px', marginBottom:'4px' }}>
+                Approve & confirm payment — enter amount user paid in {getCurrencyCode(user.currency)}
+              </div>
+              <div style={{ display:'flex', gap:'6px', marginBottom:'8px' }}>
+                <input ref={regFeeRef} defaultValue="" placeholder={`Amount paid (${getCurrencyCode(user.currency)})`} type="number" style={{ flex:1, background:t.inputBg, border:`1px solid ${t.border}`, color:t.text, fontSize:'11px', padding:'8px 10px', outline:'none', borderRadius:'6px' }}/>
+                <button type="button" disabled={clicked==='regfee-approve'} onClick={async()=>{
+                  const localVal = parseFloat(regFeeRef.current?.value||0);
+                  if(!localVal) return showMsg('Enter amount user paid');
+                  const code = getCurrencyCode(user.currency);
+                  const rates = JSON.parse(localStorage.getItem('fx_rates')||'{}');
+                  const rate = rates[code] || 1;
+                  const usdAmount = localVal / rate;
+                  setClicked('regfee-approve');
+                  try{
+                    // Save the exact amount paid + mark as paid (triggers confirmation email)
+                    await api('/users/'+id+'/registration-fee','PUT',{required:true, amount:usdAmount});
+                    const r = await api('/users/'+id+'/registration-fee/mark-paid','PUT');
+                    if(r.user) setUser(r.user);
+                    if(regFeeRef.current) regFeeRef.current.value='';
+                    showMsg('Approved · confirmation email sent in '+code);
+                  } catch(e) {
+                    showMsg('Failed: '+(e.message||'error'));
+                  } finally {
+                    setTimeout(()=>setClicked(''),500);
+                  }
+                }} style={{ padding:'8px 14px', background:clicked==='regfee-approve'?'rgba(34,197,94,0.2)':'#22c55e', border:'1.5px solid #22c55e', color:'white', fontSize:'10px', fontWeight:'700', cursor:clicked==='regfee-approve'?'wait':'pointer', borderRadius:'6px', whiteSpace:'nowrap' }}>
+                  {clicked==='regfee-approve'?'Approving...':'✓ Approve & Confirm'}
+                </button>
+              </div>
+              <button type="button" disabled={clicked==='regfee-revoke'} onClick={async()=>{
+                if(!window.confirm('Cancel registration fee requirement entirely?'))return;
+                setClicked('regfee-revoke');
+                try{
+                  const r=await api('/users/'+id+'/registration-fee/revoke','PUT');
+                  if(r.user)setUser(r.user);
+                  showMsg('Cancelled');
+                } finally {
+                  setTimeout(()=>setClicked(''),500);
+                }
+              }} style={{ width:'100%', padding:'7px', background:'transparent', border:'1.5px solid #ef4444', color:'#ef4444', fontSize:'10px', fontWeight:'700', cursor:clicked==='regfee-revoke'?'wait':'pointer', borderRadius:'6px' }}>
+                {clicked==='regfee-revoke'?'Cancelling...':'Cancel Fee Requirement'}
+              </button>
+            </>
+          )}
+
+          {/* Stage 3: Already paid */}
+          {user.registrationFeePaid && (
+            <button type="button" disabled={clicked==='regfee-revoke'} onClick={async()=>{
+              if(!window.confirm('Revoke fee status? User will be required to pay again.'))return;
+              setClicked('regfee-revoke');
+              try{
+                const r=await api('/users/'+id+'/registration-fee/revoke','PUT');
+                if(r.user)setUser(r.user);
+                showMsg('Revoked');
+              } finally {
+                setTimeout(()=>setClicked(''),500);
+              }
+            }} style={{ width:'100%', padding:'8px', background:'transparent', border:'1.5px solid #ef4444', color:'#ef4444', fontSize:'10px', fontWeight:'700', cursor:'pointer', borderRadius:'6px' }}>
+              {clicked==='regfee-revoke'?'Revoking...':'Revoke Paid Status'}
+            </button>
+          )}
         </S>
         <S title="Add Fee" t={t}>
           <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:'6px', marginBottom:'6px' }}>
