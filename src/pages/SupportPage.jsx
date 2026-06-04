@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useTheme } from '../context/ThemeContext';
 import { installer, subscribeToPush } from '../utils/pwa';
+import { Copy, Check, X } from 'lucide-react';
 
 const copyToClipboard = async (text) => {
   try {
