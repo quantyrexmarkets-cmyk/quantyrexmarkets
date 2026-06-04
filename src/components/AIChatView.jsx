@@ -6,13 +6,16 @@ const BASE_URL = import.meta.env.VITE_API_URL || 'https://quantyrexmarkets-api.v
 const STORAGE_KEY = 'qm_ai_chat_history';
 
 const QUICK_PROMPTS = [
-  { label: 'Reassure client', text: 'Short chat reply to reassure a client doubting our platform.' },
-  { label: 'Handle fraud claim', text: 'Short chat reply for a client accusing us of fraud — firm, non-defensive.' },
-  { label: 'Explain withdrawal fee', text: 'Short chat reply explaining the withdrawal validation fee is refundable.' },
-  { label: 'Translate to Hindi', text: 'Translate the following to Hindi:\n\n' },
-  { label: 'Shorten', text: 'Rewrite shorter and more direct:\n\n' },
-  { label: 'Warmer tone', text: 'Rewrite in a warmer, more personal tone:\n\n' },
-  { label: 'Draft full email', text: 'Draft a full email (with Dear / Best regards) about: ' },
+  { label: 'Reassure client', text: 'Write a polished, in-depth chat reply reassuring a client who is doubting our platform. Explain trust signals (KYC, encryption, transaction logs), offer concrete reassurance, and close with confidence.' },
+  { label: 'Handle fraud claim', text: 'A client is accusing us of being fraud. Write a firm, professional, non-defensive chat reply that acknowledges their concern, clarifies our legitimacy with specifics, and provides a concrete next step.' },
+  { label: 'Explain withdrawal fee', text: 'Write a detailed chat reply explaining the withdrawal code validation fee: what it is, why it exists (security, fraud prevention), what the client gets (protection, verification), the key reassurance (one-time, fully refundable, credited back to dashboard balance), and the next step.' },
+  { label: 'Explain registration fee', text: 'Write a detailed chat reply explaining the one-time registration fee: what it is, why it exists, what it activates, and how to complete payment.' },
+  { label: 'Translate to Hindi', text: 'Translate the following client-facing message to natural, professional Hindi:\n\n' },
+  { label: 'Translate to English', text: 'Translate the following to clear, professional English:\n\n' },
+  { label: 'Make shorter', text: 'Rewrite this shorter and more direct, keeping the professional tone:\n\n' },
+  { label: 'Make longer', text: 'Expand this with more detail, explanation, and reassurance:\n\n' },
+  { label: 'Warmer tone', text: 'Rewrite this in a warmer, more empathetic tone:\n\n' },
+  { label: 'Draft full email', text: 'Draft a full email (with "Dear Sir/Ma\'am" salutation and professional sign-off "Warm regards, Quantyrex Markets Support") about: ' },
 ];
 
 export default function AIChatView({ onClose }) {
