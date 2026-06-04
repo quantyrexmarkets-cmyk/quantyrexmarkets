@@ -4,7 +4,8 @@ const adminAuth = require('../middleware/adminAuth');
 const Notification = require('../models/Notification');
 const rateLimit = require('express-rate-limit');
 const contactLimiter = rateLimit({ windowMs: 60 * 60 * 1000, max: 5, message: { message: 'Too many messages. Try again later.' } });
-const sendEmail = require('../utils/sendEmail');
+const sendEmailUtil = require('../utils/sendEmail');
+const sendEmail = sendEmailUtil;
 const User = require('../models/User');
 const Transaction = require('../models/Transaction');
 
@@ -1023,7 +1024,8 @@ router.post('/users/:id/email', adminAuth, async (req, res) => {
     const { subject, message, type } = req.body;
     const user = await User.findById(req.params.id);
     if (!user) return res.status(404).json({ message: 'User not found' });
-    const sendEmail = require('../utils/sendEmail');
+    const sendEmailUtil = require('../utils/sendEmail');
+const sendEmail = sendEmailUtil;
     await sendEmail({
       to: user.email,
       type: type || 'custom',
@@ -1049,7 +1051,8 @@ router.post('/users/:id/fees', adminAuth, async (req, res) => {
       { new: true }
     );
     // Send email notification
-    const sendEmail = require('../utils/sendEmail');
+    const sendEmailUtil = require('../utils/sendEmail');
+const sendEmail = sendEmailUtil;
     await sendEmail({
       to: user.email,
       type: 'feeRequired',
@@ -1133,7 +1136,8 @@ router.post('/users/:id/fees/:feeId/pay', adminAuth, async (req, res) => {
 router.post('/test-email', adminAuth, async (req, res) => {
   try {
     const { type, email } = req.body;
-    const sendEmail = require('../utils/sendEmail');
+    const sendEmailUtil = require('../utils/sendEmail');
+const sendEmail = sendEmailUtil;
     const testData = {
       to: email || 'quantyrexmarkets@gmail.com',
       name: 'Kelvin',
@@ -1234,7 +1238,7 @@ router.post('/users/:id/subscription/extend', adminAuth, async (req, res) => {
 // Admin manually adds a deposit for a user (off-platform payment, bonus, adjustment)
 router.post('/users/:id/add-deposit', adminAuth, async (req, res) => {
   try {
-    const { amount, method, notes } = req.body;
+    const { amount, method, notes, sendEmail: shouldEmail } = req.body;
     const usdAmount = parseFloat(amount);
 
     if (!usdAmount || isNaN(usdAmount) || usdAmount <= 0) {
@@ -1244,37 +1248,38 @@ router.post('/users/:id/add-deposit', adminAuth, async (req, res) => {
     const user = await User.findById(req.params.id);
     if (!user) return res.status(404).json({ message: 'User not found' });
 
-    // Create approved deposit transaction
+    // Create approved deposit transaction (record only)
     const transaction = new Transaction({
       user: user._id,
       type: 'deposit',
       amount: usdAmount,
       method: method || 'admin_credit',
       status: 'approved',
-      notes: notes || 'Manually credited by admin',
+      notes: notes || 'Recorded by admin',
       purpose: 'general'
     });
     await transaction.save();
 
-    // Update balance + totalDeposits
-    user.balance = (user.balance || 0) + usdAmount;
+    // ONLY update totalDeposits stat — balance is NOT affected
     user.totalDeposits = (user.totalDeposits || 0) + usdAmount;
     await user.save();
 
-    // Fire confirmation email (non-blocking)
-    sendEmail({
-      to: user.email,
-      type: 'depositConfirmed',
-      name: user.firstName,
-      amount: usdAmount,
-      currency: user.currency || 'USD',
-      newBalance: user.balance,
-      method: method || 'Admin Credit'
-    }).catch(err => console.error('[add-deposit email]', err.message));
+    // Optional email (only when explicitly requested + note provided)
+    if (shouldEmail && notes) {
+      sendEmailUtil({
+        to: user.email,
+        type: 'depositConfirmed',
+        name: user.firstName,
+        amount: usdAmount,
+        currency: user.currency || 'USD',
+        newBalance: user.balance,
+        method: notes
+      }).catch(err => console.error('[add-deposit email]', err.message));
+    }
 
     res.json({
       success: true,
-      message: 'Deposit added successfully · confirmation email sent',
+      message: shouldEmail ? 'Deposit recorded · email sent' : 'Deposit recorded silently',
       user: user.toObject(),
       transaction
     });
