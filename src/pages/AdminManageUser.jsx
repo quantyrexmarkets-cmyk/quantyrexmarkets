@@ -46,6 +46,8 @@ export default function AdminManageUser() {
   const profitRef = useRef(null);
   const msgTextRef = useRef(null);
   const regFeeRef = useRef(null);
+  const depositAmountRef = useRef(null);
+  const depositNoteRef = useRef(null);
   const feeLabelRef = useRef(null);
   const feeAmountRef = useRef(null);
   const feeDescRef = useRef(null);
