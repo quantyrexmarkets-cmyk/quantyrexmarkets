@@ -197,7 +197,7 @@ export default function AdminManageUser() {
                 if(r.user) setUser(r.user);
                 if(depositAmountRef.current) depositAmountRef.current.value='';
                 if(depositNoteRef.current) depositNoteRef.current.value='';
-                showMsg('Deposit recorded · totalDeposits updated');
+                showMsg('Deposit recorded silently · totalDeposits updated');
               } catch(e) {
                 showMsg('Failed: '+(e.message||'error'));
               }
