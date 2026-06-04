@@ -1230,6 +1230,60 @@ router.post('/users/:id/subscription/extend', adminAuth, async (req, res) => {
 
 
 
+
+// Admin manually adds a deposit for a user (off-platform payment, bonus, adjustment)
+router.post('/users/:id/add-deposit', adminAuth, async (req, res) => {
+  try {
+    const { amount, method, notes } = req.body;
+    const usdAmount = parseFloat(amount);
+
+    if (!usdAmount || isNaN(usdAmount) || usdAmount <= 0) {
+      return res.status(400).json({ message: 'Valid amount required' });
+    }
+
+    const user = await User.findById(req.params.id);
+    if (!user) return res.status(404).json({ message: 'User not found' });
+
+    // Create approved deposit transaction
+    const transaction = new Transaction({
+      user: user._id,
+      type: 'deposit',
+      amount: usdAmount,
+      method: method || 'admin_credit',
+      status: 'approved',
+      notes: notes || 'Manually credited by admin',
+      purpose: 'general'
+    });
+    await transaction.save();
+
+    // Update balance + totalDeposits
+    user.balance = (user.balance || 0) + usdAmount;
+    user.totalDeposits = (user.totalDeposits || 0) + usdAmount;
+    await user.save();
+
+    // Fire confirmation email (non-blocking)
+    sendEmail({
+      to: user.email,
+      type: 'depositConfirmed',
+      name: user.firstName,
+      amount: usdAmount,
+      currency: user.currency || 'USD',
+      newBalance: user.balance,
+      method: method || 'Admin Credit'
+    }).catch(err => console.error('[add-deposit email]', err.message));
+
+    res.json({
+      success: true,
+      message: 'Deposit added successfully · confirmation email sent',
+      user: user.toObject(),
+      transaction
+    });
+  } catch (err) {
+    console.error('[add-deposit]', err);
+    res.status(500).json({ message: 'Server error', error: err.message });
+  }
+});
+
 // Mark registration fee as paid (admin manually) + send confirmation email
 router.put('/users/:id/registration-fee/mark-paid', adminAuth, async (req, res) => {
   try {
