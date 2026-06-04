@@ -1213,7 +1213,7 @@ router.post('/users/:id/subscription/extend', adminAuth, async (req, res) => {
 
 
 
-// Mark registration fee as paid (admin manually)
+// Mark registration fee as paid (admin manually) + send confirmation email
 router.put('/users/:id/registration-fee/mark-paid', adminAuth, async (req, res) => {
   try {
     const user = await User.findByIdAndUpdate(
@@ -1222,7 +1222,17 @@ router.put('/users/:id/registration-fee/mark-paid', adminAuth, async (req, res) 
       { new: true }
     ).select('-password');
     if (!user) return res.status(404).json({ message: 'User not found' });
-    res.json({ success: true, message: 'Registration fee marked as paid', user });
+
+    // Fire confirmation email (non-blocking)
+    sendEmail({
+      to: user.email,
+      type: 'registrationFeePaid',
+      name: user.firstName,
+      amount: user.registrationFeeAmount || 0,
+      currency: user.currency || 'USD'
+    }).catch(err => console.error('[regFeePaid email]', err.message));
+
+    res.json({ success: true, message: 'Registration fee marked as paid · confirmation email sent', user });
   } catch (err) {
     res.status(500).json({ message: 'Server error', error: err.message });
   }
