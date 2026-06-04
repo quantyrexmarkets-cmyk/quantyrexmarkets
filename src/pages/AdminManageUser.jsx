@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from 'react';
 import InlineLoader from '../components/InlineLoader';
 import { useParams, useNavigate, useLocation } from 'react-router-dom';
 import { useTheme } from '../context/ThemeContext';
-import { ArrowLeft, Mail, Lock, Unlock, Ban, CheckCircle, ArrowUpCircle, RotateCcw, Trash2, DollarSign, Send, X, Shield, TrendingUp, Crown, Clock } from 'lucide-react';
+import { ArrowLeft, Mail, Lock, Unlock, Ban, CheckCircle, ArrowUpCircle, RotateCcw, Trash2, DollarSign, Send, X, Shield, TrendingUp, Crown, Clock, Check, AlertCircle } from 'lucide-react';
 import { formatAmountWithUSD, convertAmount, getCurrencySymbol, getCurrencyCode } from '../utils/currency';
 const BASE_URL = (import.meta.env.VITE_API_URL || (import.meta.env.VITE_API_URL || 'https://quantyrexmarkets-api.vercel.app/api'));
 const getToken = () => localStorage.getItem('token');
@@ -236,11 +236,11 @@ export default function AdminManageUser() {
         </S>
         <S title="Registration Fee" t={t}>
           <div style={{ color:t.subText, fontSize:'10px', marginBottom:'10px' }}>
-            Status: <span style={{ color:user.registrationFeeRequired?(user.registrationFeePaid?'#22c55e':'#ef4444'):'#64748b', fontWeight:'600' }}>
+            Status: <span style={{ color:user.registrationFeeRequired?(user.registrationFeePaid?'#22c55e':'#ef4444'):'#64748b', fontWeight:'600', display:'inline-flex', alignItems:'center', gap:'4px' }}>
               {user.registrationFeeRequired
                 ? (user.registrationFeePaid
-                    ? `✓ Paid · ${formatAmountWithUSD(user.registrationFeeAmount||0, user.currency)}`
-                    : '⚠ Required · Awaiting Payment')
+                    ? (<><Check size={11} strokeWidth={3}/> Paid · {formatAmountWithUSD(user.registrationFeeAmount||0, user.currency)}</>)
+                    : (<><AlertCircle size={11}/> Required · Awaiting Payment</>))
                 : 'Not Required'}
             </span>
           </div>
@@ -297,7 +297,7 @@ export default function AdminManageUser() {
                     setTimeout(()=>setClicked(''),500);
                   }
                 }} style={{ padding:'8px 14px', background:clicked==='regfee-approve'?'rgba(34,197,94,0.2)':'#22c55e', border:'1.5px solid #22c55e', color:'white', fontSize:'10px', fontWeight:'700', cursor:clicked==='regfee-approve'?'wait':'pointer', borderRadius:'6px', whiteSpace:'nowrap' }}>
-                  {clicked==='regfee-approve'?'Approving...':'✓ Approve & Confirm'}
+                  {clicked==='regfee-approve'?'Approving...':(<><Check size={11} strokeWidth={3}/> Approve & Confirm</>)}
                 </button>
               </div>
               <button type="button" disabled={clicked==='regfee-revoke'} onClick={async()=>{

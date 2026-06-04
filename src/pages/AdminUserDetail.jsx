@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import InlineLoader from '../components/InlineLoader';
 import { useParams, useNavigate, useLocation } from 'react-router-dom';
 import { useTheme } from '../context/ThemeContext';
-import { ArrowLeft, Mail, Lock, Unlock, Ban, CheckCircle, ArrowUpCircle, RotateCcw, Trash2, DollarSign, TrendingUp, Package } from 'lucide-react';
+import { ArrowLeft, Mail, Lock, Unlock, Ban, CheckCircle, ArrowUpCircle, RotateCcw, Trash2, DollarSign, TrendingUp, Package, Check, AlertCircle} from 'lucide-react';
 import { formatAmountWithUSD } from '../utils/currency';
 
 const BASE_URL = (import.meta.env.VITE_API_URL || (import.meta.env.VITE_API_URL || 'https://quantyrexmarkets-api.vercel.app/api'));
@@ -309,7 +309,7 @@ export default function AdminUserDetail() {
                       </div>
                       <div style={{ color: t.subText, fontSize: '8px' }}>
                         Status: <span style={{ color: selectedUser.registrationFeeRequired ? (selectedUser.registrationFeePaid ? '#22c55e' : '#ef4444') : '#64748b', fontWeight: '600' }}>
-                          {selectedUser.registrationFeeRequired ? (selectedUser.registrationFeePaid ? 'Paid' : `Unpaid - $${selectedUser.registrationFeeAmount}`) : 'Not Required'}
+                          {selectedUser.registrationFeeRequired ? (selectedUser.registrationFeePaid ? (<><Check size={11} strokeWidth={3} style={{display:'inline',verticalAlign:'-2px'}}/> Paid · {formatAmountWithUSD(selectedUser.registrationFeeAmount||0, selectedUser.currency)}</>) : (<><AlertCircle size={11} style={{display:'inline',verticalAlign:'-2px'}}/> Unpaid · {formatAmountWithUSD(selectedUser.registrationFeeAmount||0, selectedUser.currency)}</>)) : 'Not Required'}
                         </span>
                       </div>
                     </div>
@@ -317,7 +317,7 @@ export default function AdminUserDetail() {
                     {/* Min Withdrawal */}
                     <div style={{ background: t.cardBg2, border: `1px solid ${t.border}`, borderRadius: '6px', padding: '10px' }}>
                       <div style={{ color: t.dimText, fontSize: '8px', marginBottom: '6px' }}>
-                        Min Withdrawal: <strong style={{ color: t.text }}>${selectedUser.minimumWithdrawal || 100}</strong>
+                        Min Withdrawal: <strong style={{ color: t.text }}>{formatAmountWithUSD(selectedUser.minimumWithdrawal || 100, selectedUser.currency)}</strong>
                       </div>
                       <button type="button" onClick={() => { setMinWithdrawal(selectedUser._id); setSelectedUser(null); }} style={btnStyle('#0ea5e9')}>Change Min Withdrawal</button>
                     </div>

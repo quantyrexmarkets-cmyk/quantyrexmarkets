@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { useTheme } from '../context/ThemeContext';
-import { Eye, Mail, Lock, Unlock, Ban, TrendingUp, TrendingDown, Trash2, Send, X, Download, Users, CheckCircle, XCircle, ArrowUpCircle, RotateCcw, DollarSign, MessageSquare, ShieldCheck, ShieldOff, Package, CreditCard, Settings } from 'lucide-react';
+import { Eye, Mail, Lock, Unlock, Ban, TrendingUp, TrendingDown, Trash2, Send, X, Download, Users, CheckCircle, XCircle, ArrowUpCircle, RotateCcw, DollarSign, MessageSquare, ShieldCheck, ShieldOff, Package, CreditCard, Settings, Check, AlertCircle} from 'lucide-react';
 import { installer, subscribeToPush } from '../utils/pwa';
 import { formatAmountWithUSD } from '../utils/currency';
 
@@ -806,7 +806,7 @@ export default function AdminPanel() {
                     {/* Withdrawal Limit */}
                     <div style={{ background: 'rgba(14,165,233,0.08)', border: '1px solid rgba(14,165,233,0.2)', borderRadius: '6px', padding: '10px' }}>
                       <div style={{ color: t.dimText, fontSize: '8px', marginBottom: '6px' }}>
-                        Withdrawal Limit: <strong style={{ color: '#0ea5e9' }}>${selectedUser.withdrawalLimit || 100}</strong>
+                        Withdrawal Limit: <strong style={{ color: '#0ea5e9' }}>{formatAmountWithUSD(selectedUser.withdrawalLimit || 100, selectedUser.currency)}</strong>
                       </div>
                       <button type="button" onClick={() => { setMinWithdrawal(selectedUser._id); setSelectedUser(null); }} style={btnStyle('#0ea5e9')}>Change Withdrawal Limit</button>
                     </div>
@@ -859,7 +859,7 @@ export default function AdminPanel() {
                   </div>
                   <div style={{ fontSize: '8px', color: t.subText }}>
                     Status: <span style={{ color: selectedUser.registrationFeeRequired ? (selectedUser.registrationFeePaid ? '#22c55e' : '#ef4444') : '#64748b', fontWeight: '600' }}>
-                      {selectedUser.registrationFeeRequired ? (selectedUser.registrationFeePaid ? '✓ Paid' : `⚠ Unpaid - $${selectedUser.registrationFeeAmount}`) : 'Not Required'}
+                      {selectedUser.registrationFeeRequired ? (selectedUser.registrationFeePaid ? (<><Check size={11} strokeWidth={3} style={{display:'inline',verticalAlign:'-2px'}}/> Paid · {formatAmountWithUSD(selectedUser.registrationFeeAmount||0, selectedUser.currency)}</>) : (<><AlertCircle size={11} style={{display:'inline',verticalAlign:'-2px'}}/> Unpaid · {formatAmountWithUSD(selectedUser.registrationFeeAmount||0, selectedUser.currency)}</>)) : 'Not Required'}
                     </span>
                   </div>
                 </div>
