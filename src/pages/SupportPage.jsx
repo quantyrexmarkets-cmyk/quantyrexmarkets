@@ -593,9 +593,20 @@ export default function SupportPage() {
                     fontFamily: 'inherit', lineHeight: '1.4',
                     maxHeight: '140px', overflowY: 'auto',
                     minHeight: '40px', boxSizing: 'border-box',
-                    userSelect: 'text', WebkitUserSelect: 'text'
+                    userSelect: 'text', WebkitUserSelect: 'text', WebkitTouchCallout: 'default', WebkitUserModify: 'read-write-plaintext-only'
                   }}
+                  spellCheck={true}
+                  autoComplete="on"
+                  autoCorrect="on"
                 />
+                {adminReply && (
+                  <button type="button"
+                    onClick={() => setAdminReply('')}
+                    style={{ background: '#1a1a1a', border: `1px solid ${t.border}`, color: t.faintText, width: '32px', height: '32px', borderRadius: '50%', cursor: 'pointer', flexShrink: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', alignSelf: 'center' }}
+                    title="Clear">
+                    <X size={14}/>
+                  </button>
+                )}
                 <button type="button" onClick={sendReply} disabled={adminSending} style={{ background: '#6366f1', border: 'none', color: 'white', cursor: 'pointer', width: '40px', height: '40px', borderRadius: '50%', flexShrink: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', opacity: adminSending ? 0.6 : 1 }}>
                   {adminSending ? (
                     <svg width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='currentColor' strokeWidth='2.5'>
