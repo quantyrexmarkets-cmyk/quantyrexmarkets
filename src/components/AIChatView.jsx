@@ -6,13 +6,13 @@ const BASE_URL = import.meta.env.VITE_API_URL || 'https://quantyrexmarkets-api.v
 const STORAGE_KEY = 'qm_ai_chat_history';
 
 const QUICK_PROMPTS = [
-  { label: '💬 Reassure client', text: 'Draft a calm, professional response to reassure a client who is doubting our platform is legitimate.' },
-  { label: '💰 Explain withdrawal fee', text: 'Explain to a client that the withdrawal code validation fee is a one-time refundable charge credited back to their dashboard balance.' },
-  { label: '📧 Registration fee email', text: 'Draft a brief email explaining the one-time registration fee for account activation.' },
-  { label: '🌍 Translate to Hindi', text: 'Translate the following to Hindi:\n\n' },
-  { label: '✂️ Shorten', text: 'Rewrite this message to be shorter and more direct:\n\n' },
-  { label: '☀️ Warmer tone', text: 'Rewrite this in a warmer, more personal tone:\n\n' },
-  { label: '🛡 Handle fraud claim', text: 'A client is accusing us of being fraud. Draft a firm, professional, non-defensive response.' },
+  { label: 'Reassure client', text: 'Short chat reply to reassure a client doubting our platform.' },
+  { label: 'Handle fraud claim', text: 'Short chat reply for a client accusing us of fraud — firm, non-defensive.' },
+  { label: 'Explain withdrawal fee', text: 'Short chat reply explaining the withdrawal validation fee is refundable.' },
+  { label: 'Translate to Hindi', text: 'Translate the following to Hindi:\n\n' },
+  { label: 'Shorten', text: 'Rewrite shorter and more direct:\n\n' },
+  { label: 'Warmer tone', text: 'Rewrite in a warmer, more personal tone:\n\n' },
+  { label: 'Draft full email', text: 'Draft a full email (with Dear / Best regards) about: ' },
 ];
 
 export default function AIChatView({ onClose }) {
