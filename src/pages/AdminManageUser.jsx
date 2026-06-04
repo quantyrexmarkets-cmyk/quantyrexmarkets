@@ -174,9 +174,9 @@ export default function AdminManageUser() {
           <div style={{ color:t.subText, fontSize:'8px', marginTop:'2px' }}>Enter value in {getCurrencyCode(user.currency)} · stored as USD</div>
           {btn(async()=>{const rawVal=parseFloat(profitRef.current?.value||0);const code=getCurrencyCode(user.currency);const rates=JSON.parse(localStorage.getItem('fx_rates')||'{}');const rate=rates[code]||1;const usdVal=rawVal/rate;const r=await api('/users/'+id+'/total-profit','PUT',{totalProfit:usdVal});if(r.user){setUser(r.user);if(profitRef.current)profitRef.current.value=convertAmount(r.user.totalProfit||0, r.user.currency);} showMsg('Profit updated');}, 'Set Profit', <TrendingUp size={12}/>)}
         </S>
-        <S title="Add Deposit" t={t}>
+        <S title="Record Deposit" t={t}>
           <div style={{ color:t.subText, fontSize:'9px', marginBottom:'6px', lineHeight:'1.5' }}>
-            Credit user account directly. Creates an approved deposit + sends confirmation email.
+            Adds to user's Total Deposits stat only. Does NOT affect live balance.
           </div>
           <input ref={depositAmountRef} defaultValue="" placeholder={`Amount in ${getCurrencyCode(user.currency)}`} type="number" style={inp}/>
           <div style={{ color:t.subText, fontSize:'8px', marginTop:'2px', marginBottom:'6px' }}>Enter value in {getCurrencyCode(user.currency)} · stored as USD</div>
@@ -195,11 +195,11 @@ export default function AdminManageUser() {
                 if(r.user) setUser(r.user);
                 if(depositAmountRef.current) depositAmountRef.current.value='';
                 if(depositNoteRef.current) depositNoteRef.current.value='';
-                showMsg('Deposit added · email sent');
+                showMsg('Deposit recorded · totalDeposits updated');
               } catch(e) {
                 showMsg('Failed: '+(e.message||'error'));
               }
-            }, 'Add Deposit', <DollarSign size={12}/>)}
+            }, 'Record Deposit', <DollarSign size={12}/>)}
           </div>
         </S>
         <S title="Admin Message" t={t}>
