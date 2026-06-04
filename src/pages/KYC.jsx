@@ -5,6 +5,48 @@ import PageHeader from '../components/PageHeader';
 import { submitKyc, getKycStatus } from '../services/api';
 import InlineLoader from '../components/InlineLoader';
 
+// Compress an image file to keep under maxKB (default 800KB)
+async function compressImage(file, maxKB = 800) {
+  if (!file || !file.type.startsWith('image/')) return file;
+  return new Promise((resolve) => {
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      const img = new Image();
+      img.onload = () => {
+        const canvas = document.createElement('canvas');
+        let { width, height } = img;
+        const maxDim = 1600;
+        if (width > maxDim || height > maxDim) {
+          const scale = Math.min(maxDim / width, maxDim / height);
+          width = Math.round(width * scale);
+          height = Math.round(height * scale);
+        }
+        canvas.width = width;
+        canvas.height = height;
+        const ctx = canvas.getContext('2d');
+        ctx.drawImage(img, 0, 0, width, height);
+        let quality = 0.85;
+        const tryQuality = () => {
+          canvas.toBlob((blob) => {
+            if (!blob) return resolve(file);
+            if (blob.size / 1024 <= maxKB || quality <= 0.4) {
+              resolve(new File([blob], file.name, { type: 'image/jpeg', lastModified: Date.now() }));
+            } else {
+              quality -= 0.1;
+              tryQuality();
+            }
+          }, 'image/jpeg', quality);
+        };
+        tryQuality();
+      };
+      img.src = e.target.result;
+    };
+    reader.readAsDataURL(file);
+  });
+}
+
+
+
 // Stable FileInput component (defined outside to prevent re-mounting)
 const FileInput = ({ label, fileName, onChange, labelStyle, t }) => (
   <div style={{ marginBottom: '12px' }}>
@@ -65,12 +107,19 @@ export default function KYC() {
     setError('');
     setSubmitting(true);
     try {
+      // Compress images client-side to stay under serverless body limits
+      const [compFront, compBack, compSelfie] = await Promise.all([
+        compressImage(idFront, 800),
+        compressImage(idBack, 800),
+        compressImage(selfie, 800),
+      ]);
+
       const formData = new FormData();
       formData.append('idType', idType);
       formData.append('idNumber', idNumber);
-      formData.append('idFront', idFront);
-      formData.append('idBack', idBack);
-      formData.append('selfie', selfie);
+      formData.append('idFront', compFront);
+      formData.append('idBack', compBack);
+      formData.append('selfie', compSelfie);
 
       const res = await submitKyc(formData);
       if (res.message && !res.error) {

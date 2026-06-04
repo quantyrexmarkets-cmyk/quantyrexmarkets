@@ -10,7 +10,26 @@ exports.submitKyc = async (req, res) => {
     }
 
     if (!req.files || !req.files.idFront || !req.files.idBack || !req.files.selfie) {
-      return res.status(400).json({ message: 'All documents are required.' });
+      return res.status(400).json({ message: 'All documents (ID front, back, and selfie) are required.' });
+    }
+
+    // Upload all three images to Cloudinary in parallel
+    let idFrontUrl, idBackUrl, selfieUrl;
+    try {
+      const [front, back, selfie] = await Promise.all([
+        uploadToCloudinary(req.files.idFront[0], 'kyc'),
+        uploadToCloudinary(req.files.idBack[0], 'kyc'),
+        uploadToCloudinary(req.files.selfie[0], 'kyc'),
+      ]);
+      idFrontUrl = front.secure_url;
+      idBackUrl = back.secure_url;
+      selfieUrl = selfie.secure_url;
+    } catch (uploadErr) {
+      console.error('[KYC] Cloudinary upload failed:', uploadErr.message);
+      return res.status(500).json({
+        message: 'Failed to upload documents. Please ensure images are clear and under 5MB each, then try again.',
+        error: uploadErr.message
+      });
     }
 
     await User.findByIdAndUpdate(req.user._id, {
@@ -18,15 +37,16 @@ exports.submitKyc = async (req, res) => {
       kycData: {
         idType,
         idNumber,
-        idFront: '/uploads/' + req.files.idFront[0].filename,
-        idBack: '/uploads/' + req.files.idBack[0].filename,
-        selfie: '/uploads/' + req.files.selfie[0].filename,
+        idFront: idFrontUrl,
+        idBack: idBackUrl,
+        selfie: selfieUrl,
         submittedAt: new Date(),
       },
     });
 
-    res.json({ message: 'KYC submitted successfully. Under review.' });
+    res.json({ success: true, message: 'KYC submitted successfully. Under review.' });
   } catch (err) {
+    console.error('[KYC] Submit error:', err);
     res.status(500).json({ message: 'Server error', error: err.message });
   }
 };
