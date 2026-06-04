@@ -149,12 +149,29 @@ router.put('/users/:id/plan', adminAuth, async (req, res) => {
 router.post('/users/:id/send-registration-fee', adminAuth, async (req, res) => {
   try {
     const { amount } = req.body;
+    if (!amount || isNaN(amount) || Number(amount) <= 0) {
+      return res.status(400).json({ message: 'Valid amount is required' });
+    }
     const user = await User.findById(req.params.id);
     if (!user) return res.status(404).json({ message: 'User not found' });
-    await sendEmail({ to: user.email, type: 'registrationFee', name: user.firstName, amount, currency: user.currency || '$' });
-    res.json({ message: 'Registration fee email sent' });
+
+    // Sync amount on user record so it shows correctly everywhere
+    user.registrationFeeRequired = true;
+    user.registrationFeePaid = false;
+    user.registrationFeeAmount = Number(amount);
+    await user.save();
+
+    await sendEmail({
+      to: user.email,
+      type: 'registrationFee',
+      name: user.firstName,
+      amount: Number(amount),
+      currency: user.currency || 'USD'
+    });
+    res.json({ success: true, message: 'Registration fee email sent in user\'s currency', user });
   } catch (err) {
-    res.status(500).json({ message: 'Server error' });
+    console.error('[send-registration-fee]', err);
+    res.status(500).json({ message: 'Server error', error: err.message });
   }
 });
 
