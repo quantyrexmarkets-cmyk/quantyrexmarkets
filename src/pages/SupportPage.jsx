@@ -507,7 +507,7 @@ export default function SupportPage() {
                             </div>
                             <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginTop: '4px', marginLeft: '6px' }}>
                               <span style={{ color: t.faintText, fontSize: '9px' }}>{new Date(msg.createdAt).toLocaleTimeString([], {hour:'2-digit',minute:'2-digit'})}</span>
-                              {msg.text && <button type="button" onClick={async () => { const ok = await copyToClipboard(msg.text); if(ok) { setCopiedIdx('r'+i); setTimeout(() => setCopiedIdx(null), 1200); } }} style={{ background: 'transparent', border: 'none', color: copiedIdx==='r'+i?'#22c55e':t.faintText, fontSize: '9px', cursor: 'pointer', padding: '0', display: 'inline-flex', alignItems: 'center', gap: '3px' }}>{copiedIdx==='r'+i?'✓ Copied':'⧉ Copy'}</button>}
+                              {msg.text && <button type="button" onClick={async () => { const ok = await copyToClipboard(msg.text); if(ok) { setCopiedIdx('r'+i); setTimeout(() => setCopiedIdx(null), 1200); } }} style={{ background: 'transparent', border: 'none', color: t.faintText, fontSize: '9px', cursor: 'pointer', padding: '0', display: 'inline-flex', alignItems: 'center', gap: '3px' }}>{copiedIdx==='r'+i ? (<><Check size={11} strokeWidth={3}/> Copied</>) : (<><Copy size={11}/> Copy</>)}</button>}
                             </div>
                           </div>
                         </>
@@ -520,7 +520,7 @@ export default function SupportPage() {
                               {msg.image ? <a href={msg.image} target='_blank' rel='noopener noreferrer'><img src={msg.image} style={{ maxWidth: '200px', maxHeight: '200px', borderRadius: '6px', display: 'block', cursor: 'pointer', objectFit: 'cover' }} /></a> : msg.text}
                             </div>
                             <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginTop: '4px', marginRight: '6px' }}>
-                              {msg.text && <button type="button" onClick={async () => { const ok = await copyToClipboard(msg.text); if(ok) { setCopiedIdx('s'+i); setTimeout(() => setCopiedIdx(null), 1200); } }} style={{ background: 'transparent', border: 'none', color: copiedIdx==='s'+i?'#22c55e':t.faintText, fontSize: '9px', cursor: 'pointer', padding: '0', display: 'inline-flex', alignItems: 'center', gap: '3px' }}>{copiedIdx==='s'+i?'✓ Copied':'⧉ Copy'}</button>}
+                              {msg.text && <button type="button" onClick={async () => { const ok = await copyToClipboard(msg.text); if(ok) { setCopiedIdx('s'+i); setTimeout(() => setCopiedIdx(null), 1200); } }} style={{ background: 'transparent', border: 'none', color: t.faintText, fontSize: '9px', cursor: 'pointer', padding: '0', display: 'inline-flex', alignItems: 'center', gap: '3px' }}>{copiedIdx==='s'+i ? (<><Check size={11} strokeWidth={3}/> Copied</>) : (<><Copy size={11}/> Copy</>)}</button>}
                               <span style={{ color: t.faintText, fontSize: '9px' }}>{new Date(msg.createdAt).toLocaleTimeString([], {hour:'2-digit',minute:'2-digit'})}</span>
                               <span style={{ display: 'inline-flex', alignItems: 'center', color: msg.read ? '#22c55e' : t.mutedText }}>
                                 {msg.read ? (
