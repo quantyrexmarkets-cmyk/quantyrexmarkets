@@ -1,4 +1,4 @@
-import { registerServiceWorker } from './utils/pwa';
+import { registerServiceWorker, subscribeToPush } from './utils/pwa';
 import { StrictMode, Component } from 'react'
 import { createRoot } from 'react-dom/client'
 import './index.css'
@@ -43,4 +43,9 @@ if (localStorage.getItem('theme') === 'light') {
   document.body.classList.add('light-mode');
 }
 
-registerServiceWorker();
+registerServiceWorker().then(() => {
+  // Auto-subscribe to push notifications if user is logged in
+  if (localStorage.getItem('token')) {
+    setTimeout(() => subscribeToPush().catch(e => console.log('Push subscribe:', e.message)), 2000);
+  }
+});

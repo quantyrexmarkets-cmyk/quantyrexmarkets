@@ -161,6 +161,9 @@ export default function LiveChat() {
       const data = await res.json();
       setChat(data);
       setText('');
+      // Reset textarea height to single row
+      const textarea = document.querySelector('textarea[placeholder="Type a message..."]');
+      if (textarea) textarea.style.height = 'auto';
     } catch (e) {}
     setLoading(false);
   };
