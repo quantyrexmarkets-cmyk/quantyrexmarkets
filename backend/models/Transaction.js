@@ -4,6 +4,8 @@ const transactionSchema = new mongoose.Schema({
   user: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
   type: { type: String, enum: ['deposit', 'withdrawal', 'profit', 'referral'], required: true },
   amount: { type: Number, required: true },
+  currency: { type: String, default: 'USD' },
+  currencySymbol: { type: String, default: '$' },
   method: { type: String },
   status: { type: String, enum: ['pending', 'approved', 'rejected'], default: 'pending' },
   proofImage: { type: String },

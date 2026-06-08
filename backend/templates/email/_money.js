@@ -56,4 +56,20 @@ const formatUSD = (value) => {
   return `$${out}`;
 };
 
-module.exports = { getCurrencySymbol, formatMoney, formatUSD, extractCode, RATES };
+
+// Use this when amount is ALREADY in user currency (not USD)
+const formatLocalMoney = (localValue, currency = 'USD') => {
+  const num = typeof localValue === 'number'
+    ? localValue
+    : Number(String(localValue ?? 0).replace(/,/g, ''));
+  if (!Number.isFinite(num)) return getCurrencySymbol(currency) + '0.00';
+  const code = extractCode(currency);
+  const decimals = (code === 'JPY' || code === 'KRW' || code === 'IDR' || code === 'VND') ? 0 : 2;
+  const out = num.toLocaleString('en-US', {
+    minimumFractionDigits: decimals,
+    maximumFractionDigits: decimals
+  });
+  return getCurrencySymbol(currency) + out;
+};
+
+module.exports = { getCurrencySymbol, formatMoney, formatLocalMoney, formatUSD, extractCode, RATES };

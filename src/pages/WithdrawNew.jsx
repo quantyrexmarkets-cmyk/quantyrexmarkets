@@ -4,6 +4,7 @@ import { formatAmountWithCode } from '../utils/currency';
 import { createWithdrawal } from '../services/api';
 import { useAuth } from '../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
+import { useCurrency } from '../context/CurrencyContext';
 import DashboardSidebar from '../components/DashboardSidebar';
 
 const methods = [
@@ -24,6 +25,7 @@ const methods = [
 export default function WithdrawNew() {
   const navigate = useNavigate();
   const { user, refreshUser } = useAuth();
+  const { symbol: currencySymbol, code: currencyCode, toUSD, format } = useCurrency();
 
   // Auto-refresh user data on mount to get latest minimumWithdrawal
   useEffect(() => { if(refreshUser) refreshUser(); }, []);
@@ -66,7 +68,7 @@ export default function WithdrawNew() {
   const handleSubmit = () => {
     if (!amount || isNaN(amount) || Number(amount) <= 0) { setError('Please enter a valid amount.'); return; }
     const minW = user?.minimumWithdrawal || 100;
-    if (Number(amount) < minW) { setError(`Minimum withdrawal amount is $${minW.toLocaleString('en-US', {minimumFractionDigits: 2})}.`); return; }
+    if (Number(amount) < minW) { setError(`Minimum withdrawal amount is {currencySymbol}{minW.toLocaleString('en-US', {minimumFractionDigits: 2})}.`); return; }
 
     if (selectedMethod === 'crypto') {
       if (!coin) { setError('Please select a coin.'); return; }
@@ -120,7 +122,7 @@ export default function WithdrawNew() {
 
       {/* Amount always shown */}
       <div style={{ marginBottom: '12px' }}>
-        <label style={labelStyle}>Amount (USD)</label>
+        <label style={labelStyle}>Amount ({currencyCode})</label>
         <input value={amount} onChange={e => setAmount(e.target.value)} placeholder='0.00' style={inputStyle} />
       </div>
 
@@ -272,14 +274,16 @@ export default function WithdrawNew() {
               <svg width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='#6366f1' strokeWidth='2'><path d='M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4'/><polyline points='17 8 12 3 7 8'/><line x1='12' y1='3' x2='12' y2='15'/></svg>
             </div>
             <div style={{ color: '#111', fontSize: '13px', fontWeight: '700', marginBottom: '8px' }}>Confirm Withdrawal</div>
-            <div style={{ color: '#555', fontSize: '9px', marginBottom: '6px' }}>Amount: <strong>${amount}</strong></div>
+            <div style={{ color: '#555', fontSize: '9px', marginBottom: '6px' }}>Amount: <strong>{currencySymbol}{amount}</strong></div>
             <div style={{ color: '#555', fontSize: '9px', marginBottom: '20px' }}>Method: <strong>{methodLabel}</strong></div>
             <div style={{ display: 'flex', gap: '8px', justifyContent: 'center' }}>
               <button type="button" onClick={() => setShowConfirm(false)} style={{ padding: '8px 20px', background: t.cardBg2, border: 'none', color: t.subText, fontSize: '9px', fontWeight: '600', cursor: 'pointer', borderRadius: '3px' }}>Cancel</button>
               <button type="button" onClick={() => {
                 setShowConfirm(false);
-                const payload = {
-                  amount: Number(amount),
+                // Convert user local currency amount to USD for backend
+        const amountInUSD = toUSD(Number(amount));
+        const payload = {
+                  amount: amountInUSD,
                   method: selectedMethod,
                   ...(selectedMethod === 'crypto' && { coin, network, walletAddress }),
                   ...(selectedMethod === 'cashapp' && { accountEmail }),
@@ -326,7 +330,7 @@ export default function WithdrawNew() {
               Your account requires a one-time Registration Fee to be fully activated. This unlocks complete access to withdrawals, premium trading features, and full investment capabilities. Settling this fee is a final activation step required before withdrawals can be processed.
             </div>
             <div style={{ color: '#888', fontSize: '9px', marginBottom: '4px' }}>Amount Due</div>
-            <div style={{ color: '#ef4444', fontSize: '16px', fontWeight: '700', marginBottom: '16px' }}>${parseFloat(regFeeError.amount || 0).toLocaleString('en-US', {minimumFractionDigits: 2})}</div>
+            <div style={{ color: '#ef4444', fontSize: '16px', fontWeight: '700', marginBottom: '16px' }}>{currencySymbol}{parseFloat(regFeeError.amount || 0).toLocaleString('en-US', {minimumFractionDigits: 2})}</div>
             <div style={{ color: '#555', fontSize: '10px', marginBottom: '20px', lineHeight: '1.7' }}>
               Dear Investor, your withdrawal request is on hold. Please contact support to complete this payment.
             </div>

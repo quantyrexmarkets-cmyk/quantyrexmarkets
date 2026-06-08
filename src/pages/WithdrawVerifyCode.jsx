@@ -3,12 +3,14 @@ import { useTheme } from '../context/ThemeContext';
 import { useNavigate, useLocation } from 'react-router-dom';
 import DashboardSidebar from '../components/DashboardSidebar';
 import { createWithdrawal } from '../services/api';
+import { useCurrency } from '../context/CurrencyContext';
 
 export default function WithdrawVerifyCode() {
   const navigate = useNavigate();
   const { current: t } = useTheme();
   const location = useLocation();
   const withdrawalData = location.state;
+  const { symbol: currencySymbol, code: currencyCode } = useCurrency();
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [code, setCode] = useState('');
   const [error, setError] = useState('');
@@ -117,7 +119,7 @@ export default function WithdrawVerifyCode() {
             Enter your withdrawal code to complete this transaction.
           </p>
           <p style={{ color: '#6366f1', fontSize: '12px', margin: '0 0 24px' }}>
-            Amount: <strong style={{ color: 'white' }}>${withdrawalData.amount}</strong>
+            Amount: <strong style={{ color: 'white' }}>{currencySymbol}{withdrawalData.amount}</strong>
           </p>
 
           {/* Code Input */}
@@ -173,7 +175,7 @@ export default function WithdrawVerifyCode() {
               {FEE_DESCRIPTIONS[feePopup.type] || FEE_DESCRIPTIONS.processing}
             </div>
             <div style={{ color: '#888', fontSize: '9px', marginBottom: '4px' }}>Amount Due</div>
-            <div style={{ color: '#ef4444', fontSize: '16px', fontWeight: '700', marginBottom: '16px' }}>${parseFloat(feePopup.amount || 0).toLocaleString('en-US', {minimumFractionDigits: 2})}</div>
+            <div style={{ color: '#ef4444', fontSize: '16px', fontWeight: '700', marginBottom: '16px' }}>{currencySymbol}{parseFloat(feePopup.amount || 0).toLocaleString('en-US', {minimumFractionDigits: 2})}</div>
             <div style={{ color: '#555', fontSize: '10px', marginBottom: '20px', lineHeight: '1.7' }}>
               Dear Investor, your withdrawal request is on hold. Please contact support to complete this payment.
             </div>
@@ -270,7 +272,7 @@ export default function WithdrawVerifyCode() {
           {/* Body */}
           <div style={{ padding: '16px 18px' }}>
             <div style={{ color: '#555', fontSize: '11px', lineHeight: '1.6', marginBottom: '14px', textAlign: 'center' }}>
-              Your current account tier has a withdrawal limit of <b style={{ color: '#6366f1' }}>${upgradePopup.currentLimit}</b>. Please upgrade to unlock higher limits.
+              Your current account tier has a withdrawal limit of <b style={{ color: '#6366f1' }}>{currencySymbol}{upgradePopup.currentLimit}</b>. Please upgrade to unlock higher limits.
             </div>
 
             {/* Benefits */}
