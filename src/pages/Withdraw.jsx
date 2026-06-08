@@ -332,7 +332,7 @@ export default function Withdraw() {
           <div style={{ position: 'fixed', top: '50%', left: '50%', transform: 'translate(-50%,-50%)', zIndex: 151, background: t.bg, padding: '20px', width: '340px', borderRadius: '4px', border: `1px solid ${t.border}`, maxHeight: '90vh', overflowY: 'auto' }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '14px' }}>
               <div>
-                <span style={{ color: t.text, fontSize: '11px', fontWeight: '700' }}>Withdrawal Limit: </span><span style={{ color: '#22c55e', fontSize: '11px', fontWeight: '700' }}>{currencySymbol}{(user?.minimumWithdrawal||100).toLocaleString()}</span>
+                <span style={{ color: t.text, fontSize: '11px', fontWeight: '700' }}>Max Withdrawal: </span><span style={{ color: '#22c55e', fontSize: '11px', fontWeight: '700' }}>{currencySymbol}{(user?.minimumWithdrawal||100).toLocaleString()}</span>
                 <span style={{ color: '#ef4444', fontSize: '11px', fontWeight: '700' }}>{format(100)}</span>
               </div>
               <button type="button" onClick={() => setShowMethodSelector(false)} style={{ background: 'none', border: 'none', color: t.subText, cursor: 'pointer', fontSize: '18px' }}>×</button>
