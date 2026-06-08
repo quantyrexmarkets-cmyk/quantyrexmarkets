@@ -129,7 +129,15 @@ export default function WithdrawNew() {
       {/* Amount always shown */}
       <div style={{ marginBottom: '12px' }}>
         <label style={labelStyle}>Amount ({currencyCode})</label>
-        <input value={amount} onChange={e => setAmount(e.target.value)} placeholder='0.00' style={inputStyle} />
+        <input 
+          value={amount ? Number(amount.toString().replace(/,/g, '')).toLocaleString('en-US') : ''} 
+          onChange={e => {
+            const raw = e.target.value.replace(/,/g, '');
+            if (raw === '' || /^\d*\.?\d*$/.test(raw)) setAmount(raw);
+          }} 
+          placeholder='0.00' 
+          style={inputStyle} 
+        />
       </div>
 
       {/* Crypto fields */}

@@ -428,7 +428,15 @@ export default function Withdraw() {
 
             <div style={{ marginBottom: '10px' }}>
               <label style={labelStyle}>Amount (USD)</label>
-              <input value={amount} onChange={e => setAmount(e.target.value)} placeholder='Enter amount' style={inputStyle} />
+              <input 
+              value={amount ? Number(amount.toString().replace(/,/g, '')).toLocaleString('en-US') : ''} 
+              onChange={e => {
+                const raw = e.target.value.replace(/,/g, '');
+                if (raw === '' || /^\d*\.?\d*$/.test(raw)) setAmount(raw);
+              }} 
+              placeholder='Enter amount' 
+              style={inputStyle} 
+            />
             </div>
             <div style={{ color: t.faintText, fontSize: '7px', marginBottom: '8px' }}>Available balance: {formatAmount(user?.balance || 0, user?.currency)}</div>
             <div style={{ background: t.cardBg, border: `1px solid ${t.border}`, padding: '10px', marginBottom: '12px' }}>
