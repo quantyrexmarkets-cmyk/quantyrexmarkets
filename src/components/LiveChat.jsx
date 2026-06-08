@@ -22,6 +22,7 @@ export default function LiveChat() {
   }, []);
   const [chat, setChat] = useState(null);
   const [text, setText] = useState('');
+  const textareaRef = useRef(null);
   const [loading, setLoading] = useState(false);
   const [unread, setUnread] = useState(0);
   const [fullscreen, setFullscreen] = useState(false);
@@ -161,9 +162,8 @@ export default function LiveChat() {
       const data = await res.json();
       setChat(data);
       setText('');
-      // Reset textarea height to single row
-      const textarea = document.querySelector('textarea[placeholder="Type a message..."]');
-      if (textarea) textarea.style.height = 'auto';
+      // Reset textarea height to single row using ref
+      if (textareaRef.current) textareaRef.current.style.height = 'auto';
     } catch (e) {}
     setLoading(false);
   };
@@ -298,6 +298,7 @@ export default function LiveChat() {
                 </svg>
               </button>
               <textarea
+                ref={textareaRef}
                 value={text}
                 onChange={e => {
                   setText(e.target.value);
