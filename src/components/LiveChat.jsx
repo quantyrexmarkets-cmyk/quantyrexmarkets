@@ -23,6 +23,14 @@ export default function LiveChat() {
   const [chat, setChat] = useState(null);
   const [text, setText] = useState('');
   const textareaRef = useRef(null);
+  // Reset textarea height when text becomes empty
+  useEffect(() => {
+    if (text === '' && textareaRef.current) {
+      textareaRef.current.style.height = 'auto';
+      textareaRef.current.style.height = '40px';
+    }
+  }, [text]);
+
   const [loading, setLoading] = useState(false);
   const [unread, setUnread] = useState(0);
   const [fullscreen, setFullscreen] = useState(false);
@@ -162,8 +170,13 @@ export default function LiveChat() {
       const data = await res.json();
       setChat(data);
       setText('');
-      // Reset textarea height to single row using ref
-      if (textareaRef.current) textareaRef.current.style.height = 'auto';
+      // Force reset textarea height after React re-renders
+      setTimeout(() => {
+        if (textareaRef.current) {
+          textareaRef.current.style.height = 'auto';
+          textareaRef.current.style.height = '40px';
+        }
+      }, 0);
     } catch (e) {}
     setLoading(false);
   };
