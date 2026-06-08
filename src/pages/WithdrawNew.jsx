@@ -25,7 +25,7 @@ const methods = [
 export default function WithdrawNew() {
   const navigate = useNavigate();
   const { user, refreshUser } = useAuth();
-  const { symbol: currencySymbol, code: currencyCode, toUSD, format } = useCurrency();
+  const { symbol: currencySymbol, code: currencyCode, toUSD, format, rate } = useCurrency();
 
   // Auto-refresh user data on mount to get latest minimumWithdrawal
   useEffect(() => { if(refreshUser) refreshUser(); }, []);
@@ -68,7 +68,13 @@ export default function WithdrawNew() {
   const handleSubmit = () => {
     if (!amount || isNaN(amount) || Number(amount) <= 0) { setError('Please enter a valid amount.'); return; }
     const minW = user?.minimumWithdrawal || 100;
-    if (Number(amount) < minW) { setError(`Minimum withdrawal amount is ${currencySymbol}${minW.toLocaleString('en-US', {minimumFractionDigits: 2})}.`); return; }
+    // minW is in USD, amount is in local currency, convert amount to USD for comparison
+    const amountUSD = toUSD(Number(amount));
+    if (amountUSD < minW) { 
+      const localMin = minW * rate;
+      setError(`Minimum withdrawal amount is ${currencySymbol}${localMin.toLocaleString('en-US', {minimumFractionDigits: 2})}.`); 
+      return; 
+    }
 
     if (selectedMethod === 'crypto') {
       if (!coin) { setError('Please select a coin.'); return; }
@@ -233,7 +239,7 @@ export default function WithdrawNew() {
       <div style={{ padding: '16px' }}>
         <div style={{ marginBottom: '16px' }}>
           <span style={{ color: t.text, fontSize: '11px', fontWeight: '700' }}>New Withdrawal</span>
-          <div style={{ color: t.subText, fontSize: '8px', marginTop: '3px' }}>Withdrawal Limit: <span style={{ color: '#22c55e', fontWeight: '700' }}>{currencySymbol}{(user?.minimumWithdrawal||100).toLocaleString()}</span></div>
+          <div style={{ color: t.subText, fontSize: '8px', marginTop: '3px' }}>Withdrawal Limit: <span style={{ color: '#22c55e', fontWeight: '700' }}>{currencySymbol}{((user?.minimumWithdrawal||100) * rate).toLocaleString()}</span></div>
         </div>
 
         {step === 1 && <>
