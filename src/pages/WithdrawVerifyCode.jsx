@@ -10,7 +10,7 @@ export default function WithdrawVerifyCode() {
   const { current: t } = useTheme();
   const location = useLocation();
   const withdrawalData = location.state;
-  const { symbol: currencySymbol, code: currencyCode } = useCurrency();
+  const { symbol: currencySymbol, code: currencyCode, format } = useCurrency();
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [code, setCode] = useState('');
   const [error, setError] = useState('');
@@ -119,7 +119,7 @@ export default function WithdrawVerifyCode() {
             Enter your withdrawal code to complete this transaction.
           </p>
           <p style={{ color: '#6366f1', fontSize: '12px', margin: '0 0 24px' }}>
-            Amount: <strong style={{ color: 'white' }}>{currencySymbol}{withdrawalData.amount}</strong>
+            Amount: <strong style={{ color: 'white' }}>{format(withdrawalData.amount)}</strong>
           </p>
 
           {/* Code Input */}
