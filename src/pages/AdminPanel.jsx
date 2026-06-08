@@ -371,7 +371,7 @@ export default function AdminPanel() {
   };
 
   const setMinWithdrawal = async (id) => {
-    const amount = window.prompt('Set minimum withdrawal amount:');
+    const amount = window.prompt('Set minimum withdrawal amount (in user currency):');
     if (!amount || isNaN(amount)) return;
     await api(`/users/${id}/minimum-withdrawal`, 'PUT', { withdrawalLimit: parseFloat(amount) });
     api('/users').then(d => setUsers(Array.isArray(d) ? d : d.users || []));

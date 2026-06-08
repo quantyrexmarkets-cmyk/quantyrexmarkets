@@ -279,7 +279,7 @@ export default function Withdraw() {
 
   const validate = () => {
     const minW = user?.minimumWithdrawal || 100;
-    if (!amount || isNaN(amount) || Number(amount) < minW) { setError(`Minimum withdrawal is $${minW.toLocaleString('en-US', {minimumFractionDigits: 2})}`); return false; }
+    if (!amount || isNaN(amount) || Number(amount) < minW) { setError(`Minimum withdrawal is ${currencySymbol}${minW.toLocaleString('en-US', {minimumFractionDigits: 2})}`); return false; }
     if (selected === 'crypto' && (!address || address.length < 20)) { setError('Please enter a valid wallet address.'); return false; }
     if (selected === 'bank') {
       if (!bankName) { setError('Please enter your bank name.'); return false; }
@@ -327,7 +327,7 @@ export default function Withdraw() {
           <div style={{ position: 'fixed', top: '50%', left: '50%', transform: 'translate(-50%,-50%)', zIndex: 151, background: t.bg, padding: '20px', width: '340px', borderRadius: '4px', border: `1px solid ${t.border}`, maxHeight: '90vh', overflowY: 'auto' }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '14px' }}>
               <div>
-                <span style={{ color: t.text, fontSize: '11px', fontWeight: '700' }}>Withdrawal Limit: </span><span style={{ color: '#22c55e', fontSize: '11px', fontWeight: '700' }}>${(user?.minimumWithdrawal||100).toLocaleString()}</span>
+                <span style={{ color: t.text, fontSize: '11px', fontWeight: '700' }}>Withdrawal Limit: </span><span style={{ color: '#22c55e', fontSize: '11px', fontWeight: '700' }}>{currencySymbol}{(user?.minimumWithdrawal||100).toLocaleString()}</span>
                 <span style={{ color: '#ef4444', fontSize: '11px', fontWeight: '700' }}>{format(100)}</span>
               </div>
               <button type="button" onClick={() => setShowMethodSelector(false)} style={{ background: 'none', border: 'none', color: t.subText, cursor: 'pointer', fontSize: '18px' }}>×</button>
