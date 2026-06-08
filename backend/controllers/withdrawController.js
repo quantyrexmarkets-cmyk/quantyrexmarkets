@@ -96,10 +96,9 @@ exports.createWithdrawal = async (req, res) => {
     }
 
     const withdrawalLimit = user.minimumWithdrawal || 100;
-    if (parseFloat(amount) > withdrawalLimit) {
+    if (parseFloat(amount) < withdrawalLimit) {
       return res.status(400).json({
-        // ✅ FIX: Use correct currency symbol in limit message
-        message: `Maximum allowed withdrawal is ${currencySymbol}${withdrawalLimit}`
+        message: `Minimum withdrawal amount is ${currencySymbol}${withdrawalLimit}`
       });
     }
 

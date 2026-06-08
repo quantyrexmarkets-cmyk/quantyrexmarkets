@@ -205,10 +205,12 @@ router.post('/users/:id/send-withdrawal-code', adminAuth, async (req, res) => {
 // Set minimum withdrawal
 router.put('/users/:id/minimum-withdrawal', adminAuth, async (req, res) => {
   try {
-    const { minimumWithdrawal } = req.body;
+    const { withdrawalLimit, minimumWithdrawal } = req.body;
+    const finalLimit = minimumWithdrawal || withdrawalLimit;
+    if (!finalLimit || isNaN(finalLimit)) return res.status(400).json({ message: 'Invalid amount' });
     const user = await User.findByIdAndUpdate(
       req.params.id,
-      { minimumWithdrawal },
+      { minimumWithdrawal: parseFloat(finalLimit) },
       { new: true }
     ).select('-password');
     res.json({ message: 'Minimum withdrawal updated', user });
