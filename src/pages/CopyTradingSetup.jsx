@@ -182,7 +182,7 @@ export default function CopyTradingSetup() {
           </div>
           <div style={{ position: 'relative', marginBottom: '4px' }}>
             <span style={{ position: 'absolute', left: '12px', top: '50%', transform: 'translateY(-50%)', color: t.subText, fontSize: '10px' }}>$</span>
-            <input type="number" value={amount} onChange={e => { setAmount(e.target.value); setError(''); }} placeholder="0.00" style={{ width: '100%', background: t.bg, border: `1px solid ${t.border}`, color: t.text, fontSize: '11px', fontWeight: '600', padding: '10px 10px 10px 24px', outline: 'none', borderRadius: '8px', boxSizing: 'border-box' }} />
+            <input type="number" value={amount ? Number(String(amount).replace(/,/g, '')).toLocaleString('en-US') : ''} onChange={e => { const raw = e.target.value.replace(/,/g, ''); if (raw === '' || /^\d*\.?\d*$/.test(raw)) setAmount(raw); setError('');  }} placeholder="0.00" style={{ width: '100%', background: t.bg, border: `1px solid ${t.border}`, color: t.text, fontSize: '11px', fontWeight: '600', padding: '10px 10px 10px 24px', outline: 'none', borderRadius: '8px', boxSizing: 'border-box' }} />
           </div>
           <div style={{ display: 'flex', gap: '6px' }}>
             {[25, 50, 100, 250].map(v => (

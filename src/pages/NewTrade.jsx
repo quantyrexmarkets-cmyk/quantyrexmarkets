@@ -101,7 +101,7 @@ export default function NewTrade() {
         {/* Amount */}
         <div>
           <div style={{ color: t.dimText, fontSize: '8px', marginBottom: '6px' }}>Amount (USD)</div>
-          <input value={amount} onChange={e => setAmount(e.target.value)} placeholder={`Min. ${format(10)}`}
+          <input value={amount ? Number(String(amount).replace(/,/g, '')).toLocaleString('en-US') : ''} onChange={e => { const raw = e.target.value.replace(/,/g, ''); if (raw === '' || /^\d*\.?\d*$/.test(raw)) setAmount(raw); }} placeholder={`Min. ${format(10)}`}
             style={{ width: '100%', background: t.inputBg, border: `1px solid ${direction === 'buy' ? 'rgba(34,197,94,0.4)' : 'rgba(239,68,68,0.4)'}`, color: t.text, fontSize: '11px', fontWeight: '700', padding: '8px 10px', outline: 'none', boxSizing: 'border-box' }} />
         </div>
 

@@ -68,7 +68,7 @@ export default function DepositFunds() {
           {/* Amount */}
           <div>
             <div style={{ color: t.dimText, fontSize: '9px', marginBottom: '6px' }}>Amount to deposit</div>
-            <input value={amount} onChange={e => setAmount(e.target.value)}
+            <input value={amount ? Number(String(amount).replace(/,/g, '')).toLocaleString('en-US') : ''} onChange={e => { const raw = e.target.value.replace(/,/g, ''); if (raw === '' || /^\d*\.?\d*$/.test(raw)) setAmount(raw); }}
               style={{ width: '100%', background: t.cardBg, border: `1px solid ${t.border}`, color: 'white', fontSize: '9px', padding: '10px', outline: 'none', boxSizing: 'border-box' }} />
           </div>
 

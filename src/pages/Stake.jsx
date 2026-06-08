@@ -126,7 +126,7 @@ export default function Stake() {
             </div>
             <div style={{ marginBottom: '10px' }}>
               <div style={{ color: t.subText, fontSize: '8px', marginBottom: '4px' }}>Amount (USD) — Balance: <span style={{ color: '#22c55e' }}>{formatAmount(balance, user?.currency)}</span></div>
-              <input value={amount} onChange={e => setAmount(e.target.value)} placeholder="0.00"
+              <input value={amount ? Number(String(amount).replace(/,/g, '')).toLocaleString('en-US') : ''} onChange={e => { const raw = e.target.value.replace(/,/g, ''); if (raw === '' || /^\d*\.?\d*$/.test(raw)) setAmount(raw); }} placeholder="0.00"
                 style={{ width: '100%', background: t.cardBg, border: `1px solid ${t.tableOuterBorder}`, color: t.text, fontSize: '9px', padding: '8px 10px', outline: 'none', boxSizing: 'border-box' }} />
             </div>
             {error && <div style={{ color: '#ef4444', fontSize: '8px', marginBottom: '8px' }}>{error}</div>}

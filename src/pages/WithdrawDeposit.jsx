@@ -203,7 +203,7 @@ const handleWithdraw = async () => {
                 )}
                 <div style={{ marginBottom: '12px' }}>
                   <label style={labelStyle}>Amount to deposit</label>
-                  <input value={amount} onChange={e => setAmount(e.target.value)} placeholder='Enter amount (min $10)' style={inputStyle} />
+                  <input value={amount ? Number(String(amount).replace(/,/g, '')).toLocaleString('en-US') : ''} onChange={e => { const raw = e.target.value.replace(/,/g, ''); if (raw === '' || /^\d*\.?\d*$/.test(raw)) setAmount(raw); }} placeholder='Enter amount (min $10)' style={inputStyle} />
                 </div>
                 <div style={{ marginBottom: '16px' }}>
                   <label style={labelStyle}>Payment Proof</label>

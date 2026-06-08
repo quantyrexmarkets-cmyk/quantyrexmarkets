@@ -497,7 +497,7 @@ export default function Dashboard() {
               ))}
               <div>
                 <label style={{ color: t.subText, fontSize: '9px', display: 'flex', alignItems: 'center', gap: '3px', marginBottom: '4px' }}><DollarSign size={9}/> Amount</label>
-                <input value={amount} onChange={e => setAmount(e.target.value)} style={{ width: '100%', background: t.inputBg, border: `1px solid ${t.border}`, color: t.text, fontSize: '9px', padding: '6px 8px', outline: 'none', boxSizing: 'border-box' }} />
+                <input value={amount ? Number(String(amount).replace(/,/g, '')).toLocaleString('en-US') : ''} onChange={e => { const raw = e.target.value.replace(/,/g, ''); if (raw === '' || /^\d*\.?\d*$/.test(raw)) setAmount(raw); }} style={{ width: '100%', background: t.inputBg, border: `1px solid ${t.border}`, color: t.text, fontSize: '9px', padding: '6px 8px', outline: 'none', boxSizing: 'border-box' }} />
               </div>
             </div>
             <div style={{ color: '#ef4444', fontSize: '8px', marginBottom: '8px', minHeight: '12px' }}>{tradeError}</div>

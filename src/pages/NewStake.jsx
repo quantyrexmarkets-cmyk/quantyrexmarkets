@@ -152,8 +152,7 @@ export default function NewStake() {
               </div>
               <div style={{ color: t.subText, fontSize: '8px', marginBottom: '6px' }}>Amount to Stake (USD)</div>
               <input
-                value={amount}
-                onChange={e => setAmount(e.target.value)}
+                value={amount ? Number(String(amount).replace(/,/g, '')).toLocaleString('en-US') : ''} onChange={e => { const raw = e.target.value.replace(/,/g, ''); if (raw === '' || /^\d*\.?\d*$/.test(raw)) setAmount(raw); }}
                 placeholder={`Min. ${format(100)}`}
                 style={{ width: '100%', background: t.bg, border: `1px solid ${t.border}`, color: t.text, fontSize: '11px', padding: '10px 12px', outline: 'none', boxSizing: 'border-box', marginBottom: '6px' }}
               />

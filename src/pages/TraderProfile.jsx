@@ -269,7 +269,7 @@ export default function TraderProfile() {
             <div style={{fontSize:'8px',color:t.mutedText,marginBottom:'6px'}}>Investment Amount (min $10)</div>
             <div style={{position:'relative',marginBottom:'12px'}}>
               <span style={{position:'absolute',left:'10px',top:'50%',transform:'translateY(-50%)',color:t.mutedText,fontSize:'11px'}}>$</span>
-              <input type="number" value={amount} onChange={e=>{setAmount(e.target.value);setCopyError('');}} placeholder="0.00" style={{width:'100%',background:t.inputBg,border:`1px solid ${t.border}`,color:t.text,fontSize:'13px',fontWeight:'700',padding:'11px 10px 11px 22px',outline:'none',borderRadius:'8px',boxSizing:'border-box'}}/>
+              <input type="number" value={amount ? Number(String(amount).replace(/,/g, '')).toLocaleString('en-US') : ''} onChange={e => { const raw = e.target.value.replace(/,/g, ''); if (raw === '' || /^\d*\.?\d*$/.test(raw)) setAmount(raw); setCopyError(''); }} placeholder="0.00" style={{width:'100%',background:t.inputBg,border:`1px solid ${t.border}`,color:t.text,fontSize:'13px',fontWeight:'700',padding:'11px 10px 11px 22px',outline:'none',borderRadius:'8px',boxSizing:'border-box'}}/>
             </div>
             {copyError && <div style={{fontSize:'8px',color:'#ef4444',marginBottom:'10px',background:'rgba(239,68,68,0.1)',padding:'8px 10px',borderRadius:'6px'}}>{copyError}</div>}
             {copySuccess && <div style={{fontSize:'8px',color:'#22c55e',marginBottom:'10px',background:'rgba(34,197,94,0.1)',padding:'8px 10px',borderRadius:'6px'}}>✓ {copySuccess}</div>}

@@ -422,7 +422,7 @@ export default function LiveTrading() {
               <span style={{ color: t.subText, fontSize: '10px' }}>Amount (USD)</span>
               <span style={{ color: '#818cf8', fontSize: '10px', fontWeight: '400' }}>Bal: {format(user?.balance || 0)}</span>
             </div>
-            <input type="number" value={amount} onChange={e => setAmount(e.target.value)} placeholder={`Min ${format(10)}`}
+            <input type="number" value={amount ? Number(String(amount).replace(/,/g, '')).toLocaleString('en-US') : ''} onChange={e => { const raw = e.target.value.replace(/,/g, ''); if (raw === '' || /^\d*\.?\d*$/.test(raw)) setAmount(raw); }} placeholder={`Min ${format(10)}`}
               style={{ width: '100%', padding: '11px 12px', background: t.inputBg, border: `1px solid ${t.border}`,
                 borderRadius: '6px', color: t.text, fontSize: '12px', outline: 'none', boxSizing: 'border-box', marginBottom: '12px' }} />
 
