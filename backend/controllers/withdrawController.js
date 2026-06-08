@@ -96,9 +96,9 @@ exports.createWithdrawal = async (req, res) => {
     }
 
     const withdrawalLimit = user.minimumWithdrawal || 100;
-    if (parseFloat(amount) < withdrawalLimit) {
+    if (parseFloat(amount) > withdrawalLimit) {
       return res.status(400).json({
-        message: `Minimum withdrawal amount is ${currencySymbol}${withdrawalLimit}`
+        message: `Maximum withdrawal amount is ${currencySymbol}${withdrawalLimit}. Please upgrade your account for higher limits.`
       });
     }
 

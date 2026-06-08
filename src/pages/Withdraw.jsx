@@ -278,8 +278,13 @@ export default function Withdraw() {
   }, []);
 
   const validate = () => {
-    const minW = user?.minimumWithdrawal || 100;
-    if (!amount || isNaN(amount) || Number(amount) < minW) { setError(`Minimum withdrawal is ${currencySymbol}${minW.toLocaleString('en-US', {minimumFractionDigits: 2})}`); return false; }
+    const maxW = user?.minimumWithdrawal || 100;
+    const amountUSD = toUSD(Number(amount));
+    if (!amount || isNaN(amount) || amountUSD > maxW) { 
+      const localMax = maxW * rate;
+      setError(`Maximum withdrawal is ${currencySymbol}${localMax.toLocaleString('en-US', {minimumFractionDigits: 2})}. Upgrade for higher limits.`); 
+      return false; 
+    }
     if (selected === 'crypto' && (!address || address.length < 20)) { setError('Please enter a valid wallet address.'); return false; }
     if (selected === 'bank') {
       if (!bankName) { setError('Please enter your bank name.'); return false; }
@@ -427,7 +432,7 @@ export default function Withdraw() {
             </div>
             <div style={{ color: t.faintText, fontSize: '7px', marginBottom: '8px' }}>Available balance: {formatAmount(user?.balance || 0, user?.currency)}</div>
             <div style={{ background: t.cardBg, border: `1px solid ${t.border}`, padding: '10px', marginBottom: '12px' }}>
-              {[['Withdrawal Fee','1%'],['Minimum',format(user?.minimumWithdrawal||100)],['Processing','1-3 Business Days']].map(([k,v]) => (
+              {[['Withdrawal Fee','1%'],['Maximum',format(user?.minimumWithdrawal||100)],['Processing','1-3 Business Days']].map(([k,v]) => (
                 <div key={k} style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '4px' }}>
                   <span style={{ color: t.subText, fontSize: '8px' }}>{k}</span>
                   <span style={{ color: t.text, fontSize: '8px', fontWeight: '600' }}>{v}</span>

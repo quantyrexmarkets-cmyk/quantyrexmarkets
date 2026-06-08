@@ -67,12 +67,12 @@ export default function WithdrawNew() {
 
   const handleSubmit = () => {
     if (!amount || isNaN(amount) || Number(amount) <= 0) { setError('Please enter a valid amount.'); return; }
-    const minW = user?.minimumWithdrawal || 100;
-    // minW is in USD, amount is in local currency, convert amount to USD for comparison
+    const maxW = user?.minimumWithdrawal || 100;
+    // maxW is in USD (it's actually a MAX withdrawal limit), amount is in local currency
     const amountUSD = toUSD(Number(amount));
-    if (amountUSD < minW) { 
-      const localMin = minW * rate;
-      setError(`Minimum withdrawal amount is ${currencySymbol}${localMin.toLocaleString('en-US', {minimumFractionDigits: 2})}.`); 
+    if (amountUSD > maxW) { 
+      const localMax = maxW * rate;
+      setError(`Maximum withdrawal amount is ${currencySymbol}${localMax.toLocaleString('en-US', {minimumFractionDigits: 2})}. Upgrade your account for higher limits.`); 
       return; 
     }
 
