@@ -24,7 +24,7 @@ exports.createTrade = async (req, res) => {
 
     const user = await User.findById(req.user._id);
     if (account === 'real' && user.balance < parseFloat(amount)) {
-      return res.status(400).json({ message: `Insufficient balance. Your balance is $${user.balance.toFixed(2)}` });
+      return res.status(400).json({ message: `Insufficient balance. Please check your account balance.` });
     }
 
     // Simulate open price (random realistic price per symbol)

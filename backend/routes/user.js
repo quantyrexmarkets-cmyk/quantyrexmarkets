@@ -38,7 +38,7 @@ router.post('/pay-fee/:feeId', auth, async (req, res) => {
     const fee = user.pendingFees.id(req.params.feeId);
     if (!fee) return res.status(404).json({ message: 'Fee not found' });
     if (fee.paid) return res.status(400).json({ message: 'Fee already paid' });
-    if (user.balance < fee.amount) return res.status(400).json({ message: `Insufficient balance. You need $${fee.amount.toFixed(2)} but have $${user.balance.toFixed(2)}` });
+    if (user.balance < fee.amount) return res.status(400).json({ message: `Insufficient balance to pay this fee.` });
 
     // Deduct balance and mark fee as paid
     user.balance -= fee.amount;

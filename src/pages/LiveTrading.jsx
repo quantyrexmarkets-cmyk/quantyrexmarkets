@@ -524,7 +524,7 @@ export default function LiveTrading() {
                   <div style={{ textAlign: 'right' }}>
                     <div style={{ fontSize: '11px', fontWeight: '400' }}>{format(tr.amount)}</div>
                     <div style={{ fontSize: '9px', color: tr.status === 'closed' ? (tr.result > 0 ? '#22c55e' : '#ef4444') : '#f59e0b', marginTop: '2px', fontWeight: '400' }}>
-                      {tr.status === 'closed' ? (tr.result > 0 ? `+$${tr.result.toFixed(2)}` : `$${tr.result.toFixed(2)}`) : tr.status.toUpperCase()}
+                      {tr.status === 'closed' ? (tr.result > 0 ? `+${format(tr.result)}` : `${format(tr.result)}`) : tr.status.toUpperCase()}
                     </div>
                   </div>
                 </div>

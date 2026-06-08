@@ -32,7 +32,7 @@ router.post('/', auth, requireSubscription, async (req, res) => {
     const user = await User.findById(req.user.id);
     if (!user) return res.status(404).json({ message: 'User not found' });
     if (user.balance < Number(amount)) {
-      return res.status(400).json({ message: `Insufficient balance. You need $${Number(amount).toLocaleString()} to stake.` });
+      return res.status(400).json({ message: `Insufficient balance to stake.` });
     }
 
     // Deduct from balance
@@ -59,7 +59,7 @@ router.post('/', auth, requireSubscription, async (req, res) => {
     await Notification.create({
       user: req.user.id,
       title: 'Stake Activated ✅',
-      message: `Your ${plan} stake of $${Number(amount).toLocaleString()} at ${apy} APY has been activated for ${duration}.`,
+      message: `Your ${plan} stake has been activated for ${duration}.`,
       type: 'deposit'
     });
 

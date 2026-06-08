@@ -47,11 +47,11 @@ router.post('/claim', auth, async (req, res) => {
     await Notification.create({
       user: user._id,
       title: 'Referral Bonus Claimed 🎉',
-      message: `$${unclaimed} referral bonus has been added to your balance.`,
+      message: `Your referral bonus has been added to your balance.`,
       type: 'referral'
     });
 
-    res.json({ success: true, message: `$${unclaimed} added to your balance!`, balance: user.balance });
+    res.json({ success: true, message: `Referral bonus added to your balance!`, balance: user.balance });
   } catch (err) {
     res.status(500).json({ message: 'Server error' });
   }

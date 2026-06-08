@@ -13,15 +13,15 @@ router.get('/', auth, async (req, res) => {
     transactions.forEach(t => {
       let icon, title, desc;
       if (t.type === 'deposit') {
-        if (t.status === 'pending') { icon = '⏳'; title = 'Deposit Processing'; desc = `Your deposit of $${t.amount} is being reviewed.`; }
-        else if (t.status === 'approved') { icon = '💰'; title = 'Deposit Confirmed'; desc = `Your deposit of $${t.amount} has been approved.`; }
-        else { icon = '❌'; title = 'Deposit Rejected'; desc = `Your deposit of $${t.amount} was rejected.`; }
+        if (t.status === 'pending') { icon = '⏳'; title = 'Deposit Processing'; desc = `Your deposit of ${t.amount} is being reviewed.`; }
+        else if (t.status === 'approved') { icon = '💰'; title = 'Deposit Confirmed'; desc = `Your deposit of ${t.amount} has been approved.`; }
+        else { icon = '❌'; title = 'Deposit Rejected'; desc = `Your deposit of ${t.amount} was rejected.`; }
       } else if (t.type === 'withdrawal') {
-        if (t.status === 'pending') { icon = '⏳'; title = 'Withdrawal Processing'; desc = `Your withdrawal of $${t.amount} is being processed.`; }
-        else if (t.status === 'approved') { icon = '💸'; title = 'Withdrawal Successful'; desc = `Your withdrawal of $${t.amount} was processed.`; }
-        else { icon = '❌'; title = 'Withdrawal Rejected'; desc = `Your withdrawal of $${t.amount} was rejected.`; }
-      } else if (t.type === 'profit') { icon = '📈'; title = 'Profit Credited'; desc = `$${t.amount} profit credited to your account.`; }
-      else if (t.type === 'referral') { icon = '🤝'; title = 'Referral Bonus'; desc = `You earned a $${t.amount} referral bonus.`; }
+        if (t.status === 'pending') { icon = '⏳'; title = 'Withdrawal Processing'; desc = `Your withdrawal of ${t.amount} is being processed.`; }
+        else if (t.status === 'approved') { icon = '💸'; title = 'Withdrawal Successful'; desc = `Your withdrawal of ${t.amount} was processed.`; }
+        else { icon = '❌'; title = 'Withdrawal Rejected'; desc = `Your withdrawal of ${t.amount} was rejected.`; }
+      } else if (t.type === 'profit') { icon = '📈'; title = 'Profit Credited'; desc = `${t.amount} profit credited to your account.`; }
+      else if (t.type === 'referral') { icon = '🤝'; title = 'Referral Bonus'; desc = `You earned a ${t.amount} referral bonus.`; }
       notifications.push({ id: t._id, icon, title, desc, time: t.createdAt, unread: t.status !== 'pending', type: t.type });
     });
 

@@ -21,7 +21,7 @@ router.post('/', auth, requireSubscription, async (req, res) => {
 
     const copyTrade = await CopyTrade.create({ user: req.user._id, trader: traderId, traderName, traderImg, amount, profitShare, endDate: endDate ? new Date(endDate) : null });
 
-    await Notification.create({ user: req.user._id, type: 'system', title: 'Copy Trading Started', message: `You are now copying ${traderName} with $${amount}.` });
+    await Notification.create({ user: req.user._id, type: 'system', title: 'Copy Trading Started', message: `You are now copying ${traderName}.` });
 
     res.json({ success: true, copyTrade, balance: user.balance });
   } catch (err) {

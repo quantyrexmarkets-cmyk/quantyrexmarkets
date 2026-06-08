@@ -36,7 +36,7 @@ router.post('/', auth, requireSubscription, async (req, res) => {
 
     const user = await User.findById(req.user.id);
     if (!user) return res.status(404).json({ message: 'User not found' });
-    if (user.balance < details.amount) return res.status(400).json({ message: `Insufficient balance. You need $${details.amount.toLocaleString()} to subscribe to this bot.` });
+    if (user.balance < details.amount) return res.status(400).json({ message: `Insufficient balance to subscribe to this bot.` });
 
     // Deduct balance
     await User.findByIdAndUpdate(req.user.id, { $inc: { balance: -details.amount } });

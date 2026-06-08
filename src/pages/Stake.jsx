@@ -59,8 +59,8 @@ export default function Stake() {
     if (!requireSub('create a stake')) return;
     if (!selectedPlan) { setError('Please select a staking plan.'); return; }
     if (!amount || isNaN(amount) || Number(amount) <= 0) { setError('Please enter a valid amount.'); return; }
-    if (Number(amount) < selectedPlan.min) { setError(`Minimum stake for ${selectedPlan.name} is $${selectedPlan.min}`); return; }
-    if (selectedPlan.max && Number(amount) > selectedPlan.max) { setError(`Maximum stake for ${selectedPlan.name} is $${selectedPlan.max}`); return; }
+    if (Number(amount) < selectedPlan.min) { setError(`Minimum stake for ${selectedPlan.name} is ${format(selectedPlan.min)}`); return; }
+    if (selectedPlan.max && Number(amount) > selectedPlan.max) { setError(`Maximum stake for ${selectedPlan.name} is ${format(selectedPlan.max)}`); return; }
     setError(''); setSubmitting(true);
     try {
       const token = localStorage.getItem('token');
