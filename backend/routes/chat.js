@@ -87,7 +87,7 @@ router.post('/visitor-left', auth, async (req, res) => {
 // Admin: get all chats (with dynamic online status)
 router.get('/all', adminAuth, async (req, res) => {
   try {
-    const chats = await Contact.find().sort({ updatedAt: -1 }).lean();
+    const chats = await Contact.find().populate('userId', 'avatar firstName lastName lastOnline').sort({ updatedAt: -1 }).lean();
     const ONLINE_THRESHOLD = 45 * 1000; // 45 seconds
     const now = Date.now();
     const result = chats.map(c => ({
