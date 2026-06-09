@@ -403,7 +403,7 @@ export default function SupportPage() {
                     display: 'flex', alignItems: 'center', justifyContent: 'center',
                     fontSize: '14px', fontWeight: '700'
                   }}>
-                    {initialsOf(c.name, c.email)}
+                    {c.userId?.avatar ? <img src={c.userId.avatar} alt='' style={{ width:'100%', height:'100%', objectFit:'cover', borderRadius:'50%' }}/> : initialsOf(c.name, c.email)}
                   </div>
                   {c.visitorOnline && (
                     <span style={{
