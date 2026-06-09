@@ -154,6 +154,22 @@ export default function SupportPage() {
     }
   }, [selectedChat?.messages]);
 
+  // Handle Android/browser back button - close chat instead of exiting app
+  useEffect(() => {
+    if (!selectedChat) return;
+    // Push a history entry when chat opens
+    window.history.pushState({ chatOpen: true }, '');
+    const handlePop = () => {
+      setSelectedChat(null);
+    };
+    window.addEventListener('popstate', handlePop);
+    return () => {
+      window.removeEventListener('popstate', handlePop);
+    };
+  }, [selectedChat?._id]);
+
+
+
   const sendReply = async () => {
     if (!adminReply?.trim() || adminSending) return;
     setAdminSending(true);
