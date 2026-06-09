@@ -114,6 +114,8 @@ export default function SupportPage() {
   const [canInstall, setCanInstall] = useState(installer.canInstall());
   const [adminSending, setAdminSending] = useState(false);
   const bottomRef = useRef(null);
+  const messagesRef = useRef(null);
+  const [showScrollDown, setShowScrollDown] = useState(false);
   const navigate = useNavigate();
   const token = localStorage.getItem('token');
 
@@ -457,7 +459,7 @@ export default function SupportPage() {
       </div>
 
       {/* Chat area */}
-      <div style={{ flex: 1, display: 'flex', flexDirection: 'column', background: '#000', minWidth: 0, minHeight: 0, maxHeight: '100%', overflow: 'hidden' }}>
+      <div style={{ flex: 1, display: 'flex', flexDirection: 'column', background: '#000', minWidth: 0, minHeight: 0, maxHeight: '100%', overflow: 'hidden', position: 'relative' }}>
         {!selectedChat ? (
           <div style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', color: t.faintText, fontSize: '12px' }}>Select a conversation</div>
         ) : selectedChat.isAI ? (
@@ -540,7 +542,11 @@ export default function SupportPage() {
             </div>
 
             {/* Messages */}
-            <div style={{ flex: 1, overflowY: 'auto', overflowX: 'hidden', padding: '16px', display: 'flex', flexDirection: 'column', gap: '8px', minHeight: 0, overscrollBehavior: 'contain', WebkitOverflowScrolling: 'touch', touchAction: 'pan-y' }}>
+            <div ref={messagesRef} onScroll={e => {
+              const el = e.currentTarget;
+              const distFromBottom = el.scrollHeight - el.scrollTop - el.clientHeight;
+              setShowScrollDown(distFromBottom > 200);
+            }} style={{ flex: 1, overflowY: 'auto', overflowX: 'hidden', padding: '16px', display: 'flex', flexDirection: 'column', gap: '8px', minHeight: 0, overscrollBehavior: 'contain', WebkitOverflowScrolling: 'touch', touchAction: 'pan-y', position: 'relative' }}>
               {selectedChat.messages?.map((msg, i) => {
                 const msgDate = new Date(msg.createdAt).toDateString();
                 const prevDate = i > 0 ? new Date(selectedChat.messages[i-1].createdAt).toDateString() : null;
@@ -616,6 +622,35 @@ export default function SupportPage() {
               })}
               <div ref={bottomRef} />
             </div>
+
+            {/* Scroll to bottom button */}
+            {showScrollDown && (
+              <button
+                type="button"
+                onClick={() => bottomRef.current?.scrollIntoView({ behavior: 'smooth' })}
+                style={{
+                  position: 'absolute',
+                  bottom: '90px',
+                  right: '16px',
+                  width: '40px',
+                  height: '40px',
+                  borderRadius: '50%',
+                  background: '#6366f1',
+                  border: 'none',
+                  color: 'white',
+                  cursor: 'pointer',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  boxShadow: '0 4px 12px rgba(0,0,0,0.4)',
+                  zIndex: 10,
+                  animation: 'fadeIn 0.2s ease'
+                }}>
+                <svg width='18' height='18' viewBox='0 0 24 24' fill='none' stroke='currentColor' strokeWidth='2.5' strokeLinecap='round' strokeLinejoin='round'>
+                  <path d='M6 9l6 6 6-6'/>
+                </svg>
+              </button>
+            )}
 
             {/* Input */}
             {selectedChat.status === 'open' && (
