@@ -1,5 +1,5 @@
 // Service Worker version - bump to force update
-const SW_VERSION = 'v4-20250603';
+const SW_VERSION = 'v5-20260609';
 const NOTIFICATION_BADGE = '/notification-badge.png';
 const NOTIFICATION_ICON = '/support-icon-512.png';
 

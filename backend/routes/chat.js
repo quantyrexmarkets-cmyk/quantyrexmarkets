@@ -4,6 +4,16 @@ const Contact = require('../models/Contact');
 const auth = require('../middleware/auth');
 const { sendChatNotification } = require('../utils/sendEmail');
 const { sendAdminPush, sendUserPush } = require('./push');
+
+// Generate avatar URL: use uploaded avatar OR generate from initials
+function getAvatarUrl(user, fallbackName) {
+  if (user && user.avatar) return user.avatar;
+  const name = encodeURIComponent((fallbackName || 'User').trim());
+  // ui-avatars.com generates a circular avatar with initials
+  return `https://ui-avatars.com/api/?name=${name}&background=6366f1&color=fff&size=192&bold=true&format=png`;
+}
+
+
 const adminAuth = require('../middleware/adminAuth');
 
 // User: start or continue chat
@@ -32,7 +42,7 @@ router.post('/send', auth, async (req, res) => {
       body: text.slice(0, 80),
       url: '/admin/support',
       chatId: String(chat._id),
-      image: req.user.avatar || undefined
+      image: getAvatarUrl(req.user, chat.name || chat.email)
     }).catch(() => {});
     chat.unreadAdmin += 1;
     chat.visitorOnline = true;
@@ -131,7 +141,7 @@ router.post('/send-image', auth, uploadUserMem.single('image'), async (req, res)
       body: '📷 Sent an image',
       url: '/admin/support',
       chatId: String(chat._id),
-      image: req.user.avatar || undefined
+      image: getAvatarUrl(req.user, chat.name || chat.email)
     }).catch(() => {});
     // Notify admins of new image
     sendAdminPush({
