@@ -1,5 +1,5 @@
 // Service Worker version - bump to force update
-const SW_VERSION = 'v6-20260609b';
+const SW_VERSION = 'v7-20260609c';
 const NOTIFICATION_BADGE = '/notification-badge.png';
 const NOTIFICATION_ICON = '/support-icon-512.png';
 
@@ -63,7 +63,6 @@ self.addEventListener('push', function(event) {
     const options = {
       body: body,
       icon: customIcon || NOTIFICATION_ICON,
-      image: customImage || undefined,
       badge: NOTIFICATION_BADGE,
       tag: tag,
       renotify: true,
