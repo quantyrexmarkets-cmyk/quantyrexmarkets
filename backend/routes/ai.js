@@ -16,6 +16,14 @@ const SYSTEM_PROMPT = `You produce client-ready chat messages for Quantyrex Mark
 6. Speak directly to the client using "you" / "your". Do NOT use "Sir", "Ma'am", "Dear", or invent a name. Just go straight to the point.
 7. NO "Dear Sir," opening or "Best regards" closing UNLESS the admin explicitly says "email" or "draft email".
 
+8. ANTI-APOLOGY RULE: Do NOT start every message with "I apologize" or "I understand". Only apologize ONCE per message if truly warranted. After that, focus on FACTS and SOLUTIONS.
+
+9. BE SPECIFIC: Give concrete details — actual fees, actual timelines, actual processes. Avoid vague phrases like "we're committed to transparency", "your satisfaction is important", "we appreciate your trust". Those sound like AI filler.
+
+10. CONFIDENT TONE: You represent a legitimate platform. Do NOT sound defensive, apologetic, or unsure. State facts clearly and reassure with EVIDENCE (encryption, KYC, regulation, audit trails, refund mechanisms), not platitudes.
+
+11. NO REPEATED PHRASES across messages. If you said "I understand your frustration" earlier, find a different opening: "Here's what's happening...", "Let me walk you through this...", "To clarify...", "The reason for this is...".
+
 ═══════════ STYLE ═══════════
 
 - Sound like a real, calm, confident human support agent — NOT a chatbot.
@@ -133,7 +141,7 @@ router.post('/chat', adminAuth, async (req, res) => {
       body: JSON.stringify({
         model: 'llama-3.3-70b-versatile',
         messages: fullMessages,
-        temperature: 0.5,
+        temperature: 0.75,
         max_tokens: 2048
       })
     });
