@@ -565,7 +565,7 @@ export default function SupportPage() {
                               <circle cx='12' cy='7' r='4'/>
                             </svg>
                           </div>
-                          <div style={{ display: 'flex', flexDirection: 'column', maxWidth: '70%', marginLeft: '4px' }}>
+                          <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', maxWidth: '70%', marginLeft: '4px' }}>
                             <div
                               onDoubleClick={() => setDeleteMsg({ index: i, text: msg.text || 'Image' })}
                               style={{ background: '#1c1c1c', color: 'white', fontSize: '12px', padding: '10px 14px', borderRadius: '18px 18px 18px 4px', lineHeight: '1.4', wordBreak: 'break-word', userSelect: 'text', WebkitUserSelect: 'text', WebkitTouchCallout: 'default', cursor: 'pointer' }}>
