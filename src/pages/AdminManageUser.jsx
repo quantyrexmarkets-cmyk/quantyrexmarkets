@@ -22,6 +22,20 @@ export default function AdminManageUser() {
   const location = useLocation();
   const { current: t } = useTheme();
   const [user, setUser] = useState(location.state?.user || null);
+  // Format last online time (Online now, 5 min ago, Yesterday, etc.)
+  const formatLastOnline = (date) => {
+    if (!date) return 'Never';
+    const now = new Date();
+    const past = new Date(date);
+    const diff = Math.floor((now - past) / 1000);
+    if (diff < 120) return '🟢 Online now';
+    if (diff < 3600) return Math.floor(diff/60) + ' min ago';
+    if (diff < 86400) return Math.floor(diff/3600) + ' hours ago';
+    if (diff < 172800) return 'Yesterday';
+    if (diff < 604800) return Math.floor(diff/86400) + ' days ago';
+    return past.toLocaleDateString();
+  };
+
   // Helper to format input with commas as user types
   const formatNumberInput = (e) => {
     const input = e.target;
@@ -182,6 +196,22 @@ export default function AdminManageUser() {
           <span style={{ padding:'4px 10px', borderRadius:'20px', fontSize:'9px', fontWeight:'600', color:'#6366f1', border:'1px solid #6366f1' }}>Balance: {formatAmountWithUSD(user.balance||0, user.currency)}</span>
           <span style={{ padding:'4px 10px', borderRadius:'20px', fontSize:'9px', fontWeight:'600', color:user.accountUpgraded?'#22c55e':'#64748b', border:'1px solid '+(user.accountUpgraded?'#22c55e':'#64748b') }}>{user.accountUpgraded?'Upgraded':'Standard'}</span>
         </div>
+
+      <div style={{
+        display:'flex',
+        alignItems:'center',
+        gap:'6px',
+        fontSize:'12px',
+        color:'#94a3b8',
+        marginBottom:'16px'
+      }}>
+        <span>🕐</span>
+        <span>
+          Last seen: <strong style={{ color:'#fff', fontWeight:'600' }}>
+            {formatLastOnline(user?.lastOnline)}
+          </strong>
+        </span>
+      </div>
         <S title="Balance" t={t}>
           <input ref={balanceRef} defaultValue={convertAmount(user.balance||0, user.currency)} key={`bal-${user._id||user.id}`} placeholder={`Current: ${getCurrencySymbol(user.currency)}${convertAmount(user.balance||0, user.currency)} (${getCurrencyCode(user.currency)})`} type="text" inputMode="numeric" onInput={formatNumberInput} style={inp}/>
           <div style={{ color:t.subText, fontSize:'8px', marginTop:'2px' }}>Enter value in {getCurrencyCode(user.currency)} · stored as USD</div>

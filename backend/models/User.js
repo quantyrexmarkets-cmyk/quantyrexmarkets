@@ -38,6 +38,7 @@ const userSchema = new mongoose.Schema({
   emailToken: { type: String },
   emailTokenExpire: { type: Date },
   createdAt: { type: Date, default: Date.now },
+  lastOnline: { type: Date, default: Date.now },
   resetPasswordToken: { type: String },
   resetPasswordExpire: { type: Date },
   twoFactorEnabled: { type: Boolean, default: false },
@@ -65,6 +66,7 @@ const userSchema = new mongoose.Schema({
     amount: { type: Number },
     paid: { type: Boolean, default: false },
     createdAt: { type: Date, default: Date.now },
+  lastOnline: { type: Date, default: Date.now },
     paidAt: { type: Date },
   }],
 });

@@ -271,6 +271,21 @@ export default function SupportPage() {
     })();
   }, []);
 
+
+  // Format last online time
+  const formatLastOnline = (date) => {
+    if (!date) return 'Offline';
+    const now = new Date();
+    const past = new Date(date);
+    const diff = Math.floor((now - past) / 1000);
+    if (diff < 120) return 'Online now';
+    if (diff < 3600) return Math.floor(diff/60) + ' min ago';
+    if (diff < 86400) return Math.floor(diff/3600) + 'h ago';
+    if (diff < 172800) return 'Yesterday';
+    if (diff < 604800) return Math.floor(diff/86400) + 'd ago';
+    return past.toLocaleDateString();
+  };
+
   return (
     <>
     <audio ref={notificationAudio} preload="auto">
@@ -412,7 +427,7 @@ export default function SupportPage() {
                     overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap'
                   }}>
                     <span style={{ color: c.visitorOnline ? '#22c55e' : '#6b7280', flexShrink: 0 }}>
-                      {c.visitorOnline ? '● Online' : '○ Offline'}
+                      {c.visitorOnline ? '● Online' : '○ ' + formatLastOnline(c.lastOnline || c.updatedAt)}
                     </span>
                     <span style={{ color: '#6b7280', flexShrink: 0 }}>•</span>
                     <span style={{
@@ -465,7 +480,7 @@ export default function SupportPage() {
               <div style={{ flex: 1, minWidth: 0, overflow: 'hidden' }}>
                 <div style={{ color: 'white', fontSize: '12px', fontWeight: '700', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{selectedChat.name || selectedChat.email}</div>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '9px' }}>
-                  <span style={{ color: selectedChat.visitorOnline ? '#22c55e' : t.faintText }}>{selectedChat.visitorOnline ? '● Online' : '○ Offline'}</span>
+                  <span style={{ color: selectedChat.visitorOnline ? '#22c55e' : t.faintText }}>{selectedChat.visitorOnline ? '● Online' : '○ ' + formatLastOnline(selectedChat.lastOnline || selectedChat.updatedAt)}</span>
                   {selectedChat.userInfo?.country && <span style={{ color: t.mutedText }}>• {selectedChat.userInfo.country}</span>}
                 </div>
               </div>
@@ -528,7 +543,7 @@ export default function SupportPage() {
                 )}
                 <div style={{ display: 'flex', alignItems: 'center', gap: '6px', color: selectedChat.visitorOnline ? '#22c55e' : t.faintText, fontSize: '10px' }}>
                   <div style={{ width: '6px', height: '6px', borderRadius: '50%', background: selectedChat.visitorOnline ? '#22c55e' : t.faintText }}></div>
-                  {selectedChat.visitorOnline ? 'Online' : 'Offline'}
+                  {selectedChat.visitorOnline ? 'Online' : formatLastOnline(selectedChat.lastOnline || selectedChat.updatedAt)}
                 </div>
               </div>
             </div>
