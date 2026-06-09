@@ -562,7 +562,7 @@ export default function Withdraw() {
                 <tr><td colSpan='4' style={{ padding: '24px', textAlign: 'center', color: t.faintText, fontSize: '8px' }}>No data available in table</td></tr>
               ) : filtered.map((w, i) => (
                 <tr key={i} style={{ borderBottom: `1px solid ${t.tableRowBorder}`, background: i % 2 === 0 ? 'transparent' : t.subtleBg }}>
-                  <td style={{ padding: '8px 10px', color: t.text, fontSize: '8px', fontWeight: '700', borderRight: `1px solid ${t.subtleBorder}` }}>-{format(w.amount)}</td>
+                  <td style={{ padding: '8px 10px', color: t.text, fontSize: '8px', fontWeight: '700', borderRight: `1px solid ${t.subtleBorder}` }}>-{formatAmount(w.amount, user?.currency)}</td>
                   <td style={{ padding: '8px 10px', color: t.subText, fontSize: '8px', borderRight: `1px solid ${t.subtleBorder}` }}>{w.method}</td>
                   <td style={{ padding: '8px 10px', borderRight: `1px solid ${t.subtleBorder}` }}>
                     <span style={{ background: statusColor(w.status) + '20', color: statusColor(w.status), fontSize: '7px', padding: '2px 6px', display: 'inline-block', textTransform: 'capitalize' }}>{w.status}</span>
