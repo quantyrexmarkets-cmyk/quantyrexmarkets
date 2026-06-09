@@ -60,7 +60,7 @@ async function sendToSub(sub, payload) {
 }
 
 // Send push to a specific user (all their devices)
-module.exports.sendUserPush = async (userId, { title, body, url, chatId, icon, badge }) => {
+module.exports.sendUserPush = async (userId, { title, body, url, chatId, icon, badge, image }) => {
   try {
     const subs = await PushSubscription.find({ userId });
     if (!subs.length) return 0;
@@ -69,8 +69,9 @@ module.exports.sendUserPush = async (userId, { title, body, url, chatId, icon, b
       body,
       url: url || '/dashboard',
       chatId,
-      icon: icon || '/icon-192.png',
-      badge: badge || '/icon-192.png'
+      icon: image || icon || '/icon-192.png',
+      badge: badge || '/icon-192.png',
+      image: image || undefined
     });
     const results = await Promise.all(subs.map(s => sendToSub(s, payload)));
     return results.filter(Boolean).length;
@@ -81,7 +82,7 @@ module.exports.sendUserPush = async (userId, { title, body, url, chatId, icon, b
 };
 
 // Send push to ALL admins (all their devices)
-module.exports.sendAdminPush = async ({ title, body, url, chatId, icon, badge }) => {
+module.exports.sendAdminPush = async ({ title, body, url, chatId, icon, badge, image }) => {
   try {
     const admins = await User.find({ $or: [{ isAdmin: true }, { role: 'admin' }] }).select('_id');
     if (!admins.length) return 0;
@@ -93,8 +94,9 @@ module.exports.sendAdminPush = async ({ title, body, url, chatId, icon, badge })
       body,
       url: url || '/admin/support',
       chatId,
-      icon: icon || '/icon-192.png',
-      badge: badge || '/icon-192.png'
+      icon: image || icon || '/icon-192.png',
+      badge: badge || '/icon-192.png',
+      image: image || undefined
     });
     const results = await Promise.all(subs.map(s => sendToSub(s, payload)));
     console.log(`Admin push: ${results.filter(Boolean).length}/${subs.length} delivered`);
