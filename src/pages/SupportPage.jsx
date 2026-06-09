@@ -98,6 +98,16 @@ export default function SupportPage() {
     };
   }, []);
   const [adminReply, setAdminReply] = useState('');
+  const adminReplyRef = useRef(null);
+  const adminReplyRef = useRef(null);
+  // Reset admin reply textarea height when cleared
+  useEffect(() => {
+    if (adminReply === '' && adminReplyRef.current) {
+      adminReplyRef.current.style.height = 'auto';
+      adminReplyRef.current.style.height = '40px';
+    }
+  }, [adminReply]);
+
   const [canInstall, setCanInstall] = useState(installer.canInstall());
   const [adminSending, setAdminSending] = useState(false);
   const bottomRef = useRef(null);
@@ -147,6 +157,19 @@ export default function SupportPage() {
       const data = await res.json();
       setSelectedChat(data);
       setAdminReply('');
+      setTimeout(() => {
+        if (adminReplyRef.current) {
+          adminReplyRef.current.style.height = 'auto';
+          adminReplyRef.current.style.height = '40px';
+        }
+      }, 0);
+      // Reset textarea height
+      setTimeout(() => {
+        if (adminReplyRef.current) {
+          adminReplyRef.current.style.height = 'auto';
+          adminReplyRef.current.style.height = '40px';
+        }
+      }, 0);
     } catch(e) {}
     setAdminSending(false);
   };
