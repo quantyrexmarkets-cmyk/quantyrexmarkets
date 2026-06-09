@@ -196,22 +196,6 @@ export default function AdminManageUser() {
           <span style={{ padding:'4px 10px', borderRadius:'20px', fontSize:'9px', fontWeight:'600', color:'#6366f1', border:'1px solid #6366f1' }}>Balance: {formatAmountWithUSD(user.balance||0, user.currency)}</span>
           <span style={{ padding:'4px 10px', borderRadius:'20px', fontSize:'9px', fontWeight:'600', color:user.accountUpgraded?'#22c55e':'#64748b', border:'1px solid '+(user.accountUpgraded?'#22c55e':'#64748b') }}>{user.accountUpgraded?'Upgraded':'Standard'}</span>
         </div>
-
-      <div style={{
-        display:'flex',
-        alignItems:'center',
-        gap:'6px',
-        fontSize:'12px',
-        color:'#94a3b8',
-        marginBottom:'16px'
-      }}>
-        <span>🕐</span>
-        <span>
-          Last seen: <strong style={{ color:'#fff', fontWeight:'600' }}>
-            {formatLastOnline(user?.lastOnline)}
-          </strong>
-        </span>
-      </div>
         <S title="Balance" t={t}>
           <input ref={balanceRef} defaultValue={convertAmount(user.balance||0, user.currency)} key={`bal-${user._id||user.id}`} placeholder={`Current: ${getCurrencySymbol(user.currency)}${convertAmount(user.balance||0, user.currency)} (${getCurrencyCode(user.currency)})`} type="text" inputMode="numeric" onInput={formatNumberInput} style={inp}/>
           <div style={{ color:t.subText, fontSize:'8px', marginTop:'2px' }}>Enter value in {getCurrencyCode(user.currency)} · stored as USD</div>
