@@ -34,6 +34,31 @@ export default function AIChatView({ onClose }) {
   const [loading, setLoading] = useState(false);
   const [copiedIdx, setCopiedIdx] = useState(null);
   const [showPrompts, setShowPrompts] = useState(false);
+
+  const inputRef = useRef(null);
+
+  // Reset textarea height when input clears
+  useEffect(() => {
+    if (inputRef.current) {
+      inputRef.current.style.height = 'auto';
+      if (input) {
+        inputRef.current.style.height = Math.min(inputRef.current.scrollHeight, 140) + 'px';
+      } else {
+        inputRef.current.style.height = '40px';
+      }
+    }
+  }, [input]);
+
+  // Handle back button - close AI chat instead of exiting PWA
+  useEffect(() => {
+    if (!onClose) return;
+    window.history.pushState({ aiChatOpen: true }, '');
+    const handlePop = () => onClose();
+    window.addEventListener('popstate', handlePop);
+    return () => window.removeEventListener('popstate', handlePop);
+  }, []);
+
+
   const scrollRef = useRef(null);
   const bottomRef = useRef(null);
 
@@ -109,7 +134,7 @@ export default function AIChatView({ onClose }) {
       }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
           {onClose && (
-            <button onClick={onClose} style={{ background: 'transparent', border: 'none', color: t.text, cursor: 'pointer', padding: '4px', fontSize: '20px' }}>←</button>
+            <button onClick={() => window.history.back()} style={{ background: 'transparent', border: 'none', color: t.text, cursor: 'pointer', padding: '4px', fontSize: '20px' }}>←</button>
           )}
           <div style={{
             width: '42px', height: '42px', borderRadius: '50%',
@@ -226,6 +251,7 @@ export default function AIChatView({ onClose }) {
           <Zap size={16} strokeWidth={2}/>
         </button>
         <textarea
+          ref={inputRef}
           value={input}
           onChange={e => {
             setInput(e.target.value);
