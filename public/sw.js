@@ -30,6 +30,8 @@ self.addEventListener('push', function(event) {
   const messageBody = data.body || 'You have a new support message';
   const url = data.url || '/admin/support';
   const chatId = data.chatId || getChatId(url);
+  const customIcon = data.icon || data.image || null;
+  const customImage = data.image || null;
 
   // One tag per chat so multiple messages from same user replace each other
   const tag = 'qm-chat-' + chatId;
