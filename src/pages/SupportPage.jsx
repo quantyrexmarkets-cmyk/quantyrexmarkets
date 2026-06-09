@@ -101,9 +101,13 @@ export default function SupportPage() {
   const adminReplyRef = useRef(null);
   // Reset admin reply textarea height when cleared
   useEffect(() => {
-    if (adminReply === '' && adminReplyRef.current) {
+    if (adminReplyRef.current) {
       adminReplyRef.current.style.height = 'auto';
-      adminReplyRef.current.style.height = '40px';
+      if (adminReply) {
+        adminReplyRef.current.style.height = Math.min(adminReplyRef.current.scrollHeight, 140) + 'px';
+      } else {
+        adminReplyRef.current.style.height = '40px';
+      }
     }
   }, [adminReply]);
 
@@ -156,19 +160,6 @@ export default function SupportPage() {
       const data = await res.json();
       setSelectedChat(data);
       setAdminReply('');
-      setTimeout(() => {
-        if (adminReplyRef.current) {
-          adminReplyRef.current.style.height = 'auto';
-          adminReplyRef.current.style.height = '40px';
-        }
-      }, 0);
-      // Reset textarea height
-      setTimeout(() => {
-        if (adminReplyRef.current) {
-          adminReplyRef.current.style.height = 'auto';
-          adminReplyRef.current.style.height = '40px';
-        }
-      }, 0);
     } catch(e) {}
     setAdminSending(false);
   };
