@@ -153,27 +153,7 @@ export default function AdminPanel() {
     }
   }, [contacts]);
 
-  // Register service worker and subscribe to push
-  useEffect(() => {
-    const setupPush = async () => {
-      if (!('serviceWorker' in navigator) || !('PushManager' in window)) return;
-      try {
-        const reg = await navigator.serviceWorker.register('/sw.js');
-        const permission = await Notification.requestPermission();
-        if (permission !== 'granted') return;
-        const sub = await reg.pushManager.subscribe({
-          userVisibleOnly: true,
-          applicationServerKey: 'BEiIS0GArEDCEpC2TqaQVD3UX4wu8CO1SRu2Gy4Wlypj1pjl2txbyF4VwuxKQ9eUJ7PHHRBx2BG3f0_Z9EKhhz8'
-        });
-        await fetch('https://quantyrexmarkets-api.vercel.app/api/push/subscribe', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${localStorage.getItem('token')}` },
-          body: JSON.stringify({ subscription: sub })
-        });
-      } catch(e) { console.log('Push setup error:', e); }
-    };
-    setupPush();
-  }, []);
+  // Push notifications handled in SupportPage only (admin doesn't need them here)
 
 
   const [allBots, setAllBots] = useState([]);

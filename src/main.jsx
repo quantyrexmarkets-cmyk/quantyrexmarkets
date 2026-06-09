@@ -44,8 +44,20 @@ if (localStorage.getItem('theme') === 'light') {
 }
 
 registerServiceWorker().then(() => {
-  // Auto-subscribe to push notifications if user is logged in
+  // Auto-subscribe to push notifications - only for regular users (admins subscribe via SupportPage)
   if (localStorage.getItem('token')) {
-    setTimeout(() => subscribeToPush().catch(e => console.log('Push subscribe:', e.message)), 2000);
+    setTimeout(() => {
+      try {
+        const userData = JSON.parse(sessionStorage.getItem('user') || localStorage.getItem('user') || '{}');
+        const isAdmin = userData.isAdmin === true || userData.role === 'admin';
+        if (isAdmin) {
+          console.log('[Push] Skipped for admin - use SupportPage to subscribe');
+          return;
+        }
+        subscribeToPush().catch(e => console.log('Push subscribe:', e.message));
+      } catch(e) {
+        console.log('Push setup error:', e.message);
+      }
+    }, 2000);
   }
 });
