@@ -568,7 +568,7 @@ export default function SupportPage() {
                           <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', maxWidth: '70%', marginLeft: '4px' }}>
                             <div
                               onDoubleClick={() => setDeleteMsg({ index: i, text: msg.text || 'Image' })}
-                              style={{ background: '#1c1c1c', color: 'white', fontSize: '12px', padding: '10px 14px', borderRadius: '18px 18px 18px 4px', lineHeight: '1.4', wordBreak: 'break-word', userSelect: 'text', WebkitUserSelect: 'text', WebkitTouchCallout: 'default', cursor: 'pointer' }}>
+                              style={{ background: '#1c1c1c', color: 'white', fontSize: '12px', padding: '10px 14px', borderRadius: '18px 18px 18px 4px', lineHeight: '1.4', wordBreak: 'break-word', whiteSpace: 'pre-wrap', userSelect: 'text', WebkitUserSelect: 'text', WebkitTouchCallout: 'default', cursor: 'pointer' }}>
                               {msg.image ? <a href={msg.image} target='_blank' rel='noopener noreferrer'><img src={msg.image} style={{ maxWidth: '200px', maxHeight: '200px', borderRadius: '6px', display: 'block', cursor: 'pointer', objectFit: 'cover' }} /></a> : msg.text}
                             </div>
                             <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginTop: '4px', marginLeft: '6px' }}>
@@ -582,7 +582,7 @@ export default function SupportPage() {
                           <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', maxWidth: '70%', marginRight: '4px' }}>
                             <div
                               onDoubleClick={() => setDeleteMsg({ index: i, text: msg.text || 'Image' })}
-                              style={{ background: '#3b82f6', color: 'white', fontSize: '12px', padding: msg.image ? '4px' : '10px 14px', borderRadius: '18px 18px 4px 18px', lineHeight: '1.4', wordBreak: 'break-word', userSelect: 'text', WebkitUserSelect: 'text', WebkitTouchCallout: 'default', cursor: 'pointer' }}>
+                              style={{ background: '#3b82f6', color: 'white', fontSize: '12px', padding: msg.image ? '4px' : '10px 14px', borderRadius: '18px 18px 4px 18px', lineHeight: '1.4', wordBreak: 'break-word', whiteSpace: 'pre-wrap', userSelect: 'text', WebkitUserSelect: 'text', WebkitTouchCallout: 'default', cursor: 'pointer' }}>
                               {msg.image ? <a href={msg.image} target='_blank' rel='noopener noreferrer'><img src={msg.image} style={{ maxWidth: '200px', maxHeight: '200px', borderRadius: '6px', display: 'block', cursor: 'pointer', objectFit: 'cover' }} /></a> : msg.text}
                             </div>
                             <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginTop: '4px', marginRight: '6px' }}>
