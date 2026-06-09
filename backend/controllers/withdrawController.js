@@ -48,6 +48,23 @@ function convertToUSD(amount, currencyCode) {
   return parseFloat((amount * rate).toFixed(2));
 }
 
+
+const RATES_FROM_USD = {
+  USD: 1, EUR: 0.92, GBP: 0.79, INR: 95.78, NGN: 1580, JPY: 149.5,
+  CAD: 1.36, AUD: 1.53, CHF: 0.90, CNY: 7.24, ZAR: 18.5,
+  AED: 3.67, SAR: 3.75, BRL: 5.05, MXN: 17.1, KES: 129, GHS: 15.5,
+  PKR: 278, BDT: 110, PHP: 56, IDR: 15700, MYR: 4.7,
+  SGD: 1.34, HKD: 7.8, KRW: 1330, THB: 35, VND: 24500,
+  TRY: 32, RUB: 92, EGP: 49, NZD: 1.65,
+  SEK: 10.5, NOK: 10.8, DKK: 6.9, PLN: 4.0,
+  UGX: 3700, TZS: 2500
+};
+
+function convertFromUSD(usdAmount, currencyCode) {
+  const rate = RATES_FROM_USD[currencyCode] || 1;
+  return parseFloat((usdAmount * rate).toFixed(2));
+}
+
 exports.createWithdrawal = async (req, res) => {
   try {
     const {
@@ -71,7 +88,7 @@ exports.createWithdrawal = async (req, res) => {
     // ✅ FIX: Balance check uses correct currency symbol
     if (user.balance < parseFloat(amount))
       return res.status(400).json({
-        message: `Insufficient balance. Your balance is ${currencySymbol}${user.balance.toFixed(2)}`
+        message: `Insufficient balance. Your balance is ${currencySymbol}${convertFromUSD(user.balance, currencyCode).toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2})}`
       });
 
     if (user.kycStatus !== 'approved')
