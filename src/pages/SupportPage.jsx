@@ -99,7 +99,6 @@ export default function SupportPage() {
   }, []);
   const [adminReply, setAdminReply] = useState('');
   const adminReplyRef = useRef(null);
-  const adminReplyRef = useRef(null);
   // Reset admin reply textarea height when cleared
   useEffect(() => {
     if (adminReply === '' && adminReplyRef.current) {
