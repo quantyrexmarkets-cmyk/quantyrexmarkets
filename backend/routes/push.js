@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const webpush = require('web-push');
 const PushSubscription = require('../models/PushSubscription');
-const adminAuth = require('../middleware/adminAuth');
+const User = require('../models/User');
 const auth = require('../middleware/auth');
 
 webpush.setVapidDetails(
@@ -11,56 +11,96 @@ webpush.setVapidDetails(
   process.env.VAPID_PRIVATE_KEY
 );
 
-// Save subscription
+// Save subscription - support multiple devices per user (by endpoint)
 router.post('/subscribe', auth, async (req, res) => {
   try {
     const { subscription } = req.body;
+    if (!subscription || !subscription.endpoint) {
+      return res.status(400).json({ message: 'Invalid subscription' });
+    }
     await PushSubscription.findOneAndUpdate(
-      { userId: req.user._id },
-      { userId: req.user._id, subscription },
+      { endpoint: subscription.endpoint },
+      { userId: req.user._id, subscription, endpoint: subscription.endpoint },
       { upsert: true, new: true }
     );
     res.json({ message: 'Subscribed' });
   } catch(e) {
+    console.error('Subscribe error:', e.message);
     res.status(500).json({ message: 'Server error' });
   }
 });
 
-// Send push to all admin subscriptions
-router.post('/send-admin', async (req, res) => {
+// Unsubscribe
+router.post('/unsubscribe', auth, async (req, res) => {
   try {
-    const { title, body, url } = req.body;
-    const subs = await PushSubscription.find();
-    const payload = JSON.stringify({ title, body, url });
-    await Promise.all(subs.map(s =>
-      webpush.sendNotification(s.subscription, payload).catch(e => {
-        if (e.statusCode === 410) PushSubscription.findByIdAndDelete(s._id);
-      })
-    ));
-    res.json({ message: 'Sent' });
+    const { endpoint } = req.body;
+    if (endpoint) await PushSubscription.deleteOne({ endpoint });
+    res.json({ message: 'Unsubscribed' });
   } catch(e) {
     res.status(500).json({ message: 'Server error' });
   }
 });
 
 module.exports = router;
-module.exports.sendUserPush = async (userId, { title, body, url }) => {
+
+// Helper: send to a single subscription with cleanup
+async function sendToSub(sub, payload) {
   try {
-    const sub = await PushSubscription.findOne({ userId });
-    if (!sub) return;
-    const payload = JSON.stringify({ title, body, url: url || '/dashboard' });
-    await webpush.sendNotification(sub.subscription, payload).catch(e => {
-      if (e.statusCode === 410) PushSubscription.findByIdAndDelete(sub._id);
+    await webpush.sendNotification(sub.subscription, payload);
+    return true;
+  } catch (e) {
+    if (e.statusCode === 410 || e.statusCode === 404) {
+      await PushSubscription.findByIdAndDelete(sub._id);
+      console.log('Removed dead subscription:', sub._id);
+    } else {
+      console.log('Push error:', e.statusCode, e.message);
+    }
+    return false;
+  }
+}
+
+// Send push to a specific user (all their devices)
+module.exports.sendUserPush = async (userId, { title, body, url, chatId, icon, badge }) => {
+  try {
+    const subs = await PushSubscription.find({ userId });
+    if (!subs.length) return 0;
+    const payload = JSON.stringify({
+      title,
+      body,
+      url: url || '/dashboard',
+      chatId,
+      icon: icon || '/icon-192.png',
+      badge: badge || '/icon-192.png'
     });
-  } catch(e) { console.log('Push error:', e.message); }
+    const results = await Promise.all(subs.map(s => sendToSub(s, payload)));
+    return results.filter(Boolean).length;
+  } catch(e) {
+    console.error('sendUserPush error:', e.message);
+    return 0;
+  }
 };
 
-module.exports.sendAdminPush = async ({ title, body, url, chatId }) => {
-  const subs = await PushSubscription.find();
-  const payload = JSON.stringify({ title, body, url: url || '/admin', chatId });
-  await Promise.all(subs.map(s =>
-    webpush.sendNotification(s.subscription, payload).catch(e => {
-      if (e.statusCode === 410) PushSubscription.findByIdAndDelete(s._id);
-    })
-  ));
+// Send push to ALL admins (all their devices)
+module.exports.sendAdminPush = async ({ title, body, url, chatId, icon, badge }) => {
+  try {
+    const admins = await User.find({ $or: [{ isAdmin: true }, { role: 'admin' }] }).select('_id');
+    if (!admins.length) return 0;
+    const adminIds = admins.map(a => a._id);
+    const subs = await PushSubscription.find({ userId: { $in: adminIds } });
+    if (!subs.length) return 0;
+    const payload = JSON.stringify({
+      title,
+      body,
+      url: url || '/admin/support',
+      chatId,
+      icon: icon || '/icon-192.png',
+      badge: badge || '/icon-192.png'
+    });
+    const results = await Promise.all(subs.map(s => sendToSub(s, payload)));
+    console.log(`Admin push: ${results.filter(Boolean).length}/${subs.length} delivered`);
+    return results.filter(Boolean).length;
+  } catch(e) {
+    console.error('sendAdminPush error:', e.message);
+    return 0;
+  }
 };

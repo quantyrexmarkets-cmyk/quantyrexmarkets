@@ -3,7 +3,7 @@ const router = express.Router();
 const Contact = require('../models/Contact');
 const auth = require('../middleware/auth');
 const { sendChatNotification } = require('../utils/sendEmail');
-const { sendAdminPush } = require('./push');
+const { sendAdminPush, sendUserPush } = require('./push');
 const adminAuth = require('../middleware/adminAuth');
 
 // User: start or continue chat
@@ -125,6 +125,12 @@ router.post('/send-image', auth, uploadUserMem.single('image'), async (req, res)
     }
 
     chat.messages.push({ sender: 'user', text: '', image: url });
+    sendAdminPush({
+      title: chat.name || chat.email || 'New Support Message',
+      body: '📷 Sent an image',
+      url: '/admin/support',
+      chatId: String(chat._id)
+    }).catch(() => {});
     // Notify admins of new image
     sendAdminPush({
       title: chat.name || chat.email || 'New Support Message',
@@ -163,6 +169,15 @@ router.post('/reply/:chatId', adminAuth, async (req, res) => {
     chat.unreadAdmin = 0;
     chat.updatedAt = Date.now();
     await chat.save();
+    // Notify user of admin reply
+    if (chat.userId) {
+      sendUserPush(chat.userId, {
+        title: 'Quantyrex Markets Support',
+        body: text.slice(0, 80),
+        url: '/support',
+        chatId: String(chat._id)
+      }).catch(() => {});
+    }
     res.json(chat);
   } catch (e) {
     res.status(500).json({ message: 'Server error' });
@@ -224,6 +239,14 @@ router.post('/reply-image/:chatId', adminAuth, uploadMem.single('image'), async 
     chat.unreadAdmin = 0;
     chat.updatedAt = Date.now();
     await chat.save();
+    if (chat.userId) {
+      sendUserPush(chat.userId, {
+        title: 'Quantyrex Markets Support',
+        body: '📷 Sent an image',
+        url: '/support',
+        chatId: String(chat._id)
+      }).catch(() => {});
+    }
     res.json(chat);
   } catch (e) {
     console.error(e);
