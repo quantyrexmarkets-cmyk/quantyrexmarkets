@@ -484,7 +484,7 @@ export default function SupportPage() {
           <>
             {/* Header */}
             <div style={{ background: '#0a0a0a', padding: '12px 16px', paddingTop: 'max(12px, env(safe-area-inset-top, 12px))', borderBottom: `1px solid ${t.subtleBorder}`, display: 'flex', alignItems: 'center', gap: '10px', flexShrink: 0 }}>
-              <button type="button" onClick={() => setSelectedChat(null)} style={{ background: 'none', border: 'none', color: t.text, cursor: 'pointer', fontSize: '18px', padding: '0' }}>←</button>
+              <button type="button" onClick={() => window.history.back()} style={{ background: 'none', border: 'none', color: t.text, cursor: 'pointer', fontSize: '18px', padding: '0' }}>←</button>
               <div style={{ width: '36px', height: '36px', borderRadius: '50%', background: '#4b5563', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '12px', color: 'white', fontWeight: '700', overflow: 'hidden' }}>{selectedChat.userId?.avatar ? <img src={selectedChat.userId.avatar} style={{ width:'100%', height:'100%', objectFit:'cover' }}/> : (selectedChat.name || selectedChat.email || 'U').slice(0,2).toUpperCase()}</div>
               <div style={{ flex: 1, minWidth: 0, overflow: 'hidden' }}>
                 <div style={{ color: 'white', fontSize: '12px', fontWeight: '700', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{selectedChat.name || selectedChat.email}</div>
