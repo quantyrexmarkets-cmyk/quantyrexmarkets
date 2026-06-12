@@ -10,6 +10,7 @@ import { updateProfile } from '../services/api';
 const COUNTRIES = [
   { name: 'United States', code: '+1', flag: '🇺🇸', minLen: 10, maxLen: 10 },
   { name: 'United Kingdom', code: '+44', flag: '🇬🇧', minLen: 10, maxLen: 10 },
+  { name: 'Ireland', code: '+353', flag: '🇮🇪', minLen: 9, maxLen: 9 },
   { name: 'Nigeria', code: '+234', flag: '🇳🇬', minLen: 10, maxLen: 11 },
   { name: 'India', code: '+91', flag: '🇮🇳', minLen: 10, maxLen: 10 },
   { name: 'Canada', code: '+1', flag: '🇨🇦', minLen: 10, maxLen: 10 },

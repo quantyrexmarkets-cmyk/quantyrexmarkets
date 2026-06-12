@@ -6,6 +6,7 @@ import { useAuth } from '../context/AuthContext';
 const countryCodes = [
   { flag: '🇺🇸', code: '+1', name: 'United States' },
   { flag: '🇬🇧', code: '+44', name: 'United Kingdom' },
+  { flag: '🇮🇪', code: '+353', name: 'Ireland' },
   { flag: '🇳🇬', code: '+234', name: 'Nigeria' },
   { flag: '🇮🇳', code: '+91', name: 'India' },
   { flag: '🇨🇦', code: '+1', name: 'Canada' },
