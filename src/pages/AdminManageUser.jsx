@@ -231,6 +231,22 @@ export default function AdminManageUser() {
                 showMsg('Failed: '+(e.message||'error'));
               }
             }, 'Record Deposit', <DollarSign size={12}/>)}
+            {btn(async()=>{
+              const localVal = parseFloat(String(depositAmountRef.current?.value||'0').replace(/,/g, ''));
+              if(isNaN(localVal) || localVal < 0) return showMsg('Enter valid amount');
+              const code = getCurrencyCode(user.currency);
+              const rates = JSON.parse(localStorage.getItem('fx_rates')||'{}');
+              const rate = rates[code] || 1;
+              const usdAmount = localVal / rate;
+              try {
+                const r = await api('/users/'+id+'/total-deposits','PUT',{totalDeposits:usdAmount});
+                if(r.user) setUser(r.user);
+                if(depositAmountRef.current) depositAmountRef.current.value='';
+                showMsg('Total Deposits overwritten · ' + code + ' ' + localVal.toLocaleString());
+              } catch(e) {
+                showMsg('Failed: '+(e.message||'error'));
+              }
+            }, 'Set Deposits (overwrite)', <DollarSign size={12}/>)}
           </div>
         </S>
         <S title="Admin Message" t={t}>

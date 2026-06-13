@@ -992,6 +992,26 @@ router.put('/users/:id/total-profit', adminAuth, async (req, res) => {
   }
 });
 
+// Admin overwrites total deposits (does NOT affect balance)
+router.put('/users/:id/total-deposits', adminAuth, async (req, res) => {
+  try {
+    const { totalDeposits } = req.body;
+    if (totalDeposits === undefined || isNaN(totalDeposits)) {
+      return res.status(400).json({ message: 'Valid totalDeposits required' });
+    }
+    const user = await User.findByIdAndUpdate(
+      req.params.id,
+      { $set: { totalDeposits: parseFloat(totalDeposits) } },
+      { new: true }
+    );
+    if (!user) return res.status(404).json({ message: 'User not found' });
+    res.json({ success: true, message: `Total deposits set to $${totalDeposits}`, user });
+  } catch (err) {
+    res.status(500).json({ message: 'Server error', error: err.message });
+  }
+});
+
+
 // Admin generate password reset link for user
 router.post('/users/:id/reset-password', adminAuth, async (req, res) => {
   try {
