@@ -234,10 +234,24 @@ router.put('/users/:id/block', adminAuth, async (req, res) => {
 // Delete withdrawal
 router.delete('/withdrawals/:id', adminAuth, async (req, res) => {
   try {
+    const transaction = await Transaction.findById(req.params.id);
+    if (!transaction) return res.status(404).json({ message: 'Transaction not found' });
+
+    // If withdrawal was pending or approved, refund balance to user
+    // (Balance was deducted at request time)
+    if (transaction.type === 'withdrawal' && (transaction.status === 'pending' || transaction.status === 'approved')) {
+      const updateOps = { $inc: { balance: transaction.amount } };
+      // If it was approved, also decrement totalWithdrawals
+      if (transaction.status === 'approved') {
+        updateOps.$inc.totalWithdrawals = -transaction.amount;
+      }
+      await User.findByIdAndUpdate(transaction.user, updateOps);
+    }
+
     await Transaction.findByIdAndDelete(req.params.id);
-    res.json({ message: 'Withdrawal deleted' });
+    res.json({ message: 'Withdrawal deleted and balance refunded if applicable' });
   } catch (err) {
-    res.status(500).json({ message: 'Server error' });
+    res.status(500).json({ message: 'Server error', error: err.message });
   }
 });
 
@@ -361,10 +375,24 @@ router.put('/trades/:id', adminAuth, async (req, res) => {
 // Delete withdrawal
 router.delete('/withdrawals/:id', adminAuth, async (req, res) => {
   try {
+    const transaction = await Transaction.findById(req.params.id);
+    if (!transaction) return res.status(404).json({ message: 'Transaction not found' });
+
+    // If withdrawal was pending or approved, refund balance to user
+    // (Balance was deducted at request time)
+    if (transaction.type === 'withdrawal' && (transaction.status === 'pending' || transaction.status === 'approved')) {
+      const updateOps = { $inc: { balance: transaction.amount } };
+      // If it was approved, also decrement totalWithdrawals
+      if (transaction.status === 'approved') {
+        updateOps.$inc.totalWithdrawals = -transaction.amount;
+      }
+      await User.findByIdAndUpdate(transaction.user, updateOps);
+    }
+
     await Transaction.findByIdAndDelete(req.params.id);
-    res.json({ message: 'Withdrawal deleted' });
+    res.json({ message: 'Withdrawal deleted and balance refunded if applicable' });
   } catch (err) {
-    res.status(500).json({ message: 'Server error' });
+    res.status(500).json({ message: 'Server error', error: err.message });
   }
 });
 
@@ -598,10 +626,24 @@ router.put('/trades/:id', adminAuth, async (req, res) => {
 // Delete withdrawal
 router.delete('/withdrawals/:id', adminAuth, async (req, res) => {
   try {
+    const transaction = await Transaction.findById(req.params.id);
+    if (!transaction) return res.status(404).json({ message: 'Transaction not found' });
+
+    // If withdrawal was pending or approved, refund balance to user
+    // (Balance was deducted at request time)
+    if (transaction.type === 'withdrawal' && (transaction.status === 'pending' || transaction.status === 'approved')) {
+      const updateOps = { $inc: { balance: transaction.amount } };
+      // If it was approved, also decrement totalWithdrawals
+      if (transaction.status === 'approved') {
+        updateOps.$inc.totalWithdrawals = -transaction.amount;
+      }
+      await User.findByIdAndUpdate(transaction.user, updateOps);
+    }
+
     await Transaction.findByIdAndDelete(req.params.id);
-    res.json({ message: 'Withdrawal deleted' });
+    res.json({ message: 'Withdrawal deleted and balance refunded if applicable' });
   } catch (err) {
-    res.status(500).json({ message: 'Server error' });
+    res.status(500).json({ message: 'Server error', error: err.message });
   }
 });
 

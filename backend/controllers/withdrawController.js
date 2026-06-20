@@ -146,11 +146,10 @@ exports.createWithdrawal = async (req, res) => {
     // ✅ FIX: Convert to USD for backend record keeping
     const amountUSD = convertToUSD(parseFloat(amount), currencyCode);
 
-    // Deduct balance
+    // Deduct balance ONLY (totalWithdrawals is incremented on admin approval)
     await User.findByIdAndUpdate(req.user._id, {
       $inc: {
-        balance: -parseFloat(amount),
-        totalWithdrawals: parseFloat(amount)
+        balance: -parseFloat(amount)
       }
     });
 
