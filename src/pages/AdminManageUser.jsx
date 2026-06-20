@@ -206,6 +206,9 @@ export default function AdminManageUser() {
           {btn(async()=>{const rawVal=parseFloat(String(profitRef.current?.value||'0').replace(/,/g, ''));const code=getCurrencyCode(user.currency);const rates=JSON.parse(localStorage.getItem('fx_rates')||'{}');const rate=rates[code]||1;const usdVal=rawVal/rate;const r=await api('/users/'+id+'/total-profit','PUT',{totalProfit:usdVal});if(r.user){setUser(r.user);if(profitRef.current)profitRef.current.value=convertAmount(r.user.totalProfit||0, r.user.currency);} showMsg('Profit updated');}, 'Set Profit', <TrendingUp size={12}/>)}
         </S>
         <S title="Record Deposit" t={t}>
+          <div style={{ color:'#22c55e', fontSize:'11px', marginBottom:'6px', padding:'8px', background:'rgba(34,197,94,0.1)', borderRadius:'6px', fontWeight:'700' }}>
+            Current Total Deposits: {getCurrencyCode(user.currency)} {Number(convertAmount(user.totalDeposits||0, user.currency)).toLocaleString()} <span style={{ color:t.subText, fontWeight:'400', fontSize:'9px' }}>(${(user.totalDeposits||0).toFixed(2)} USD)</span>
+          </div>
           <div style={{ color:t.subText, fontSize:'9px', marginBottom:'6px', lineHeight:'1.5' }}>
             Adds to user's Total Deposits stat only. Does NOT affect live balance.
           </div>
