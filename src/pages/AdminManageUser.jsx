@@ -90,7 +90,7 @@ export default function AdminManageUser() {
     if (location.state?.user) {
       const u = location.state.user;
       setUser(u);
-      setBalance(convertAmount(u.balance||0, u.currency));
+      setBalance(Number(convertAmount(u.balance||0, u.currency)).toLocaleString());
       setMsgText(u.adminMessage || '');
       setLoading(false);
     }
@@ -103,10 +103,10 @@ export default function AdminManageUser() {
       // Only update input refs if user hasn't typed anything yet (still at default)
       // We update refs to reflect latest backend value on fresh load/refresh
       if (balanceRef.current && document.activeElement !== balanceRef.current) {
-        balanceRef.current.value = convertAmount(u.balance||0, u.currency);
+        balanceRef.current.value = Number(convertAmount(u.balance||0, u.currency)).toLocaleString();
       }
       if (profitRef.current && document.activeElement !== profitRef.current) {
-        profitRef.current.value = convertAmount(u.totalProfit||0, u.currency);
+        profitRef.current.value = Number(convertAmount(u.totalProfit||0, u.currency)).toLocaleString();
       }
       if (msgTextRef.current && document.activeElement !== msgTextRef.current) {
         msgTextRef.current.value = u.adminMessage || '';
@@ -197,11 +197,11 @@ export default function AdminManageUser() {
           <span style={{ padding:'4px 10px', borderRadius:'20px', fontSize:'9px', fontWeight:'600', color:user.accountUpgraded?'#22c55e':'#64748b', border:'1px solid '+(user.accountUpgraded?'#22c55e':'#64748b') }}>{user.accountUpgraded?'Upgraded':'Standard'}</span>
         </div>
         <S title="Balance" t={t}>
-          <input ref={balanceRef} defaultValue={convertAmount(user.balance||0, user.currency)} key={`bal-${user._id||user.id}`} placeholder={`Current: ${getCurrencySymbol(user.currency)}${convertAmount(user.balance||0, user.currency)} (${getCurrencyCode(user.currency)})`} type="text" inputMode="numeric" onInput={formatNumberInput} style={inp}/>
+          <input ref={balanceRef} defaultValue={Number(convertAmount(user.balance||0, user.currency)).toLocaleString()} key={`bal-${user._id||user.id}`} placeholder={`Current: ${getCurrencySymbol(user.currency)}${Number(convertAmount(user.balance||0, user.currency)).toLocaleString()} (${getCurrencyCode(user.currency)})`} type="text" inputMode="numeric" onInput={formatNumberInput} style={inp}/>
           <div style={{ color:t.subText, fontSize:'8px', marginTop:'2px' }}>Enter value in {getCurrencyCode(user.currency)} · stored as USD</div>
           {btn(async()=>{const rawVal=parseFloat(String(balanceRef.current?.value||'0').replace(/,/g, ''));const code=getCurrencyCode(user.currency);const rates=JSON.parse(localStorage.getItem('fx_rates')||'{}');const rate=rates[code]||1;const usdVal=rawVal/rate;const r=await api('/users/'+id+'/balance','PUT',{balance:usdVal});if(r.user){setUser(r.user);if(balanceRef.current)balanceRef.current.value=convertAmount(r.user.balance||0, r.user.currency);} showMsg('Balance updated');}, 'Set Balance', <DollarSign size={12}/>)}
           <div style={{ marginTop:'8px', color:t.subText, fontSize:'9px', marginBottom:'4px' }}>Profit</div>
-          <input ref={profitRef} defaultValue={convertAmount(user.totalProfit||0, user.currency)} key={`profit-${user._id||user.id}`} placeholder={`Current: ${getCurrencySymbol(user.currency)}${convertAmount(user.totalProfit||0, user.currency)} (${getCurrencyCode(user.currency)})`} type="text" inputMode="numeric" onInput={formatNumberInput} style={inp}/>
+          <input ref={profitRef} defaultValue={Number(convertAmount(user.totalProfit||0, user.currency)).toLocaleString()} key={`profit-${user._id||user.id}`} placeholder={`Current: ${getCurrencySymbol(user.currency)}${Number(convertAmount(user.totalProfit||0, user.currency)).toLocaleString()} (${getCurrencyCode(user.currency)})`} type="text" inputMode="numeric" onInput={formatNumberInput} style={inp}/>
           <div style={{ color:t.subText, fontSize:'8px', marginTop:'2px' }}>Enter value in {getCurrencyCode(user.currency)} · stored as USD</div>
           {btn(async()=>{const rawVal=parseFloat(String(profitRef.current?.value||'0').replace(/,/g, ''));const code=getCurrencyCode(user.currency);const rates=JSON.parse(localStorage.getItem('fx_rates')||'{}');const rate=rates[code]||1;const usdVal=rawVal/rate;const r=await api('/users/'+id+'/total-profit','PUT',{totalProfit:usdVal});if(r.user){setUser(r.user);if(profitRef.current)profitRef.current.value=convertAmount(r.user.totalProfit||0, r.user.currency);} showMsg('Profit updated');}, 'Set Profit', <TrendingUp size={12}/>)}
         </S>
@@ -449,13 +449,13 @@ export default function AdminManageUser() {
             </div>
             <div style={{ textAlign:'right' }}>
               <div style={{ fontSize:'9px', color:t.subText, fontWeight:'600', letterSpacing:'1.2px' }}>MAX WITHDRAWAL</div>
-              <div style={{ fontSize:'15px', fontWeight:'700', color:t.text, marginTop:'4px' }}>{getCurrencySymbol(user.currency)}{convertAmount(user.minimumWithdrawal||100, user.currency)}</div>
+              <div style={{ fontSize:'15px', fontWeight:'700', color:t.text, marginTop:'4px' }}>{getCurrencySymbol(user.currency)}{Number(convertAmount(user.minimumWithdrawal||100, user.currency)).toLocaleString()}</div>
             </div>
           </div>
 
           {/* Input + Upgrade Button */}
           <div style={{ color:t.subText, fontSize:'10px', marginBottom:'6px' }}>New Maximum Withdrawal ({getCurrencyCode(user.currency)})</div>
-          <input ref={minWRef} type="text" inputMode="numeric" onInput={formatNumberInput} defaultValue={convertAmount(user.minimumWithdrawal||100, user.currency)} key={`minw-${user._id}`} placeholder="Enter new minimum" style={{ width:'100%', background:t.inputBg, border:`1px solid ${t.border}`, color:t.text, fontSize:'11px', padding:'9px 12px', outline:'none', borderRadius:'6px', boxSizing:'border-box', marginBottom:'8px' }}/>
+          <input ref={minWRef} type="text" inputMode="numeric" onInput={formatNumberInput} defaultValue={Number(convertAmount(user.minimumWithdrawal||100, user.currency)).toLocaleString()} key={`minw-${user._id}`} placeholder="Enter new minimum" style={{ width:'100%', background:t.inputBg, border:`1px solid ${t.border}`, color:t.text, fontSize:'11px', padding:'9px 12px', outline:'none', borderRadius:'6px', boxSizing:'border-box', marginBottom:'8px' }}/>
 
           <button type="button" disabled={clicked==='upgrade'} onClick={async()=>{const localV=parseFloat(String(minWRef.current?.value||'0').replace(/,/g, ''));if(!localV||localV<1)return showMsg('Minimum must be at least 1');const code=getCurrencyCode(user.currency);const rates=JSON.parse(localStorage.getItem('fx_rates')||'{}');const rate=rates[code]||1;const v=localV/rate;setClicked('upgrade');try{await api('/users/'+id+'/minimum-withdrawal','PUT',{minimumWithdrawal:v});const r=await api('/users/'+id+'/account-upgrade','PUT',{forceUpgrade:true});if(r.user)setUser(p=>({...r.user,minimumWithdrawal:v}));else setUser(p=>({...p,accountUpgraded:true,minimumWithdrawal:v}));showMsg('Upgraded · Max set to '+getCurrencySymbol(user.currency)+localV.toLocaleString());}catch(e){showMsg('Failed: '+e.message);}finally{setTimeout(()=>setClicked(''),500);}}} style={{ width:'100%', padding:'11px', background:clicked==='upgrade'?'rgba(34,197,94,0.15)':'linear-gradient(135deg, #22c55e, #16a34a)', border:'none', color:'#ffffff', fontSize:'11px', fontWeight:'700', cursor:clicked==='upgrade'?'wait':'pointer', borderRadius:'6px', display:'flex', alignItems:'center', justifyContent:'center', gap:'6px', marginBottom:'8px', letterSpacing:'0.5px' }}>{clicked==='upgrade'?(<><span style={{animation:'dotPulse 1.4s infinite',animationDelay:'0s'}}>.</span><span style={{animation:'dotPulse 1.4s infinite',animationDelay:'0.2s'}}>.</span><span style={{animation:'dotPulse 1.4s infinite',animationDelay:'0.4s'}}>.</span></>):(<><ArrowUpCircle size={13}/> {user.accountUpgraded?'Update Max Withdrawal':'Upgrade & Set Max'}</>)}</button>
 
