@@ -1001,7 +1001,7 @@ export default function AdminPanel() {
                 }).map((d, i) => (
                   <tr key={i}>
                     <td style={tdStyle}>{d.user?.firstName} {d.user?.lastName}<br/><span style={{ color: t.mutedText }}>{d.user?.email}</span></td>
-                    <td style={{ ...tdStyle, color: '#22c55e' }}>{(d.currencySymbol || '$') + Number(d.amount||0).toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2}) + ' ' + (d.currency || 'USD')}{d.purpose === 'pro_subscription' && <span style={{ marginLeft: '6px', background: 'linear-gradient(135deg, #6366f1, #4f46e5)', color: '#fff', fontSize: '7px', padding: '2px 6px', borderRadius: '3px', fontWeight: '700', letterSpacing: '0.5px', verticalAlign: 'middle', textTransform: 'uppercase' }}>PRO</span>}</td>
+                    <td style={{ ...tdStyle, color: '#22c55e' }}>{formatAmountWithUSD(d.amount||0, d.currency || d.user?.currency)}{d.purpose === 'pro_subscription' && <span style={{ marginLeft: '6px', background: 'linear-gradient(135deg, #6366f1, #4f46e5)', color: '#fff', fontSize: '7px', padding: '2px 6px', borderRadius: '3px', fontWeight: '700', letterSpacing: '0.5px', verticalAlign: 'middle', textTransform: 'uppercase' }}>PRO</span>}</td>
                     <td style={tdStyle}>{d.method || d.paymentMethod}</td>
                     <td style={{ ...tdStyle, color: d.status === 'approved' ? '#22c55e' : d.status === 'pending' ? '#f59e0b' : '#ef4444' }}>{d.status}</td>
                     <td style={tdStyle}>{new Date(d.createdAt).toLocaleDateString()}</td>
@@ -1043,7 +1043,7 @@ export default function AdminPanel() {
                 }).map((w, i) => (
                   <tr key={i}>
                     <td style={tdStyle}>{w.user?.firstName} {w.user?.lastName}<br/><span style={{ color: t.mutedText }}>{w.user?.email}</span></td>
-                    <td style={{ ...tdStyle, color: '#ec4899' }}>{(w.currencySymbol || '$') + Number(w.amount||0).toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2}) + ' ' + (w.currency || 'USD')}</td>
+                    <td style={{ ...tdStyle, color: '#ec4899' }}>{formatAmountWithUSD(w.amount||0, w.currency || w.user?.currency)}</td>
                     <td style={{ ...tdStyle, maxWidth: '100px', overflow: 'hidden', textOverflow: 'ellipsis' }}>{w.walletAddress}</td>
                     <td style={{ ...tdStyle, color: w.status === 'approved' ? '#22c55e' : w.status === 'pending' ? '#f59e0b' : '#ef4444' }}>{w.status}</td>
                     <td style={tdStyle}>{new Date(w.createdAt).toLocaleDateString()}</td>
