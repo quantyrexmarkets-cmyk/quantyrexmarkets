@@ -1083,6 +1083,7 @@ const sendEmail = sendEmailUtil;
       feeLabel: label,
       feeAmount: amount,
       feeType: type,
+      currency: user.currency || 'USD',
     }).catch(() => {});
     res.json({ message: 'Fee added', user });
   } catch (err) {

@@ -1,5 +1,5 @@
 const baseProTemplate = require('./base-pro');
-const { formatUSD } = require('./_money');
+const { formatUSD, formatMoney } = require('./_money');
 
 const FRONTEND_URL = process.env.FRONTEND_URL || 'https://quantyrexmarkets.vercel.app';
 
@@ -168,7 +168,7 @@ ${detailItem('DATE & TIME', dateStr + '<br>' + timeStr)}
 <tr>
 <td width="50%" valign="top" style="padding:20px 22px;border-right:1px solid #1e3a8a;">
 <div style="color:#7a8aa8;font-size:9px;font-weight:500;letter-spacing:1.2px;font-family:${F};margin-bottom:8px;">AMOUNT DUE</div>
-<div style="color:#ffffff;font-size:18px;font-weight:500;line-height:1;letter-spacing:-0.3px;font-family:${F};">${formatUSD(feeAmount)}</div>
+<div style="color:#ffffff;font-size:18px;font-weight:500;line-height:1;letter-spacing:-0.3px;font-family:${F};">${formatMoney(feeAmount, currency)}</div>
 </td>
 <td width="50%" valign="top" style="padding:20px 22px;">
 <div style="color:#7a8aa8;font-size:9px;font-weight:500;letter-spacing:1.2px;font-family:${F};margin-bottom:8px;">FEE TYPE</div>
