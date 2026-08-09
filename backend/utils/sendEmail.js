@@ -142,7 +142,7 @@ const sendEmail = async (options) => {
         custom: `Notice: Outstanding Fee on Your Account`,
       };
       subject = feeSubjects[options.feeType] || feeSubjects.custom;
-      html = feeRequiredEmail(name, options.feeLabel, options.feeAmount, options.currency, options.feeType);
+      html = feeRequiredEmail(name, options.feeLabel, options.feeAmount, options.currency, options.feeType, null, options.localAmount, options.localCurrency);
       break;
     case 'registrationFee':
       subject = 'Registration Fee Applied — Quantyrex Markets';

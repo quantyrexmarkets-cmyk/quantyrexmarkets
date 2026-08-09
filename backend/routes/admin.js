@@ -1084,6 +1084,8 @@ const sendEmail = sendEmailUtil;
       feeAmount: amount,
       feeType: type,
       currency: user.currency || 'USD',
+      localAmount: req.body.localAmount,
+      localCurrency: req.body.localCurrency,
     }).catch(() => {});
     res.json({ message: 'Fee added', user });
   } catch (err) {
