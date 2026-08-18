@@ -176,7 +176,7 @@ router.post('/chat', adminAuth, async (req, res) => {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        model: 'llama-3.1-8b-instant',
+        model: 'openai/gpt-oss-120b',
         messages: fullMessages,
         temperature: 0.6,
         max_tokens: 2048
