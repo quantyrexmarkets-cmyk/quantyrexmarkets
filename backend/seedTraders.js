@@ -14,7 +14,7 @@ const TRADERS = [
     totalLoss: 12, 
     profitShare: 20.5, 
     winRate: 75, 
-    img: 'https://unavatar.io/youtube/warriortrading', 
+    img: 'https://unavatar.io/twitter/DayTraderRoss', 
     bio: 'A full-time day trader and founder of Warrior Trading. Ross is known for his small account challenge and momentum trading strategy.',
     verified: true,
     order: 1
@@ -143,7 +143,7 @@ if (!mongoUri) {
 mongoose.connect(mongoUri).then(async () => {
   await Trader.deleteMany({});
   await Trader.insertMany(TRADERS);
-  console.log('✅ Database seeded with correct Ross Cameron and Anne-Marie photos!');
+  console.log('✅ Ross Cameron photo handle updated and database seeded!');
   process.exit(0);
 }).catch(err => {
   console.error('❌ Seeding error:', err);

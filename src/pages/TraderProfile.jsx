@@ -6,7 +6,7 @@ import { useTheme } from '../context/ThemeContext';
 import { startCopyTrade, getTraderById, getTraders } from '../services/api';
 
 const HEADSHOTS = {
-  "Ross Cameron": "https://unavatar.io/youtube/warriortrading",
+  "Ross Cameron": "https://unavatar.io/twitter/DayTraderRoss",
   "Rayner Teo": "https://unavatar.io/twitter/rayner_teo",
   "Kathy Lien": "https://unavatar.io/twitter/kathylienfx",
   "Nicola Duke": "https://unavatar.io/twitter/nicoladuke",
