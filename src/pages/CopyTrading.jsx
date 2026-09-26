@@ -1,19 +1,30 @@
 import { useState, useEffect } from 'react';
 import { useTheme } from '../context/ThemeContext';
 import { useNavigate } from 'react-router-dom';
-import { Search, MapPin, Users, FlaskConical, Heart, CheckCircle2 } from 'lucide-react';
+import { Search, MapPin, Users, FlaskConical, Heart } from 'lucide-react';
 import PageHeader from '../components/PageHeader';
 import { getTraders } from '../services/api';
 
+const HEADSHOTS = {
+  "Ross Cameron": "https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&w=256&q=80",
+  "Rayner Teo": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=256&q=80",
+  "Kathy Lien": "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=256&q=80",
+  "Nicola Duke": "https://images.unsplash.com/photo-1580489944761-15a19d654956?auto=format&fit=crop&w=256&q=80",
+  "Anton Kreil": "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=256&q=80",
+  "Timothy Sykes": "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?auto=format&fit=crop&w=256&q=80",
+  "Nial Fuller": "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&w=256&q=80",
+  "Anne-Marie Baiynd": "https://images.unsplash.com/photo-1567532939604-b6b5b0db2604?auto=format&fit=crop&w=256&q=80"
+};
+
 const TRADERS_DEFAULT = [
-  { id: 1, _id: '1', name: 'Ross Cameron', bio: 'A full-time day trader and the founder of Warrior Trading, a trading education platform and community that teaches people how to trade stocks. Ross is known for his small account challenge and momentum trading strategy.', location: 'Vermont, USA', flag: '🇺🇸', followers: '1.2k', risk: 6.5, favorite: 'AAPL', totalTrades: 300, totalLoss: 12, profitShare: 20.5, winRate: 75, img: 'https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&w=256&q=80', verified: true },
-  { id: 2, _id: '2', name: 'Rayner Teo', bio: 'A professional trader and author from Singapore. Rayner specializes in price action trading, candlestick patterns, and support/resistance strategies.', location: 'Singapore', flag: '🇸🇬', followers: '3.4k', risk: 4.8, favorite: 'SPY', totalTrades: 820, totalLoss: 34, profitShare: 18.0, winRate: 82, img: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=256&q=80', verified: true },
-  { id: 3, _id: '3', name: 'Kathy Lien', bio: 'Managing Director of FX Strategy at BK Asset Management, Kathy is a renowned forex expert and author of several trading books.', location: 'New York, USA', flag: '🇺🇸', followers: '2.1k', risk: 5.4, favorite: 'EURUSD', totalTrades: 950, totalLoss: 21, profitShare: 15.2, winRate: 79, img: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=256&q=80', verified: true },
-  { id: 4, _id: '4', name: 'Nicola Duke', bio: 'Forex educator and professional trader. Specializes in price action and technical analysis on major pairs.', location: 'United Kingdom', flag: '🇬🇧', followers: '1.6k', risk: 5.2, favorite: 'GBPUSD', totalTrades: 540, totalLoss: 15, profitShare: 19.5, winRate: 81, img: 'https://images.unsplash.com/photo-1580489944761-15a19d654956?auto=format&fit=crop&w=256&q=80', verified: true },
-  { id: 5, _id: '5', name: 'Anton Kreil', bio: 'Former Goldman Sachs trader. Aggressive multi-asset strategy with focus on crypto and equity derivatives.', location: 'London, UK', flag: '🇬🇧', followers: '2.8k', risk: 7.1, favorite: 'ETH', totalTrades: 1200, totalLoss: 45, profitShare: 12.5, winRate: 88, img: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=256&q=80', verified: true },
-  { id: 6, _id: '6', name: 'Timothy Sykes', bio: 'A well-known penny stock trader and entrepreneur. High-risk, high-reward with focus on momentum.', location: 'Miami, USA', flag: '🇺🇸', followers: '4.1k', risk: 9.1, favorite: 'TSLA', totalTrades: 1800, totalLoss: 280, profitShare: 25.0, winRate: 65, img: 'https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?auto=format&fit=crop&w=256&q=80', verified: true },
-  { id: 7, _id: '7', name: 'Nial Fuller', bio: 'Price action specialist. Conservative approach with focus on key levels and clean chart setups.', location: 'Australia', flag: '🇦🇺', followers: '1.8k', risk: 5.1, favorite: 'GBPUSD', totalTrades: 610, totalLoss: 18, profitShare: 22.3, winRate: 84, img: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&w=256&q=80', verified: true },
-  { id: 8, _id: '8', name: 'Anne-Marie Baiynd', bio: 'Author of "The Trading Book" and senior market strategist. Combines technical analysis with behavioral finance.', location: 'Texas, USA', flag: '🇺🇸', followers: '1.4k', risk: 4.9, favorite: 'SPX', totalTrades: 720, totalLoss: 22, profitShare: 17.8, winRate: 80, img: 'https://images.unsplash.com/photo-1567532939604-b6b5b0db2604?auto=format&fit=crop&w=256&q=80', verified: true },
+  { id: 1, _id: '1', name: 'Ross Cameron', bio: 'A full-time day trader and founder of Warrior Trading.', location: 'Vermont, USA', flag: '🇺🇸', followers: '1.2k', risk: 6.5, favorite: 'AAPL', totalTrades: 300, totalLoss: 12, profitShare: 20.5, winRate: 75, img: HEADSHOTS["Ross Cameron"], verified: true },
+  { id: 2, _id: '2', name: 'Rayner Teo', bio: 'A professional trader and author from Singapore.', location: 'Singapore', flag: '🇸🇬', followers: '3.4k', risk: 4.8, favorite: 'SPY', totalTrades: 820, totalLoss: 34, profitShare: 18.0, winRate: 82, img: HEADSHOTS["Rayner Teo"], verified: true },
+  { id: 3, _id: '3', name: 'Kathy Lien', bio: 'Managing Director of FX Strategy at BK Asset Management.', location: 'New York, USA', flag: '🇺🇸', followers: '2.1k', risk: 5.4, favorite: 'EURUSD', totalTrades: 950, totalLoss: 21, profitShare: 15.2, winRate: 79, img: HEADSHOTS["Kathy Lien"], verified: true },
+  { id: 4, _id: '4', name: 'Nicola Duke', bio: 'Forex educator and professional trader.', location: 'United Kingdom', flag: '🇬🇧', followers: '1.6k', risk: 5.2, favorite: 'GBPUSD', totalTrades: 540, totalLoss: 15, profitShare: 19.5, winRate: 81, img: HEADSHOTS["Nicola Duke"], verified: true },
+  { id: 5, _id: '5', name: 'Anton Kreil', bio: 'Former Goldman Sachs trader.', location: 'London, UK', flag: '🇬🇧', followers: '2.8k', risk: 7.1, favorite: 'ETH', totalTrades: 1200, totalLoss: 45, profitShare: 12.5, winRate: 88, img: HEADSHOTS["Anton Kreil"], verified: true },
+  { id: 6, _id: '6', name: 'Timothy Sykes', bio: 'Penny stock trader and entrepreneur.', location: 'Miami, USA', flag: '🇺🇸', followers: '4.1k', risk: 9.1, favorite: 'TSLA', totalTrades: 1800, totalLoss: 280, profitShare: 25.0, winRate: 65, img: HEADSHOTS["Timothy Sykes"], verified: true },
+  { id: 7, _id: '7', name: 'Nial Fuller', bio: 'Price action specialist.', location: 'Australia', flag: '🇦🇺', followers: '1.8k', risk: 5.1, favorite: 'GBPUSD', totalTrades: 610, totalLoss: 18, profitShare: 22.3, winRate: 84, img: HEADSHOTS["Nial Fuller"], verified: true },
+  { id: 8, _id: '8', name: 'Anne-Marie Baiynd', bio: 'Author of "The Trading Book".', location: 'Texas, USA', flag: '🇺🇸', followers: '1.4k', risk: 4.9, favorite: 'SPX', totalTrades: 720, totalLoss: 22, profitShare: 17.8, winRate: 80, img: HEADSHOTS["Anne-Marie Baiynd"], verified: true },
 ];
 
 export default function CopyTrading() {
@@ -25,7 +36,13 @@ export default function CopyTrading() {
 
   useEffect(() => {
     getTraders().then(data => {
-      if (Array.isArray(data) && data.length > 0) setTraders(data);
+      if (Array.isArray(data) && data.length > 0) {
+        const mapped = data.map(tr => ({
+          ...tr,
+          img: (tr.img && !tr.img.includes('ui-avatars.com') && tr.img.trim() !== '') ? tr.img : (HEADSHOTS[tr.name] || 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=256&q=80')
+        }));
+        setTraders(mapped);
+      }
       setLoading(false);
     }).catch(() => setLoading(false));
   }, []);
@@ -53,6 +70,8 @@ export default function CopyTrading() {
         </div>
         {filtered.map(tr => {
           const traderKey = tr._id || tr.id || tr.name;
+          const photo = (tr.img && !tr.img.includes('ui-avatars.com') && tr.img.trim() !== '') ? tr.img : (HEADSHOTS[tr.name] || 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=256&q=80');
+
           return (
             <div key={traderKey} style={{ background: t.cardBg, border: `1px solid ${t.subtleBorder}`, borderRadius: '12px', padding: '16px', marginBottom: '12px', position: 'relative' }}>
               <div style={{ position: 'absolute', top: '12px', right: '12px', fontSize: '20px' }}>{tr.flag || '🌐'}</div>
@@ -61,7 +80,7 @@ export default function CopyTrading() {
                 style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', marginBottom: '10px', cursor: 'pointer' }}
               >
                 <div style={{ width: '64px', height: '64px', borderRadius: '50%', overflow: 'hidden', border: '2px solid rgba(99,102,241,0.5)', marginBottom: '8px' }}>
-                  <img src={(tr.img && !tr.img.includes("ui-avatars.com") && tr.img.trim() !== "") ? tr.img : (headshots[tr.name] || "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=256&q=80")} style={{ width: '100%', height: '100%', objectFit: 'cover' }} onError={e => e.target.src = 'https://ui-avatars.com/api/?name=' + encodeURIComponent(tr.name) + '&background=6366f1&color=fff'} />
+                  <img src={photo} alt={tr.name} style={{ width: '100%', height: '100%', objectFit: 'cover' }} onError={e => e.target.src = 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=256&q=80'} />
                 </div>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
                   <span style={{ fontSize: '13px', fontWeight: '700' }}>{tr.name}</span>
