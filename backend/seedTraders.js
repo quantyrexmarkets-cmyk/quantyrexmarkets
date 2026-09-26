@@ -14,7 +14,7 @@ const TRADERS = [
     totalLoss: 12, 
     profitShare: 20.5, 
     winRate: 75, 
-    img: 'https://ui-avatars.com/api/?name=Ross+Cameron&background=6366f1&color=fff&size=128', 
+    img: 'https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&w=256&q=80', 
     bio: 'A full-time day trader and the founder of Warrior Trading. Ross is known for his small account challenge and momentum trading strategy.',
     verified: true,
     order: 1
@@ -30,7 +30,7 @@ const TRADERS = [
     totalLoss: 34, 
     profitShare: 18.0, 
     winRate: 82, 
-    img: 'https://ui-avatars.com/api/?name=Rayner+Teo&background=22c55e&color=fff&size=128', 
+    img: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=256&q=80', 
     bio: 'Professional forex & equities trader. Author of "The Complete Trading Guide." Known for systematic trend-following strategies.',
     verified: true,
     order: 2
@@ -46,7 +46,7 @@ const TRADERS = [
     totalLoss: 21, 
     profitShare: 15.2, 
     winRate: 79, 
-    img: 'https://ui-avatars.com/api/?name=Kathy+Lien&background=ec4899&color=fff&size=128', 
+    img: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=256&q=80', 
     bio: 'Managing Director of FX Strategy at BK Asset Management, Kathy is a renowned forex expert and CNBC contributor.',
     verified: true,
     order: 3
@@ -62,7 +62,7 @@ const TRADERS = [
     totalLoss: 15, 
     profitShare: 19.5, 
     winRate: 81, 
-    img: 'https://ui-avatars.com/api/?name=Nicola+Duke&background=f59e0b&color=fff&size=128', 
+    img: 'https://images.unsplash.com/photo-1580489944761-15a19d654956?auto=format&fit=crop&w=256&q=80', 
     bio: 'Forex educator and professional trader. Specializes in price action and technical analysis on major pairs.',
     verified: true,
     order: 4
@@ -78,7 +78,7 @@ const TRADERS = [
     totalLoss: 45, 
     profitShare: 12.5, 
     winRate: 88, 
-    img: 'https://ui-avatars.com/api/?name=Anton+Kreil&background=3b82f6&color=fff&size=128', 
+    img: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=256&q=80', 
     bio: 'Former Goldman Sachs trader. Aggressive multi-asset strategy with focus on crypto and equity derivatives.',
     verified: true,
     order: 5
@@ -94,7 +94,7 @@ const TRADERS = [
     totalLoss: 280, 
     profitShare: 25.0, 
     winRate: 65, 
-    img: 'https://ui-avatars.com/api/?name=Timothy+Sykes&background=ef4444&color=fff&size=128', 
+    img: 'https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?auto=format&fit=crop&w=256&q=80', 
     bio: 'Turned $12k into $7M trading momentum and small-cap stocks. High-risk, high-reward strategy.',
     verified: true,
     order: 6
@@ -110,7 +110,7 @@ const TRADERS = [
     totalLoss: 18, 
     profitShare: 22.3, 
     winRate: 84, 
-    img: 'https://ui-avatars.com/api/?name=Nial+Fuller&background=8b5cf6&color=fff&size=128', 
+    img: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&w=256&q=80', 
     bio: 'Price action specialist. Conservative approach with focus on key levels and clean chart setups.',
     verified: true,
     order: 7
@@ -126,7 +126,7 @@ const TRADERS = [
     totalLoss: 22, 
     profitShare: 17.8, 
     winRate: 80, 
-    img: 'https://ui-avatars.com/api/?name=Anne-Marie+Baiynd&background=06b6d4&color=fff&size=128', 
+    img: 'https://images.unsplash.com/photo-1567532939604-b6b5b0db2604?auto=format&fit=crop&w=256&q=80', 
     bio: 'Author of "The Trading Book" and senior market strategist combining technical analysis with behavioral finance.',
     verified: true,
     order: 8
@@ -143,7 +143,7 @@ if (!mongoUri) {
 mongoose.connect(mongoUri).then(async () => {
   await Trader.deleteMany({});
   await Trader.insertMany(TRADERS);
-  console.log('✅ Traders successfully seeded!');
+  console.log('✅ Traders successfully seeded with real profile photos!');
   process.exit(0);
 }).catch(err => {
   console.error('❌ Seeding error:', err);
