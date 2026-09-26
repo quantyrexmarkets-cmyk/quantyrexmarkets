@@ -5,7 +5,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { ArrowLeft, MapPin, Users, FlaskConical, Heart, TrendingUp, BarChart2, Copy, UserCheck, Shield, Star, Clock, DollarSign, Activity, ChevronDown, ChevronUp } from 'lucide-react';
 import PageHeader from '../components/PageHeader';
 import { useTheme } from '../context/ThemeContext';
-import { startCopyTrade } from '../services/api';
+import { startCopyTrade, getTraderById, getTraders } from '../services/api';
 
 const TRADERS_DEFAULT = [
   { id: 1, name: 'Ross Cameron', location: 'Vermont, USA', flag: '🇺🇸', followers: '1.2k', risk: 6.5, favorite: 'AAPL', totalTrades: 300, totalLoss: 12, profitShare: 20.5, winRate: 75, img: 'https://ui-avatars.com/api/?name=Ross+Cameron&background=6366f1&color=fff&size=128', verified: true, bio: 'Full-time momentum trader with 10+ years experience. Specializes in small-cap breakouts and large-cap momentum plays.', joined: 'Jan 2019', avgReturn: '+34.2%', totalFollowers: 1243, topAssets: ['AAPL', 'TSLA', 'AMZN', 'NVDA', 'MSFT'] },
@@ -62,7 +62,20 @@ export default function TraderProfile() {
   const [copyError, setCopyError] = useState('');
   const [copySuccess, setCopySuccess] = useState('');
 
-  const trader = TRADERS_DEFAULT.find(t => t.id === parseInt(id));
+  const [dbTrader, setDbTrader] = useState(null);
+  useEffect(() => {
+    getTraderById(id).then(d => { if (d && d.name) setDbTrader(d); }).catch(() => {
+      getTraders().then(list => {
+        if (Array.isArray(list)) {
+          const found = list.find(tr => String(tr._id) === String(id) || String(tr.id) === String(id));
+          if (found) setDbTrader(found);
+        }
+      }).catch(() => {});
+    });
+  }, [id]);
+
+  const defaultTrader = TRADERS_DEFAULT.find(t => String(t.id) === String(id) || String(t._id) === String(id)) || TRADERS_DEFAULT[0];
+  const trader = dbTrader ? { ...defaultTrader, ...dbTrader, topAssets: defaultTrader.topAssets || ["BTC", "ETH", "AAPL"] } : defaultTrader;
 
   if (!trader) return (
     <div style={{minHeight:'100vh',background:t.bg,display:'flex',alignItems:'center',justifyContent:'center'}}>
@@ -77,7 +90,7 @@ export default function TraderProfile() {
     if (!amount || isNaN(amount) || parseFloat(amount) < 10) { setCopyError('Minimum investment is $10'); return; }
     setCopying(true); setCopyError('');
     try {
-      await startCopyTrade({ traderId: trader.id, traderName: trader.name, traderImg: trader.img, amount: parseFloat(amount), profitShare: trader.profitShare });
+      await startCopyTrade({ traderId: trader._id || trader.id, traderName: trader.name, traderImg: trader.img, amount: parseFloat(amount), profitShare: trader.profitShare });
       setCopySuccess('Strategy copied successfully!');
       setTimeout(() => { setModal(false); setCopySuccess(''); }, 1500);
     } catch (err) { setCopyError(err.message || 'Failed. Check your balance.'); }

@@ -62,7 +62,7 @@ export default function CopyTradingSetup() {
     if (!agreed) { setError('Please agree to the terms before proceeding.'); return; }
     setLoading(true);
     try {
-      const res = await startCopyTrade({ traderId: trader._id, traderName: trader.name, traderImg: trader.img, amount: parseFloat(amount), profitShare: trader.profitShare, duration });
+      const res = await startCopyTrade({ traderId: trader._id || trader.id, traderName: trader.name, traderImg: trader.img, amount: parseFloat(amount), profitShare: trader.profitShare, duration });
       setLoading(false);
       if (res.success) setSuccess(true);
       else setError(res.message || 'Something went wrong.');

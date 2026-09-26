@@ -5,6 +5,7 @@ import { useAuth } from '../context/AuthContext';
 import { ArrowLeft, TrendingUp, TrendingDown, Users, Calendar, DollarSign, AlertCircle, CheckCircle } from 'lucide-react';
 import PageHeader from '../components/PageHeader';
 import { useTheme } from '../context/ThemeContext';
+import { getTraderById, startCopyTrade } from '../services/api';
 import InlineLoader from '../components/InlineLoader';
 
 export default function TraderDetails() {
@@ -26,11 +27,10 @@ export default function TraderDetails() {
 
   const fetchTrader = async () => {
     try {
-      const response = await fetch(`https://quantyrexmarkets-api.vercel.app/api/traders/${id}`);
-      const data = await response.json();
+      const data = await getTraderById(id);
       setTrader(data);
-    } catch (error) {
-      console.error('Error:', error);
+    } catch (err) {
+      console.error("Error fetching trader:", err);
     } finally {
       setLoading(false);
     }
@@ -38,39 +38,24 @@ export default function TraderDetails() {
 
   const handleStartCopy = async () => {
     if (!amount || parseFloat(amount) < 10) {
-      setError('Minimum investment is $10');
+      setError("Minimum investment is $10");
       return;
     }
-
     setCopying(true);
-    setError('');
-
+    setError("");
     try {
-      const response = await fetch('https://quantyrexmarkets-api.vercel.app/api/copy-trade', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token || localStorage.getItem('token')}`
-        },
-        body: JSON.stringify({
-          traderId: trader._id,
-          traderName: trader.name,
-          traderImg: trader.img,
-          amount: parseFloat(amount),
-          profitShare: trader.profitShare || 20,
-          duration: parseInt(duration)
-        })
+      await startCopyTrade({
+        traderId: trader._id || trader.id,
+        traderName: trader.name,
+        traderImg: trader.img,
+        amount: parseFloat(amount),
+        profitShare: trader.profitShare || 20,
+        duration: parseInt(duration)
       });
-
-      const data = await response.json();
-      if (response.ok) {
-        setSuccess('Successfully started copy trading!');
-        setTimeout(() => navigate('/dashboard/my-copy-trades'), 2000);
-      } else {
-        setError(data.message || 'Failed to start copy trading');
-      }
-    } catch (error) {
-      setError('Failed to connect to server');
+      setSuccess("Successfully started copy trading!");
+      setTimeout(() => navigate("/dashboard/my-copy-trades"), 2000);
+    } catch (err) {
+      setError(err.message || "Failed to start copy trading");
     } finally {
       setCopying(false);
     }

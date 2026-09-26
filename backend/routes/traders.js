@@ -5,7 +5,6 @@ const cloudinary = require('cloudinary').v2;
 const Trader = require('../models/Trader');
 const adminAuth = require('../middleware/adminAuth');
 
-
 cloudinary.config({
   cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
   api_key: process.env.CLOUDINARY_API_KEY,
@@ -22,6 +21,19 @@ router.get('/', async (req, res) => {
     res.json(traders);
   } catch (err) {
     res.status(500).json({ message: 'Server error' });
+  }
+});
+
+// Get single trader (public)
+router.get('/:id', async (req, res) => {
+  try {
+    const trader = await Trader.findById(req.params.id);
+    if (!trader) {
+      return res.status(404).json({ message: 'Trader not found' });
+    }
+    res.json(trader);
+  } catch (err) {
+    res.status(500).json({ message: 'Server error', error: err.message });
   }
 });
 

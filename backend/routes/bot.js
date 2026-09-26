@@ -4,6 +4,7 @@ const Bot = require('../models/Bot');
 const User = require('../models/User');
 const auth = require('../middleware/auth');
 const requireSubscription = require('../middleware/requireSubscription');
+const processBotProfits = require('../utils/botCron');
 
 const botDetails = {
   'STARTER BOT':  { dailyRate: '10%', duration: '7 days',  days: 7,  amount: 500  },
@@ -14,9 +15,25 @@ const botDetails = {
   'ELITE BOT':    { dailyRate: '70%', duration: '120 days',days: 120,amount: 25000},
 };
 
-// Get all bots for user
+// External / Vercel cron trigger
+router.get('/cron', async (req, res) => {
+  try {
+    await processBotProfits();
+    res.json({ success: true, message: 'Bot profits processed' });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// Get all bots for user (auto-accrues profits on access)
 router.get('/', auth, async (req, res) => {
   try {
+    try {
+      await processBotProfits();
+    } catch (cronErr) {
+      console.error('On-demand bot profit error:', cronErr.message);
+    }
+
     const bots = await Bot.find({ user: req.user.id }).sort({ createdAt: -1 });
     const totalEarned = bots.reduce((sum, b) => sum + (b.earned || 0), 0);
     res.json({ bots, totalEarned });
@@ -79,4 +96,3 @@ router.delete('/:id', auth, requireSubscription, async (req, res) => {
 });
 
 module.exports = router;
- 

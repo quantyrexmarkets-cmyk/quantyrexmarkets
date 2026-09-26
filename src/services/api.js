@@ -80,6 +80,7 @@ export const startCopyTrade = (data) => fetch(`${BASE_URL}/copy-trade`, { method
 export const getCopyTrades = () => fetch(`${BASE_URL}/copy-trade`, { headers: headers() }).then(handleResponse);
 export const stopCopyTrade = (id) => fetch(`${BASE_URL}/copy-trade/${id}/stop`, { method: 'PUT', headers: headers() }).then(handleResponse);
 export const getTraders = () => fetch(`${BASE_URL}/traders`).then(handleResponse);
+export const getTraderById = (id) => fetch(`${BASE_URL}/traders/${id}`).then(handleResponse);
 export const addTrader = (data) => fetch(`${BASE_URL}/traders`, { method: 'POST', headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }, body: data }).then(handleResponse);
 export const updateTrader = (id, data) => fetch(`${BASE_URL}/traders/${id}`, { method: 'PUT', headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }, body: data }).then(handleResponse);
 export const deleteTrader = (id) => fetch(`${BASE_URL}/traders/${id}`, { method: 'DELETE', headers: headers() }).then(handleResponse);
