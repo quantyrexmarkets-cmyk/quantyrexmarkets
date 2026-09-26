@@ -6,7 +6,7 @@ import PageHeader from '../components/PageHeader';
 import { getTraders } from '../services/api';
 
 const HEADSHOTS = {
-  "Ross Cameron": "https://unavatar.io/twitter/DayTraderRoss",
+  "Ross Cameron": "https://unavatar.io/twitter/Rosscameronwar",
   "Rayner Teo": "https://unavatar.io/twitter/rayner_teo",
   "Kathy Lien": "https://unavatar.io/twitter/kathylienfx",
   "Nicola Duke": "https://unavatar.io/twitter/nicoladuke",
