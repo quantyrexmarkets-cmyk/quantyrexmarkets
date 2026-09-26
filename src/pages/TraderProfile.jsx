@@ -6,14 +6,14 @@ import { useTheme } from '../context/ThemeContext';
 import { startCopyTrade, getTraderById, getTraders } from '../services/api';
 
 const HEADSHOTS = {
-  "Ross Cameron": "https://unavatar.io/twitter/rosscameron",
+  "Ross Cameron": "https://unavatar.io/youtube/warriortrading",
   "Rayner Teo": "https://unavatar.io/twitter/rayner_teo",
   "Kathy Lien": "https://unavatar.io/twitter/kathylienfx",
   "Nicola Duke": "https://unavatar.io/twitter/nicoladuke",
   "Anton Kreil": "https://unavatar.io/twitter/antonkreil",
   "Timothy Sykes": "https://unavatar.io/twitter/timothysykes",
   "Nial Fuller": "https://unavatar.io/twitter/nialfuller",
-  "Anne-Marie Baiynd": "https://unavatar.io/twitter/annemarieband"
+  "Anne-Marie Baiynd": "https://unavatar.io/twitter/AnneMarieTrades"
 };
 
 const TRADERS_DEFAULT = [
