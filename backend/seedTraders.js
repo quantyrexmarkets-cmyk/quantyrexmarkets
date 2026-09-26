@@ -1,4 +1,4 @@
-require('dotenv').config();
+try { require('dotenv').config(); } catch (e) {}
 const mongoose = require('mongoose');
 const Trader = require('./models/Trader');
 
@@ -14,8 +14,8 @@ const TRADERS = [
     totalLoss: 12, 
     profitShare: 20.5, 
     winRate: 75, 
-    img: 'https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&w=256&q=80', 
-    bio: 'A full-time day trader and the founder of Warrior Trading. Ross is known for his small account challenge and momentum trading strategy.',
+    img: 'https://unavatar.io/twitter/rosscameron', 
+    bio: 'A full-time day trader and founder of Warrior Trading. Ross is known for his small account challenge and momentum trading strategy.',
     verified: true,
     order: 1
   },
@@ -30,7 +30,7 @@ const TRADERS = [
     totalLoss: 34, 
     profitShare: 18.0, 
     winRate: 82, 
-    img: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=256&q=80', 
+    img: 'https://unavatar.io/twitter/rayner_teo', 
     bio: 'Professional forex & equities trader. Author of "The Complete Trading Guide." Known for systematic trend-following strategies.',
     verified: true,
     order: 2
@@ -46,7 +46,7 @@ const TRADERS = [
     totalLoss: 21, 
     profitShare: 15.2, 
     winRate: 79, 
-    img: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=256&q=80', 
+    img: 'https://unavatar.io/twitter/kathylienfx', 
     bio: 'Managing Director of FX Strategy at BK Asset Management, Kathy is a renowned forex expert and CNBC contributor.',
     verified: true,
     order: 3
@@ -62,7 +62,7 @@ const TRADERS = [
     totalLoss: 15, 
     profitShare: 19.5, 
     winRate: 81, 
-    img: 'https://images.unsplash.com/photo-1580489944761-15a19d654956?auto=format&fit=crop&w=256&q=80', 
+    img: 'https://unavatar.io/twitter/nicoladuke', 
     bio: 'Forex educator and professional trader. Specializes in price action and technical analysis on major pairs.',
     verified: true,
     order: 4
@@ -78,8 +78,8 @@ const TRADERS = [
     totalLoss: 45, 
     profitShare: 12.5, 
     winRate: 88, 
-    img: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=256&q=80', 
-    bio: 'Former Goldman Sachs trader. Aggressive multi-asset strategy with focus on crypto and equity derivatives.',
+    img: 'https://unavatar.io/twitter/antonkreil', 
+    bio: 'Former Goldman Sachs trader. Managing partner at the Institute of Trading and Portfolio Management.',
     verified: true,
     order: 5
   },
@@ -94,7 +94,7 @@ const TRADERS = [
     totalLoss: 280, 
     profitShare: 25.0, 
     winRate: 65, 
-    img: 'https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?auto=format&fit=crop&w=256&q=80', 
+    img: 'https://unavatar.io/twitter/timothysykes', 
     bio: 'Turned $12k into $7M trading momentum and small-cap stocks. High-risk, high-reward strategy.',
     verified: true,
     order: 6
@@ -110,8 +110,8 @@ const TRADERS = [
     totalLoss: 18, 
     profitShare: 22.3, 
     winRate: 84, 
-    img: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&w=256&q=80', 
-    bio: 'Price action specialist. Conservative approach with focus on key levels and clean chart setups.',
+    img: 'https://unavatar.io/twitter/nialfuller', 
+    bio: 'Price action specialist and founder of Learn To Trade The Market. Focuses on clean chart setups.',
     verified: true,
     order: 7
   },
@@ -126,7 +126,7 @@ const TRADERS = [
     totalLoss: 22, 
     profitShare: 17.8, 
     winRate: 80, 
-    img: 'https://images.unsplash.com/photo-1567532939604-b6b5b0db2604?auto=format&fit=crop&w=256&q=80', 
+    img: 'https://unavatar.io/twitter/annemarieband', 
     bio: 'Author of "The Trading Book" and senior market strategist combining technical analysis with behavioral finance.',
     verified: true,
     order: 8
@@ -136,14 +136,14 @@ const TRADERS = [
 const mongoUri = process.env.MONGODB_URI || process.env.MONGO_URI;
 
 if (!mongoUri) {
-  console.error("No MONGODB_URI found in environment");
+  console.error("❌ No MONGODB_URI found in environment");
   process.exit(1);
 }
 
 mongoose.connect(mongoUri).then(async () => {
   await Trader.deleteMany({});
   await Trader.insertMany(TRADERS);
-  console.log('✅ Traders successfully seeded with real profile photos!');
+  console.log('✅ Database seeded with authentic trader profile pictures!');
   process.exit(0);
 }).catch(err => {
   console.error('❌ Seeding error:', err);

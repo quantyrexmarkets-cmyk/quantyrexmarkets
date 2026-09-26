@@ -6,14 +6,14 @@ import { useTheme } from '../context/ThemeContext';
 import { startCopyTrade, getTraderById, getTraders } from '../services/api';
 
 const HEADSHOTS = {
-  "Ross Cameron": "https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&w=256&q=80",
-  "Rayner Teo": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=256&q=80",
-  "Kathy Lien": "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=256&q=80",
-  "Nicola Duke": "https://images.unsplash.com/photo-1580489944761-15a19d654956?auto=format&fit=crop&w=256&q=80",
-  "Anton Kreil": "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=256&q=80",
-  "Timothy Sykes": "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?auto=format&fit=crop&w=256&q=80",
-  "Nial Fuller": "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&w=256&q=80",
-  "Anne-Marie Baiynd": "https://images.unsplash.com/photo-1567532939604-b6b5b0db2604?auto=format&fit=crop&w=256&q=80"
+  "Ross Cameron": "https://unavatar.io/twitter/rosscameron",
+  "Rayner Teo": "https://unavatar.io/twitter/rayner_teo",
+  "Kathy Lien": "https://unavatar.io/twitter/kathylienfx",
+  "Nicola Duke": "https://unavatar.io/twitter/nicoladuke",
+  "Anton Kreil": "https://unavatar.io/twitter/antonkreil",
+  "Timothy Sykes": "https://unavatar.io/twitter/timothysykes",
+  "Nial Fuller": "https://unavatar.io/twitter/nialfuller",
+  "Anne-Marie Baiynd": "https://unavatar.io/twitter/annemarieband"
 };
 
 const TRADERS_DEFAULT = [
