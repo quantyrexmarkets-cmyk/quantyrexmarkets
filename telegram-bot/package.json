@@ -1,0 +1,17 @@
+{
+  "name": "quantyrex-telegram-bot",
+  "version": "1.0.0",
+  "description": "QuantyRex Markets Assistant & Anti-Spam Bot",
+  "main": "bot.js",
+  "scripts": {
+    "start": "node bot.js"
+  },
+  "dependencies": {
+    "axios": "^1.6.0",
+    "dotenv": "^16.3.1",
+    "telegraf": "^4.15.0"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}
