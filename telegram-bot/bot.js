@@ -1,12 +1,38 @@
 const { Telegraf, Markup } = require('telegraf');
 const axios = require('axios');
 const http = require('http');
+const Parser = require('rss-parser');
 
 // Configuration
 const BOT_TOKEN = process.env.BOT_TOKEN || '8815717797:AAE9XmlaDn3uiIuUrv_3-eyv2yL_MFhlPmM';
 const ADMIN_ID = parseInt(process.env.ADMIN_ID || '7759205941');
 const WEBSITE_URL = 'https://quantyrexmarkets.vercel.app';
 const PORT = process.env.PORT || 10000;
+
+// RSS Parser for CoinTelegraph & Decrypt News
+const rssParser = new Parser({
+    customFields: {
+        item: [
+            ['media:content', 'mediaContent'],
+            ['enclosure', 'enclosure'],
+            ['content:encoded', 'contentEncoded']
+        ]
+    }
+});
+
+// Helper to extract image URL from RSS item
+function extractImageUrl(item) {
+    if (item.mediaContent && item.mediaContent.$ && item.mediaContent.$.url) {
+        return item.mediaContent.$.url;
+    }
+    if (item.enclosure && item.enclosure.url && /\.(jpeg|jpg|gif|png|webp)/i.test(item.enclosure.url)) {
+        return item.enclosure.url;
+    }
+    const htmlContent = item.contentEncoded || item.content || '';
+    const match = htmlContent.match(/src=["'](https?:\/\/[^"']+\.(?:png|jpg|jpeg|webp))["']/i);
+    if (match) return match[1];
+    return null;
+}
 
 // Dummy HTTP server for Render Health Check
 http.createServer((req, res) => {
@@ -18,7 +44,7 @@ http.createServer((req, res) => {
 
 const bot = new Telegraf(BOT_TOKEN);
 
-// --- GLOBAL ERROR HANDLER ---
+// Global Error Handler
 bot.catch((err, ctx) => {
     console.error(`Telegraf error for ${ctx.updateType}:`, err.message);
 });
@@ -31,7 +57,6 @@ bot.use(async (ctx, next) => {
     const userId = ctx.from?.id;
     if (!userId) return next();
 
-    // Allow Admin & Group Admins
     if (userId === ADMIN_ID) return next();
 
     try {
@@ -41,7 +66,6 @@ bot.use(async (ctx, next) => {
         }
     } catch (e) {}
 
-    // Delete external links from normal users
     const text = ctx.message.text || ctx.message.caption || '';
     const hasLink = /(https?:\/\/[^\s]+)|(t\.me\/[^\s]+)|(telegram\.me\/[^\s]+)|(www\.[^\s]+)/gi.test(text);
 
@@ -61,17 +85,7 @@ bot.use(async (ctx, next) => {
     return next();
 });
 
-// --- WELCOME MESSAGE ---
-bot.on('new_chat_members', (ctx) => {
-    const newUser = ctx.message.new_chat_members[0].first_name;
-    ctx.replyWithMarkdown(`✨ *Welcome to QuantyRex Markets, ${newUser}!* ✨\n\nWe are glad to have you in our trading community.\n\nType /help to see available commands!`, 
-    Markup.inlineKeyboard([
-        [Markup.button.url('🌐 Official Website', WEBSITE_URL)],
-        [Markup.button.callback('📜 Group Rules', 'show_policy')]
-    ]));
-});
-
-// --- PUBLIC COMMANDS ---
+// --- COMMANDS ---
 
 bot.command('start', (ctx) => {
     ctx.replyWithMarkdown(`👋 Welcome to *QuantyRex Assistant Bot*!\n\nUse /help to see all available commands.`);
@@ -84,45 +98,39 @@ bot.help((ctx) => {
         `• /market - Live Crypto Prices 💹\n` +
         `• /plans - View AI Bot & Copy Trading Tiers 📊\n` +
         `• /policy - Community Rules & Policy ⚖️\n` +
-        `• /support - Official Admin Support Contact 🆘`
+        `• /support - Official Admin Support Contact os`
     );
 });
 
-// /news Command - Crypto News with Pictures
+// /news Command - Breaking News via RSS with High Quality Photos
 bot.command('news', async (ctx) => {
     try {
-        const res = await axios.get('https://min-api.cryptocompare.com/data/v2/news/?lang=EN', {
-            headers: { 
-                'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36'
-            },
-            timeout: 8000
-        });
+        // Fetch CoinTelegraph feed
+        const feed = await rssParser.parseURL('https://cointelegraph.com/rss');
+        const articles = feed.items ? feed.items.slice(0, 2) : [];
 
-        const articles = res.data?.Data;
-        if (!articles || articles.length === 0) {
-            return ctx.reply("❌ No news articles available at the moment.");
+        if (articles.length === 0) {
+            return ctx.reply("❌ No news articles found right now.");
         }
 
-        // Send top 2 news articles
-        const topArticles = articles.slice(0, 2);
-
-        for (const item of topArticles) {
-            const headline = item.title ? item.title.trim() : 'Crypto Market News';
-            const bodyText = item.body || '';
-            const summary = bodyText.length > 180 ? bodyText.substring(0, 180) + '...' : bodyText;
-            const source = item.source_info?.name || item.source || 'CryptoCompare';
+        for (const item of articles) {
+            const headline = item.title ? item.title.trim() : 'Crypto Breaking News';
+            const rawSnippet = item.contentSnippet || item.content || '';
+            const cleanSummary = rawSnippet.replace(/<[^>]*>?/gm, '').trim();
+            const summary = cleanSummary.length > 180 ? cleanSummary.substring(0, 180) + '...' : cleanSummary;
+            const imageUrl = extractImageUrl(item);
 
             const caption = `📰 *${headline}*\n\n` +
                 `${summary}\n\n` +
-                `📡 *Source:* ${source}`;
+                `📡 *Source:* CoinTelegraph`;
 
             const keyboard = Markup.inlineKeyboard([
-                [Markup.button.url('📖 Read Full Article', item.url)]
+                [Markup.button.url('📖 Read Full Article', item.link)]
             ]);
 
             try {
-                if (item.imageurl) {
-                    await ctx.replyWithPhoto(item.imageurl, {
+                if (imageUrl) {
+                    await ctx.replyWithPhoto(imageUrl, {
                         caption: caption,
                         parse_mode: 'Markdown',
                         ...keyboard
@@ -131,13 +139,13 @@ bot.command('news', async (ctx) => {
                     await ctx.replyWithMarkdown(caption, keyboard);
                 }
             } catch (imgErr) {
-                // If Telegram fails to load image URL, fallback to markdown text
-                await ctx.replyWithMarkdown(`${caption}\n\n🔗 [Read Article](${item.url})`, keyboard);
+                // Fallback to text + inline URL if photo fails
+                await ctx.replyWithMarkdown(`${caption}\n\n🔗 [Read Full Story](${item.link})`, keyboard);
             }
         }
     } catch (e) {
-        console.error('News Command Error:', e.message);
-        ctx.reply("❌ Unable to load crypto news right now. Try again shortly.");
+        console.error('RSS News Error:', e.message);
+        ctx.reply("❌ Unable to load news feed. Try again shortly.");
     }
 });
 
@@ -244,9 +252,8 @@ bot.command('signal', (ctx) => {
     bot.telegram.sendMessage(ctx.chat.id, signalMsg, { parse_mode: 'Markdown' });
 });
 
-// Launch with dropPendingUpdates to prevent 409 Conflict errors
 bot.launch({ dropPendingUpdates: true }).then(() => {
-    console.log('✅ QuantyRex Assistant Bot launched successfully!');
+    console.log('✅ QuantyRex Assistant Bot with RSS Picture News is live!');
 }).catch((err) => {
     console.error('Launch failed:', err.message);
 });
