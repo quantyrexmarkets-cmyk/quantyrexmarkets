@@ -8,7 +8,7 @@ const ADMIN_ID = parseInt(process.env.ADMIN_ID || '7759205941');
 const WEBSITE_URL = 'https://quantyrexmarkets.vercel.app';
 const PORT = process.env.PORT || 10000;
 
-// --- DUMMY HTTP SERVER FOR RENDER HEALTH CHECK ---
+// Dummy HTTP server for Render Health Check
 http.createServer((req, res) => {
     res.writeHead(200, { 'Content-Type': 'text/plain' });
     res.end('QuantyRex Telegram Bot is running live!\n');
@@ -19,7 +19,6 @@ http.createServer((req, res) => {
 const bot = new Telegraf(BOT_TOKEN);
 
 // --- ANTI-SPAM MIDDLEWARE ---
-// Automatically deletes links posted by normal members
 bot.use(async (ctx, next) => {
     if (!ctx.chat || ctx.chat.type === 'private') return next();
     if (!ctx.message) return next();
@@ -27,20 +26,15 @@ bot.use(async (ctx, next) => {
     const userId = ctx.from?.id;
     if (!userId) return next();
 
-    // 1. Allow the Main Admin
     if (userId === ADMIN_ID) return next();
 
-    // 2. Allow Group Admins & Creators
     try {
         const chatMember = await ctx.getChatMember(userId);
         if (chatMember.status === 'administrator' || chatMember.status === 'creator') {
             return next();
         }
-    } catch (e) {
-        // Continue check
-    }
+    } catch (e) {}
 
-    // 3. Inspect text for URLs and Telegram links
     const text = ctx.message.text || ctx.message.caption || '';
     const hasLink = /(https?:\/\/[^\s]+)|(t\.me\/[^\s]+)|(telegram\.me\/[^\s]+)|(www\.[^\s]+)/gi.test(text);
 
@@ -70,10 +64,53 @@ bot.on('new_chat_members', (ctx) => {
     ]));
 });
 
-// --- COMMANDS ---
+// --- PUBLIC COMMANDS ---
 
 bot.help((ctx) => {
-    ctx.replyWithMarkdown(`*QuantyRex Assistant Bot Commands:*\n\n/start - Initialize bot\n/plans - View AI Bot & Copy Trade plans\n/market - Live Crypto Prices\n/policy - Group rules & safety\n/support - Official Support contact`);
+    ctx.replyWithMarkdown(`*QuantyRex Assistant Bot Commands:*\n\n/start - Initialize bot\n/news - Breaking Crypto News with pictures 📰\n/market - Live Crypto Prices 💹\n/plans - View AI Bot & Copy Trade plans 📊\n/policy - Group rules & safety ⚖️\n/support - Official Support contact 🆘`);
+});
+
+// /news - Live Crypto News with Pictures
+bot.command('news', async (ctx) => {
+    try {
+        const res = await axios.get('https://min-api.cryptocompare.com/data/v2/news/?lang=EN');
+        const articles = res.data?.Data;
+
+        if (!articles || articles.length === 0) {
+            return ctx.reply("❌ No news available at the moment.");
+        }
+
+        // Fetch top 2 articles
+        const topArticles = articles.slice(0, 2);
+
+        for (const item of topArticles) {
+            const headline = item.title.trim();
+            const summary = item.body.length > 180 ? item.body.substring(0, 180) + '...' : item.body;
+            const source = item.source_info?.name || item.source;
+
+            const caption = `📰 *${headline}*\n\n` +
+                `${summary}\n\n` +
+                `📡 *Source:* ${source}`;
+
+            const keyboard = Markup.inlineKeyboard([
+                [Markup.button.url('📖 Read Full Article', item.url)]
+            ]);
+
+            try {
+                await ctx.replyWithPhoto(item.imageurl, {
+                    caption: caption,
+                    parse_mode: 'Markdown',
+                    ...keyboard
+                });
+            } catch (imgErr) {
+                // Fallback to text if photo URL fails
+                await ctx.replyWithMarkdown(`${caption}\n🌐 [Read Article](${item.url})`, keyboard);
+            }
+        }
+    } catch (e) {
+        console.error('News fetch error:', e.message);
+        ctx.reply("❌ Unable to load crypto news right now. Try again shortly.");
+    }
 });
 
 bot.command('plans', (ctx) => {
@@ -116,12 +153,51 @@ bot.command('support', (ctx) => {
 
 // --- ADMIN COMMANDS ---
 
-bot.command('postnews', (ctx) => {
+// Admin handles custom news with image or URL
+bot.command('postnews', async (ctx) => {
     if (ctx.from.id !== ADMIN_ID) return ctx.reply("🚫 Admin access required.");
-    const news = ctx.message.text.split(' ').slice(1).join(' ');
-    if (!news) return ctx.reply("Usage: /postnews <Your news message>");
     
-    bot.telegram.sendMessage(ctx.chat.id, `🔔 *QUANTYREX MARKET NEWS* 🔔\n\n${news}`, { parse_mode: 'Markdown' });
+    const text = ctx.message.text.split(' ').slice(1).join(' ');
+    if (!text) return ctx.reply("Usage:\n1) /postnews <Your news message>\n2) /postnews <IMAGE_URL> | <Your news message>");
+
+    let photoUrl = null;
+    let newsText = text;
+
+    if (text.includes('|')) {
+        const parts = text.split('|');
+        photoUrl = parts[0].trim();
+        newsText = parts.slice(1).join('|').trim();
+    }
+
+    const newsMsg = `🔔 *QUANTYREX MARKET NEWS* 🔔\n\n${newsText}`;
+
+    try {
+        if (photoUrl) {
+            await bot.telegram.sendPhoto(ctx.chat.id, photoUrl, { caption: newsMsg, parse_mode: 'Markdown' });
+        } else {
+            await bot.telegram.sendMessage(ctx.chat.id, newsMsg, { parse_mode: 'Markdown' });
+        }
+    } catch (err) {
+        ctx.reply("❌ Error posting news: " + err.message);
+    }
+});
+
+// Admin uploads image with caption /postnews ...
+bot.on('photo', async (ctx, next) => {
+    const caption = ctx.message.caption || '';
+    if (ctx.from.id === ADMIN_ID && caption.startsWith('/postnews')) {
+        const newsText = caption.replace('/postnews', '').trim();
+        const photoId = ctx.message.photo[ctx.message.photo.length - 1].file_id;
+        const newsMsg = `🔔 *QUANTYREX MARKET NEWS* 🔔\n\n${newsText || 'Major update from QuantyRex Markets.'}`;
+        
+        try {
+            await bot.telegram.sendPhoto(ctx.chat.id, photoId, { caption: newsMsg, parse_mode: 'Markdown' });
+        } catch (err) {
+            ctx.reply("❌ Failed to broadcast image news.");
+        }
+        return;
+    }
+    return next();
 });
 
 bot.command('signal', (ctx) => {
@@ -144,7 +220,7 @@ bot.command('signal', (ctx) => {
 
 console.log('Bot initialized...');
 bot.launch().then(() => {
-    console.log('✅ QuantyRex Assistant Bot is running!');
+    console.log('✅ QuantyRex Assistant Bot is running with Picture News!');
 });
 
 process.once('SIGINT', () => bot.stop('SIGINT'));
