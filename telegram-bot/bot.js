@@ -6,6 +6,7 @@ const Parser = require('rss-parser');
 // Configuration
 const BOT_TOKEN = process.env.BOT_TOKEN || '8815717797:AAE9XmlaDn3uiIuUrv_3-eyv2yL_MFhlPmM';
 const ADMIN_ID = parseInt(process.env.ADMIN_ID || '7759205941');
+const SUPPORT_HANDLE = '@QUANTYREX_SUPPORT_OFFICAL';
 const WEBSITE_URL = 'https://quantyrexmarkets.vercel.app';
 const PORT = process.env.PORT || 10000;
 
@@ -53,7 +54,7 @@ bot.catch((err, ctx) => {
 
 // Middleware: Auto-detect group chat ID + Anti-Spam
 bot.use(async (ctx, next) => {
-    // 1. Auto-detect Group Chat ID
+    // Auto-detect Group Chat ID
     if (ctx.chat && (ctx.chat.type === 'group' || ctx.chat.type === 'supergroup')) {
         if (targetGroupId !== ctx.chat.id) {
             targetGroupId = ctx.chat.id;
@@ -73,14 +74,14 @@ bot.use(async (ctx, next) => {
         }
     } catch (e) {}
 
-    // 2. Anti-Spam: delete links from regular users
+    // Anti-Spam: delete links from regular users
     const text = ctx.message.text || ctx.message.caption || '';
     const hasLink = /(https?:\/\/[^\s]+)|(t\.me\/[^\s]+)|(telegram\.me\/[^\s]+)|(www\.[^\s]+)/gi.test(text);
 
     if (hasLink) {
         try {
             await ctx.deleteMessage();
-            const warning = await ctx.reply(`⚠️ @${ctx.from.username || ctx.from.first_name}, external links are not allowed in this group!`);
+            const warning = await ctx.reply(`⚠️ @${ctx.from.username || ctx.from.first_name}, external links are not allowed in this group! For help contact ${SUPPORT_HANDLE}`);
             setTimeout(() => {
                 ctx.telegram.deleteMessage(ctx.chat.id, warning.message_id).catch(() => {});
             }, 6000);
@@ -96,7 +97,7 @@ bot.use(async (ctx, next) => {
 // --- COMMANDS ---
 
 bot.command('start', (ctx) => {
-    ctx.replyWithMarkdown(`👋 Welcome to *QuantyRex Assistant Bot*!\n\nUse /help to see all available commands.`);
+    ctx.replyWithMarkdown(`👋 Welcome to *QuantyRex Assistant Bot*!\n\nUse /help to see all available commands or contact ${SUPPORT_HANDLE} for support.`);
 });
 
 bot.help((ctx) => {
@@ -105,8 +106,8 @@ bot.help((ctx) => {
         `• /news - Latest Crypto News with pictures 📰\n` +
         `• /market - Live Crypto Prices 💹\n` +
         `• /plans - AI Bot & Copy Trading Tiers 📊\n` +
-        `• /policy - Community Rules ⚖️\n` +
-        `• /support - Contact Official Support 🆘`
+        `• /policy - Community Rules & Safety ⚖️\n` +
+        `• /support - Contact Official Support 🆘 (${SUPPORT_HANDLE})`
     );
 });
 
@@ -142,16 +143,16 @@ bot.command('market', async (ctx) => {
 });
 
 bot.command('policy', (ctx) => {
-    ctx.replyWithMarkdown(`⚖️ *Group Rules & Policy:*\n\n1. No external referral/promo links allowed.\n2. Respect all group members.\n3. Admins will NEVER send you a direct message first to ask for funds or secret keys.\n4. Always report suspicious users to @QUANTYREX_SUPPORT_OFFICAL.`);
+    ctx.replyWithMarkdown(`⚖️ *Group Rules & Policy:*\n\n1. No external referral/promo links allowed.\n2. Respect all group members.\n3. Admins will NEVER send you a direct message first to ask for funds or secret keys.\n4. Always report suspicious users directly to ${SUPPORT_HANDLE}.`);
 });
 
 bot.action('show_policy', (ctx) => {
     ctx.answerCbQuery();
-    ctx.replyWithMarkdown(`⚖️ *Group Rules & Policy:*\n\n1. No external referral/promo links allowed.\n2. Respect all group members.\n3. Admins will NEVER DM you first for payments/passwords.`);
+    ctx.replyWithMarkdown(`⚖️ *Group Rules & Policy:*\n\n1. No external referral/promo links allowed.\n2. Respect all group members.\n3. Admins will NEVER DM you first for payments/passwords.\n4. Official Support: ${SUPPORT_HANDLE}`);
 });
 
 bot.command('support', (ctx) => {
-    ctx.replyWithMarkdown(`🆘 *QuantyRex Official Support*\n\nContact Admin directly: @QUANTYREX_SUPPORT_OFFICAL\nWebsite Support: ${WEBSITE_URL}/support`);
+    ctx.replyWithMarkdown(`🆘 *QuantyRex Official Support*\n\nContact Admin directly: ${SUPPORT_HANDLE}\nWebsite Support: ${WEBSITE_URL}/support`);
 });
 
 // --- ADMIN COMMANDS ---
@@ -273,22 +274,19 @@ async function sendMarketUpdate(chatId) {
 
 // --- AUTOMATED BACKGROUND MONITORING LOOPS ---
 
-// 1. Check for Breaking News every 10 Minutes and auto-send to group
 async function checkAutoNews() {
     try {
         const feed = await rssParser.parseURL('https://cointelegraph.com/rss');
         const articles = feed.items || [];
 
         if (isInitialNewsBoot) {
-            // Seed existing articles so we don't spam old news on reboot
             articles.forEach(item => seenArticles.add(item.guid || item.link));
             isInitialNewsBoot = false;
             console.log(`📡 Auto-news initialized with ${seenArticles.size} existing stories.`);
             return;
         }
 
-        // Check for new articles
-        for (const item of articles.reverse()) { // process older to newest
+        for (const item of articles.reverse()) {
             const itemKey = item.guid || item.link;
             if (!seenArticles.has(itemKey)) {
                 seenArticles.add(itemKey);
@@ -304,7 +302,6 @@ async function checkAutoNews() {
     }
 }
 
-// 2. Scheduled Market Updates every 6 Hours
 async function checkAutoMarket() {
     if (targetGroupId) {
         console.log(`📊 Auto-posting scheduled market update to group ${targetGroupId}...`);
@@ -321,7 +318,7 @@ setTimeout(checkAutoNews, 5000);
 
 // Launch Bot
 bot.launch({ dropPendingUpdates: true }).then(() => {
-    console.log('✅ QuantyRex Assistant Bot with Auto-News & Auto-Market is LIVE!');
+    console.log('✅ QuantyRex Assistant Bot updated & LIVE!');
 }).catch((err) => {
     console.error('Launch failed:', err.message);
 });
