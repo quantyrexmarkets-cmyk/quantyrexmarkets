@@ -38,7 +38,7 @@ function extractImageUrl(item) {
     return null;
 }
 
-// Dummy HTTP Server for Render
+// Health Check Server
 http.createServer((req, res) => {
     res.writeHead(200, { 'Content-Type': 'text/plain' });
     res.end(`QuantyRex Telegram Bot is running! Target Group: ${targetGroupId || 'Auto-Detecting'}\n`);
@@ -52,9 +52,8 @@ bot.catch((err, ctx) => {
     console.error(`Telegraf error for ${ctx?.updateType}:`, err.message);
 });
 
-// Middleware: Auto-detect group chat ID + Anti-Spam
+// Middleware: Group ID detection + Anti-Spam
 bot.use(async (ctx, next) => {
-    // Auto-detect Group Chat ID
     if (ctx.chat && (ctx.chat.type === 'group' || ctx.chat.type === 'supergroup')) {
         if (targetGroupId !== ctx.chat.id) {
             targetGroupId = ctx.chat.id;
@@ -74,20 +73,17 @@ bot.use(async (ctx, next) => {
         }
     } catch (e) {}
 
-    // Anti-Spam: delete links from regular users
     const text = ctx.message.text || ctx.message.caption || '';
     const hasLink = /(https?:\/\/[^\s]+)|(t\.me\/[^\s]+)|(telegram\.me\/[^\s]+)|(www\.[^\s]+)/gi.test(text);
 
     if (hasLink) {
         try {
             await ctx.deleteMessage();
-            const warning = await ctx.reply(`⚠️ @${ctx.from.username || ctx.from.first_name}, external links are not allowed in this group! For help contact ${SUPPORT_HANDLE}`);
+            const warning = await ctx.reply(`⚠️ @${ctx.from.username || ctx.from.first_name}, external links are prohibited! Contact ${SUPPORT_HANDLE} for support.`);
             setTimeout(() => {
                 ctx.telegram.deleteMessage(ctx.chat.id, warning.message_id).catch(() => {});
             }, 6000);
-        } catch (err) {
-            console.error('Anti-spam deletion error:', err.message);
-        }
+        } catch (err) {}
         return;
     }
 
@@ -97,21 +93,157 @@ bot.use(async (ctx, next) => {
 // --- COMMANDS ---
 
 bot.command('start', (ctx) => {
-    ctx.replyWithMarkdown(`👋 Welcome to *QuantyRex Assistant Bot*!\n\nUse /help to see all available commands or contact ${SUPPORT_HANDLE} for support.`);
+    ctx.replyWithMarkdown(
+        `✨ *Welcome to QuantyRex Markets Assistant Bot!* ✨\n\n` +
+        `QuantyRex Markets is an automated institutional crypto trading & copy trading platform.\n\n` +
+        `Select an option below or type /help:`,
+        Markup.inlineKeyboard([
+            [Markup.button.callback('📖 How It Works', 'btn_howitworks'), Markup.button.callback('📊 Investment Plans', 'btn_plans')],
+            [Markup.button.url('🌐 Register Account', `${WEBSITE_URL}/register`), Markup.button.url('🆘 Contact Support', `https://t.me/QUANTYREX_SUPPORT_OFFICAL`)]
+        ])
+    );
 });
 
 bot.help((ctx) => {
     ctx.replyWithMarkdown(
         `🤖 *QuantyRex Assistant Bot Commands:*\n\n` +
-        `• /news - Latest Crypto News with pictures 📰\n` +
+        `• /howitworks - Step-by-step platform guide 📖\n` +
+        `• /plans - Full AI Bot & Copy Trading Investment Tiers 📊\n` +
+        `• /news - Latest Breaking Crypto News with photos 📰\n` +
         `• /market - Live Crypto Prices 💹\n` +
-        `• /plans - AI Bot & Copy Trading Tiers 📊\n` +
-        `• /policy - Community Rules & Safety ⚖️\n` +
-        `• /support - Contact Official Support 🆘 (${SUPPORT_HANDLE})`
+        `• /policy - Group Rules & Security ⚖️\n` +
+        `• /support - Official Admin Contact 🆘 (${SUPPORT_HANDLE})`
     );
 });
 
-// /news Command
+// --- HOW IT WORKS COMMAND ---
+
+bot.command('howitworks', (ctx) => {
+    sendHowItWorksMessage(ctx);
+});
+
+function sendHowItWorksMessage(ctx) {
+    const text = `📖 *HOW QUANTYREX MARKETS WORKS* 📖\n\n` +
+        `QuantyRex Markets provides automated crypto growth through AI Algorithmic Trading and Mirror Copy Trading.\n\n` +
+        `*1️⃣ Step 1: Create an Account*\n` +
+        `Sign up at [QuantyRex Markets](${WEBSITE_URL}/register) in under 60 seconds.\n\n` +
+        `*2️⃣ Step 2: Deposit Funds*\n` +
+        `Fund your wallet with BTC, ETH, USDT, SOL, or BNB on your personal Dashboard.\n\n` +
+        `*3️⃣ Step 3: Choose Your Growth Engine*\n` +
+        `• *AI Trading Bots:* Select a plan (Starter to Elite) and let automated algorithms trade 24/7.\n` +
+        `• *Copy Trading:* Allocate capital to mirror real public traders (Ross Cameron, Rayner Teo, Kathy Lien) automatically.\n\n` +
+        `*4️⃣ Step 4: Daily Profit Accrual*\n` +
+        `Watch your trade returns accrue daily in your account dashboard.\n\n` +
+        `*5️⃣ Step 5: Fast Withdrawals*\n` +
+        `Withdraw capital and profits to your external crypto wallet anytime.`;
+
+    const keyboard = Markup.inlineKeyboard([
+        [Markup.button.callback('🤖 View AI Bot Plans', 'btn_bot_plans'), Markup.button.callback('👥 View Copy Traders', 'btn_copy_traders')],
+        [Markup.button.url('🚀 Launch Dashboard', `${WEBSITE_URL}/dashboard`)]
+    ]);
+
+    if (ctx.callbackQuery) {
+        ctx.replyWithMarkdown(text, keyboard);
+    } else {
+        ctx.replyWithMarkdown(text, keyboard);
+    }
+}
+
+// --- PLANS COMMAND ---
+
+bot.command('plans', (ctx) => {
+    sendPlansMenu(ctx);
+});
+
+function sendPlansMenu(ctx) {
+    const text = `📊 *QUANTYREX INVESTMENT PLANS & TIERS* 📊\n\n` +
+        `Choose between fully automated **AI Bot Strategies** or **Copy Trading Top Traders**.\n\n` +
+        `Select a category below to see detailed ROI, minimums, and durations:`;
+
+    const keyboard = Markup.inlineKeyboard([
+        [Markup.button.callback('🤖 AI Trading Bots (10% - 70%)', 'btn_bot_plans')],
+        [Markup.button.callback('👥 Copy Expert Traders', 'btn_copy_traders')],
+        [Markup.button.url('🌐 Activate Plan On Website', `${WEBSITE_URL}/dashboard/bot-trading`)]
+    ]);
+
+    ctx.replyWithMarkdown(text, keyboard);
+}
+
+// --- INLINE CALLBACK ACTIONS ---
+
+bot.action('btn_howitworks', (ctx) => {
+    ctx.answerCbQuery();
+    sendHowItWorksMessage(ctx);
+});
+
+bot.action('btn_plans', (ctx) => {
+    ctx.answerCbQuery();
+    sendPlansMenu(ctx);
+});
+
+bot.action('btn_bot_plans', (ctx) => {
+    ctx.answerCbQuery();
+    const botText = `🤖 *QUANTYREX AI TRADING BOTS* 🤖\n\n` +
+        `1️⃣ *Starter Bot*\n` +
+        `• Min Deposit: *$500*\n` +
+        `• Expected Return: *10% Profit*\n` +
+        `• Duration: *7 Days*\n\n` +
+        `2️⃣ *Silver Bot*\n` +
+        `• Min Deposit: *$1,000*\n` +
+        `• Expected Return: *16% Profit*\n` +
+        `• Duration: *14 Days*\n\n` +
+        `3️⃣ *Gold Bot*\n` +
+        `• Min Deposit: *$2,500*\n` +
+        `• Expected Return: *24% Profit*\n` +
+        `• Duration: *30 Days*\n\n` +
+        `4️⃣ *Platinum Bot*\n` +
+        `• Min Deposit: *$5,000*\n` +
+        `• Expected Return: *36% Profit*\n` +
+        `• Duration: *60 Days*\n\n` +
+        `5️⃣ *Diamond Bot*\n` +
+        `• Min Deposit: *$10,000*\n` +
+        `• Expected Return: *50% Profit*\n` +
+        `• Duration: *90 Days*\n\n` +
+        `6️⃣ *Elite Bot*\n` +
+        `• Min Deposit: *$25,000*\n` +
+        `• Expected Return: *70% Profit*\n` +
+        `• Duration: *120 Days*`;
+
+    const keyboard = Markup.inlineKeyboard([
+        [Markup.button.callback('👥 View Copy Traders', 'btn_copy_traders')],
+        [Markup.button.url('🤖 Start AI Bot Now', `${WEBSITE_URL}/dashboard/bot-trading`)]
+    ]);
+
+    ctx.replyWithMarkdown(botText, keyboard);
+});
+
+bot.action('btn_copy_traders', (ctx) => {
+    ctx.answerCbQuery();
+    const copyText = `👥 *FEATURED QUANTYREX COPY TRADERS* 👥\n\n` +
+        `Mirror verified trading positions automatically in real time:\n\n` +
+        `• *Ross Cameron* — Day Trading Specialist\n` +
+        `  📈 Win Rate: *88%* | 30d Avg ROI: *+34%*\n\n` +
+        `• *Rayner Teo* — Price Action & Swing Trader\n` +
+        `  📈 Win Rate: *85%* | 30d Avg ROI: *+29%*\n\n` +
+        `• *Kathy Lien* — Forex & Macro Crypto\n` +
+        `  📈 Win Rate: *82%* | 30d Avg ROI: *+26%*\n\n` +
+        `• *Anton Kreil* — Institutional Strategy\n` +
+        `  📈 Win Rate: *91%* | 30d Avg ROI: *+41%*\n\n` +
+        `• *Nicola Duke* — Technical Pattern Expert\n` +
+        `  📈 Win Rate: *80%* | 30d Avg ROI: *+22%*\n\n` +
+        `• *Timothy Sykes* — Momentum Trader\n` +
+        `  📈 Win Rate: *84%* | 30d Avg ROI: *+31%*`;
+
+    const keyboard = Markup.inlineKeyboard([
+        [Markup.button.callback('🤖 View AI Bot Plans', 'btn_bot_plans')],
+        [Markup.button.url('👥 Connect & Copy Trader', `${WEBSITE_URL}/dashboard/copy-trading`)]
+    ]);
+
+    ctx.replyWithMarkdown(copyText, keyboard);
+});
+
+// --- NEWS COMMAND ---
+
 bot.command('news', async (ctx) => {
     try {
         const feed = await rssParser.parseURL('https://cointelegraph.com/rss');
@@ -128,15 +260,7 @@ bot.command('news', async (ctx) => {
     }
 });
 
-bot.command('plans', (ctx) => {
-    const planMsg = `📊 *QuantyRex Investment Tiers* 📊\n\n` +
-        `🤖 *AI Bot Trading:* \n• Starter: 10% profit (7 days)\n• Silver: 16% profit (14 days)\n• Gold: 24% profit (30 days)\n• Platinum: 36% profit (60 days)\n• Diamond: 50% profit (90 days)\n• Elite: 70% profit (120 days)\n\n` +
-        `👥 *Copy Trading:* \nMirror verified top traders (Ross Cameron, Rayner Teo, Kathy Lien) automatically on your account.`;
-    
-    ctx.replyWithMarkdown(planMsg, Markup.inlineKeyboard([
-        [Markup.button.url('🚀 Start Trading Now', `${WEBSITE_URL}/dashboard/bot-trading`)]
-    ]));
-});
+// --- MARKET COMMAND ---
 
 bot.command('market', async (ctx) => {
     await sendMarketUpdate(ctx.chat.id);
@@ -272,7 +396,7 @@ async function sendMarketUpdate(chatId) {
     }
 }
 
-// --- AUTOMATED BACKGROUND MONITORING LOOPS ---
+// --- AUTOMATED BACKGROUND LOOPS ---
 
 async function checkAutoNews() {
     try {
@@ -309,16 +433,13 @@ async function checkAutoMarket() {
     }
 }
 
-// Start background timers
-setInterval(checkAutoNews, 10 * 60 * 1000); // Every 10 mins
-setInterval(checkAutoMarket, 6 * 60 * 60 * 1000); // Every 6 hours
+setInterval(checkAutoNews, 10 * 60 * 1000);
+setInterval(checkAutoMarket, 6 * 60 * 60 * 1000);
 
-// Run initial news boot check after 5 seconds
 setTimeout(checkAutoNews, 5000);
 
-// Launch Bot
 bot.launch({ dropPendingUpdates: true }).then(() => {
-    console.log('✅ QuantyRex Assistant Bot updated & LIVE!');
+    console.log('✅ QuantyRex Assistant Bot updated with /howitworks & /plans interactive menus!');
 }).catch((err) => {
     console.error('Launch failed:', err.message);
 });
