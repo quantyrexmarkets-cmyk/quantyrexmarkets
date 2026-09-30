@@ -1,14 +1,24 @@
 const { Telegraf, Markup } = require('telegraf');
 const axios = require('axios');
+const http = require('http');
 
-// Configuration (Uses environment variables on Render, or default local fallback)
+// Configuration
 const BOT_TOKEN = process.env.BOT_TOKEN || '8815717797:AAE9XmlaDn3uiIuUrv_3-eyv2yL_MFhlPmM';
 const ADMIN_ID = parseInt(process.env.ADMIN_ID || '7759205941');
 const WEBSITE_URL = 'https://quantyrexmarkets.vercel.app';
+const PORT = process.env.PORT || 10000;
+
+// --- DUMMY HTTP SERVER FOR RENDER HEALTH CHECK ---
+http.createServer((req, res) => {
+    res.writeHead(200, { 'Content-Type': 'text/plain' });
+    res.end('QuantyRex Telegram Bot is running live!\n');
+}).listen(PORT, () => {
+    console.log(`✅ Health check HTTP server listening on port ${PORT}`);
+});
 
 const bot = new Telegraf(BOT_TOKEN);
 
-// --- ANTI-SPAM MIDDLEWARE (OPTION 2) ---
+// --- ANTI-SPAM MIDDLEWARE ---
 // Automatically deletes links posted by normal members
 bot.use(async (ctx, next) => {
     if (!ctx.chat || ctx.chat.type === 'private') return next();
@@ -27,7 +37,7 @@ bot.use(async (ctx, next) => {
             return next();
         }
     } catch (e) {
-        // Continue check if failed to fetch chat member
+        // Continue check
     }
 
     // 3. Inspect text for URLs and Telegram links
@@ -36,10 +46,7 @@ bot.use(async (ctx, next) => {
 
     if (hasLink) {
         try {
-            // Delete the spam message
             await ctx.deleteMessage();
-            
-            // Send brief warning that self-deletes in 7 seconds
             const warning = await ctx.reply(`⚠️ @${ctx.from.username || ctx.from.first_name}, external links are not allowed in this group!`);
             setTimeout(() => {
                 ctx.telegram.deleteMessage(ctx.chat.id, warning.message_id).catch(() => {});
@@ -47,7 +54,7 @@ bot.use(async (ctx, next) => {
         } catch (err) {
             console.error('Anti-spam deletion failed:', err.message);
         }
-        return; // Stop handling this message
+        return;
     }
 
     return next();
@@ -135,7 +142,6 @@ bot.command('signal', (ctx) => {
     bot.telegram.sendMessage(ctx.chat.id, signalMsg, { parse_mode: 'Markdown' });
 });
 
-// Syntax check & start
 console.log('Bot initialized...');
 bot.launch().then(() => {
     console.log('✅ QuantyRex Assistant Bot is running!');
