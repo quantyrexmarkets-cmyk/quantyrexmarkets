@@ -4,7 +4,7 @@ const http = require('http');
 const Parser = require('rss-parser');
 
 // Configuration
-const BOT_TOKEN = process.env.BOT_TOKEN || '8815717797:AAE9XmlaDn3uiIuUrv_3-eyv2yL_MFhlPmM';
+const BOT_TOKEN = process.env.BOT_TOKEN || '8815717797:AAGFh9lCyKcsd5kYNq-l98ENl9GzJXTj2aw';
 const ADMIN_ID = parseInt(process.env.ADMIN_ID || '7759205941');
 const SUPPORT_HANDLE = '@QUANTYREX_SUPPORT_OFFICAL';
 const WEBSITE_URL = 'https://quantyrexmarkets.vercel.app';
@@ -142,11 +142,7 @@ function sendHowItWorksMessage(ctx) {
         [Markup.button.url('🚀 Launch Dashboard', `${WEBSITE_URL}/dashboard`)]
     ]);
 
-    if (ctx.callbackQuery) {
-        ctx.replyWithMarkdown(text, keyboard);
-    } else {
-        ctx.replyWithMarkdown(text, keyboard);
-    }
+    ctx.replyWithMarkdown(text, keyboard);
 }
 
 // --- PLANS COMMAND ---
@@ -439,7 +435,7 @@ setInterval(checkAutoMarket, 6 * 60 * 60 * 1000);
 setTimeout(checkAutoNews, 5000);
 
 bot.launch({ dropPendingUpdates: true }).then(() => {
-    console.log('✅ QuantyRex Assistant Bot updated with /howitworks & /plans interactive menus!');
+    console.log('✅ QuantyRex Assistant Bot updated with NEW token!');
 }).catch((err) => {
     console.error('Launch failed:', err.message);
 });
