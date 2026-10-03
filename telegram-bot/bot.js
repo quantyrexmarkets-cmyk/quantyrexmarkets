@@ -280,7 +280,23 @@ bot.command('support', (ctx) => {
 bot.command('setgroup', (ctx) => {
     if (ctx.from.id !== ADMIN_ID) return;
     targetGroupId = ctx.chat.id;
-    ctx.reply(`✅ Current group set as auto-broadcast target ID: ${targetGroupId}`);
+    ctx.reply(`✅ Current group set as auto-broadcast target ID: ${targetGroupId}\n\nAdd GROUP_CHAT_ID = ${targetGroupId} to Render env variables to keep it permanently.`);
+});
+
+// Admin command to test auto-broadcaster immediately
+bot.command('testautonews', async (ctx) => {
+    if (ctx.from.id !== ADMIN_ID) return ctx.reply("🚫 Admin access required.");
+    const group = targetGroupId || ctx.chat.id;
+    ctx.reply(`🔄 Triggering test auto-news broadcast to target group ${group}...`);
+    try {
+        const feed = await rssParser.parseURL('https://cointelegraph.com/rss');
+        if (feed.items && feed.items.length > 0) {
+            await sendArticleToChat(group, feed.items[0]);
+            ctx.reply("✅ Test auto-news broadcast successful!");
+        }
+    } catch (err) {
+        ctx.reply("❌ Test failed: " + err.message);
+    }
 });
 
 bot.command('postnews', async (ctx) => {
@@ -435,7 +451,7 @@ setInterval(checkAutoMarket, 6 * 60 * 60 * 1000);
 setTimeout(checkAutoNews, 5000);
 
 bot.launch({ dropPendingUpdates: true }).then(() => {
-    console.log('✅ QuantyRex Assistant Bot updated with NEW token!');
+    console.log('✅ QuantyRex Assistant Bot updated!');
 }).catch((err) => {
     console.error('Launch failed:', err.message);
 });
