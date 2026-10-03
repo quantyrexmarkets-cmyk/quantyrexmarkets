@@ -1,3 +1,4 @@
+import Support from './pages/Support';
 import React, { useState, useEffect } from "react";
 import { useAuth } from "./context/AuthContext";
 import { Navigate } from "react-router-dom";
@@ -153,6 +154,7 @@ function App() {
       />
       <ScrollToTop />
       <Routes>
+        <Route path="/support" element={<Support />} />
         <Route path="/" element={<HomePage />} />
         <Route path="/signup" element={<SignUp />} />
         <Route path="/signin" element={<SignIn />} />

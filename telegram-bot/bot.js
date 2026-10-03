@@ -6,6 +6,7 @@ const Parser = require('rss-parser');
 // Configuration
 const BOT_TOKEN = process.env.BOT_TOKEN || '8815717797:AAGFh9lCyKcsd5kYNq-l98ENl9GzJXTj2aw';
 const ADMIN_ID = parseInt(process.env.ADMIN_ID || '7759205941');
+const SUPPORT_LINK = 'https://t.me/QUANTYREX_SUPPORT_OFFICAL';
 const SUPPORT_HANDLE = '@QUANTYREX_SUPPORT_OFFICAL';
 const WEBSITE_URL = 'https://quantyrexmarkets.vercel.app';
 const PORT = process.env.PORT || 10000;
@@ -79,7 +80,7 @@ bot.use(async (ctx, next) => {
     if (hasLink) {
         try {
             await ctx.deleteMessage();
-            const warning = await ctx.reply(`⚠️ @${ctx.from.username || ctx.from.first_name}, external links are prohibited! Contact ${SUPPORT_HANDLE} for support.`);
+            const warning = await ctx.reply(`⚠️ @${ctx.from.username || ctx.from.first_name}, external links are prohibited! Contact ${SUPPORT_HANDLE} for help.`);
             setTimeout(() => {
                 ctx.telegram.deleteMessage(ctx.chat.id, warning.message_id).catch(() => {});
             }, 6000);
@@ -99,7 +100,7 @@ bot.command('start', (ctx) => {
         `Select an option below or type /help:`,
         Markup.inlineKeyboard([
             [Markup.button.callback('📖 How It Works', 'btn_howitworks'), Markup.button.callback('📊 Investment Plans', 'btn_plans')],
-            [Markup.button.url('🌐 Register Account', `${WEBSITE_URL}/register`), Markup.button.url('🆘 Contact Support', `https://t.me/QUANTYREX_SUPPORT_OFFICAL`)]
+            [Markup.button.url('🌐 Register Account', `${WEBSITE_URL}/register`), Markup.button.url('🆘 Contact Support', SUPPORT_LINK)]
         ])
     );
 });
@@ -112,11 +113,9 @@ bot.help((ctx) => {
         `• /news - Latest Breaking Crypto News with photos 📰\n` +
         `• /market - Live Crypto Prices 💹\n` +
         `• /policy - Group Rules & Security ⚖️\n` +
-        `• /support - Official Admin Contact 🆘 (${SUPPORT_HANDLE})`
+        `• /support - Official Support Contact 🆘`
     );
 });
-
-// --- HOW IT WORKS COMMAND ---
 
 bot.command('howitworks', (ctx) => {
     sendHowItWorksMessage(ctx);
@@ -145,8 +144,6 @@ function sendHowItWorksMessage(ctx) {
     ctx.replyWithMarkdown(text, keyboard);
 }
 
-// --- PLANS COMMAND ---
-
 bot.command('plans', (ctx) => {
     sendPlansMenu(ctx);
 });
@@ -164,8 +161,6 @@ function sendPlansMenu(ctx) {
 
     ctx.replyWithMarkdown(text, keyboard);
 }
-
-// --- INLINE CALLBACK ACTIONS ---
 
 bot.action('btn_howitworks', (ctx) => {
     ctx.answerCbQuery();
@@ -238,8 +233,6 @@ bot.action('btn_copy_traders', (ctx) => {
     ctx.replyWithMarkdown(copyText, keyboard);
 });
 
-// --- NEWS COMMAND ---
-
 bot.command('news', async (ctx) => {
     try {
         const feed = await rssParser.parseURL('https://cointelegraph.com/rss');
@@ -256,8 +249,6 @@ bot.command('news', async (ctx) => {
     }
 });
 
-// --- MARKET COMMAND ---
-
 bot.command('market', async (ctx) => {
     await sendMarketUpdate(ctx.chat.id);
 });
@@ -272,7 +263,17 @@ bot.action('show_policy', (ctx) => {
 });
 
 bot.command('support', (ctx) => {
-    ctx.replyWithMarkdown(`🆘 *QuantyRex Official Support*\n\nContact Admin directly: ${SUPPORT_HANDLE}\nWebsite Support: ${WEBSITE_URL}/support`);
+    const text = `🆘 *QUANTYREX OFFICIAL SUPPORT* 🆘\n\n` +
+        `• *Telegram Support:* [${SUPPORT_HANDLE}](${SUPPORT_LINK})\n` +
+        `• *Website Help Center:* [quantyrexmarkets.vercel.app/support](${WEBSITE_URL}/support)\n\n` +
+        `Tap the button below to start a direct chat with our support team:`;
+
+    const keyboard = Markup.inlineKeyboard([
+        [Markup.button.url('💬 Chat with Support Now', SUPPORT_LINK)],
+        [Markup.button.url('🌐 Open Website Support', `${WEBSITE_URL}/support`)]
+    ]);
+
+    ctx.replyWithMarkdown(text, keyboard);
 });
 
 // --- ADMIN COMMANDS ---
@@ -283,7 +284,6 @@ bot.command('setgroup', (ctx) => {
     ctx.reply(`✅ Current group set as auto-broadcast target ID: ${targetGroupId}\n\nAdd GROUP_CHAT_ID = ${targetGroupId} to Render env variables to keep it permanently.`);
 });
 
-// Admin command to test auto-broadcaster immediately
 bot.command('testautonews', async (ctx) => {
     if (ctx.from.id !== ADMIN_ID) return ctx.reply("🚫 Admin access required.");
     const group = targetGroupId || ctx.chat.id;
@@ -451,7 +451,7 @@ setInterval(checkAutoMarket, 6 * 60 * 60 * 1000);
 setTimeout(checkAutoNews, 5000);
 
 bot.launch({ dropPendingUpdates: true }).then(() => {
-    console.log('✅ QuantyRex Assistant Bot updated!');
+    console.log('✅ QuantyRex Assistant Bot updated with working support buttons!');
 }).catch((err) => {
     console.error('Launch failed:', err.message);
 });
