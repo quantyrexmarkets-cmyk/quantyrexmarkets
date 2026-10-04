@@ -1,3 +1,24 @@
+// Safety patch for React DOM removeChild/insertBefore crashes (e.g. browser translation)
+if (typeof window !== 'undefined' && typeof Node === 'function' && Node.prototype) {
+  const originalRemoveChild = Node.prototype.removeChild;
+  Node.prototype.removeChild = function (child) {
+    if (child.parentNode !== this) {
+      if (console) console.warn('Cannot remove child: parent mismatch avoided', child, this);
+      return child;
+    }
+    return originalRemoveChild.apply(this, arguments);
+  };
+
+  const originalInsertBefore = Node.prototype.insertBefore;
+  Node.prototype.insertBefore = function (newNode, referenceNode) {
+    if (referenceNode && referenceNode.parentNode !== this) {
+      if (console) console.warn('Cannot insert before: parent mismatch avoided', referenceNode, this);
+      return newNode;
+    }
+    return originalInsertBefore.apply(this, arguments);
+  };
+}
+
 import { registerServiceWorker, subscribeToPush } from './utils/pwa';
 import { StrictMode, Component } from 'react'
 import { createRoot } from 'react-dom/client'
@@ -28,30 +49,28 @@ createRoot(document.getElementById('root')).render(
   <StrictMode>
     <ErrorBoundary>
       <ThemeProvider>
-    <AuthProvider>
-    <CurrencyProvider>
-        <App />
-      </CurrencyProvider>
-  </AuthProvider>
-    </ThemeProvider>
+        <AuthProvider>
+          <CurrencyProvider>
+            <App />
+          </CurrencyProvider>
+        </AuthProvider>
+      </ThemeProvider>
     </ErrorBoundary>
   </StrictMode>,
 )
 
-// Apply saved theme on load
 if (localStorage.getItem('theme') === 'light') {
   document.body.classList.add('light-mode');
 }
 
 registerServiceWorker().then(() => {
-  // Auto-subscribe to push notifications - only for regular users (admins subscribe via SupportPage)
   if (localStorage.getItem('token')) {
     setTimeout(() => {
       try {
         const userData = JSON.parse(sessionStorage.getItem('user') || localStorage.getItem('user') || '{}');
         const isAdmin = userData.isAdmin === true || userData.role === 'admin';
         if (isAdmin) {
-          console.log('[Push] Skipped for admin - use SupportPage to subscribe');
+          console.log('[Push] Skipped for admin');
           return;
         }
         subscribeToPush().catch(e => console.log('Push subscribe:', e.message));
