@@ -9,9 +9,11 @@ const ADMIN_ID = parseInt(process.env.ADMIN_ID || '7759205941');
 const SUPPORT_LINK = 'https://t.me/QUANTYREX_SUPPORT_OFFICAL';
 const SUPPORT_HANDLE = '@QUANTYREX_SUPPORT_OFFICAL';
 const WEBSITE_URL = 'https://quantyrexmarkets.vercel.app';
+const RENDER_SERVICE_URL = 'https://quantyrex-telegram-bot-mtpro.onrender.com';
 const PORT = process.env.PORT || 10000;
 
-let targetGroupId = process.env.GROUP_CHAT_ID ? parseInt(process.env.GROUP_CHAT_ID) : null;
+// Hardcode default group ID so restarts never lose the chat
+let targetGroupId = process.env.GROUP_CHAT_ID ? parseInt(process.env.GROUP_CHAT_ID) : -1004302599281;
 const seenArticles = new Set();
 let isInitialNewsBoot = true;
 
@@ -39,13 +41,20 @@ function extractImageUrl(item) {
     return null;
 }
 
-// Health Check Server
+// Health Check HTTP Server for Render
 http.createServer((req, res) => {
     res.writeHead(200, { 'Content-Type': 'text/plain' });
-    res.end(`QuantyRex Telegram Bot is running! Target Group: ${targetGroupId || 'Auto-Detecting'}\n`);
+    res.end(`QuantyRex Telegram Bot is running live! Target Group: ${targetGroupId}\n`);
 }).listen(PORT, () => {
     console.log(`✅ Health check HTTP server listening on port ${PORT}`);
 });
+
+// Self-Ping Keep-Alive to prevent Render Free Tier spin-down
+setInterval(() => {
+    axios.get(RENDER_SERVICE_URL)
+        .then(() => console.log('⚡ Keep-alive self-ping successful'))
+        .catch(err => console.log('Keep-alive ping:', err.message));
+}, 4 * 60 * 1000); // Ping every 4 minutes
 
 const bot = new Telegraf(BOT_TOKEN);
 
@@ -281,7 +290,7 @@ bot.command('support', (ctx) => {
 bot.command('setgroup', (ctx) => {
     if (ctx.from.id !== ADMIN_ID) return;
     targetGroupId = ctx.chat.id;
-    ctx.reply(`✅ Current group set as auto-broadcast target ID: ${targetGroupId}\n\nAdd GROUP_CHAT_ID = ${targetGroupId} to Render env variables to keep it permanently.`);
+    ctx.reply(`✅ Current group set as auto-broadcast target ID: ${targetGroupId}`);
 });
 
 bot.command('testautonews', async (ctx) => {
@@ -451,7 +460,7 @@ setInterval(checkAutoMarket, 6 * 60 * 60 * 1000);
 setTimeout(checkAutoNews, 5000);
 
 bot.launch({ dropPendingUpdates: true }).then(() => {
-    console.log('✅ QuantyRex Assistant Bot updated with working support buttons!');
+    console.log('✅ QuantyRex Assistant Bot updated with Keep-Alive self-ping!');
 }).catch((err) => {
     console.error('Launch failed:', err.message);
 });
