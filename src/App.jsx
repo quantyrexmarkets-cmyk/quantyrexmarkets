@@ -1,3 +1,4 @@
+import LanguageTranslator from './components/LanguageTranslator';
 import Support from './pages/Support';
 import React, { useState, useEffect } from "react";
 import { useAuth } from "./context/AuthContext";
@@ -203,6 +204,7 @@ function App() {
         <Route path="*" element={<NotFound />} />
       </Routes>
     </BrowserRouter>
+    <LanguageTranslator />
     <LiveChat />
     </>
   );

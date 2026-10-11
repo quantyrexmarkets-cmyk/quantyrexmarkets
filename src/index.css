@@ -173,3 +173,14 @@ textarea, input[type="text"], input:not([type]), [contenteditable] {
   user-select: text !important;
   -webkit-touch-callout: default !important;
 }
+
+/* Hide Google Translate Top Banner */
+.goog-te-banner-frame {
+  display: none !important;
+}
+body {
+  top: 0px !important;
+}
+.skiptranslate {
+  display: none !important;
+}
