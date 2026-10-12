@@ -3,7 +3,12 @@ import express from 'express';
 import Parser from 'rss-parser';
 
 // --- CONFIGURATION ---
-const BOT_TOKEN = process.env.BOT_TOKEN || '8815717797:AAGFh9lCyKcsd5kYNq-l98ENl9GzJXTj2aw';
+const BOT_TOKEN = process.env.BOT_TOKEN;
+if (!BOT_TOKEN) {
+  console.error('FATAL ERROR: BOT_TOKEN environment variable is missing!');
+  process.exit(1);
+}
+
 const ADMIN_ID = 7759205941; // @QUANTYREX_SUPPORT_OFFICAL
 const SUPPORT_LINK = 'https://t.me/QUANTYREX_SUPPORT_OFFICAL';
 const WEBSITE_URL = 'https://quantyrexmarkets.vercel.app';
