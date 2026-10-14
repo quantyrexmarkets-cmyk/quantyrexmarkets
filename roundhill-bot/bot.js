@@ -5,7 +5,6 @@ import Parser from 'rss-parser';
 // --- CONFIGURATION FOR ROUNDHILL INVESTMENTS ---
 const BOT_TOKEN = process.env.BOT_TOKEN || '8865237359:AAHafU092hTh2_YaoAW1NtODJmVQGpf_-XQ';
 const ADMIN_ID = 8451430916; // Trader Kelvin
-const SUPPORT_HANDLE = '@Trader_kelvin53'; 
 const SUPPORT_LINK = 'https://t.me/Trader_kelvin53';
 const RENDER_BOT_URL = process.env.RENDER_URL || 'https://roundhill-investments-bot.onrender.com';
 
@@ -58,7 +57,8 @@ const getRoundHillINRText = () => {
     `• 🟢 *Min Capital:* ₹10,000\n` +
     `• 🔴 *Max Capital:* ₹100,000\n` +
     `• ⏱ *Payout Duration:* 24 Hours Max Settlement\n` +
-    `• 🛡 *Risk Mitigation:* 100% Capital Guaranteed\n\n` +
+    `• 🛡 *Risk Mitigation:* 100% Capital Guaranteed\n` +
+    `• 💳 *Payout Methods:* UPI, Bank Transfer (IMPS/NEFT), USDT TRC20\n\n` +
     `🚀 *HOW TO GET STARTED:* \n` +
     `1️⃣ Pick your investment package (₹10k to ₹100k).\n` +
     `2️⃣ Tap *"🏛 Deposit & Invest Now"* to message Trader Kelvin.\n` +
@@ -90,22 +90,36 @@ async function fetchAndBroadcastNews() {
     let imageUrl = 'https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?auto=format&fit=crop&w=1200&q=80';
     if (latestItem.enclosure && latestItem.enclosure.url) {
       imageUrl = latestItem.enclosure.url;
+    } else if (latestItem['media:content'] && latestItem['media:content'].$) {
+      imageUrl = latestItem['media:content'].$.url;
     }
 
-    const caption = `🏛 *ROUNDHILL BREAKING NEWS*\n\n🔥 *${latestItem.title}*\n\n🔗 [Read Full Analysis](${latestItem.link})`;
-    const keyboard = Markup.inlineKeyboard([[Markup.button.url('📊 Trade with Kelvin', SUPPORT_LINK)]]);
+    const caption =
+      `🏛 *ROUNDHILL BREAKING MARKET INTELLIGENCE*\n\n` +
+      `🔥 *${latestItem.title}*\n\n` +
+      `${latestItem.contentSnippet ? latestItem.contentSnippet.slice(0, 220) + '...' : ''}\n\n` +
+      `🔗 [Read Full Analysis](${latestItem.link})`;
+
+    const keyboard = Markup.inlineKeyboard([
+      [Markup.button.url('📊 Trade Signals with Kelvin', SUPPORT_LINK)],
+      [Markup.button.url('💬 Contact Support', SUPPORT_LINK)]
+    ]);
 
     await bot.telegram.sendPhoto(TARGET_GROUP_ID, imageUrl, { caption: caption, parse_mode: 'Markdown', ...keyboard });
-  } catch (err) { console.error('News Error:', err.message); }
+    console.log('[RoundHill Auto-News] Broadcasted news photo to group');
+  } catch (err) {
+    console.error('News Error:', err.message);
+  }
 }
 
+// Background timers
 setInterval(fetchAndBroadcastNews, 30 * 60 * 1000);
 
-// --- AUTOMATED 2-HOUR INR PROMO ---
 setInterval(async () => {
   if (!TARGET_GROUP_ID) return;
   try {
     await bot.telegram.sendMessage(TARGET_GROUP_ID, getRoundHillINRText(), { parse_mode: 'Markdown', ...getRoundHillButtons() });
+    console.log('[RoundHill Auto-INR] Broadcasted investment tiers');
   } catch (err) { console.error('Auto-INR Error:', err.message); }
 }, 2 * 60 * 60 * 1000);
 
@@ -113,30 +127,175 @@ setInterval(async () => {
 bot.use(async (ctx, next) => {
   if (ctx.message && ctx.message.text && ctx.chat.type !== 'private') {
     const text = ctx.message.text;
+    if (text.startsWith('/')) return next();
+
     const isLink = /(https?:\/\/|t\.me\/|telegram\.me\/|www\.)/i.test(text);
     if (isLink && ctx.from.id !== ADMIN_ID) {
-      try { await ctx.deleteMessage(); return; } catch (e) {}
+      try {
+        await ctx.deleteMessage();
+        const warn = await ctx.reply(`⚠️ ${ctx.from.first_name}, links are not allowed in this group.`);
+        setTimeout(() => ctx.telegram.deleteMessage(ctx.chat.id, warn.message_id).catch(() => {}), 5000);
+        return;
+      } catch (e) {}
     }
   }
   return next();
 });
 
-// --- COMMAND HANDLERS ---
-bot.start((ctx) => ctx.replyWithMarkdown(`🏛 *Welcome to ROUNDHILL INVESTMENTS!*\n\nHigh-yielding 5X multiplier plans by Trader Kelvin.\n\nUse /inr to see plans or /support to chat.`, getRoundHillButtons()));
-bot.command(['inr', 'plans'], (ctx) => ctx.replyWithMarkdown(getRoundHillINRText(), getRoundHillButtons()));
-bot.command('support', (ctx) => ctx.replyWithMarkdown(`💬 *ROUNDHILL SUPPORT*\n\nConnect with Trader Kelvin:\n${SUPPORT_LINK}`, getRoundHillButtons()));
+// --- USER COMMAND HANDLERS ---
+
+// 1. START COMMAND
+bot.start((ctx) => {
+  const welcomeText =
+    `🏛 *Welcome to ROUNDHILL INVESTMENTS TRADING BOT!*\n\n` +
+    `Institutional AI Arbitrage Trading managed by Trader Kelvin. Capital growth with guaranteed 5X returns.\n\n` +
+    `📌 *Available Commands:*\n` +
+    `• /inr or /plans - 5X INR Investment Tiers (₹10k - ₹100k)\n` +
+    `• /howitworks - Investment Quickstart Guide\n` +
+    `• /market - Live Crypto Prices (BTC, ETH, SOL, BNB)\n` +
+    `• /news - Latest Breaking Crypto News\n` +
+    `• /policy - Community Rules & Safety\n` +
+    `• /support - Connect with Trader Kelvin`;
+
+  ctx.replyWithMarkdown(welcomeText, getRoundHillButtons());
+});
+
+// 2. HELP COMMAND
+bot.help((ctx) => {
+  const helpText =
+    `ℹ️ *ROUNDHILL INVESTMENTS HELP DESK*\n\n` +
+    `• /inr - View 5X Investment Packages\n` +
+    `• /howitworks - Read process guide\n` +
+    `• /market - View live price tracker\n` +
+    `• /news - Get instant news report\n` +
+    `• /support - Direct Telegram Chat with Trader Kelvin\n\n` +
+    `For immediate account setup, tap below:`;
+
+  ctx.replyWithMarkdown(helpText, getRoundHillButtons());
+});
+
+// 3. INR & PLANS COMMAND
+bot.command(['inr', 'plans'], (ctx) => {
+  ctx.replyWithMarkdown(getRoundHillINRText(), getRoundHillButtons());
+});
+
+// 4. HOW IT WORKS COMMAND
+bot.command('howitworks', (ctx) => {
+  const text =
+    `📖 *HOW ROUNDHILL INVESTMENTS WORKS*\n\n` +
+    `1️⃣ *Select Plan:* Choose an INR Investment Package (₹10,000 to ₹100,000).\n` +
+    `2️⃣ *Submit Capital:* Deposit via UPI, Bank Wire, or USDT.\n` +
+    `3️⃣ *AI Execution:* Arbitrage trading bots execute multi-exchange trades.\n` +
+    `4️⃣ *Guaranteed Payout:* Receive your 5X settlement in 24 Hours directly!`;
+
+  ctx.replyWithMarkdown(text, getRoundHillButtons());
+});
+
+// 5. MARKET COMMAND
+bot.command('market', async (ctx) => {
+  try {
+    const res = await fetch('https://api.coingecko.com/api/v3/simple/price?ids=bitcoin,ethereum,solana,binancecoin&vs_currencies=usd&include_24hr_change=true');
+    const data = await res.json();
+
+    const text =
+      `📊 *ROUNDHILL LIVE MARKET METRICS*\n\n` +
+      `• *BTC/USD:* $${data.bitcoin.usd.toLocaleString()} (${data.bitcoin.usd_24h_change.toFixed(2)}%)\n` +
+      `• *ETH/USD:* $${data.ethereum.usd.toLocaleString()} (${data.ethereum.usd_24h_change.toFixed(2)}%)\n` +
+      `• *SOL/USD:* $${data.solana.usd.toLocaleString()} (${data.solana.usd_24h_change.toFixed(2)}%)\n` +
+      `• *BNB/USD:* $${data.binancecoin.usd.toLocaleString()} (${data.binancecoin.usd_24h_change.toFixed(2)}%)`;
+
+    ctx.replyWithMarkdown(text);
+  } catch (err) {
+    ctx.reply('❌ Unable to fetch live market prices right now. Please try again in a moment.');
+  }
+});
+
+// 6. NEWS COMMAND (REPLIES DIRECTLY IN CHAT)
+bot.command('news', async (ctx) => {
+  try {
+    const feed = await parser.parseURL('https://cointelegraph.com/rss');
+    if (!feed.items || feed.items.length === 0) {
+      return ctx.reply('📰 No news available at the moment.');
+    }
+
+    const latestItem = feed.items[0];
+    let imageUrl = 'https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?auto=format&fit=crop&w=1200&q=80';
+    if (latestItem.enclosure && latestItem.enclosure.url) {
+      imageUrl = latestItem.enclosure.url;
+    } else if (latestItem['media:content'] && latestItem['media:content'].$) {
+      imageUrl = latestItem['media:content'].$.url;
+    }
+
+    const caption =
+      `📰 *ROUNDHILL BREAKING NEWS*\n\n` +
+      `🔥 *${latestItem.title}*\n\n` +
+      `${latestItem.contentSnippet ? latestItem.contentSnippet.slice(0, 220) + '...' : ''}\n\n` +
+      `🔗 [Read Full Analysis](${latestItem.link})`;
+
+    const keyboard = Markup.inlineKeyboard([
+      [Markup.button.url('📊 Trade with Trader Kelvin', SUPPORT_LINK)],
+      [Markup.button.url('💬 Official Support', SUPPORT_LINK)]
+    ]);
+
+    await ctx.replyWithPhoto(imageUrl, { caption: caption, parse_mode: 'Markdown', ...keyboard });
+  } catch (err) {
+    ctx.reply('❌ Failed to fetch breaking news story.');
+  }
+});
+
+// 7. POLICY COMMAND
+bot.command('policy', (ctx) => {
+  const policyText =
+    `🛡 *ROUNDHILL COMMUNITY & SECURITY POLICY*\n\n` +
+    `1️⃣ *No Spam / Links:* Unauthorized links are deleted automatically.\n` +
+    `2️⃣ *Verified Admin:* Trader Kelvin (${SUPPORT_LINK}) is the only official admin.\n` +
+    `3️⃣ *Zero Impersonation:* Admins will never ask for your private key or password.`;
+
+  ctx.replyWithMarkdown(policyText, getRoundHillButtons());
+});
+
+// 8. SUPPORT COMMAND
+bot.command('support', (ctx) => {
+  ctx.replyWithMarkdown(
+    `💬 *ROUNDHILL OFFICIAL SUPPORT*\n\nConnect with Trader Kelvin directly for deposits, accounts, and 5X payouts:\nTelegram: ${SUPPORT_LINK}`,
+    Markup.inlineKeyboard([[Markup.button.url('💬 Chat with Trader Kelvin', SUPPORT_LINK)]])
+  );
+});
 
 // --- ADMIN COMMANDS ---
+
 bot.command('setgroup', (ctx) => {
-  if (ctx.from.id !== ADMIN_ID) return;
+  if (ctx.from.id !== ADMIN_ID) return ctx.reply('❌ Admin only command.');
   TARGET_GROUP_ID = ctx.chat.id.toString();
-  ctx.reply(`✅ RoundHill group locked for broadcasting: \`${TARGET_GROUP_ID}\``);
+  ctx.reply(`✅ RoundHill target group updated to: \`${TARGET_GROUP_ID}\``, { parse_mode: 'Markdown' });
 });
 
 bot.command('postinr', async (ctx) => {
-  if (ctx.from.id !== ADMIN_ID || !TARGET_GROUP_ID) return;
-  await bot.telegram.sendMessage(TARGET_GROUP_ID, getRoundHillINRText(), { parse_mode: 'Markdown', ...getRoundHillButtons() });
-  ctx.reply('✅ INR Alert Broadcasted.');
+  if (ctx.from.id !== ADMIN_ID) return ctx.reply('❌ Admin only command.');
+  const target = TARGET_GROUP_ID || ctx.chat.id;
+  try {
+    await bot.telegram.sendMessage(target, getRoundHillINRText(), { parse_mode: 'Markdown', ...getRoundHillButtons() });
+    ctx.reply('✅ INR 5X promo card posted successfully!');
+  } catch (err) {
+    ctx.reply(`❌ Failed to send promo: ${err.message}`);
+  }
 });
 
-bot.launch({ dropPendingUpdates: true });
+bot.command('testautonews', async (ctx) => {
+  if (ctx.from.id !== ADMIN_ID) return ctx.reply('❌ Admin only command.');
+  await fetchAndBroadcastNews();
+  ctx.reply('✅ Tested auto-news broadcast to group.');
+});
+
+// GLOBAL ERROR CATCH
+bot.catch((err, ctx) => {
+  console.error(`[RoundHill Bot Error] for ${ctx.updateType}:`, err);
+});
+
+// LAUNCH BOT
+bot.launch({ dropPendingUpdates: true })
+  .then(() => console.log('🤖 RoundHill Investments Bot launched successfully!'))
+  .catch((err) => console.error('Failed to launch bot:', err));
+
+process.once('SIGINT', () => bot.stop('SIGINT'));
+process.once('SIGTERM', () => bot.stop('SIGTERM'));
