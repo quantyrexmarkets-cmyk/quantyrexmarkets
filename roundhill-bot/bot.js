@@ -4,14 +4,7 @@ import Parser from 'rss-parser';
 
 // --- CONFIGURATION FOR ROUNDHILL INVESTMENTS ---
 const BOT_TOKEN = process.env.BOT_TOKEN || '8865237359:AAHafU092hTh2_YaoAW1NtODJmVQGpf_-XQ';
-
-// AUTHORIZED ADMIN LIST (Both Developer & Trader Kelvin)
-const ADMIN_IDS = [7759205941, 8451430916]; 
-const isAdmin = (userId) => {
-  if (!userId) return false;
-  return ADMIN_IDS.some((id) => String(id) === String(userId));
-};
-
+const KELVIN_ADMIN_ID = '8451430916';
 const SUPPORT_LINK = 'https://t.me/Trader_kelvin53';
 const RENDER_BOT_URL = process.env.RENDER_URL || 'https://roundhill-investments-bot.onrender.com';
 
@@ -20,6 +13,32 @@ let TARGET_GROUP_ID = process.env.TARGET_GROUP_ID || '';
 const bot = new Telegraf(BOT_TOKEN);
 const parser = new Parser();
 let lastNewsTitle = '';
+
+// --- ADVANCED ASYNC ADMIN CHECKER ---
+async function isUserAdmin(ctx) {
+  if (!ctx || !ctx.from) return false;
+  
+  const userId = String(ctx.from.id);
+  const username = ctx.from.username || '';
+
+  // 1. Direct Kelvin User ID
+  if (userId === KELVIN_ADMIN_ID) return true;
+
+  // 2. Telegram Anonymous Group Admin / Channel Post
+  if (userId === '1088788430' || username === 'GroupAnonymousBot') return true;
+
+  // 3. Telegram Group Administrator Role
+  if (ctx.chat && (ctx.chat.type === 'group' || ctx.chat.type === 'supergroup')) {
+    try {
+      const member = await ctx.telegram.getChatMember(ctx.chat.id, ctx.from.id);
+      if (['creator', 'administrator'].includes(member.status)) return true;
+    } catch (e) {
+      console.error('Failed to fetch chat member status:', e.message);
+    }
+  }
+
+  return false;
+}
 
 // --- DUMMY HTTP SERVER FOR RENDER 24/7 HEALTH CHECK ---
 const app = express();
@@ -139,16 +158,17 @@ bot.use(async (ctx, next) => {
     if (text.startsWith('/')) return next();
 
     const isLink = /(https?:\/\/|t\.me\/|telegram\.me\/|www\.)/i.test(text);
-    const userIsAdmin = ctx.from && isAdmin(ctx.from.id);
-
-    // Block links only if user is NOT an admin
-    if (isLink && !userIsAdmin) {
-      try {
-        await ctx.deleteMessage();
-        const warn = await ctx.reply(`⚠️ ${ctx.from.first_name}, promotional links are restricted in RoundHill group.`);
-        setTimeout(() => ctx.telegram.deleteMessage(ctx.chat.id, warn.message_id).catch(() => {}), 5000);
-        return;
-      } catch (e) {}
+    
+    if (isLink) {
+      const userIsAdmin = await isUserAdmin(ctx);
+      if (!userIsAdmin) {
+        try {
+          await ctx.deleteMessage();
+          const warn = await ctx.reply(`⚠️ ${ctx.from ? ctx.from.first_name : 'Member'}, promotional links are restricted in RoundHill group.`);
+          setTimeout(() => ctx.telegram.deleteMessage(ctx.chat.id, warn.message_id).catch(() => {}), 5000);
+          return;
+        } catch (e) {}
+      }
     }
   }
   return next();
@@ -265,14 +285,16 @@ bot.command('support', (ctx) => {
 });
 
 // --- ADMIN COMMAND HANDLERS ---
-bot.command('setgroup', (ctx) => {
-  if (!isAdmin(ctx.from.id)) return ctx.reply('❌ Admin only command.');
+bot.command('setgroup', async (ctx) => {
+  const admin = await isUserAdmin(ctx);
+  if (!admin) return ctx.reply('❌ Admin only command.');
   TARGET_GROUP_ID = ctx.chat.id.toString();
   ctx.reply(`✅ RoundHill target broadcast group updated to: \`${TARGET_GROUP_ID}\``, { parse_mode: 'Markdown' });
 });
 
 bot.command('postinr', async (ctx) => {
-  if (!isAdmin(ctx.from.id)) return ctx.reply('❌ Admin only command.');
+  const admin = await isUserAdmin(ctx);
+  if (!admin) return ctx.reply('❌ Admin only command.');
   const target = TARGET_GROUP_ID || ctx.chat.id;
   try {
     await bot.telegram.sendMessage(target, getRoundHillINRText(), { parse_mode: 'Markdown', ...getRoundHillButtons() });
@@ -283,7 +305,8 @@ bot.command('postinr', async (ctx) => {
 });
 
 bot.command('testautonews', async (ctx) => {
-  if (!isAdmin(ctx.from.id)) return ctx.reply('❌ Admin only command.');
+  const admin = await isUserAdmin(ctx);
+  if (!admin) return ctx.reply('❌ Admin only command.');
   await fetchAndBroadcastNews();
   ctx.reply('✅ Tested auto-news broadcast to group.');
 });
