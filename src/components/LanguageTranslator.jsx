@@ -37,6 +37,48 @@ const LANGUAGES = [
   { code: 'ur', name: 'اردو', flag: '🇵🇰' },
   { code: 'bn', name: 'বাংলা', flag: '🇧🇩' },
   { code: 'sw', name: 'Kiswahili', flag: '🇰🇪' },
+  { code: 'af', name: 'Afrikaans', flag: '🇿🇦' },
+  { code: 'sq', name: 'Shqip', flag: '🇦🇱' },
+  { code: 'am', name: 'አማርኛ', flag: '🇪🇹' },
+  { code: 'hy', name: 'Հայերեն', flag: '🇦🇲' },
+  { code: 'az', name: 'Azərbaycan', flag: '🇦🇿' },
+  { code: 'bs', name: 'Bosanski', flag: '🇧🇦' },
+  { code: 'bg', name: 'Български', flag: '🇧🇬' },
+  { code: 'ca', name: 'Català', flag: '🇪🇸' },
+  { code: 'hr', name: 'Hrvatski', flag: '🇭🇷' },
+  { code: 'et', name: 'Eesti', flag: '🇪🇪' },
+  { code: 'ka', name: 'ქართული', flag: '🇬🇪' },
+  { code: 'gu', name: 'ગુજરાતી', flag: '🇮🇳' },
+  { code: 'ha', name: 'Hausa', flag: '🇳🇬' },
+  { code: 'is', name: 'Íslenska', flag: '🇮🇸' },
+  { code: 'ig', name: 'Igbo', flag: '🇳🇬' },
+  { code: 'ga', name: 'Gaeilge', flag: '🇮🇪' },
+  { code: 'jv', name: 'Basa Jawa', flag: '🇮🇩' },
+  { code: 'kn', name: 'ಕನ್ನಡ', flag: '🇮🇳' },
+  { code: 'kk', name: 'Қазақ тілі', flag: '🇰🇿' },
+  { code: 'km', name: 'ភាសាខ្មែរ', flag: '🇰🇭' },
+  { code: 'lo', name: 'ພາສາລາວ', flag: '🇱🇦' },
+  { code: 'lv', name: 'Latviešu', flag: '🇱🇻' },
+  { code: 'lt', name: 'Lietuvių', flag: '🇱🇹' },
+  { code: 'mk', name: 'Македонски', flag: '🇲🇰' },
+  { code: 'ml', name: 'മലയാളം', flag: '🇮🇳' },
+  { code: 'mr', name: 'मराठी', flag: '🇮🇳' },
+  { code: 'mn', name: 'Монгол', flag: '🇲🇳' },
+  { code: 'my', name: 'မြန်မာ', flag: '🇲🇲' },
+  { code: 'ne', name: 'नेपाली', flag: '🇳🇵' },
+  { code: 'ps', name: 'پښتو', flag: '🇦🇫' },
+  { code: 'pa', name: 'ਪੰਜਾਬੀ', flag: '🇮🇳' },
+  { code: 'sr', name: 'Српски', flag: '🇷🇸' },
+  { code: 'si', name: 'සිංහල', flag: '🇱🇰' },
+  { code: 'sk', name: 'Slovenčina', flag: '🇸🇰' },
+  { code: 'sl', name: 'Slovenščina', flag: '🇸🇮' },
+  { code: 'so', name: 'Soomaali', flag: '🇸🇴' },
+  { code: 'su', name: 'Basa Sunda', flag: '🇮🇩' },
+  { code: 'ta', name: 'தமிழ்', flag: '🇮🇳' },
+  { code: 'te', name: 'తెలుగు', flag: '🇮🇳' },
+  { code: 'uz', name: 'Oʻzbekcha', flag: '🇺🇿' },
+  { code: 'yo', name: 'Yorùbá', flag: '🇳🇬' },
+  { code: 'zu', name: 'isiZulu', flag: '🇿🇦' },
 ];
 
 export default function LanguageTranslator() {
@@ -114,7 +156,7 @@ export default function LanguageTranslator() {
         <div className="absolute bottom-14 left-0 w-56 bg-[#111622]/95 border border-gray-800 rounded-xl shadow-2xl backdrop-blur-xl p-2.5 mb-1 animate-in fade-in slide-in-from-bottom-2 duration-150">
           <div className="flex items-center justify-between pb-2 border-b border-gray-800/80 mb-2">
             <span className="text-[11px] font-semibold text-gray-400 uppercase tracking-wider flex items-center gap-1">
-              <Globe className="w-3 h-3 text-blue-400" /> Language ({LANGUAGES.length})
+              <Globe className="w-3 h-3 text-blue-400" /> Select Language
             </span>
             <button 
               onClick={() => setIsOpen(false)} 
@@ -136,7 +178,7 @@ export default function LanguageTranslator() {
             />
           </div>
 
-          <div className="max-h-52 overflow-y-auto space-y-0.5 pr-1 scrollbar-thin scrollbar-thumb-gray-800">
+          <div className="max-h-56 overflow-y-auto space-y-0.5 pr-1 scrollbar-thin scrollbar-thumb-gray-800">
             {filteredLanguages.map((lang) => {
               const isSelected = currentLang === lang.code;
               return (
