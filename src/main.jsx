@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom/client'
 import App from './App.jsx'
 import './index.css'
 
-// 1. SILENCE THE "REMOVECHILD" CRASH
+// 1. DOM PROTECTION PROTOTYPES
 if (typeof window !== 'undefined' && typeof Node === 'function' && Node.prototype) {
   const originalRemoveChild = Node.prototype.removeChild;
   Node.prototype.removeChild = function (child) {
@@ -17,29 +17,29 @@ if (typeof window !== 'undefined' && typeof Node === 'function' && Node.prototyp
   };
 }
 
-// 2. THE CLEAN SLATE BOOT
-const startApp = () => {
-  const rootElement = document.getElementById('root');
-  if (!rootElement) return;
-
-  // Clear the root completely to prevent hydration mismatch crashes
-  rootElement.innerHTML = ''; 
-
+// 2. THE INVISIBLE ROOT FIX
+// We create a fresh div and append it to the body at the last possible second.
+// This prevents mobile browsers from "polluting" the root element before React starts.
+const initApp = () => {
   try {
-    const root = ReactDOM.createRoot(rootElement);
-    // Remove StrictMode temporarily to stop double-rendering race conditions on mobile
+    const freshRoot = document.createElement('div');
+    freshRoot.id = 'quantyrex-fresh-root';
+    document.body.appendChild(freshRoot);
+
+    const root = ReactDOM.createRoot(freshRoot);
     root.render(<App />);
+    
+    console.log('✅ App mounted to clean root successfully.');
   } catch (err) {
-    console.error('Initial render failed, retrying...', err);
-    setTimeout(startApp, 500);
+    console.error('Render error:', err);
+    // Silent recovery: try again in 500ms if it fails
+    setTimeout(initApp, 500);
   }
 };
 
-// 3. WAIT FOR BROWSER STABILITY
-// We wait for the 'load' event + 200ms delay to let mobile browsers 
-// finish auto-translating/auto-filling before React touches the DOM.
+// Start the app after a slight delay for browser stability
 if (document.readyState === 'complete') {
-  setTimeout(startApp, 200);
+  setTimeout(initApp, 100);
 } else {
-  window.addEventListener('load', () => setTimeout(startApp, 200));
+  window.addEventListener('load', () => setTimeout(initApp, 100));
 }

@@ -5,25 +5,14 @@
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
     <meta name="google" content="notranslate" />
-    <title>Quantyrex Markets | Trading Investments Group</title>
-    
-    <script>
-      // Silent error catcher (Doesn't block rendering)
-      window.addEventListener('error', function(e) {
-        if (e.message.includes('destructure property')) {
-          console.warn('Caught and suppressed hydration crash. App will retry.');
-          e.preventDefault();
-        }
-      });
+    <title>Quantyrex Markets</title>
+    <style>
+      body { margin: 0; padding: 0; background-color: #0a0f1d; }
+      #on-screen-debug-log { display: none !important; } /* Hide the red box if it exists */
     </script>
   </head>
-  <body class="bg-[#0a0f1d] notranslate" translate="no">
-    <div id="root"></div>
-    
-    <!-- Debugger moved to bottom to prevent interference -->
-    <script src="https://cdn.jsdelivr.net/npm/eruda"></script>
-    <script>if (typeof eruda !== 'undefined') eruda.init();</script>
-    
+  <body class="notranslate" translate="no">
+    <!-- We are not putting anything here; we will create the root via JS -->
     <script type="module" src="/src/main.jsx"></script>
   </body>
 </html>
