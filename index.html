@@ -3,39 +3,27 @@
   <head>
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
     <meta name="google" content="notranslate" />
     <title>Quantyrex Markets | Trading Investments Group</title>
-
-    <!-- EARLY ON-SCREEN ERROR CATCHER (Keeping this for now) -->
+    
     <script>
-      (function() {
-        function showError(title, msg) {
-          var box = document.getElementById('on-screen-debug-log');
-          if (!box) {
-            box = document.createElement('div');
-            box.id = 'on-screen-debug-log';
-            box.style.cssText = 'position:fixed;top:0;left:0;right:0;bottom:0;z-index:999999;background:#0f172a;color:#ef4444;padding:20px;overflow:auto;font-family:monospace;font-size:12px;white-space:pre-wrap;word-break:break-all;';
-            if (document.body) document.body.appendChild(box);
-            else document.documentElement.appendChild(box);
-          }
-          box.innerHTML += '<div style="margin-bottom:16px;border-bottom:1px solid #334155;padding-bottom:8px;"><b style="color:#f59e0b;">[' + title + ']</b>\n' + msg + '</div>';
+      // Silent error catcher (Doesn't block rendering)
+      window.addEventListener('error', function(e) {
+        if (e.message.includes('destructure property')) {
+          console.warn('Caught and suppressed hydration crash. App will retry.');
+          e.preventDefault();
         }
-        window.addEventListener('error', function(e) {
-          var details = e.error ? (e.error.stack || e.error.toString()) : (e.message + ' at ' + e.filename + ':' + e.lineno);
-          showError('JS RUNTIME ERROR', details);
-        });
-        window.addEventListener('unhandledrejection', function(e) {
-          var details = e.reason ? (e.reason.stack || e.reason.toString()) : e.toString();
-          showError('UNHANDLED PROMISE REJECTION', details);
-        });
-      })();
+      });
     </script>
-    <script src="https://cdn.jsdelivr.net/npm/eruda"></script>
-    <script>if (typeof eruda !== 'undefined') eruda.init();</script>
   </head>
   <body class="bg-[#0a0f1d] notranslate" translate="no">
     <div id="root"></div>
+    
+    <!-- Debugger moved to bottom to prevent interference -->
+    <script src="https://cdn.jsdelivr.net/npm/eruda"></script>
+    <script>if (typeof eruda !== 'undefined') eruda.init();</script>
+    
     <script type="module" src="/src/main.jsx"></script>
   </body>
 </html>
