@@ -3,48 +3,36 @@ import ReactDOM from 'react-dom/client'
 import App from './App.jsx'
 import './index.css'
 
-// 1. SILENCE DOM ERRORS (Browser vs React fight)
+// 1. THE FATAL ERROR PROTECTION (Crucial for Mobile/Translators)
+// Intercepts DOM changes to prevent React from crashing when 'current' is missing
 if (typeof window !== 'undefined' && typeof Node === 'function' && Node.prototype) {
-  const patch = (name) => {
-    const original = Node.prototype[name];
-    Node.prototype[name] = function() {
-      try { return original.apply(this, arguments); }
-      catch (e) { 
-        console.warn(`Recovered from ${name} crash`);
-        return arguments[0]; 
-      }
-    };
+  const originalRemoveChild = Node.prototype.removeChild;
+  Node.prototype.removeChild = function (child) {
+    if (child.parentNode !== this) return child; // Skip instead of crashing
+    return originalRemoveChild.apply(this, arguments);
   };
-  patch('removeChild');
-  patch('insertBefore');
+  const originalInsertBefore = Node.prototype.insertBefore;
+  Node.prototype.insertBefore = function (newNode, referenceNode) {
+    if (referenceNode && referenceNode.parentNode !== this) return newNode; // Skip instead of crashing
+    return originalInsertBefore.apply(this, arguments);
+  };
 }
 
-// 2. THE CLEAN START FUNCTION
-const mountApp = () => {
-  // Clear the entire body to remove browser-injected garbage (translators, autofill, etc)
-  document.body.innerHTML = '<div id="quantyrex-stable-root"></div>';
-  
-  const rootElement = document.getElementById('quantyrex-stable-root');
-  if (!rootElement) return;
+// 2. STABLE CLIENT-SIDE RENDER
+const rootElement = document.getElementById('root');
+if (rootElement) {
+  const root = ReactDOM.createRoot(rootElement);
+  // We avoid <React.StrictMode> here to prevent double-mount race conditions on mobile
+  root.render(<App />);
+}
 
-  try {
-    const root = ReactDOM.createRoot(rootElement);
-    root.render(<App />);
-    console.log('✅ App launched in Clean Mode');
-  } catch (err) {
-    console.error('Fatal Launch Error:', err);
-    // Force a full clean reload if it still fails
-    if (!window.location.hash.includes('reloaded')) {
-      window.location.hash = 'reloaded';
+// 3. AUTO-RECOVERY
+// If a hydration/destructure error still occurs, refresh the page automatically once
+window.onerror = function(message) {
+  if (message.includes('destructure') || message.includes('current')) {
+    if (!window.sessionStorage.getItem('reloaded')) {
+      window.sessionStorage.setItem('reloaded', 'true');
       window.location.reload();
     }
   }
 };
-
-// 3. WAIT FOR BROWSER STABILITY (1 Second Delay)
-// This gives Chrome/Android time to finish translating/filling before React starts
-if (document.readyState === 'complete') {
-  setTimeout(mountApp, 1000);
-} else {
-  window.addEventListener('load', () => setTimeout(mountApp, 1000));
-}
