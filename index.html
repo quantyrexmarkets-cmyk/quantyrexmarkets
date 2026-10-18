@@ -5,28 +5,6 @@
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Quantyrex Markets | Trading Investments Group</title>
-    
-    <!-- CRITICAL INCOGNITO / STORAGE SAFETY PATCH -->
-    <script>
-      (function() {
-        var dummy = {
-          getItem: function() { return null; },
-          setItem: function() {},
-          removeItem: function() {},
-          clear: function() {},
-          key: function() { return null; },
-          length: 0
-        };
-        try {
-          window.localStorage.setItem('__test__', '1');
-          window.localStorage.removeItem('__test__');
-        } catch (e) {
-          console.warn('Storage blocked, applying safety polyfill');
-          Object.defineProperty(window, 'localStorage', { value: dummy, writable: true });
-          Object.defineProperty(window, 'sessionStorage', { value: dummy, writable: true });
-        }
-      })();
-    </script>
   </head>
   <body class="bg-[#0a0f1d]">
     <div id="root"></div>
