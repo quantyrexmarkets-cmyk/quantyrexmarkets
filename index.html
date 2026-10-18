@@ -7,12 +7,14 @@
     <meta name="google" content="notranslate" />
     <title>Quantyrex Markets</title>
     <style>
-      body { margin: 0; padding: 0; background-color: #0a0f1d; }
-      #on-screen-debug-log { display: none !important; } /* Hide the red box if it exists */
-    </script>
+      body { margin: 0; padding: 0; background-color: #0a0f1d; min-height: 100vh; }
+      /* Hide browser-injected translate banners */
+      .skiptranslate, .goog-te-banner-frame { display: none !important; }
+      body { top: 0 !important; }
+    </style>
   </head>
   <body class="notranslate" translate="no">
-    <!-- We are not putting anything here; we will create the root via JS -->
+    <!-- Body is empty. React will create its own div at runtime. -->
     <script type="module" src="/src/main.jsx"></script>
   </body>
 </html>

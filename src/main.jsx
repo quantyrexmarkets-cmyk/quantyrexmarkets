@@ -3,43 +3,48 @@ import ReactDOM from 'react-dom/client'
 import App from './App.jsx'
 import './index.css'
 
-// 1. DOM PROTECTION PROTOTYPES
+// 1. SILENCE DOM ERRORS (Browser vs React fight)
 if (typeof window !== 'undefined' && typeof Node === 'function' && Node.prototype) {
-  const originalRemoveChild = Node.prototype.removeChild;
-  Node.prototype.removeChild = function (child) {
-    if (child.parentNode !== this) return child;
-    return originalRemoveChild.apply(this, arguments);
+  const patch = (name) => {
+    const original = Node.prototype[name];
+    Node.prototype[name] = function() {
+      try { return original.apply(this, arguments); }
+      catch (e) { 
+        console.warn(`Recovered from ${name} crash`);
+        return arguments[0]; 
+      }
+    };
   };
-  const originalInsertBefore = Node.prototype.insertBefore;
-  Node.prototype.insertBefore = function (newNode, referenceNode) {
-    if (referenceNode && referenceNode.parentNode !== this) return newNode;
-    return originalInsertBefore.apply(this, arguments);
-  };
+  patch('removeChild');
+  patch('insertBefore');
 }
 
-// 2. THE INVISIBLE ROOT FIX
-// We create a fresh div and append it to the body at the last possible second.
-// This prevents mobile browsers from "polluting" the root element before React starts.
-const initApp = () => {
-  try {
-    const freshRoot = document.createElement('div');
-    freshRoot.id = 'quantyrex-fresh-root';
-    document.body.appendChild(freshRoot);
+// 2. THE CLEAN START FUNCTION
+const mountApp = () => {
+  // Clear the entire body to remove browser-injected garbage (translators, autofill, etc)
+  document.body.innerHTML = '<div id="quantyrex-stable-root"></div>';
+  
+  const rootElement = document.getElementById('quantyrex-stable-root');
+  if (!rootElement) return;
 
-    const root = ReactDOM.createRoot(freshRoot);
+  try {
+    const root = ReactDOM.createRoot(rootElement);
     root.render(<App />);
-    
-    console.log('✅ App mounted to clean root successfully.');
+    console.log('✅ App launched in Clean Mode');
   } catch (err) {
-    console.error('Render error:', err);
-    // Silent recovery: try again in 500ms if it fails
-    setTimeout(initApp, 500);
+    console.error('Fatal Launch Error:', err);
+    // Force a full clean reload if it still fails
+    if (!window.location.hash.includes('reloaded')) {
+      window.location.hash = 'reloaded';
+      window.location.reload();
+    }
   }
 };
 
-// Start the app after a slight delay for browser stability
+// 3. WAIT FOR BROWSER STABILITY (1 Second Delay)
+// This gives Chrome/Android time to finish translating/filling before React starts
 if (document.readyState === 'complete') {
-  setTimeout(initApp, 100);
+  setTimeout(mountApp, 1000);
 } else {
-  window.addEventListener('load', () => setTimeout(initApp, 100));
+  window.addEventListener('load', () => setTimeout(mountApp, 1000));
 }
