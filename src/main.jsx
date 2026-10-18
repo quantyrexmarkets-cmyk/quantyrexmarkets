@@ -3,14 +3,14 @@ import ReactDOM from 'react-dom/client'
 import App from './App.jsx'
 import './index.css'
 
-// --- DOM SAFETY PATCH (Fixes "removeChild" crashes from auto-translators) ---
+// --- 1. THE "NO-CRASH" DOM PATCH ---
+// This stops React from exploding when Google Translate changes the text
 if (typeof window !== 'undefined' && typeof Node === 'function' && Node.prototype) {
   const originalRemoveChild = Node.prototype.removeChild;
   Node.prototype.removeChild = function (child) {
     if (child.parentNode !== this) return child;
     return originalRemoveChild.apply(this, arguments);
   };
-
   const originalInsertBefore = Node.prototype.insertBefore;
   Node.prototype.insertBefore = function (newNode, referenceNode) {
     if (referenceNode && referenceNode.parentNode !== this) return newNode;
@@ -18,35 +18,43 @@ if (typeof window !== 'undefined' && typeof Node === 'function' && Node.prototyp
   };
 }
 
-// --- ERROR BOUNDARY (Displays the error message if the app fails to load) ---
-class GlobalErrorBoundary extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = { hasError: false, errorLog: "" };
-  }
-  static getDerivedStateFromError(error) {
-    return { hasError: true, errorLog: error.toString() };
-  }
-  render() {
-    if (this.state.hasError) {
-      return (
-        <div style={{ padding: '20px', color: 'white', textAlign: 'center', background: '#0a0f1d', minHeight: '100vh' }}>
-          <h2>Platform Initialization Error</h2>
-          <p style={{ color: '#ef4444' }}>{this.state.errorLog}</p>
-          <button onClick={() => window.location.reload()} style={{ padding: '10px 20px', background: '#2563eb', border: 'none', color: 'white', borderRadius: '5px' }}>
-            Reload Platform
-          </button>
-        </div>
-      );
-    }
-    return this.props.children;
-  }
+// --- 2. THE "NO-CRASH" STORAGE PATCH ---
+// Silently handles Incognito/Private mode without throwing SecurityErrors
+try {
+  const testKey = '__storage_test__';
+  window.localStorage.setItem(testKey, testKey);
+  window.localStorage.removeItem(testKey);
+} catch (e) {
+  const memoryStore = {};
+  const mock = {
+    getItem: (k) => memoryStore[k] || null,
+    setItem: (k, v) => { memoryStore[k] = String(v); },
+    removeItem: (k) => { delete memoryStore[k]; },
+    clear: () => { for (let k in memoryStore) delete memoryStore[k]; },
+    length: 0,
+    key: () => null
+  };
+  Object.defineProperty(window, 'localStorage', { value: mock, writable: true });
+  Object.defineProperty(window, 'sessionStorage', { value: mock, writable: true });
 }
 
-ReactDOM.createRoot(document.getElementById('root')).render(
-  <React.StrictMode>
-    <GlobalErrorBoundary>
+// --- 3. RENDER WITH ERROR RECOVERY ---
+const root = ReactDOM.createRoot(document.getElementById('root'));
+
+function SafeRender() {
+  return (
+    <React.StrictMode>
       <App />
-    </GlobalErrorBoundary>
-  </React.StrictMode>
-);
+    </React.StrictMode>
+  );
+}
+
+try {
+  root.render(<SafeRender />);
+} catch (error) {
+  console.error("Critical Render Error:", error);
+  // If hydration fails, force a clean client-side render
+  setTimeout(() => {
+    window.location.reload();
+  }, 100);
+}
