@@ -198,12 +198,30 @@ export default function AdminManageUser() {
         </div>
         <S title="Balance" t={t}>
           <input ref={balanceRef} defaultValue={Number(convertAmount(user.balance||0, user.currency)).toLocaleString()} key={`bal-${user._id||user.id}`} placeholder={`Current: ${getCurrencySymbol(user.currency)}${Number(convertAmount(user.balance||0, user.currency)).toLocaleString()} (${getCurrencyCode(user.currency)})`} type="text" inputMode="numeric" onInput={formatNumberInput} style={inp}/>
-          <div style={{ color:t.subText, fontSize:'8px', marginTop:'2px' }}>Enter value in {getCurrencyCode(user.currency)} · stored as USD</div>
-          {btn(async()=>{const rawVal=parseFloat(String(balanceRef.current?.value||'0').replace(/,/g, ''));const code=getCurrencyCode(user.currency);const rates=JSON.parse(localStorage.getItem('fx_rates')||'{}');const rate=rates[code]||1;const usdVal=rawVal/rate;const r=await api('/users/'+id+'/balance','PUT',{balance:usdVal});if(r.user){setUser(r.user);if(balanceRef.current)balanceRef.current.value=convertAmount(r.user.balance||0, r.user.currency);} showMsg('Balance updated');}, 'Set Balance', <DollarSign size={12}/>)}
+          <div style={{ color:t.subText, fontSize:'8px', marginTop:'2px' }}>Enter value in {getCurrencyCode(user.currency)} </div>
+          {btn(async()=>{
+  const rawVal = parseFloat(String(balanceRef.current?.value||'0').replace(/,/g, ''));
+  const usdVal = toUSD(rawVal, user.currency);
+  const r = await api('/users/'+id+'/balance','PUT',{balance:usdVal});
+  if(r.user){
+    setUser(r.user);
+    if(balanceRef.current) balanceRef.current.value = Number(convertAmount(r.user.balance||0, r.user.currency)).toLocaleString();
+  }
+  showMsg('Balance updated');
+}, 'Set Balance', <DollarSign size={12}/>)}
           <div style={{ marginTop:'8px', color:t.subText, fontSize:'9px', marginBottom:'4px' }}>Profit</div>
           <input ref={profitRef} defaultValue={Number(convertAmount(user.totalProfit||0, user.currency)).toLocaleString()} key={`profit-${user._id||user.id}`} placeholder={`Current: ${getCurrencySymbol(user.currency)}${Number(convertAmount(user.totalProfit||0, user.currency)).toLocaleString()} (${getCurrencyCode(user.currency)})`} type="text" inputMode="numeric" onInput={formatNumberInput} style={inp}/>
-          <div style={{ color:t.subText, fontSize:'8px', marginTop:'2px' }}>Enter value in {getCurrencyCode(user.currency)} · stored as USD</div>
-          {btn(async()=>{const rawVal=parseFloat(String(profitRef.current?.value||'0').replace(/,/g, ''));const code=getCurrencyCode(user.currency);const rates=JSON.parse(localStorage.getItem('fx_rates')||'{}');const rate=rates[code]||1;const usdVal=rawVal/rate;const r=await api('/users/'+id+'/total-profit','PUT',{totalProfit:usdVal});if(r.user){setUser(r.user);if(profitRef.current)profitRef.current.value=convertAmount(r.user.totalProfit||0, r.user.currency);} showMsg('Profit updated');}, 'Set Profit', <TrendingUp size={12}/>)}
+          <div style={{ color:t.subText, fontSize:'8px', marginTop:'2px' }}>Enter value in {getCurrencyCode(user.currency)} </div>
+          {btn(async()=>{
+  const rawVal = parseFloat(String(profitRef.current?.value||'0').replace(/,/g, ''));
+  const usdVal = toUSD(rawVal, user.currency);
+  const r = await api('/users/'+id+'/total-profit','PUT',{totalProfit:usdVal});
+  if(r.user){
+    setUser(r.user);
+    if(profitRef.current) profitRef.current.value = Number(convertAmount(r.user.totalProfit||0, r.user.currency)).toLocaleString();
+  }
+  showMsg('Profit updated');
+}, 'Set Profit', <TrendingUp size={12}/>)}
         </S>
         <S title="Record Deposit" t={t}>
           <div style={{ color:'#22c55e', fontSize:'11px', marginBottom:'6px', padding:'8px', background:'rgba(34,197,94,0.1)', borderRadius:'6px', fontWeight:'700' }}>
@@ -213,7 +231,7 @@ export default function AdminManageUser() {
             Adds to user's Total Deposits stat only. Does NOT affect live balance.
           </div>
           <input ref={depositAmountRef} defaultValue="" placeholder={`Amount in ${getCurrencyCode(user.currency)}`} type="text" inputMode="numeric" onInput={formatNumberInput} style={inp}/>
-          <div style={{ color:t.subText, fontSize:'8px', marginTop:'2px', marginBottom:'6px' }}>Enter value in {getCurrencyCode(user.currency)} · stored as USD</div>
+          <div style={{ color:t.subText, fontSize:'8px', marginTop:'2px', marginBottom:'6px' }}>Enter value in {getCurrencyCode(user.currency)} </div>
           <input ref={depositNoteRef} defaultValue="" placeholder="Note (optional, e.g. 'Bonus credit')" type="text" style={inp}/>
           <div style={{ marginTop:'8px' }}>
             {btn(async()=>{
