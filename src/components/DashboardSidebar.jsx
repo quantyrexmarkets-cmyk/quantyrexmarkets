@@ -236,7 +236,7 @@ export default function DashboardSidebar({ open, onClose }) {
                       return (
                         <button type="button" key={si2} onClick={() => { navigate(sub.route); onClose(); }}
                           style={{
-                            width: '100%', padding: '8px 16px', marginBottom: '2px', fontSize: '11px',
+                            width: '100%', padding: '8px 16px', marginBottom: '2px',
                             background: subActive
                               ? t.bg === '#e6e6e6' ? 'rgba(99,102,241,0.1)' : 'rgba(99,102,241,0.18)'
                               : 'transparent',
