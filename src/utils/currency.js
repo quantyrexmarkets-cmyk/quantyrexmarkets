@@ -1,5 +1,5 @@
-// Universal Currency Formatter for Quantyrex Markets
-export const USD_TO_INR_RATE = 87.0; // 1 USD = 87 INR
+// Universal Currency Formatter & Helper for Quantyrex Markets
+export const USD_TO_INR_RATE = 87.0; // Fixed 1 USD = 87 INR
 
 export function isINR(currency) {
   if (!currency) return false;
@@ -7,13 +7,38 @@ export function isINR(currency) {
   return c === 'INR' || c === '₹' || c.includes('INR') || c.includes('₹') || c.includes('RUPEE');
 }
 
+export function getRate(currency = 'USD') {
+  if (isINR(currency)) return USD_TO_INR_RATE;
+  const code = getCurrencyCode(currency);
+  try {
+    const rates = JSON.parse(localStorage.getItem('fx_rates') || '{}');
+    if (rates[code]) return rates[code];
+  } catch (e) {}
+  return 1;
+}
+
+export function toUSD(localAmount, currency = 'USD') {
+  const num = parseFloat(String(localAmount).replace(/,/g, '')) || 0;
+  const rate = getRate(currency);
+  return num / rate;
+}
+
+export function convertAmount(amountInUSD, currency = 'USD') {
+  const num = parseFloat(amountInUSD) || 0;
+  if (isINR(currency)) {
+    // If input is small (< 1000), treat as USD and convert to INR (e.g. $105 -> ₹9,135)
+    // If input is large (>= 1000), treat as already in INR (e.g. ₹50,000)
+    return num < 1000 ? Math.round(num * USD_TO_INR_RATE) : Math.round(num);
+  }
+  const rate = getRate(currency);
+  return num < 1000 ? num * rate : num;
+}
+
 export function formatCurrency(amountInUSD, currency = 'USD') {
   const num = parseFloat(amountInUSD) || 0;
 
   if (isINR(currency)) {
-    // If DB amount is USD (e.g. $105 fee or balance), convert to INR (105 * 87 = ₹9,135).
-    // If amount is already in INR (e.g. >= 1000), keep as is.
-    const inrAmount = num < 1000 ? Math.round(num * USD_TO_INR_RATE) : Math.round(num);
+    const inrAmount = convertAmount(num, 'INR');
     return '₹' + inrAmount.toLocaleString('en-IN');
   }
 
@@ -37,14 +62,6 @@ export function getCurrencySymbol(currency = 'USD') {
 
 export function getCurrencyCode(currency = 'USD') {
   return isINR(currency) ? 'INR' : 'USD';
-}
-
-export function convertAmount(amountInUSD, currency = 'USD') {
-  const num = parseFloat(amountInUSD) || 0;
-  if (isINR(currency)) {
-    return num < 1000 ? Math.round(num * USD_TO_INR_RATE) : Math.round(num);
-  }
-  return num;
 }
 
 // Aliases for full backward compatibility
