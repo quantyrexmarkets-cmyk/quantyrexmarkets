@@ -1,3 +1,9 @@
+
+const getKycUrl = (path) => {
+  if (!path) return '#';
+  if (path.startsWith('http://') || path.startsWith('https://') || path.startsWith('data:')) return path;
+  return 'https://quantyrexmarkets-api.vercel.app' + (path.startsWith('/') ? path : '/' + path);
+};
 import { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
@@ -1078,9 +1084,19 @@ export default function AdminPanel() {
                     <td style={{ ...tdStyle, color: k.kycStatus === 'approved' ? '#22c55e' : k.kycStatus === 'submitted' ? '#f59e0b' : '#ef4444' }}>{k.kycStatus}</td>
                     <td style={tdStyle}>{new Date(k.createdAt).toLocaleDateString()}</td>
                     <td style={tdStyle}>
-                      {k.kycData?.idFront && <a href={'https://quantyrexmarkets-api.vercel.app' + k.kycData.idFront} target="_blank" style={{ ...btnStyle('#6366f1'), textDecoration: 'none', display: 'inline-block' }}>Front</a>}
-                      {k.kycData?.idBack && <a href={'https://quantyrexmarkets-api.vercel.app' + k.kycData.idBack} target="_blank" style={{ ...btnStyle('#6366f1'), textDecoration: 'none', display: 'inline-block' }}>Back</a>}
-                      {k.kycData?.selfie && <a href={'https://quantyrexmarkets-api.vercel.app' + k.kycData.selfie} target="_blank" style={{ ...btnStyle('#818cf8'), textDecoration: 'none', display: 'inline-block' }}>Selfie</a>}
+                      {(() => {
+                        const f = k.kycData?.idFront || k.idFront;
+                        const b = k.kycData?.idBack || k.idBack;
+                        const s = k.kycData?.selfie || k.selfie;
+                        return (
+                          <>
+                            {f && <a href={getKycUrl(f)} target="_blank" rel="noopener noreferrer" style={{ ...btnStyle('#6366f1'), textDecoration: 'none', display: 'inline-block', marginRight: '4px' }}>Front</a>}
+                            {b && <a href={getKycUrl(b)} target="_blank" rel="noopener noreferrer" style={{ ...btnStyle('#6366f1'), textDecoration: 'none', display: 'inline-block', marginRight: '4px' }}>Back</a>}
+                            {s && <a href={getKycUrl(s)} target="_blank" rel="noopener noreferrer" style={{ ...btnStyle('#818cf8'), textDecoration: 'none', display: 'inline-block' }}>Selfie</a>}
+                            {!f && !b && !s && <span style={{ color: '#94a3b8', fontSize: '8px' }}>No docs</span>}
+                          </>
+                        );
+                      })()}
                     </td>
                     <td style={tdStyle}>
                       {(k.kycStatus === 'submitted' || k.kycStatus === 'pending') && <>
