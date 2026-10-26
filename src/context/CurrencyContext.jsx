@@ -13,10 +13,22 @@ const SYMBOLS = {
   EGP: 'E£', NZD: 'NZ$', SEK: 'kr', NOK: 'kr', DKK: 'kr', PLN: 'zł'
 };
 
-function extractCode(raw) {
+const DEFAULT_RATES = {
+  USD: 1,
+  INR: 87.0,
+  EUR: 0.92,
+  GBP: 0.79,
+  NGN: 1500,
+  CAD: 1.35,
+  AUD: 1.50
+};
+
+export function extractCode(raw) {
   if (!raw) return 'USD';
-  if (raw.length === 3) return raw.toUpperCase();
-  const m = raw.match(/\(([A-Z]{3})\)/);
+  const str = String(raw).trim().toUpperCase();
+  if (str === 'INR' || str === '₹' || str.includes('INR') || str.includes('₹') || str.includes('RUPEE')) return 'INR';
+  if (str.length === 3) return str;
+  const m = str.match(/\b([A-Z]{3})\b/);
   return m ? m[1] : 'USD';
 }
 
@@ -25,9 +37,9 @@ const BASE_URL = import.meta.env.VITE_API_URL || 'https://quantyrexmarkets-api.v
 export function CurrencyProvider({ children }) {
   const { user } = useAuth() || {};
   const code = extractCode(user?.currency);
-  const symbol = SYMBOLS[code] || code + ' ';
+  const symbol = SYMBOLS[code] || (code === 'INR' ? '₹' : code + ' ');
 
-  const [rates, setRates] = useState({ USD: 1 });
+  const [rates, setRates] = useState(DEFAULT_RATES);
   const [loaded, setLoaded] = useState(false);
 
   useEffect(() => {
@@ -38,7 +50,7 @@ export function CurrencyProvider({ children }) {
 
     if (cached && (Date.now() - cachedTime) < ONE_HOUR) {
       try {
-        setRates(JSON.parse(cached));
+        setRates(prev => ({ ...prev, ...JSON.parse(cached) }));
         setLoaded(true);
         return;
       } catch {}
@@ -49,7 +61,7 @@ export function CurrencyProvider({ children }) {
       .then(d => {
         if (cancelled) return;
         if (d?.rates) {
-          setRates(d.rates);
+          setRates(prev => ({ ...prev, ...d.rates, INR: d.rates.INR || 87.0 }));
           localStorage.setItem('fx_rates', JSON.stringify(d.rates));
           localStorage.setItem('fx_rates_time', String(Date.now()));
         }
@@ -60,12 +72,19 @@ export function CurrencyProvider({ children }) {
     return () => { cancelled = true; };
   }, []);
 
-  const rate = rates[code] || 1;
+  const rate = rates[code] || (code === 'INR' ? 87.0 : 1);
 
   // Format USD amount → user's currency (display)
   const format = (usdAmount, opts = {}) => {
     const { showCode = false, decimals } = opts;
     const num = Number(usdAmount) || 0;
+
+    if (code === 'INR') {
+      const inrAmount = num < 1000 ? Math.round(num * rate) : Math.round(num);
+      const formattedINR = '₹' + inrAmount.toLocaleString('en-IN');
+      return showCode ? `${formattedINR} INR` : formattedINR;
+    }
+
     const converted = num * rate;
     const dec = decimals !== undefined ? decimals : (code === 'JPY' || code === 'VND' || code === 'IDR' || code === 'KRW' ? 0 : 2);
     const formatted = converted.toLocaleString(undefined, {
@@ -84,9 +103,16 @@ export function CurrencyProvider({ children }) {
   // Format raw amount in any currency (for admin viewing other users)
   const formatAs = (usdAmount, targetCode) => {
     const tCode = extractCode(targetCode);
-    const tSymbol = SYMBOLS[tCode] || tCode + ' ';
-    const tRate = rates[tCode] || 1;
-    const converted = (Number(usdAmount) || 0) * tRate;
+    const tSymbol = SYMBOLS[tCode] || (tCode === 'INR' ? '₹' : tCode + ' ');
+    const tRate = rates[tCode] || (tCode === 'INR' ? 87.0 : 1);
+    const num = Number(usdAmount) || 0;
+
+    if (tCode === 'INR') {
+      const inrAmount = num < 1000 ? Math.round(num * tRate) : Math.round(num);
+      return '₹' + inrAmount.toLocaleString('en-IN');
+    }
+
+    const converted = num * tRate;
     const dec = (tCode === 'JPY' || tCode === 'VND' || tCode === 'IDR' || tCode === 'KRW') ? 0 : 2;
     return `${tSymbol}${converted.toLocaleString(undefined, { minimumFractionDigits: dec, maximumFractionDigits: dec })}`;
   };
