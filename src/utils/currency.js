@@ -26,19 +26,17 @@ export function toUSD(localAmount, currency = 'USD') {
 export function convertAmount(amountInUSD, currency = 'USD') {
   const num = parseFloat(amountInUSD) || 0;
   if (isINR(currency)) {
-    // If input is small (< 1000), treat as USD and convert to INR (e.g. $105 -> ₹9,135)
-    // If input is large (>= 1000), treat as already in INR (e.g. ₹50,000)
-    return num < 1000 ? Math.round(num * USD_TO_INR_RATE) : Math.round(num);
+    return Math.round(num * USD_TO_INR_RATE);
   }
   const rate = getRate(currency);
-  return num < 1000 ? num * rate : num;
+  return num * rate;
 }
 
 export function formatCurrency(amountInUSD, currency = 'USD') {
   const num = parseFloat(amountInUSD) || 0;
 
   if (isINR(currency)) {
-    const inrAmount = convertAmount(num, 'INR');
+    const inrAmount = Math.round(num * USD_TO_INR_RATE);
     return '₹' + inrAmount.toLocaleString('en-IN');
   }
 

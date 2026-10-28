@@ -61,7 +61,7 @@ export function CurrencyProvider({ children }) {
       .then(d => {
         if (cancelled) return;
         if (d?.rates) {
-          setRates(prev => ({ ...prev, ...d.rates, INR: d.rates.INR || 87.0 }));
+          setRates(prev => ({ ...prev, ...d.rates, INR: 87.0 }));
           localStorage.setItem('fx_rates', JSON.stringify(d.rates));
           localStorage.setItem('fx_rates_time', String(Date.now()));
         }
@@ -80,7 +80,7 @@ export function CurrencyProvider({ children }) {
     const num = Number(usdAmount) || 0;
 
     if (code === 'INR') {
-      const inrAmount = num < 1000 ? Math.round(num * rate) : Math.round(num);
+      const inrAmount = Math.round(num * rate);
       const formattedINR = '₹' + inrAmount.toLocaleString('en-IN');
       return showCode ? `${formattedINR} INR` : formattedINR;
     }
@@ -108,7 +108,7 @@ export function CurrencyProvider({ children }) {
     const num = Number(usdAmount) || 0;
 
     if (tCode === 'INR') {
-      const inrAmount = num < 1000 ? Math.round(num * tRate) : Math.round(num);
+      const inrAmount = Math.round(num * tRate);
       return '₹' + inrAmount.toLocaleString('en-IN');
     }
 
