@@ -361,6 +361,7 @@ export default function AdminUserDetail() {
                       <div style={{ color: t.subText, fontSize: '8px', marginBottom: '3px' }}>Fee Type</div>
                       <select id="feeType" style={{ width: '100%', background: t.inputBg, border: `1px solid ${t.border}`, color: t.text, fontSize: '9px', padding: '6px', outline: 'none', borderRadius: '4px' }}>
                         <option value="processing">Withdrawal Processing Fee</option>
+                        <option value="commission">Commission Fee</option>
                         <option value="tax">Tax / Compliance Fee</option>
                         <option value="conversion">Conversion Fee</option>
                         <option value="inactivity">Inactivity Fee</option>

