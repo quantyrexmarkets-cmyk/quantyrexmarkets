@@ -47,38 +47,7 @@ const LANGUAGES = [
   { code: 'ca', name: 'Català', flag: '🇪🇸' },
   { code: 'hr', name: 'Hrvatski', flag: '🇭🇷' },
   { code: 'et', name: 'Eesti', flag: '🇪🇪' },
-  { code: 'ka', name: 'ქართული', flag: '🇬🇪' },
-  { code: 'gu', name: 'ગુજરાતી', flag: '🇮🇳' },
-  { code: 'ha', name: 'Hausa', flag: '🇳🇬' },
-  { code: 'is', name: 'Íslenska', flag: '🇮🇸' },
-  { code: 'ig', name: 'Igbo', flag: '🇳🇬' },
-  { code: 'ga', name: 'Gaeilge', flag: '🇮🇪' },
-  { code: 'jv', name: 'Basa Jawa', flag: '🇮🇩' },
-  { code: 'kn', name: 'ಕನ್ನಡ', flag: '🇮🇳' },
-  { code: 'kk', name: 'Қазақ тілі', flag: '🇰🇿' },
-  { code: 'km', name: 'ភាសាខ្មែរ', flag: '🇰🇭' },
-  { code: 'lo', name: 'ພາສາລາວ', flag: '🇱🇦' },
-  { code: 'lv', name: 'Latviešu', flag: '🇱🇻' },
-  { code: 'lt', name: 'Lietuvių', flag: '🇱🇹' },
-  { code: 'mk', name: 'Македонски', flag: '🇲🇰' },
-  { code: 'ml', name: 'മലയാളം', flag: '🇮🇳' },
-  { code: 'mr', name: 'मराठी', flag: '🇮🇳' },
-  { code: 'mn', name: 'Монгол', flag: '🇲🇳' },
-  { code: 'my', name: 'မြန်မာ', flag: '🇲🇲' },
-  { code: 'ne', name: 'नेपाली', flag: '🇳🇵' },
-  { code: 'ps', name: 'پښتو', flag: '🇦🇫' },
-  { code: 'pa', name: 'ਪੰਜਾਬੀ', flag: '🇮🇳' },
-  { code: 'sr', name: 'Српски', flag: '🇷🇸' },
-  { code: 'si', name: 'සිංහල', flag: '🇱🇰' },
-  { code: 'sk', name: 'Slovenčina', flag: '🇸🇰' },
-  { code: 'sl', name: 'Slovenščina', flag: '🇸🇮' },
-  { code: 'so', name: 'Soomaali', flag: '🇸🇴' },
-  { code: 'su', name: 'Basa Sunda', flag: '🇮🇩' },
-  { code: 'ta', name: 'தமிழ்', flag: '🇮🇳' },
-  { code: 'te', name: 'తెలుగు', flag: '🇮🇳' },
-  { code: 'uz', name: 'Oʻzbekcha', flag: '🇺🇿' },
-  { code: 'yo', name: 'Yorùbá', flag: '🇳🇬' },
-  { code: 'zu', name: 'isiZulu', flag: '🇿🇦' },
+  { code: 'ka', name: 'ქართული', flag: '🇬🇪' }
 ];
 
 export default function LanguageTranslator() {
@@ -88,10 +57,6 @@ export default function LanguageTranslator() {
   const [chatOpen, setChatOpen] = useState(false);
   const popupRef = useRef(null);
 
-  // Hide translator on admin routes or when chat is open
-  const pathname = typeof window !== 'undefined' ? window.location.pathname : '';
-  const isAdmin = pathname.startsWith('/admin');
-
   useEffect(() => {
     const handleChatState = (e) => {
       setChatOpen(!!(e.detail && e.detail.open));
@@ -100,14 +65,17 @@ export default function LanguageTranslator() {
     return () => window.removeEventListener('chatStateChange', handleChatState);
   }, []);
 
-  if (isAdmin || chatOpen) return null;
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (popupRef.current && !popupRef.current.contains(event.target)) {
+        setIsOpen(false);
+      }
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
 
   useEffect(() => {
-    const match = document.cookie.match(/googtrans=\/en\/([^;]+)/);
-    if (match && match[1]) {
-      setCurrentLang(match[1]);
-    }
-
     if (!document.getElementById('google-translate-script')) {
       const script = document.createElement('script');
       script.id = 'google-translate-script';
@@ -130,29 +98,16 @@ export default function LanguageTranslator() {
     }
   }, []);
 
-  useEffect(() => {
-    const handleClickOutside = (e) => {
-      if (popupRef.current && !popupRef.current.contains(e.target)) {
-        setIsOpen(false);
-      }
-    };
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => document.removeEventListener('mousedown', handleClickOutside);
-  }, []);
-
   const changeLanguage = (langCode) => {
     setCurrentLang(langCode);
     setIsOpen(false);
-
-    const domain = window.location.hostname;
-    document.cookie = `googtrans=/en/${langCode}; path=/; domain=${domain}`;
-    document.cookie = `googtrans=/en/${langCode}; path=/;`;
-
     const select = document.querySelector('.goog-te-combo');
     if (select) {
       select.value = langCode;
       select.dispatchEvent(new Event('change'));
     } else {
+      document.cookie = `googtrans=/en/${langCode}; path=/; domain=${window.location.hostname}`;
+      document.cookie = `googtrans=/en/${langCode}; path=/`;
       window.location.reload();
     }
   };
@@ -162,26 +117,28 @@ export default function LanguageTranslator() {
     lang.code.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
+  // Early return ONLY after all hooks have been declared
+  const pathname = typeof window !== 'undefined' ? window.location.pathname : '';
+  if (pathname.startsWith('/admin') || chatOpen) return null;
+
   return (
     <div ref={popupRef} className="fixed bottom-5 left-5 z-[99999] font-sans">
       <div id="google_translate_element" className="hidden" />
 
-      {/* Sleek Language Popup */}
       {isOpen && (
         <div className="absolute bottom-14 left-0 w-56 bg-[#111622]/95 border border-gray-800 rounded-xl shadow-2xl backdrop-blur-xl p-2.5 mb-1 animate-in fade-in slide-in-from-bottom-2 duration-150">
           <div className="flex items-center justify-between pb-2 border-b border-gray-800/80 mb-2">
             <span className="text-[11px] font-semibold text-gray-400 uppercase tracking-wider flex items-center gap-1">
               <Globe className="w-3 h-3 text-blue-400" /> Select Language
             </span>
-            <button 
-              onClick={() => setIsOpen(false)} 
+            <button
+              onClick={() => setIsOpen(false)}
               className="text-gray-400 hover:text-white p-0.5 rounded hover:bg-gray-800/50 transition"
             >
               <X className="w-3.5 h-3.5" />
             </button>
           </div>
 
-          {/* Quick Search Box */}
           <div className="relative mb-2">
             <Search className="w-3.5 h-3.5 text-gray-500 absolute left-2.5 top-2" />
             <input
@@ -201,8 +158,8 @@ export default function LanguageTranslator() {
                   key={lang.code}
                   onClick={() => changeLanguage(lang.code)}
                   className={`w-full flex items-center justify-between px-2.5 py-1.5 text-xs rounded-lg transition ${
-                    isSelected 
-                      ? 'bg-blue-600/20 text-blue-400 font-medium border border-blue-500/30' 
+                    isSelected
+                      ? 'bg-blue-600/20 text-blue-400 font-medium border border-blue-500/30'
                       : 'text-gray-300 hover:bg-gray-800/60 hover:text-white'
                   }`}
                 >
@@ -221,7 +178,6 @@ export default function LanguageTranslator() {
         </div>
       )}
 
-      {/* Small Round Toggle Button (40px) */}
       <button
         onClick={() => setIsOpen(!isOpen)}
         className="w-10 h-10 rounded-full bg-[#121824] hover:bg-blue-600 text-gray-300 hover:text-white shadow-lg shadow-black/40 border border-gray-700/60 hover:border-blue-500/50 flex items-center justify-center transition-all duration-200 active:scale-95 group relative"
