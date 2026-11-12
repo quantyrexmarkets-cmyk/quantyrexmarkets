@@ -28,6 +28,29 @@ export default function LiveChat() {
   const [chat, setChat] = useState(null);
   const [text, setText] = useState('');
   const textareaRef = useRef(null);
+
+  const typingTimeoutRef = useRef(null);
+
+  const notifyTyping = (isUploadingImage = false) => {
+    if (!token) return;
+    fetch(`${API}/typing`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
+      body: JSON.stringify({ isTyping: true, isUploadingImage })
+    }).catch(() => {});
+
+    if (!isUploadingImage) {
+      if (typingTimeoutRef.current) clearTimeout(typingTimeoutRef.current);
+      typingTimeoutRef.current = setTimeout(() => {
+        fetch(`${API}/typing`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
+          body: JSON.stringify({ isTyping: false, isUploadingImage: false })
+        }).catch(() => {});
+      }, 3000);
+    }
+  };
+
   // Reset textarea height when text becomes empty
   useEffect(() => {
     if (text === '' && textareaRef.current) {
@@ -299,6 +322,7 @@ export default function LiveChat() {
             <div style={{ padding: '10px', borderTop: '1px solid rgba(0,0,0,0.1)', display: 'flex', gap: '8px', background: '#dedede', flexShrink: 0, position: 'relative', zIndex: 10000, alignItems: 'flex-end' }}>
               <input type="file" accept="image/*" id="clientImageUpload" style={{ display: 'none' }} onChange={async e => {
                 const file = e.target.files[0]; if (!file) return;
+                notifyTyping(true);
                 setLoading(true);
                 const fd = new FormData(); fd.append('image', file);
                 try {
@@ -320,6 +344,7 @@ export default function LiveChat() {
                 value={text}
                 onChange={e => {
                   setText(e.target.value);
+                  notifyTyping();
                   // Auto-resize
                   e.target.style.height = 'auto';
                   e.target.style.height = Math.min(e.target.scrollHeight, 140) + 'px';

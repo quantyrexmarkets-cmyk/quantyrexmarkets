@@ -1311,7 +1311,32 @@ export default function AdminPanel() {
                         <span style={{ color: t.text, fontSize: '10px', fontWeight: '700' }}>{selectedChat.name || selectedChat.email}</span>
                       </div>
                       <div style={{ display: 'flex', gap: '6px' }}>
-                        {selectedChat.status === 'open' && (
+                        {
+                    {/* Real-time Indicators: Typing & Image Uploading */}
+                    {(selectedChat.isUploadingImage || selectedChat.isTyping) && (
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '8px', padding: '6px 12px', background: t.cardBg, borderRadius: '12px', width: 'fit-content', marginTop: '4px', marginBottom: '8px', border: `1px solid ${t.border}`, boxShadow: '0 2px 8px rgba(0,0,0,0.1)' }}>
+                        <div style={{ width: '20px', height: '22px', borderRadius: '50%', background: '#4f46e5', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '8px', color: 'white', fontWeight: '700' }}>
+                          {(selectedChat.name || selectedChat.email || 'U').slice(0,2).toUpperCase()}
+                        </div>
+                        {selectedChat.isUploadingImage ? (
+                          <div style={{ display: 'flex', alignItems: 'center', gap: '6px', color: '#a855f7', fontSize: '9px', fontWeight: '600' }}>
+                            <svg className="animate-spin" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="12" cy="12" r="10" strokeDasharray="32" strokeDashoffset="10"/></svg>
+                            <span>Sending image...</span>
+                          </div>
+                        ) : (
+                          <div style={{ display: 'flex', alignItems: 'center', gap: '4px', color: t.subText, fontSize: '9px', fontWeight: '500' }}>
+                            <span>typing</span>
+                            <span style={{ display: 'inline-flex', gap: '2px', marginLeft: '2px' }}>
+                              <span style={{ animation: 'pulse 1s infinite 0s', width: '3px', height: '3px', background: '#6366f1', borderRadius: '50%' }}></span>
+                              <span style={{ animation: 'pulse 1s infinite 0.2s', width: '3px', height: '3px', background: '#6366f1', borderRadius: '50%' }}></span>
+                              <span style={{ animation: 'pulse 1s infinite 0.4s', width: '3px', height: '3px', background: '#6366f1', borderRadius: '50%' }}></span>
+                            </span>
+                          </div>
+                        )}
+                      </div>
+                    )}
+
+                  {selectedChat.status === 'open' && (
                           <button type="button" onClick={async () => {
                             await fetch(`https://quantyrexmarkets-api.vercel.app/api/chat/resolve/${selectedChat._id}`, { method: 'PATCH', headers: { Authorization: `Bearer ${localStorage.getItem('token')}` } });
                             fetch('https://quantyrexmarkets-api.vercel.app/api/chat/all', { headers: { Authorization: `Bearer ${localStorage.getItem('token')}` } }).then(r => r.json()).then(d => setContacts(Array.isArray(d) ? d : []));
