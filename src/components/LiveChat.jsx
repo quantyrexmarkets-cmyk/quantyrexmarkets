@@ -6,8 +6,9 @@ const API = 'https://quantyrexmarkets-api.vercel.app/api/chat';
 
 export default function LiveChat() {
   const { current: t } = useTheme();
+    const { user } = useAuth();
   if (window.location.pathname.startsWith('/admin')) return null;
-  const { user } = useAuth();
+  if (user && (user.role === 'admin' || user.isAdmin)) return null;
   const token = localStorage.getItem('token');
   const [open, setOpen] = useState(false);
   const [showBubble, setShowBubble] = useState(() => {
@@ -333,7 +334,7 @@ export default function LiveChat() {
                 style={{
                   flex: 1, background: '#ffffff',
                   border: '1px solid rgba(0,0,0,0.1)',
-                  color: '#1f2937', fontSize: '13px',
+                  color: '#1f2937', fontSize: '16px',
                   padding: '10px 16px', outline: 'none',
                   borderRadius: '20px', resize: 'none',
                   fontFamily: 'inherit', lineHeight: '1.4',
