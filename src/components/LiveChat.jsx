@@ -17,6 +17,10 @@ export default function LiveChat() {
 
   // Allow external trigger
   useEffect(() => {
+    window.dispatchEvent(new CustomEvent('chatStateChange', { detail: { open } }));
+  }, [open]);
+
+  useEffect(() => {
     const handler = () => { setOpen(true); setShowBubble(false); };
     window.addEventListener('openLiveChat', handler);
     return () => window.removeEventListener('openLiveChat', handler);

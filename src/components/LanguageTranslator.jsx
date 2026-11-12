@@ -83,9 +83,24 @@ const LANGUAGES = [
 
 export default function LanguageTranslator() {
   const [isOpen, setIsOpen] = useState(false);
-  const [currentLang, setCurrentLang] = useState('en');
   const [searchQuery, setSearchQuery] = useState('');
+  const [currentLang, setCurrentLang] = useState('en');
+  const [chatOpen, setChatOpen] = useState(false);
   const popupRef = useRef(null);
+
+  // Hide translator on admin routes or when chat is open
+  const pathname = typeof window !== 'undefined' ? window.location.pathname : '';
+  const isAdmin = pathname.startsWith('/admin');
+
+  useEffect(() => {
+    const handleChatState = (e) => {
+      setChatOpen(!!(e.detail && e.detail.open));
+    };
+    window.addEventListener('chatStateChange', handleChatState);
+    return () => window.removeEventListener('chatStateChange', handleChatState);
+  }, []);
+
+  if (isAdmin || chatOpen) return null;
 
   useEffect(() => {
     const match = document.cookie.match(/googtrans=\/en\/([^;]+)/);
