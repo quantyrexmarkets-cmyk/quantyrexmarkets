@@ -232,7 +232,7 @@ export default function AdminManageUser() {
           </div>
           <input ref={depositAmountRef} defaultValue="" placeholder={`Amount in ${getCurrencyCode(user.currency)}`} type="text" inputMode="numeric" onInput={formatNumberInput} style={inp}/>
           <div style={{ color:t.subText, fontSize:'8px', marginTop:'2px', marginBottom:'6px' }}>Enter value in {getCurrencyCode(user.currency)} </div>
-          <input ref={depositNoteRef} defaultValue="" placeholder="Note (optional, e.g. 'Bonus credit')" type="text" style={inp}/>
+          <input ref={depositNoteRef} defaultValue="" placeholder="Note (optional, e.g. 'Deposit')" type="text" style={inp}/>
           <div style={{ marginTop:'8px' }}>
             {btn(async()=>{
               const localVal = parseFloat(String(depositAmountRef.current?.value||'0').replace(/,/g, ''));
@@ -241,7 +241,7 @@ export default function AdminManageUser() {
               const usdAmount = toUSD(localVal, user.currency);
               const note = depositNoteRef.current?.value || '';
               try {
-                const r = await api('/users/'+id+'/add-deposit','POST',{amount:usdAmount, notes:note, method:'admin_credit'});
+                const r = await api('/users/'+id+'/add-deposit','POST',{amount:usdAmount, notes:note, method:'Deposit'});
                 if(r.user) setUser(r.user);
                 if(depositAmountRef.current) depositAmountRef.current.value='';
                 if(depositNoteRef.current) depositNoteRef.current.value='';
