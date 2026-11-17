@@ -547,7 +547,7 @@ export default function SupportPage() {
                 {selectedChat.userInfo?.page && (
                   <div style={{ display: 'flex', alignItems: 'center', gap: '6px', fontSize: '10px' }}>
                     <svg width='10' height='10' fill='none' stroke='#6366f1' viewBox='0 0 24 24' strokeWidth='2'><path d='M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71'/><path d='M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71'/></svg>
-                    <span style={{ color: '#6366f1' }}>vertextradspro.vercel.app{selectedChat.userInfo.page}</span>
+                    <span style={{ color: '#6366f1' }}>www.quantyrexmarkets.trade{selectedChat.userInfo.page}</span>
                   </div>
                 )}
                 <div style={{ display: 'flex', alignItems: 'center', gap: '6px', color: selectedChat.visitorOnline ? '#22c55e' : t.faintText, fontSize: '10px' }}>
