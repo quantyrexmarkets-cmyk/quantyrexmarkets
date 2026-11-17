@@ -264,6 +264,18 @@ export default function AdminManageUser() {
                 showMsg('Failed: '+(e.message||'error'));
               }
             }, 'Set Deposits (overwrite)', <DollarSign size={12}/>)}
+            {btn(async()=>{
+              if(!window.confirm("Are you sure you want to reset total deposits to 0?")) return;
+              try {
+                const r = await api("/users/"+id+"/total-deposits","PUT",{totalDeposits:0});
+                if(r.user) setUser(r.user);
+                else setUser(p=>({...p, totalDeposits: 0}));
+                if(depositAmountRef.current) depositAmountRef.current.value="";
+                showMsg("Total Deposits reset to 0");
+              } catch(e) {
+                showMsg("Failed: "+(e.message||"error"));
+              }
+            }, "Reset (to 0)", <RotateCcw size={12}/>, "reset-dep")}
           </div>
         </S>
         <S title="Admin Message" t={t}>
