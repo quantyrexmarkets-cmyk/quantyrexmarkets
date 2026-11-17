@@ -191,8 +191,24 @@ export default function AdminPanel() {
     URL.revokeObjectURL(url);
   };
 
-  const api = (path, method = 'GET', body) =>
-    fetch(`${BASE_URL}/admin${path}`, { method, headers: headers(), body: body ? JSON.stringify(body) : undefined }).then(r => r.json());
+  const api = async (path, method = 'GET', body) => {
+    try {
+      const r = await fetch(`${BASE_URL}/admin${path}`, {
+        method,
+        headers: headers(),
+        body: body ? JSON.stringify(body) : undefined
+      });
+      const text = await r.text();
+      try {
+        return text ? JSON.parse(text) : {};
+      } catch {
+        return { success: r.ok };
+      }
+    } catch (err) {
+      console.error("API error:", err);
+      return { error: err.message };
+    }
+  };
 
   useEffect(() => { api('/stats').then(setStats); }, []);
 
@@ -234,10 +250,21 @@ export default function AdminPanel() {
   };
 
   const deleteDeposit = async (id) => {
+    if (!id) return showMsg('Invalid deposit ID');
     if (!window.confirm('Delete this deposit record?')) return;
-    await api(`/deposits/${id}`, 'DELETE');
-    setDeposits(prev => prev.filter(d => d._id !== id));
-    showMsg('Deposit deleted');
+    try {
+      setDeposits(prev => prev.filter(d => (d._id || d.id) !== id));
+      const res = await api(`/deposits/${id}`, 'DELETE');
+      if (res && res.error) {
+        showMsg(res.error);
+      } else {
+        showMsg('Deposit deleted');
+      }
+      api('/deposits').then(d => setDeposits(Array.isArray(d) ? d : []));
+      api('/stats').then(setStats);
+    } catch (e) {
+      showMsg('Failed: ' + (e.message || 'error'));
+    }
   };
 
   const approveDeposit = async (id, status) => {
@@ -249,10 +276,21 @@ export default function AdminPanel() {
   };
 
   const deleteWithdrawal = async (id) => {
+    if (!id) return showMsg('Invalid withdrawal ID');
     if (!window.confirm('Delete this withdrawal record?')) return;
-    await api(`/withdrawals/${id}`, 'DELETE');
-    setWithdrawals(prev => prev.filter(w => w._id !== id));
-    showMsg('Withdrawal deleted');
+    try {
+      setWithdrawals(prev => prev.filter(w => (w._id || w.id) !== id));
+      const res = await api(`/withdrawals/${id}`, 'DELETE');
+      if (res && res.error) {
+        showMsg(res.error);
+      } else {
+        showMsg('Withdrawal deleted');
+      }
+      api('/withdrawals').then(d => setWithdrawals(Array.isArray(d) ? d : []));
+      api('/stats').then(setStats);
+    } catch (e) {
+      showMsg('Failed: ' + (e.message || 'error'));
+    }
   };
 
   const approveWithdrawal = async (id, status) => {
@@ -1017,7 +1055,7 @@ export default function AdminPanel() {
                         <button type="button" onClick={() => approveDeposit(d._id, 'approved')} style={btnStyle('#22c55e')}><CheckCircle size={12}/> Approve</button>
                         <button type="button" onClick={() => approveDeposit(d._id, 'rejected')} style={btnStyle('#ef4444')}><XCircle size={12}/> Reject</button>
                       </>}
-                      <button type="button" onClick={() => deleteDeposit(d._id)} style={btnStyle('#64748b')}><Trash2 size={12}/> Delete</button>
+                      <button type="button" onClick={() => deleteDeposit(d._id || d.id)} style={btnStyle('#64748b')}><Trash2 size={12}/> Delete</button>
                       {d.proofImage && <button type="button" onClick={() => setProofImage(d.proofImage)} style={btnStyle('#6366f1')}><Eye size={12}/> Proof</button>}
                     </td>
                   </tr>
@@ -1058,7 +1096,7 @@ export default function AdminPanel() {
                       {w.status === 'pending' && <>
                         <button type="button" onClick={() => approveWithdrawal(w._id, 'approved')} style={btnStyle('#22c55e')}><CheckCircle size={12}/> Approve</button>
                         <button type="button" onClick={() => approveWithdrawal(w._id, 'rejected')} style={btnStyle('#ef4444')}><XCircle size={12}/> Reject</button>
-                        <button type="button" onClick={() => deleteWithdrawal(w._id)} style={btnStyle('#64748b')}><Trash2 size={12}/> Delete</button>
+                        <button type="button" onClick={() => deleteWithdrawal(w._id || w.id)} style={btnStyle('#64748b')}><Trash2 size={12}/> Delete</button>
                       </>}
                     </td>
                   </tr>
