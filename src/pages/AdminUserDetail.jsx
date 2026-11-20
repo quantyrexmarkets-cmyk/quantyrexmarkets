@@ -143,7 +143,7 @@ export default function AdminUserDetail() {
       api(`/users/${id}/bots`),
       api(`/users/${id}/investments`),
     ]).then(([u, b, inv]) => {
-      setSelectedUser(u);
+      const uObj = u?.user || (u?._id ? u : null); if(uObj) setSelectedUser(uObj);
       setUserBots(Array.isArray(b) ? b : []);
       setUserInvestments(Array.isArray(inv) ? inv : []);
       setLoading(false);
